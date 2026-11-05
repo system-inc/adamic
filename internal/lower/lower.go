@@ -295,6 +295,9 @@ type lowering struct {
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
 	provenModuleReads map[*ast.Node]bool
+	// moduleOrdered is moduleOrder's held answer, and moduleOrders how many times it was computed.
+	moduleOrdered *moduleOrdering
+	moduleOrders  int
 	// assignedSymbols is every symbol an identifier in the program assigns to (predicates.go's assignedSymbol).
 	assignedSymbols map[*ast.Symbol]bool
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one

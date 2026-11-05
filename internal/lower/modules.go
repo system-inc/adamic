@@ -2,6 +2,7 @@
 package lower
 
 import (
+	"slices"
 	"sort"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -13,7 +14,33 @@ import (
 // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
 // depth-first in the order they're written, then the module itself. The prelude's 'adamic' module
 // has no body to run. A module already in progress is the cycle back edge and is skipped.
+//
+// It's answered once per lowering and entry (moduleOrdered), its error with it: 25 callers ask, and
+// plainReceiver asks once a receiver, which on a cyclic program reran proveModuleReads over the whole
+// program each time (#20pb346: tsc's entry census 776 to 1,324 s, dumpTypes 5 to 106 s). The answer
+// is the same each time for one program and entry: ESMModuleOrder and dynamicImportGap read only the
+// program's syntax and the checker's symbols. Its side effects, cyclicModules and provenModuleReads,
+// are made by the first answer and written nowhere else, so a held answer leaves them as they were.
+// A different entry is answered afresh and replaces the held one.
 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	if held := l.moduleOrdered; held != nil && held.entry == entry {
+		return slices.Clone(held.order), held.err
+	}
+	order, err := l.orderModules(entry)
+	l.moduleOrdered = &moduleOrdering{entry: entry, order: order, err: err}
+	return slices.Clone(order), err
+}
+
+// moduleOrdering is moduleOrder's answer for one entry: the order, or the error that refused it.
+type moduleOrdering struct {
+	entry *ast.SourceFile
+	order []*ast.SourceFile
+	err   error
+}
+
+// orderModules computes moduleOrder's answer and makes its side effects; moduleOrder holds it.
+func (l *lowering) orderModules(entry *ast.SourceFile) ([]*ast.SourceFile, error) {
+	l.moduleOrders++
 	order, cyclic := ESMModuleOrder(l.checker, entry)
 	// Dynamic imports are not lowered. Refuse them before imported types can
 	// request source identities during declaration or initializer lowering.
