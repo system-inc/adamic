@@ -57,6 +57,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// a later rule anywhere in the module (refusalPass.deferred).
 		"3270 refuseAnyRelation",
 		"3300 refuseOptionalWidening",
+		"3330 narrowedNullishReadGap",
 		// constraintRelationRefusal judges the type arguments a site binds once every rule has judged
 		// the site itself, and before the walk reaches its arguments.
 		"3350 constraintRelationRefusal",
