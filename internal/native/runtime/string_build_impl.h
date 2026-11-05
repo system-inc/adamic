@@ -26,12 +26,18 @@ adamic_string *adamic_string_from_number(double value) {
 }
 
 // V8's longest string, in UTF-16 units (String::kMaxLength on 64-bit): past it, every way of making
-// a string throws RangeError: Invalid string length, and so Adamic panics there too.
-void adamic_string_check_length(double units) {
-	if (units > ADAMIC_STRING_MAX_UNITS) {
-		static const char message[] = "RangeError: Invalid string length";
-		adamic_panic(message, sizeof message - 1);
+// a string throws RangeError: Invalid string length, a catch takes it, and so does Adamic's.
+bool adamic_string_check_length(double units) {
+	if (units <= ADAMIC_STRING_MAX_UNITS) {
+		return true;
 	}
+	// A builder that went on past an earlier failure (a nested join, a replace's pieces) fails again
+	// here; the first RangeError stays the one pending, and none is lost.
+	if (adamic_thrown == NULL) {
+		static const char message[] = "Invalid string length";
+		adamic_throw_kind("RangeError", sizeof "RangeError" - 1, message, sizeof message - 1);
+	}
+	return false;
 }
 
 adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {
@@ -50,7 +56,9 @@ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) 
 		for (size_t index = 0; index < count; index++) {
 			units += adamic_string_length(parts[index]);
 		}
-		adamic_string_check_length(units);
+		if (!adamic_string_check_length(units)) {
+			return adamic_retain(&adamic_string_empty);
+		}
 	}
 	adamic_string *string = allocate(length);
 	// Joining surrogate halves changes bytes, but preserves the number of UTF-16 units.

@@ -22,5 +22,8 @@ func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
 func (e *emitter) libraryArrayJoin(join ir.ArrayJoin) string {
 	array := e.value(join.Array)
 	separator := e.value(join.Separator)
-	return e.own(ir.String, fmt.Sprintf("adamic_array_join_nested(%s, %s, %s, %d)", array, separator, joinKind(join.Element), join.Depth))
+	result := e.own(ir.String, fmt.Sprintf("adamic_array_join_nested(%s, %s, %s, %d)", array, separator, joinKind(join.Element), join.Depth))
+	// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
+	e.checkThrown()
+	return result
 }
