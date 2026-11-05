@@ -1,0 +1,4 @@
+// a-check: refused a void value at the argument site through <TReturn> seen as any
+const pair: Iterable<number, void> = [1, 2];
+function total(values: Iterable<number>): number { let sum = 0; for (const value of values) { sum += value; } return sum; }
+console.log(String(total(pair)));
