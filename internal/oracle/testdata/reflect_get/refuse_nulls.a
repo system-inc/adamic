@@ -1,0 +1,6 @@
+// An array of null alone holds each null as a null pointer, so it's refused where it's viewed as
+// unknown (#ys4naww, Language's k02). Node prints null.
+import { propertyOf } from './hostErrors.ts';
+
+const nulls: null[] = [null, null];
+console.log(propertyOf(nulls, '0') === null ? 'null' : 'not null');

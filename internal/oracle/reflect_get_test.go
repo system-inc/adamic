@@ -141,6 +141,13 @@ match length number 3
 match index number 1
 match input string abcd
 match groups undefined
+nullable strings 0 string s
+nullable strings 1 null
+absent 0 object here
+absent 1 undefined
+either 0 null
+either 1 undefined
+either 2 object there
 `
 
 // undefinedSpreadAnswers is what undefined_spread.a prints on Node.
@@ -422,6 +429,16 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		{"notyet_getter_to_primitive.a", "hostErrors.ts:16:12", "a class getter that converts an object field to a primitive"},
 		{"notyet_literal_getter_method.a", "notyet_literal_getter_method.a:10:2", "a non-accessor method in an accessor literal"},
 		{"error_subclass.a", "error_subclass.a:5:17", "a computed class base; name the base class directly"},
+		// An array whose elements may be null and are held as references holds null as a null
+		// pointer, which the run-time key read can't tell from undefined (Language's must on
+		// #ys4naww), so it's NotYet where an unknown views it, held directly (k07, k12, k02) or
+		// reached through a field or an element. Mutant: unknownView's nullableReferenceArray test
+		// dropped, so each lowers and natively reads its null as undefined.
+		{"refuse_null_object_array.a", "refuse_null_object_array.a:10:24", nullableArrayRefusal},
+		{"refuse_null_array_array.a", "refuse_null_array_array.a:6:24", nullableArrayRefusal},
+		{"refuse_nulls.a", "refuse_nulls.a:6:24", nullableArrayRefusal},
+		{"refuse_null_object_array_field.a", "refuse_null_object_array_field.a:10:35", nullableArrayRefusal},
+		{"refuse_null_object_array_array.a", "refuse_null_object_array_array.a:10:35", nullableArrayRefusal},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -433,6 +450,10 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		})
 	}
 }
+
+// nullableArrayRefusal is unknownView's NotYet for an array with a nullable element held as a
+// reference.
+const nullableArrayRefusal = "an array with a nullable element viewed as unknown or object (null and undefined element tags)"
 
 // hostErrors.ts as stage3 will carry it, 47's two helpers and propertyOf with Performance's message,
 // lowered as the census lowers a root, lowers whole.
