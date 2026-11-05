@@ -57,7 +57,19 @@ def run_roots(tree, roots, logs, timeout=5, build_timeout=60):
         (output / 'package.json').write_text('{"type":"module"}\n')
         results = {}
         for index, root in enumerate(roots):
-            result = {'node_version': version, 'build_exit': build_exit, 'exit': None,
+            # Ask the same compiler/config for this root's resolved source set,
+            # not the union emitted above. Declarations are not lowering units.
+            config.write_text(json.dumps({'compilerOptions': options, 'files': [root]}))
+            files_log = logs / f'{index}-files.log'
+            files_exit, files_timeout = command(
+                ['tsc', '--project', str(config), '--listFilesOnly'], files_log, build_timeout)
+            sources = sorted({str(Path(line).resolve()) for line in files_log.read_text().splitlines()
+                              if Path(line).is_file() and Path(line).suffix in ('.ts', '.tsx', '.mts', '.cts', '.js', '.a')
+                              and not line.endswith(('.d.ts', '.d.mts', '.d.cts'))})
+            result = {'program_files': sources,
+                      'program_files_complete': files_exit == 0 and not files_timeout and root in sources,
+                      'program_files_exit': files_exit, 'program_files_timeout': files_timeout,
+                      'node_version': version, 'build_exit': build_exit, 'exit': None,
                       'timeout': build_timeout_hit, 'first_error': '', 'throws': False}
             if build_exit == 0 and version and version.startswith('v24.'):
                 log = logs / f'{index}.log'

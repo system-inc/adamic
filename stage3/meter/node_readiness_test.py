@@ -38,6 +38,10 @@ class NodeReadinessTests(unittest.TestCase):
             self.assertIsNone(timed_out['exit'])
             self.assertFalse(timed_out['throws'])
             self.assertTrue((logs / 'results.json').is_file())
+            self.assertTrue(all(result['program_files_complete'] for result in results.values()))
+            self.assertEqual(clean['program_files'], sorted(str(tree / name) for name in ('clean.ts', 'flags.ts')))
+            self.assertEqual(cycle['program_files'], sorted(str(tree / name) for name in ('cycle.ts', 'dependency.ts')))
+            self.assertEqual(exited['program_files'], [str(tree / 'exit.ts')])
 
     def test_value_import_used_only_as_type_keeps_its_evaluation_edge(self):
         with tempfile.TemporaryDirectory() as temporary:
