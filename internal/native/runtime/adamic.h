@@ -983,6 +983,10 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 adamic_object *adamic_string_iterator(adamic_string *string);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_collection_iterator_is says whether a value is an iterator adamic_collection_iterator made:
+// an object of the iterator shape whose next is a collection's, never a string's iterator, which
+// shares the shape. An iterable view's dispatch asks it (ir.IsCollectionIterator).
+bool adamic_collection_iterator_is(const void *value);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);

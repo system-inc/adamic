@@ -61,6 +61,7 @@ var gobTypes = []any{
 	HasProperty{},
 	If{},
 	InstanceOf{},
+	IsCollectionIterator{},
 	IsGenerator{},
 	IsNull{},
 	IsUndefined{},

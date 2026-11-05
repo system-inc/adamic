@@ -6,6 +6,7 @@ import (
 	"go/parser"
 	"go/token"
 	"path/filepath"
+	"reflect"
 	"sort"
 	"strings"
 	"testing"
@@ -35,6 +36,8 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 		{"an IterableIterator parameter", iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
 		{"a generic instance", iterableCounted + "function weigh<T>(items: Iterable<T>, by: (item: T) => number): number { let sum = 0; for (const item of items) { sum += by(item); } return sum; }\nconsole.log(String(weigh(counted(3), (value: number): number => value + 1)));"},
 		{"one function at two call sites", iterableCounted + iterableTotal + "console.log(String(total(counted(2)) + total(counted(4))));"},
+		// The dispatch's two arms: one slot fed a generator at one call and a Map's values() at another.
+		{"a generator beside a collection's iterator", iterableCounted + iterableTotal + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));"},
 		{"an outer loop over the for-of", iterableCounted + "function firsts(items: Iterable<number>): number { let sum = 0; for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break; } } return sum; }\nconsole.log(String(firsts(counted(3))));"},
 		{"a type-only typeof", iterableCounted + "function total(items: Iterable<number>): number { const none: typeof items | undefined = undefined; let sum = none === undefined ? 0 : 1; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
 		{"a nested block's own name", iterableCounted + "function total(items: Iterable<number>): number { let sum = 0; { const items = 4; sum += items; } for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
@@ -55,7 +58,7 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 // closure that captures it, never called, passing it on, assigning it, reading arguments, and a callee
 // the call can't name as one body (an async function, a function value, a method), or a generator
 // that isn't the argument's own call (one stored first). And what S2c-1 doesn't build yet: two
-// generator functions into one parameter, a generator beside a collection's iterator, an
+// generator functions into one parameter, an
 // Iterable<string> parameter, held as a union, and yields held otherwise than the view reads them.
 // Spreading or destructuring the parameter stops before the proof, in its own words, so those rows
 // hold only that it doesn't compile. Mutants (internal/oracle/testdata/generators/mutants.md): the
@@ -89,7 +92,6 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		{"it === g2()", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = items === halved(2) ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
 		{"it = g2() before the loop", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = 0; items = halved(2); for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
 		{"two generator functions", iterableCounted + iterableTotal + halved + "console.log(String(total(counted(2)) + total(halved(2))));", "generators of more than one function"},
-		{"a generator beside a collection's iterator", iterableCounted + iterableTotal + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));", "both a generator and a collection's iterator"},
 		{"an Iterable<string> parameter", "function* words(limit: number): Generator<string, undefined, undefined> { for (let index = 0; index < limit; index++) { yield `w${String(index)}`; } }\nfunction joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));", "held as a union"},
 		{"yields held otherwise", iterableCounted + "function show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counted(2));", "held differently"},
 	} {
@@ -142,19 +144,19 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	}
 }
 
-// The view a generator feeds is rewritten into a per-step dispatch on the heap kind (Lower's (b)): its
-// block closes what it holds at every way out, its loop tests the kind, panics as a compiler bug on
-// any kind the proof didn't list, and steps the generator by GeneratorNext and GeneratorDone of the
-// object it holds, never by a library iterator's next. And the generator crosses into the parameter
-// through IterableOf, as the call's own argument. Mutant: the kind test made always true, and every
-// generator fixture that reaches a view panics through the loud default.
+// The view a generator feeds is rewritten into a per-step dispatch on what the object is (Lower's
+// (b)): its block closes what it holds at every way out, and each pass tests whether the object is a
+// generator, stepping it by GeneratorNext and GeneratorDone, else whether it is a collection's
+// iterator, stepping it by the library loop's own step (one read of its next), else panics as a
+// compiler bug. And the generator crosses into the parameter through IterableOf, as the call's own
+// argument. The mutants that take out an arm are in testdata/generators/mutants.md.
 func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 	t.Parallel()
 	program, err := lowerSource(t, iterableCounted+iterableTotal+"console.log(String(total(counted(3))));")
 	if err != nil {
 		t.Fatal(err)
 	}
-	closes, kinds, steps, iterables := 0, 0, 0, 0
+	closes, kinds, collections, steps, nexts, iterables := 0, 0, 0, 0, 0, 0
 	inspect := func(node any) bool {
 		switch node := node.(type) {
 		case ir.Block:
@@ -163,6 +165,8 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 			}
 		case ir.IsGenerator:
 			kinds++
+		case ir.IsCollectionIterator:
+			collections++
 		case ir.GeneratorNext:
 			if node.Generator.Type() == ir.Object && program.Functions[node.Function].Generator {
 				steps++
@@ -175,7 +179,7 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 			}
 		case ir.Property:
 			if node.Name == "next" {
-				t.Errorf("the dispatch reads a library iterator's next: %+v", node)
+				nexts++
 			}
 		}
 		return true
@@ -184,8 +188,8 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 	for _, function := range program.Functions {
 		walk(function.Body, inspect)
 	}
-	if closes != 1 || kinds != 1 || steps != 1 || iterables != 1 {
-		t.Fatalf("%d closing blocks, %d kind tests, %d generator steps of an object and %d IterableOf arguments, want one each", closes, kinds, steps, iterables)
+	if closes != 1 || kinds != 1 || collections != 1 || steps != 1 || nexts != 1 || iterables != 1 {
+		t.Fatalf("%d closing blocks, %d generator tests, %d collection tests, %d generator steps of an object, %d reads of a next and %d IterableOf arguments, want one each", closes, kinds, collections, steps, nexts, iterables)
 	}
 }
 
@@ -335,5 +339,35 @@ func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(t *testing.T) {
 		if err == nil || !strings.Contains(err.Error(), "compiler bug") {
 			t.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, err)
 		}
+	}
+}
+
+// libraryIteratorLoop steps by libraryIteratorStep, which an iterable view's dispatch shares (Lower's
+// condition 4: one step, never a copy). The loop's IR is what it was before the step was its own
+// function, statement for statement, so every collection-iterator for-of emits the same C, which is
+// a function of the IR alone; this holds the IR to the old shape, written out.
+func TestLibraryIteratorLoopIsItsStepAndItsBody(t *testing.T) {
+	t.Parallel()
+	l := &lowering{result: &ir.Program{Locals: []ir.Local{{Name: "element", Type: ir.Number}}}}
+	item := ir.Read{Local: 0, Of: ir.Number}
+	iterator := ir.Read{Local: 0, Of: ir.Object}
+	body := []ir.Statement{ir.Evaluate{Value: item}}
+	got := l.libraryIteratorLoop(0, iterator, item, body)
+	held := ir.Read{Local: 1, Of: ir.Object}
+	step := ir.Read{Local: 2, Of: ir.Object}
+	want := []ir.Statement{
+		ir.Declare{Local: held.Local, Value: iterator},
+		ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
+			ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+			ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
+			ir.Declare{Local: item.Local, Value: ir.Property{Object: step, Name: "value", Of: item.Of}},
+			ir.Evaluate{Value: item},
+		}},
+	}
+	if !reflect.DeepEqual(got, want) {
+		t.Fatalf("libraryIteratorLoop's IR changed:\ngot  %#v\nwant %#v", got, want)
+	}
+	if len(l.result.Locals) != 3 || l.result.Locals[1].Name != "iterator" || l.result.Locals[2].Name != "step" {
+		t.Fatalf("libraryIteratorLoop's locals changed: %+v", l.result.Locals)
 	}
 }

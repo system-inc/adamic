@@ -43,6 +43,13 @@ type IsGenerator struct{ Value Expression }
 
 func (IsGenerator) Type() Type { return Boolean }
 
+// IsCollectionIterator is whether the object an iterable view holds is a Map's or a Set's library
+// iterator, read from the runtime object itself, never its static type: the view's dispatch steps
+// one only by the library iterator's own step (lower/library_map_set.go's libraryIteratorStep).
+type IsCollectionIterator struct{ Value Expression }
+
+func (IsCollectionIterator) Type() Type { return Boolean }
+
 // GeneratorDone is whether the generator's last GeneratorNext found the body finished.
 type GeneratorDone struct {
 	Generator Expression

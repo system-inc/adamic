@@ -10,6 +10,10 @@ package javascript
 // shape is marked host (map_set.c), where a plain object would hand out Object as its constructor.
 const iteratorClassRuntime = "class AdamicIterator { constructor(next) { this.next = next; } }\n"
 
-const collectionIteratorRuntime = "const adamicCollectionIterator = (collection, part) => { const iterator = collection[part](); return new AdamicIterator(new AdamicClosure(() => { const step = iterator.next(); if (part === 'entries' && !step.done) adamicTuple(step.value); return step; }, [])); };\n"
+// A collection's iterator is an AdamicCollectionIterator, an AdamicIterator still, so an iterable
+// view's dispatch can tell it from a string's (ir.IsCollectionIterator), as native's
+// adamic_collection_iterator_is does. Only adamicCollectionIterator makes one: the class is the
+// runtime's own, which no program names.
+const collectionIteratorRuntime = "class AdamicCollectionIterator extends AdamicIterator {}\nconst adamicCollectionIterator = (collection, part) => { const iterator = collection[part](); return new AdamicCollectionIterator(new AdamicClosure(() => { const step = iterator.next(); if (part === 'entries' && !step.done) adamicTuple(step.value); return step; }, [])); };\n"
 
 const stringIteratorRuntime = "const adamicStringIterator = string => { const iterator = string[Symbol.iterator](); return new AdamicIterator(new AdamicClosure(() => iterator.next(), [])); };\n"

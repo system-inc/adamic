@@ -61,11 +61,12 @@ S2c-1). The generator crosses into the parameter through `ir.IterableOf`, the on
 generator to an object's slot. The parameter's only use, counted in the lowered program, must be one
 for-of over it, in a function that doesn't suspend, read `arguments`, assign it or let a closure
 capture it. That for-of becomes a dispatch on what the object is at run time: a generator steps by
-its own next, and anything else is a compiler bug that stops the program, naming the site. Every way
-out of the loop finishes the generator, as Node's `return()` does, so a later pass over the same
-parameter finds it done and its frame's cells are let go of at once. A view that a generator and a
-collection's iterator both feed, one fed by generators of two functions, and an `Iterable<string>`
-one fed by a generator stay not yet built.
+its own next, a Map's or a Set's iterator by the collection loop's own step, so one parameter can be
+fed both at different call sites, and anything else is a compiler bug that stops the program, naming
+the site. Every way out of the loop finishes a generator, as Node's `return()` does, so a later pass
+over the same parameter finds it done and its frame's cells are let go of at once; a collection's
+iterator has no `return()` and is left as it is. A view fed by generators of two functions, and an
+`Iterable<string>` one fed by a generator, stay not yet built.
 
 ## How it runs
 

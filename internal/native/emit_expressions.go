@@ -54,6 +54,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("((adamic_object *)%s)", e.value(expression.Value))
 	case ir.IsGenerator:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("(((const adamic_heap *)%s)->kind == adamic_kind_generator)", e.value(expression.Value)))
+	case ir.IsCollectionIterator:
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_collection_iterator_is(%s)", e.value(expression.Value)))
 	case ir.RegExpNew:
 		for _, argument := range expression.Arguments {
 			e.value(argument)

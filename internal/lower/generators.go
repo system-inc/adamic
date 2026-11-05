@@ -405,7 +405,7 @@ func checkGeneratorRoads(program *ir.Program) error {
 	// goes through it; what a view's dispatch holds, no runtime call or field read takes, only its
 	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1).
 	iterables, handed := 0, 0
-	dispatched, stepped, reads := map[int]bool{}, map[int]int{}, map[int]int{}
+	dispatched, stepped, nexts, reads := map[int]bool{}, map[int]int{}, map[int]int{}, map[int]int{}
 	var visit func(value reflect.Value)
 	visit = func(value reflect.Value) {
 		if !value.IsValid() {
@@ -453,9 +453,18 @@ func checkGeneratorRoads(program *ir.Program) error {
 				dispatched[node.Closes-1] = true
 			}
 		case ir.IsGenerator:
-			// The view's dispatch reads what it holds only to test its kind and to step it.
+			// The view's dispatch reads what it holds only to test its kind and to step it: by a
+			// generator's step, or by a collection iterator's, which reads its next.
 			if read, ok := node.Value.(ir.Read); ok && read.Of == ir.Object {
 				stepped[read.Local]++
+			}
+		case ir.IsCollectionIterator:
+			if read, ok := node.Value.(ir.Read); ok && read.Of == ir.Object {
+				stepped[read.Local]++
+			}
+		case ir.Property:
+			if read, ok := node.Object.(ir.Read); ok && read.Of == ir.Object && node.Name == "next" {
+				nexts[read.Local]++
 			}
 		case ir.Read:
 			reads[node.Local]++
@@ -490,8 +499,8 @@ func checkGeneratorRoads(program *ir.Program) error {
 		return fmt.Errorf("lower: compiler bug: %d generators seen as objects where only %d are a call's own argument", iterables, handed)
 	}
 	for local := range dispatched {
-		if reads[local] != stepped[local] {
-			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local])
+		if reads[local] != stepped[local]+nexts[local] {
+			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local]+nexts[local])
 		}
 	}
 	for local, declared := range program.Locals {

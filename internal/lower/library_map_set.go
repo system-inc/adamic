@@ -234,13 +234,21 @@ func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
 func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, item ir.Read, body []ir.Statement) []ir.Statement {
 	held := l.libraryLocal(function, "iterator", ir.Object)
 	step := l.libraryLocal(function, "step", ir.Object)
-	loop := []ir.Statement{
-		ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
-		ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
-		ir.Declare{Local: item.Local, Value: ir.Property{Object: step, Name: "value", Of: item.Of}},
-	}
+	loop, value := libraryIteratorStep(held, step, item.Of)
+	loop = append(loop, ir.Declare{Local: item.Local, Value: value})
 	loop = append(loop, body...)
 	return []ir.Statement{ir.Declare{Local: held.Local, Value: iterator}, ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: loop}}
+}
+
+// libraryIteratorStep is one step of a library iterator held in held: its next called into step, a
+// break when it says done, and the step's value, read as of. libraryIteratorLoop steps by it, and so
+// does an iterable view's dispatch, its collection arm (iterable_views.go), never by a copy of it
+// (Lower's condition 4 on #qk8rztp).
+func libraryIteratorStep(held, step ir.Read, of ir.Type) ([]ir.Statement, ir.Expression) {
+	return []ir.Statement{
+		ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+		ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
+	}, ir.Property{Object: step, Name: "value", Of: of}
 }
 
 func (l *lowering) libraryIteratorArray(node *ast.Node, iterator ir.Expression, element ir.Type) ir.Expression {
