@@ -70,7 +70,11 @@ func TestJSONEncodeRefusals(t *testing.T) {
 		{"undefined", `encodeJson<undefined>(undefined);`, "encodeJson cannot prove"},
 		{"optional_explicit_undefined", `encodeJson<{readonly n?:number|undefined}>({});`, "encodeJson cannot prove"},
 		{"widened_union_slot", `const full={value:42};const view:{readonly value:number|string}=full;encodeJson<{readonly value:number|string}>(view);`, "complete runtime slot metadata"},
-		{"widened_union_array", `const full:readonly number[]=[42];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`, "complete runtime slot metadata"},
+		// A widened array whose elements read as the view holds them, strings read as a union, reaches
+		// encodeJson's own refusal. A number[] widened so stops first, where the view is made, since its
+		// numbers would be read as boxes (element_fit.go, #3vsp1ds).
+		{"widened_union_array", `const full:readonly string[]=['a'];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`, "complete runtime slot metadata"},
+		{"widened_number_array", `const full:readonly number[]=[42];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`, "held as a boxed union"},
 		{"ambiguous_union", `encodeJson<{readonly x:number}|{readonly y:number}>({x:1});`, "encodeJson cannot prove"},
 	}
 	for _, test := range cases {
