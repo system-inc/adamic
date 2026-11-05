@@ -209,19 +209,27 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			}
 		})
 	}
-	// `items == null` is refused before the proof, by the rule against ==; were that lifted, its read
-	// is counted.
-	for _, probe := range []struct{ name, source, reason string }{
-		{"items == null", first(nullable, "if (items == null) { return found; } for (const value of items) { found = value; break; }"), "refuses =="},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
-			}
-		})
+	// A loose test is no undefined test (Adamic's ruling: strict `===` and `!==` against the literal
+	// undefined only, Compiler's must). `== null`, `!= null` and `== undefined` are each refused before
+	// the proof, by the rule against == and != (refusals.go's operatorRefusal), which refuse runs on
+	// every module whatever its extension, so a .ts program is refused as a .a one is. Only a
+	// placeholder slot's own null test is let through there, and a parameter is no placeholder. Were
+	// the rule lifted, a loose null test lowers to IsNull, counted as a read.
+	for _, extension := range []string{".a", ".ts"} {
+		for _, probe := range []struct{ name, source, reason string }{
+			{"items == null", first(nullable, "if (items == null) { return found; } for (const value of items) { found = value; break; }"), "refuses ==; use ===, which doesn't coerce"},
+			{"items != null", first(nullable, "if (items != null) { for (const value of items) { found = value; break; } }"), "refuses !=; use !==, which doesn't coerce"},
+			{"items == undefined", first(nullable, "if (items == undefined) { return found; } for (const value of items) { found = value; break; }"), "refuses ==; use ===, which doesn't coerce"},
+		} {
+			t.Run(probe.name+" in "+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, probe.source, extension)
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
+					t.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
+				}
+			})
+		}
 	}
 }
 
