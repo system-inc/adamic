@@ -20,11 +20,23 @@ import (
 // The storage is decided where the value is made, and it's what every slot that holds the value reads,
 // as #fsb6n82 found for a literal's tuple. A union slot is any member the value is assignable to, and
 // narrowing can pick any of them, so every such container member must read the elements as they're
-// stored, not one. Only a value made right there is judged: one lowering builds at a representation it
-// can name. A named container seen through a wider readonly slot is a ruling of its own, not made here.
+// stored, not one. An array literal is judged at the representation lowering built it with. Any other
+// value is judged at its own type, the one it was stored as when it was made, a named one included:
+// invariant-mutable lets a named number[] go where readonly (number | string)[] is held, since that slot
+// can't write, but its reads still worked the numbers as boxes and segfaulted natively, and a
+// Map<string, number> read through ReadonlyMap<string, number | string> printed undefined (#3vsp1ds).
 
 // elementFitDepth bounds elementsSeenAs. A container reached no sooner is judged, so it fails closed.
 const elementFitDepth = 16
+
+// elementFitKey is what elementsSeenAs's answer at the top depends on, the memo's key: the value's
+// type, the slot's, how a literal stored its elements, and whether it's a literal, whose elements are
+// judged at their own sites. The walk reads nothing else, so one answer serves every site of a pair.
+type elementFitKey struct {
+	own, slot *checker.Type
+	built     ir.Type
+	shallow   bool
+}
 
 // elementMismatch is where a container's elements are stored otherwise than a slot reads them: the two
 // element types, or which side Adamic can't name a representation for, or neither when the walk went
@@ -58,12 +70,20 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
-	case !l.freshValue(node):
-		// An object literal's fields are values at their own slots, and a named value isn't made here.
+	case node.Kind == ast.KindObjectLiteralExpression:
+		// An object literal's fields are values at their own slots, each judged there.
 		return ""
 	}
 	own := l.checker.GetTypeAtLocation(node)
-	found := l.elementsSeenAs(own, slot, built, node.Kind == ast.KindArrayLiteralExpression, 0, map[[2]*checker.Type]bool{})
+	key := elementFitKey{own: own, slot: slot, built: built, shallow: node.Kind == ast.KindArrayLiteralExpression}
+	found, answered := l.elementFits[key]
+	if !answered {
+		found = l.elementsSeenAs(own, slot, built, key.shallow, 0, map[[2]*checker.Type]bool{})
+		if l.elementFits == nil {
+			l.elementFits = map[elementFitKey]*elementMismatch{}
+		}
+		l.elementFits[key] = found
+	}
 	if found == nil {
 		return ""
 	}
