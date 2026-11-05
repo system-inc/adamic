@@ -34,6 +34,15 @@ Its call is consumed by one of:
 Each consumer decides by the call's origin, never by the iterator type it is declared to return, so
 a generator declared `SetIterator<T>` is stepped as a generator and never read as a Set's iterator.
 
+A spread, `Array.from`, `new Set` and `new Map` each step the generator to its end and never read
+its last result's value, so a `void` TReturn, what a plain `function*` infers and what tsc's
+`mapIterator` declares, is never read there: the void rules let the call through when it is a
+direct call to a generator this compiler lowers, the consumer's one argument (for the constructors,
+the library's own `Map` and `Set`, judged by symbol, never a user class of that name or a subclass),
+and what it yields holds no `void` at any depth, neither element of a pair included (rulings.md's
+void-container classifier, as Adamic ruled on #qk8rztp; `generatorStepped`). Anything else that
+reaches the TReturn, a stored generator among them, stays judged by the void rules.
+
 ## How it runs
 
 - **The frame.** The call makes an `adamic_generator` (runtime/generator.h): a code record naming
@@ -101,8 +110,8 @@ async generator, rule 2400, among them).
 - **Destructuring a generator's call, and an `Array.from` mapper.** Destructuring takes only the
   steps its pattern asks and must close the rest; the mapper waits for the same value form. `new
   Map` of a call whose yield isn't one `[key, value]` tuple, or whose pairs are held otherwise than
-  the Map's, stops in the words `new Map` gives any other such source, and so does `new Map` or `new Set` of a generator that isn't a
-  direct call. Destructuring a plain `function*` is refused before that,
+  the Map's, stops in the words `new Map` gives any other such source, and so does `new Map` or
+  `new Set` of a generator that isn't a direct call. Destructuring a plain `function*` is refused before that,
   by adamic/no-void-read, which reads its `void` last value as a void position.
 - **A generator expression, a method, a nested declaration.** A nested generator captures its
   parent's frame, which needs a canonical environment a generator's cells can be; a method needs

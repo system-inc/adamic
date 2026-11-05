@@ -451,14 +451,18 @@ func (l *lowering) generatorPairTypes(source *ast.Node) (ir.Type, ir.Type, bool)
 	return key, value, keyKnown && valueKnown
 }
 
-// generatorStepped is a direct call to a generator this slice lowers that a spread or Array.from
-// consumes. Both step it to its end and never read its last result's value, so a TReturn of void,
-// what a plain function* infers, is never read there, and the void rules (adamic/no-void-read,
-// no-void-widening) have nothing to refuse in it. It holds only when the yielded type holds no void:
-// every value a step hands over is read. It is syntactic, since the refusal walk runs before any
-// function is lowered. It applies rulings.md's void-container classifier (judged by expression) to a
-// generator, as Adamic confirmed on #qk8rztp. cohere's gate never refused these programs: it has no
-// twin of no-void-read, and its no-void-widening judges function-type relations (#z7zv50g).
+// generatorStepped is a direct call to a generator this slice lowers that a stepping consumer
+// consumes: a spread, Array.from, new Map or new Set (steppedSite). Each steps it to its end and
+// never reads its last result's value, so a TReturn of void, what a plain function* infers and what
+// tsc's mapIterator declares, is never read there, and the void rules (adamic/no-void-read,
+// no-void-widening) have nothing to refuse in it. It holds only when the yielded type holds no void
+// at any depth (for new Map, neither element of the pair): every value a step hands over is read. A
+// stored generator, a user iterable or an iterator object is no direct call, and stays judged. It
+// is syntactic, since the refusal walk runs before any function is lowered. It applies rulings.md's
+// void-container classifier (judged by expression) to a generator, as Adamic ruled on #qk8rztp, for
+// spread and Array.from (S1c) and for new Map and new Set (S2b-1c). cohere's gate never refused the
+// S1c programs: it has no twin of no-void-read, and its no-void-widening judges function-type
+// relations (#z7zv50g).
 func (l *lowering) generatorStepped(node *ast.Node) bool {
 	if node.Kind != ast.KindCallExpression {
 		return false
@@ -471,6 +475,23 @@ func (l *lowering) generatorStepped(node *ast.Node) bool {
 	if symbol == nil || len(symbol.Declarations) != 1 || !loweredGenerator(symbol.Declarations[0]) {
 		return false
 	}
+	if !l.steppedSite(node) {
+		return false
+	}
+	returns := l.checker.GetTypeAtLocation(node)
+	if !l.isLibraryType(returns, "Generator") {
+		return false
+	}
+	arguments := l.checker.GetTypeArguments(returns)
+	return len(arguments) == 3 && !l.isVoidValue(arguments[0]) && !l.holdsVoid(arguments[0])
+}
+
+// steppedSite reports whether node, parentheses aside, stands where a consumer steps it to its end:
+// an array literal's spread, the one argument of the library's Array.from, or the one argument of
+// the library's new Map or new Set. The constructors are judged by the built-in's symbol, never by
+// the name, so a user class called Map, or a subclass of the built-in, isn't one (Language, on
+// #qk8rztp): a subclass's set is program code a step can run.
+func (l *lowering) steppedSite(node *ast.Node) bool {
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent
@@ -480,16 +501,19 @@ func (l *lowering) generatorStepped(node *ast.Node) bool {
 	case parent == nil:
 		return false
 	case parent.Kind == ast.KindSpreadElement && parent.Parent != nil && parent.Parent.Kind == ast.KindArrayLiteralExpression:
+		return true
 	case parent.Kind == ast.KindCallExpression && l.arrayFromCall(parent) && len(parent.AsCallExpression().Arguments.Nodes) == 1 && parent.AsCallExpression().Arguments.Nodes[0] == site:
-	default:
-		return false
+		return true
+	case parent.Kind == ast.KindNewExpression && l.collectionConstructor(parent) && parent.AsNewExpression().Arguments != nil && len(parent.AsNewExpression().Arguments.Nodes) == 1 && parent.AsNewExpression().Arguments.Nodes[0] == site:
+		return true
 	}
-	returns := l.checker.GetTypeAtLocation(node)
-	if !l.isLibraryType(returns, "Generator") {
-		return false
-	}
-	arguments := l.checker.GetTypeArguments(returns)
-	return len(arguments) == 3 && !l.isVoidValue(arguments[0]) && !l.holdsVoid(arguments[0])
+	return false
+}
+
+// collectionConstructor is new Map or new Set, the library's own.
+func (l *lowering) collectionConstructor(created *ast.Node) bool {
+	callee := ast.SkipParentheses(created.AsNewExpression().Expression)
+	return l.isLibraryGlobal(callee, "Map") || l.isLibraryGlobal(callee, "Set")
 }
 
 // arrayFromCall is a call of the library's Array.from.
