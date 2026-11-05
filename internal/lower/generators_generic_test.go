@@ -62,8 +62,8 @@ each([3]);`)
 
 // A generic generator's instance takes every road a non-generic one's call takes, and stops on each
 // that isn't a consumer exactly as that one does: stored, passed, returned, put in an array, read
-// through a view or as a value, new Set, new Map, destructuring, a mapper, an optional or spread
-// call, a consumer inside a generator. An instance whose yielded type isn't held in one present
+// through a view or as a value, destructuring, a mapper, an optional or spread call, a consumer
+// inside a generator. new Set and new Map of one are consumers (generators_collections_test.go). An instance whose yielded type isn't held in one present
 // slot, a union or unknown (an unread instance), stops at its declaration. Each row's reason is a
 // word of its stop. Mutant: call()'s generator guard at the generic branch taken out; the five
 // value rows stop for other reasons or reach checkGeneratorRoads' compiler bug, and go red.
@@ -80,7 +80,6 @@ func TestGenericGeneratorRoadsAreNotYet(t *testing.T) {
 		{"read through a view", each + "const view: Iterable<number> = each([2]); for (const value of view) { console.log(String(value)); }", "used other than by a for-of"},
 		{"the function as a value", each + "const make = each; for (const value of make([2])) { console.log(String(value)); }", "used as a value"},
 		{"Array.from with a mapper", each + "console.log(Array.from(each([3]), (value: number): number => value * 2).join(','));", "Array.from with a mapper"},
-		{"new Set", each + "console.log(String(new Set(each([3])).size));", "consumed by new Set"},
 		{"destructured", each + "const [first] = each([3]); console.log(String(first));", "consumed by destructuring"},
 		{"called optionally", each + "for (const value of each?.([1])) { console.log(String(value)); }", "called optionally"},
 		{"called with a spread argument", each + "const lists: [number[]] = [[1]]; for (const value of each(...lists)) { console.log(String(value)); }", "spread argument"},
