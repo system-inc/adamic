@@ -26,6 +26,9 @@ Its call is consumed by one of:
 - a `for...of` directly over the call, declaring one name with `const` or `let`;
 - a spread of the call in an array literal, alone or among other elements;
 - `Array.from` of the call, with no mapper;
+- `new Set` of the call, its only argument, each value added in order;
+- `new Map` of the call, its only argument, when what it yields is a `[key, value]` tuple of two
+  required elements held as the Map's keys and values, each pair set in order;
 - the call as a statement, which makes the generator and drops it, running none of the body.
 
 Each consumer decides by the call's origin, never by the iterator type it is declared to return, so
@@ -50,7 +53,10 @@ a generator declared `SetIterator<T>` is stepped as a generator and never read a
   it reads done: a throw out of the body finishes the frame, so done would read true. The for-of's
   block holds the generator, so every way out of the loop (exhaustion, `break`, `continue` or a
   labeled jump to an outer loop, `return`, a throw from the body or the loop) lets go of it once.
-  A spread or `Array.from` steps it in a helper made for the call site, whose local holds it.
+  A spread, `Array.from`, `new Set` or `new Map` steps it in a helper made for the call site, whose
+  local holds it; the Set or the Map is made from the values the helper collected. Node's
+  constructors add each value before the next step, which is the same, since nothing can reach the
+  Set or the Map before it's returned, and adding to a fresh one can't throw.
 
 ## The frame's rules
 
@@ -92,9 +98,11 @@ async generator, rule 2400, among them).
   put in an array or a field, read through a view, or the generator function used as a value. A
   generator object as a value needs `next`, `return` and `throw` as methods, a result object, a
   retain around each step, and the cycle finder seeing its cells as slots.
-- **Destructuring a generator's call, `new Set` or `new Map` of one, and an `Array.from` mapper.**
-  Destructuring takes only the steps its pattern asks and must close the rest; the constructors and
-  the mapper wait for the same value form. Destructuring a plain `function*` is refused before that,
+- **Destructuring a generator's call, and an `Array.from` mapper.** Destructuring takes only the
+  steps its pattern asks and must close the rest; the mapper waits for the same value form. `new
+  Map` of a call whose yield isn't one `[key, value]` tuple, or whose pairs are held otherwise than
+  the Map's, stops in those words, and so does `new Map` or `new Set` of a generator that isn't a
+  direct call. Destructuring a plain `function*` is refused before that,
   by adamic/no-void-read, which reads its `void` last value as a void position.
 - **A generator expression, a method, a nested declaration.** A nested generator captures its
   parent's frame, which needs a canonical environment a generator's cells can be; a method needs

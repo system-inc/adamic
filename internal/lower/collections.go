@@ -29,7 +29,7 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 	// A call to a program's generator is collected as the generator it is, before any reading of its
 	// declared iterator type (#qk8rztp, Compiler's risk 2). Collecting steps it to its end, which is
 	// right only for a consumer that reads every value: an array literal's spread (object.go) is one,
-	// and new Map and new Set, which could stop early, stop a generator before they reach here.
+	// and so are new Map (newMapFromGenerator) and new Set, which take every value a generator gives.
 	if function, isGenerator, err := l.generatorCallee(node); err != nil {
 		return nil, 0, err
 	} else if isGenerator {
@@ -132,13 +132,20 @@ func (l *lowering) collectionPart(node *ast.Node, receiver *ast.Node, part strin
 // another Map, or map.entries(). Each pair's key and value must be held as the Map holds its own, or
 // a number would land where number | undefined goes without becoming the pair, so they're checked.
 func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, value ir.Type) (ir.Expression, error) {
+	// A call to a program's generator is read by its origin, before its declared iterator type can
+	// route it as a collection's (#qk8rztp).
+	if function, isGenerator, err := l.generatorCallee(source); err != nil {
+		return nil, err
+	} else if isGenerator {
+		return l.newMapFromGenerator(source, function, key, value)
+	}
 	if sourceType := l.checker.GetTypeAtLocation(ast.SkipParentheses(source)); sourceType.Flags()&checker.TypeFlagsUnion != 0 && l.checker.GetNonNullableType(sourceType) != sourceType && l.arrayOrUndefined(sourceType) {
 		return l.newMapFromOptional(source, sourceType, key, value)
 	}
 	pairKey, pairValue, isKnown := l.pairTypes(source)
 	if !isKnown {
-		// A generator's pairs are pairs, but a generator function isn't built yet (docs/user-iterators.md),
-		// so walking one waits on generators, not on this constructor.
+		// A Generator that isn't a direct call to a program's generator, one stored or passed, waits on
+		// generators as values (#qk8rztp S2), not on this constructor.
 		if l.isLibraryType(l.checker.GetTypeAtLocation(ast.SkipParentheses(source)), "Generator") {
 			return nil, l.notYet(source, "new Map from a generator's pairs")
 		}
@@ -146,11 +153,6 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	}
 	if pairKey != key || pairValue != value {
 		return nil, l.notYet(source, "new Map from pairs held otherwise than the Map's keys and values")
-	}
-	if _, isGenerator, err := l.generatorCallee(source); err != nil {
-		return nil, err
-	} else if isGenerator {
-		return nil, l.generatorNotYet(source, "consumed by new Map")
 	}
 	pairs, element, err := l.iterated(source)
 	if err != nil {
