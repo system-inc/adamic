@@ -124,7 +124,8 @@ func TestGeneratorRuntimeDropSuspended(t *testing.T) {
 
 func TestGeneratorRuntimeReturn(t *testing.T) {
 	t.Parallel()
-	generatorRuntimeGuard(t, "return", "1\n", "adamic_generator_finish(generator);\n            break;", "break;", "Assertion")
+	// The finish return runs, retained around it since q3, taken out whole.
+	generatorRuntimeGuard(t, "return", "1\n", "adamic_retain(generator);\n            adamic_generator_finish(generator);\n            adamic_release(generator);\n            break;", "break;", "Assertion")
 }
 
 func TestGeneratorRuntimeKill(t *testing.T) {

@@ -1,8 +1,10 @@
-// tsc's arrayFrom (core.ts:1337-1347, its overloads and all), handed mapDefinedIterator's call as
-// builderState.ts:624 hands it one, with a mapper, so the instance's T and U are both read. The
-// generator crosses into arrayFrom's Iterable<T> parameter through IterableOf, the parameter's one
-// use is its for-of, and that for-of steps the generator by its dispatch (#qk8rztp S2c-1). The
-// generator itself steps a Map's values() through its own view (S2b-1b).
+// tsc's arrayFrom (core.ts:1337-1347), its implementation signature alone, handed
+// mapDefinedIterator's call as builderState.ts:624 hands it one, with a mapper, so the instance's T
+// and U are both read. The generator crosses into arrayFrom's Iterable<T> parameter through
+// IterableOf, the parameter's one use is its for-of, and that for-of steps the generator by its
+// dispatch (#qk8rztp S2c-1). The generator itself steps a Map's values() through its own view
+// (S2b-1b). tsc's overload set itself is refused by Adamic's overload-covariance rule: overload 1's
+// result U[] can't be served by the implementation's (T | U)[].
 interface SourceFile {
     readonly fileName: string;
     readonly emitted: boolean;
@@ -12,10 +14,6 @@ interface SourceFile {
  *
  * @internal
  */
-export function arrayFrom<T, U>(iterator: Iterable<T>, map: (t: T) => U): U[];
-/** @internal */
-export function arrayFrom<T>(iterator: Iterable<T>): T[];
-/** @internal */
 export function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
     const result: (T | U)[] = [];
     for (const value of iterator) {

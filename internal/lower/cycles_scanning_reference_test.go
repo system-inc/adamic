@@ -1717,6 +1717,12 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 		return nil, err
 	}
 	lowering.finishToPrimitive()
+	// As lowerCheckedWithCycleTypes does, before exceptions: a view a generator feeds is rewritten
+	// into its dispatch there, interning the dispatch's panic message, so both modes' IR and string
+	// tables agree (#qk8rztp S2c-1).
+	if err := lowering.checkIterableViews(); err != nil {
+		return nil, err
+	}
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
