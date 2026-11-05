@@ -1,4 +1,4 @@
-interface Options { target?: number; extra?: number; required: number; }
+interface Options { target?: number; required: number; [option: string]: number | undefined; }
 function drop(options: Options, key: 'target' | 'extra'): void { delete options[key]; }
 const options: Options = { target: 7, required: 4, extra: 9 };
 drop(options, 'extra');

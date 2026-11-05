@@ -297,8 +297,7 @@ const nullishObservationDepth = 32
 
 // nullishObservationOf walks the read's flow straight back to the place it was last seen holding the
 // narrowed value: a plain assignment of it, a delete of it, or a check that proves it holds exactly that
-// nullish unit (=== null, !== undefined on its false side, == null for undefined or null, typeof x ===
-// 'undefined'). A condition that doesn't mention it, a call, which codeBetween judges, and a join
+// nullish unit (=== null, !== undefined on its false side, typeof x === 'undefined'). A condition that doesn't mention it, a call, which codeBetween judges, and a join
 // whose every way in reaches the same observation (an optional chain's) are walked through. A loop, a
 // label of any other kind, a write of what holds the read, another test of it or the start of a
 // function ends the walk with none, since the value there isn't the one seen.
@@ -365,27 +364,24 @@ func (l *lowering) nullishObservationAlong(read *ast.Node, absent string, flow *
 }
 
 // nullishCheck is the reference a condition reads when, on the side flow takes, it proves the
-// reference holds exactly absent: x === null or x == undefined when true, x !== undefined or x != null
-// when false, and typeof x === 'undefined' the same way. Nil for any other condition.
+// reference holds exactly absent: x === null or x === undefined when true, x !== null or x !== undefined
+// when false, and typeof x === 'undefined' the same way. Nil for any other condition (== is refused).
 func (l *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNode) *ast.Node {
 	condition := ast.SkipParentheses(flow.Node)
 	if condition.Kind != ast.KindBinaryExpression {
 		return nil
 	}
 	binary := condition.AsBinaryExpression()
-	strict, equal := false, false
 	switch binary.OperatorToken.Kind {
 	case ast.KindEqualsEqualsEqualsToken:
-		strict, equal = true, true
+		if flow.Flags&ast.FlowFlagsTrueCondition == 0 {
+			return nil
+		}
 	case ast.KindExclamationEqualsEqualsToken:
-		strict = true
-	case ast.KindEqualsEqualsToken:
-		equal = true
-	case ast.KindExclamationEqualsToken:
+		if flow.Flags&ast.FlowFlagsTrueCondition != 0 {
+			return nil
+		}
 	default:
-		return nil
-	}
-	if equal != (flow.Flags&ast.FlowFlagsTrueCondition != 0) {
 		return nil
 	}
 	for _, sides := range [][2]*ast.Node{{binary.Left, binary.Right}, {binary.Right, binary.Left}} {
@@ -393,17 +389,11 @@ func (l *lowering) nullishCheck(read *ast.Node, absent string, flow *ast.FlowNod
 		var proves string
 		switch {
 		case reference.Kind == ast.KindTypeOfExpression && (other.Kind == ast.KindStringLiteral || other.Kind == ast.KindNoSubstitutionTemplateLiteral) && other.Text() == "undefined":
-			// typeof gives a string, so == and === test it alike.
 			reference, proves = ast.SkipParentheses(reference.AsTypeOfExpression().Expression), "undefined"
-		case other.Kind == ast.KindNullKeyword || other.Kind == ast.KindIdentifier && other.Text() == "undefined" && l.checker.GetTypeAtLocation(other).Flags() == checker.TypeFlagsUndefined:
-			switch {
-			case !strict:
-				proves = "undefined or null" // == null holds for undefined too, and == undefined for null.
-			case other.Kind == ast.KindNullKeyword:
-				proves = "null"
-			default:
-				proves = "undefined"
-			}
+		case other.Kind == ast.KindNullKeyword:
+			proves = "null"
+		case other.Kind == ast.KindIdentifier && other.Text() == "undefined" && l.checker.GetTypeAtLocation(other).Flags() == checker.TypeFlagsUndefined:
+			proves = "undefined"
 		default:
 			continue
 		}

@@ -1,8 +1,8 @@
 class B {
-	get x(): number | undefined {
-		return 4;
+	get x(): string | undefined {
+		return 'four';
 	}
-	set x(value: number | undefined) {}
+	set x(value: string | undefined) {}
 }
 const b = new B();
 b.x = undefined;

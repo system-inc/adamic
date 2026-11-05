@@ -51,17 +51,18 @@ import (
 // weak_parent.a), a method call between, in a function only the module's top level calls, whose own
 // earlier writes can't run again (c12, class_oct6_subclass_holder.a), and a library push between, after
 // an element's assignment (c13, scout_nullable_strings.a). Their negatives stop: a check followed by a
-// call in the same condition that writes the name (f13), a loose == null check, which doesn't prove the
-// undefined the read is narrowed to (f14), a write two direct calls away (f15), a write in the read's own
-// function entered again through a method (f16), and a push after a delete, which can write that index
-// (f17).
+// call in the same condition that writes the name (f13), a check that proves less than the narrowing,
+// `!== null` over a read narrowed to undefined (f14), a write two direct calls away (f15), a write in the
+// read's own function entered again through a method (f16), and a push after a check of an index, which
+// can write that index (f17). (== is refused, and so is a delete on a fixed object or an array, so f08
+// and c09 delete from a record.)
 // Mutants: narrowedNullishReadGap's binding test forced to let every binding through, and every binding
 // stop here lowers instead, printing undefined where Node prints 4. assignedJustBefore forced to answer
 // no, and c05 stops. passedAtDeclaredType's parameter test dropped, and n17 lowers. The property rule's
 // stop forced off, and f01 to f10 lower; the write that could reach any name ignored, and f05 and f06
 // lower; code between the property's assignment and its read always assumed, and c04 stops; the getter
 // test (accessorName) dropped, and f11 and f12 lower; reach taken as nothing, and f15 and f16 lower;
-// calledOnlyFromTopLevel answering yes, and f16 lowers; the push exemption kept after a delete, and f17
+// calledOnlyFromTopLevel answering yes, and f16 lowers; the push exemption kept after a check, and f17
 // lowers.
 func TestNarrowedToNullishReadsArePinned(t *testing.T) {
 	t.Parallel()
@@ -113,7 +114,7 @@ func TestNarrowedToNullishReadsArePinned(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 92 {
-		t.Fatalf("found %d programs, want 92", programs)
+	if programs != 96 {
+		t.Fatalf("found %d programs, want 96", programs)
 	}
 }
