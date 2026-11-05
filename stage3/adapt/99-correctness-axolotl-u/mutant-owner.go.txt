@@ -1,0 +1,93 @@
+// Measurement-only direct owner control. Build with the meter's no-output overlay.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+)
+
+func main() {
+	project := flag.String("project", "", "complete compiler source directory")
+	where := flag.String("where", "", "restored call position")
+	flag.Parse()
+	if *project == "" || *where == "" {
+		panic("project and where required")
+	}
+	if err := os.Setenv("LATENT_FULL", "1"); err != nil {
+		panic(err)
+	}
+	var paths []string
+	err := filepath.WalkDir(*project, func(path string, entry os.DirEntry, failure error) error {
+		if failure != nil {
+			return failure
+		}
+		if !entry.IsDir() && filepath.Ext(path) == ".ts" {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(paths)
+	if len(paths) != 79 {
+		panic("expected all 79 compiler roots")
+	}
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		panic(err)
+	}
+	diagnostics := program.LatentDiagnostics()
+	if len(diagnostics) != 0 {
+		panic(fmt.Sprint(diagnostics))
+	}
+	output, failure := lower.Lower(context.Background(), program)
+	if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+		panic("usable IR escaped")
+	}
+	exposed, failure := load.Load(paths)
+	if exposed != nil || failure == nil {
+		panic("ordinary loader exposed a program")
+	}
+	// Replay selects the exact owner. Its ordinary signature check cannot match a
+	// dependency-located NotYet at the caller coordinate, so validate the complete
+	// trace instead: the caller Boundary must carry exactly that NotYet's text.
+	record, selectionError := lower.LatentReplay(context.Background(), program, *where, "NotYet", "direct owner trace selection")
+	if len(record.Units) != 1 || record.Units[0].Status != "attempted" {
+		panic("owner not attempted")
+	}
+	var root *lower.LatentFinding
+	for _, site := range record.Findings {
+		if site.Kind != "Boundary" || site.Where != *where {
+			continue
+		}
+		for _, finding := range record.Findings {
+			if finding.Kind == "NotYet" && finding.Unit == site.Unit && finding.Text == site.Text {
+				copy := finding
+				root = &copy
+			}
+		}
+	}
+	if root == nil {
+		panic("restored call did not fail through NotYet")
+	}
+	summary := map[string]any{
+		"roots": len(paths), "checker_diagnostics": len(diagnostics),
+		"restored_call": *where, "restored_call_failed": true,
+		"root_kind": root.Kind, "root_where": root.Where, "root_reason": root.Reason,
+		"root_is_dependency_located": root.Where != *where,
+		"trace":                      record, "selection_error": fmt.Sprint(selectionError),
+		"no_output_guards_passed": true,
+	}
+	if err := json.NewEncoder(os.Stdout).Encode(summary); err != nil {
+		panic(err)
+	}
+}

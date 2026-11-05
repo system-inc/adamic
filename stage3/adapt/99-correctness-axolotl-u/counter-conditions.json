@@ -1,0 +1,90 @@
+[
+  {
+    "id": "G01",
+    "owner": "isPrimitiveLiteralValue",
+    "file": "utilities.ts",
+    "condition": "isPrefixUnaryExpression(node)",
+    "following": "if (node.operator === SyntaxKind.MinusToken) {",
+    "kind": "PrefixUnaryExpression"
+  },
+  {
+    "id": "G02",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isGetAccessor(node) || isSetAccessor(node)",
+    "following": "return createAccessorTypeError(node);",
+    "kind": "isGetAccessor"
+  },
+  {
+    "id": "G03",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isComputedPropertyName(node) || isShorthandPropertyAssignment(node) || isSpreadAssignment(node)",
+    "following": "return createObjectLiteralError(node);",
+    "kind": "isComputedPropertyName"
+  },
+  {
+    "id": "G04",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isArrayLiteralExpression(node) || isSpreadElement(node)",
+    "following": "return createArrayLiteralError(node);",
+    "kind": "isArrayLiteralExpression"
+  },
+  {
+    "id": "G05",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isMethodDeclaration(node) || isConstructSignatureDeclaration(node) || isFunctionExpression(node) || isArrowFunction(node) || isFunctionDeclaration(node)",
+    "following": "return createReturnTypeError(node);",
+    "kind": "isMethodDeclaration"
+  },
+  {
+    "id": "G06",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isBindingElement(node)",
+    "following": "return createBindingElementError(node);",
+    "kind": "isBindingElement"
+  },
+  {
+    "id": "G07",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isPropertyDeclaration(node) || isVariableDeclaration(node)",
+    "following": "return createVariableOrPropertyError(node);",
+    "kind": "isPropertyDeclaration"
+  },
+  {
+    "id": "G08",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isParameter(node)",
+    "following": "return createParameterError(node);",
+    "kind": "isParameter"
+  },
+  {
+    "id": "G09",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isPropertyAssignment(node)",
+    "following": "return createExpressionError(node.initializer);",
+    "kind": "isPropertyAssignment"
+  },
+  {
+    "id": "G10",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isClassExpression(node)",
+    "following": "return createClassExpressionError(node);",
+    "kind": "isClassExpression"
+  },
+  {
+    "id": "G11",
+    "owner": "getDiagnostic",
+    "file": "transformers/declarations/diagnostics.ts",
+    "condition": "isExpression(node)",
+    "following": "return createExpressionError(node);",
+    "kind": "default"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "base": "31d7a244808fa8092643926d21ab9d310a54cce3",
+  "results": [
+    {
+      "side": "before",
+      "file": "utilities.ts",
+      "first": {
+        "roots": [
+          "/workspace/scratch/99u-final31-main/src/compiler/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/99u-final31-main/src/compiler/core.ts:736:36",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 9.839531582
+      }
+    },
+    {
+      "side": "before",
+      "file": "transformers/declarations/diagnostics.ts",
+      "first": {
+        "roots": [
+          "/workspace/scratch/99u-final31-main/src/compiler/transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/99u-final31-main/src/compiler/core.ts:736:36",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 9.664270188
+      }
+    },
+    {
+      "side": "after",
+      "file": "utilities.ts",
+      "first": {
+        "roots": [
+          "/workspace/scratch/99u-final31/src/compiler/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/99u-final31/src/compiler/core.ts:736:36",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 9.897438656
+      }
+    },
+    {
+      "side": "after",
+      "file": "transformers/declarations/diagnostics.ts",
+      "first": {
+        "roots": [
+          "/workspace/scratch/99u-final31/src/compiler/transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/99u-final31/src/compiler/core.ts:736:36",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 9.550819055
+      }
+    }
+  ]
+}

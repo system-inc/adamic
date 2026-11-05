@@ -1,0 +1,28 @@
+{
+  "oracleBase": "31d7a244808fa8092643926d21ab9d310a54cce3",
+  "landingBase": "9a56f1c0760b444f1de85ccb4d44a9713a5d4d1e",
+  "changedFiles": [
+    "docs/generators.md",
+    "docs/rulings.md",
+    "internal/flow/writes_test.go",
+    "internal/fresh/fresh.go",
+    "internal/ir/generator.go",
+    "internal/ir/gob_types_generated.go",
+    "internal/javascript/javascript.go",
+    "internal/javascript/library_map_set.go",
+    "internal/lower/generators.go",
+    "internal/lower/iterable_generators_test.go",
+    "internal/lower/iterable_views.go",
+    "internal/lower/library_map_set.go",
+    "internal/lower/view_reads.go",
+    "internal/lower/view_reads_test.go",
+    "internal/native/emit_expressions.go",
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/map_set.c",
+    "internal/oracle/generators_test.go",
+    "internal/oracle/testdata/generators/mutants.md",
+    "internal/oracle/testdata/generators/view_counted_items.a",
+    "internal/oracle/testdata/generators/view_mixed.a"
+  ],
+  "stage3AdaptationsAndOracleHarnessUnchanged": true
+}
