@@ -1017,7 +1017,18 @@ func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
 			continue
 		}
 		if !slices.Equal(set.Parts, unset.Parts) || !slices.Equal(set.Portable, unset.Portable) || set.Compiler != unset.Compiler || set.Archiver != unset.Archiver || set.Options != unset.Options {
-			t.Errorf("%s: the variable set moved the request from\n%s\nto\n%s", variant.Name, strings.Join(unset.Parts, "\n"), strings.Join(set.Parts, "\n"))
+			var moved []string
+			for _, part := range unset.Parts {
+				if !slices.Contains(set.Parts, part) {
+					moved = append(moved, "unset alone: "+part)
+				}
+			}
+			for _, part := range set.Parts {
+				if !slices.Contains(unset.Parts, part) {
+					moved = append(moved, "set alone: "+part)
+				}
+			}
+			t.Errorf("%s: the variable set moved the request (compiler %s, then %s; options %+v, then %+v):\n%s", variant.Name, unset.Compiler, set.Compiler, unset.Options, set.Options, strings.Join(moved, "\n"))
 		}
 	}
 	if refused == 0 {
