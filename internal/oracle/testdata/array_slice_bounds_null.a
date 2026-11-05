@@ -1,0 +1,2 @@
+function range(a: readonly number[], to: number | null) { return a.slice(0, to); }
+console.log(range([1, 2, 3], null).join(','));
