@@ -1,0 +1,106 @@
+// Each way of making a string past V8's longest (536,870,888 UTF-16 units) throws Node's RangeError,
+// "Invalid string length", and a catch takes it: its name and its message are two fields, printed
+// apart. half is 2^28 units, so half joined to itself is 24 units over and is refused before it's
+// built; repeat and pad are refused before anything is. The step written into each line is a string
+// made at run time, let go on the way to the catch, so the leak check holds it.
+const half = 'ab'.repeat(2 ** 27);
+console.log(half.length);
+let step = 0;
+
+step = step + 1;
+try {
+	console.log(`${step} concat: ${(half + half).length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} template: ${`${half}${half}`.length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} join: ${[half, half].join('').length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} repeat: ${'ab'.repeat(268435456).length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} padStart: ${'a'.padStart(536870889, 'xy').length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} padEnd: ${'a'.padEnd(Infinity, 'xy').length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+step = step + 1;
+try {
+	console.log(`${step} replaceAll: ${'aa'.replaceAll('a', half).length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+// One FDFA above the largest repeat whose eighteen-unit compatibility expansion fits: refused once
+// it's measured, before the result is allocated.
+step = step + 1;
+try {
+	console.log(`${step} normalize: ${'ﷺ'.repeat(29826161).normalize('NFKD').length}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+
+// text = text + more throws before text is written, so text holds what it held.
+function grown(): number {
+	let text = half;
+	try {
+		text = text + half;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	}
+	return text.length;
+}
+console.log(grown());
+console.log('done');

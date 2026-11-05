@@ -58,5 +58,8 @@ func (e *emitter) jsonStringify(expression ir.JSONStringify) string {
 	}
 	replacerSchema := e.jsonSchema(expression.ReplacerSchema)
 	spaceSchema := e.jsonSchema(expression.SpaceSchema)
-	return e.own(ir.String, fmt.Sprintf("adamic_json_stringify(%s, %s, %s, %s, %s, %s)", first, schema, replacer, replacerSchema, space, spaceSchema))
+	result := e.own(ir.String, fmt.Sprintf("adamic_json_stringify(%s, %s, %s, %s, %s, %s)", first, schema, replacer, replacerSchema, space, spaceSchema))
+	// Past V8's longest, a RangeError is pending and the result empty, let go with the rest.
+	e.checkThrown()
+	return result
 }
