@@ -3290,6 +3290,62 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 	}
 }
 
+// A runtime archive's settled key moves with every package runtimeproducts imports, and never with a package of the tree
+// outside its import closure (Node's must 1 on #gr5y0yf item 1): its lean recipe is derived from the caller's imports
+// as the build settles (leanRecipeOf), never named. In a tree of its own, runtimeproducts imports internal/native, which
+// imports internal/ir, and internal/lower sits beside them, imported by none: an edit of native or of ir, or a file added
+// to ir, moves the key, and an edit of lower leaves it. Mutants that each fail it: the caller listed without what it
+// links; the caller's lean recipe swapped for buildcache's own.
+// Not parallel: newRig, and it replaces leanRecipeFor.
+func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
+	caller := modulePath + "/internal/native/runtimeproducts"
+	tree := map[string]string{
+		"internal/buildcache/buildcache.go":                  "package buildcache\n",
+		"internal/native/runtimeproducts/runtimeproducts.go": "package runtimeproducts\n\nimport _ \"github.com/system-inc/adamic/internal/native\"\n",
+		"internal/native/native.go":                          "package native\n\nimport _ \"github.com/system-inc/adamic/internal/ir\"\n",
+		"internal/ir/ir.go":                                  "package ir\n",
+		"internal/lower/lower.go":                            "package lower\n",
+	}
+	settled := func(edited map[string]string) string {
+		t.Helper()
+		r := newRig(t)
+		leanRecipeFor = leanRecipeOf
+		for name, content := range tree {
+			write(t, r.root, name, content)
+		}
+		for name, content := range edited {
+			write(t, r.root, name, content)
+		}
+		gitIn(t, r.root, "add", ".")
+		gitIn(t, r.root, "commit", "-q", "-m", "packages")
+		forgetTracked()
+		product(t, port, building("built"), &leanBuild{caller: caller})
+		build := r.built(t)["port"]
+		r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
+		settlement := r.settle(t)
+		for _, report := range settlement.Reports {
+			if report.Outcome == ReportSettled && report.Lean {
+				return report.Key
+			}
+		}
+		t.Fatalf("no lean settlement: settled %q, refused %q", settlement.Settled, settlement.Refused)
+		return ""
+	}
+	base := settled(nil)
+	for name, edited := range map[string]map[string]string{
+		"an edit of internal/native, which runtimeproducts imports": {"internal/native/native.go": tree["internal/native/native.go"] + "\nconst Edited = 1\n"},
+		"an edit of internal/ir, which internal/native imports":     {"internal/ir/ir.go": "package ir\n\nconst Edited = 1\n"},
+		"an empty file added to internal/ir":                        {"internal/ir/added.go": "package ir\n"},
+	} {
+		if key := settled(edited); key == base {
+			t.Errorf("%s left the archive's key at %s", name, base[:12])
+		}
+	}
+	if key := settled(map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"}); key != base {
+		t.Errorf("an edit of internal/lower, outside runtimeproducts' import closure, moved the archive's key from %s to %s", base[:12], key[:12])
+	}
+}
+
 // A lean caller opens the lean recipe to its builds only by naming its census (#gr5y0yf item 1, Node's condition 1), and
 // a census it names is a test its package's test binary runs on the line: a top-level func Test<Name>(t *testing.T) in
 // a _test.go file of that package, one go builds for linux/amd64. An entry naming none fails closed, to the whole recipe
@@ -3380,11 +3436,12 @@ func censusMissing(root string, census leanCensus) string {
 }
 
 // A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the tree
-// it links, each by every non-test file, and a lean caller's own package, never what the caller links. So a runtime
-// archive keys runtimeproducts, internal/toolchain and buildcache's gobuild.go (goProduct's closure and
-// withOutsideHeaders, which run a go build) and no file of the compiler, where the settling binary's whole recipe keys
-// the compiler's. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no package
-// is refused, as recipeOf refuses it. Mutants that each fail it: the caller listed with what it links; buildcache keyed
+// it links, each by every non-test file, and a lean caller's package with its whole import closure (Node's must 1 on
+// #gr5y0yf item 1). So a runtime archive keys runtimeproducts, internal/toolchain, buildcache's gobuild.go (goProduct's
+// closure and withOutsideHeaders, which run a go build) and every package runtimeproducts links, internal/native, ir and
+// flow among them, and never the settling binary's own: internal/oracle's and internal/lower's files, or a dependency's
+// test files. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no package is
+// refused, as recipeOf refuses it. Mutants that each fail it: the caller listed without what it links; buildcache keyed
 // by its make files alone; the caller left out; the refusal dropped.
 func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 	t.Parallel()
@@ -3411,12 +3468,13 @@ func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 	has := func(listed []string, prefix string) bool {
 		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
 	}
-	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod"} {
+	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod",
+		"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ccjobserver/", "content internal/ir/", "content internal/flow/", "listing internal/ir"} {
 		if !has(lean, want) {
 			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
 		}
 	}
-	for _, unwanted := range []string{"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ir/", "content internal/flow/", "content bridge/", "content internal/buildcache/precise_test.go"} {
+	for _, unwanted := range []string{"content internal/oracle/", "content internal/lower/", "content internal/native/runtimeproducts/census_test.go", "content internal/native/library_test.go", "content internal/buildcache/precise_test.go"} {
 		if has(lean, unwanted) {
 			t.Errorf("a runtime archive's lean recipe holds %q", unwanted)
 		}
