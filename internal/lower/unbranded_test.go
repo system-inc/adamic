@@ -9,7 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-// tsc's four shapes and a mint over a union element, run on Node and through the JavaScript backend, which
+// tsc's four shapes and a mint over a union element from a mixed literal, run on Node and through the JavaScript backend, which
 // must print the same: a branded array's length, elements and methods are its base array's (#gb0fqaa).
 // The native backend is held by the oracle, which has no fixture for these yet (unbranded.mutants.md).
 // Mutant: unbranded returning t; each row stops NotYet at the value.
@@ -29,7 +29,7 @@ created.push(9);
 console.log(String(created.length) + ' ' + created.join(','));
 const sorted = toSorted([3, 1, 2], (a, b) => a - b);
 console.log(String(sorted.length) + ' ' + sorted.join(',') + ' ' + String(sorted[0]));
-const mixed = [0, 1] as unknown as SortedArray<number | string>;
+const mixed = [0, 'one'] as unknown as SortedArray<number | string>;
 mixed.push('two');
 console.log(String(mixed.length) + ' ' + mixed.join(','));
 let total = 0;
@@ -38,6 +38,19 @@ for (const value of sorted) {
 }
 console.log(String(total));
 `, ".ts")
+}
+
+// A literal narrower than the brand's union element, `[0, 1] as unknown as SortedArray<number | string>`,
+// is refused as `const xs: (number | string)[] = [0, 1]` is, now the brand's slot is seen as its base
+// array: before #gb0fqaa it was admitted at the cast and stopped NotYet at its value.
+func TestUnbrandedNarrowLiteralMintIsRefused(t *testing.T) {
+	t.Parallel()
+	const want = "union-typed array built from a narrower literal"
+	_, err := lowerSourceAs(t, brandMintPrelude+"const mixed = [0, 1] as unknown as SortedArray<number | string>;\nconsole.log(String(mixed.length));\n", ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.Error(), want) {
+		t.Fatalf("got %v, want a refusal containing %q", err, want)
+	}
 }
 
 // A mint is the value it mints from: `xs as unknown as SortedArray<number>` declares sorted with a read of
@@ -142,7 +155,7 @@ func TestUnbrandedPresenceIsRefused(t *testing.T) {
 		{"Object.getOwnPropertyNames", sortedValue + "console.log(String(Object.getOwnPropertyNames(sorted).length));\n", sortedMember + " (Object.getOwnPropertyNames)"},
 		{"Object.assign, a source", sortedValue + "console.log(String(Object.assign({}, sorted).length));\n", sortedMember + " (Object.assign)"},
 		{"Object.assign, the target", sortedValue + "console.log(String(Object.assign(sorted, { n: 1 }).n));\n", sortedMember + " (Object.assign)"},
-		{"JSON.stringify", sortedValue + "console.log(JSON.stringify(sorted));\n", sortedMember + " (JSON.stringify)"},
+		{"JSON.stringify", sortedValue + "console.log(String(JSON.stringify(sorted)));\n", sortedMember + " (JSON.stringify)"},
 		{"an object spread", sortedValue + "const copy = { ...sorted };\nconsole.log(String(copy.length));\n", sortedMember + " (an object spread)"},
 		{"an element write, a literal key", sortedValue + "sorted[' __sortedArrayBrand'] = undefined;\nconsole.log(String(sorted.length));\n", sortedMember + " (a write)"},
 		{"an element write, a key not a literal", sortedValue + "const key: ' __sortedArrayBrand' = ' __sortedArrayBrand';\nsorted[key] = undefined;\nconsole.log(String(sorted.length));\n", sortedMember + " (a write)"},
