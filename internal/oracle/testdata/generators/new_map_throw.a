@@ -1,0 +1,21 @@
+// A step that throws, on the third, leaves new Map before any Map is made: the try around it prints
+// the message and nothing of the map, the pairs already collected are let go of, and the same
+// generator, asked for fewer pairs, makes a Map after.
+function* pairs(limit: number): Generator<[string, string], undefined, undefined> {
+    for(let index = 1; index <= limit; index++) {
+        if(index === 3) {
+            throw new Error(`step ${String(index)}`);
+        }
+        yield [`k${String(index)}`, `v${String(index)}`];
+    }
+}
+try {
+    const map = new Map(pairs(5));
+    console.log(`made ${String(map.size)}`);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`caught ${error.message}`);
+    }
+}
+console.log(String(new Map(pairs(2)).size));
