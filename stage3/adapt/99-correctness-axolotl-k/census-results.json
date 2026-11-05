@@ -1,0 +1,1766 @@
+{
+  "roots": 79,
+  "movedPastCore356": 73,
+  "newFirstStops": [
+    {
+      "kind": "Refused",
+      "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+      "count": 73,
+      "locations": [
+        "src/compiler/core.ts:381:26"
+      ],
+      "roots": [
+        "_namespaces/ts.moduleSpecifiers.ts",
+        "_namespaces/ts.performance.ts",
+        "_namespaces/ts.ts",
+        "binder.ts",
+        "builder.ts",
+        "builderPublic.ts",
+        "builderState.ts",
+        "builderStatePublic.ts",
+        "checker.ts",
+        "commandLineParser.ts",
+        "emitter.ts",
+        "executeCommandLine.ts",
+        "expressionToTypeNode.ts",
+        "factory/baseNodeFactory.ts",
+        "factory/emitHelpers.ts",
+        "factory/emitNode.ts",
+        "factory/nodeChildren.ts",
+        "factory/nodeConverters.ts",
+        "factory/nodeFactory.ts",
+        "factory/nodeTests.ts",
+        "factory/parenthesizerRules.ts",
+        "factory/utilities.ts",
+        "factory/utilitiesPublic.ts",
+        "moduleNameResolver.ts",
+        "moduleSpecifiers.ts",
+        "parser.ts",
+        "path.ts",
+        "performance.ts",
+        "performanceCore.ts",
+        "program.ts",
+        "programDiagnostics.ts",
+        "resolutionCache.ts",
+        "scanner.ts",
+        "semver.ts",
+        "sourcemap.ts",
+        "symbolWalker.ts",
+        "sys.ts",
+        "tracing.ts",
+        "transformer.ts",
+        "transformers/classFields.ts",
+        "transformers/classThis.ts",
+        "transformers/declarations.ts",
+        "transformers/declarations/diagnostics.ts",
+        "transformers/destructuring.ts",
+        "transformers/es2015.ts",
+        "transformers/es2016.ts",
+        "transformers/es2017.ts",
+        "transformers/es2018.ts",
+        "transformers/es2019.ts",
+        "transformers/es2020.ts",
+        "transformers/es2021.ts",
+        "transformers/esDecorators.ts",
+        "transformers/esnext.ts",
+        "transformers/generators.ts",
+        "transformers/jsx.ts",
+        "transformers/legacyDecorators.ts",
+        "transformers/module/esnextAnd2015.ts",
+        "transformers/module/impliedNodeFormatDependent.ts",
+        "transformers/module/module.ts",
+        "transformers/module/system.ts",
+        "transformers/namedEvaluation.ts",
+        "transformers/taggedTemplate.ts",
+        "transformers/ts.ts",
+        "transformers/typeSerializer.ts",
+        "transformers/utilities.ts",
+        "tsbuild.ts",
+        "tsbuildPublic.ts",
+        "utilities.ts",
+        "utilitiesPublic.ts",
+        "visitorPublic.ts",
+        "watch.ts",
+        "watchPublic.ts",
+        "watchUtilities.ts"
+      ]
+    }
+  ],
+  "currentMainMatchesPinnedS2a": true,
+  "currentMainDifferences": {},
+  "files": [
+    {
+      "file": "_namespaces/ts.moduleSpecifiers.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "_namespaces/ts.performance.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "_namespaces/ts.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "binder.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "builder.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "builderPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "builderState.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "builderStatePublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "checker.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "commandLineParser.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "core.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    },
+    {
+      "file": "corePublic.ts",
+      "before": {
+        "kind": "accepted"
+      },
+      "after": {
+        "kind": "accepted"
+      },
+      "currentMainAfter": {
+        "kind": "accepted"
+      }
+    },
+    {
+      "file": "debug.ts",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      "currentMainAfter": {
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      }
+    },
+    {
+      "file": "diagnosticInformationMap.generated.ts",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "currentMainAfter": {
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      }
+    },
+    {
+      "file": "emitter.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "executeCommandLine.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "expressionToTypeNode.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/baseNodeFactory.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/emitHelpers.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/nodeChildren.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/utilities.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "hostErrors.ts",
+      "before": {
+        "kind": "accepted"
+      },
+      "after": {
+        "kind": "accepted"
+      },
+      "currentMainAfter": {
+        "kind": "accepted"
+      }
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "parser.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "path.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "performance.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "performanceCore.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "program.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "resolutionCache.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "scanner.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "semver.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "sourcemap.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "symbolWalker.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "sys.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "tracing.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformer.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/classThis.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/declarations/diagnostics.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2016.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2017.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2019.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2020.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/es2021.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/generators.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/jsx.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/module/impliedNodeFormatDependent.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/namedEvaluation.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/taggedTemplate.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/ts.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/typeSerializer.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "tsbuild.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "types.ts",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "currentMainAfter": {
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      }
+    },
+    {
+      "file": "utilities.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "visitorPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "watch.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "watchPublic.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "file": "watchUtilities.ts",
+      "before": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:356:37",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      "currentMainAfter": {
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      }
+    }
+  ],
+  "execution": [
+    {
+      "label": "s2a-before",
+      "command": [
+        "/workspace/scratch/samemap-s2a-census",
+        "/workspace/scratch/samemap-baseline/src/compiler",
+        "/workspace/scratch/samemap-census-s2a-before.jsonl"
+      ],
+      "cwd": "/workspace/scratch/samemap-s2a",
+      "output": "/workspace/scratch/samemap-census-s2a-before.jsonl",
+      "exit": 0,
+      "rows": 83,
+      "seconds": 660.094
+    },
+    {
+      "label": "s2a-after",
+      "command": [
+        "/workspace/scratch/samemap-s2a-census",
+        "/workspace/scratch/samemap-adapt-lane/adapted-tree/src/compiler",
+        "/workspace/scratch/samemap-census-s2a-after.jsonl"
+      ],
+      "cwd": "/workspace/scratch/samemap-s2a",
+      "output": "/workspace/scratch/samemap-census-s2a-after.jsonl",
+      "exit": 0,
+      "rows": 83,
+      "seconds": 660.094
+    },
+    {
+      "label": "main-after",
+      "command": [
+        "/workspace/scratch/samemap-main-bin/tool",
+        "/workspace/scratch/samemap-adapt-lane/adapted-tree/src/compiler",
+        "/workspace/scratch/samemap-census-main-after.jsonl"
+      ],
+      "cwd": "/workspace/adamic",
+      "output": "/workspace/scratch/samemap-census-main-after.jsonl",
+      "exit": 0,
+      "rows": 83,
+      "seconds": 660.093
+    }
+  ]
+}
