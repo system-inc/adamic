@@ -25,12 +25,19 @@ import (
 //     GetTypeArguments, behind an ObjectFlagsReference test), and those read the brand's own: a
 //     `NumberBrand extends Array<number>` has none, and a `PairBrand<T> extends Array<[T, T]>` has T
 //     where the base has [T, T]. A brand whose arguments are its base's reads the same there as its base.
+//   - A brand with a member typed void: such a program fails closed under the void-container rule
+//     (rulings.md, Oct 29), so it doesn't gain its base's layout here. The cast is erased all the same.
 func (l *lowering) unbranded(t *checker.Type) *checker.Type {
 	base := t
 	for {
-		next, _ := l.phantomExtension(base)
+		next, members := l.phantomExtension(base)
 		if next == nil {
 			break
+		}
+		for _, member := range members {
+			if l.voidBrandMember(base, member) {
+				return t
+			}
 		}
 		base = next
 	}
@@ -38,6 +45,20 @@ func (l *lowering) unbranded(t *checker.Type) *checker.Type {
 		return t
 	}
 	return base
+}
+
+// voidBrandMember is whether brand's member name is typed void, or a union holding void, as
+// phantomBrandMember reads a member's type.
+func (l *lowering) voidBrandMember(brand *checker.Type, name string) bool {
+	property := l.checker.GetPropertyOfType(brand, name)
+	if property == nil {
+		return false
+	}
+	proven := l.checker.GetTypeOfSymbol(property)
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		return slices.ContainsFunc(proven.Types(), func(part *checker.Type) bool { return part.Flags()&checker.TypeFlagsVoid != 0 })
+	}
+	return proven.Flags()&checker.TypeFlagsVoid != 0
 }
 
 // isArrayType is the checker's array test (Array or ReadonlyArray) of t held as its base.
