@@ -5,6 +5,7 @@ Each is one edit, run on a house box, then put back. The presence design is Diag
 | Mutant | Edit | Red |
 |---|---|---|
 | No unbranding | unbranded.go, `unbranded`: return t first | TestBrandMintsOfTscsSortedArraysAreAdmitted, TestBrandMintOfALiteralIsExact, TestUnbrandedArraysAgreeWithNode, TestUnbrandedMintLowersToItsOperand: each stops NotYet at the branded value |
+| No void guard | unbranded.go, `unbranded`: the voidBrandMember test dropped | TestUnbrandedVoidBrandStops, the length row lowers whole |
 | A raw array question | expression.go, `representation`: `l.checker.IsArrayType(proven)` put back in the Array case | TestArrayQuestionsGoThroughUnbranded |
 | A real member admitted | brand_mint.go, `phantomExtension`: `!l.phantomBrandMember(property) ||` made `false ||` | TestUnbrandedOnlyPhantomExtensions, the real-member row lowers; TestBrandMintRecognitionIsExact, its real-member row passes the cast |
 | No `in` road | phantom_array_presence.go: the `in` clause made `false &&` | TestUnbrandedPresenceIsRefused, the three `in` rows (b09's union heard as inProperty's union refusal) |
