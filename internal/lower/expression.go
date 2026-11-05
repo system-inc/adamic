@@ -319,6 +319,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if stop := l.containerWhereOtherGoes(l.checker.GetTypeAtLocation(skipped), contextual, l.libraryCallArgument(skipped)); stop != "" {
 				return nil, l.notYet(skipped, stop)
 			}
+			// And so is a container whose elements are stored otherwise than the slot reads them
+			// (element_fit.go), literals included, since a union slot doesn't make one as its own.
+			if stop := l.elementsHeldOtherwise(skipped, contextual); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
