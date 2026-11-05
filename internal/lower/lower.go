@@ -299,6 +299,9 @@ type lowering struct {
 	crossFunctionWrites map[*ast.Symbol]bool
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
 	propertyWrites *propertyWrites
+	// topLevelOnlyFunctions is calledOnlyFromTopLevel's answer for each function declaration asked
+	// about (narrowed_nullish.go).
+	topLevelOnlyFunctions map[*ast.Node]bool
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow

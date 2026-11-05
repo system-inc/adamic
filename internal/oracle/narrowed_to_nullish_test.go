@@ -44,13 +44,25 @@ import (
 // counted maybe_numbers.a:10:16), a read passed whole to a program function whose parameter holds the
 // declared type, which reads storage (c07, the shape of the counted regions.a:78:40), and an imported
 // binding read after the call that sets it, which the checker doesn't narrow in the importing module
-// (n14).
+// (n14). Each counted program the first property rule stopped has a control of its shape: an optional
+// chain between the assignment and the read (c08, graph_regions_list.a), a delete as the narrowing with a
+// literal union's delete elsewhere (c09, the records fixtures'), a check as the narrowing (c10,
+// scout_nullable_object_null_field.a), a call between that reaches no function writing the name (c11,
+// weak_parent.a), a method call between, in a function only the module's top level calls, whose own
+// earlier writes can't run again (c12, class_oct6_subclass_holder.a), and a library push between, after
+// an element's assignment (c13, scout_nullable_strings.a). Their negatives stop: a check followed by a
+// call in the same condition that writes the name (f13), a loose == null check, which doesn't prove the
+// undefined the read is narrowed to (f14), a write two direct calls away (f15), a write in the read's own
+// function entered again through a method (f16), and a push after a delete, which can write that index
+// (f17).
 // Mutants: narrowedNullishReadGap's binding test forced to let every binding through, and every binding
 // stop here lowers instead, printing undefined where Node prints 4. assignedJustBefore forced to answer
 // no, and c05 stops. passedAtDeclaredType's parameter test dropped, and n17 lowers. The property rule's
 // stop forced off, and f01 to f10 lower; the write that could reach any name ignored, and f05 and f06
 // lower; code between the property's assignment and its read always assumed, and c04 stops; the getter
-// test (accessorName) dropped, and f11 and f12 lower.
+// test (accessorName) dropped, and f11 and f12 lower; reach taken as nothing, and f15 and f16 lower;
+// calledOnlyFromTopLevel answering yes, and f16 lowers; the push exemption kept after a delete, and f17
+// lowers.
 func TestNarrowedToNullishReadsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/narrowed_to_nullish"
@@ -101,7 +113,7 @@ func TestNarrowedToNullishReadsArePinned(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 70 {
-		t.Fatalf("found %d programs, want 70", programs)
+	if programs != 92 {
+		t.Fatalf("found %d programs, want 92", programs)
 	}
 }
