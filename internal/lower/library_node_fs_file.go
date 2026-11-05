@@ -441,7 +441,13 @@ func (l *lowering) dateNow(node, callee *ast.Node) (ir.Expression, bool, error) 
 	if arguments := node.AsCallExpression().Arguments; arguments != nil && len(arguments.Nodes) != 0 {
 		return nil, true, l.notYet(node, "Date.now with arguments")
 	}
-	return ir.NodeFSFile{Operation: "time_now", Of: ir.Number}, true, nil
+	return dateNowCall(), true, nil
+}
+
+// dateNowCall is Date.now(), as a direct call and as the body of its function value
+// (library_function_values.go).
+func dateNowCall() ir.Expression {
+	return ir.NodeFSFile{Operation: "time_now", Of: ir.Number}
 }
 
 func (l *lowering) nodeFSFileDate(node *ast.Node) (ir.Expression, bool, error) {

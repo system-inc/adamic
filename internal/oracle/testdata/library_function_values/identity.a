@@ -1,0 +1,9 @@
+// Date.now read as a value twice is one function value, === as Node says; an arrow calling it is
+// another; and typeof says function.
+const first: () => number = Date.now;
+const second: () => number = Date.now;
+console.log(`same ${String(first === second)}`);
+const wrapped: () => number = () => Date.now();
+console.log(`an arrow is another ${String(first === wrapped)}`);
+console.log(typeof first);
+console.log(`it reads the clock ${String(Math.abs(second() - wrapped()) < 60000)}`);
