@@ -1,0 +1,16 @@
+{
+  "base": {
+    "compiler_commit": "b0efce6dce1cd7445ed8a570aecac387a4a7d684",
+    "binary_sha256": "f9e714f59d740c9de1a0ee30d4763bdf6696ee04cb47faf0fe98b053a26b61f6",
+    "helper_sha256": "ce18bb7babc45377e4097f33376136120cf2c25293894e0b7c966784cf2c486e",
+    "original_binary_sha256": "0aee63a7444bc56777ded75c16895096902ade2c31e4daede1e0aab4cd33281e",
+    "patch": "file and top-level unit selection only inside latentRun; full 79-root program loading and lowering unchanged"
+  },
+  "head": {
+    "compiler_commit": "66fff4ecc05c3bfb2258cf4bb2a7b0a2b762c59b",
+    "binary_sha256": "f559657d3235c041bc6c550db01b9a091da2019dd8fd3dd614512c765f36d640",
+    "helper_sha256": "ce18bb7babc45377e4097f33376136120cf2c25293894e0b7c966784cf2c486e",
+    "original_binary_sha256": "e14fd6bc7bb230c42bcaf592175ed68d9904a7a14d274a638544650aa518d36f",
+    "patch": "file and top-level unit selection only inside latentRun; full 79-root program loading and lowering unchanged"
+  }
+}

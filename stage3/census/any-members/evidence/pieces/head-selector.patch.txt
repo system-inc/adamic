@@ -1,0 +1,10 @@
+--- original latent hook
++++ selected latent hook
+@@ -274,0 +275,3 @@
++		if !anyMembersCensusSelected(program.FileName(file), "") {
++			continue
++		}
+@@ -290,0 +294,3 @@
++			if !anyMembersCensusSelected(program.FileName(file), program.Where(node)) {
++				continue
++			}

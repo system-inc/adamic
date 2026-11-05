@@ -1,6 +1,8 @@
 # Paired any-members census (tmdhz1d): stopped
 
-**Any-member findings and first stops: unknown. This run cannot establish 0.**
+**Piece measurements in progress. Any-member findings and first stops remain unknown until the matching pieces and base-union check finish.**
+
+The bounded piece plan and admission checks are in [PIECES.md](PIECES.md). Completed pieces will be committed and pushed individually. The stopped whole-run evidence below remains historical.
 
 The head findings list is unavailable. The foreground rerun completed 3,153 of 4,056 timed attempts before interruption. Its compiler was found defunct, and only the measurement header survived. No head member location, owner unit, full reason, or first-stop status can be recovered from unit timers.
 

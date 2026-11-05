@@ -1,0 +1,115 @@
+{
+  "files": [
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "all_units": true,
+      "units": []
+    }
+  ],
+  "base_unit_seconds": 2.1022609539999983,
+  "estimated_seconds": 302.102260954,
+  "schema": 1,
+  "id": "p01",
+  "expected_units": [
+    "src/compiler/_namespaces/ts.performance.ts:3:1",
+    "src/compiler/builderStatePublic.ts:1:1",
+    "src/compiler/builderStatePublic.ts:6:1",
+    "src/compiler/builderStatePublic.ts:12:1",
+    "src/compiler/factory/baseNodeFactory.ts:1:1",
+    "src/compiler/factory/baseNodeFactory.ts:13:1",
+    "src/compiler/factory/baseNodeFactory.ts:26:1",
+    "src/compiler/factory/utilitiesPublic.ts:1:1",
+    "src/compiler/factory/utilitiesPublic.ts:10:1",
+    "src/compiler/factory/utilitiesPublic.ts:14:1",
+    "src/compiler/factory/utilitiesPublic.ts:43:1",
+    "src/compiler/hostErrors.ts:2:1",
+    "src/compiler/hostErrors.ts:7:1",
+    "src/compiler/hostErrors.ts:12:1",
+    "src/compiler/transformers/es2016.ts:1:1",
+    "src/compiler/transformers/es2016.ts:21:1",
+    "src/compiler/transformers/es2019.ts:1:1",
+    "src/compiler/transformers/es2019.ts:17:1",
+    "src/compiler/transformers/es2020.ts:1:1",
+    "src/compiler/transformers/es2020.ts:42:1",
+    "src/compiler/transformers/es2021.ts:1:1",
+    "src/compiler/transformers/es2021.ts:25:1",
+    "src/compiler/tsbuild.ts:1:1",
+    "src/compiler/tsbuild.ts:10:1",
+    "src/compiler/tsbuild.ts:41:1",
+    "src/compiler/tsbuild.ts:58:1",
+    "src/compiler/tsbuild.ts:177:1"
+  ],
+  "expected_timed_units": [
+    "src/compiler/_namespaces/ts.performance.ts:3:1",
+    "src/compiler/builderStatePublic.ts:1:1",
+    "src/compiler/builderStatePublic.ts:6:1",
+    "src/compiler/builderStatePublic.ts:12:1",
+    "src/compiler/factory/baseNodeFactory.ts:1:1",
+    "src/compiler/factory/baseNodeFactory.ts:13:1",
+    "src/compiler/factory/baseNodeFactory.ts:26:1",
+    "src/compiler/factory/utilitiesPublic.ts:1:1",
+    "src/compiler/factory/utilitiesPublic.ts:14:1",
+    "src/compiler/factory/utilitiesPublic.ts:43:1",
+    "src/compiler/hostErrors.ts:2:1",
+    "src/compiler/hostErrors.ts:7:1",
+    "src/compiler/hostErrors.ts:12:1",
+    "src/compiler/transformers/es2016.ts:1:1",
+    "src/compiler/transformers/es2016.ts:21:1",
+    "src/compiler/transformers/es2019.ts:1:1",
+    "src/compiler/transformers/es2019.ts:17:1",
+    "src/compiler/transformers/es2020.ts:1:1",
+    "src/compiler/transformers/es2020.ts:42:1",
+    "src/compiler/transformers/es2021.ts:1:1",
+    "src/compiler/transformers/es2021.ts:25:1",
+    "src/compiler/tsbuild.ts:1:1",
+    "src/compiler/tsbuild.ts:10:1",
+    "src/compiler/tsbuild.ts:41:1",
+    "src/compiler/tsbuild.ts:58:1",
+    "src/compiler/tsbuild.ts:177:1"
+  ]
+}

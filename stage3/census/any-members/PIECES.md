@@ -1,0 +1,13 @@
+# Bounded first-error census pieces
+
+Measurement in progress. The retained whole base is the cross-check, not a substitute for matching base pieces. Existing speculative-only piece support and its union proof were read; that mode is not used here.
+
+The first-error selector adds only file and top-level-unit scheduling guards to each pinned compiler's no-output overlay. Every child still loads the complete 79-root checked program and keeps original registration, dependencies, first-error recovery, generic deferral and witness recording. Production compiler files are unchanged. `first-error-piece.go.txt` is the compiled helper source; the two minimal selector patches and binary hashes are in `evidence/pieces/`.
+
+There are 23 pieces. Ordinary files belong to one file group. Utilities and utilitiesPublic are partitioned into contiguous disjoint top-level unit groups because their measured whole-run unit costs exceed a safe file-only piece budget. All 4,555 unit identities, including 499 deferred declarations, occur exactly once; all 4,056 timed attempts are scheduled. Repeated file scans in these unit pieces will be deduplicated and independently checked against the whole base. Source byte totals will not be summed across repeated file records.
+
+Each completed child is validated against its exact scheduled files, units, timers and finding owners. Its raw stream is committed to `scratch/piece-checkpoints` Git immediately; lossless archives, hashes, metrics and that scratch commit ID are then committed and pushed to `typescript/any-members-census` before any next child starts. Resume verifies identities and checksums and does not rerun completed children. The hard child limit is twenty minutes, with a goroutine dump on a five-minute timer stall or the budget boundary.
+
+A piece need not reproduce the whole census: deferred-generic `instantiated` witnesses reflect the callers actually attempted, including later files. The fixture audit observes that difference directly while preserving first stops. The full base unit-by-unit union check is the admission gate. Any unit metadata, ordered lowering-findings or first-stop mismatch will be reported and excluded from pairing; nonmatching scan contexts will also be excluded. No witness bits will be normalized to manufacture equality.
+
+Run `prepare_pieces.py`, `audit_piece_selector.py`, then `run_first_error_pieces.py`. Preparation is already complete. The runner is foreground, sequential and resumable. Results and `INDEX.json` are under `evidence/pieces/`. The final comparison will be generated only after all planned observations are saved.

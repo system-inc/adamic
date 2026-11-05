@@ -1,0 +1,16 @@
+{
+  "prepared_utc": "2026-11-05T22:29:44.780035+00:00",
+  "hostname": "3cbd7fe9a660",
+  "mode": "first-error",
+  "program_files": 79,
+  "units": 4555,
+  "timed_units": 4056,
+  "pieces": 23,
+  "max_estimated_seconds": 588.6207859829999,
+  "hard_limit_seconds": 1200,
+  "existing_piece_mode": "speculative only; not used",
+  "selector_scope": "guarded overlay file/unit scheduling only; all 79 program roots loaded; registration and dependency lowering unchanged",
+  "union_gate": "compare complete base piece union with retained whole base, unit metadata, ordered lowering findings, first stops and scans; exclude mismatches before feature pairing",
+  "witness_policy": "retain and report instantiated differences; never OR, reset or mask them to force equality",
+  "checkpoint_policy": "raw latent.jsonl and timers committed to local scratch Git immediately; lossless archives committed and plainly pushed to report branch before next piece"
+}
