@@ -931,11 +931,86 @@ var runtimeproductsEnvironment = map[string]string{
 }
 var requestEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG":      buildLogReading,
-	"WASI_SYSROOT":          "a wasm request's --sysroot flag, a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation; otherwise it only refuses a request (ValidateOptions)",
+	"WASI_SYSROOT":          "a wasm request's --sysroot flag, exactly what the variable holds and none on another request (TestTheSysrootReadIsTheSysrootFlag), a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation, and the compiler beside it, which the key holds by its report; otherwise it only refuses a request (ValidateOptions)",
 	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte",
 }
 var jobserverEnvironment = map[string]string{
 	"ADAMIC_CC_JOBSERVER": "names the FIFO of the compile token pool handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
+}
+
+// The one environment variable whose value reaches an archive's request, WASI_SYSROOT, reaches it as the --sysroot flag
+// and nothing else: a wasm variant's request carries exactly one, holding exactly what the variable holds, as a flag of
+// its Parts, the same one relocated to <compiler>/share/wasi-sysroot in its Portable, which its key holds, and its
+// compiler is the clang beside it, which the key holds by its report; every other variant's request carries none. Two
+// installations in two places carry their own sysroot each, and one Portable. The installations are stand-ins
+// (fakeWASISDK), so it runs where no wasi-sdk is installed. Mutants that each fail it: Flags spelling the flag from
+// anything but the variable as it's set (a trailing slash added); a sysroot flag on a native target.
+// Not parallel: it sets WASI_SYSROOT, which is process-wide.
+func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
+	var portable []string
+	for _, installation := range []string{fakeWASISDK(t), fakeWASISDK(t)} {
+		t.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
+		for _, variant := range Variants {
+			request, err := native.RuntimeRequestFor(variant.Options)
+			if err != nil {
+				t.Fatalf("%s: %v", variant.Name, err)
+			}
+			var sysroots, portableSysroots []string
+			for _, part := range request.Parts {
+				if strings.HasPrefix(part, "flag --sysroot") {
+					sysroots = append(sysroots, part)
+				}
+			}
+			for _, part := range request.Portable {
+				if strings.HasPrefix(part, "flag --sysroot") {
+					portableSysroots = append(portableSysroots, part)
+				}
+			}
+			if variant.Options.Target != "wasm32-wasi" {
+				if len(sysroots) > 0 || len(portableSysroots) > 0 {
+					t.Errorf("the %s request carries a sysroot: %q, %q", variant.Name, sysroots, portableSysroots)
+				}
+				continue
+			}
+			if want := []string{"flag --sysroot=" + os.Getenv("WASI_SYSROOT")}; !slices.Equal(sysroots, want) {
+				t.Errorf("the %s request's sysroot flags are %q, want %q", variant.Name, sysroots, want)
+			}
+			if want := []string{"flag --sysroot=<compiler>/share/wasi-sysroot"}; !slices.Equal(portableSysroots, want) {
+				t.Errorf("the %s request's portable sysroot flags are %q, want %q", variant.Name, portableSysroots, want)
+			}
+			if want := filepath.Join(installation, "bin", "clang"); request.Compiler != want {
+				t.Errorf("the %s request's compiler is %s, want %s beside the sysroot", variant.Name, request.Compiler, want)
+			}
+			if variant.Name == "wasm" {
+				portable = append(portable, strings.Join(request.Portable, "\n"))
+			}
+		}
+	}
+	if len(portable) != 2 || portable[0] != portable[1] {
+		t.Errorf("two installations' wasm requests key apart:\n%s", strings.Join(portable, "\n--\n"))
+	}
+}
+
+// fakeWASISDK is a stand-in wasi-sdk installation for a test that asks native for a wasm request: its sysroot under
+// share/wasi-sysroot, and bin/clang, which reports the pinned release's version (native's wasiClangVersion) and lists no
+// header for a scan, so a request reads only what the census holds of it, with nothing compiled.
+func fakeWASISDK(t *testing.T) string {
+	t.Helper()
+	installation, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(installation, "share", "wasi-sysroot"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(installation, "bin"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	clang := "#!/bin/sh\nfor argument in \"$@\"; do\n\tif [ \"$argument\" = --version ]; then\n\t\techo 'clang version 20.1.8-wasi-sdk (a stand-in)'\n\t\texit 0\n\tfi\ndone\n"
+	if err := os.WriteFile(filepath.Join(installation, "bin", "clang"), []byte(clang), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	return installation
 }
 
 // requestState are internal/native's package variables an archive's request reads that code outside its reach may
