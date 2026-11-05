@@ -140,8 +140,12 @@ func (l *lowering) checkLazyViewReads() error {
 	// different checker type id. Field-name fallback retains the refusal until
 	// the receiver flow proves it cannot receive a viewed allocation.
 	unsupportedFields := map[string]string{}
+	mutableArrayFields := map[string]bool{}
 	for _, descriptor := range program.ViewContracts {
 		for _, field := range descriptor.Fields {
+			if mutableViewArrayContract(program, field.Contract, map[ir.ViewContractID]bool{}) {
+				mutableArrayFields[field.Name] = true
+			}
 			if family := program.ViewContracts[field.Contract-1].Unsupported; family != "" {
 				unsupportedFields[field.Name] = family
 			}
@@ -191,6 +195,10 @@ func (l *lowering) checkLazyViewReads() error {
 			demanded = demanded || viewed[site]
 		}
 		if demanded {
+			if mutableViewArrayContract(program, contract, map[ir.ViewContractID]bool{}) || contract == 0 && mutableArrayFields[field] {
+				refused = &NotYet{Where: where, What: "a checked view of mutable array field " + field}
+				return false
+			}
 			if strings.Contains(family, "views-v3: array element kind") {
 				refused = &NotYet{Where: where, What: "checked view union arm awaits views-v3: array element kind"}
 				return false
