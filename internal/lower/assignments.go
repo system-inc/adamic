@@ -200,6 +200,9 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 			continue
 		}
 		local, isLocal := l.local(element)
+		// A field written here, [o.a] = [2], may be a frozen object's: a lowering of that write must
+		// count ir.Program's FrozenWriteMayThrow and test the pending word after it (checkThrown), as
+		// writeProperty does (pinned by library_object_throws/stop_destructure_array.a, #c3bk0fp).
 		if !ast.IsIdentifier(element) || !isLocal || l.alwaysUndefined[l.symbol(element)] {
 			return nil, l.notYet(element, "assigning to "+describe(element)+" in a destructuring assignment")
 		}
@@ -264,6 +267,9 @@ func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *a
 		if name == nil || !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
 			return nil, l.notYet(property, "a computed field name")
 		}
+		// A field written here, ({ c: o.a } = value), may be a frozen object's: a lowering of that write
+		// must count ir.Program's FrozenWriteMayThrow and test the pending word after it (checkThrown), as
+		// writeProperty does (pinned by library_object_throws/stop_destructure_object.a, #c3bk0fp).
 		if !ast.IsIdentifier(target) {
 			return nil, l.notYet(target, "assigning to "+describe(target)+" in a destructuring assignment")
 		}

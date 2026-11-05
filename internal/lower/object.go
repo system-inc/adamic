@@ -1143,6 +1143,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return l.forOfGenerator(node, function, initializer.AsVariableDeclarationList().Declarations.Nodes[0].Name())
 	}
 	initializer := statement.Initializer
+	// A field as the target, for (o.a of values), may be a frozen object's: a lowering of that write
+	// must count ir.Program's FrozenWriteMayThrow and test the pending word after each one
+	// (checkThrown), as writeProperty does (pinned by library_object_throws/stop_for_of_target.a, #c3bk0fp).
 	if initializer.Kind != ast.KindVariableDeclarationList || initializer.Flags&ast.NodeFlagsBlockScoped == 0 {
 		return nil, l.notYet(initializer, "a for...of that doesn't declare its variable with const or let")
 	}
