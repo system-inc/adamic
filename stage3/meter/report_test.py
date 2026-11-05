@@ -30,8 +30,13 @@ class ReportTests(unittest.TestCase):
 
     def render(self):
         (self.run / 'census.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in self.records))
-        report(self.tree, self.run, '20261007T000000Z')
+        report(self.tree, self.run, '20261007T000000Z', '1' * 40)
         return json.loads((self.run / 'report.json').read_text())
+
+    def test_missing_compiler_commit_is_an_error(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaisesRegex(ValueError, 'compiler commit is required'):
+                report(self.tree, self.run, 'stamp')
 
     def test_checker_and_lowering_are_separate(self):
         result = self.render()
@@ -102,7 +107,7 @@ class ReportTests(unittest.TestCase):
             if hasattr(self, 'unit_times'):
                 (self.run / label / 'latent-times.jsonl').write_text(
                     ''.join(json.dumps(row) + '\n' for row in self.unit_times))
-        return report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha')
+        return report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'area-sha', self.run, '1' * 40)
 
     def test_pair_preserves_area_fields_and_prints_four_numbers_first(self):
         result = self.render_pair()
@@ -391,7 +396,7 @@ class CensusAttributionTests(unittest.TestCase):
                 with (run / 'census.log').open('w') as log:
                     subprocess.run([os.environ['CENSUS_BINARY'], str(compiler), str(run / 'census.jsonl')],
                                    check=True, stdout=log, stderr=log)
-                observations.append(report(tree, run, label))
+                observations.append(report(tree, run, label, '1' * 40))
             before, after = observations
             self.assertEqual(before['totals']['checker_whole_program'], 2)
             self.assertEqual(before['totals']['checker_own_file'], 2)
@@ -408,27 +413,11 @@ if __name__ == '__main__':
 class PreviousRunTests(unittest.TestCase):
     def test_oct19_beside_committed_oct8(self):
         root = Path(__file__).resolve().parent
-        old = root / 'runs/20261008T171021Z.iBLy18/report.json'
-        current = json.loads((root / 'testdata/oct19-report.json').read_text())
+        current = json.loads((root / 'runs/20261019T233755Z.9xwivl15/report.json').read_text())
         with tempfile.TemporaryDirectory() as temporary:
             run = Path(temporary) / '20261019T233755Z.9xwivl15'
             run.mkdir()
-            # Isolate the inventory from future committed runs.
-            real = subprocess.check_output
-            def inventory(args, **kwargs):
-                if args[:2] == ['git', 'ls-tree']:
-                    return str(old.relative_to(root.parents[1])) + '\n'
-                return real(args, **kwargs)
-            revision = 'pinned-main-witness'
-            def pinned_inventory(args, **kwargs):
-                if args[:2] == ['git', 'show']:
-                    self.assertTrue(args[2].startswith(revision + ':'))
-                    return real(['git', 'show', 'HEAD:' + args[2].split(':', 1)[1]], **kwargs)
-                if args[:2] == ['git', 'ls-tree']:
-                    self.assertIn(revision, args)
-                return inventory(args, **kwargs)
-            with patch('report.subprocess.check_output', side_effect=pinned_inventory):
-                write_readme(run, current, revision)
+            write_readme(run, current, root / 'runs')
             text = (run / 'README.md').read_text()
             self.assertIn('| Current | 295df3bc6aa3d47933ccf675da1c33e745856313 | 2/79 | 56/79 | 2/79 | 235 |', text)
             self.assertIn('| 20261008T171021Z.iBLy18 | 45487a809f89885a3fc651cd590e7dabf31362dc | 2/79 | 56/79 | 0/79 | 320 |', text)
@@ -544,7 +533,7 @@ class RootOrderTests(unittest.TestCase):
             latent += [{'measurement': MEASUREMENT, 'file': str(path), 'findings': []}
                        for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]
             (directory / 'latent.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in latent))
-        result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'main-sha')
+        result = report_pair(self.tree, self.tree, self.run, 'stamp', 'main-sha', 'main-sha', self.run, '1' * 40)
         text = (self.run / 'report.md').read_text()
         for label in ('main', 'area'):
             self.assertEqual(len(result['trees'][label]['root_order_artifacts']), 1)

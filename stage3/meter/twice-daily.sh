@@ -114,7 +114,13 @@ done
 # the copied streams still name main-adapted, so both labels use that tree.
 cp -a "$run/main" "$run/area"
 python3 "$repository/stage3/meter/box.py" "$run/box.json" end
-python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/main-adapted" "$run" "$stamp" "$main_commit" "$area_commit"
+# Snapshot exactly the pinned, tracked reports, excluding uncommitted scratch runs.
+mkdir -p "$scratch/committed/stage3/meter/runs"
+if git cat-file -e "$main_commit:stage3/meter/runs" 2>/dev/null; then
+    git archive "$main_commit" stage3/meter/runs > "$scratch/committed-runs.tar"
+    tar -xf "$scratch/committed-runs.tar" -C "$scratch/committed"
+fi
+STAGE3_METER_COMMIT="$checkout_commit" python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/main-adapted" "$run" "$stamp" "$main_commit" "$area_commit" "$scratch/committed/stage3/meter/runs"
 gzip "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
 python3 - "$run" "$SECONDS" <<'PYTHON'
 import json, pathlib, sys

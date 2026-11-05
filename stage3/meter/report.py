@@ -5,7 +5,7 @@ from collections import Counter
 from html import escape
 import re
 from pathlib import Path
-import subprocess
+import os
 import sys
 
 from node_readiness import run_roots
@@ -343,6 +343,9 @@ def root_order_table(label, result):
 
 
 def report(tree, run, stamp, compiler_commit=None):
+    compiler_commit = compiler_commit or os.environ.get('STAGE3_METER_COMMIT')
+    if not compiler_commit or not re.fullmatch(r'[0-9a-f]{40}', compiler_commit):
+        raise ValueError('a full compiler commit is required (argument or STAGE3_METER_COMMIT)')
     compiler = tree / 'src/compiler'
     expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}
     records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
@@ -414,7 +417,7 @@ def report(tree, run, stamp, compiler_commit=None):
     }
     result = {
         'timestamp_utc': stamp,
-        'adamic_commit': compiler_commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'adamic_commit': compiler_commit,
         'profile': 'unmodified stage 0 checker options and prelude',
         'adapted_tree': str(tree),
         'unlocated_diagnostics': len(unlocated),
@@ -443,18 +446,16 @@ def report(tree, run, stamp, compiler_commit=None):
     return result
 
 
-def write_readme(run, result, revision='HEAD'):
-    """Compare against the latest earlier report tracked by Git, never scratch output."""
-    tracked = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', 'stage3/meter/runs'], text=True).splitlines()
-    repository = Path(subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], text=True).strip())
+def write_readme(run, result, committed_runs):
+    """Compare against the latest earlier paired report in the supplied snapshot."""
+    committed_runs = Path(committed_runs)
+    if not committed_runs.is_dir():
+        raise ValueError('committed runs directory is required')
     candidates = []
-    for name in tracked:
-        if not name.endswith('/report.json'):
+    for path in committed_runs.rglob('report.json'):
+        if path.parent.resolve() == run.resolve() or path.parent.name >= run.name:
             continue
-        path = repository / name
-        if path.parent == run or path.parent.name >= run.name:
-            continue
-        old = json.loads(subprocess.check_output(['git', 'show', revision + ':' + name], text=True))
+        old = json.loads(path.read_text())
         if 'trees' in old:
             candidates.append((path.parent.name, old))
     previous = max(candidates, default=None, key=lambda item: item[0])
@@ -479,7 +480,7 @@ def write_readme(run, result, revision='HEAD'):
     (run / 'README.md').write_text('\n'.join(lines))
 
 
-def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
+def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit, committed_runs, compiler_commit=None):
     metadata_path = run / 'compiler-mode.json'
     metadata = json.loads(metadata_path.read_text()) if metadata_path.exists() else None
     mode = metadata['mode'] if metadata else 'single'
@@ -495,7 +496,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
             raise ValueError('single compiler commits differ')
     trees = {}
     for label, tree, commit in [('main', main_tree, main_commit), ('area', area_tree, area_commit)]:
-        trees[label] = report(tree, run / label, stamp, metadata['commits'][label] if metadata else None)
+        trees[label] = report(tree, run / label, stamp, metadata['commits'][label] if metadata else compiler_commit)
         trees[label]['tree_ref'] = 'origin/main' if main_commit == area_commit or label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
@@ -556,7 +557,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
               'Global and external diagnostics are counted separately in JSON; they have no compiler-file location.',
               'Non-source inputs fail the extension gate and are excluded from source denominators.', '']
     (run / 'report.md').write_text('\n'.join(lines))
-    write_readme(run, result, main_commit if metadata else 'HEAD')
+    write_readme(run, result, committed_runs)
     return result
 
 
@@ -576,8 +577,9 @@ if __name__ == '__main__':
         lines = ['Recorded roots only; census coverage is not asserted.'] + root_order_table('recorded roots', result)
         (run / 'root-order.md').write_text('\n'.join(lines) + '\n')
         print('\n'.join(lines))
-    elif len(sys.argv) == 4:
-        report(Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), sys.argv[3])
+    elif len(sys.argv) in (4, 5):
+        report(Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), sys.argv[3],
+               sys.argv[4] if len(sys.argv) == 5 else None)
     else:
         report_pair(Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(),
-                    Path(sys.argv[3]).resolve(), *sys.argv[4:7])
+                    Path(sys.argv[3]).resolve(), *sys.argv[4:8], compiler_commit=os.environ.get('STAGE3_METER_COMMIT'))

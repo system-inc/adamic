@@ -204,3 +204,121 @@ All three root-order mutants and the value-import elision mutant went red on the
 pins the third outcome: a qualifying per-root enum stop still fails its file
 when Node exits 0. The daily integration regression asserts both labels' counts,
 full artifact rows, JSON lists, and the generated README table.
+
+
+## Gate repair on the re-cut branch, 2026-11-05
+
+Base origin/main: `ab8a85bebf2a14a06fa8c3c4ca8cc93201a2309f`.
+The five Python suites write their fixtures, generated Go packages, probe
+outputs and logs under independent temporary directories. They do not mutate
+package source files. All five Go wrappers now call `t.Parallel()` first.
+
+`report` requires a full compiler commit argument or `STAGE3_METER_COMMIT`.
+An absent or malformed commit raises ValueError. The reporter contains no git
+commands. `write_readme` and `report_pair` require a directory containing the
+prior runs. `twice-daily.sh` supplies an archive of the pinned main revision's
+tracked runs, preserving the old reader's input revision and excluding dirty
+working-tree runs. It also passes the checkout commit explicitly. Compiler
+metadata continues to supply each measured compiler's pin when present.
+The Oct 19 regression reads the committed Oct 19 and Oct 8 reports from disk.
+
+### No-checkout proof
+
+A full `git archive HEAD` was extracted to
+`/workspace/scratch/meter-no-git`, then the changed meter sources were copied
+into it. There is no `.git` in that tree or its ancestors. The compiler-selection
+suite creates its own temporary Git repositories as fixtures; it does not need
+the source tree to be a checkout. No suites were omitted.
+
+```sh
+cd /workspace/scratch/meter-no-git
+source /workspace/adamic-tools/env.sh
+python3 -E -S -B -m unittest discover -s stage3/meter -p '*_test.py' > /workspace/scratch/meter-no-git-final.log 2>&1
+```
+
+```text
+Ran 65 tests in 101.138s
+OK (skipped=5)
+```
+
+Zero failures and zero errors. The five skips are the existing optional binary
+probes. This run overlapped cold setup and full apply; it is not the unit timing
+measurement below.
+
+### Mutants after the repair
+
+```sh
+python3 -E -S -B stage3/meter/check-root-order-mutants.py > /workspace/scratch/meter-mutants.log 2>&1
+```
+
+| Mutant | Named test | Result |
+| --- | --- | --- |
+| artifact-clean-own-file-implies-whole | test_artifact_with_clean_own_file_and_refused_dependency_does_not_lower_whole | red, AssertionError |
+| ignore-entry-readiness | test_entry_order_readiness_still_counts_against_root_file | red, AssertionError |
+| count-root-order-artifact-as-failure | test_root_only_readiness_with_node_throw_is_visible_artifact | red, AssertionError |
+| elide-value-import-used-only-as-type | test_value_import_used_only_as_type_keeps_its_evaluation_edge | red, AssertionError |
+
+The harness exited 0 and confirmed all three root-order mutants and the
+value-import elision mutant went red on their named tests.
+
+### Whole Go checks and unit times
+
+```sh
+go test -count=1 -parallel=1 -json ./stage3/meter/... > /workspace/scratch/go-meter-final.jsonl 2>&1
+go test -count=1 -json ./cmd/adamic-gate/... > /workspace/scratch/go-gate.jsonl 2>&1
+```
+
+Both commands exited 0. Cold setup completed successfully in 734.423 seconds.
+The meter run uses `-parallel=1` to measure the wrappers without contention
+between suites; the wrappers remain parallel-safe.
+
+| Meter unit | Seconds | Result |
+| --- | ---: | --- |
+| TestReportPython | 0.45 | pass |
+| TestGeneratorPython | 1.59 | pass |
+| TestNodeReadinessPython | 9.69 | pass |
+| TestCompilerPython | 17.99 | pass |
+| TestEntryPython | 0.17 | pass |
+
+Meter package elapsed: 29.912 seconds. All five units are below 30 seconds.
+The first run overlapped cold setup and other validation; it passed but its
+compiler wrapper took 41.06 seconds. The isolated measurements above replace
+that run for the timing check, without code changes to the compiler suite.
+
+The gate packages passed in 10.137 seconds (adamic-gate) and 9.615 seconds
+(parallelcensus). All 15 gate tests are below 30 seconds; the maximum is 10.09
+seconds. TestEveryTestIsParallelOrSaysWhy passed in 9.09 seconds.
+
+### Nov 4 S2a byte comparison
+
+The replay uses the same saved inputs described above: the S2a complete ordinary
+census from `268b0a5e6b1f29b05dce9389071bdb5abd6eb2aa`, paired with the S1c
+entry streams from `26973f0b0728cab64817cbe9df9efe97805ebac9`. Only absolute
+adapted-tree prefixes were remapped. This remains a cross-revision replay,
+not a fresh census. The adapted tree was produced by full apply on the re-cut
+meter branch before either adaptation was added.
+
+`/workspace/scratch/report-before.py` is the reporter before the gate fixes.
+`/workspace/scratch/compare-reports.py` runs both that reporter and the fixed
+one against the same tree, run directory, stamp and explicit compiler pin
+`424eb3dd3baed2265f8af65e3c1c7b7d55e4e7e0`. Both execute the real Node probes.
+Their JSON and Markdown outputs were saved separately and compared with `cmp`.
+
+```sh
+source /workspace/adamic-tools/env.sh
+python3 -E -S -B /workspace/scratch/compare-reports.py > /workspace/scratch/report-comparison.log 2>&1
+cmp /workspace/scratch/replay/s2a/before-report.json /workspace/scratch/replay/s2a/after-report.json
+cmp /workspace/scratch/replay/s2a/before-report.md /workspace/scratch/replay/s2a/after-report.md
+```
+
+Both `cmp` calls exited 0. `/workspace/scratch/report-cmp.log` records the
+exact byte comparisons. Both reports have 82 files, 79 source roots, checker
+79/79, own file 79/79, lowering 2/79 and three root-order artifacts.
+
+| Output | SHA256 before and after |
+| --- | --- |
+| report.json | 69d3487f20dbb079c187445a22756fd6ea6108528eddac5ab44d63f8582278d2 |
+| report.md | fa0723f0602834529940e58455b1c37b0fa0773518f929197724020824c41633 |
+
+The existing `check-unit-time-mutant.py` also exited 0: its dropped
+`latent_time` field was caught with the expected KeyError.

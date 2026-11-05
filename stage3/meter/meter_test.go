@@ -12,11 +12,26 @@ import (
 
 // Keep these Python suites in the Go gate too. Their local fixtures include Go
 // compiler witnesses; each suite has its own bound and file-backed output.
-func TestReportPython(t *testing.T)        { runPython(t, "report_test") }
-func TestEntryPython(t *testing.T)         { runPython(t, "entry_test") }
-func TestCompilerPython(t *testing.T)      { runPython(t, "compiler_test") }
-func TestGeneratorPython(t *testing.T)     { runPython(t, "generator_test") }
-func TestNodeReadinessPython(t *testing.T) { runPython(t, "node_readiness_test") }
+func TestReportPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "report_test")
+}
+func TestEntryPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "entry_test")
+}
+func TestCompilerPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "compiler_test")
+}
+func TestGeneratorPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "generator_test")
+}
+func TestNodeReadinessPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "node_readiness_test")
+}
 
 func runPython(t *testing.T, module string) {
 	t.Helper()

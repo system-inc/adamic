@@ -223,7 +223,7 @@ class CompilerSelectionTests(unittest.TestCase):
         (run / 'compiler-mode.json').write_text(json.dumps(metadata))
         with self.assertRaisesRegex(ValueError, 'do not match source pins'):
             report_pair(Path(result['trees']['main']['adapted_tree']),
-                        Path(result['trees']['area']['adapted_tree']), run, 'stamp', self.main, self.area)
+                        Path(result['trees']['area']['adapted_tree']), run, 'stamp', self.main, self.area, run)
 
     def test_legacy_latent_mode_and_stale_full_claim(self):
         self.env['STAGE3_METER_LATENT']='first-error'
@@ -237,7 +237,7 @@ class CompilerSelectionTests(unittest.TestCase):
         (run/'compiler-mode.json').write_text(json.dumps(metadata))
         with self.assertRaisesRegex(ValueError,'latent overlay mode does not match requested mode'):
             report_pair(Path(result['trees']['main']['adapted_tree']),
-                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.main)
+                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.main,run)
 
     def test_invalid_latent_mode_fails_before_creating_a_run(self):
         self.env['STAGE3_METER_LATENT']='typo'
