@@ -53,7 +53,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// The generator itself, seen as the object an Iterable<T> slot holds: no retain, no release.
 		return fmt.Sprintf("((adamic_object *)%s)", e.value(expression.Value))
 	case ir.IsGenerator:
-		return e.snapshot(ir.Boolean, fmt.Sprintf("(((const adamic_heap *)%s)->kind == adamic_kind_generator)", e.value(expression.Value)))
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_is(%s)", e.value(expression.Value)))
 	case ir.IsCollectionIterator:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_collection_iterator_is(%s)", e.value(expression.Value)))
 	case ir.RegExpNew:
