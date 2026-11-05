@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/workspace/scratch/99r/bin/latent",
+    "/workspace/scratch/99r/after/src/compiler",
+    "/workspace/scratch/99r/checker-piece/piece-294.pending.jsonl"
+  ],
+  "wall_seconds": 139.4639019430001,
+  "peak_rss_kib": 1058960,
+  "exit": 2,
+  "user_cpu_seconds": 138.435074,
+  "system_cpu_seconds": 1.499115,
+  "phase_first_wall_seconds": {
+    "refusal_scan": 2.8891140219998306,
+    "contract_scan": 11.370576332999917,
+    "registration": 138.11655355599987,
+    "walk": 139.36345566499995
+  },
+  "time_limit_seconds": 300.0,
+  "rss_limit_mib": 3072,
+  "address_space_limit_mib": 6144,
+  "rss_limit_killed": false
+}

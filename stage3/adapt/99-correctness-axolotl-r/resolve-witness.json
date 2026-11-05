@@ -1,0 +1,81 @@
+{
+  "node": "v24.19.0",
+  "rows": [
+    {
+      "case": "absent",
+      "before": [
+        {
+          "parameters": [
+            "this"
+          ],
+          "arguments": [
+            "this"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "parameters": [
+            "this"
+          ],
+          "arguments": [
+            "this"
+          ]
+        }
+      ],
+      "same": true
+    },
+    {
+      "case": "present empty",
+      "before": [
+        {
+          "parameters": [
+            "this"
+          ],
+          "arguments": [
+            "this"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "parameters": [
+            "this"
+          ],
+          "arguments": [
+            "this"
+          ]
+        }
+      ],
+      "same": true
+    },
+    {
+      "case": "present nonempty",
+      "before": [
+        {
+          "parameters": [
+            "T",
+            "this"
+          ],
+          "arguments": [
+            "T",
+            "this"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "parameters": [
+            "T",
+            "this"
+          ],
+          "arguments": [
+            "T",
+            "this"
+          ]
+        }
+      ],
+      "same": true
+    }
+  ]
+}
