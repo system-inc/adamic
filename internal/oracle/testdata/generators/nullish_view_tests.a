@@ -1,0 +1,52 @@
+// The other undefined tests Adamic ruled lower on #qk8rztp S2c-3, beside one for-of over an
+// Iterable<T> | undefined parameter: a test after the for-of, written `undefined === items`, and one in
+// the condition of a loop around it, beside a read of another local. Each is a test, not a read, so
+// the for-of is the parameter's one read. Each parameter is fed a generator's direct call and a Map's
+// values(). A break closes the generator, as Node's return() does, so its line after the first yield
+// never prints, and the loop's second pass finds it done; a Map's iterator has no return(), so the
+// second pass goes on from where the first left it.
+function* counted(prefix: string, count: number): Generator<number, void, undefined> {
+    console.log(`${prefix} starts`);
+    for(let index = 0; index < count; index++) {
+        yield (index + 1) * 10;
+        console.log(`${prefix} after ${String(index)}`);
+    }
+}
+function firstThenAsk(items: Iterable<number> | undefined): string {
+    let found = -1;
+    if (items !== undefined) {
+        for (const value of items) {
+            found = value;
+            break;
+        }
+    }
+    if (undefined === items) {
+        return 'missing';
+    }
+    return `found ${String(found)}`;
+}
+function firstWhilePresent(items: Iterable<number> | undefined): number {
+    let total = 0;
+    let passes = 0;
+    while (items !== undefined && passes < 2) {
+        for (const value of items) {
+            total += value;
+            break;
+        }
+        passes++;
+    }
+    return total;
+}
+const sizes = new Map<string, number>();
+for(let index = 0; index < 3; index++) {
+    sizes.set(`size ${String(index)}`, index + 7);
+}
+const more = new Map<string, number>();
+for(let index = 0; index < 3; index++) {
+    more.set(`more ${String(index)}`, index * 100);
+}
+console.log(firstThenAsk(counted(`ask ${String(2)}`, 2)));
+console.log(firstThenAsk(sizes.values()));
+console.log(firstThenAsk(counted(`empty ${String(0)}`, 0)));
+console.log(String(firstWhilePresent(counted(`loop ${String(3)}`, 3))));
+console.log(String(firstWhilePresent(more.values())));
