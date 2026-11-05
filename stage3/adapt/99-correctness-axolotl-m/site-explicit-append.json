@@ -1,0 +1,88 @@
+{
+  "typescript": "6.0.3",
+  "edit": true,
+  "roots": 79,
+  "rows": [
+    {
+      "call": "mapfn(array[i]!, i)",
+      "position": {
+        "line": 402,
+        "character": 22
+      },
+      "signature": "(x: T, i: number): U | readonly U[] | undefined",
+      "arguments": [
+        {
+          "text": "array[i]!",
+          "type": "NonNullable<T>"
+        },
+        {
+          "text": "i",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "call": "isArray(v)",
+      "position": {
+        "line": 404,
+        "character": 20
+      },
+      "signature": "(value: unknown): value is readonly unknown[]",
+      "arguments": [
+        {
+          "text": "v",
+          "type": "U | readonly U[]"
+        }
+      ]
+    },
+    {
+      "call": "addRange(result, v)",
+      "position": {
+        "line": 405,
+        "character": 29
+      },
+      "signature": "(to: U[] | undefined, from: readonly U[] | undefined, start?: number | undefined, end?: number | undefined): U[] | undefined",
+      "inferred": [
+        {
+          "parameter": "T",
+          "type": "U"
+        }
+      ],
+      "arguments": [
+        {
+          "text": "result",
+          "type": "U[] | undefined"
+        },
+        {
+          "text": "v",
+          "type": "readonly U[]"
+        }
+      ]
+    },
+    {
+      "call": "append<U>(result, v)",
+      "position": {
+        "line": 408,
+        "character": 29
+      },
+      "signature": "(to: U[] | undefined, value: U): U[]",
+      "inferred": [
+        {
+          "parameter": "T",
+          "type": "U"
+        }
+      ],
+      "arguments": [
+        {
+          "text": "result",
+          "type": "U[] | undefined"
+        },
+        {
+          "text": "v",
+          "type": "U"
+        }
+      ]
+    }
+  ],
+  "diagnostics": []
+}
