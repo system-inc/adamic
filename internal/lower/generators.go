@@ -37,12 +37,35 @@ func generatorDeclaration(node *ast.Node) bool {
 
 // loweredGenerator is a generator declaration this slice lowers: a named function* declared at a
 // module's top level. A generic one is lowered once per instantiation, where it's called, as every
-// generic function is (generic.go), and its yielded type is judged at that instance. Rule 2500 stops
-// every other generator before lowering.
+// generic function is (generic.go), and its yielded type is judged at that instance, so one nothing
+// instantiates costs nothing. Every other generator stops at lowering, wherever lowering reaches its
+// declaration, in the words generatorForm gives it (Lower, open question 7 on #qk8rztp); only an
+// async generator is stopped before lowering, refused for good by rule 2400.
 func loweredGenerator(node *ast.Node) bool {
 	return node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil &&
 		node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && node.Name() != nil &&
 		!ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync)
+}
+
+// generatorForm names the form of a generator declaration this slice doesn't lower, for its stop.
+func generatorForm(node *ast.Node) string {
+	switch {
+	case node.Kind == ast.KindFunctionExpression:
+		return "written as an expression"
+	case node.Kind == ast.KindMethodDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindObjectLiteralExpression:
+		return "written as an object literal's method"
+	case node.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(node, ast.ModifierFlagsStatic):
+		return "written as a static method"
+	case node.Kind == ast.KindMethodDeclaration:
+		return "written as a method"
+	case node.Name() == nil:
+		return "declared without a name"
+	case node.Parent != nil && node.Parent.Kind == ast.KindModuleBlock:
+		return "declared inside a namespace"
+	case node.Parent != nil && node.Parent.Kind != ast.KindSourceFile:
+		return "declared inside a function or a block"
+	}
+	return "of this form"
 }
 
 // generatorSignature writes a generator's result: a Generator, which yields one slot per value.

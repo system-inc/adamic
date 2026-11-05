@@ -81,9 +81,11 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Receiver = true
 	}
 	if generatorDeclaration(declaration) {
-		// Rule 2500 lets only the generators this slice lowers reach a signature.
+		// Every function body is lowered after its signature is written, here, so this is where a
+		// generator of a form this slice doesn't lower stops, before its body could be lowered as an
+		// ordinary function's (a function* that only returns would return undefined, not a generator).
 		if !loweredGenerator(declaration) {
-			return l.generatorNotYet(declaration, "of this form")
+			return l.generatorNotYet(declaration, generatorForm(declaration))
 		}
 		if err := l.generatorSignature(&function, declaration); err != nil {
 			return err

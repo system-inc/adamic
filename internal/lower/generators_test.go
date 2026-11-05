@@ -185,8 +185,9 @@ func TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom(t *testing.T) {
 	// not yet: generatorStepped reads T from the call's own instantiated type, void here, so the
 	// exemption doesn't apply. Read by testing, it isn't the only layer: the spread's array is void[]
 	// and its read is refused whatever generatorStepped says, so a generatorStepped reading T from the
-	// declaration is an equivalent mutant on this program. Mutant: loweredGenerator refuses type
-	// parameters again; rule 2500 stops this not yet before the void rules, and it goes red.
+	// declaration is an equivalent mutant on this program. Mutant: the walk stops a generic generator
+	// before the void rules (asyncGeneratorRefusal also taking a generic function*); this reads that
+	// stop instead, and goes red.
 	generic := "function f(): void {}\nfunction* each<T>(value: T) { yield value; }\nconsole.log(String([...each(f())].length));"
 	if _, err := lowerSource(t, generic); !errors.As(err, &refused) || !strings.Contains(refused.Error(), "adamic/no-void") {
 		t.Errorf("a generic generator spread at a void instantiation: got %v, want a void rule's refusal", err)

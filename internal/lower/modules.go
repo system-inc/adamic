@@ -148,6 +148,10 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				l.staticStorage(statement)
 			}
 		case ast.KindFunctionDeclaration:
+			if generatorDeclaration(statement) && !loweredGenerator(statement) {
+				// export default function* () has no name to declare it by (#qk8rztp).
+				return l.generatorNotYet(statement, generatorForm(statement))
+			}
 			if statement.Body() == nil && l.censusImplementation(statement) != nil {
 				continue
 			}

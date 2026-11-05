@@ -18,6 +18,11 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Kind != ast.KindFunctionDeclaration {
 			continue
 		}
+		if generatorDeclaration(node) {
+			// Before a generic one is put by to instantiate where it's called: its declaration is
+			// reached here, whether or not anything calls it (#qk8rztp, open question 7).
+			return nil, l.generatorNotYet(node, generatorForm(node))
+		}
 		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
 			// switchBindings owns the shared case environment and hoists these functions.
 			continue

@@ -58,9 +58,11 @@ Wave 3 (S2a, generic generators lowered per instance), run against the three fix
 The lowering's own pins have their mutants in their tests (internal/lower): generatorCallee's
 generic arm taken out (TestGenericGeneratorsLowerPerInstance and every road row), call()'s generator
 guard at the generic branch taken out (TestGenericGeneratorRoadsAreNotYet's value rows, two of them
-on checkGeneratorRoads' compiler bug), and loweredGenerator refusing type parameters again (the
-void instantiation row of TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom, now not yet at rule
-2500 where it must be a void rule's refusal). Two mutants read by testing are equivalent on these
+on checkGeneratorRoads' compiler bug), and the walk stopping a generic generator before the void
+rules (the void instantiation row of TestGeneratorVoidReturnIsNeverReadBySpreadOrArrayFrom, which
+must be a void rule's refusal). The forms' stops at lowering, once rule 2500 is gone, have theirs in
+TestGeneratorFormsStopAtLowering and TestUninstantiatedGenericGeneratorsAreWalkedButNotLowered. Two
+mutants read by testing are equivalent on these
 programs: generatorStepped reading `T` from the declaration (the spread's array is `void[]`, refused
 whatever the exemption says), and generatorSignature reading its result without `concrete`
 (representation reads a bare `T` through the instance's substitution; only an unread instance's

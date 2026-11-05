@@ -17,3 +17,5 @@ What moved: mapIterator is a generic top-level `function*`, which now lowers onc
 Mutant: loweredGenerator in internal/lower/generators.go refuses type parameters again (`len(node.TypeParameters()) == 0 &&` put back), on top of this change; the change's status.json stays.
 Command: GOFLAGS=-buildvcs=false go test -count=1 -v ./stage3/fixtures -run 'TestFixturesObjects$'
 Result with the mutant: exit 1, red in objects on exactly 25_map_generator.a/stage0, back at 3:1, rule 2500's generator stop. Restored, checked with cmp, the same command passes (darwin/arm64).
+
+Then rule 2500 is deleted (#qk8rztp, Lower's open question 7): generator forms not built stop at lowering. The record doesn't move, since mapIterator is lowered. The same mutant, on top of that change, reads Refused at 8:17, the spread, by adamic/no-void-read (a generator no longer lowered isn't exempt from the void rules), and is red on exactly 25_map_generator.a/stage0 again.

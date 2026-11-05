@@ -77,8 +77,15 @@ generator runs no `finally`, as Node, which collects one without running it.
 ## What stays not yet built, and why
 
 Every one of these stops as not yet built (NotYet, never Refused: generators are designed and
-intended), at rule 2500 for a declaration this slice doesn't lower, and at lowering, in its own
-words, for everything else.
+intended), at lowering, in its own words, wherever lowering reaches it (Lower, open question 7 on
+#qk8rztp). A declaration of a form this slice doesn't lower stops where lowering reaches it, called
+or not: its signature, a nested function's declaration, a function expression, or a block's
+statements, each saying the form (written as an expression, a method, a static method, an object
+literal's method, declared inside a function or a block, inside a namespace, without a name). No
+function's body is lowered before its signature is written, so none can compile as an ordinary
+function. A generic generator nothing instantiates is never lowered, so what its body holds costs
+nothing; the refusal walk still reads it, and refuses what is refused for good (an async generator,
+rule 2400, among them).
 
 - **A generator anywhere but its consumer:** stored in a variable, passed as an argument, returned,
   put in an array or a field, read through a view, or the generator function used as a value. A

@@ -58,6 +58,11 @@ func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) 
 	case ast.KindExportAssignment:
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
+		if generatorDeclaration(node) && !loweredGenerator(node) {
+			// A generator in a block at a module's top level is declared by no one, so it stops here,
+			// where the statements reach it, rather than at a call that finds no function.
+			return nil, l.generatorNotYet(node, generatorForm(node))
+		}
 		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
 			// Switch functions are initialized at entry, before dispatch.
 			return nil, nil

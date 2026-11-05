@@ -238,21 +238,6 @@ func (l *lowering) asyncGeneratorRefusal(node *ast.Node) error {
 
 func init() { refusalRules.register(2400, "asyncGeneratorRefusal", (*lowering).asyncGeneratorRefusal) }
 
-// generatorGap stops a synchronous generator function this slice doesn't lower as not yet built.
-// Generators are designed (#yvgst44) and ruled NotYet, never Refused (docs/rulings.md, open question
-// 17), so the stop says intended support. It runs at the ordinal the refusal held, so every program
-// it still stops stops where it did. A named, non-generic function* declared at a module's top level
-// goes on to lowering (#qk8rztp S1c), which stops what it holds that isn't built yet in its own words
-// (generators.go); a yield needs no rule of its own: it sits inside a generator function.
-func (l *lowering) generatorGap(node *ast.Node) error {
-	if generatorDeclaration(node) && !loweredGenerator(node) {
-		return l.notYet(node, "a generator function (its counted frame is being built, #qk8rztp)")
-	}
-	return nil
-}
-
-func init() { refusalRules.register(2500, "generatorGap", (*lowering).generatorGap) }
-
 // shorthandLibraryMethodGap stops a shorthand property whose variable holds a library method value.
 func (l *lowering) shorthandLibraryMethodGap(node *ast.Node) error {
 	if node.Kind == ast.KindShorthandPropertyAssignment {
