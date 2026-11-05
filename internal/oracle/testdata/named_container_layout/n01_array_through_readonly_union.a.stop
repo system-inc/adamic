@@ -1,0 +1,1 @@
+internal/oracle/testdata/named_container_layout/n01_array_through_readonly_union.a:2:44: stage 0 can't lower a number[] where readonly (string | number)[] goes: its number elements are stored as number and read there as string | number, held as a boxed union (build it as the slot's type where it's made, or copy its elements into one) yet
