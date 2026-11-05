@@ -703,6 +703,37 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		return l.widened(own, contextual, visited)
 	}
 	own, contextual = l.withoutUndefined(own), l.withoutUndefined(contextual)
+	if members := l.definedMembers(contextual); len(members) > 1 {
+		// Seen as a union, the fresh value is seen as each member it can be, as widened sees any value,
+		// and it's still fresh at each: a new Map in a "string" | Map<string, number | string> slot has
+		// no other name that reads it as its own Map<string, Kind>. So each member it's assignable to is
+		// judged with its own slots exempt, and every one of them must pass, not one, since narrowing
+		// picks any of them to write through (#rkybez3). A value assignable to none is left to widened.
+		if l.declaredKeys && slices.Contains(members, own) {
+			// The value stays the member that names its own type, as widened keeps it (records.go).
+			return nil
+		}
+		assignable := false
+		for _, member := range members {
+			if !l.checker.IsTypeAssignableTo(own, member) {
+				continue
+			}
+			assignable = true
+			if found := l.freshWidened(own, member, visited); found != nil {
+				return found
+			}
+		}
+		if assignable {
+			return nil
+		}
+		return l.widened(own, contextual, visited)
+	}
+	return l.freshWidened(own, contextual, visited)
+}
+
+// freshWidened is widened for a fresh value seen as one type: a container of the same kind has only
+// what's inside it walked, its own slots exempt, and anything else is walked as any value is.
+func (l *lowering) freshWidened(own *checker.Type, contextual *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	for _, viewed := range l.containers(contextual) {
 		for _, inside := range l.containers(own) {
 			if l.sameContainer(inside, viewed) {
