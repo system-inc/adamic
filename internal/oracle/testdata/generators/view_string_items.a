@@ -1,0 +1,31 @@
+// Lower's string-element pin (#qk8rztp S2c-1, commit 3): a Map's values() and a string generator
+// into one Iterable<string> view, held as a union, every string built. The dispatch declares its
+// item at the top of each pass and each arm assigns it, so a string item must start empty, take each
+// step's string releasing the last, and be let go of at the end of each pass, through the loop's end
+// and through a return out of it. ASan and the leak check are the proof.
+function* words(prefix: string, count: number): Generator<string, void, undefined> {
+    for(let index = 0; index < count; index++) {
+        yield `${prefix}${'w'.repeat(index + 1)}`;
+    }
+}
+function joined(items: Iterable<string>): string {
+    const parts: string[] = [];
+    for (const word of items) {
+        parts.push(word.toUpperCase());
+    }
+    return parts.join('|');
+}
+function first(items: Iterable<string>): string {
+    for (const word of items) {
+        return `first ${word}`;
+    }
+    return 'none';
+}
+const n = 7;
+const byKey = new Map([['a', 'x' + String(n)], ['b', `y${String(n * 2)}`]]);
+console.log(joined(byKey.values()));
+console.log(joined(words('g', 3)));
+console.log(joined(words('e', 0)));
+console.log(first(words('h', 2)));
+console.log(first(byKey.values()));
+console.log(first(new Map<string, string>().values()));

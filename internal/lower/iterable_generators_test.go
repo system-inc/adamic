@@ -19,6 +19,9 @@ import (
 // Generator<T, void> outside a stepped site is refused earlier by the void rules.
 const iterableCounted = "function* counted(limit: number): Generator<number, undefined, undefined> { for (let index = 0; index < limit; index++) { yield index * 10; } }\n"
 
+// iterableWords is a generator of built strings, for an Iterable<string> parameter, held as a union.
+const iterableWords = "function* words(limit: number): Generator<string, undefined, undefined> { for (let index = 0; index < limit; index++) { yield `w${String(index)}`; } }\n"
+
 // iterableTotal is a function whose one use of its Iterable<number> parameter is one for-of over it.
 const iterableTotal = "function total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\n"
 
@@ -36,6 +39,9 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 		{"an IterableIterator parameter", iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
 		{"a generic instance", iterableCounted + "function weigh<T>(items: Iterable<T>, by: (item: T) => number): number { let sum = 0; for (const item of items) { sum += by(item); } return sum; }\nconsole.log(String(weigh(counted(3), (value: number): number => value + 1)));"},
 		{"one function at two call sites", iterableCounted + iterableTotal + "console.log(String(total(counted(2)) + total(counted(4))));"},
+		// The union arm: an Iterable<string> slot fed a generator, and fed a Set's keys() too.
+		{"an Iterable<string> parameter", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));"},
+		{"an Iterable<string> parameter beside a Set's keys()", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconst seen = new Set<string>([`s${String(1)}`]);\nconsole.log(joined(words(2)) + joined(seen.keys()));"},
 		// The dispatch's two arms: one slot fed a generator at one call and a Map's values() at another.
 		{"a generator beside a collection's iterator", iterableCounted + iterableTotal + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));"},
 		{"an outer loop over the for-of", iterableCounted + "function firsts(items: Iterable<number>): number { let sum = 0; for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break; } } return sum; }\nconsole.log(String(firsts(counted(3))));"},
@@ -57,9 +63,9 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 // loop, a default that names it; a hand-driven next is refused earlier, below), a
 // closure that captures it, never called, passing it on, assigning it, reading arguments, and a callee
 // the call can't name as one body (an async function, a function value, a method), or a generator
-// that isn't the argument's own call (one stored first). And what S2c-1 doesn't build yet: two
-// generator functions into one parameter, an
-// Iterable<string> parameter, held as a union, and yields held otherwise than the view reads them.
+// that isn't the argument's own call (one stored first). And what S2c-1 doesn't build: two generator
+// functions into one parameter, a string beside a generator into an Iterable<string> parameter, an
+// origin no view admits, and yields held otherwise than the view reads them.
 // Spreading or destructuring the parameter stops before the proof, in its own words, so those rows
 // hold only that it doesn't compile. Mutants (internal/oracle/testdata/generators/mutants.md): the
 // one-read test made false admits the second-read rows; the call site taking any generator's call as
@@ -92,7 +98,7 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		{"it === g2()", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = items === halved(2) ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
 		{"it = g2() before the loop", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = 0; items = halved(2); for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
 		{"two generator functions", iterableCounted + iterableTotal + halved + "console.log(String(total(counted(2)) + total(halved(2))));", "generators of more than one function"},
-		{"an Iterable<string> parameter", "function* words(limit: number): Generator<string, undefined, undefined> { for (let index = 0; index < limit; index++) { yield `w${String(index)}`; } }\nfunction joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));", "held as a union"},
+		{"a string beside a generator into Iterable<string>", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)) + joined(`text ${String(1)}`));", "unproven origin"},
 		{"yields held otherwise", iterableCounted + "function show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counted(2));", "held differently"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
