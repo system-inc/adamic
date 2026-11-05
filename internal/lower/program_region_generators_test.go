@@ -84,3 +84,21 @@ func TestProgramRegionGeneratorCapturedByClosureStops(t *testing.T) {
 	source := programRegionGeneratorTree + programRegionGeneratorRun(" const steps = walk(branch);\n const read = (): Generator<Tree, undefined, undefined> => steps;\n for (const tree of read()) { console.log(tree.name); }")
 	programRegionGeneratorStops(t, source, "whose generator is used other than by a for-of over its call or a call as a statement")
 }
+
+// The callee side of the one road S2c-1 opened: a generator passed into an Iterable<T> parameter, which
+// the callee then puts in a slot, an object's field or a closure's capture, instead of one for-of over it.
+func TestProgramRegionGeneratorParameterStoredInFieldStops(t *testing.T) {
+	t.Parallel()
+	source := programRegionGeneratorTree +
+		"function names(trees: Iterable<Tree>): void { const holder = { t: trees }; for (const tree of holder.t) { console.log(tree.name); } }\n" +
+		programRegionGeneratorRun(" names(walk(branch));")
+	programRegionGeneratorStops(t, source, "passed into the parameter trees, whose one use isn't a for-of over it")
+}
+
+func TestProgramRegionGeneratorParameterCapturedByClosureStops(t *testing.T) {
+	t.Parallel()
+	source := programRegionGeneratorTree +
+		"function names(trees: Iterable<Tree>): void { const read = (): Iterable<Tree> => trees; for (const tree of read()) { console.log(tree.name); } }\n" +
+		programRegionGeneratorRun(" names(walk(branch));")
+	programRegionGeneratorStops(t, source, "passed into the parameter trees, which a closure captures")
+}
