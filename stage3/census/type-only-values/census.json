@@ -1,0 +1,5434 @@
+{
+  "typescript": "6.0.3",
+  "roots": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts"
+  ],
+  "options": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": []
+  },
+  "files": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "sha256": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "sha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "sha256": "115bf34edb7bddaa365f9ec60a5e0d24776f74acdc404b5ac155110a3616143c"
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "sha256": "cc1c7b1f6ccba7393e634a0307781de75a07b03a7ba34ec6046390ef631fd8a2"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "sha256": "56bae6e7b35779c27776bc1afac734ddef84617a7e0876c37e140721b5b251a6"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "sha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "sha256": "2b1de9ded2ba8b5ede4ce921346267cc0d016986fc2bcf5278c4992a33758810"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "sha256": "7be216d0f04aebcb91ce166181d06bea298a8b418848f7ea203b4ffaace2550d"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "sha256": "279c6c1fc40e45025b07244c0b3ce84b6e28a1cc901ac9d789fae0911aed67fb"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "sha256": "0ec43231c051abbc554fd34154fd80b46f54771f67fe3675d5c24bbebd4f183b"
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab"
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+    },
+    {
+      "file": "src/compiler/factory/nodeChildren.ts",
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "sha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+    },
+    {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "sha256": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230"
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "sha256": "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "sha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "sha256": "4cf2621fcd2d659c0e7561d9177d0ff10f51e85b6357d91cfd30601ac5f29938"
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "sha256": "9188f7c490a9c716cd1939ea6932a4af1ac1e256c5b042c5b9ad88f2313b4a3b"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "sha256": "2c7047197c8eb011a3e1201b20c88f5164806471e513b4415d877b8855afee67"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "sha256": "a2a02f0f675ff9c65c350da8af0868ff8b30604559d222aa7bbe68a010742ed8"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "sha256": "6ac1af02e48510c6e8017199ae70fd9d546ef78fff3ccf673f1b4fe854490571"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "sha256": "21b405e7d70573550a4b412d924c96e1a8107c5f6f6265a51e3d6f6fb66af255"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "sha256": "f8dc15db9cc3afa950a3007f50d3456e91eeedb9891982f10a9e3c64a2a111e6"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "sha256": "8a4bd2136c672d865347086513d51c42ed521367bf271c1810232e14abf9f418"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "sha256": "f2c22f33bd5ab34b3aae203980931ba32a9ef2ecbc1dfde3fd95cd7080ec94b7"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "sha256": "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "sha256": "67337f0d2a1b78d8de9776ab5d09e32b09d3424b1339a2de26045d349eb959d8"
+    },
+    {
+      "file": "src/compiler/transformers/classThis.ts",
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "sha256": "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "sha256": "6cf16affa15878db3e25a03caa3aa9b568923eea7af8764d8299a3d6effbc34d"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "sha256": "b3cd96874cfbdc0655f27e063213873f823f32437e8d747bf4ec13472a559918"
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "sha256": "a7e509c413a72c05f3c054439d930d5fab25b36ccda29975506d34a01d6b8d6e"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "sha256": "c9b798b0542a7f72877004143b8a768e808b9508ef7887b33beb6012a8ab7239"
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a"
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "sha256": "572d9ed4aaffe4a4da286122477601fe45ad2cf9354025333b3cabe538e6f7b0"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "sha256": "112a60322a57f7a60835cd1a3e5206556def471d9faae7284ecfe10885d7c12e"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "sha256": "503850d4681b64d51f5ee6cc3c52e1d0ebd6828870f1bd4f4de3cdc0eb3eccd3"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "sha256": "a6152ff5eb16419db8e22e03f942b797e3ed828d095fc74f088d66c11b09f295"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0"
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "sha256": "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52"
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "sha256": "a0fb602c1403c3c6f13c398360ec6bb0adfeb8592975e5574cb6bdfb694abe8b"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "sha256": "cdcd5353acc1d86e687e96fefc4793cc0e862c5bbf84e5ab30b80c2f7997600e"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "sha256": "58634091ee8e9c336671b0c457b91d1cbdb71ef37eccfa556aedc07192743868"
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "sha256": "6ef7f50b25b509b12607f51d4e885c551fa478826e42572d6dea53e4f3446b02"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "sha256": "1dc52221c695d3c0beeb9ad926f580fc203eab3b1e68f9871ff3552ec5965146"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "sha256": "ad246678fc97945a1c1ef2b446c8c5c93cefe3e51e3793c7acd1558f6f1ba96f"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "sha256": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "sha256": "f697acb7bc02bc3f5261ac615414a479ca1c6378edf01e5cd8a4a12603f02511"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "sha256": "d7d41bbb856cd72f33ae8115947e7e425f9a9bbb5fe9720560b858e9f37e35d9"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+    }
+  ],
+  "summary": {
+    "total": 27,
+    "byKind": {
+      "const enum": 26,
+      "enum": 1
+    },
+    "wholeDeclarations": 1,
+    "mixedDeclarations": 9,
+    "wholeSpecifiers": 1,
+    "mixedSpecifiers": 26
+  },
+  "forms": {
+    "namespace": 19,
+    "named": 5049
+  },
+  "unresolved": [
+    {
+      "file": "src/compiler/sys.ts",
+      "name": "_fs",
+      "references": [
+        {
+          "line": 1485,
+          "type": false,
+          "context": "_fs.realpathSync"
+        },
+        {
+          "line": 1485,
+          "type": false,
+          "context": "_fs.realpathSync"
+        },
+        {
+          "line": 1485,
+          "type": false,
+          "context": "_fs.realpathSync"
+        },
+        {
+          "line": 1544,
+          "type": false,
+          "context": "_fs.mkdirSync"
+        },
+        {
+          "line": 1626,
+          "type": false,
+          "context": "_fs.statSync"
+        },
+        {
+          "line": 1696,
+          "type": false,
+          "context": "_fs.mkdirSync"
+        },
+        {
+          "line": 1701,
+          "type": false,
+          "context": "_fs.writeFileSync"
+        },
+        {
+          "line": 1734,
+          "type": false,
+          "context": "_fs.watchFile"
+        },
+        {
+          "line": 1737,
+          "type": false,
+          "context": "_fs.unwatchFile"
+        },
+        {
+          "line": 1773,
+          "type": false,
+          "context": "_fs.watch"
+        },
+        {
+          "line": 1784,
+          "type": false,
+          "context": "_fs.readFileSync"
+        },
+        {
+          "line": 1822,
+          "type": false,
+          "context": "_fs.openSync"
+        },
+        {
+          "line": 1823,
+          "type": false,
+          "context": "_fs.writeSync"
+        },
+        {
+          "line": 1827,
+          "type": false,
+          "context": "_fs.closeSync"
+        },
+        {
+          "line": 1834,
+          "type": false,
+          "context": "_fs.readdirSync"
+        },
+        {
+          "line": 1908,
+          "type": false,
+          "context": "_fs.realpathSync"
+        },
+        {
+          "line": 1908,
+          "type": false,
+          "context": "_fs.realpathSync"
+        },
+        {
+          "line": 1926,
+          "type": false,
+          "context": "_fs.utimesSync"
+        },
+        {
+          "line": 1935,
+          "type": false,
+          "context": "_fs.unlinkSync"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "name": "_path",
+      "references": [
+        {
+          "line": 1492,
+          "type": false,
+          "context": "_path.join"
+        },
+        {
+          "line": 1492,
+          "type": false,
+          "context": "_path.dirname"
+        },
+        {
+          "line": 1535,
+          "type": false,
+          "context": "_path.resolve"
+        },
+        {
+          "line": 1669,
+          "type": false,
+          "context": "_path.dirname"
+        },
+        {
+          "line": 1693,
+          "type": false,
+          "context": "_path.join"
+        },
+        {
+          "line": 1696,
+          "type": false,
+          "context": "_path.dirname"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "name": "_os",
+      "references": [
+        {
+          "line": 1483,
+          "type": false,
+          "context": "_os.platform"
+        },
+        {
+          "line": 1519,
+          "type": false,
+          "context": "_os.EOL"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "name": "_crypto",
+      "references": [
+        {
+          "line": 1943,
+          "type": false,
+          "context": "_crypto.createHash"
+        }
+      ]
+    }
+  ],
+  "unused": [],
+  "validation": {
+    "beforeDiagnostics": 59,
+    "afterInlineTypeDiagnostics": 59,
+    "TS1361or1362": 0,
+    "newDiagnosticMessages": 0
+  },
+  "declarations": [
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 2,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "AssertionLevel",
+          "valueReferences": 7,
+          "references": 12
+        },
+        {
+          "name": "compareValues",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "every",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "FlowFlags",
+          "valueReferences": 36,
+          "references": 38
+        },
+        {
+          "name": "getEffectiveModifierFlagsNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getEmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getOwnKeys",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getParseTreeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSourceFileOfNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getSourceTextOfNodeFromSourceFile",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "hasProperty",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "idText",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isArrayTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isBigIntLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isCallSignatureDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isConditionalTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isConstructorDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isConstructorTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isConstructSignatureDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isDefaultClause",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isFunctionTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isGeneratedIdentifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isGetAccessorDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIdentifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIndexedAccessTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIndexSignatureDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isInferTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIntersectionTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isLiteralTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isMappedTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNamedTupleMember",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNumericLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isOptionalTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isParameter",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isParenthesizedTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isParseTreeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isPrivateIdentifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isRestTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSetAccessorDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isStringLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isThisTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTupleTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeLiteralNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeOperatorNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeParameterDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypePredicateNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeQueryNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeReferenceNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isUnionTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "map",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "maxBy",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "nodeIsSynthesized",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "noop",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "objectAllocator",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "ObjectFlags",
+          "valueReferences": 8,
+          "references": 9
+        },
+        {
+          "name": "SymbolFlags",
+          "valueReferences": 2,
+          "references": 3
+        },
+        {
+          "name": "symbolName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "toSorted",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "TypeFlags",
+          "valueReferences": 16,
+          "references": 17
+        },
+        {
+          "name": "TypeMapKind",
+          "valueReferences": 6,
+          "references": 7
+        },
+        {
+          "name": "unescapeLeadingUnderscores",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "VarianceFlags",
+          "valueReferences": 8,
+          "references": 9
+        },
+        {
+          "name": "zipWith",
+          "valueReferences": 2,
+          "references": 2
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "line": 1,
+      "module": "../_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "objectAllocator",
+          "valueReferences": 5,
+          "references": 5
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "addInternalEmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "addRange",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "addRelatedInfo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "append",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "arrayIsEqualTo",
+          "valueReferences": 12,
+          "references": 12
+        },
+        {
+          "name": "canHaveDecorators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "canHaveIllegalDecorators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "chainDiagnosticMessages",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "changeExtension",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "changesAffectingProgramStructure",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "changesAffectModuleResolution",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "combinePaths",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "commandLineOptionOfCustomType",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "compareDataObjects",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "comparePaths",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "compareValues",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Comparison",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "computeLineAndCharacterOfPosition",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "concatenate",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "contains",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "containsIgnoredPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "containsPath",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "convertToRelativePath",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createCommentDirectivesMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createCompilerDiagnostic",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "createCompilerDiagnosticFromMessageChain",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createDiagnosticForNodeFromMessageChain",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createDiagnosticForNodeInSourceFile",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "createDiagnosticForRange",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createFileDiagnostic",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "createGetCanonicalFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createModeAwareCache",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "createModeAwareCacheKey",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createModuleResolutionCache",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createMultiMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createProgramDiagnostics",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createSourceFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createSymlinkCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createTypeChecker",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createTypeReferenceDirectiveResolutionCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 16,
+          "references": 16
+        },
+        {
+          "name": "DiagnosticCategory",
+          "valueReferences": 4,
+          "references": 5
+        },
+        {
+          "name": "diagnosticCategoryName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "Diagnostics",
+          "valueReferences": 218,
+          "references": 218
+        },
+        {
+          "name": "directorySeparator",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "emitFiles",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "emitModuleKindIsNonNodeESM",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "emitResolverSkipsTypeChecking",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "emptyArray",
+          "valueReferences": 15,
+          "references": 15
+        },
+        {
+          "name": "ensureTrailingDirectorySeparator",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "exclusivelyPrefixedNodeCoreModules",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Extension",
+          "valueReferences": 36,
+          "references": 36
+        },
+        {
+          "name": "extensionFromPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "externalHelpersModuleNameText",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "factory",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "fileExtensionIs",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "fileExtensionIsOneOf",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "FileIncludeKind",
+          "valueReferences": 21,
+          "references": 21
+        },
+        {
+          "name": "FilePreprocessingDiagnosticsKind",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "filter",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "find",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "findIndex",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "firstDefinedIterator",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "flatMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "flatten",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "forEach",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "forEachAncestorDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachChildRecursively",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachDynamicImportOrRequireCall",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachEmittedFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachEntry",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "forEachKey",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachOptionsSyntaxByName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachProjectReference",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "forEachPropertyAssignment",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "ts_forEachResolvedProjectReference",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachTsConfigPropArray",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getAllowJSCompilerOption",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "getAutomaticTypeDirectiveNames",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getBaseFileName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "ts_getCommonSourceDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getCommonSourceDirectoryOfConfig",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getComputedCommonSourceDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ts_getDeclarationDiagnostics",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getDefaultLibFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getDirectoryPath",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "getEmitDeclarations",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "getEmitModuleKind",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "getEmitModuleResolutionKind",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getEmitScriptTarget",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getErrorSpanForNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getExternalModuleName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getIsolatedModules",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSXImplicitImportBase",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSXRuntimeImport",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getLibFileNameFromLibReference",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "getLineStarts",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getNewLineCharacter",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getNormalizedAbsolutePath",
+          "valueReferences": 11,
+          "references": 11
+        },
+        {
+          "name": "getNormalizedAbsolutePathWithoutRoot",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getNormalizedPathComponents",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getOutputDeclarationFileName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getPackageScopeForPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getPathFromPathComponents",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getPositionOfLineAndCharacter",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getRelativePathFromFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getResolvedModuleFromResolution",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getResolvedTypeReferenceDirectiveFromResolution",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getResolveJsonModule",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getRootLength",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSetExternalModuleIndicator",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSourceFileOfNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getStrictOptionValue",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getSupportedExtensions",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSupportedExtensionsWithJsonIfResolveJsonModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTemporaryModuleResolutionState",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTextOfIdentifierOrLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTransformers",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTsBuildInfoEmitOutputFilePath",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getTsConfigObjectLiteralExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTypesPackageName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasChangesInResolutions",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "hasExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasJSFileExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasJsonModuleEmitEnabled",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasProperty",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "hasSyntacticModifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasZeroOrOneAsteriskCharacter",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "identity",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "importSyntaxAffectsModuleResolution",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "InternalEmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "inverseJsxOptionMap",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isAmbientModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isAnyImportOrReExport",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isArray",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isArrayLiteralExpression",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isBuildInfoFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isCheckJsEnabledForFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isClassDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isDeclarationFileName",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isDecorator",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isDefaultModifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExportDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isExportModifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExternalModule",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isExternalModuleNameRelative",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isIdentifierText",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportCall",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportEqualsDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportSpecifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isInJSFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocImportTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isModifier",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isModuleDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isObjectLiteralExpression",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isParameter",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isPlainJsFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isRequireCall",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isRootedDiskPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSourceFileJS",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isString",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isStringLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isStringLiteralLike",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isTraceEnabled",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "JsxEmit",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "length",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "libs",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "mapDefined",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "maybeBind",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "memoize",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "ModifierFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModuleKind",
+          "valueReferences": 45,
+          "references": 47
+        },
+        {
+          "name": "moduleResolutionIsEqualTo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModuleResolutionKind",
+          "valueReferences": 13,
+          "references": 13
+        },
+        {
+          "name": "moduleResolutionSupportsPackageJsonExportsAndImports",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "NodeFlags",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "nodeModulesPathPart",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "noop",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "normalizePath",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "notImplementedResolver",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "noTransformers",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "OperationCanceledException",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "optionDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "optionsHaveChanges",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "packageIdToPackageName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "packageIdToString",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "parseIsolatedEntityName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "parseJsonSourceFileConfigFileContent",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "parseNodeFactory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "pathContainsNodeModules",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "pathIsAbsolute",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "pathIsRelative",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "projectReferenceIsEqualTo",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "removeFileExtension",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "removePrefix",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "removeSuffix",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "resolutionExtensionIsTSOrJson",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "resolveConfigFileProjectName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "resolveLibrary",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "resolveModuleName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "resolveTypeReferenceDirective",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "returnFalse",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "returnUndefined",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ScriptKind",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "ScriptTarget",
+          "valueReferences": 5,
+          "references": 6
+        },
+        {
+          "name": "setParent",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "setParentRecursive",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "skipTrivia",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "skipTypeChecking",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "some",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "sortAndDeduplicateDiagnostics",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "sourceFileAffectingCompilerOptions",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "sourceFileMayBeEmitted",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "startsWith",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "StructureIsReused",
+          "valueReferences": 30,
+          "references": 32
+        },
+        {
+          "name": "supportedJSExtensionsFlat",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "SyntaxKind",
+          "valueReferences": 76,
+          "references": 76
+        },
+        {
+          "name": "sys",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "toFileNameLowerCase",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "tokenToString",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "ts_toPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "toSorted",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "trace",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "tracing",
+          "valueReferences": 36,
+          "references": 36
+        },
+        {
+          "name": "tryCast",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "typeDirectiveIsEqualTo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "unprefixedNodeCoreModules",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Version",
+          "valueReferences": 5,
+          "references": 6
+        },
+        {
+          "name": "versionMajorMinor",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "walkUpParenthesizedExpressions",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "writeFileEnsuringDirectories",
+          "valueReferences": 1,
+          "references": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "addRange",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "append",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "chainBundle",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createEmitHelperFactory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 36,
+          "references": 36
+        },
+        {
+          "name": "disposeEmitNodes",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "EmitFlags",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "emptyArray",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "factory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getEmitFlags",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getEmitModuleKind",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getEmitScriptTarget",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSXTransformEnabled",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getParseTreeNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getSourceFileOfNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getUseDefineForClassFields",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isBundle",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSourceFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "LexicalEnvironmentFlags",
+          "valueReferences": 4,
+          "references": 7
+        },
+        {
+          "name": "map",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "memoize",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModuleKind",
+          "valueReferences": 11,
+          "references": 12
+        },
+        {
+          "name": "NodeFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "noop",
+          "valueReferences": 13,
+          "references": 13
+        },
+        {
+          "name": "notImplemented",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "returnUndefined",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "ScriptTarget",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "setEmitFlags",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "some",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "SyntaxKind",
+          "valueReferences": 2,
+          "references": 4
+        },
+        {
+          "name": "tracing",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "transformClassFields",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformECMAScriptModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2015",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2016",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2017",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2018",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2019",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2020",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformES2021",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformESDecorators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformESNext",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformGenerators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformImpliedNodeFormatDependentModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformJsx",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformLegacyDecorators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformSystemModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformTypeScript",
+          "valueReferences": 1,
+          "references": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 1,
+      "module": "../../_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "addEmitHelpers",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "addRange",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "append",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "chainBundle",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createEmptyExports",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createExternalHelpersImportDeclarationIfNeeded",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "EmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachDynamicImportOrRequireCall",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "GeneratedIdentifierFlags",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "getEmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getEmitModuleKind",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "getEmitScriptTarget",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getExternalHelpersModuleName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getExternalModuleNameLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getIsolatedModules",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getNodeId",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasSyntacticModifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "idText",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "insertStatementsAfterCustomPrologue",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExportNamespaceAsDefaultDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExternalModule",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isExternalModuleImportEqualsDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExternalModuleIndicator",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIdentifier",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isInJSFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNamespaceExport",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSourceFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isStatement",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isStringLiteralLike",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "ModifierFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModuleKind",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "NodeFlags",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "rangeContainsRange",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "rewriteModuleSpecifier",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "ScriptTarget",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "setOriginalNode",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "setTextRange",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "shouldRewriteModuleSpecifier",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "singleOrMany",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "some",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "SyntaxKind",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "visitArray",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "visitEachChild",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "visitNodes",
+          "valueReferences": 1,
+          "references": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "line": 1,
+      "module": "../../_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "Debug",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSourceFile",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "map",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModuleKind",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "SyntaxKind",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "transformECMAScriptModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "transformModule",
+          "valueReferences": 1,
+          "references": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": true,
+      "remaining": []
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "addEmitFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "addRange",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "affectsDeclarationPathOptionDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "affectsEmitOptionDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "append",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "arrayFrom",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "assertType",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "AssignmentDeclarationKind",
+          "valueReferences": 19,
+          "references": 22
+        },
+        {
+          "name": "binarySearch",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "canHaveDecorators",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "canHaveLocals",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "canHaveModifiers",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "changeAnyExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "CharacterCodes",
+          "valueReferences": 47,
+          "references": 55
+        },
+        {
+          "name": "CheckFlags",
+          "valueReferences": 4,
+          "references": 5
+        },
+        {
+          "name": "classHasDeclaredOrExplicitlyAssignedName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "combinePaths",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "CommentDirectiveType",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "comparePaths",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "compareStringsCaseSensitive",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "compareValues",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "Comparison",
+          "valueReferences": 23,
+          "references": 31
+        },
+        {
+          "name": "computeLineAndCharacterOfPosition",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "computeLineOfPosition",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "computeLineStarts",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "concatenate",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "ContainerFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "contains",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "containsPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createGetCanonicalFileName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createMultiMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createScanner",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "createTextSpan",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "createTextSpanFromBounds",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 55,
+          "references": 55
+        },
+        {
+          "name": "Diagnostics",
+          "valueReferences": 14,
+          "references": 14
+        },
+        {
+          "name": "directorySeparator",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "EmitFlags",
+          "valueReferences": 6,
+          "references": 8
+        },
+        {
+          "name": "emptyArray",
+          "valueReferences": 24,
+          "references": 24
+        },
+        {
+          "name": "endsWith",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ensurePathIsNonModuleName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ensureTrailingDirectorySeparator",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "equalOwnProperties",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "equateValues",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "escapeLeadingUnderscores",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "every",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "Extension",
+          "valueReferences": 105,
+          "references": 126
+        },
+        {
+          "name": "factory",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "fileExtensionIs",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "fileExtensionIsOneOf",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "filter",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "find",
+          "valueReferences": 11,
+          "references": 11
+        },
+        {
+          "name": "findAncestor",
+          "valueReferences": 15,
+          "references": 15
+        },
+        {
+          "name": "findBestPatternMatch",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "findIndex",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "findLast",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "firstDefined",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "firstOrUndefined",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "flatMap",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "flatMapToMutable",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "flatten",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "forEach",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "forEachChild",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "forEachChildRecursively",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getAllJSDocTags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getBaseFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getCombinedModifierFlags",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getCombinedNodeFlags",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "getCommonSourceDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getContainerFlags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getDirectoryPath",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "getImpliedNodeFormatForEmitWorker",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocAugmentsTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocDeprecatedTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocImplementsTags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocOverrideTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocParameterTags",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getJSDocParameterTagsNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocPrivateTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocProtectedTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocPublicTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocReadonlyTagNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocReturnType",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocSatisfiesTag",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getJSDocTags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocType",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocTypeParameterTags",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocTypeParameterTagsNoCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getJSDocTypeTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getLeadingCommentRanges",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "getLineAndCharacterOfPosition",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "getLinesBetweenPositions",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "getLineStarts",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getModeForUsageLocation",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getNameOfDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getNodeChildren",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getNormalizedAbsolutePath",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "getNormalizedPathComponents",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getOwnKeys",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getParseTreeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getPathComponents",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getPathFromPathComponents",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getRelativePathFromDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getRelativePathToDirectoryOrUrl",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getResolutionModeOverride",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getRootLength",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSnippetElement",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getStringComparer",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getSymbolId",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTrailingCommentRanges",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasInitializer",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasJSDocNodes",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "hasProperty",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "identifierToKeywordKind",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "identity",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "idText",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "ignoredPaths",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "indexOfAnyCharCode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "insertSorted",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "InternalSymbolName",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isAccessor",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isAnyDirectorySeparator",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isArray",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isArrayLiteralExpression",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isArrowFunction",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isAssertionExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isAutoAccessorPropertyDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isBigIntLiteral",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isBinaryExpression",
+          "valueReferences": 23,
+          "references": 23
+        },
+        {
+          "name": "isBindingElement",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isBindingPattern",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isBlock",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isCallExpression",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isCaseClause",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isClassDeclaration",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "isClassElement",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isClassExpression",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isClassLike",
+          "valueReferences": 14,
+          "references": 14
+        },
+        {
+          "name": "isClassStaticBlockDeclaration",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isCommaListExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isComputedPropertyName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isConstructorDeclaration",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isConstTypeReference",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isDeclaration",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isDeclarationFileName",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isDecorator",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isDefaultClause",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isElementAccessExpression",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isEnumDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isEnumMember",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExportAssignment",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExportDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isExpressionStatement",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isExpressionWithTypeArguments",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExternalModule",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "isExternalModuleReference",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isFileProbablyExternalModule",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isForStatement",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isFunctionDeclaration",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "isFunctionExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isFunctionLike",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "isFunctionLikeDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isFunctionLikeOrClassStaticBlockDeclaration",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isGetAccessorDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isHeritageClause",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isIdentifier",
+          "valueReferences": 33,
+          "references": 33
+        },
+        {
+          "name": "isIdentifierStart",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isIdentifierText",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isImportTypeNode",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isInterfaceDeclaration",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDoc",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isJSDocAugmentsTag",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDocFunctionType",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocImplementsTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocImportTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocLinkLike",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDocMemberName",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "isJSDocNameReference",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDocNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isJSDocOverloadTag",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDocParameterTag",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isJSDocPropertyLikeTag",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isJSDocReturnTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocSatisfiesTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocSignature",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJSDocTag",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocTemplateTag",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isJSDocTypeExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocTypeLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJSDocTypeTag",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isJsxChild",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJsxFragment",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJsxNamespacedName",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isJsxOpeningLikeElement",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isJsxText",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isLeftHandSideExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isLineBreak",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isLiteralTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isMappedTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isMemberName",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isMetaProperty",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isMethodDeclaration",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isMethodOrAccessor",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isModifierLike",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isModuleBlock",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isModuleDeclaration",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "isModuleOrEnumDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNamedDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNamespaceExport",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isNamespaceExportDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isNamespaceImport",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isNonNullExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNoSubstitutionTemplateLiteral",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNullishCoalesce",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isNumericLiteral",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "isObjectBindingPattern",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isObjectLiteralExpression",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isOmittedExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isOptionalChain",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isParameter",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isParameterPropertyDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isParenthesizedExpression",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isParenthesizedTypeNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isPrefixUnaryExpression",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isPrivateIdentifier",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isPropertyAccessExpression",
+          "valueReferences": 11,
+          "references": 11
+        },
+        {
+          "name": "isPropertyAssignment",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isPropertyDeclaration",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isPropertyName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isPropertySignature",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isQualifiedName",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isRootedDiskPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSetAccessorDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isShiftOperatorOrHigher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isShorthandPropertyAssignment",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isSourceFile",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isString",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isStringLiteral",
+          "valueReferences": 10,
+          "references": 10
+        },
+        {
+          "name": "isStringLiteralLike",
+          "valueReferences": 12,
+          "references": 12
+        },
+        {
+          "name": "isTypeAliasDeclaration",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isTypeElement",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeLiteralNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeNode",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isTypeParameterDeclaration",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "isTypeQueryNode",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isTypeReferenceNode",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isVariableDeclaration",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "isVariableStatement",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "isVoidExpression",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isWhiteSpaceLike",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "isWhiteSpaceSingleLine",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "JsxEmit",
+          "valueReferences": 8,
+          "references": 8
+        },
+        {
+          "name": "LanguageVariant",
+          "valueReferences": 2,
+          "references": 3
+        },
+        {
+          "name": "last",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "lastOrUndefined",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "length",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "libMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "mangleScopedPackageName",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "map",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "mapDefined",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "memoize",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ModifierFlags",
+          "valueReferences": 61,
+          "references": 80
+        },
+        {
+          "name": "ModuleDetectionKind",
+          "valueReferences": 5,
+          "references": 7
+        },
+        {
+          "name": "ModuleKind",
+          "valueReferences": 34,
+          "references": 39
+        },
+        {
+          "name": "ModuleResolutionKind",
+          "valueReferences": 19,
+          "references": 22
+        },
+        {
+          "name": "moduleResolutionOptionDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "NewLineKind",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "NodeFlags",
+          "valueReferences": 37,
+          "references": 40
+        },
+        {
+          "name": "nodeModulesPathPart",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "noop",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "normalizePath",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "optionsAffectingProgramStructure",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "or",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "OuterExpressionKinds",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "parseConfigFileTextToJson",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "pathIsRelative",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "removeTrailingDirectorySeparator",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "resolvePath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "returnFalse",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "returnUndefined",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "ScriptKind",
+          "valueReferences": 27,
+          "references": 32
+        },
+        {
+          "name": "ScriptTarget",
+          "valueReferences": 13,
+          "references": 17
+        },
+        {
+          "name": "semanticDiagnosticsOptionDeclarations",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "setOriginalNode",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "setTextRange",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "shouldAllowImportingTsExtension",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "singleElementArray",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "singleOrUndefined",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "skipOuterExpressions",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "skipTrivia",
+          "valueReferences": 19,
+          "references": 19
+        },
+        {
+          "name": "SnippetKind",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "some",
+          "valueReferences": 16,
+          "references": 16
+        },
+        {
+          "name": "startsWith",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "startsWithUseStrict",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "stringToToken",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "SymbolFlags",
+          "valueReferences": 24,
+          "references": 32
+        },
+        {
+          "name": "SyntaxKind",
+          "valueReferences": 1275,
+          "references": 1308
+        },
+        {
+          "name": "targetOptionDeclaration",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "toFileNameLowerCase",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "TokenFlags",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "tokenToString",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "toPath",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "toSorted",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "tracing",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "TransformFlags",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "tryCast",
+          "valueReferences": 11,
+          "references": 11
+        },
+        {
+          "name": "tryRemovePrefix",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "TypeFlags",
+          "valueReferences": 6,
+          "references": 8
+        },
+        {
+          "name": "TypePredicateKind",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "unescapeLeadingUnderscores",
+          "valueReferences": 5,
+          "references": 5
+        },
+        {
+          "name": "visitEachChild",
+          "valueReferences": 1,
+          "references": 1
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "canJsonReportNoInputFiles",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "changeCompilerHostLikeToUseCache",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "changesAffectModuleResolution",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "cleanExtendedConfigCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "clearMap",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "clearSharedExtendedConfigFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "closeFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "closeFileWatcherOf",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "createBuilderProgramUsingIncrementalBuildInfo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createCachedDirectoryStructureHost",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createCompilerDiagnostic",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createCompilerHostFromProgramHost",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createCompilerHostWorker",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createEmitAndSemanticDiagnosticsBuilderProgram",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createGetCanonicalFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createResolutionCache",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createWatchCompilerHostOfConfigFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createWatchCompilerHostOfFilesAndCompilerOptions",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "createWatchFactory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 14,
+          "references": 14
+        },
+        {
+          "name": "Diagnostics",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "FileWatcherEventKind",
+          "valueReferences": 2,
+          "references": 6
+        },
+        {
+          "name": "getBuildInfo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getConfigFileParsingDiagnostics",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getDirectoryPath",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getFileNamesFromConfigSpecs",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getNewLineCharacter",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getNormalizedAbsolutePath",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "getParsedCommandLineOfConfigFile",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "getSourceFileVersionAsHashFromText",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getTsBuildInfoEmitOutputFilePath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isArray",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isIgnoredFileFromWildCardWatching",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isIncrementalBuildInfo",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isProgramUptoDate",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "maybeBind",
+          "valueReferences": 9,
+          "references": 9
+        },
+        {
+          "name": "noop",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "noopFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "parseConfigHostFromCompilerHostLike",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "PollingInterval",
+          "valueReferences": 7,
+          "references": 8
+        },
+        {
+          "name": "ProgramUpdateLevel",
+          "valueReferences": 13,
+          "references": 16
+        },
+        {
+          "name": "returnFalse",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "returnTrue",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "setGetSourceFileAsHashVersioned",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "sys",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "toPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ts_toPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "updateErrorForNoInputFiles",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "updateMissingFilePathsWatch",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "updateSharedExtendedConfigFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "updateWatchingWildcardDirectories",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "version",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "WatchType",
+          "valueReferences": 12,
+          "references": 13
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 1,
+      "module": "./_namespaces/ts.js",
+      "resolvedModule": "src/compiler/_namespaces/ts.ts",
+      "wholeDeclaration": false,
+      "remaining": [
+        {
+          "name": "arrayToMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "binarySearch",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "clearMap",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "closeFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "compareStringsCaseSensitive",
+          "valueReferences": 4,
+          "references": 4
+        },
+        {
+          "name": "createGetCanonicalFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "Debug",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "emptyArray",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "emptyFileSystemEntries",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ensureTrailingDirectorySeparator",
+          "valueReferences": 7,
+          "references": 7
+        },
+        {
+          "name": "Extension",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "fileExtensionIsOneOf",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "FileWatcherEventKind",
+          "valueReferences": 2,
+          "references": 4
+        },
+        {
+          "name": "find",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "forEachAncestorDirectory",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getAllowJSCompilerOption",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getBaseFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getDirectoryPath",
+          "valueReferences": 3,
+          "references": 3
+        },
+        {
+          "name": "getNormalizedAbsolutePath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "getResolveJsonModule",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "hasExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "identity",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "insertSorted",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isArray",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "isBuilderProgram",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isDeclarationFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isExcludedFile",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "isSupportedSourceFileName",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "map",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "matchesExclude",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "matchFiles",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "mutateMap",
+          "valueReferences": 2,
+          "references": 2
+        },
+        {
+          "name": "noop",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "normalizePath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "removeFileExtension",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "removeIgnoredPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "returnNoopFileWatcher",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "ScriptKind",
+          "valueReferences": 8,
+          "references": 9
+        },
+        {
+          "name": "setSysLog",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "supportedJSExtensionsFlat",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "timestamp",
+          "valueReferences": 6,
+          "references": 6
+        },
+        {
+          "name": "ts_toPath",
+          "valueReferences": 1,
+          "references": 1
+        },
+        {
+          "name": "WatchDirectoryFlags",
+          "valueReferences": 1,
+          "references": 13
+        },
+        {
+          "name": "WatchFileKind",
+          "valueReferences": 1,
+          "references": 2
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 6,
+      "importedName": "CheckMode",
+      "localName": "CheckMode",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 500,
+          "type": true,
+          "context": "CheckMode"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 8,
+      "importedName": "EmitFlags",
+      "localName": "EmitFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 472,
+          "type": true,
+          "context": "EmitFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 65,
+      "importedName": "ModifierFlags",
+      "localName": "ModifierFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 464,
+          "type": true,
+          "context": "ModifierFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 68,
+      "importedName": "NodeCheckFlags",
+      "localName": "NodeCheckFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 460,
+          "type": true,
+          "context": "NodeCheckFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 69,
+      "importedName": "NodeFlags",
+      "localName": "NodeFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 456,
+          "type": true,
+          "context": "NodeFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 75,
+      "importedName": "RelationComparisonResult",
+      "localName": "RelationComparisonResult",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 496,
+          "type": true,
+          "context": "RelationComparisonResult"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 76,
+      "importedName": "ScriptKind",
+      "localName": "ScriptKind",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 452,
+          "type": true,
+          "context": "ScriptKind"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 78,
+      "importedName": "SignatureCheckMode",
+      "localName": "SignatureCheckMode",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 504,
+          "type": true,
+          "context": "SignatureCheckMode"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 79,
+      "importedName": "SignatureFlags",
+      "localName": "SignatureFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 484,
+          "type": true,
+          "context": "SignatureFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 80,
+      "importedName": "SnippetKind",
+      "localName": "SnippetKind",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 448,
+          "type": true,
+          "context": "SnippetKind"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 85,
+      "importedName": "SyntaxKind",
+      "localName": "SyntaxKind",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 334,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 335,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 336,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 337,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 444,
+          "type": true,
+          "context": "SyntaxKind"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 87,
+      "importedName": "TransformFlags",
+      "localName": "TransformFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 468,
+          "type": true,
+          "context": "TransformFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 89,
+      "importedName": "TypeFacts",
+      "localName": "TypeFacts",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 2,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 508,
+          "type": true,
+          "context": "TypeFacts"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "line": 4,
+      "importedName": "SyntaxKind",
+      "localName": "SyntaxKind",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "../_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 14,
+          "type": true,
+          "context": "SyntaxKind.SourceFile"
+        },
+        {
+          "line": 15,
+          "type": true,
+          "context": "SyntaxKind.Identifier"
+        },
+        {
+          "line": 16,
+          "type": true,
+          "context": "SyntaxKind.PrivateIdentifier"
+        },
+        {
+          "line": 17,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 18,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 27,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 28,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 29,
+          "type": true,
+          "context": "SyntaxKind.Identifier"
+        },
+        {
+          "line": 30,
+          "type": true,
+          "context": "SyntaxKind.PrivateIdentifier"
+        },
+        {
+          "line": 31,
+          "type": true,
+          "context": "SyntaxKind.SourceFile"
+        },
+        {
+          "line": 41,
+          "type": true,
+          "context": "SyntaxKind.SourceFile"
+        },
+        {
+          "line": 45,
+          "type": true,
+          "context": "SyntaxKind.Identifier"
+        },
+        {
+          "line": 49,
+          "type": true,
+          "context": "SyntaxKind.PrivateIdentifier"
+        },
+        {
+          "line": 53,
+          "type": true,
+          "context": "SyntaxKind"
+        },
+        {
+          "line": 57,
+          "type": true,
+          "context": "SyntaxKind"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 69,
+      "importedName": "EmitOnly",
+      "localName": "EmitOnly",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 2693,
+          "type": true,
+          "context": "EmitOnly"
+        },
+        {
+          "line": 2724,
+          "type": true,
+          "context": "EmitOnly"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 16,
+      "importedName": "EmitHint",
+      "localName": "EmitHint",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 227,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 232,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 232,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 385,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 414,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 414,
+          "type": true,
+          "context": "EmitHint"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 18,
+      "importedName": "EmitOnly",
+      "localName": "EmitOnly",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 120,
+          "type": true,
+          "context": "EmitOnly"
+        },
+        {
+          "line": 127,
+          "type": true,
+          "context": "EmitOnly"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 12,
+      "importedName": "EmitHint",
+      "localName": "EmitHint",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "../../_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 386,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 386,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 411,
+          "type": true,
+          "context": "EmitHint"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "line": 4,
+      "importedName": "EmitHint",
+      "localName": "EmitHint",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "../../_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 44,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 63,
+          "type": true,
+          "context": "EmitHint"
+        },
+        {
+          "line": 63,
+          "type": true,
+          "context": "EmitHint"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 11,
+      "importedName": "NodeFactoryFlags",
+      "localName": "NodeFactoryFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": true,
+      "references": [
+        {
+          "line": 8746,
+          "type": true,
+          "context": "NodeFactoryFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 250,
+      "importedName": "InternalEmitFlags",
+      "localName": "InternalEmitFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 1370,
+          "type": true,
+          "context": "InternalEmitFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 461,
+      "importedName": "ObjectFlags",
+      "localName": "ObjectFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 8280,
+          "type": true,
+          "context": "ObjectFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 525,
+      "importedName": "SignatureFlags",
+      "localName": "SignatureFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 8470,
+          "type": true,
+          "context": "SignatureFlags"
+        },
+        {
+          "line": 8500,
+          "type": true,
+          "context": "SignatureFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 56,
+      "importedName": "JSDocParsingMode",
+      "localName": "JSDocParsingMode",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 261,
+          "type": true,
+          "context": "JSDocParsingMode"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 78,
+      "importedName": "ScriptTarget",
+      "localName": "ScriptTarget",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 758,
+          "type": true,
+          "context": "ScriptTarget"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 92,
+      "importedName": "WatchDirectoryFlags",
+      "localName": "WatchDirectoryFlags",
+      "kind": "const enum",
+      "symbolFlags": 128,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 458,
+          "type": true,
+          "context": "WatchDirectoryFlags"
+        },
+        {
+          "line": 1112,
+          "type": true,
+          "context": "WatchDirectoryFlags"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "line": 46,
+      "importedName": "PollingInterval",
+      "localName": "PollingInterval",
+      "kind": "enum",
+      "symbolFlags": 256,
+      "module": "./_namespaces/ts.js",
+      "declarationLine": 1,
+      "wholeDeclaration": false,
+      "references": [
+        {
+          "line": 693,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 731,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 736,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 748,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 762,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 807,
+          "type": true,
+          "context": "PollingInterval"
+        },
+        {
+          "line": 811,
+          "type": true,
+          "context": "PollingInterval"
+        }
+      ]
+    }
+  ],
+  "adamicBase": "6761c7374aa7169c73602b6a74bc281b879a640d",
+  "upstream": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "adaptedProductKey": "d3d7119e05963133d152a90e3d34fcea1975bc1bdcf4a28bc35eb68cb382fddf",
+  "orderingAnalysis": "Deferred: removed declaration edges listed; Adamic evaluation orders for the 79 roots were not compared."
+}
