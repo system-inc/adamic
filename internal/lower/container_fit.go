@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"fmt"
 	"math"
+	"os"
 	"slices"
 	"strconv"
 
@@ -65,7 +67,14 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 		l.containerFits = map[containerFitPair]string{}
 	}
 	walk := &containerFitWalk{busy: map[containerFitPair]int{}, done: map[containerFitPair]containerFitAnswer{}, frame: containerFitAnswer{leans: containerFitNoLean}}
-	return l.containerPairGoes(value, target, libraryArgument, 0, walk)
+	stop := l.containerPairGoes(value, target, libraryArgument, 0, walk)
+	if path := os.Getenv("ADAMIC_FIT_PAIRS_LOG"); path != "" {
+		if file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
+			fmt.Fprintf(file, "walk judged=%d past=%d kept=%d stop=%q\n", len(walk.done), walk.pastDepth, len(l.containerFits), stop)
+			file.Close()
+		}
+	}
+	return stop
 }
 
 // containerFitPair is a value's type and the type it goes where, the walk's unit and the memo's key.
