@@ -451,7 +451,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
 			t.Fatal(err)
 		}
-		// A new process scans again; within one, the system's headers are taken as fixed.
+		// As a new process does, with nothing held (TestARewrittenHeaderMovesAHeldScan holds one across a rewrite).
 		headerScans.Clear()
 		headers, err := headersRead(files, flags, compiler)
 		if err != nil {
@@ -477,6 +477,52 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 	plain, err := headersRead(files, Flags(Options{}), compiler)
 	if err == nil || strings.Contains(plain, header) {
 		t.Fatalf("without -isystem the compile can't find the header, so listing it must fail: %q, %v", plain, err)
+	}
+}
+
+// The memo of a header scan (headerScans) is found by the sources, flags and compiler, never by the headers, so a scan it
+// holds is the answer only while each header it lists holds what it hashed: rewriting a header between two builds that
+// share the memo moves the headers part, the runtime key's, and rewriting it back finds the first again. Mutant:
+// headersRead handing out a held scan without headersHold.
+// Not parallel: it reads headerScans across a rewrite, and clears it first so the scan is this test's.
+func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	system := t.TempDir()
+	header := filepath.Join(system, "answer_system.h")
+	files := []runtimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
+	flags := append(Flags(Options{}), "-isystem", system)
+	headerScans.Clear()
+	read := func(value string) string {
+		t.Helper()
+		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		headers, err := headersRead(files, flags, compiler)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(headers, header) {
+			t.Fatalf("the headers the compile reads don't name %s:\n%s", header, headers)
+		}
+		return headers
+	}
+	first, second := read("42"), read("43")
+	if first == second {
+		t.Fatalf("a header rewritten under a held scan kept the headers part:\n%s", first)
+	}
+	if want := fmt.Sprintf("%s %x", header, sha256.Sum256([]byte("#define ANSWER 43\n"))); !strings.Contains(second, want) {
+		t.Fatalf("the headers part after the rewrite doesn't hash what the header holds now (%s):\n%s", want, second)
+	}
+	if again := read("42"); again != first {
+		t.Fatalf("the header rewritten back moved the headers part from\n%s\nto\n%s", first, again)
+	}
+	held := 0
+	headerScans.Range(func(any, any) bool { held++; return true })
+	if held != 1 {
+		t.Fatalf("the three reads held %d scans, want the one memo they share", held)
 	}
 }
 

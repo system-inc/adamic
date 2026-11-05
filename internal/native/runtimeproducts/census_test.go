@@ -152,7 +152,9 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 //     copy shares storage with; and each reached package variable another package could write, an exported one (M1,
 //     M2);
 //   - each package of the tree it reaches outside leanSlice, and each interface call some type of such a package
-//     implements;
+//     implements. A package followed names is reached as its census follows it: each function or method of it reached
+//     must be one of the entries followed names for it, which a census of that package's own holds, and a package
+//     variable of it read directly is a finding;
 //   - each read of the environment in reached code (environmentReads), but of a variable environment names by a
 //     constant;
 //   - when programsByPath, each program reached code starts or finds by a bare name (programStarts given a constant
@@ -167,10 +169,10 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 // caller.
 //
 // The package variables scheduling names (schedulingState) are let be written by code the reach doesn't take in a
-// declared file, and by a reached function code outside the reach calls.
+// declared file, and by a reached function code outside the reach calls, and be exported.
 //
 // Empty when the build is complete by its declared files and leanSlice.
-func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string, programsByPath bool) ([]string, error) {
+func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string, programsByPath bool, followed map[string][]string) ([]string, error) {
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = "linux", "amd64", true
 	listed, err := context.ImportDir(directory, 0)
@@ -356,7 +358,7 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 					switch {
 					case path == "reflect":
 						findings[fmt.Sprintf("%s: reflection (reflect), which the census can't follow", at(node))] = true
-					case strings.HasPrefix(path, modulePath+"/") && !slices.Contains(leanSlice, path):
+					case strings.HasPrefix(path, modulePath+"/") && !slices.Contains(leanSlice, path) && followed[path] == nil:
 						findings[fmt.Sprintf("%s: reaches %s, a package of the tree no lean recipe keys", at(node), path)] = true
 					}
 				case *types.Var:
@@ -365,6 +367,14 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 					// reached code that set it.
 					if _, isFunction := object.Type().Underlying().(*types.Signature); isFunction && object.Pkg() == checked && (object.IsField() || object.Parent() == checked.Scope()) {
 						findings[fmt.Sprintf("%s: the function value %s, held in a package variable or a field, which the census can't follow", at(node), node.Name)] = true
+					}
+					if other := object.Pkg(); other != nil && other != checked && followed[other.Path()] != nil && !object.IsField() && object.Parent() == other.Scope() {
+						findings[fmt.Sprintf("%s: reads %s.%s, a package variable of another package, which no key holds", at(node), other.Path(), object.Name())] = true
+					}
+					mark(object)
+				case *types.Func:
+					if other := object.Pkg(); other != nil && other != checked && followed[other.Path()] != nil && !slices.Contains(followed[other.Path()], followedName(object)) {
+						findings[fmt.Sprintf("%s: reaches %s.%s, which no census of %s follows", at(node), other.Path(), followedName(object), other.Path())] = true
 					}
 					mark(object)
 				default:
@@ -460,8 +470,8 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		if content, err := os.ReadFile(file); err == nil && strings.Contains(string(content), "//go:linkname") {
 			findings[fmt.Sprintf("%s holds a go:linkname, which the census can't follow", filepath.Base(file))] = true
 		}
-		// M2: a reached package variable another package could write is beyond the census.
-		if variable, ok := object.(*types.Var); ok && variable.Exported() {
+		// M2: a reached package variable another package could write is beyond the census, unless scheduling names it.
+		if variable, ok := object.(*types.Var); ok && variable.Exported() && !scheduled(variable, checked, scheduling) {
 			findings[fmt.Sprintf("%s, which the build reads, is exported, so a package the census doesn't read can write it", object.Name())] = true
 		}
 	}
@@ -542,6 +552,22 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 	}
 	sort.Strings(census)
 	return census, nil
+}
+
+// followedName is a function's name as a census entry names it: "Function", or "Type.Method" by its receiver's type.
+func followedName(function *types.Func) string {
+	receiver := function.Signature().Recv()
+	if receiver == nil {
+		return function.Name()
+	}
+	typ := receiver.Type()
+	if pointer, ok := typ.(*types.Pointer); ok {
+		typ = pointer.Elem()
+	}
+	if named, ok := types.Unalias(typ).(*types.Named); ok {
+		return named.Obj().Name() + "." + function.Name()
+	}
+	return typ.String() + "." + function.Name()
 }
 
 // scheduled says whether variable is a package variable of checked that scheduling names.
@@ -806,19 +832,252 @@ func repositoryRoot(t *testing.T) string {
 // An archive's build reaches nothing of internal/native but the files its key declares (runtimeFiles), and no package
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
 // rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
-// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. Mutant: jobserver.go
-// left out of runtimeFiles.
+// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's one of the two
+// tests buildcache's leanCallers names as this package's census, the gate that opens the lean recipe, runtimeproducts'
+// import closure, to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds, the other,
+// holding the path to it. Mutants: jobserver.go left out of runtimeFiles; an environment read planted in compileRuntime.
 func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, runtimeEnvironment, false)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, runtimeEnvironment, false, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if len(census) > 0 {
 		t.Fatalf("the runtime archive's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
+}
+
+// buildPath are the entries of an archive's path to its build, by package, each held by a census of its package's own
+// (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), and what each may reach of the next: runtimeproducts' product
+// tests and supplier, native's request and the build its window runs, and the jobserver handed to it.
+var buildPath = map[string][]string{
+	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "Inputs", "Declared"},
+	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
+	modulePath + "/internal/ccjobserver":            {"Process"},
+}
+
+// keyedValues are functions of the tree an archive's path calls outside every census, each with its reason: one whose
+// result enters the archive's key as a value, so what it read to make it is keyed by what it made.
+var keyedValues = map[string][]string{
+	modulePath + "/internal/ir": {"TypeTagFingerprint"},
+}
+
+func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
+	t.Parallel()
+	buildcache.GoExports(t, "./internal/native/runtimeproducts")
+}
+
+// An archive's path to its build reads nothing in process that its key doesn't hold (Node's must 2 on #gr5y0yf item 1):
+// from runtimeproducts' product tests and its supplier, through native's request and the jobserver to the build its
+// window runs, no environment but what each package's list names with its reason, no package variable of another
+// package, no package variable written outside its initializer or exported but what each package's state names with
+// its reason, and nothing the census can't follow. clang's environment is toolchain.Env's, buildcache's slice.
+// Each package of the path is held by a census of its own from the entries buildPath names, and a reach into another
+// package must be one of that package's entries, or a keyedValues function, whose result the key holds. Its recipe is
+// the import closure (buildcache's leanRecipeOf), so declared is each package whole. It's the other test buildcache's
+// leanCallers names as this package's census, beside TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each
+// fail it: an os.Getenv planted in Build; Build reading another package's variable; native's entries left without
+// UseJobserver.
+func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
+	t.Parallel()
+	root := repositoryRoot(t)
+	nativeExports, nativeTree, nativeLean := censusTypes(t)
+	ownExports, ownTree, _, err := censusImports(buildcache.GoExports(t, "./internal/native/runtimeproducts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	followed := maps.Clone(buildPath)
+	for path, entries := range keyedValues {
+		followed[path] = entries
+	}
+	type pathPackage struct {
+		exports     map[string]string
+		tree        []string
+		lean        bool
+		scheduling  map[string]string
+		environment map[string]string
+	}
+	packages := map[string]pathPackage{
+		modulePath + "/internal/native/runtimeproducts": {ownExports, ownTree, true, productsState, runtimeproductsEnvironment},
+		modulePath + "/internal/native":                 {nativeExports, nativeTree, nativeLean, requestState, requestEnvironment},
+		modulePath + "/internal/ccjobserver":            {nativeExports, nativeTree, false, jobserverState, jobserverEnvironment},
+	}
+	var findings []string
+	for _, path := range slices.Sorted(maps.Keys(buildPath)) {
+		relative := strings.TrimPrefix(path, modulePath+"/")
+		held := packages[path]
+		for _, entry := range buildPath[path] {
+			census, err := leanCensus(root, filepath.Join(root, filepath.FromSlash(relative)), path, entry, []string{relative}, held.exports, held.tree, held.lean, held.scheduling, held.environment, false, followed)
+			if err != nil {
+				t.Fatalf("%s %s: %v", relative, entry, err)
+			}
+			for _, finding := range census {
+				findings = append(findings, relative+" "+entry+": "+finding)
+			}
+		}
+	}
+	if len(findings) > 0 {
+		t.Fatalf("an archive's path to its build reads past what its key holds:\n%s", strings.Join(findings, "\n"))
+	}
+}
+
+// runtimeproductsEnvironment, requestEnvironment and jobserverEnvironment are the environment variables each package of
+// an archive's path may name, each with its reason: one that never reaches what an archive is built from, or one whose
+// value the archive's key holds.
+var runtimeproductsEnvironment = map[string]string{
+	"ADAMIC_ORACLE_WASI": "decides only whether a wasm variant's product test runs or skips (variantNamed), never what an archive is built from",
+}
+var requestEnvironment = map[string]string{
+	"ADAMIC_BUILD_LOG":      buildLogReading,
+	"WASI_SYSROOT":          "a wasm request's --sysroot flag, exactly what the variable holds and none on another request (TestTheSysrootReadIsTheSysrootFlag), a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation, and the compiler beside it, which the key holds by its report; otherwise it only refuses a request (ValidateOptions)",
+	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte (TestAProgramRegionOnlyRefusesARequest)",
+}
+var jobserverEnvironment = map[string]string{
+	"ADAMIC_CC_JOBSERVER": "names the FIFO of the compile token pool handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
+}
+
+// The one environment variable whose value reaches an archive's request, WASI_SYSROOT, reaches it as the --sysroot flag
+// and nothing else: a wasm variant's request carries exactly one, holding exactly what the variable holds, as a flag of
+// its Parts, the same one relocated to <compiler>/share/wasi-sysroot in its Portable, which its key holds, and its
+// compiler is the clang beside it, which the key holds by its report; every other variant's request carries none. Two
+// installations in two places carry their own sysroot each, and one Portable. The installations are stand-ins
+// (fakeWASISDK), so it runs where no wasi-sdk is installed. Mutants that each fail it: Flags spelling the flag from
+// anything but the variable as it's set (a trailing slash added); a sysroot flag on a native target.
+// Not parallel: it sets WASI_SYSROOT, which is process-wide.
+func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
+	var portable []string
+	for _, installation := range []string{fakeWASISDK(t), fakeWASISDK(t)} {
+		t.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
+		for _, variant := range Variants {
+			request, err := native.RuntimeRequestFor(variant.Options)
+			if err != nil {
+				t.Fatalf("%s: %v", variant.Name, err)
+			}
+			var sysroots, portableSysroots []string
+			for _, part := range request.Parts {
+				if strings.HasPrefix(part, "flag --sysroot") {
+					sysroots = append(sysroots, part)
+				}
+			}
+			for _, part := range request.Portable {
+				if strings.HasPrefix(part, "flag --sysroot") {
+					portableSysroots = append(portableSysroots, part)
+				}
+			}
+			if variant.Options.Target != "wasm32-wasi" {
+				if len(sysroots) > 0 || len(portableSysroots) > 0 {
+					t.Errorf("the %s request carries a sysroot: %q, %q", variant.Name, sysroots, portableSysroots)
+				}
+				continue
+			}
+			if want := []string{"flag --sysroot=" + os.Getenv("WASI_SYSROOT")}; !slices.Equal(sysroots, want) {
+				t.Errorf("the %s request's sysroot flags are %q, want %q", variant.Name, sysroots, want)
+			}
+			if want := []string{"flag --sysroot=<compiler>/share/wasi-sysroot"}; !slices.Equal(portableSysroots, want) {
+				t.Errorf("the %s request's portable sysroot flags are %q, want %q", variant.Name, portableSysroots, want)
+			}
+			if want := filepath.Join(installation, "bin", "clang"); request.Compiler != want {
+				t.Errorf("the %s request's compiler is %s, want %s beside the sysroot", variant.Name, request.Compiler, want)
+			}
+			if variant.Name == "wasm" {
+				portable = append(portable, strings.Join(request.Portable, "\n"))
+			}
+		}
+	}
+	if len(portable) != 2 || portable[0] != portable[1] {
+		t.Errorf("two installations' wasm requests key apart:\n%s", strings.Join(portable, "\n--\n"))
+	}
+}
+
+// ADAMIC_PROGRAM_REGION only ever refuses an archive's request and never changes its bytes: set, every variant's
+// request is refused as one a program region can't take (a wasm target, a request reactor), or is the request it is
+// unset, every part of its key, its portable parts, compiler, archiver and options alike, and what the request's build
+// compiles is its Parts' files and flags with that compiler, so its bytes are the same. The wasm variants ask a
+// stand-in installation (fakeWASISDK), so they're asked where no wasi-sdk is installed. Mutants that each fail it: Flags
+// adding -DADAMIC_PROGRAM_REGION when the variable is set; ValidateOptions refusing no variant for it.
+// Not parallel: it sets ADAMIC_PROGRAM_REGION and WASI_SYSROOT, which are process-wide.
+func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
+	t.Setenv("WASI_SYSROOT", filepath.Join(fakeWASISDK(t), "share", "wasi-sysroot"))
+	refused := 0
+	for _, variant := range Variants {
+		t.Setenv("ADAMIC_PROGRAM_REGION", "")
+		unset, err := native.RuntimeRequestFor(variant.Options)
+		if err != nil {
+			t.Fatalf("%s, the variable unset: %v", variant.Name, err)
+		}
+		t.Setenv("ADAMIC_PROGRAM_REGION", "1")
+		set, err := native.RuntimeRequestFor(variant.Options)
+		if err != nil {
+			if !strings.Contains(err.Error(), "Program regions require a one-shot native CLI") {
+				t.Errorf("%s, the variable set, failed for another reason than a program region's refusal: %v", variant.Name, err)
+			}
+			refused++
+			continue
+		}
+		if !slices.Equal(set.Parts, unset.Parts) || !slices.Equal(set.Portable, unset.Portable) || set.Compiler != unset.Compiler || set.Archiver != unset.Archiver || set.Options != unset.Options {
+			var moved []string
+			for _, part := range unset.Parts {
+				if !slices.Contains(set.Parts, part) {
+					moved = append(moved, "unset alone: "+part)
+				}
+			}
+			for _, part := range set.Parts {
+				if !slices.Contains(unset.Parts, part) {
+					moved = append(moved, "set alone: "+part)
+				}
+			}
+			t.Errorf("%s: the variable set moved the request (compiler %s, then %s; options %+v, then %+v):\n%s", variant.Name, unset.Compiler, set.Compiler, unset.Options, set.Options, strings.Join(moved, "\n"))
+		}
+	}
+	if refused == 0 {
+		t.Error("the variable set refused no variant; want the wasm variants refused, as a program region can't take them")
+	}
+}
+
+// fakeWASISDK is a stand-in wasi-sdk installation for a test that asks native for a wasm request: its sysroot under
+// share/wasi-sysroot, and bin/clang, which reports the pinned release's version (native's wasiClangVersion) and lists no
+// header for a scan, so a request reads only what the census holds of it, with nothing compiled.
+func fakeWASISDK(t *testing.T) string {
+	t.Helper()
+	installation, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(installation, "share", "wasi-sysroot"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(filepath.Join(installation, "bin"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	clang := "#!/bin/sh\nfor argument in \"$@\"; do\n\tif [ \"$argument\" = --version ]; then\n\t\techo 'clang version 20.1.8-wasi-sdk (a stand-in)'\n\t\texit 0\n\tfi\ndone\n"
+	if err := os.WriteFile(filepath.Join(installation, "bin", "clang"), []byte(clang), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	return installation
+}
+
+// requestState are internal/native's package variables an archive's request reads that code outside its reach may
+// write, each with its reason: the build's own scheduling, and what decides only when a compile runs or what a request
+// remembers of one whose result the key holds.
+var requestState = map[string]string{
+	"jobserver":        schedulingState["jobserver"],
+	"processJobserver": "the process's compile token pool the header scan behind RuntimeRequestFor runs clang -M under (UseJobserver): when it runs, never what it lists",
+	"headerScans":      "the process's memo of the header scan, found by the runtime key of the same sources, flags and compiler and handed out only while each header it lists holds what it hashed (headersHold, TestARewrittenHeaderMovesAHeldScan): what it holds is the request's headers part, which the key holds (TestRuntimeProductKeyHoldsEveryPart)",
+	"ErrJobserverSet":  "the error UseJobserver returns for a second jobserver, which fails the process's setup before any compile, never reaches one",
+}
+
+// jobserverState are ccjobserver's package variables that decide when a compile runs, never what one writes.
+var jobserverState = map[string]string{
+	"process": "the jobserver ADAMIC_CC_JOBSERVER names, handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
+	"failed":  "why that jobserver couldn't be opened, which fails the build rather than running it unbounded",
+}
+
+// productsState are runtimeproducts' exported tables an archive's path reads, each with its reason.
+var productsState = map[string]string{
+	"Sets":     "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"Variants": "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 }
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
@@ -833,7 +1092,7 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment, true)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment, true, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -855,7 +1114,7 @@ func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native", "agreementproducts"), modulePath+"/internal/native/agreementproducts", "BuildAgreementC", []string{"internal/native/agreementproducts"}, exports, tree, true, nil, nil, true)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native", "agreementproducts"), modulePath+"/internal/native/agreementproducts", "BuildAgreementC", []string{"internal/native/agreementproducts"}, exports, tree, true, nil, nil, true, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -959,7 +1218,7 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 				os.WriteFile(filepath.Join(directory, file), []byte(content), 0o644)
 			}
 		}
-		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"}, true)
+		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"}, true, nil)
 		if err != nil {
 			t.Fatalf("%s: %v", name, err)
 		}
