@@ -4,8 +4,20 @@
     "a136488e6a1c1eb1c2662b0dbc1bbf3cce3bde9676e24e8d0a82f0970da53d5e": {
       "path": "internal/oracle/testdata/reflect_get/stop_array_method.a",
       "ruling_task": "#ys4naww",
-      "lifting_task": "#ys4naww-methods",
+      "lifting_task": "#g187f1e",
       "stderr": "adamic: panic: an array's methods aren't read by a run-time key yet (reading 'map')\n"
+    },
+    "049a6826c5fff055e8e09aaea5979df5f189e047112321e78d311b209b62769e": {
+      "path": "internal/oracle/testdata/reflect_get/stop_tuple.a",
+      "ruling_task": "#ys4naww",
+      "lifting_task": "#g187f1e",
+      "stderr": "adamic: panic: a tuple's properties aren't read by a run-time key yet (reading '0')\n"
+    },
+    "1a5af0c5a0bfcad5934e00220d57270246d8f78104df81a5ce05fa9c07fdde67": {
+      "path": "internal/oracle/testdata/reflect_get/stop_tuple_indices.a",
+      "ruling_task": "#ys4naww",
+      "lifting_task": "#g187f1e",
+      "stderr": "adamic: panic: a tuple's properties aren't read by a run-time key yet (reading '0')\n"
     },
     "47fd37fa64c58682983a994cff4dccab02b90932f9410baa9422c0b045a37676": {
       "path": "internal/oracle/testdata/reflect_get/stop_error_stack.a",
