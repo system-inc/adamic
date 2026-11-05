@@ -1,0 +1,38 @@
+{
+  "deliverableBase": "0f613b285cc0d3314f1217b78f65ad94571c5547",
+  "compilerMainFull": "d40c2470eb76fc4cd89d30235bc52650881c9c2e",
+  "laterMainObserved": "006b368745e6a37f18b1427b1a63a78285f92694",
+  "laterMainChange": "only new Map/new Set of generator calls and associated pins; complete diff retained",
+  "compilerSourcesIdenticalToBase": true,
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "stockTypeScript": "6.0.3",
+  "compilerBuildCommand": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/main-bin/",
+    "./cmd/adamic",
+    "./stage3/census/tool"
+  ],
+  "compilerBuildDirectory": "/workspace/adamic-main",
+  "compilerBuildExit": 0,
+  "ordinaryCensusHasOverlay": false,
+  "siteCensusMeasurementOnlyOverlay": true,
+  "binaries": {
+    "adamic": {
+      "sha256": "f52de08475e75f7812c169666a642859cb2df4fd9d7d348335de83275193a10f",
+      "bytes": 41783760
+    },
+    "tool": {
+      "sha256": "b84f253b42a4454457e5823a64bec1ad73d223830c1842a78dc18d700c30c680",
+      "bytes": 35654291
+    },
+    "latent": {
+      "sha256": "7d91381fb1514b1dd859cfffb721d772d7797babce512d27ba422a6c10f79e7d",
+      "bytes": 34824536
+    }
+  },
+  "adapterSha256": "5d151b2f15492602578002d56c0ede5fbcdf7052a1ea0d35a6ed2ccbbe60a0a6"
+}

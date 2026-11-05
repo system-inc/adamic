@@ -1,0 +1,94 @@
+[
+  {
+    "site": "H01",
+    "removed": [
+      [
+        "NotYet",
+        "684",
+        "an array of unknown with erased element storage (retain its declared element type before reading elements)"
+      ]
+    ],
+    "added": [],
+    "diagnostics": [],
+    "seconds": 24.953268060000028
+  },
+  {
+    "site": "H04",
+    "removed": [
+      [
+        "Refused",
+        "2551",
+        "a value of type T[][] seen as (readonly T[])[], which can write readonly T[] where T[] is read"
+      ]
+    ],
+    "added": [],
+    "diagnostics": [],
+    "seconds": 25.942831076999937
+  },
+  {
+    "site": "H05",
+    "removed": [
+      [
+        "Refused",
+        "2611",
+        "a cast the runtime can't check"
+      ]
+    ],
+    "added": [],
+    "diagnostics": [],
+    "seconds": 25.544425364000062
+  },
+  {
+    "site": "H03",
+    "removed": [
+      [
+        "NotYet",
+        "1066",
+        "a member typed any (()) related to T | undefined at the initializer site"
+      ],
+      [
+        "Refused",
+        "1066",
+        "a cast the runtime can't check"
+      ],
+      [
+        "Refused",
+        "1067",
+        "a cast the runtime can't check"
+      ]
+    ],
+    "added": [
+      [
+        "NotYet",
+        "1066",
+        "a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow"
+      ],
+      [
+        "NotYet",
+        "1329",
+        "a member typed any ([]) related to T at the return site"
+      ],
+      [
+        "Refused",
+        "1066",
+        "a method read as a value (at would lose its object, and this with it)"
+      ]
+    ],
+    "diagnostics": [],
+    "seconds": 26.268848613999808
+  },
+  {
+    "site": "concatenate",
+    "removed": [],
+    "added": [],
+    "diagnostics": [
+      "/workspace/q-alone/src/compiler/checker.ts:14120:62: error TS18048: 'typeParameters' is possibly 'undefined'.",
+      "/workspace/q-alone/src/compiler/checker.ts:14121:48: error TS2345: Argument of type 'TypeParameter[] | undefined' is not assignable to parameter of type 'readonly TypeParameter[]'.\n  Type 'undefined' is not assignable to type 'readonly TypeParameter[]'.",
+      "/workspace/q-alone/src/compiler/checker.ts:16980:9: error TS2322: Type 'readonly Type[] | undefined' is not assignable to type 'readonly Type[]'.\n  Type 'undefined' is not assignable to type 'readonly Type[]'.",
+      "/workspace/q-alone/src/compiler/checker.ts:41574:37: error TS2412: Type 'readonly TypeParameter[] | undefined' is not assignable to type 'readonly TypeParameter[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'readonly TypeParameter[]'.",
+      "/workspace/q-alone/src/compiler/checker.ts:41628:60: error TS2345: Argument of type 'readonly TypeParameter[] | undefined' is not assignable to parameter of type 'readonly TypeParameter[]'.\n  Type 'undefined' is not assignable to type 'readonly TypeParameter[]'.",
+      "/workspace/q-alone/src/compiler/checker.ts:49743:17: error TS2322: Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n  Type 'undefined' is not assignable to type 'Diagnostic[]'."
+    ],
+    "seconds": 26.00430391099985
+  }
+]

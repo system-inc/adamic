@@ -1,0 +1,46 @@
+{
+  "firstRun": {
+    "files": 1,
+    "edits": 4,
+    "writes": 1
+  },
+  "secondRun": {
+    "files": 0,
+    "edits": 0,
+    "writes": 0,
+    "bytesAndMtimePreserved": true
+  },
+  "refusals": [
+    "deduplicateRelational: changed owner",
+    "deduplicateRelational: changed adapted owner",
+    "deduplicateRelational: missing owner",
+    "deduplicateRelational: duplicate owner",
+    "deduplicateRelational: nested duplicate owner",
+    "deduplicateRelational: moved owner",
+    "deduplicateRelational: half-adapted tree",
+    "indicesOf: changed owner",
+    "indicesOf: changed adapted owner",
+    "indicesOf: missing owner",
+    "indicesOf: duplicate owner",
+    "indicesOf: nested duplicate owner",
+    "indicesOf: moved owner",
+    "indicesOf: half-adapted tree",
+    "cartesianProductWorker: changed owner",
+    "cartesianProductWorker: changed adapted owner",
+    "cartesianProductWorker: missing owner",
+    "cartesianProductWorker: duplicate owner",
+    "cartesianProductWorker: nested duplicate owner",
+    "cartesianProductWorker: moved owner",
+    "cartesianProductWorker: half-adapted tree",
+    "isNodeLikeSystem: changed owner",
+    "isNodeLikeSystem: changed adapted owner",
+    "isNodeLikeSystem: missing owner",
+    "isNodeLikeSystem: duplicate owner",
+    "isNodeLikeSystem: nested duplicate owner",
+    "isNodeLikeSystem: moved owner",
+    "isNodeLikeSystem: half-adapted tree",
+    "parse error"
+  ],
+  "foreignEditPreserved": true,
+  "crlfAndLfPreserved": true
+}

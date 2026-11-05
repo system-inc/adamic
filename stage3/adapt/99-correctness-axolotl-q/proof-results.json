@@ -1,0 +1,68 @@
+{
+  "setup": {
+    "exit": 0,
+    "seconds": 522.384
+  },
+  "applyBefore": {
+    "exit": 0
+  },
+  "applyAfter": {
+    "exit": 0
+  },
+  "normalBuildBefore": {
+    "exit": 0
+  },
+  "normalBuildAfter": {
+    "exit": 0
+  },
+  "replay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  },
+  "typesBefore": {
+    "roots": 79,
+    "exit": 0,
+    "seconds": 4.752829410999993
+  },
+  "typesAfter": {
+    "roots": 79,
+    "exit": 0,
+    "seconds": 4.628030299999978
+  },
+  "contract": "pass, 29 refusal fixtures before any write",
+  "javascriptAndPublicDeclarations": "byte-identical",
+  "laneInitial": {
+    "exit": 0,
+    "seconds": 116.954
+  },
+  "laneFinal": {
+    "exit": 0,
+    "seconds": 103.311
+  },
+  "apiDirectInitial": {
+    "exit": 1,
+    "reason": "missing ADAMIC_TYPESCRIPT_SOURCE; setup checks only"
+  },
+  "apiDirectConfigured": {
+    "exit": 0,
+    "tests": 22,
+    "seconds": 71.245
+  },
+  "shardsFinal": {
+    "exit": 0
+  },
+  "concatenate": {
+    "kept": false,
+    "adamicDiagnostics": 6,
+    "ordinaryBuildExit": 1,
+    "publicDeclarationsIdentical": true
+  },
+  "runtimeOracle": "skipped under type-only exception",
+  "ordinaryCensus": {
+    "exit": 0,
+    "typescriptRoots": 79,
+    "allRawRows": 82
+  },
+  "stagedScopeAndWhitespace": "pass"
+}
