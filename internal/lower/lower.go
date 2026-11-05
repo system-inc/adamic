@@ -295,6 +295,8 @@ type lowering struct {
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one
 	// (enum_tag_flow.go's accessorName). accessorNames below holds getters alone.
 	writtenAccessorNames map[string]bool
+	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
+	crossFunctionWrites map[*ast.Symbol]bool
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
