@@ -1,0 +1,18 @@
+// tsc's performanceCore.ts timestamp: a native clock where the host has one, else Date.now, the arm
+// chosen at run time, then called again and again through the binding. A fixture never prints the
+// time, only facts about it: positive, never going back, and close to Date.now() called directly.
+function pick(native: boolean): () => number {
+    return native ? () => 1 : Date.now;
+}
+const timestamp: () => number = pick(String(Date.now()).length > 99);
+let previous = timestamp();
+let monotone = previous > 0;
+for(let index = 0; index < 6; index++) {
+    const next = timestamp();
+    monotone = monotone && next >= previous;
+    previous = next;
+}
+console.log(`positive and monotone ${String(monotone)}`);
+console.log(`close to the clock ${String(Math.abs(timestamp() - Date.now()) < 60000)}`);
+const native: () => number = pick(String(Date.now()).length > 0);
+console.log(`the other arm ${String(native())}`);
