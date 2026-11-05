@@ -28,7 +28,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"adamicDynamicKeyedPrototypeNames", ir.DynamicKeyedPrototypeNames}, {"adamicDynamicKeyedErrorNames", ir.DynamicKeyedErrorNames}} {
+	}{{"adamicDynamicKeyedPrototypeNames", ir.DynamicKeyedPrototypeNames}, {"adamicDynamicKeyedArrayPrototypeNames", ir.DynamicKeyedArrayPrototypeNames}, {"adamicDynamicKeyedErrorNames", ir.DynamicKeyedErrorNames}} {
 		quoted := []string{}
 		for _, name := range list.names {
 			quoted = append(quoted, quote(name))
@@ -57,9 +57,22 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (value === undefined || value === null) return adamicDynamicStop('Nullish', key);\n")
 	builder.WriteString("\tif (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return adamicDynamicStop('Primitive', key);\n")
 	builder.WriteString("\tif (value instanceof AdamicClosure) return adamicDynamicStop('Function', key);\n")
-	// A tuple is an array on this backend, and every array literal is marked as a tuple is
-	// (adamicTuple), so the two share native's one stop.
-	builder.WriteString("\tif (Array.isArray(value)) return adamicDynamicStop('Array', key);\n")
+	// A tuple is an array on this backend, marked (adamicTuple) where native makes one: a tuple
+	// literal, an entries pair, a Map's spread or iterator entry, a match's indices pair.
+	builder.WriteString("\tif (Array.isArray(value) && adamicTupleObjects.has(value)) return adamicDynamicStop('Tuple', key);\n")
+	// An array answers its own properties as Node's does (#ys4naww), its indexes, its length and a
+	// match's fields, as native's keyed_array does; a name it inherits stops, and any other reads
+	// undefined.
+	builder.WriteString("\tif (Array.isArray(value)) {\n")
+	builder.WriteString("\t\tif (Object.hasOwn(value, key)) {\n")
+	// A match's indices pairs are tuples natively, so they're marked as the static read marks them
+	// (ir.RegExpProperty), and a read of one stops alike.
+	builder.WriteString("\t\t\tif (key === 'indices' && Object.hasOwn(value, 'input')) value.indices?.forEach((pair) => pair !== undefined && adamicTuple(pair));\n")
+	builder.WriteString("\t\t\treturn value[key];\n")
+	builder.WriteString("\t\t}\n")
+	builder.WriteString("\t\tif (adamicDynamicKeyedArrayPrototypeNames.has(key) || adamicDynamicKeyedPrototypeNames.has(key)) return adamicDynamicStop('ArrayPrototype', key);\n")
+	builder.WriteString("\t\treturn undefined;\n")
+	builder.WriteString("\t}\n")
 	builder.WriteString("\tif (value instanceof Map || value instanceof Set) return adamicDynamicStop('Collection', key);\n")
 	builder.WriteString("\tif (ArrayBuffer.isView(value)) return adamicDynamicStop('TypedArray', key);\n")
 	if classes {
