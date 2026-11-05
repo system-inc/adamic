@@ -26,6 +26,10 @@ func TestAsyncStringLengthConsumption(t *testing.T) {
 		{"one pending await first in a template", word + "const first = word('a');\nconsole.log(`${await first}|`);\n", "", ""},
 		{"a template between a pending promise and its await", fail + "const count = 3;\nconst first = fail('a');\nconst label = `n${count}`;\nconst value = await first;\nconsole.log(label + value);\n", "main.a:9:15", stringLengthConsumption},
 		{"a callee that throws otherwise", fail + "const first = fail('a');\nconst second = fail('b');\nconsole.log(`${await first}|${await second}`);\n", "main.a:8:7", general},
+		// An awaited function that rejects at the limit only through a helper it calls keeps the general
+		// text: telling it apart needs a whole-program may-throw fixpoint (Adamic, 07:11:58Z), so a later
+		// one changes this row on purpose.
+		{"an indirect cause", "function shout(text: string): string {\n\treturn `${text}!`;\n}\nasync function loud(text: string): Promise<string> {\n\treturn shout(text);\n}\nconst first = loud('a');\nconst second = loud('b');\nconsole.log(`${await first}|${await second}`);\n", "main.a:8:7", general},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -39,6 +43,39 @@ func TestAsyncStringLengthConsumption(t *testing.T) {
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || notYet.What != probe.want || !strings.HasSuffix(notYet.Where, "/"+probe.where) {
 				t.Fatalf("want NotYet %q at %s, got %v", probe.want, probe.where, err)
+			}
+		})
+	}
+}
+
+// Language's and Adamic's probes (#c3bk0fp, 07:11:58Z and 07:12:12Z): two of word's promises pending
+// in one statement, and in each something can run code or throw before the second await, or before
+// the first: a concatenation after the first await, an argument or an operand between the two, a
+// condition evaluated first, a callee, a property read, a computed key, a tagged template's tag, a
+// destructuring default, a comma expression. Each stops, named for the string-length limit: being
+// first consumes the first promise only, never the statement's later awaits.
+func TestAsyncStringLengthProbes(t *testing.T) {
+	t.Parallel()
+	const word = "async function word(text: string): Promise<string> {\n\treturn `${text}!`;\n}\n"
+	const setup = word + "const big = 'x';\nconst more = 'y';\nconst p = word('a');\nconst q = word('b');\n"
+	for _, probe := range []struct{ name, source string }{
+		{"a: a concatenation between the awaits", setup + "console.log(`${await p}${big}${await q}`);\n"},
+		{"b: an argument between the awaits", setup + "function f(a: string, b: string, c: string): string {\n\treturn a + b + c;\n}\nconsole.log(f(await p, big + more, await q));\n"},
+		{"c: a binary chain", setup + "console.log((await p) + big + (await q));\n"},
+		{"d: a condition first", setup + "const flag = big === 'x';\nconsole.log(flag ? await p : `${big}${await q}`);\n"},
+		{"a1: a callee first", setup + "function show(text: string): string {\n\treturn text;\n}\nconsole.log(show(`${await p}|${await q}`));\n"},
+		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n"},
+		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n"},
+		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n"},
+		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n"},
+		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || notYet.What != stringLengthConsumption {
+				t.Fatalf("want NotYet %q, got %v", stringLengthConsumption, err)
 			}
 		})
 	}
