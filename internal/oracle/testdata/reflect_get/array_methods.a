@@ -1,0 +1,31 @@
+// The names an array inherits, read by a run-time key, answer as Node's do (#g187f1e): each of
+// Array.prototype's and Object.prototype's functions has Node's length and is one function from
+// every array and every read. An array's constructor, toString and toLocaleString are
+// Array.prototype's, never an object's, and its valueOf and hasOwnProperty are an object's.
+import { propertyOf } from './hostErrors.ts';
+
+const names = [
+	'constructor', 'at', 'concat', 'copyWithin', 'fill', 'find', 'findIndex', 'findLast', 'findLastIndex', 'lastIndexOf',
+	'pop', 'push', 'reverse', 'shift', 'unshift', 'slice', 'sort', 'splice', 'includes', 'indexOf', 'join', 'keys',
+	'entries', 'values', 'forEach', 'filter', 'flat', 'flatMap', 'map', 'every', 'some', 'reduce', 'reduceRight',
+	'toReversed', 'toSorted', 'toSpliced', 'with', 'toLocaleString', 'toString', 'valueOf', 'hasOwnProperty',
+	'isPrototypeOf', 'propertyIsEnumerable', '__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__',
+];
+const numbers = [1, 2, 3];
+const strings = ['a'];
+for (const name of names) {
+	const method = propertyOf(numbers, name);
+	if (typeof method === 'function') console.log(`${name}: function ${String(method.length)}`);
+	else console.log(`${name}: ${typeof method}`);
+}
+const object = { present: 'here' };
+console.log(`map from two arrays: ${String(propertyOf(numbers, 'map') === propertyOf(strings, 'map'))}`);
+const first = propertyOf(numbers, 'map');
+const second = propertyOf(numbers, 'map');
+console.log(`map read twice: ${String(first === second)}`);
+console.log(`map is filter: ${String(propertyOf(numbers, 'map') === propertyOf(numbers, 'filter'))}`);
+console.log(`constructor is an object's: ${String(propertyOf(numbers, 'constructor') === propertyOf(object, 'constructor'))}`);
+console.log(`toString is an object's: ${String(propertyOf(numbers, 'toString') === propertyOf(object, 'toString'))}`);
+console.log(`toLocaleString is an object's: ${String(propertyOf(strings, 'toLocaleString') === propertyOf(object, 'toLocaleString'))}`);
+console.log(`valueOf is an object's: ${String(propertyOf(numbers, 'valueOf') === propertyOf(object, 'valueOf'))}`);
+console.log(`hasOwnProperty is an object's: ${String(propertyOf(strings, 'hasOwnProperty') === propertyOf(object, 'hasOwnProperty'))}`);

@@ -1,11 +1,11 @@
 // An array read by a run-time key answers as Node's does (#ys4naww): an index below length answers
 // its element, boxed by how the array holds its slots (numbers, booleans, numbers that may be
 // undefined, and references: strings, objects, a mix, null); an index at or past length, a key that
-// isn't a canonical index, and a name no array has read undefined; length answers a number; and a
-// match array answers its own index, input and groups. Array.prototype's names stop
-// (stop_array_method.a). A null element reads null where the array boxes its elements as a Union (a
-// string | null, an object | null | undefined); an object | null array, which holds null as a null
-// pointer, is NotYet where it's viewed as unknown (refuse_null_object_array.a).
+// isn't a canonical index, and a name no array has read undefined; length answers a number; a match
+// array answers its own index, input and groups; and a node array answers the metadata fields the
+// program set, undefined for one it didn't (array_methods.a reads inherited names). A null element
+// reads null where the array boxes its elements as a Union (a string | null, an object | null |
+// undefined); an object | null array is NotYet where it's viewed (refuse_null_object_array.a).
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
@@ -75,3 +75,16 @@ const either: ({ name: string } | null | undefined)[] = [null, undefined, { name
 show('either 0', propertyOf(either, '0'));
 show('either 1', propertyOf(either, '1'));
 show('either 2', propertyOf(either, '2'));
+interface SpannedInterface extends Array<number> {
+	pos: number;
+	end: number;
+	flagged: boolean;
+}
+const spanned = [7, 8] as SpannedInterface;
+spanned.pos = 3;
+spanned.flagged = true;
+show('spanned 0', propertyOf(spanned, '0'));
+show('spanned pos', propertyOf(spanned, 'pos'));
+show('spanned flagged', propertyOf(spanned, 'flagged'));
+show('spanned end', propertyOf(spanned, 'end'));
+show('spanned length', propertyOf(spanned, 'length'));

@@ -1,0 +1,21 @@
+// A Set of number | undefined hands out entries() pairs whose slots the runtime marks as numbers
+// that may be undefined (map_set.c's representation bytes), where the pair shape's kinds say only
+// number, so a run-time key read boxes them by the bytes and reads undefined as Node does
+// (#g187f1e).
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else console.log(`${label} ${typeof value}`);
+}
+
+const maybe = new Set<number | undefined>();
+maybe.add(undefined);
+maybe.add(4);
+const pairs = [...maybe.entries()];
+for (const index of ['0', '1']) {
+	const pair = propertyOf(pairs, index);
+	show(`pair ${index} 0`, propertyOf(pair, '0'));
+	show(`pair ${index} 1`, propertyOf(pair, '1'));
+	show(`pair ${index} length`, propertyOf(pair, 'length'));
+}
