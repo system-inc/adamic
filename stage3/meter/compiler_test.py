@@ -106,7 +106,7 @@ class CompilerSelectionTests(unittest.TestCase):
         self.env.pop('STAGE3_METER_AREA_REF', None)
         self.command('git', 'init', '-b', 'main')
         source = Path(__file__).resolve().parent
-        for name in ('report.py', 'owners.json', 'box.py'):
+        for name in ('report.py', 'owners.json', 'box.py', 'node_readiness.py'):
             self.write('stage3/meter/' + name, (source / name).read_text())
         script = Path(os.environ.get('METER_SCRIPT_UNDER_TEST', source / 'twice-daily.sh'))
         self.write('stage3/meter/twice-daily.sh', script.read_text())
