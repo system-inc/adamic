@@ -19,6 +19,10 @@ Each is one edit, run on a house box, then put back. The presence design is Diag
 | Every literal write refused | phantom_array_presence.go, `phantomPresenceWrite`: a literal key refused whatever it names | TestUnbrandedPresenceControls, the write at a number |
 | An array spread refused | phantom_array_presence.go: SpreadElement judged as an object spread is | TestUnbrandedPresenceControls, the array spread row |
 
+Survived, on Home for 1663124c: cast_proof.go's arrayLikeType guard, which keeps a cast seeing the brand, removed. No test
+turns red, so the guard keeps the head's behavior (a phantom extension is no array to castAssignableAt's skip) without a
+case that tells the two apart. It's kept for Diagnostics to rule on.
+
 Not held by a mutant: the oracle fixture of tsc's four shapes on both backends. Adding one means a recorded count row and
 the fixture families on a box; the JavaScript backend holds the shapes to Node (TestUnbrandedArraysAgreeWithNode), and
 internal/oracle/testdata/notyet_element_access/sorted.a, now lowering, holds a SortedReadonlyArray parameter to Node on

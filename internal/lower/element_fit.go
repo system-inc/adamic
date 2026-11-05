@@ -169,7 +169,7 @@ func (l *lowering) elementsSeenAs(stored *checker.Type, viewed *checker.Type, bu
 					}
 					storedArguments, viewedArguments := l.typeArguments(container), l.typeArguments(slot)
 					for index := 0; index < len(storedArguments) && index < len(viewedArguments); index++ {
-						literal := built != 0 && index == 0 && l.checker.IsArrayType(container)
+						literal := built != 0 && index == 0 && l.isArrayType(container)
 						if storedArguments[index] == viewedArguments[index] && !literal {
 							// One type is held one way, whatever it is.
 							continue
