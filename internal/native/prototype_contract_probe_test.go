@@ -14,6 +14,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -152,7 +154,8 @@ func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
 }
 
 // Pin each debug.ts link separately: an earlier create/descriptor refusal must not hide the setter.
-// Availability tests are recorded too, so a "no edge" site is not confused with a linked object.
+// Availability tests are recorded too, so a "no edge" site is not confused with a linked object: they
+// lower, and print what Node does on both backends.
 func TestPrototypeDebugSiteRefusals(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ line, api, expected string }{
@@ -175,14 +178,15 @@ func TestPrototypeDebugSiteRefusals(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), checked)
+			program, err := lower.Lower(context.Background(), checked)
 			if fixture.api == "" {
-				var refusal *lower.Refused
-				if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "unbound-method") {
-					t.Fatalf("availability refusal: %v", err)
+				// typeof Object.setPrototypeOf only tests for the method, an observation, not a detach
+				// (lower/method_presence.go, #4q1b2er): it lowers, and each backend prints Node's answer.
+				if err != nil {
+					t.Fatalf("availability probe: %v", err)
 				}
-				t.Logf("refused availability probe, no prototype edge: %v", err)
-				prototypeRefusalControl(t, name, "console.log(\"true\");\n")
+				prototypeBackendsPrint(t, program, fixture.expected)
+				t.Log("lowered availability probe, no prototype edge")
 				return
 			}
 			var refusal *lower.Refused
@@ -211,6 +215,34 @@ func TestPrototypeDebugSiteRefusals(t *testing.T) {
 	var refusal *lower.Refused
 	if !errors.As(err, &refusal) || refusal.What != "Object.setPrototypeOf" {
 		t.Fatalf("mixed-edge admission not refused: %v", err)
+	}
+}
+
+// prototypeBackendsPrint runs program on the JavaScript backend and natively, sanitized, and fails
+// unless each prints expected and exits cleanly.
+func prototypeBackendsPrint(t *testing.T, program *ir.Program, expected string) {
+	t.Helper()
+	directory := t.TempDir()
+	script := filepath.Join(directory, "main.mjs")
+	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "native")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for _, backend := range []struct {
+		name    string
+		command *exec.Cmd
+	}{
+		{"javascript", exec.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", script)},
+		{"native", exec.Command(binary)},
+	} {
+		var stdout, stderr bytes.Buffer
+		backend.command.Stdout, backend.command.Stderr = &stdout, &stderr
+		if err := backend.command.Run(); err != nil || stdout.String() != expected {
+			t.Fatalf("%s: %v, stdout %q, want %q\n%s", backend.name, err, stdout.String(), expected, stderr.String())
+		}
 	}
 }
 
