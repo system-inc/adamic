@@ -1,0 +1,27 @@
+{
+  "deliverableBase": "c2b6304cc949b68b1dbe72fbf3577a9039fb950d",
+  "compilerMain": "99449b40bc54c2539b7b30f2840371b332957b0f",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compilerBuildCommand": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/flatten-main-bin/",
+    "./cmd/adamic",
+    "./stage3/census/tool"
+  ],
+  "compilerBuildDirectory": "/workspace/adamic-99l-ref",
+  "ordinaryMeter": true,
+  "overlays": false,
+  "refusalSuppression": false,
+  "backend": false,
+  "partialRootFallback": false,
+  "binaries": {
+    "tool": "0d7b38cdc866c0a97b3f7a9973d1cee82084039d244372c5a21e1a3ad88d2ec4",
+    "adamic": "ce1791dc31335580ab19ea6a35d7f78f20ce8b00cef34fb3b12a427077bb1e19"
+  },
+  "mainAdaptationsUnchangedSince99kBase": true,
+  "inheritedGOFLAGS": "-buildvcs=false -trimpath"
+}

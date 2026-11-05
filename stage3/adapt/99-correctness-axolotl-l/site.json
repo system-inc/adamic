@@ -1,0 +1,9 @@
+{
+  "base": "c2b6304cc949b68b1dbe72fbf3577a9039fb950d",
+  "file": "src/compiler/core.ts",
+  "line": 381,
+  "column": 26,
+  "expression": "result",
+  "role": "first argument of addRange(result, v), a writable T[] parameter",
+  "owner": "export function flatten<T>(array: T[][] | readonly (T | readonly T[] | undefined)[]): T[] {\n    const result = [];\n    for (let i = 0; i < array.length; i++) {\n        const v = array[i];\n        if (v) {\n            if (isArray(v)) {\n                addRange(result, v);\n            }\n            else {\n                result.push(v);\n            }\n        }\n    }\n    return result;\n}"
+}
