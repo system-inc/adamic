@@ -110,7 +110,7 @@ class ReportTests(unittest.TestCase):
         text = (self.run / 'report.md').read_text()
         self.assertIn(MEASUREMENT, text)
         self.assertIn('Lowering, main: 1/4; root-order artifacts: 0.', text)
-        self.assertIn('| Root | Stop | Reason | Node result | Classification | File result from entry census |', text)
+        self.assertIn('| Root | Stop | Reason | Node result | Classification | Program result from entry census |', text)
         self.assertIn('| area-only blocker | OWNER BLANK |', text)
         self.assertLess(text.index('### Unowned'), text.index('Latent lowering, main:'))
         self.assertEqual(result['trees']['main']['latent_lowering']['totals']['NotYet'], 0)
@@ -459,7 +459,8 @@ class RootOrderTests(unittest.TestCase):
             rows[1]['findings'] = [{'measurement': ENTRY_MEASUREMENT, 'kind': 'NotYet',
                                     'where': f'{self.stop}:99:1', 'reason': entry_reason, 'text': 'stop'}]
         path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
-        self.node = {'node_version': 'v24.19.0', 'build_exit': 0, 'exit': 1 if node_throws else 0,
+        self.node = {'program_files': [str(self.root), str(self.stop)], 'program_files_complete': True,
+                     'node_version': 'v24.19.0', 'build_exit': 0, 'exit': 1 if node_throws else 0,
                      'timeout': False, 'throws': node_throws,
                      'first_error': "ReferenceError: Cannot access 'early' before initialization" if node_throws else ''}
         self.probe = patch('report.run_roots', return_value={str(self.root): self.node})
@@ -486,7 +487,7 @@ class RootOrderTests(unittest.TestCase):
         self.assertEqual(result['totals']['lowering'], 2)
         artifact = {'root': 'src/compiler/later.ts', 'where': 'src/compiler/good.ts:7:9',
                     'reason': self.reason, 'node': self.node,
-                    'entry_file_attempted': True, 'entry_next_stop': None}
+                    'entry_program_attempted': True, 'entry_unattempted_sources': [], 'entry_next_stop': None}
         self.assertEqual(result['root_order_artifacts'], [artifact])
         self.assertEqual(result['readiness_node_checks'], [artifact])
         text = (self.run / 'report.md').read_text()
@@ -576,12 +577,12 @@ class RootOrderTests(unittest.TestCase):
         self.assertEqual(result['totals']['lowering'], 1)
         self.assertEqual(len(result['root_order_artifacts']), 1)
         stop = {'kind': 'Refused', 'where': 'src/compiler/later.ts:167:31',
-                'reason': 'a cast the runtime cannot check', 'source': 'entry census'}
+                'reason': 'a cast the runtime cannot check', 'source': 'entry census', 'order': 'source order'}
         self.assertEqual(self.root_row(result)['lowering_stop'], stop)
         self.assertEqual(self.root_row(result)['lowering_evidence'], 'entry census')
         self.assertEqual(result['root_order_artifacts'][0]['entry_next_stop'], stop)
         text = (self.run / 'report.md').read_text()
-        self.assertIn('Refused src/compiler/later.ts:167:31: a cast the runtime cannot check (read from the entry census)', text)
+        self.assertIn('Refused src/compiler/later.ts:167:31: a cast the runtime cannot check (read from the entry census; source order)', text)
         self.assertIn('root-order artifact', text)
 
     def test_artifact_without_attempted_root_units_does_not_lower_whole(self):
@@ -594,4 +595,39 @@ class RootOrderTests(unittest.TestCase):
         self.assertFalse(self.root_row(result)['lowering'])
         self.assertEqual(result['totals']['lowering'], 1)
         self.assertEqual(len(result['root_order_artifacts']), 1)
-        self.assertIn('no units attempted; lowering unproven', (self.run / 'report.md').read_text())
+        self.assertIn('program reach unavailable or units not attempted; lowering unproven', (self.run / 'report.md').read_text())
+
+    def test_artifact_with_clean_own_file_and_refused_dependency_does_not_lower_whole(self):
+        from report import ENTRY_MEASUREMENT
+        self.readiness()
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[2]['findings'] = [{'kind': 'Refused', 'where': f'{self.stop}:356:13',
+                                'reason': 'refused dependency', 'text': 'refused',
+                                'measurement': ENTRY_MEASUREMENT}]
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(len(result['root_order_artifacts']), 1)
+        stop = self.root_row(result)['lowering_stop']
+        self.assertEqual(stop, {'kind': 'Refused', 'where': 'src/compiler/good.ts:356:13',
+                                'reason': 'refused dependency', 'source': 'entry census', 'order': 'source order'})
+        self.assertIn('refused dependency (read from the entry census; source order)',
+                      (self.run / 'report.md').read_text())
+
+    def test_artifact_needs_attempted_units_in_every_program_source(self):
+        from report import ENTRY_MEASUREMENT
+        self.readiness()
+        dependency = self.tree / 'src/compiler/refused.ts'
+        self.node['program_files'].append(str(dependency))
+        path = self.run / 'tsc/latent.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[0]['sources'].append(str(dependency))
+        rows.append({'file': str(dependency), 'measurement': ENTRY_MEASUREMENT, 'units': [], 'findings': []})
+        path.write_text(''.join(json.dumps(row) + '\n' for row in rows))
+        result = self.render()
+        self.assertFalse(self.root_row(result)['lowering'])
+        self.assertEqual(result['totals']['lowering'], 1)
+        self.assertEqual(result['root_order_artifacts'][0]['entry_unattempted_sources'],
+                         ['src/compiler/refused.ts'])
