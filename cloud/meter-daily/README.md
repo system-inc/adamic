@@ -5,7 +5,7 @@ box, so it needs no one's session. Never on a Mac: both scripts refuse to run th
 
 - `run.sh` runs the meter once, as adamicmeter (network, no keys, no push rights, no sudo), on
   main's tip. It clones adamic over HTTPS into its own checkout, detaches it at the sha origin/main
-  resolves to, and runs twice-daily.sh with `per-ref`, `first-error` and a 2 hour limit, pinned to
+  resolves to, and runs twice-daily.sh with `per-ref`, `first-error` and a 3 hour limit (2 hours until Nov 5; back to 2 when #20pb346 is fixed), pinned to
   that sha. Its state directory, /var/lib/adamic-meter (adamicmeter's, with an ACL so ahra can read
   it), holds `work/` (the checkout), `runs/<stamp>/` (the output, plus `toolchain.txt` naming the
   node, go, clang and npm it ran with), `logs/<stamp>.log` (every step and the meter's whole output)
@@ -21,7 +21,7 @@ box, so it needs no one's session. Never on a Mac: both scripts refuse to run th
   `ahra loom submit` makes with `--base` off. It exits 3, "not configured", pushing nothing, until /etc/adamic-meter/submit.env names
   `ADAMIC_METER_DEPLOY_KEY` and `ADAMIC_METER_SUBMIT_TOKEN`, each a readable file. `--dry-run`
   builds the commit and the body and prints them without either secret.
-- `meter-daily.service` (User=adamicmeter, TimeoutStartSec=2h30m, its own /tmp) starts
+- `meter-daily.service` (User=adamicmeter, TimeoutStartSec=3h30m, its own /tmp) starts
   `meter-daily-submit.service` (User=ahra) only on success. `meter-daily.timer` starts it daily at
   06:17 America/Denver, Persistent=true.
 
