@@ -69,7 +69,7 @@ console.log(String(new Map(zip(["a", "b"], [1, 2])).size) + " " + String(new Set
 
 // What new Map can't take from a generator's call stops as not yet, in words that say why: a yield
 // that isn't one [key, value] tuple (a union of two), and pairs held otherwise than the Map's keys and
-// values. A Generator that isn't a direct call, a parameter here, still stops as it did before S2b-1a
+// values, each in the words newMapFrom gives any other source. A Generator that isn't a direct call, a parameter here, still stops as it did before S2b-1a
 // (TestNewMapFromAGeneratorNamesGenerators holds the same). Mutants: generatorPairTypes' tuple test
 // taken out (the union row goes red), newMapFromGenerator's held-otherwise test taken out (that row
 // lowers, and goes red).
@@ -80,11 +80,11 @@ func TestNewMapOfAGeneratorsCallStopsWhereItsYieldsArentItsPairs(t *testing.T) {
 	yield ["a", 1];
 	yield ["b", 2];
 }
-console.log(String(new Map(pairs()).size));`, "consumed by new Map, yielding something other than [key, value] pairs"},
+console.log(String(new Map(pairs()).size));`, "new Map from something that isn't [key, value] pairs"},
 		{"pairs held otherwise", `function* pairs(): Generator<[string, number], undefined, undefined> {
 	yield ["a" + "b", 1];
 }
-console.log(String(new Map<string, number | string>(pairs()).size));`, "consumed by new Map, yielding pairs held otherwise than the Map's keys and values"},
+console.log(String(new Map<string, number | string>(pairs()).size));`, "new Map from pairs held otherwise than the Map's keys and values"},
 		{"a generator that isn't a call", `function size(source: Generator<readonly [string, number], undefined, unknown>): number {
 	return new Map(source).size;
 }
