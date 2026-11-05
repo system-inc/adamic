@@ -8,9 +8,9 @@ import tempfile
 meter = Path(__file__).resolve().parent
 source = (meter / 'report.py').read_text()
 mutants = [
-    ('artifact-implies-whole',
-     "return artifact['entry_file_attempted'] and artifact['entry_next_stop'] is None",
-     'return True', 'test_artifact_with_entry_refusal_does_not_lower_whole'),
+    ('artifact-clean-own-file-implies-whole',
+     "return artifact['entry_program_attempted'] and artifact['entry_next_stop'] is None",
+     'return True', 'test_artifact_with_clean_own_file_and_refused_dependency_does_not_lower_whole'),
     ('ignore-entry-readiness', 'in attempted - readiness', 'in attempted',
      'test_entry_order_readiness_still_counts_against_root_file'),
     ('count-root-order-artifact-as-failure', "artifacts = [row for row in checks if row['node']['throws']]",

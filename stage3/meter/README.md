@@ -289,10 +289,17 @@ also retains clean and inconclusive probes. Every artifact's root, stop, reason
 and Node result appears beside lowering counts in single, paired and daily
 README tables, without truncation. This ruling changes the file's meter score,
 not its raw outcome or latent finding-site totals. An artifact root counts as
-lowering whole only when its own file has attempted entry-census units and no
-finding of any kind in that file. Otherwise `lowering_stop` records the first
-file-local entry finding (kind, reason, location), labeled `entry census`,
-and the table shows it behind the artifact. Unattempted files stay unproven.
+lowering whole only when every implementation source in its program has
+attempted entry-census units and no finding of any kind in any program file.
+The Node runner asks tsc `--listFilesOnly` separately for each root using the
+same options as emit, excludes declarations, and records `program_files` and
+`program_files_complete`. An unavailable reach never proves whole lowering.
+Otherwise `lowering_stop` records the first entry finding in the program
+(kind, reason, location), labeled `entry census`. Compiler source lists do not
+establish ES-module evaluation order, so the report explicitly uses source
+order: normalized path, numeric line and column, then entry-stream order for
+ties. The table shows that next stop behind the artifact. Unattempted program
+files are named in `entry_unattempted_sources` and prevent a pass.
 No successful IR after the per-root first stop is claimed. Probe logs remain in each run's `node-readiness/`.
 
 For a partial historical ordinary census, `python3 -E -S -B
@@ -308,6 +315,7 @@ The Node runner has its own real-tool tests in
 suites; new tests keep the existing `*_test.py` naming and the stage3 Python
 suite census stays unchanged.
 
-The `artifact-implies-whole` mutant must go red on
-`RootOrderTests.test_artifact_with_entry_refusal_does_not_lower_whole`; an
-entry-census refusal in an artifact root's own file still prevents whole lowering.
+The `artifact-clean-own-file-implies-whole` mutant must go red on
+`RootOrderTests.test_artifact_with_clean_own_file_and_refused_dependency_does_not_lower_whole`.
+A refusal in a dependency prevents whole-program lowering even when the root
+file itself is clean. A separate test pins missing attempted dependency units.

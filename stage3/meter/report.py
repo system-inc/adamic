@@ -289,26 +289,35 @@ def root_order_checks(tree, run, records):
     checks = []
     for row in candidates:
         root = str(Path(row['roots'][0]).resolve())
-        first = next((finding for record in latent[1:] for finding in record.get('findings') or []
-                      if stop_file(finding['where']) == root), None)
+        probe = probes[root]
+        program = {str(Path(name).resolve()) for name in probe.get('program_files', [])}
+        complete = probe.get('program_files_complete', False) and root in program
+        # A source-file list is not an ES-module evaluation order. Use the allowed
+        # fallback explicitly: source path, numeric line/column, then stream order.
+        findings = [finding for record in latent[1:] for finding in record.get('findings') or []
+                    if stop_file(finding['where']) in program]
+        findings.sort(key=lambda finding: (site_where(stop_file(finding['where'])),
+                                          *map(int, finding['where'].rsplit(':', 2)[1:])))
+        first = findings[0] if findings else None
         checks.append({'root': site_where(root), 'where': site_where(row['where']),
-                       'reason': row['reason'], 'node': probes[root],
-                       'entry_file_attempted': root in attempted,
+                       'reason': row['reason'], 'node': probe,
+                       'entry_program_attempted': complete and program <= attempted,
+                       'entry_unattempted_sources': sorted(site_where(name) for name in program - attempted),
                        'entry_next_stop': None if first is None else {
                            'kind': first['kind'], 'where': site_where(first['where']),
-                           'reason': first['reason'], 'source': 'entry census'}})
+                           'reason': first['reason'], 'source': 'entry census', 'order': 'source order'}})
     return checks
 
 
 def artifact_lowers_whole(artifact):
-    return artifact['entry_file_attempted'] and artifact['entry_next_stop'] is None
+    return artifact['entry_program_attempted'] and artifact['entry_next_stop'] is None
 
 
 def root_order_table(label, result):
     totals = result['totals']
     lines = ['', f"Lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
              f"root-order artifacts: {len(result.get('root_order_artifacts', []))}.",
-             '', '| Root | Stop | Reason | Node result | Classification | File result from entry census |',
+             '', '| Root | Stop | Reason | Node result | Classification | Program result from entry census |',
              '| --- | --- | --- | --- | --- | --- |']
     for row in result.get('readiness_node_checks', []):
         node = row['node']
@@ -320,11 +329,11 @@ def root_order_table(label, result):
         if node['throws']:
             stop = row['entry_next_stop']
             if stop is not None:
-                entry_result = f"{stop['kind']} {stop['where']}: {stop['reason']} (read from the entry census)"
-            elif row['entry_file_attempted']:
-                entry_result = 'units attempted; no findings; lowers whole'
+                entry_result = f"{stop['kind']} {stop['where']}: {stop['reason']} (read from the entry census; {stop['order']})"
+            elif row['entry_program_attempted']:
+                entry_result = 'all program files attempted; no findings; lowers whole'
             else:
-                entry_result = 'no units attempted; lowering unproven'
+                entry_result = 'program reach unavailable or units not attempted; lowering unproven'
         cells = [row['root'], row['where'], row['reason'], outcome, classification, entry_result]
         lines.append('| ' + ' | '.join(escape(cell).replace('|', '&#124;').replace('\n', ' ')
                                       for cell in cells) + ' |')
@@ -466,7 +475,7 @@ def write_readme(run, result, revision='HEAD'):
     if not previous:
         lines += ['', 'No previous committed paired run was found.']
     lines += root_order_table('main', result['trees']['main'])
-    lines += ['', 'For artifact roots, lowering requires attempted file units and no entry-census finding. No native output is claimed.', '']
+    lines += ['', 'For artifact roots, lowering requires attempted units in every program source and no entry-census finding in the program. No native output is claimed.', '']
     (run / 'README.md').write_text('\n'.join(lines))
 
 
