@@ -1,0 +1,16 @@
+// a-check: refused destructuring a value made in the assignment itself
+// stops today; when lowered, must throw Node's TypeError through FrozenWriteMayThrow.
+// Language's l03 on #c3bk0fp: o.a, a frozen object's field, written as an object destructuring
+// target. Node prints TypeError and "Cannot assign to read only property 'a' of object '#<Object>'".
+const o = { a: 1, b: 'x' };
+Object.freeze(o);
+try {
+	({ c: o.a } = { c: 2 });
+	console.log('wrote');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+console.log(`${o.a} ${o.b}`);
