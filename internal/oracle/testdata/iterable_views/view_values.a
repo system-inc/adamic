@@ -1,0 +1,37 @@
+// One Iterable<number> parameter handed a Set's values() and a Map's values(), and an
+// IterableIterator<number> one and an Iterable<number> local handed a Map's: every origin is a
+// collection's iterator holding numbers, so each loop steps it as the collection's own for-of does.
+function largest(items: Iterable<number>): number {
+    let best = -1;
+    for(const value of items) {
+        console.log(`saw ${String(value)}`);
+        if(value > best) {
+            best = value;
+        }
+    }
+    return best;
+}
+function joined(items: IterableIterator<number>): string {
+    const parts: string[] = [];
+    for(const value of items) {
+        parts.push(String(value * 2));
+    }
+    return parts.join('+');
+}
+const sizes = new Set<number>();
+for(let index = 0; index < 6; index++) {
+    sizes.add((index * 7) % 5);
+}
+const scores = new Map<string, number>();
+for(let index = 0; index < 4; index++) {
+    scores.set(`player ${String(index)}`, (index * 11) % 6);
+}
+console.log(String(largest(sizes.values())));
+console.log(String(largest(scores.values())));
+console.log(joined(scores.values()));
+const held: Iterable<number> = sizes.keys();
+let count = 0;
+for(const value of held) {
+    count += value;
+}
+console.log(`held ${String(count)}`);

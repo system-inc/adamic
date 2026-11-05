@@ -1,0 +1,21 @@
+// An iterator stepped by hand before a view walks it: the view sees only what is left, and walked
+// again once it is done, nothing, as Node's iterator gives.
+function drain(items: Iterable<number>, label: string): void {
+    const seen: string[] = [];
+    for(const value of items) {
+        seen.push(String(value));
+    }
+    console.log(`${label}: ${seen.join(',')}`);
+}
+const ids = new Map<number, string>();
+for(let index = 1; index <= 5; index++) {
+    ids.set(index * 10, `id ${String(index)}`);
+}
+const keys = ids.keys();
+const skipped = keys.next();
+if(!skipped.done) {
+    console.log(`skipped ${String(skipped.value)}`);
+}
+drain(keys, 'rest');
+drain(keys, 'again');
+drain(ids.keys(), 'fresh');

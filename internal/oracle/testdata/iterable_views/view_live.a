@@ -1,0 +1,25 @@
+// A view over a Map's keys() while the loop writes the Map: an entry added during the walk is
+// visited, one deleted before the walk reaches it isn't, and a key set again keeps its place, as
+// Node's live iterator does.
+function visit(items: Iterable<number>, into: Map<number, string>): void {
+    for(const key of items) {
+        console.log(`visit ${String(key)} ${into.get(key) ?? 'none'}`);
+        if(key < 3) {
+            into.set(key * 3 + 1, `added by ${String(key)}`);
+        }
+        if(key === 2) {
+            into.delete(3);
+            into.set(1, `again ${String(key)}`);
+        }
+    }
+}
+const live = new Map<number, string>();
+for(let index = 1; index <= 3; index++) {
+    live.set(index, `start ${String(index)}`);
+}
+visit(live.keys(), live);
+const order: string[] = [];
+for(const [key, value] of live) {
+    order.push(`${String(key)}=${value}`);
+}
+console.log(order.join(' '));
