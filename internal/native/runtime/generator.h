@@ -39,6 +39,10 @@ adamic_generator *adamic_generator_new(size_t count, const adamic_generator_code
  * zero, a throw with adamic_thrown set; a done generator yields zero. */
 adamic_value adamic_generator_next(adamic_generator *);
 bool adamic_generator_done(const adamic_generator *);
+/* An iterable view's dispatch (ir.IsGenerator): false for NULL, as adamic_collection_iterator_is
+ * is, so a NULL the proof missed reaches the dispatch's loud default, which names the site, never
+ * a fault with none (Memory's should on #qk8rztp S2c-1 commit 3). */
+bool adamic_generator_is(const void *);
 /* At a yield, for a cell the resume never reads again. */
 void adamic_generator_kill(adamic_generator *, size_t index);
 /* Completion and throw: every counted cell and error released and NULLed. */

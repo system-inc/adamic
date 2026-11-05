@@ -45,6 +45,10 @@ bool adamic_generator_done(const adamic_generator *generator) {
     return generator->status == adamic_generator_status_done;
 }
 
+bool adamic_generator_is(const void *value) {
+    return value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_generator;
+}
+
 void adamic_generator_kill(adamic_generator *generator, size_t index) {
     adamic_cell *cell = &generator->cells[index];
     if (cell->references && cell->value.reference != NULL) {

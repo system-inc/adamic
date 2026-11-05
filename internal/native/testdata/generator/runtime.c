@@ -219,6 +219,13 @@ int main(int argc, char **argv) {
         adamic_generator *generator = adamic_generator_new(0, &returning);
         (void)adamic_generator_next(generator);
         assert(!"returning next returned");
+    } else if (strcmp(mode, "is") == 0) {
+        /* A view's dispatch asks this first; NULL, a string and a generator each get their answer. */
+        adamic_generator *generator = counting_new();
+        adamic_string *text = adamic_string_from_number(4);
+        printf("%d %d %d\n", adamic_generator_is(NULL), adamic_generator_is(text), adamic_generator_is(generator));
+        adamic_release(text);
+        adamic_release(generator);
     } else {
         assert(!"unknown mode");
     }
