@@ -1,0 +1,203 @@
+{
+  "base": "5ff432f962b1c7c9145533946c46a35450ebfacc",
+  "supersededBy": "b0efce6dce1cd7445ed8a570aecac387a4a7d684",
+  "identity": {
+    "rawEventsBefore": 212734,
+    "rawEventsAfter": 212734,
+    "normalizedOccurrences": 106367,
+    "rawMultisetsMatch": true,
+    "normalizedMultisetsMatch": true,
+    "added": 0,
+    "removed": 0,
+    "outcomes": {
+      "pass": 106366,
+      "fail": 1,
+      "pending": 0
+    },
+    "failures": [
+      {
+        "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+        "count": 1
+      }
+    ],
+    "normalizedSha256": "1de5705e5a5982dc8172377c138f37e6c65f6e8a60dbe76f160a85a181152371"
+  },
+  "counters": [
+    {
+      "id": "G01",
+      "owner": "isPrimitiveLiteralValue",
+      "file": "utilities.ts",
+      "condition": "isPrefixUnaryExpression(node)",
+      "following": "if (node.operator === SyntaxKind.MinusToken) {",
+      "kind": "PrefixUnaryExpression",
+      "runs": 288,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G02",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isGetAccessor(node) || isSetAccessor(node)",
+      "following": "return createAccessorTypeError(node);",
+      "kind": "isGetAccessor",
+      "runs": 29,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G03",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isComputedPropertyName(node) || isShorthandPropertyAssignment(node) || isSpreadAssignment(node)",
+      "following": "return createObjectLiteralError(node);",
+      "kind": "isComputedPropertyName",
+      "runs": 126,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G04",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isArrayLiteralExpression(node) || isSpreadElement(node)",
+      "following": "return createArrayLiteralError(node);",
+      "kind": "isArrayLiteralExpression",
+      "runs": 23,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G05",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isMethodDeclaration(node) || isConstructSignatureDeclaration(node) || isFunctionExpression(node) || isArrowFunction(node) || isFunctionDeclaration(node)",
+      "following": "return createReturnTypeError(node);",
+      "kind": "isMethodDeclaration",
+      "runs": 311,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G06",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isBindingElement(node)",
+      "following": "return createBindingElementError(node);",
+      "kind": "isBindingElement",
+      "runs": 24,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G07",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isPropertyDeclaration(node) || isVariableDeclaration(node)",
+      "following": "return createVariableOrPropertyError(node);",
+      "kind": "isPropertyDeclaration",
+      "runs": 308,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G08",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isParameter(node)",
+      "following": "return createParameterError(node);",
+      "kind": "isParameter",
+      "runs": 88,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G09",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isPropertyAssignment(node)",
+      "following": "return createExpressionError(node.initializer);",
+      "kind": "isPropertyAssignment",
+      "runs": 61,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G10",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isClassExpression(node)",
+      "following": "return createClassExpressionError(node);",
+      "kind": "isClassExpression",
+      "runs": 18,
+      "wouldFail": 0,
+      "failingTitles": {},
+      "ship": true
+    },
+    {
+      "id": "G11",
+      "owner": "getDiagnostic",
+      "file": "transformers/declarations/diagnostics.ts",
+      "condition": "isExpression(node)",
+      "following": "return createExpressionError(node);",
+      "kind": "default",
+      "runs": 26,
+      "wouldFail": 12,
+      "failingTitles": {
+        "compiler tests compiler tests for tests/cases/compiler/isolatedDeclarationErrorsClasses.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/isolatedDeclarationErrorsClasses.ts\"": 3,
+        "compiler tests compiler tests for tests/cases/compiler/isolatedDeclarationErrorsClasses.ts Correct JS output for tests/cases/compiler/isolatedDeclarationErrorsClasses.ts": 3,
+        "compiler tests compiler tests for tests/cases/compiler/isolatedDeclarationsAddUndefined.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/isolatedDeclarationsAddUndefined.ts\"": 3,
+        "compiler tests compiler tests for tests/cases/compiler/isolatedDeclarationsAddUndefined.ts Correct JS output for tests/cases/compiler/isolatedDeclarationsAddUndefined.ts": 3
+      },
+      "ship": false
+    }
+  ],
+  "stockChecks": [
+    {
+      "name": "before",
+      "tree": "/workspace/scratch/99u-main",
+      "roots": 79,
+      "diagnostics": []
+    },
+    {
+      "name": "after",
+      "tree": "/workspace/scratch/99u-adapted",
+      "roots": 79,
+      "diagnostics": []
+    },
+    {
+      "name": "kind-pin-mutant",
+      "tree": "/workspace/scratch/99u-adapted",
+      "roots": 79,
+      "changed": {
+        "file": "/workspace/scratch/99u-adapted/src/compiler/utilities.ts",
+        "removedLine": "case SyntaxKind.Parameter:",
+        "line": 12066
+      },
+      "diagnostics": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 12080,
+          "code": 2345,
+          "message": "Argument of type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 340 more ... | SyntaxKind.Count' is not assignable to parameter of type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count'.\n  Type 'SyntaxKind.Parameter' is not assignable to type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count'."
+        }
+      ]
+    },
+    {
+      "name": "debug-type-mutant",
+      "tree": "/workspace/scratch/99u-control-first",
+      "roots": 79,
+      "diagnostics": []
+    }
+  ],
+  "allPrimaryMeasurementsWillBeRepeated": true
+}

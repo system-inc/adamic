@@ -1,0 +1,63 @@
+{
+  "owners": [
+    {
+      "owner": "isDeclarationWithTypeParameters",
+      "before": {
+        "casts": 0,
+        "claims": 1
+      },
+      "after": {
+        "casts": 0,
+        "claims": 0
+      }
+    },
+    {
+      "owner": "isDeclarationWithTypeParameterChildren",
+      "before": {
+        "casts": 0,
+        "claims": 1
+      },
+      "after": {
+        "casts": 0,
+        "claims": 0
+      }
+    },
+    {
+      "owner": "isPrimitiveLiteralValue",
+      "before": {
+        "casts": 0,
+        "claims": 1
+      },
+      "after": {
+        "casts": 0,
+        "claims": 0
+      }
+    },
+    {
+      "owner": "hasInferredType",
+      "before": {
+        "casts": 0,
+        "claims": 1
+      },
+      "after": {
+        "casts": 0,
+        "claims": 0
+      }
+    },
+    {
+      "owner": "createGetIsolatedDeclarationErrors.getDiagnostic",
+      "before": {
+        "casts": 1,
+        "claims": 1
+      },
+      "after": {
+        "casts": 1,
+        "claims": 0
+      }
+    }
+  ],
+  "noNewCasts": true,
+  "deletedDebugTypeCalls": 5,
+  "onlyExistingDefaultCastRetained": true,
+  "noGoFiles": true
+}

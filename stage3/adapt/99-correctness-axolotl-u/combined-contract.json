@@ -1,0 +1,263 @@
+{
+  "cases": 43,
+  "results": [
+    {
+      "name": "first-apply-and-replay",
+      "first": {
+        "files": 2,
+        "edits": 14,
+        "javascriptChanging": true
+      },
+      "replay": {
+        "files": 0,
+        "edits": 0,
+        "javascriptChanging": true
+      },
+      "replayWrites": 0
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-before-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-before-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-before-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-after-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-after-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-after-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isDeclarationWithTypeParameters"
+    },
+    {
+      "name": "isDeclarationWithTypeParameters-mixed",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted tree"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-before-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-before-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-before-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-after-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-after-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-after-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isDeclarationWithTypeParameterChildren"
+    },
+    {
+      "name": "isDeclarationWithTypeParameterChildren-mixed",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted tree"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-before-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-before-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-before-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-after-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-after-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-after-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: isPrimitiveLiteralValue"
+    },
+    {
+      "name": "isPrimitiveLiteralValue-mixed",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted tree"
+    },
+    {
+      "name": "hasInferredType-before-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-before-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-before-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-after-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-after-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-after-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: hasInferredType"
+    },
+    {
+      "name": "hasInferredType-mixed",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted tree"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-before-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-before-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-before-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-after-changed",
+      "refused": true,
+      "writes": 0,
+      "reason": "changed owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-after-missing",
+      "refused": true,
+      "writes": 0,
+      "reason": "missing owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-after-duplicate",
+      "refused": true,
+      "writes": 0,
+      "reason": "duplicate owner: createGetIsolatedDeclarationErrors.getDiagnostic"
+    },
+    {
+      "name": "createGetIsolatedDeclarationErrors.getDiagnostic-mixed",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted tree"
+    },
+    {
+      "name": "partial-imports",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted guard imports"
+    },
+    {
+      "name": "partial-imports-before",
+      "refused": true,
+      "writes": 0,
+      "reason": "half-adapted guard imports"
+    },
+    {
+      "name": "LF-preserved",
+      "passed": true
+    },
+    {
+      "name": "CRLF-preserved",
+      "passed": true
+    },
+    {
+      "name": "foreign-edit-before",
+      "passed": true
+    },
+    {
+      "name": "foreign-edit-after",
+      "passed": true
+    },
+    {
+      "name": "concurrent-source-change",
+      "refused": true,
+      "writes": 0,
+      "reason": "concurrent source change: utilities.ts\n+ actual - expected\n... Skipped lines\n\n  'import {\\r\\n' +\n    '    type __String,\\r\\n' +\n    '    type AccessExpression,\\r\\n' +\n    '    type AccessorDeclaration,\\r\\n' +\n    '    addEmitFlags,\\r\\n' +\n...\n    '    isTypeLiteralNode,\\r\\n' +\n+   '    isTypeNode'... 505415 more characters\n-   '    isTypeNode'... 505391 more characters\n"
+    }
+  ]
+}

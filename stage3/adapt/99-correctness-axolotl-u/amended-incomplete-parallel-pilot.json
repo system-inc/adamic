@@ -1,0 +1,58 @@
+{
+  "tree": "/workspace/scratch/99u2-candidate",
+  "nproc": 5,
+  "workers": 8,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.71
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 28.713
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 106.75
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 0,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "failures": [],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 0,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "baseline_previews": [],
+  "wall_seconds": 138.191
+}

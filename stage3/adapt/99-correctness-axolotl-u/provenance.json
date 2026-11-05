@@ -1,0 +1,69 @@
+{
+  "base": "b0efce6dce1cd7445ed8a570aecac387a4a7d684",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "ordinaryCompilerUnmodified": true,
+  "meterOverlayGeneratorUnmodified": true,
+  "harnessUnmodified": true,
+  "files": {
+    "/workspace/adamic/stage3/oracle/run.sh": {
+      "sha256": "40824223c443f8277f2267ba9b9b55d895c30c8ab89ed0e298e2de0e8a0a775f",
+      "bytes": 111
+    },
+    "/workspace/adamic/stage3/oracle/run.py": {
+      "sha256": "ca92f2095d2a8b4bb7808363a8dfb921265dfb876d786edd62a1d12fb92ef6e9",
+      "bytes": 6869
+    },
+    "/workspace/adamic/stage3/census/latent/make_overlay.py": {
+      "sha256": "bf85a10968e519e7f668549b54dee5a79aa21b875ed4ca0116c95c2156678363",
+      "bytes": 13314
+    },
+    "/workspace/scratch/99u-bin/adamic": {
+      "sha256": "ba68abf3dbaabf9b9a1c9309aaaa4306ff8a2f371ee3785479ee756726b16b1f",
+      "bytes": 41894007
+    },
+    "/workspace/scratch/99u-bin/tool": {
+      "sha256": "a92e96f59d8b711e24d49ab5c5c04785c53afdfd4cce9882360c613c22429004",
+      "bytes": 35756070
+    },
+    "/workspace/scratch/99u-bin/latent": {
+      "sha256": "e077b794c8ced3dfa2bbce917187461be25c861e10b9419464ec3dbc0bf23492",
+      "bytes": 34864813
+    },
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/adapt.cjs": {
+      "sha256": "08c627edf8fa3afdca33887f237d0cf9d252c4a752272991b3d0c397e3803c37",
+      "bytes": 6588
+    },
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/pins.json": {
+      "sha256": "d26b86a8c8f2f1282e69a1c18f12b93f392ffd21f885409ce052bea6820822f0",
+      "bytes": 14144
+    },
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/imports.json": {
+      "sha256": "b286ba6b8c8adf3801bc67ce7d0caf2a17fc91d0afb799a94594666cf89a266d",
+      "bytes": 395
+    }
+  },
+  "completeCensusCompilerBase": "b0efce6dce1cd7445ed8a570aecac387a4a7d684",
+  "landingBase": "a3f9467233562ef1d8834b064dddf1a149dd036c",
+  "currentFocusedCompilerBase": "a3f9467233562ef1d8834b064dddf1a149dd036c",
+  "currentFocusedBinaries": {
+    "adamic": {
+      "sha256": "ac3314b8687ebc9bb7220bb315acbed8ca107238e72bfa40d3429cedbcbeafbd",
+      "bytes": 41930060
+    },
+    "tool": {
+      "sha256": "304538d769b4cdd74e7f7807e0db5701772bff8fc219bd2408fb7cbc849c6573",
+      "bytes": 35788995
+    },
+    "owner-census": {
+      "sha256": "e1c66e5fff41c39e11efed1cf6523a073ffcc23b45a0c2a51f6dbca738ca91a2",
+      "bytes": 34871964
+    },
+    "mutant-owner": {
+      "sha256": "8c3e420de2671047e82299f977510811f69d7de0c7db7cd0e8f870d2f16ef834",
+      "bytes": 34871668
+    }
+  },
+  "typescriptSourcesUnchangedAcrossLatestGoOnlyDelta": true
+}
