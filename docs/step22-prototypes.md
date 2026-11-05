@@ -164,10 +164,10 @@ the complete inherited getter/method behavior separately.
 
 | Fixture | Upstream site | Current result and reason |
 | --- | --- | --- |
-| debug_554.a | debug.ts:554 | Refused: reading setPrototypeOf as a value triggers `unbound-method`. This feature test introduces no ownership edge. |
+| debug_554.a | debug.ts:554 | Lowers: `typeof Object.setPrototypeOf` only tests for the method, an observation, not a detach (#4q1b2er), so it is `"function"` and both backends print Node's `true`. This feature test introduces no ownership edge. |
 | debug_558.a | debug.ts:558 | Refused Object.create: flowNodeProto.[[Prototype]] -> Object.prototype is not lowered as a graph edge yet. |
 | debug_561.a | debug.ts:561 | Refused Object.setPrototypeOf: flowNode.[[Prototype]] -> flowNodeProto is not lowered as a graph edge yet; __debugFlowFlags lives on the shared prototype. |
-| debug_594.a | debug.ts:594 | Refused: second availability read triggers `unbound-method`; no ownership edge. |
+| debug_594.a | debug.ts:594 | Lowers, as debug_554.a does: the second availability test only tests for the method; no ownership edge. |
 | debug_598.a | debug.ts:598 | Refused Object.create: nodeArrayProto.[[Prototype]] -> Array.prototype is not lowered as a graph edge yet. |
 | debug_601.a | debug.ts:601 | Refused Object.setPrototypeOf: array.[[Prototype]] -> nodeArrayProto is not lowered as a graph edge yet; __tsDebuggerDisplay is inherited. |
 | debug_859.a | debug.ts:859 | Refused Object.setPrototypeOf: mapper.[[Prototype]] -> DebugTypeMapper.prototype is not lowered as a graph edge yet; __debugToString is inherited. |
