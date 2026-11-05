@@ -103,6 +103,17 @@ func reviewPrograms(t *testing.T, category string, check func(*testing.T, string
 func reviewEach(t *testing.T, paths []string, check func(*testing.T, string)) {
 	t.Helper()
 	for _, path := range paths {
+		if filepath.Dir(path) != filepath.Join(reviewRoot, "agree") {
+			continue
+		}
+		if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending"); !errors.Is(err, os.ErrNotExist) {
+			continue
+		}
+		// Shared per-process setup is not a program's cost and must never count against its 30 s.
+		identity(t)
+		break
+	}
+	for _, path := range paths {
 		t.Run(filepath.Base(path), func(t *testing.T) {
 			reviewSkip(t, path)
 			started := time.Now()
