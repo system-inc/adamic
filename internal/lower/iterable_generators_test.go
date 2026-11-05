@@ -163,14 +163,18 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 }
 
 // A nullable Iterable<T> parameter's undefined tests are the one use besides its for-of the one-read
-// rule doesn't count (#qk8rztp S2c-3), and only those: a truthiness test, a null test beside the
-// undefined one, and a second for-of each count as a read. The door stays shut to `| null` and to
-// `?`, which stop where the call is lowered, a generator used other than by a consumer, and the
-// rule stops `Iterable<string> | undefined`, held as a union. An undefined passed in at another call
-// site reaches the view as an origin it can't name. Mutants (internal/oracle/testdata/generators/
-// mutants.md): the exemption widened to a null test admits the null-test row; the door's undefined
-// test widened to null turns the `| null` row into the one-read stop; the union check taken out
-// admits the Iterable<string> row.
+// rule doesn't count (#qk8rztp S2c-3, Adamic's ruling: strict tests against the literal undefined
+// only), and only an ir.IsUndefined whose value is a bare read of it: a truthiness test, a null test
+// beside the undefined one, a typeof test (a string comparison of ir.TypeOf over the read), `??`, an
+// undefined test whose operand holds the read inside a conditional, and a second for-of each count as
+// a read. A test inside an arrow is a capture. The door stays shut to `| null` and to `?`, which stop
+// where the call is lowered, a generator used other than by a consumer, and the rule stops
+// `Iterable<string> | undefined`, held as a union. An undefined passed in at another call site stops
+// not yet, never refused (Node runs it, as `return undefined`): the view can't name it as an origin.
+// Mutants (internal/oracle/testdata/generators/mutants.md): the exemption widened to a null test
+// admits the null-test row, and to any ir.IsUndefined the conditional row; the door's undefined test
+// widened to null turns the `| null` row into the one-read stop; the union check taken out admits the
+// Iterable<string> row.
 func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	t.Parallel()
 	const readTwice = "read 2 times"
@@ -179,8 +183,16 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		return iterableCounted + "function first(" + parameter + "): number { let found = -1; " + body + " return found; }\nconsole.log(String(first(counted(3))));"
 	}
 	const nullable = "items: Iterable<number> | undefined"
+	const loop = "if (items !== undefined) { for (const value of items) { found = value; break; } }"
 	for _, probe := range []struct{ name, source, reason string }{
 		{"a truthiness test", first(nullable, "if (items) { for (const value of items) { found = value; break; } }"), readTwice},
+		{"a typeof test", first(nullable, "if (typeof items === 'undefined') { return found; } for (const value of items) { found = value; break; }"), readTwice},
+		{"??", first(nullable, "const kept = items ?? undefined; found += kept === undefined ? 0 : 1; "+loop), readTwice},
+		// Lower's condition 3: the test's operand holds the read inside something, so it is no
+		// undefined test of the parameter and its read counts. The any-operand mutant's red row.
+		{"an undefined test of a conditional holding it", iterableCounted + "function first(items: Iterable<number> | undefined, pick: boolean): number { let found = -1; if ((pick ? items : undefined) !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3), 'ab'.length > 1)));", readTwice},
+		{"an undefined test inside an arrow, called", first(nullable, "const empty = (): boolean => items === undefined; found = empty() ? 0 : 1; "+loop), "which a closure captures"},
+		{"an undefined test inside an arrow, never called", first(nullable, "const empty = (): boolean => items === undefined; "+loop), "which a closure captures"},
 		{"a null test beside the undefined test", first(nullable, "if (items !== null && items !== undefined) { for (const value of items) { found = value; break; } }"), readTwice},
 		{"an undefined test and a second for-of", first(nullable, "if (items !== undefined) { for (const value of items) { found = value; break; } for (const value of items) { found += value; } }"), readTwice},
 		{"| null", first("items: Iterable<number> | null", "if (items !== null) { for (const value of items) { found = value; break; } }"), other},
@@ -197,12 +209,10 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			}
 		})
 	}
-	// `items == null` is refused before the proof, by the rule against ==, and a hand-driven next
-	// through an IterableIterator<T> | undefined parameter by unbound-method, as S2c-1's next rows are;
-	// these hold only that each is refused there, and were either lifted, its read is counted.
+	// `items == null` is refused before the proof, by the rule against ==; were that lifted, its read
+	// is counted.
 	for _, probe := range []struct{ name, source, reason string }{
 		{"items == null", first(nullable, "if (items == null) { return found; } for (const value of items) { found = value; break; }"), "refuses =="},
-		{"an undefined test and a next", first("items: IterableIterator<number> | undefined", "if (items !== undefined) { items.next(); for (const value of items) { found = value; break; } }"), "(unbound-method)"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -212,6 +222,58 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 				t.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
 			}
 		})
+	}
+}
+
+// An optional chain on the parameter, a method read off it by a computed key, stops before the
+// proof; the words are expected to be the unbound-method refusal or a not yet at the element access,
+// and are pinned from the box's run. Were it ever lowered, its read is counted.
+func TestNullishIterableParameterOptionalChainStops(t *testing.T) {
+	t.Parallel()
+	source := iterableCounted + "function first(items: Iterable<number> | undefined): number { let found = -1; if (items?.[Symbol.iterator] !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3))));"
+	if _, err := lowerSource(t, source); err == nil {
+		t.Fatal("an optional chain on a nullable Iterable<T> parameter a generator feeds lowered, want it stopped")
+	}
+}
+
+// A nullable parameter's for-of, inside its undefined test, reads it through ir.Defined, the
+// narrowing's check (narrowed.go's defined). The dispatch keeps that check in the holder's
+// declaration, so an undefined the proof missed panics in Defined's words before any arm, never
+// stepped (Lower's condition on #qk8rztp S2c-3). Mutant: dispatchView declaring the bare read, and
+// this goes red.
+func TestNullishViewHolderKeepsItsDefinedCheck(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, iterableCounted+iterableFirst+iterableShown+"console.log(shown(firstOrUndefinedIterator(counted(3))));")
+	if err != nil {
+		t.Fatal(err)
+	}
+	holders := 0
+	inspect := func(node any) bool {
+		block, isBlock := node.(ir.Block)
+		if !isBlock || block.Closes == 0 || len(block.Body) == 0 {
+			return true
+		}
+		declared, isDeclare := block.Body[0].(ir.Declare)
+		if !isDeclare || declared.Local != block.Closes-1 {
+			return true
+		}
+		holders++
+		defined, isDefined := declared.Value.(ir.Defined)
+		if !isDefined {
+			t.Errorf("the dispatched view's holder is declared with %T, want the ir.Defined over the parameter's read", declared.Value)
+			return true
+		}
+		if _, isRead := defined.Value.(ir.Read); !isRead {
+			t.Errorf("the holder's ir.Defined holds %T, want the parameter's read", defined.Value)
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if holders != 1 {
+		t.Fatalf("%d dispatched view holders, want 1", holders)
 	}
 }
 

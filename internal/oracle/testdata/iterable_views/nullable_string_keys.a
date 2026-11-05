@@ -1,0 +1,23 @@
+// An Iterable<string> | undefined parameter handed a Set's keys(), with no generator anywhere in the
+// program (#qk8rztp S2c-3's side effect, Lower's pin). It is held as a union, which holds undefined as
+// a member, so a read of it narrowed past its undefined test is the union itself, never ir.Defined
+// (narrowed.go's defined leaves a union as it is). The loop reads it through the checked unbox, as
+// view_union.a's does, and the early return keeps undefined from reaching it. An empty Set's keys()
+// give the empty string. Words are built, never only literals.
+function joinedOrNone(items: Iterable<string> | undefined): string {
+    if (items === undefined) {
+        return 'none';
+    }
+    const parts: string[] = [];
+    for(const word of items) {
+        parts.push(word.toUpperCase());
+    }
+    return parts.join(' ');
+}
+const words = new Set<string>();
+for(let index = 0; index < 3; index++) {
+    words.add(`word ${'q'.repeat(index + 1)}`);
+}
+const empty = new Set<string>();
+console.log(joinedOrNone(words.keys()));
+console.log(`[${joinedOrNone(empty.keys())}]`);
