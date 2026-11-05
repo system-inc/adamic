@@ -19,3 +19,11 @@ Command: GOFLAGS=-buildvcs=false go test -count=1 -v ./stage3/fixtures -run 'Tes
 Result with the mutant: exit 1, red in objects on exactly 25_map_generator.a/stage0, back at 3:1, rule 2500's generator stop. Restored, checked with cmp, the same command passes (darwin/arm64).
 
 Then rule 2500 is deleted (#qk8rztp, Lower's open question 7): generator forms not built stop at lowering. The record doesn't move, since mapIterator is lowered. The same mutant, on top of that change, reads Refused at 8:17, the spread, by adamic/no-void-read (a generator no longer lowered isn't exempt from the void rules), and is red on exactly 25_map_generator.a/stage0 again.
+
+## S2b-1b: a for-of over an Iterable<T> slot is a view (#qk8rztp)
+
+What moved: mapIterator's for-of over `iter` lowers as a view, proven after lowering to be handed only a collection's iterator (internal/lower/iterable_views.go). The body no longer stops at 4:21. The spread hands it an array, `[1, 2, 3]`, which stops where it goes into `Iterable<number>`, at 8:29, NotYet, "an array going where a plain object type is held" (shape_fit.go). The census reason names that construct. The fixture is unchanged. This record was written before any run: the box run of S2b-1b's proof says whether the argument's stop fires first, or the view's proof at 4:21 ("a view over an iterable of unproven origin"), and this record is held to what it prints.
+
+Mutant: forOf's view arm skipped (`false && isView`, internal/lower/object.go), on top of this change; the change's status.json stays.
+Command: GOFLAGS=-buildvcs=false go test -count=1 -v ./stage3/fixtures -run 'TestFixturesObjects$'
+Expected with the mutant: red on exactly 25_map_generator.a/stage0, back at 4:21, "for...of over an object".
