@@ -1,0 +1,57 @@
+{
+  "base": "df44f6f5c8597d851ec5d742c1e86bebb9da5746",
+  "upstreamMain": "df44f6f5c8597d851ec5d742c1e86bebb9da5746",
+  "upstreamWalls": "dd57a3c669045b9942d6aa014f955e8d2a483ae7",
+  "fullApply": {
+    "exit": 0,
+    "tree": "/workspace/scratch/99t-rebased-full",
+    "log": "rebased-apply.log.gz"
+  },
+  "keyedReplay": {
+    "exit": 0,
+    "tree": "/workspace/scratch/99t-rebased-replay",
+    "payloadIdentical": true,
+    "payloadEntries": 81504
+  },
+  "measuredSourceMatch": {
+    "identical": true,
+    "files": 711
+  },
+  "adapterReplay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true
+  },
+  "checks": [
+    {
+      "name": "shards",
+      "command": [
+        "python3",
+        "-B",
+        "stage3/lane/generate_shards.py",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.06725536200065108
+    },
+    {
+      "name": "lane",
+      "command": [
+        "go",
+        "test",
+        "-count=1",
+        "-parallel=1",
+        "-skip",
+        "TestShard_|TestProduct_",
+        "./stage3/lane/"
+      ],
+      "exit": 0,
+      "seconds": 130.2602988209983
+    }
+  ],
+  "reportArchivesAddedAfterFrozenApply": true,
+  "executablePinHashes": {
+    "adapt.cjs": "07f366509df47af8622333481101000c14ca8d9dd63d01f0295e22b1d9f82589",
+    "pins.json": "ea57c8944e87a17a91dc795292688a601896254eae241195fbb04320d9cc7e56"
+  }
+}

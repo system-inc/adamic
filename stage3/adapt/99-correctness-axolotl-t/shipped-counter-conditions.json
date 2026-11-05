@@ -1,0 +1,68 @@
+[
+  {
+    "id": "CW144",
+    "condition": "typeof sourceFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW145",
+    "condition": "typeof targetFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW146-element",
+    "condition": "typeof sFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW147-element",
+    "condition": "typeof tFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW148",
+    "condition": "typeof sFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW149",
+    "condition": "typeof targetFormatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW150",
+    "condition": "typeof mapper1Formatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW151",
+    "condition": "typeof mapper2Formatter === \"function\"",
+    "owner": "Debug.DebugTypeMapper.__debugToString",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW143",
+    "condition": "ts.isSourceFile(sourceFile)",
+    "owner": "Debug.enableDebugInfo",
+    "file": "debug.ts"
+  },
+  {
+    "id": "CW154",
+    "condition": "hasAntecedentList && (antecedent === undefined || Array.isArray(antecedent))",
+    "owner": "Debug.formatControlFlowGraph.hasAntecedents",
+    "file": "debug.ts"
+  },
+  {
+    "id": "ArrowFunction | FunctionExpression",
+    "condition": "isFunctionLikeDeclaration(node) && (node.kind === SyntaxKind.ArrowFunction || node.kind === SyntaxKind.FunctionExpression)",
+    "owner": "createSyntacticTypeNodeBuilder.typeFromExpression",
+    "file": "expressionToTypeNode.ts"
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "status": "pass",
+  "rows": [
+    {
+      "case": "first apply",
+      "files": 2,
+      "edits": 11,
+      "javascriptChanging": true
+    },
+    {
+      "case": "replay",
+      "writes": 0,
+      "unchangedBytesAndMtime": true
+    },
+    {
+      "case": "Debug.DebugTypeMapper.__debugToString changed before",
+      "error": "changed owner: Debug.DebugTypeMapper.__debugToString",
+      "writes": 0
+    },
+    {
+      "case": "Debug.DebugTypeMapper.__debugToString changed after",
+      "error": "changed owner: Debug.DebugTypeMapper.__debugToString",
+      "writes": 0
+    },
+    {
+      "case": "Debug.DebugTypeMapper.__debugToString mixed tree",
+      "error": "half-adapted tree",
+      "writes": 0
+    },
+    {
+      "case": "Debug.DebugTypeMapper.__debugToString partial owner",
+      "error": "changed owner: Debug.DebugTypeMapper.__debugToString",
+      "writes": 0
+    },
+    {
+      "case": "Debug.enableDebugInfo changed before",
+      "error": "changed owner: Debug.enableDebugInfo",
+      "writes": 0
+    },
+    {
+      "case": "Debug.enableDebugInfo changed after",
+      "error": "changed owner: Debug.enableDebugInfo",
+      "writes": 0
+    },
+    {
+      "case": "Debug.enableDebugInfo mixed tree",
+      "error": "half-adapted tree",
+      "writes": 0
+    },
+    {
+      "case": "Debug.enableDebugInfo partial owner",
+      "error": "changed owner: Debug.enableDebugInfo",
+      "writes": 0
+    },
+    {
+      "case": "Debug.formatControlFlowGraph.hasAntecedents changed before",
+      "error": "changed owner: Debug.formatControlFlowGraph.hasAntecedents",
+      "writes": 0
+    },
+    {
+      "case": "Debug.formatControlFlowGraph.hasAntecedents changed after",
+      "error": "changed owner: Debug.formatControlFlowGraph.hasAntecedents",
+      "writes": 0
+    },
+    {
+      "case": "Debug.formatControlFlowGraph.hasAntecedents mixed tree",
+      "error": "half-adapted tree",
+      "writes": 0
+    },
+    {
+      "case": "Debug.formatControlFlowGraph.hasAntecedents partial owner",
+      "error": "changed owner: Debug.formatControlFlowGraph.hasAntecedents",
+      "writes": 0
+    },
+    {
+      "case": "createSyntacticTypeNodeBuilder.typeFromExpression changed before",
+      "error": "changed owner: createSyntacticTypeNodeBuilder.typeFromExpression",
+      "writes": 0
+    },
+    {
+      "case": "createSyntacticTypeNodeBuilder.typeFromExpression changed after",
+      "error": "changed owner: createSyntacticTypeNodeBuilder.typeFromExpression",
+      "writes": 0
+    },
+    {
+      "case": "createSyntacticTypeNodeBuilder.typeFromExpression mixed tree",
+      "error": "half-adapted tree",
+      "writes": 0
+    },
+    {
+      "case": "createSyntacticTypeNodeBuilder.typeFromExpression partial owner",
+      "error": "changed owner: createSyntacticTypeNodeBuilder.typeFromExpression",
+      "writes": 0
+    },
+    {
+      "case": "foreign before",
+      "status": "accepted"
+    },
+    {
+      "case": "foreign after",
+      "status": "accepted"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "name": "shards",
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/generate_shards.py",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 0.06725536200065108
+  },
+  {
+    "name": "lane",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "exit": 0,
+    "seconds": 130.2602988209983
+  },
+  {
+    "name": "post-rebase shards",
+    "exit": 0,
+    "base": "df44f6f5c8597d851ec5d742c1e86bebb9da5746",
+    "command": [
+      "python3",
+      "-B",
+      "stage3/lane/generate_shards.py",
+      "--check"
+    ]
+  },
+  {
+    "name": "post-rebase lane",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "mutant": false,
+  "status": "green",
+  "expected": "reject a label whose antecedent is an iterable object rather than an array",
+  "result": {
+    "threw": "Error",
+    "message": "Debug Failure. False expression: Expected label antecedents."
+  }
+}

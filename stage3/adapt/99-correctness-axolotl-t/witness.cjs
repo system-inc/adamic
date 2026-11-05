@@ -1,0 +1,51 @@
+'use strict';
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
+const parser=require('typescript');
+const root=process.argv[2],stock=require(path.join(root,'built/local/typescript.js'));
+const source=fs.readFileSync(path.join(root,'src/compiler/debug.ts'),'utf8');
+const text=parser.transpileModule(source,{compilerOptions:{target:parser.ScriptTarget.ES2024,module:parser.ModuleKind.CommonJS}}).outputText;
+const box={exports:{},require:()=>stock,console};vm.runInNewContext(text,box);
+const Debug=box.exports.Debug;
+Debug.enableDebugInfo();Debug.isDebugging=true;
+const sf=stock.createSourceFile('w.ts','const value = 1;',stock.ScriptTarget.Latest,true);
+const host=stock.createCompilerHost({noLib:true});host.getSourceFile=f=>f==='w.ts'?sf:undefined;host.fileExists=f=>f==='w.ts';host.readFile=f=>f==='w.ts'?sf.text:undefined;
+const program=stock.createProgram(['w.ts'],{noLib:true},host),checker=program.getTypeChecker();
+const type=checker.getTypeAtLocation(sf.statements[0].declarationList.declarations[0].initializer);
+const mapper=o=>Debug.attachDebugPrototypeIfDebug(o),simple=()=>mapper({kind:stock.TypeMapKind.Simple,source:type,target:type});
+let deferredCalls=0;
+const mappers={simple:simple(),array:mapper({kind:stock.TypeMapKind.Array,sources:[type],targets:[type]}),any:mapper({kind:stock.TypeMapKind.Array,sources:[type],targets:undefined}),deferred:mapper({kind:stock.TypeMapKind.Deferred,sources:[type],targets:[()=>{deferredCalls++;return type}]}),merged:mapper({kind:stock.TypeMapKind.Merged,mapper1:simple(),mapper2:simple()}),composite:mapper({kind:stock.TypeMapKind.Composite,mapper1:simple(),mapper2:simple()}),function:mapper({kind:stock.TypeMapKind.Function,func:x=>x,debugInfo:()=>'(witness)'})};
+const start={flags:stock.FlowFlags.Start,id:0,node:undefined};
+const label={flags:stock.FlowFlags.BranchLabel,id:0,antecedent:[start]};
+const output={type:type.__debugTypeToString(),mappers:Object.fromEntries(Object.entries(mappers).map(([k,v])=>[k,v.__debugToString()])),deferredCalls,flow:Debug.formatControlFlowGraph(label),source:sf.__debugGetText(),node:sf.statements[0].__debugGetText()};
+assert.equal(deferredCalls,1);
+const accessorEvents=[];
+function debugValue(label) { const value=Object.create(type); Object.defineProperty(value,'__debugTypeToString',{value:function(){accessorEvents.push('format '+label);assert.equal(this,value);return label}});return value; }
+const first=debugValue('first'),second=debugValue('second');
+let sourceReads=0,targetReads=0;
+const accessorMapper=mapper({kind:stock.TypeMapKind.Array,get sources(){accessorEvents.push('sources');return ++sourceReads===1?[first]:[second]},get targets(){accessorEvents.push('targets');targetReads++;return [first]}});
+output.accessorArray={text:accessorMapper.__debugToString(),sourceReads,targetReads,events:[...accessorEvents]};
+assert.equal(sourceReads,1);assert.equal(targetReads,1);
+const arrayLikeSources=Object.create([first]),arrayLikeTargets=Object.create([first]);
+assert.equal(Array.isArray(arrayLikeSources),false);
+output.arrayLike=mapper({kind:stock.TypeMapKind.Array,sources:arrayLikeSources,targets:arrayLikeTargets}).__debugToString();
+let formatterReads=0;
+const getterType=Object.create(type),formatter=function(){assert.equal(this,getterType);return 'getter first'};formatter.call=()=>{throw Error('overridden call must not run')};
+Object.defineProperty(getterType,'__debugTypeToString',{get(){formatterReads++;return formatterReads===1?formatter:function(){return 'getter second'}}});
+output.accessorMethod={text:mapper({kind:stock.TypeMapKind.Simple,source:getterType,target:first}).__debugToString(),formatterReads};
+assert.equal(formatterReads,1);
+let antecedentReads=0;
+const accessorLabel={flags:stock.FlowFlags.BranchLabel,id:0,get antecedent(){antecedentReads++;return [start]}};
+output.accessorLabel={text:Debug.formatControlFlowGraph(accessorLabel),antecedentReads};
+assert.equal(antecedentReads,2);
+
+output.assertionLevels=[];
+for(const level of [0,1,2,3]){Debug.setAssertionLevel(level);let message;try{Debug.assert(false,'witness')}catch(e){message=e.message}assert.equal(message,'Debug Failure. False expression: witness');output.assertionLevels.push({level,message});}
+// Exercise the real public declaration emitter through both function-expression kinds.
+const input='export const arrow = () => 1; export const fn = function () { return 2; };';
+const emitSource=stock.createSourceFile('emit.ts',input,stock.ScriptTarget.Latest,true);
+const emitHost=stock.createCompilerHost({noLib:true,declaration:true,emitDeclarationOnly:true,isolatedDeclarations:true});const emitted={};
+emitHost.getSourceFile=f=>f==='emit.ts'?emitSource:undefined;emitHost.fileExists=f=>f==='emit.ts';emitHost.readFile=f=>f==='emit.ts'?input:undefined;emitHost.writeFile=(f,t)=>emitted[f]=t;
+const emitProgram=stock.createProgram(['emit.ts'],{noLib:true,declaration:true,emitDeclarationOnly:true,isolatedDeclarations:true},emitHost);
+output.emission={files:emitted,diagnostics:emitProgram.emit().diagnostics.map(d=>stock.flattenDiagnosticMessageText(d.messageText,'\n'))};
+output.emission.files=emitted;
+console.log(JSON.stringify(output,null,2));

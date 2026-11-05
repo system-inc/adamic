@@ -1,0 +1,50 @@
+{
+  "tree": "/workspace/scratch/99t-counted",
+  "workers": 8,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 3.559
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 541.699
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 387.59
+    }
+  },
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "status": "fail",
+  "wall_seconds": 932.952
+}
