@@ -238,7 +238,7 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		for index, inside := range sources {
 			if index < len(targets) {
 				if found := l.voidContained(inside, targets[index], depth, seen); found != nil {
-					found.path = "<" + strconv.Itoa(index+1) + ">" + found.path
+					found.path = "<" + l.typeArgumentName(source, index) + ">" + found.path
 					return found
 				}
 			}
@@ -258,6 +258,21 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		}
 	}
 	return nil
+}
+
+// typeArgumentName names a reference's type argument at index by its target's type parameter, as the
+// declaration spells it, so a path reads next()<TReturn> rather than next()<1>, a position the reader
+// would have to count to in the lib (#v97ejyb). A target with no parameter there keeps the 1-based
+// position, so a step is never empty.
+func (l *lowering) typeArgumentName(reference *checker.Type, index int) string {
+	if declared := reference.Target().AsInterfaceType(); declared != nil {
+		if parameters := declared.TypeParameters(); index < len(parameters) {
+			if name := l.checker.TypeToString(parameters[index]); name != "" {
+				return name
+			}
+		}
+	}
+	return strconv.Itoa(index + 1)
 }
 
 // A function can hand out a void function from its return, or receive one through
