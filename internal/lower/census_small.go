@@ -245,15 +245,9 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		}
 		proven, failed := l.predicateOverloadResultProven(implementation, overload)
 		if proven {
-			// Each call's callback must come from a road that checks its claim (predicateOverloadOrigins).
-			callbacks := []int{}
-			for _, callback := range l.predicateOverloadCallbacks(implementation, overload, promised) {
-				callbacks = append(callbacks, callback.parameter)
-			}
-			if l.predicateOverloads == nil {
-				l.predicateOverloads = map[*ast.Node][]int{}
-			}
-			l.predicateOverloads[overload] = callbacks
+			// Every call's callback is proven where it's passed: an overload's predicate parameter whose
+			// implementation takes a plain boolean callback isn't a checked claim (checkedFunctionTypeClaim), so
+			// predicateArguments demands a named function or arrow whose body proves both branches.
 			return nil
 		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)

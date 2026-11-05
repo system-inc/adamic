@@ -9,8 +9,10 @@ import (
 // core.ts find does: U | undefined from a body typed T | undefined. The narrowing is the callback's
 // claim, so it holds in .ts on two halves (#2qvx0r2, Adamic's and Compiler's ruling). The body
 // returns only what already serves the promise or the very value its callback just said yes to
-// (predicateOverloadResultProven), and every call passes a callback whose claim is checked where
-// it's made (predicateOverloadOrigins). In .a a predicate value is refused, so the overload is too.
+// (predicateOverloadResultProven). Every call passes a callback whose claim is proven where it's
+// passed: predicateArguments demands a named function or arrow proving both branches for a predicate
+// parameter nothing checks, which an overload's is when its implementation takes a plain boolean
+// callback (checkedFunctionTypeClaim). In .a a predicate value is refused, so the overload is too.
 
 // predicateOverloadCallback is a parameter of an overload typed as a function claiming `x is U`:
 // its index, and the index of the callback's own parameter the claim names.
@@ -181,77 +183,4 @@ func (l *lowering) predicateOverloadReturn(implementation, statement *ast.Node, 
 		}
 	}
 	return false
-}
-
-// predicateOverloadOrigins stops a call resolving to an overload predicateOverloadResultProven
-// admitted unless each callback it passes comes from a road that checks the callback's claim: an
-// arrow or a function expression written in place, which checks its own claim at each return
-// (checkedPredicateClosure) or proves it, or a name for a function declaration with a body, whose
-// value checks its claim (checkedPredicateForwarder) or proves it. Any other callback, a parameter,
-// a field, a call's result or a variable, could hold an ambient predicate whose claim nothing checks,
-// and the overload's narrower result would then be that claim's lie.
-func (l *lowering) predicateOverloadOrigins(call *ast.CallExpression) error {
-	if len(l.predicateOverloads) == 0 {
-		return nil
-	}
-	resolved := l.checker.GetResolvedSignature(call.AsNode())
-	if resolved == nil || resolved.Declaration() == nil {
-		return nil
-	}
-	callbacks, admitted := l.predicateOverloads[resolved.Declaration()]
-	if !admitted {
-		return nil
-	}
-	for _, index := range callbacks {
-		for position, argument := range call.Arguments.Nodes {
-			if position > index {
-				break
-			}
-			origin := ""
-			if argument.Kind == ast.KindSpreadElement {
-				origin = "a spread"
-			} else if position == index {
-				origin = l.predicateOverloadOrigin(argument)
-			}
-			if origin != "" {
-				return l.notYet(argument, "a predicate overload's callback from "+origin+" whose claim nothing checks")
-			}
-		}
-	}
-	return nil
-}
-
-// predicateOverloadOrigin names where a predicate overload's callback comes from, "" when that road
-// checks the callback's claim (predicateOverloadOrigins).
-func (l *lowering) predicateOverloadOrigin(argument *ast.Node) string {
-	argument = ast.SkipParentheses(argument)
-	switch argument.Kind {
-	case ast.KindArrowFunction, ast.KindFunctionExpression:
-		return ""
-	case ast.KindIdentifier:
-		symbol := l.symbol(argument)
-		if symbol == nil || len(symbol.Declarations) == 0 {
-			return "a name with no declaration"
-		}
-		for _, declaration := range symbol.Declarations {
-			// An ambient declaration has no body to check its claim in.
-			if declaration.Kind == ast.KindFunctionDeclaration && (declaration.Body() != nil || l.censusImplementation(declaration) != nil) {
-				return ""
-			}
-		}
-		for _, declaration := range symbol.Declarations {
-			switch declaration.Kind {
-			case ast.KindParameter:
-				return "a parameter"
-			case ast.KindVariableDeclaration:
-				return "a variable"
-			}
-		}
-		return "a name for " + describe(symbol.Declarations[0])
-	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
-		return "a field"
-	case ast.KindCallExpression:
-		return "a call's result"
-	}
-	return describe(argument)
 }

@@ -291,11 +291,6 @@ type lowering struct {
 
 	// predicateFalse is the false-direction walk's switch and memo (predicate_false_flow.go).
 	predicateFalse *predicateFalseFlow
-	// predicateOverloads is each overload whose narrower result the predicate body proof admitted, with
-	// the indexes of its callback parameters, which every call's origin check reads
-	// (overload_predicate_result.go). censusOverloads fills it as each function is declared, before any
-	// call to it lowers.
-	predicateOverloads map[*ast.Node][]int
 
 	// refusal is what refuse's per-node rules leave for one another (refusal_rules.go).
 	refusal refusalPass

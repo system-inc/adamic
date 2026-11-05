@@ -61,7 +61,7 @@ const circle = find(grown, (x): x is Circle => {
     return x.kind === "circle";
 });
 console.log(circle === undefined ? "none" : ` + "`radius ${circle.radius}`" + `);
-console.log(grown.length);
+console.log(String(grown.length));
 `
 	lowersAndAgreesWithNodeAs(t, source, ".ts")
 }
@@ -113,7 +113,9 @@ console.log("never");
 	}
 }
 
-// A callback from another function's parameter could be an ambient predicate nothing checks: NotYet at the argument.
+// A callback from another function's parameter could be an ambient predicate nothing checks, so the
+// overload's narrower result would be its lie: predicateArguments refuses it, as it refuses any
+// predicate argument whose body doesn't prove both branches.
 func TestPredicateOverloadCallbackFromParameter(t *testing.T) {
 	t.Parallel()
 	source := predicateOverloadFind + `function firstCircle(shapes: Shape[], test: (x: Shape) => x is Circle): Circle | undefined {
@@ -124,9 +126,9 @@ const circle = firstCircle(shapes, (x): x is Circle => x.kind === "circle");
 console.log(circle === undefined ? "none" : ` + "`radius ${circle.radius}`" + `);
 `
 	_, err := lowerSourceAs(t, source, ".ts")
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a predicate overload's callback from a parameter whose claim nothing checks" {
-		t.Fatalf("want NotYet at the parameter passed as find's callback, got %v", err)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "an unproven predicate argument for parameter predicate") {
+		t.Fatalf("want predicateArguments' refusal of the parameter passed as find's callback, got %v", err)
 	}
 }
 
