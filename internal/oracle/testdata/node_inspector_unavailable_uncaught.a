@@ -1,0 +1,4 @@
+import 'node:process';
+console.log('before');
+require('inspector');
+console.log('unreached');
