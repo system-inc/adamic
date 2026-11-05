@@ -1,0 +1,21 @@
+// tsc's commandLineParser.ts:141, as it is written: mapIterator, declared as core.ts:332 declares it,
+// handed a Map's entries() through its Iterable<T> parameter, a view (#qk8rztp S2b-1b), and its
+// generator consumed by new Map. The frame holds the Map's iterator and each step across every
+// yield, so ASan and the leak check hold that its cells keep them and let go of them at the end.
+function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown> {
+    for(const x of iter) {
+        yield mapFn(x);
+    }
+}
+const jsxOptionMap = new Map<string, number>();
+let emit = 0;
+for(const name of ['preserve', 'react', 'react-native', 'react-jsx', 'react-jsxdev']) {
+    emit++;
+    jsxOptionMap.set(name.toUpperCase().toLowerCase(), emit);
+}
+const inverseJsxOptionMap: Map<string, string> = new Map(mapIterator(jsxOptionMap.entries(), ([key, value]: [string, number]) => ['' + value, key] as const));
+console.log(String(inverseJsxOptionMap.size));
+for(const [emitted, name] of inverseJsxOptionMap) {
+    console.log(`${emitted} ${name}`);
+}
+console.log(`${inverseJsxOptionMap.get('3') ?? 'none'} ${inverseJsxOptionMap.get('9') ?? 'none'}`);

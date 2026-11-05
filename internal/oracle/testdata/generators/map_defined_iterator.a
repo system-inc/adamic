@@ -1,0 +1,24 @@
+// tsc's builder.ts:2377 shape: mapDefinedIterator, declared as core.ts:509 declares it, handed a
+// Set's keys() through its Iterable<T> parameter, a view held as a union since T is string (#qk8rztp
+// S2b-1b), with a mapper that drops the changed files, and its generator consumed by new Map of the
+// [key, value] pairs it keeps. The frame holds the Set's iterator across every yield, and a step
+// that yields nothing goes on to the next without suspending.
+function* mapDefinedIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U | undefined): Generator<U & ({} | null), void, unknown> {
+    for(const x of iter) {
+        const value = mapFn(x);
+        if(value !== undefined) {
+            yield value;
+        }
+    }
+}
+const fileInfos = new Set<string>();
+for(let index = 0; index < 6; index++) {
+    fileInfos.add(`/src/file${String(index)}.ts`);
+}
+const changedFilesSet = new Set<string>([`/src/file${String(1)}.ts`, `/src/file${String(4)}.ts`]);
+const semanticDiagnostics = new Map<string, number>(mapDefinedIterator(fileInfos.keys(), (key: string): [string, number] | undefined => !changedFilesSet.has(key) ? [key, key.length * 2] : undefined));
+console.log(String(semanticDiagnostics.size));
+for(const [path, count] of semanticDiagnostics) {
+    console.log(`${path} ${String(count)}`);
+}
+console.log(`${String(semanticDiagnostics.has(`/src/file${String(1)}.ts`))} ${String(semanticDiagnostics.get('/src/file5.ts') ?? -1)}`);
