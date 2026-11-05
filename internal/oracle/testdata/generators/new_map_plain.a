@@ -1,0 +1,14 @@
+// A plain function*, which infers Generator<[string, number], void, unknown>, into new Map: the
+// constructor steps it to its end and never reads its void completion, so the void rules let the
+// direct call through (Adamic, on #qk8rztp). A key given again keeps its place and takes its last
+// value, as on Node. Keys are built.
+function* pairs(count: number) {
+    for(let index = 0; index < count; index++) {
+        const pair: [string, number] = [`k${String(index % 2)}`, index];
+        yield pair;
+    }
+}
+const map = new Map(pairs(3));
+console.log(String(map.size));
+console.log([...map.keys()].join(','));
+console.log([...map.values()].map((value: number): string => `v${String(value)}`).join(','));

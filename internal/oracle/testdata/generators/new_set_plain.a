@@ -1,0 +1,11 @@
+// A plain function*, which infers Generator<string, void, unknown>, into new Set: the constructor
+// steps it to its end and never reads its void completion (Adamic, on #qk8rztp). A value given again
+// is kept once, in its first place, as on Node. Values are built.
+function* words(count: number) {
+    for(let index = 0; index < count; index++) {
+        yield `w${String(index % 3)}`;
+    }
+}
+const set = new Set(words(5));
+console.log(String(set.size));
+console.log([...set].join(','));

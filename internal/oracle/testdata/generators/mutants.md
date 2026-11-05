@@ -92,3 +92,13 @@ with the one test it must turn red:
 | The collected pairs dropped | lower/generators.go, `newMapFromGenerator`: the MapNew made from an empty array, its pairs unused | TestNewMapAndNewSetStepAGeneratorsCall (internal/lower), and new_map_entries.a prints an empty Map |
 | generatorPairTypes' tuple test taken out | lower/generators.go: `if len(arguments) == 0 \|\| !checker.IsTupleType(arguments[0]) {` made `if len(arguments) == 0 {` | TestNewMapOfAGeneratorsCallStopsWhereItsYieldsArentItsPairs, its union row |
 | newMapFromGenerator's held-otherwise test taken out | lower/generators.go: `if pairKey != key \|\| pairValue != value {` made `if false && (pairKey != key \|\| pairValue != value) {` | TestNewMapOfAGeneratorsCallStopsWhereItsYieldsArentItsPairs, its held-otherwise row |
+
+S2b-1c (new Map and new Set as stepped consumers, Adamic's ruling on #qk8rztp), each one exact line,
+run by `s2b1c-proof.sh` with the one test it must turn red:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The new Map and new Set arm dropped | lower/generators.go, `steppedSite`: `case parent.Kind == ast.KindNewExpression && l.collectionConstructor(parent) && ...` made `case false && ...` | new_map_plain.a and new_set_plain.a, refused again by the void rules; TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's lowering rows |
+| Widened to any Generator-typed expression at a stepped site | lower/generators.go, `generatorStepped`: its first test, `if node.Kind != ast.KindCallExpression {`, made to return `steppedSite` and a Generator type for any expression | TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's stored rows, which reach lowering and stop there instead of a void rule |
+| The yielded-type test dropped | lower/generators.go, `generatorStepped`: `return len(arguments) == 3 && !l.isVoidValue(arguments[0]) && !l.holdsVoid(arguments[0])` made `return len(arguments) == 3` | TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's void rows: the void-yielding Set and both void pairs reach lowering |
+| The constructor judged by its name | lower/generators.go, `collectionConstructor`: the library-symbol test made a name test | TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet's user-class row |
