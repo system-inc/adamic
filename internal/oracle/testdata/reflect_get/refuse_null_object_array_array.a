@@ -1,0 +1,10 @@
+// An array whose elements are arrays of objects or null is refused where it's viewed as unknown: a
+// run-time key read hands out the inner array, whose null would read as undefined (#ys4naww). Node
+// prints null.
+import { propertyOf } from './hostErrors.ts';
+
+class Point {
+	x = 1;
+}
+const lists: (Point | null)[][] = [[new Point(), null]];
+console.log(propertyOf(propertyOf(lists, '0'), '1') === null ? 'null' : 'not null');

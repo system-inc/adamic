@@ -3,7 +3,9 @@
 // undefined, and references: strings, objects, a mix, null); an index at or past length, a key that
 // isn't a canonical index, and a name no array has read undefined; length answers a number; and a
 // match array answers its own index, input and groups. Array.prototype's names stop
-// (stop_array_method.a).
+// (stop_array_method.a). A null element reads null where the array boxes its elements as a Union (a
+// string | null, an object | null | undefined); an object | null array, which holds null as a null
+// pointer, is NotYet where it's viewed as unknown (refuse_null_object_array.a).
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {
@@ -63,3 +65,13 @@ if (match !== null) {
 	show('match input', propertyOf(match, 'input'));
 	show('match groups', propertyOf(match, 'groups'));
 }
+const nullableStrings: (string | null)[] = ['s', null];
+show('nullable strings 0', propertyOf(nullableStrings, '0'));
+show('nullable strings 1', propertyOf(nullableStrings, '1'));
+const absent: ({ name: string } | undefined)[] = [{ name: 'here' }, undefined];
+show('absent 0', propertyOf(absent, '0'));
+show('absent 1', propertyOf(absent, '1'));
+const either: ({ name: string } | null | undefined)[] = [null, undefined, { name: 'there' }];
+show('either 0', propertyOf(either, '0'));
+show('either 1', propertyOf(either, '1'));
+show('either 2', propertyOf(either, '2'));
