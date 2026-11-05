@@ -309,10 +309,34 @@ func TestACompiledThenLinkedProgramFailsAsTheOneCallFails(t *testing.T) {
 }
 
 // A checker build (BuildTSGo) compiled to main.o and then linked is the one call's binary too, release, shipped
-// release, Debug and sanitized, linking a checker archive of the ABI's stubs. Mutant, red: the compile's flags left off
-// the checker's link.
+// release, Debug and sanitized, linking a checker archive of the ABI's stubs. One top-level test a build kind, as the
+// program's equality tests are (7d4f816c), so each fits a test's time on a runner: the four built one after another in
+// one test took 43 s on the line (#s3dce49, internal/native#1). Mutant, red: the compile's flags left off the checker's
+// link.
 func TestACompiledThenLinkedCheckerIsTheOneCallChecker(t *testing.T) {
 	t.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(t, 0)
+}
+
+func TestACompiledThenLinkedShippedCheckerIsTheOneCallChecker(t *testing.T) {
+	t.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(t, 1)
+}
+
+func TestACompiledThenLinkedDebugCheckerIsTheOneCallChecker(t *testing.T) {
+	t.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(t, 2)
+}
+
+func TestACompiledThenLinkedSanitizedCheckerIsTheOneCallChecker(t *testing.T) {
+	t.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(t, 3)
+}
+
+// compiledThenLinkedCheckerIsTheOneCall builds splitBuilds[index] as a checker, once in one call and once compiled then
+// linked, against its own checker archive of the ABI's stubs, and holds the two to the same binary.
+func compiledThenLinkedCheckerIsTheOneCall(t *testing.T, index int) {
+	t.Helper()
 	source := "#include \"tsgo_runtime.h\"\n" + splitCorpusSource(t, "arguments_length_extended.a")
 	directory := t.TempDir()
 	var stubs strings.Builder
@@ -337,18 +361,17 @@ func TestACompiledThenLinkedCheckerIsTheOneCallChecker(t *testing.T) {
 		t.Fatalf("archive: %v\n%s", err, output)
 	}
 	output := filepath.Join(directory, "checker")
-	for _, build := range splitBuilds[:4] {
-		var built [2]splitBuilt
-		for index, oneCall := range []bool{true, false} {
-			built[index] = splitResult(t, output, buildTSGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall))
-			os.Remove(output)
-		}
-		if built[0].failure != "" {
-			t.Errorf("%s: the one call failed: %s", build.name, built[0].failure)
-		}
-		if difference := splitDifference(built[0], built[1]); difference != "" {
-			t.Errorf("%s: %s", build.name, difference)
-		}
+	build := splitBuilds[index]
+	var built [2]splitBuilt
+	for which, oneCall := range []bool{true, false} {
+		built[which] = splitResult(t, output, buildTSGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall))
+		os.Remove(output)
+	}
+	if built[0].failure != "" {
+		t.Errorf("%s: the one call failed: %s", build.name, built[0].failure)
+	}
+	if difference := splitDifference(built[0], built[1]); difference != "" {
+		t.Errorf("%s: %s", build.name, difference)
 	}
 }
 
