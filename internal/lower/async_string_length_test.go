@@ -61,16 +61,16 @@ func TestAsyncStringLengthProbes(t *testing.T) {
 	const word = "async function word(text: string): Promise<string> {\n\treturn `${text}!`;\n}\n"
 	const setup = word + "const big = 'x';\nconst more = 'y';\nconst p = word('a');\nconst q = word('b');\n"
 	for _, probe := range []struct{ name, source, want string }{
-		{"a: a concatenation between the awaits", setup + "console.log(`${await p}${big}${await q}`);\n"},
-		{"b: an argument between the awaits", setup + "function f(a: string, b: string, c: string): string {\n\treturn a + b + c;\n}\nconsole.log(f(await p, big + more, await q));\n"},
-		{"c: a binary chain", setup + "console.log((await p) + big + (await q));\n"},
-		{"d: a condition first", setup + "const flag = big === 'x';\nconsole.log(flag ? await p : `${big}${await q}`);\n"},
-		{"a1: a callee first", setup + "function show(text: string): string {\n\treturn text;\n}\nconsole.log(show(`${await p}|${await q}`));\n"},
-		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n"},
+		{"a: a concatenation between the awaits", setup + "console.log(`${await p}${big}${await q}`);\n", ""},
+		{"b: an argument between the awaits", setup + "function f(a: string, b: string, c: string): string {\n\treturn a + b + c;\n}\nconsole.log(f(await p, big + more, await q));\n", ""},
+		{"c: a binary chain", setup + "console.log((await p) + big + (await q));\n", ""},
+		{"d: a condition first", setup + "const flag = big === 'x';\nconsole.log(flag ? await p : `${big}${await q}`);\n", ""},
+		{"a1: a callee first", setup + "function show(text: string): string {\n\treturn text;\n}\nconsole.log(show(`${await p}|${await q}`));\n", ""},
+		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n", ""},
 		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n", "a computed field name"},
 		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n", "a value of type TemplateStringsArray"},
 		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n", "a destructured name that isn't plain"},
-		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n"},
+		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
