@@ -1,0 +1,10 @@
+// An array whose elements may be null and are held as references is refused where it's viewed as
+// unknown (#ys4naww): it holds null as a null pointer, which a run-time key read can't tell from
+// undefined, so natively it read null as undefined (Language's k07). Node prints null.
+import { propertyOf } from './hostErrors.ts';
+
+class Point {
+	x = 1;
+}
+const items: (Point | null)[] = [new Point(), null];
+console.log(propertyOf(items, '1') === null ? 'null' : 'not null');

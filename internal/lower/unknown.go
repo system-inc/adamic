@@ -172,6 +172,9 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
+	if l.nullableReferenceArray(present, map[*checker.Type]bool{}) {
+		return l.notYet(node, "an array with a nullable element viewed as unknown or object (null and undefined element tags)")
+	}
 	if checker.IsTupleType(present) {
 		return l.notYet(node, "a tuple viewed as unknown or object (array presence metadata)")
 	}
@@ -179,6 +182,50 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		return l.notYet(node, "an opaque host or collection value viewed as unknown or object (dynamic property metadata)")
 	}
 	return nil
+}
+
+// nullableReferenceArray says whether a value of this type reaches, through its fields, its elements
+// or a union's members, an array whose elements may be null and are held as references (a Point |
+// null, a number[] | null, a null). Such an array holds null as a null pointer, which a run-time key
+// read (union.c's keyed_array_element) can't tell from undefined, so it would read a null element as
+// undefined (#ys4naww, Language's k07, k12 and k02). A string | null or a Point | null | undefined is
+// boxed as a Union, whose null is its own, and reads right. The walk follows the reach, not only the
+// value's own fields, because an unknown hands out what it holds one read at a time: an object's
+// field holding such an array passes the nullable-field test above.
+func (l *lowering) nullableReferenceArray(proven *checker.Type, seen map[*checker.Type]bool) bool {
+	proven = l.concrete(proven)
+	if seen[proven] {
+		return false
+	}
+	seen[proven] = true
+	if proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range proven.Types() {
+			if l.nullableReferenceArray(member, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	if l.checker.IsArrayType(proven) {
+		element := l.checker.GetElementTypeOfArrayType(proven)
+		if l.includesNull(element) {
+			// A representation not known refuses too, so the guard doesn't lean on valueType's NotYet
+			// for an element it can't place.
+			if held, known := l.representation(element); !known || held != ir.Union {
+				return true
+			}
+		}
+		return l.nullableReferenceArray(element, seen)
+	}
+	for _, field := range l.checker.GetPropertiesOfType(proven) {
+		if l.nullableReferenceArray(l.checker.GetTypeOfSymbol(field), seen) {
+			return true
+		}
+	}
+	return false
 }
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
