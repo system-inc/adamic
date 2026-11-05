@@ -10,9 +10,12 @@ import (
 // allocationFlowGraph is the shared may-flow graph used by graph regions and
 // shape certification. It never changes ownership when queried.
 type allocationFlowGraph struct {
-	projection        *allocationProjection
-	projectionReads   map[int]ir.AllocationSet
-	projectionBusy    map[int]bool
+	projection      *allocationProjection
+	projectionReads map[int]ir.AllocationSet
+	projectionBusy  map[int]bool
+	// projectionFrames memoizes a projected query that isn't a bare Read, keyed by the expression, its
+	// depth and the Reads busy around it (shape_flow.go's projectionFrame).
+	projectionFrames  map[string]ir.AllocationSet
 	program           *ir.Program
 	sources           map[int][]ir.Expression
 	unknownParameters map[int]bool
