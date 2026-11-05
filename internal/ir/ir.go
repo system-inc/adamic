@@ -20,6 +20,9 @@ type Program struct {
 	PlaceholderSources SortedMap[string, string]
 	PlaceholderViews   SortedMap[string, string]
 	PlaceholderChecks  []PlaceholderCheck
+	// BrandMints lists every erased cast that adds only phantom brand members, for the checked report
+	// (rulings.md:29, #yth65gz).
+	BrandMints []BrandMint
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
@@ -101,6 +104,12 @@ type Program struct {
 
 // PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
 type PlaceholderCheck struct{ Origin, Use, Path, Where, Status string }
+
+// BrandMint is one cast that mints a brand: where, the branded target, and the phantom members it adds.
+type BrandMint struct {
+	Where, Target string
+	Members       []string
+}
 
 type PlaceholderUse struct {
 	Value                    Expression

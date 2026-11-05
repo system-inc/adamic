@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -47,12 +48,19 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 			return nil
 		}
 		for _, field := range l.checker.GetPropertiesOfType(object) {
-			if checker.IsKnownSymbol(field) || !phantomField(l.checker.GetTypeOfSymbol(field)) || primitiveMember(primitive.Flags(), field.Name) {
+			if !l.phantomMember(field) || primitiveMember(primitive.Flags(), field.Name) {
 				return nil
 			}
 		}
 	}
 	return primitive
+}
+
+// phantomMember is the one test of a phantom brand member, for a primitive's brand (phantomBase) and
+// an object's (brandMintOf, a brand mint's cast) alike (#yth65gz, one proof): keyed by a name, never a
+// symbol (Nov 1), and typed so a read finds nothing there (phantomField).
+func (l *lowering) phantomMember(field *ast.Symbol) bool {
+	return !checker.IsKnownSymbol(field) && phantomField(l.checker.GetTypeOfSymbol(field))
 }
 
 // On a primitive the brand member is never present, so a read gives undefined on Node and natively.
