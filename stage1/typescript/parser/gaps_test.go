@@ -44,10 +44,7 @@ func TestClosedStrongAstParentGap(t *testing.T) {
 		t.Fatal("strong parent/child cycle accepted without graph ownership")
 	}
 	code := native.C(lowered)
-	binary := filepath.Join(t.TempDir(), "strong-parent")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := gapNative(t, "gaps/1_strong_ast_parent.ts", "", native.Options{Sanitize: true})
 	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	t.Setenv("UBSAN_OPTIONS", "halt_on_error=1")
 	actual := execute(t, "", binary).output
@@ -67,10 +64,7 @@ func TestClosedStrongAstParentGap(t *testing.T) {
 	if report := leakcheck.Report(t, code, binary); report != "" {
 		t.Fatal(report)
 	}
-	counted := filepath.Join(t.TempDir(), "strong-parent-counted")
-	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
-	}
+	counted := gapNative(t, "gaps/1_strong_ast_parent.ts", "", native.Options{Count: true})
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	stdout, stderr, err := childguard.Capture(ctx, exec.Command(counted))
@@ -105,10 +99,7 @@ func TestPushSpreadGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "spread")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := gapNative(t, "gaps/2_push_spread.ts", "", native.Options{Sanitize: true})
 	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(t, "", binary).output
 	emitted := filepath.Join(t.TempDir(), "spread.mjs")
@@ -174,10 +165,7 @@ func TestClosedOptionalFunctionValueGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "optional")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := gapNative(t, "gaps/5_optional_function_value.ts", "", native.Options{Sanitize: true})
 	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(t, "", binary).output
 	emitted := filepath.Join(t.TempDir(), "optional.mjs")
@@ -220,10 +208,7 @@ func TestClosedConditionalEmptyArrayGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "conditional")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := gapNative(t, "gaps/6_conditional_empty_array.ts", "", native.Options{Sanitize: true})
 	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
 	actual := execute(t, "", binary).output
 	emitted := filepath.Join(t.TempDir(), "conditional.mjs")

@@ -31,14 +31,10 @@ func TestTypeOnlyImportCycleCompiles(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
+	if _, err := lower.Lower(context.Background(), program); err != nil {
 		t.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
 	}
-	binary := filepath.Join(t.TempDir(), "cycle")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
+	binary := gapNative(t, "testdata/type_import_cycle/entry.a", "testdata/type_import_cycle", native.Options{Sanitize: true})
 	got := execute(t, "", binary).output
 	if !bytes.Equal(got, want) {
 		t.Fatalf("native %q, Node %q", got, want)
