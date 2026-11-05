@@ -8,6 +8,9 @@ import tempfile
 meter = Path(__file__).resolve().parent
 source = (meter / 'report.py').read_text()
 mutants = [
+    ('artifact-implies-whole',
+     "return artifact['entry_file_attempted'] and artifact['entry_next_stop'] is None",
+     'return True', 'test_artifact_with_entry_refusal_does_not_lower_whole'),
     ('ignore-entry-readiness', 'in attempted - readiness', 'in attempted',
      'test_entry_order_readiness_still_counts_against_root_file'),
     ('count-root-order-artifact-as-failure', "artifacts = [row for row in checks if row['node']['throws']]",
@@ -50,4 +53,4 @@ with tempfile.TemporaryDirectory(prefix='meter-node-elision-mutant-') as tempora
     print(text, end='')
     if result.returncode == 0 or 'FAIL: ' + test not in text or 'AssertionError:' not in text:
         raise AssertionError('value-import elision mutant survived or failed for another reason')
-print('Both root-order mutants and the value-import elision mutant went red on their named tests.')
+print('All three root-order mutants and the value-import elision mutant went red on their named tests.')
