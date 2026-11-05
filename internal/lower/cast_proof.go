@@ -20,6 +20,8 @@ type castProof struct {
 	construction   bool
 	nodeArray      bool
 	speculation    bool
+	// brandMint is a cast that adds only phantom brand members (brand_mint.go): erased, and listed.
+	brandMint *brandMint
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -32,7 +34,95 @@ func (l *lowering) castRepair(node *ast.Node) string {
 }
 
 func (l *lowering) castAssignable(source, target *checker.Type) bool {
-	return l.classAssignable(source, target) && l.enumAssignable(source, target) && l.widened(source, target, map[[2]*checker.Type]bool{}) == nil && l.castOptionalFields(source, target, map[[2]*checker.Type]bool{}) && l.optionalRelationFailure(source, target, nil, map[[2]*checker.Type]bool{}) == ""
+	return l.castAssignableAt(nil, source, target)
+}
+
+// castAssignableAt is castAssignable for the value at operand: its widening is judged as at any slot,
+// so a fresh literal ([]) held by nothing else relates by its own elements (freshOrWidened). A nil
+// operand is a type with no value behind it, judged by widened alone. One list of rules for both, so a
+// rule added to one can't miss the other (Lower's should on #yth65gz).
+func (l *lowering) castAssignableAt(operand *ast.Node, source, target *checker.Type) bool {
+	if !l.classAssignable(source, target) || !l.enumAssignable(source, target) {
+		return false
+	}
+	if operand != nil {
+		if l.freshOrWidened(operand, source, target) != nil {
+			return false
+		}
+	} else if l.widened(source, target, map[[2]*checker.Type]bool{}) != nil {
+		return false
+	}
+	// castOptionalFields guards against a structural view hiding an optional field it can't vouch for.
+	// Two cases where its member walk misjudges a value at a cast (measured on Golem and Cloud, #yth65gz);
+	// a type with no value (castAssignable) keeps the walk as it was:
+	//   - An array seen as an array relates by its element type. The walk over its lib members refused
+	//     even a T[] seen as ReadonlyArray<T>, so arrays compare their elements by the same walk, which
+	//     still catches an element hiding a field (Language, #b5w3ycg).
+	//   - A literal made right there hides nothing of its own, but only when everything it holds is a
+	//     primitive or another such literal (primitiveLiteral). A named element, field or spread can hide
+	//     a field, so it's walked as any value is.
+	switch {
+	case operand != nil && l.arrayLikeType(source) && l.arrayLikeType(target):
+		from, to := l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target)
+		if from == nil || to == nil || !l.castOptionalFields(from, to, map[[2]*checker.Type]bool{}) {
+			return false
+		}
+	case operand != nil && l.primitiveLiteral(operand):
+	default:
+		if !l.castOptionalFields(source, target, map[[2]*checker.Type]bool{}) {
+			return false
+		}
+	}
+	return l.optionalRelationFailure(source, target, nil, map[[2]*checker.Type]bool{}) == ""
+}
+
+// arrayLikeType is whether a type is an array, mutable or readonly, by the checker's own test.
+func (l *lowering) arrayLikeType(proven *checker.Type) bool {
+	return l.checker.IsArrayType(proven) || l.isLibraryType(proven, "ReadonlyArray")
+}
+
+// primitiveLiteral is whether operand is an array or object literal written at the cast whose every
+// element and field value is a primitive, or another such literal: a value that can hide no field. A
+// spread, a method, an accessor or a computed key makes it no such literal.
+func (l *lowering) primitiveLiteral(operand *ast.Node) bool {
+	operand = ast.SkipParentheses(operand)
+	var values []*ast.Node
+	switch operand.Kind {
+	case ast.KindArrayLiteralExpression:
+		values = operand.AsArrayLiteralExpression().Elements.Nodes
+	case ast.KindObjectLiteralExpression:
+		for _, property := range operand.AsObjectLiteralExpression().Properties.Nodes {
+			switch property.Kind {
+			case ast.KindPropertyAssignment:
+				if property.Name() == nil || property.Name().Kind == ast.KindComputedPropertyName {
+					return false
+				}
+				values = append(values, property.AsPropertyAssignment().Initializer)
+			case ast.KindShorthandPropertyAssignment:
+				values = append(values, property.Name())
+			default:
+				return false
+			}
+		}
+	default:
+		return false
+	}
+	for _, value := range values {
+		if value.Kind == ast.KindSpreadElement {
+			return false
+		}
+		inner := ast.SkipParentheses(value)
+		if inner.Kind == ast.KindArrayLiteralExpression || inner.Kind == ast.KindObjectLiteralExpression {
+			if !l.primitiveLiteral(inner) {
+				return false
+			}
+			continue
+		}
+		if l.checker.GetTypeAtLocation(value).Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // A structural view can hide an optional field of an incompatible type. Assignability permits
@@ -134,6 +224,13 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	if l.phantomCast(source, target) {
+		return castProof{}, nil
+	}
+	operand, from := l.mintOperand(as)
+	if mint := l.brandMintOf(operand, from, target); mint != nil {
+		return castProof{brandMint: mint}, l.brandMintRefusal(node, target, mint)
+	}
+	if l.mintHop(node) {
 		return castProof{}, nil
 	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}

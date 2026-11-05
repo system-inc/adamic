@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -59,6 +60,15 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 			}
 		}
 		fmt.Fprintf(output, "adamic: placeholder checks: proven %d checked %d\n", proven, checked)
+	}
+	// A brand mint is erased, so no check holds its claim: each gets its own line (rulings.md:29).
+	if len(program.BrandMints) > 0 {
+		mints := append([]ir.BrandMint(nil), program.BrandMints...)
+		sort.SliceStable(mints, func(i, j int) bool { return mints[i].Where < mints[j].Where })
+		for _, mint := range mints {
+			fmt.Fprintf(output, "%s: brand mint %s adds %s: erased, unchecked\n", relative(mint.Where), mint.Target, strings.Join(mint.Members, ", "))
+		}
+		fmt.Fprintf(output, "adamic: brand mints: %d\n", len(mints))
 	}
 	counts := program.PredicateChecks
 	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
