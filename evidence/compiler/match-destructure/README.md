@@ -45,3 +45,23 @@ lower 5 (program-source census tests: pinned TypeScript commit absent), native (
 cache tests refuse; debug-review and TSGo product tests), oracle 52 (Product, counts shards, Stage0Emits shards,
 AssignmentProof; none names match_destructure). Base had more failures than head (flaky or product-dependent tests I
 did not chase), so these are environmental, not caused by this change. No failure at head names this change's files.
+
+# Round 2 (Performance's review): branch compiler/match-destructure-2
+
+Head: 4af52be1de0c4f6b5fc9ec75f53e3b9b04d1692d, the first commit cherry-picked and amended onto origin/main a7b6da7f622bd768a99a443706490e80667dd547.
+- **Empty capture keeps its value.** Fixture gained `/(a*)(b)/.exec("b")` with `[, run = "DEFAULT", tail = "T"]`; Node 24 prints `[] 0 b`.
+- **Mutant (c):** the default also taken for an empty string (a Conditional on `value === ""` ahead of the Coalesce, in the lowering,
+  so both backends carry it). `TestNativeAgreesWithNode_028/internal/oracle/testdata/match_destructure.a` went red, stdout differs on native
+  (`[DEFAULT] 7 b` for Node's `[] 0 b`) and on the JavaScript backend; restored. `v2_mutant_c_empty_string_takes_default.log`.
+- **House clang:** LLVM-20.1.8-Linux-X64.tar.xz from the llvm-project release (xz CRC ok, sha256 1ead36b3dfcb774b57be530df42bec70ab2d239fbce9889447c7a29a4ddc1ae6;
+  I could not check it against GitHub's published digest from here), selected through ADAMIC_TOOLS with Node 24.22.2.
+  `clang --version` = 20.1.8. Fixture oracle unit under it (native with ASan, UBSan and leak check, and the JavaScript backend): passed
+  (`v2_oracle_fixture_clang20_green.log`). Counts re-recorded with it: `| 140 | 140 | 214 | 216 | 32 | 0 |` (allocations = frees);
+  the row moved from 135/135/204/207/30 because of the new fixture lines. The record check for that row passes
+  (TestCountsAreRecorded_028); two other shards the pattern also matched (026, async_counts_stable) fail here, as they did at base before.
+- **internal/lower whole at the new head** (`v2_head_lower.log`): FAIL 607.3s, the same five tests as before and nothing else
+  (TestCycleFinderCensusEquality, TestProduct_CycleScanningCensus, TestProgramRegionCensusMembership,
+  TestProduct_ProgramRegionCensusPairwise, TestProduct_ProgramRegionCensusIndexed: pinned TypeScript commit 050880ce absent from the shallow
+  submodule). I did not re-run lower at a7b6da7f without my commit; those five are environment failures (same message at old base).
+  javascript, native and oracle were not re-run whole this round.
+- gofmt and go vet ./internal/lower/ clean.
