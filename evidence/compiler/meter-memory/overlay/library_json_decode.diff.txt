@@ -1,0 +1,11 @@
+--- /home/user/adamic/internal/lower/library_json_decode.go	2026-11-04 06:57:56.161304393 +0000
++++ /tmp/m/scratch/latent-overlay-memo/internal_lower_library_json_decode.go	2026-11-05 02:31:18.609515696 +0000
+@@ -147,7 +147,7 @@
+ 		index := len(schema.Nodes)
+ 		seen[t] = index
+ 		schema.Nodes = append(schema.Nodes, ir.JSONDecodeNode{})
+-		n := ir.JSONDecodeNode{Expected: l.checker.TypeToString(t)}
++		n := ir.JSONDecodeNode{Expected: l.typeString(t)}
+ 		flags := t.Flags()
+ 		var literal ir.Expression
+ 		var of ir.Type

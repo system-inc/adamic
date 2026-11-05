@@ -8,6 +8,8 @@ package lower
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"os"
 	"path/filepath"
 	"runtime/metrics"
@@ -83,4 +85,61 @@ func heapUnit(file, where string) {
 		"t": time.Now().UnixNano()})
 }
 
-func heapFinal() { heapWriteProfile("heap-exit.pprof") }
+func heapFinal() { heapWriteProfile("heap-exit.pprof"); memoStats() }
+
+// Counting and optional memo of Checker.TypeToString for jsonDecodeSchema (task #rw2vjhn, scratch only).
+// MEMO_TOSTRING=1 returns the first spelling of a type for every later call. The checker is
+// single threaded here and one program has one checker, so a type pointer is a complete key.
+type memoKey struct {
+	checker *checker.Checker
+	t       *checker.Type
+}
+
+var memoTable = map[memoKey]string{}
+var memoCalls, memoMisses int
+var memoDistinctSeen = map[memoKey]bool{}
+var boundaryCalls int
+var boundaryDistinctType = map[*checker.Type]bool{}
+var boundaryDistinctNode = map[*ast.Node]bool{}
+var boundaryDistinctPair = map[[2]any]bool{}
+
+func (l *lowering) typeString(t *checker.Type) string {
+	key := memoKey{l.checker, t}
+	memoCalls++
+	memoDistinctSeen[key] = true
+	if os.Getenv("MEMO_TOSTRING") == "1" {
+		if text, found := memoTable[key]; found {
+			return text
+		}
+		memoMisses++
+		text := l.checker.TypeToString(t)
+		memoTable[key] = text
+		return text
+	}
+	return l.checker.TypeToString(t)
+}
+
+func memoCountBoundary(node *ast.Node, proven *checker.Type) {
+	boundaryCalls++
+	boundaryDistinctType[proven] = true
+	boundaryDistinctNode[node] = true
+	boundaryDistinctPair[[2]any{node, proven}] = true
+}
+
+func memoStats() {
+	path := os.Getenv("MEMO_STATS")
+	if path == "" {
+		return
+	}
+	file, err := os.Create(path)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+	_ = json.NewEncoder(file).Encode(map[string]any{
+		"memo_enabled":                        os.Getenv("MEMO_TOSTRING") == "1",
+		"jsonDecodeSchema_TypeToString_calls": memoCalls, "distinct_types": len(memoDistinctSeen), "memo_misses": memoMisses,
+		"boundarySchema_calls": boundaryCalls, "boundary_distinct_proven_types": len(boundaryDistinctType),
+		"boundary_distinct_declaration_nodes": len(boundaryDistinctNode), "boundary_distinct_node_type_pairs": len(boundaryDistinctPair),
+		"units": heapUnitCount})
+}
