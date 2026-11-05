@@ -29,12 +29,18 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// missing name would read a method as undefined.
 	{"Primitive", "a primitive receiver's properties aren't read yet"},
 	{"Function", "a function's properties aren't read by a run-time key yet"},
-	// One stop for an array and a tuple: the JavaScript backend marks every array literal as it marks
-	// a tuple (adamicTuple), so it can't tell them apart. A tuple can't reach the read today (lowering
-	// refuses one viewed as unknown), so the native tuple branch is a guard, sharing these words.
-	{"Array", "an array's or a tuple's properties aren't read by a run-time key yet"},
+	// An array answers its indexes, its length and a match's own fields (#ys4naww), and reads any other
+	// name as undefined but the ones it inherits, Array.prototype's and Object.prototype's, which stop:
+	// a method read would hand out a function no call can reach yet.
+	{"ArrayPrototype", "an array's methods aren't read by a run-time key yet"},
 	{"Collection", "a Map's or a Set's properties aren't read by a run-time key yet"},
 	{"TypedArray", "a typed array's properties aren't read by a run-time key yet"},
+	// Lowering refuses a tuple viewed as unknown, but one still reaches the read as a value an unknown
+	// holds: an object's field, an array's element, an Object.entries pair, a match's indices pair.
+	// Natively a tuple is an object marked tuple, whose runtime-made pairs carry no slot types, so it
+	// isn't read as an array yet. The JavaScript backend marks the same values (adamicTuple), so both
+	// stop alike.
+	{"Tuple", "a tuple's properties aren't read by a run-time key yet"},
 	{"StaticClass", "a class's static properties aren't read by a run-time key yet"},
 	{"RuntimeValue", "this runtime value's properties aren't read by a run-time key yet"},
 	// A class keeps its private fields under names beginning with #, as string keys on the JavaScript
@@ -65,6 +71,19 @@ var DynamicKeyedPrototypeMethods = []string{
 // DynamicKeyedPrototypeNames are Object.getOwnPropertyNames(Object.prototype) on Node: Object as
 // constructor, the __proto__ accessor, and the ten methods.
 var DynamicKeyedPrototypeNames = append([]string{"constructor", "__proto__"}, DynamicKeyedPrototypeMethods...)
+
+// DynamicKeyedArrayPrototypeNames are Object.getOwnPropertyNames(Array.prototype) on Node, less
+// length, which every array holds as its own. An array inherits each of them, and Object.prototype's
+// names too (DynamicKeyedPrototypeNames), so a run-time key read of any stops (ArrayPrototype).
+// TestDynamicKeyedArrayPrototypeNamesAreNodes holds this list to the pinned Node's both ways, so a
+// name Node adds goes red rather than reading undefined.
+var DynamicKeyedArrayPrototypeNames = []string{
+	"constructor", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex",
+	"lastIndexOf", "pop", "push", "reverse", "shift", "unshift", "slice", "sort", "splice", "includes",
+	"indexOf", "join", "keys", "entries", "values", "forEach", "filter", "flat", "flatMap", "map", "every",
+	"some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with", "toLocaleString",
+	"toString",
+}
 
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't
 // have, so on an Error they stop on both backends even where one side has the name: every Error's
