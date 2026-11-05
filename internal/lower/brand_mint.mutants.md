@@ -4,7 +4,7 @@ Each is one edit, run on a house box, then put back.
 
 | Mutant | Edit | Red |
 |---|---|---|
-| No mint | brand_mint.go, `brandMintOf`: return nil first | TestBrandMintsOfTscsSortedArraysAreAdmitted, every row Refused (a cast the runtime can't check) where NotYet at the value is wanted |
+| No mint | brand_mint.go, `brandMintOf`: return nil first | TestBrandMintsOfTscsSortedArraysAreAdmitted, every row Refused (a cast the runtime can't check) where it lowers whole since #gb0fqaa (NotYet at the value before) |
 | A non-phantom member admitted | brand_mint.go: `!l.phantomBrandMember(property) ||` made `false ||` in the declared-member walk | TestBrandMintRecognitionIsExact, the real-member row passes the cast |
 | No report line | cmd/adamic/checks.go: the brand mint loop not printed | TestExplainChecksListsBrandMints |
 | A redeclared base member admitted (Language's must) | brand_mint.go: the walk skips a declared member the base also has (`continue`), as the first head did | TestBrandMintRecognitionIsExact, the n01, n07, n08 and merged-declaration rows pass the cast |

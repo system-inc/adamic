@@ -285,7 +285,7 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	var found []*checker.Type
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
-			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+			(l.isArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
 		}
 	}
@@ -296,8 +296,8 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 // arrays or tuples (readonly or not), two maps, or two sets.
 func (l *lowering) sameContainer(from *checker.Type, to *checker.Type) bool {
 	switch {
-	case l.checker.IsArrayType(to) || checker.IsTupleType(to):
-		return l.checker.IsArrayType(from) || checker.IsTupleType(from)
+	case l.isArrayType(to) || checker.IsTupleType(to):
+		return l.isArrayType(from) || checker.IsTupleType(from)
 	case l.isLibraryType(to, "Map", "ReadonlyMap"):
 		return l.isLibraryType(from, "Map", "ReadonlyMap")
 	default:
@@ -756,7 +756,7 @@ func (l *lowering) freshValue(node *ast.Node) bool {
 		}
 		switch method {
 		case "slice", "filter", "map", "concat":
-			return l.checker.IsArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
+			return l.isArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
 		}
 	}
 	return false
@@ -794,7 +794,7 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 			if context := l.callableContext(parent); context != nil {
 				return context
 			}
-			if contextual := l.slotType(parent); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+			if contextual := l.slotType(parent); contextual != nil && l.isArrayType(l.withoutUndefined(contextual)) {
 				return contextual
 			}
 			return l.impliedExpressionTarget(parent)
@@ -832,7 +832,7 @@ func (l *lowering) impliedExpressionTarget(parent *ast.Node) *checker.Type {
 	if parent.Kind == ast.KindArrayLiteralExpression {
 		literal := target
 		target = nil
-		if l.checker.IsArrayType(literal) {
+		if l.isArrayType(literal) {
 			if arguments := l.checker.GetTypeArguments(literal); len(arguments) == 1 {
 				target = arguments[0]
 			}
@@ -989,8 +989,8 @@ func (l *lowering) carriedSlot(node *ast.Node) (slot *checker.Type, carried bool
 			}
 			return arguments[index], true, true
 		}
-		if l.checker.IsArrayType(array) {
-			return l.checker.GetElementTypeOfArrayType(array), true, true
+		if l.isArrayType(array) {
+			return l.elementTypeOfArray(array), true, true
 		}
 		return nil, true, false
 	}

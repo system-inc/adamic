@@ -357,8 +357,8 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	// element would expose an alias through the returned arrays. Refuse such inferred widening.
 	var sourceType *checker.Type
 	proven := l.checker.GetTypeAtLocation(sourceNode)
-	if l.checker.IsArrayType(proven) {
-		sourceType = l.checker.GetElementTypeOfArrayType(proven)
+	if l.isArrayType(proven) {
+		sourceType = l.elementTypeOfArray(proven)
 	}
 	if l.isSet(sourceNode) || l.isLibraryType(proven, "MapIterator", "SetIterator") {
 		sourceType = l.typeArguments(proven)[0]
@@ -367,7 +367,7 @@ func (l *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool, error
 	if len(grouped) != 2 {
 		return nil, true, l.notYet(node, "Map.groupBy without known grouped elements")
 	}
-	groupedElement := l.checker.GetElementTypeOfArrayType(grouped[1])
+	groupedElement := l.elementTypeOfArray(grouped[1])
 	if held, known := l.representation(groupedElement); !known || held != element {
 		return nil, true, l.notYet(node, "Map.groupBy grouped elements held otherwise than the input's")
 	}

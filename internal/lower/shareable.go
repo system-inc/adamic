@@ -50,7 +50,7 @@ func (l *lowering) shareableWith(proven *checker.Type, path string, where *ast.N
 				kind = "Set"
 			}
 			return name + " is a mutable " + kind
-		case l.checker.IsArrayType(current) || checker.IsTupleType(current):
+		case l.isArrayType(current) || checker.IsTupleType(current):
 			if !l.isLibraryType(current, "ReadonlyArray") && !(checker.IsTupleType(current) && current.TargetTupleType().IsReadonly()) {
 				return name + " is a mutable " + l.checker.TypeToString(current)
 			}

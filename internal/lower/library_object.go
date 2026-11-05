@@ -133,7 +133,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			result := l.checker.GetTypeAtLocation(node)
 			// The interface overload may return any. Its destination supplies the
 			// contract we must prove or check, never permission to erase it.
-			if contextual := l.slotType(node); contextual != nil && l.checker.IsArrayType(contextual) {
+			if contextual := l.slotType(node); contextual != nil && l.isArrayType(contextual) {
 				result = contextual
 			}
 			arguments := l.checker.GetTypeArguments(result)
@@ -302,7 +302,7 @@ func (l *lowering) objectCanFreeze() bool {
 // field that holds the intersection itself is the object being proven.
 func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	for _, part := range proven.Types() {
-		if part.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 || l.unsupportedViewFamily(part) != "" {
+		if part.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 || l.unsupportedViewFamily(part) != "" {
 			return 0, false
 		}
 	}

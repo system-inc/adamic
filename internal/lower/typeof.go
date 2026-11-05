@@ -11,7 +11,7 @@ func (l *lowering) typeOfNull(node *ast.Node) bool {
 	proven := l.concrete(l.checker.GetTypeAtLocation(node))
 	if node.Kind == ast.KindElementAccessExpression {
 		receiver := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression)))
-		if l.checker.IsArrayType(receiver) && l.includesNull(l.checker.GetElementTypeOfArrayType(receiver)) {
+		if l.isArrayType(receiver) && l.includesNull(l.elementTypeOfArray(receiver)) {
 			return true
 		}
 	}

@@ -21,7 +21,7 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
 		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
-	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+	if l.isArrayType(target) || checker.IsTupleType(target) {
 		return l.unionAggregateContract(node, target)
 	}
 	if l.callableViewContract(target) {
@@ -82,7 +82,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 		return "collection"
 	case checker.IsTupleType(target):
 		return "tuple"
-	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.checker.IsArrayType(target):
+	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.isArrayType(target):
 		return "dictionary"
 	}
 
@@ -119,7 +119,7 @@ func (l *lowering) plainObjectIntersection(target *checker.Type) bool {
 		return false
 	}
 	for _, member := range target.Types() {
-		if member.Flags()&checker.TypeFlagsObject == 0 || l.checker.IsArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
+		if member.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(member) || l.callableViewContract(member) || l.unsupportedViewFamily(member) != "" {
 			return false
 		}
 	}

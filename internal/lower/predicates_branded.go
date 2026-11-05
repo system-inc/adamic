@@ -76,8 +76,8 @@ func (l *lowering) brandedMembership(target *checker.Type, visited map[*checker.
 		}
 		return false
 	}
-	if l.checker.IsArrayType(target) {
-		return l.brandedMembership(l.checker.GetElementTypeOfArrayType(target), visited)
+	if l.isArrayType(target) {
+		return l.brandedMembership(l.elementTypeOfArray(target), visited)
 	}
 	return target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.fieldLiteral(target, "kind") == nil && l.brandedSupertype(target)
 }
@@ -337,7 +337,7 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 			return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", with no read of it on the true side")
 		}
 		read := l.concrete(narrowed)
-		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.checker.IsArrayType(instance) {
+		if (read.Id() == instance.Id() || l.brandedIntersection(read, instance)) && instance.Flags()&checker.TypeFlagsUnion == 0 && !l.isArrayType(instance) {
 			return nil
 		}
 		return l.notYet(node, "a checked predicate target "+l.checker.TypeToString(instance)+" over a generic argument "+l.checker.TypeToString(declared)+", read on the true side as "+l.checker.TypeToString(read))
@@ -352,7 +352,7 @@ func (l *lowering) brandedNarrowing(node, argument *ast.Node, claim *checker.Typ
 		if !l.brandedMembership(target, map[*checker.Type]bool{}) {
 			continue
 		}
-		if l.checker.IsArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
+		if l.isArrayType(target) || target.Flags()&checker.TypeFlagsUnion != 0 {
 			return l.notYet(node, "a branded supertype inside a checked predicate's array target")
 		}
 		for _, member := range members {
