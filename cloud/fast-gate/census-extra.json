@@ -2627,5 +2627,19 @@
     "message": "\"fixture row %d: the CheckedStop javascript check needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR\"",
     "class": "opt-in-lane",
     "provides": "The node-without-inspector host configuration (#cn4yapb): with ADAMIC_HOST_NODE_WITHOUT_INSPECTOR naming a Node v24.19.0 built --without-inspector, which the configuration's probe holds to `v24.19.0 false`, a row declaring that configuration runs the fixture's Node re-derivation of its recorded bytes under it. Stock setup builds no such Node, so no gate sets it, and only that step skips: the row's native, stage0 and recorded-bytes comparisons run on every runner. An unknown configuration, bad metadata or a failed probe is a t.Fatal in hostconfiguration.Require, never a skip."
+  },
+  {
+    "file": "internal/oracle/inspector_unavailable_test.go",
+    "test": "TestInspectorUnavailableIsNodes",
+    "id": "TestInspectorUnavailableIsNodes:c7aa2998b40731f13142a9c10666ce2e4d11b0581472cd6560aaa63203cf5341",
+    "line": 17,
+    "condition": "why := hostconfiguration.Skip(1, configuration); why != \"\"",
+    "reads": [],
+    "callers": [
+      "TestInspectorUnavailableIsNodes"
+    ],
+    "message": "\"inspector measurement row %d: the CommonJS load needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR\"",
+    "class": "opt-in-lane",
+    "provides": "The node-without-inspector host configuration (#cn4yapb): with ADAMIC_HOST_NODE_WITHOUT_INSPECTOR naming a Node v24.19.0 built --without-inspector, which the configuration's probe holds to `v24.19.0 false`, the inspector measurement row runs its CommonJS load of inspector, node:inspector and inspector/promises under it and holds each throw to the bytes the backends pin. Stock setup builds no such Node, so no gate sets it, and only this measurement skips: TestInspectorUnavailableBackends' Node, native and JavaScript comparisons run on every runner. An unknown configuration, bad metadata or a failed probe is a t.Fatal in hostconfiguration.Require, never a skip."
   }
 ]
