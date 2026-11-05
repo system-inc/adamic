@@ -25,6 +25,13 @@ const iterableWords = "function* words(limit: number): Generator<string, undefin
 // iterableTotal is a function whose one use of its Iterable<number> parameter is one for-of over it.
 const iterableTotal = "function total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\n"
 
+// iterableFirst is tsc's firstOrUndefinedIterator (core.ts:1088), verbatim: its Iterable<T> | undefined
+// parameter's uses are one undefined test and one for-of (#qk8rztp S2c-3).
+const iterableFirst = "function firstOrUndefinedIterator<T>(iter: Iterable<T> | undefined): T | undefined { if (iter !== undefined) { for (const value of iter) { return value; } } return undefined; }\n"
+
+// iterableShown prints what iterableFirst gives back, undefined among it.
+const iterableShown = "function shown(value: number | undefined): string { return value === undefined ? 'undefined' : String(value); }\n"
+
 // A generator's direct call passed straight into a one-body function's Iterable<T> parameter, whose
 // only use is one for-of, lowers (#qk8rztp S2c-1, Adamic's ruling): a module function, through
 // IterableIterator<T> too, a generic instance, and the shapes Language named that must stay
@@ -47,6 +54,11 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 		{"an outer loop over the for-of", iterableCounted + "function firsts(items: Iterable<number>): number { let sum = 0; for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break; } } return sum; }\nconsole.log(String(firsts(counted(3))));"},
 		{"a type-only typeof", iterableCounted + "function total(items: Iterable<number>): number { const none: typeof items | undefined = undefined; let sum = none === undefined ? 0 : 1; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
 		{"a nested block's own name", iterableCounted + "function total(items: Iterable<number>): number { let sum = 0; { const items = 4; sum += items; } for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
+		// S2c-3: a nullable parameter, held as an object, its undefined tests not counted as reads.
+		{"tsc's firstOrUndefinedIterator", iterableCounted + iterableFirst + iterableShown + "console.log(shown(firstOrUndefinedIterator(counted(3))));"},
+		{"firstOrUndefinedIterator beside a Map's values()", iterableCounted + iterableFirst + iterableShown + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator(sizes.values())));"},
+		{"a nullable parameter tested === undefined, returning early", iterableCounted + "function first(items: Iterable<number> | undefined): number { if (items === undefined) { return -1; } for (const value of items) { return value; } return -1; }\nconsole.log(String(first(counted(3))));"},
+		{"an IterableIterator<T> | undefined parameter", iterableCounted + "function first(items: IterableIterator<number> | undefined): number { if (items !== undefined) { for (const value of items) { return value; } } return -1; }\nconsole.log(String(first(counted(3))));"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -145,6 +157,59 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			var refused *Refused
 			if !errors.As(err, &gap) && !errors.As(err, &refused) {
 				t.Fatalf("got %v, want it stopped", err)
+			}
+		})
+	}
+}
+
+// A nullable Iterable<T> parameter's undefined tests are the one use besides its for-of the one-read
+// rule doesn't count (#qk8rztp S2c-3), and only those: a truthiness test, a null test beside the
+// undefined one, and a second for-of each count as a read. The door stays shut to `| null` and to
+// `?`, which stop where the call is lowered, a generator used other than by a consumer, and the
+// rule stops `Iterable<string> | undefined`, held as a union. An undefined passed in at another call
+// site reaches the view as an origin it can't name. Mutants (internal/oracle/testdata/generators/
+// mutants.md): the exemption widened to a null test admits the null-test row; the door's undefined
+// test widened to null turns the `| null` row into the one-read stop; the union check taken out
+// admits the Iterable<string> row.
+func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
+	t.Parallel()
+	const readTwice = "read 2 times"
+	const other = "used other than by a for-of"
+	first := func(parameter, body string) string {
+		return iterableCounted + "function first(" + parameter + "): number { let found = -1; " + body + " return found; }\nconsole.log(String(first(counted(3))));"
+	}
+	const nullable = "items: Iterable<number> | undefined"
+	for _, probe := range []struct{ name, source, reason string }{
+		{"a truthiness test", first(nullable, "if (items) { for (const value of items) { found = value; break; } }"), readTwice},
+		{"a null test beside the undefined test", first(nullable, "if (items !== null && items !== undefined) { for (const value of items) { found = value; break; } }"), readTwice},
+		{"an undefined test and a second for-of", first(nullable, "if (items !== undefined) { for (const value of items) { found = value; break; } for (const value of items) { found += value; } }"), readTwice},
+		{"| null", first("items: Iterable<number> | null", "if (items !== null) { for (const value of items) { found = value; break; } }"), other},
+		{"an optional parameter", first("items?: Iterable<number>", "if (items !== undefined) { for (const value of items) { found = value; break; } }"), other},
+		{"Iterable<string> | undefined", iterableWords + "function joined(items: Iterable<string> | undefined): string { let all = ''; if (items !== undefined) { for (const word of items) { all += word; } } return all; }\nconsole.log(joined(words(2)));", "which may be undefined and is held as a union"},
+		{"undefined passed at another call site", iterableCounted + iterableFirst + iterableShown + "console.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator<number>(undefined)));", "a view over an iterable of unproven origin"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
+				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			}
+		})
+	}
+	// `items == null` is refused before the proof, by the rule against ==, and a hand-driven next
+	// through an IterableIterator<T> | undefined parameter by unbound-method, as S2c-1's next rows are;
+	// these hold only that each is refused there, and were either lifted, its read is counted.
+	for _, probe := range []struct{ name, source, reason string }{
+		{"items == null", first(nullable, "if (items == null) { return found; } for (const value of items) { found = value; break; }"), "refuses =="},
+		{"an undefined test and a next", first("items: IterableIterator<number> | undefined", "if (items !== undefined) { items.next(); for (const value of items) { found = value; break; } }"), "(unbound-method)"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
+				t.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
 			}
 		})
 	}

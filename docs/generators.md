@@ -60,7 +60,12 @@ module function, an overload set judged at its implementation, or a generic inst
 S2c-1). The generator crosses into the parameter through `ir.IterableOf`, the one door from a
 generator to an object's slot. The parameter's only use, counted in the lowered program, must be one
 for-of over it, in a function that doesn't suspend, read `arguments`, assign it or let a closure
-capture it. That for-of becomes a dispatch on what the object is at run time: a generator steps by
+capture it. The parameter may be typed `Iterable<T> | undefined` or `IterableIterator<T> | undefined`
+too, as tsc's `firstOrUndefinedIterator`'s is, when it is held as an object, whose undefined is a
+missing pointer: its `=== undefined` and `!== undefined` tests are tests, not reads, and anything
+else that reads it, a truthiness test or a null test among them, still counts (#qk8rztp S2c-3).
+`| null`, `?` and a default stay not yet built, and so does `Iterable<string> | undefined`, held as a
+union. That for-of becomes a dispatch on what the object is at run time: a generator steps by
 its own next, a Map's or a Set's iterator by the collection loop's own step, so one parameter can be
 fed both at different call sites, and anything else is a compiler bug that stops the program, naming
 the site. Every way out of the loop finishes a generator, as Node's `return()` does, so a later pass

@@ -243,8 +243,11 @@ func (l *lowering) checkIterableViews() error {
 // closure captures it, nothing assigns it, and it is read exactly once in the lowered program, as a
 // view's for-of over it. The reads are counted in the IR, so a default that names the parameter, a
 // capture or a second for-of counts as surely as a read written out; a type position reads nothing.
-// With one read and a direct call, nothing but that for-of can ever name the generator, so the
-// for-of's exits closing it and the caller letting go of it is the whole of its life.
+// A parameter typed `Iterable<T> | undefined` is admitted too, held as a nullable object, and its
+// undefined tests (undefinedTestOf) are tests, not reads, since they never step or hand on what the
+// slot holds (#qk8rztp S2c-3, tsc's firstOrUndefinedIterator). With one read and a direct call,
+// nothing but that for-of can ever name the generator, so the for-of's exits closing it and the
+// caller letting go of it is the whole of its life.
 func (l *lowering) checkGeneratorArguments() error {
 	views := map[int]int{}
 	for index, view := range l.iterableViews {
@@ -275,7 +278,10 @@ func (l *lowering) checkGeneratorArguments() error {
 	return failed
 }
 
-// generatorParameter is checkGeneratorArguments for one generator handed in at one call.
+// generatorParameter is checkGeneratorArguments for one generator handed in at one call. A nullable
+// parameter must be held as an object, whose undefined is a `NULL` pointer the for-of's test has
+// ruled out; `Iterable<string> | undefined` is held as a union, whose undefined is a member the
+// dispatch's plain cast wasn't built to meet, so it stays not yet built (#qk8rztp S2c-3).
 func (l *lowering) generatorParameter(call ir.Call, position int, of ir.IterableOf, views map[int]int) error {
 	if of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return fmt.Errorf("lower: compiler bug: a generator seen as an object with no site")
@@ -302,11 +308,18 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 		return l.generatorNotYet(where, "passed into a function that reads arguments")
 	case l.result.Locals[parameter].Captured:
 		return l.generatorNotYet(where, "passed into the parameter "+name+", which a closure captures")
+	case l.generatorArguments[of.Site-1].nullable && l.result.Locals[parameter].Type != ir.Object:
+		return l.generatorNotYet(where, "passed into the parameter "+name+", which may be undefined and is held as a union")
 	}
 	// Every field that names a local counts, not only Read and Assign: a for-of head, a pattern's
-	// binding and a catch write one too (Lower's must), and anything else that names it is a use.
+	// binding and a catch write one too (Lower's must), and anything else that names it is a use. An
+	// undefined test of the parameter is the one node not gone into, so its read isn't counted, and
+	// nothing else is exempt (#qk8rztp S2c-3).
 	var uses localUseCount
 	count := func(node any) bool {
+		if undefinedTestOf(node, parameter) {
+			return false
+		}
 		uses.node(node, parameter)
 		return true
 	}

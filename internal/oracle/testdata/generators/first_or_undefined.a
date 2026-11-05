@@ -1,0 +1,35 @@
+// tsc's firstOrUndefinedIterator (core.ts:1088), verbatim, fed a generator's direct call as
+// checker.ts:26569 feeds it, and a Map's values() as tsbuildPublic.ts:1149 does (#qk8rztp S2c-3). Its
+// parameter is Iterable<T> | undefined, held as a nullable object, and its undefined test is a test,
+// not a read, so its one read is the for-of, whose dispatch steps either. The return inside the loop
+// closes the generator, as Node's return() does, so the line it logs after its first yield never
+// prints. A generator that yields nothing, and an empty Map's values(), leave the loop at once, and
+// undefined is printed. The generator's prefix is a built string its frame keeps, let go of with it.
+export function firstOrUndefinedIterator<T>(iter: Iterable<T> | undefined): T | undefined {
+    if (iter !== undefined) {
+        for (const value of iter) {
+            return value;
+        }
+    }
+    return undefined;
+}
+function* counted(prefix: string, count: number): Generator<number, void, undefined> {
+    console.log(`${prefix} starts`);
+    for(let index = 0; index < count; index++) {
+        yield (index + 1) * 10;
+        console.log(`${prefix} after ${String(index)}`);
+    }
+}
+function shown(value: number | undefined): string {
+    return value === undefined ? 'undefined' : String(value);
+}
+const sizes = new Map<string, number>();
+for(let index = 0; index < 3; index++) {
+    sizes.set(`size ${String(index)}`, index + 7);
+}
+const none = new Map<string, number>();
+console.log(shown(firstOrUndefinedIterator(counted(`three ${String(3)}`, 3))));
+console.log(shown(firstOrUndefinedIterator(sizes.values())));
+console.log(shown(firstOrUndefinedIterator(counted(`none ${String(0)}`, 0))));
+console.log(shown(firstOrUndefinedIterator(none.values())));
+console.log(shown(firstOrUndefinedIterator(counted(`again ${String(2)}`, 2))));
