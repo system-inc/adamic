@@ -1,0 +1,16 @@
+// a-check: refused a for...of that doesn't declare its variable with const or let
+// stops today; when lowered, must throw Node's TypeError through FrozenWriteMayThrow.
+// Language's l05 on #c3bk0fp: o.a, a frozen object's field, written as a for-of target. Node
+// prints TypeError and "Cannot assign to read only property 'a' of object '#<Object>'".
+const o = { a: 1, b: 'x' };
+Object.freeze(o);
+try {
+	for (o.a of [2]) {}
+	console.log('wrote');
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.name);
+		console.log(error.message);
+	}
+}
+console.log(`${o.a} ${o.b}`);

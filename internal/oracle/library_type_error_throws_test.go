@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -75,5 +76,41 @@ func TestLibraryTypeErrorConstantsDoNotCheck(t *testing.T) {
 	}
 	if source := native.C(program); strings.Contains(source, "adamic_thrown") {
 		t.Error("the C tests the pending word after matchAll given a global literal or an object write no freeze reaches")
+	}
+}
+
+// Three writes to a frozen object stop today, each at a NotYet of its own, and must throw Node's
+// TypeError once lowered (Language's l03 to l05 on #c3bk0fp): an object destructuring target, an
+// array destructuring target and a for-of target. Each fixture's first line names the stop it makes,
+// "// a-check: refused <text>", and its second line the promise, which this test holds too. When one
+// lowers, its pin goes red here, and its lowering must count FrozenWriteMayThrow and test the pending
+// word after the write (checkThrown), as writeProperty does.
+func TestFrozenWritePinsStopWithTheirHeaders(t *testing.T) {
+	t.Parallel()
+	const promise = "// stops today; when lowered, must throw Node's TypeError through FrozenWriteMayThrow."
+	for _, name := range []string{"stop_destructure_object", "stop_destructure_array", "stop_for_of_target"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			absolute, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_object_throws", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			source, err := os.ReadFile(absolute)
+			if err != nil {
+				t.Fatal(err)
+			}
+			lines := strings.SplitN(string(source), "\n", 3)
+			want, pinned := strings.CutPrefix(lines[0], "// a-check: refused ")
+			if !pinned || want == "" {
+				t.Fatalf("first line %q names no stop", lines[0])
+			}
+			if len(lines) < 2 || lines[1] != promise {
+				t.Fatalf("second line isn't the promise %q", promise)
+			}
+			_, err = lowered(t, absolute)
+			if err == nil || !strings.Contains(err.Error(), want) {
+				t.Fatalf("got %v, want an error holding %q", err, want)
+			}
+		})
 	}
 }
