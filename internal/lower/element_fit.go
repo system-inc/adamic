@@ -53,8 +53,9 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 		// only the literal's own elements are judged here.
 		element, err := l.elementType(node)
 		if err != nil {
-			// Lowering the literal met this already, and its stop is the one a program hears.
-			return ""
+			// The literal lowered (expression judges a value only once it has), so elementType can't
+			// restate how its elements were stored, and nothing shows they're read as they're held.
+			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
 	case !l.freshValue(node):

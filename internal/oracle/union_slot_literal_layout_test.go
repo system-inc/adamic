@@ -19,7 +19,13 @@ import (
 // elementsHeldOtherwise's words, in .a and .ts; a later fix that lowers one must agree with Node to pass.
 // The k rows stopped on main and still stop: an element of a union-element array (k01) and an object
 // member's array field (k02) by object.go's narrower-literal guard, a copy, a new Map and a new Set into
-// a union slot by invariant-mutable (k03, k06, k07), and Array.from (k04); a new Set<number> into a
+// a union slot by invariant-mutable (k03, k06, k07), and Array.from (k04). k08 to k12 hold the roads
+// where a container meets a slot member that reads elements without being a container, which
+// elementsHeldOtherwise doesn't walk (Compiler's question): a literal into Iterable<number | string>, into
+// ArrayLike<number | string>, and into "s" | Iterable<number | string>, a copy into an Iterable and a new
+// Map<string, number> into an Iterable of pairs. Each stops before the judgment, at shape_fit's plain
+// object stop or at ArrayLike's own, and its pin goes red the day one lowers, so that lift meets this
+// judgment first; a new Set<number> into a
 // Set<number | string> (k05) now stops at the judgment, before the Set's own element stop. The controls
 // lower and agree with Node on release, sanitized native and the JavaScript backend: a mixed literal into
 // the union slot (c01) and a plain one (c02), a number literal into "string" | number[] (c03), numbers
@@ -80,7 +86,7 @@ func TestUnionSlotLiteralLayout(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 48 {
-		t.Fatalf("found %d programs, want 48", programs)
+	if programs != 58 {
+		t.Fatalf("found %d programs, want 58", programs)
 	}
 }
