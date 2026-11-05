@@ -138,7 +138,7 @@ func (e *emitter) generatorFunction(index int) string {
 // generatorNext emits a step: the resume runs to the next way out and its value comes back owned.
 // When the body can throw, the pending exception is tested right after, before anything reads done.
 func (e *emitter) generatorNext(next ir.GeneratorNext) string {
-	generator := e.value(next.Generator)
+	generator := generatorPointer(next.Generator, e.value(next.Generator))
 	step := fmt.Sprintf("adamic_generator_next(%s).%s", generator, member(next.Of))
 	var result string
 	if next.Of.IsReference() {
@@ -150,4 +150,13 @@ func (e *emitter) generatorNext(next ir.GeneratorNext) string {
 		e.checkThrown()
 	}
 	return result
+}
+
+// generatorPointer is a step's generator as the runtime takes it. An iterable view's dispatch steps
+// the object it holds, which IsGenerator has just said is a generator (lower/iterable_views.go).
+func generatorPointer(generator ir.Expression, value string) string {
+	if generator.Type() == ir.Object {
+		return "((adamic_generator *)" + value + ")"
+	}
+	return value
 }

@@ -120,6 +120,11 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		return nil, err
 	}
 	lowering.finishToPrimitive()
+	// Before exceptions: a view a generator feeds is rewritten into its dispatch here, and the
+	// dispatch's steps are throws the fixed point must see, each its own generator's ResumeMayThrow.
+	if err := lowering.checkIterableViews(); err != nil {
+		return nil, err
+	}
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
@@ -136,9 +141,6 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		return nil, err
 	}
 	if err := checkGeneratorRoads(lowering.result); err != nil {
-		return nil, err
-	}
-	if err := lowering.checkIterableViews(); err != nil {
 		return nil, err
 	}
 	if err := flow.NormalizeAsync(lowering.result); err != nil {
@@ -262,6 +264,9 @@ type lowering struct {
 	// collection's iterator, each proven by checkIterableViews once every call is in
 	// (iterable_views.go).
 	iterableViews []iterableView
+	// generatorArguments are the generators' calls handed into an Iterable<T> parameter, by
+	// IterableOf's Site (iterableOfGenerator), which checkIterableViews proves.
+	generatorArguments []generatorArgument
 
 	programPlan          *programMembership
 	programDiscovery     bool

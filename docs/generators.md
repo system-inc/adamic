@@ -54,6 +54,19 @@ iterator, the parameter of a function used as a value, of an object literal's me
 callback, a field, a record's or a Map's value. `next(x)`, `return()` and `throw()` through a view
 don't lower either.
 
+A generator's direct call can also be passed straight into such a parameter, the argument for an
+`Iterable<T>` or `IterableIterator<T>` parameter of a function the call names by its one body: a
+module function, an overload set judged at its implementation, or a generic instance (#qk8rztp
+S2c-1). The generator crosses into the parameter through `ir.IterableOf`, the one door from a
+generator to an object's slot. The parameter's only use, counted in the lowered program, must be one
+for-of over it, in a function that doesn't suspend, read `arguments`, assign it or let a closure
+capture it. That for-of becomes a dispatch on what the object is at run time: a generator steps by
+its own next, and anything else is a compiler bug that stops the program, naming the site. Every way
+out of the loop finishes the generator, as Node's `return()` does, so a later pass over the same
+parameter finds it done and its frame's cells are let go of at once. A view that a generator and a
+collection's iterator both feed, one fed by generators of two functions, and an `Iterable<string>`
+one fed by a generator stay not yet built.
+
 ## How it runs
 
 - **The frame.** The call makes an `adamic_generator` (runtime/generator.h): a code record naming
@@ -114,8 +127,9 @@ nothing, and so is a generator method of a class nothing in the whole program co
 static parts still run; the refusal walk still reads both, and refuses what is refused for good (an
 async generator, rule 2400, among them).
 
-- **A generator anywhere but its consumer:** stored in a variable, passed as an argument, returned,
-  put in an array or a field, read through a view, or the generator function used as a value. A
+- **A generator anywhere but its consumer:** stored in a variable, passed as an argument other
+  than straight into a one-read `Iterable<T>` parameter, returned, put in an array or a field, read
+  through a view, or the generator function used as a value. A
   generator object as a value needs `next`, `return` and `throw` as methods, a result object, a
   retain around each step, and the cycle finder seeing its cells as slots.
 - **Destructuring a generator's call, and an `Array.from` mapper.** Destructuring takes only the

@@ -1,0 +1,26 @@
+// checker.ts's elaborateElementwise shape: a non-generic function whose one for-of over its
+// Iterable<T> parameter only `continue`s past what it doesn't report, handed one generator
+// function's call at two call sites, each with its own arguments (#qk8rztp S2c-1). Two different
+// generator functions into one parameter stay not yet built (a step names one function).
+interface ElaborationElement {
+    readonly name: string;
+    readonly broken: boolean;
+}
+function* generateElements(names: readonly string[], broken: number): Generator<ElaborationElement, void, undefined> {
+    for(let index = 0; index < names.length; index++) {
+        yield { name: `${names[index] ?? ''}#${String(index)}`, broken: index % broken === 0 };
+    }
+}
+function elaborateElementwise(iterator: Iterable<ElaborationElement>, label: string): number {
+    let reported = 0;
+    for (const element of iterator) {
+        if (!element.broken) {
+            continue;
+        }
+        reported++;
+        console.log(`${label}: ${element.name}`);
+    }
+    return reported;
+}
+console.log(String(elaborateElementwise(generateElements(['alpha', 'beta', 'gamma', 'delta'], 2), 'array')));
+console.log(String(elaborateElementwise(generateElements(['one', 'two', 'three'], 3), 'tuple')));

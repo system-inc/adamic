@@ -1179,7 +1179,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			// the view runs that iterator's own loop, and checkIterableViews proves, once every call
 			// is lowered, that nothing else reaches it.
 			l.iterableViews = append(l.iterableViews, iterableView{where: iterated, iterated: iterable, held: held})
-			return l.libraryForOfIterator(node, iterable, held.element, name)
+			view := len(l.iterableViews) - 1
+			statements, err := l.libraryForOfIterator(node, iterable, held.element, name)
+			return l.viewLoop(view, statements, err)
 		}
 		if !l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(iterated)), "RegExpStringIterator") {
 			return nil, l.notYet(iterated, "for...of over an object")
@@ -1195,8 +1197,10 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		// unbox, whose tag test stops the program if the proof is ever wrong. A string origin is a second
 		// kind, unproven until a dispatch exists.
 		l.iterableViews = append(l.iterableViews, iterableView{where: iterated, iterated: iterable, held: held})
+		view := len(l.iterableViews) - 1
 		unboxed := ir.Narrow{Value: iterable, To: ir.Object, Checked: true, Message: "a view over an iterable held something other than a collection's iterator at " + l.program.Where(iterated)}
-		return l.libraryForOfIterator(node, unboxed, held.element, name)
+		statements, err := l.libraryForOfIterator(node, unboxed, held.element, name)
+		return l.viewLoop(view, statements, err)
 	default:
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}

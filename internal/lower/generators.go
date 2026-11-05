@@ -233,6 +233,109 @@ func (l *lowering) generatorCall(node *ast.Node, function int) (ir.Expression, e
 	return l.callFunction(call, function)
 }
 
+// iterableArgument reports whether a generator's call, parentheses aside, is an argument passed
+// straight into a parameter typed the library's Iterable<T> or IterableIterator<T>, of a callee
+// resolved by its symbol to exactly one body: a module's own function declaration, an overload set
+// judged at its implementation, or a generic one, judged per instance where it's lowered. Never a
+// method, a function value, a closure, a library function, a generator or an async function, and
+// never through a spread or an optional call (Adamic's ruling on #qk8rztp S2c-1, conditions 1 and
+// 2). It is syntactic, so the refusal walk and lowering agree on it; that the parameter's one use is
+// one for-of is proven after lowering (checkIterableViews), and a program this admits that the proof
+// refuses stops there, not yet, which fails closed.
+func (l *lowering) iterableArgument(node *ast.Node) bool {
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	parent := site.Parent
+	if parent == nil || parent.Kind != ast.KindCallExpression {
+		return false
+	}
+	call := parent.AsCallExpression()
+	if call.QuestionDotToken != nil || call.Expression == site {
+		return false
+	}
+	position := -1
+	for index, argument := range call.Arguments.Nodes {
+		if argument.Kind == ast.KindSpreadElement {
+			return false
+		}
+		if argument == site {
+			position = index
+		}
+	}
+	callee := ast.SkipParentheses(call.Expression)
+	if position < 0 || !ast.IsIdentifier(callee) {
+		return false
+	}
+	implementation := l.iterableCallee(l.symbol(callee))
+	if implementation == nil {
+		return false
+	}
+	parameters := implementation.Parameters()
+	if position >= len(parameters) {
+		return false
+	}
+	parameter := parameters[position]
+	declared := parameter.AsParameterDeclaration()
+	if !ast.IsIdentifier(parameter.Name()) || parameter.Name().Text() == "this" || declared.DotDotDotToken != nil || declared.QuestionToken != nil || declared.Initializer != nil {
+		return false
+	}
+	return l.isLibraryType(l.checker.GetTypeAtLocation(parameter.Name()), "Iterable", "IterableIterator")
+}
+
+// iterableCallee is the one body a symbol names, when it is a module-level function declaration
+// that is neither a generator nor async: its only declaration, or the implementation of an overload
+// set whose other declarations are its signatures.
+func (l *lowering) iterableCallee(symbol *ast.Symbol) *ast.Node {
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		return nil
+	}
+	var implementation *ast.Node
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindSourceFile {
+			return nil
+		}
+		if declaration.Body() == nil {
+			continue
+		}
+		if implementation != nil {
+			return nil
+		}
+		implementation = declaration
+	}
+	if implementation == nil || generatorDeclaration(implementation) || ast.HasSyntacticModifier(implementation, ast.ModifierFlagsAsync) {
+		return nil
+	}
+	return implementation
+}
+
+// iterableOfGenerator lowers a generator's call passed into an Iterable<T> parameter
+// (iterableArgument): the call makes the frame, IterableOf hands it over as the object the slot
+// holds, and the site is kept for checkIterableViews to prove and to name.
+func (l *lowering) iterableOfGenerator(node *ast.Node, function int) (ir.Expression, error) {
+	if l.function != nil && l.function.Suspends() {
+		return nil, l.generatorNotYet(node, "passed into an Iterable<T> parameter inside an async function or a generator")
+	}
+	made, err := l.generatorCall(node, function)
+	if err != nil {
+		return nil, err
+	}
+	argument := generatorArgument{node: node, generator: function}
+	argument.key, argument.value, argument.pair = l.generatorPairTypes(node)
+	l.generatorArguments = append(l.generatorArguments, argument)
+	return ir.IterableOf{Value: made, Site: len(l.generatorArguments)}, nil
+}
+
+// generatorArgument is a generator's call iterableOfGenerator handed over, and how its yields hold
+// a [key, value] pair when they are one.
+type generatorArgument struct {
+	node       *ast.Node
+	generator  int
+	pair       bool
+	key, value ir.Type
+}
+
 // forOfGenerator lowers for (const x of gen(a)) by the generator's origin, never by its declared
 // iterator type: the call makes g, each pass steps it, a pass that finds it done leaves, and the
 // binding is the step's value, a fresh one each pass. g is the block's local, so every way out of
@@ -298,6 +401,11 @@ func (l *lowering) forOfGenerator(node *ast.Node, function int, name *ast.Node) 
 func checkGeneratorRoads(program *ir.Program) error {
 	counted, allowed := 0, 0
 	held := map[int]bool{}
+	// IterableOf is the one door from a generator to an object's slot, and only a call's own argument
+	// goes through it; what a view's dispatch holds, no runtime call or field read takes, only its
+	// kind test and its steps (Compiler's and Memory's conditions on #qk8rztp S2c-1).
+	iterables, handed := 0, 0
+	dispatched, stepped, reads := map[int]bool{}, map[int]int{}, map[int]int{}
 	var visit func(value reflect.Value)
 	visit = func(value reflect.Value) {
 		if !value.IsValid() {
@@ -328,13 +436,40 @@ func checkGeneratorRoads(program *ir.Program) error {
 			if call, ok := node.Value.(ir.Call); ok && call.Returns == ir.Generator {
 				allowed++
 			}
+		case ir.Call:
+			// A generator handed into an Iterable<T> parameter, as the call's own argument.
+			for _, argument := range node.Arguments {
+				if of, ok := argument.(ir.IterableOf); ok {
+					handed++
+					if call, ok := of.Value.(ir.Call); ok && call.Returns == ir.Generator {
+						allowed++
+					}
+				}
+			}
+		case ir.IterableOf:
+			iterables++
+		case ir.Block:
+			if node.Closes != 0 {
+				dispatched[node.Closes-1] = true
+			}
+		case ir.IsGenerator:
+			// The view's dispatch reads what it holds only to test its kind and to step it.
+			if read, ok := node.Value.(ir.Read); ok && read.Of == ir.Object {
+				stepped[read.Local]++
+			}
+		case ir.Read:
+			reads[node.Local]++
 		case ir.GeneratorNext:
 			if read, ok := node.Generator.(ir.Read); ok && read.Of == ir.Generator {
 				allowed++
+			} else if ok && read.Of == ir.Object {
+				stepped[read.Local]++
 			}
 		case ir.GeneratorDone:
 			if read, ok := node.Generator.(ir.Read); ok && read.Of == ir.Generator {
 				allowed++
+			} else if ok && read.Of == ir.Object {
+				stepped[read.Local]++
 			}
 		}
 		if expression, ok := value.Interface().(ir.Expression); ok && expression.Type() == ir.Generator {
@@ -350,6 +485,14 @@ func checkGeneratorRoads(program *ir.Program) error {
 	}
 	if counted != allowed {
 		return fmt.Errorf("lower: compiler bug: %d generator values where only %d are a consuming loop's or a dropped call's", counted, allowed)
+	}
+	if iterables != handed {
+		return fmt.Errorf("lower: compiler bug: %d generators seen as objects where only %d are a call's own argument", iterables, handed)
+	}
+	for local := range dispatched {
+		if reads[local] != stepped[local] {
+			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local])
+		}
 	}
 	for local, declared := range program.Locals {
 		if declared.Type == ir.Generator && (!held[local] || declared.Global || declared.Captured) {
@@ -490,8 +633,15 @@ func (l *lowering) generatorStepped(node *ast.Node) bool {
 // an array literal's spread, the one argument of the library's Array.from, or the one argument of
 // the library's new Map or new Set. The constructors are judged by the built-in's symbol, never by
 // the name, so a user class called Map, or a subclass of the built-in, isn't one (Language, on
-// #qk8rztp): a subclass's set is program code a step can run.
+// #qk8rztp): a subclass's set is program code a step can run. And, since S2c-1, the argument for a
+// one-body function's Iterable<T> parameter (iterableArgument), whose only use is one for-of, which
+// never reads the completion value either (Adamic's ruling on #qk8rztp, rulings.md:294 one call
+// deeper). That use is proven after lowering; a program this lets past the void rules that the proof
+// then refuses stops there, not yet, so the arm fails closed.
 func (l *lowering) steppedSite(node *ast.Node) bool {
+	if l.iterableArgument(node) {
+		return true
+	}
 	site := node
 	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
 		site = site.Parent

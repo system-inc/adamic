@@ -1052,6 +1052,13 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.GeneratorDone:
 		a.value(expression.Generator)
 		return value{}
+	case ir.IterableOf:
+		// The generator itself, never a fresh object: no reuse or region plan may take its storage
+		// as an object's (Memory, on #qk8rztp S2c-1).
+		return a.value(expression.Value)
+	case ir.IsGenerator:
+		a.value(expression.Value)
+		return value{}
 	case ir.PromiseValue:
 		return a.call([]value{a.value(expression.Value)}, ir.Promise)
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.JSONNull, ir.Null:
