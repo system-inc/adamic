@@ -1,4 +1,5 @@
-// An array stops on both backends, before any key is judged. Node prints 2.
+// An array's length, read by a run-time key, answers on both backends as Node's does (#ys4naww), where
+// it once stopped. Node prints number.
 import { propertyOf } from './hostErrors.ts';
 
 console.log('before');

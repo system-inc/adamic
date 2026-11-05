@@ -38,7 +38,7 @@ var runtimeNotYetForms = map[string]string{
 	"a class instance's constructor isn't read by a run-time key yet":       "#0sps03r",
 	"this runtime value's properties aren't read by a run-time key yet":     "#0sps03r",
 	"an Error property Node sets and the native Error lacks isn't read yet": "#zhgxzjg",
-	"an array's or a tuple's properties aren't read by a run-time key yet":  "#zhgxzjg",
+	"an array's methods aren't read by a run-time key yet":                  "#ys4naww",
 	"an object literal's getter isn't read by a run-time key yet":           "#zhgxzjg",
 }
 

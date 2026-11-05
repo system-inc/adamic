@@ -1,0 +1,10 @@
+// A match's indices pair is a tuple, read through the match by run-time keys, and stops on both
+// backends as stop_tuple.a's does. Node prints number.
+import { propertyOf } from './hostErrors.ts';
+
+const match = /b/d.exec('abc');
+if (match !== null) {
+	const pair = propertyOf(propertyOf(match, 'indices'), '0');
+	console.log('before');
+	console.log(typeof propertyOf(pair, '0'));
+}
