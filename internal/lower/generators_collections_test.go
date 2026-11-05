@@ -37,11 +37,11 @@ console.log(String(map.size) + " " + String(set.size));`)
 	walk(program.Main, func(node any) bool {
 		switch node := node.(type) {
 		case ir.MapNew:
-			if call, ok := node.Pairs.(ir.Call); ok && program.Functions[call.Function].Name == "collect_generator" {
+			if call, ok := node.Pairs.(ir.Call); ok && program.Functions[program.CallTargets(call)[0]].Name == "collect_generator" {
 				made["map"] = true
 			}
 		case ir.SetNew:
-			if call, ok := node.Values.(ir.Call); ok && program.Functions[call.Function].Name == "collect_generator" {
+			if call, ok := node.Values.(ir.Call); ok && program.Functions[program.CallTargets(call)[0]].Name == "collect_generator" {
 				made["set"] = true
 			}
 		}

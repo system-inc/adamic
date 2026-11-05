@@ -50,8 +50,8 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 
 // Every road the one-read rule closes stops as not yet built, each in its own words (Adamic's ruling
 // on #qk8rztp S2c-1, conditions 2 and 3, Compiler's roads and Language's shapes): a second read of the
-// parameter in the lowered IR (a hand-driven next, a typeof or an identity test, a read after a
-// labeled break out of the loop, a default that names it, a next inside the loop's own body), a
+// parameter in the lowered IR (a typeof or an identity test, a read after a labeled break out of the
+// loop, a default that names it; a hand-driven next is refused earlier, below), a
 // closure that captures it, never called, passing it on, assigning it, reading arguments, and a callee
 // the call can't name as one body (an async function, a function value, a method), or a generator
 // that isn't the argument's own call (one stored first). And what S2c-1 doesn't build yet: two
@@ -69,9 +69,7 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		return iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; " + body + " return sum; }\nconsole.log(String(total(counted(3))));"
 	}
 	for _, probe := range []struct{ name, source, reason string }{
-		{"next through the parameter", function("const first = items.next(); if (!first.done) { sum += first.value; } for (const value of items) { sum += value; }"), readTwice},
 		{"typeof it", function("if (typeof items === 'object') { sum += 1; } for (const value of items) { sum += value; }"), readTwice},
-		{"next inside the loop", function("for (const value of items) { items.next(); sum += value; }"), readTwice},
 		{"a read after a labeled break", function("outer: for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break outer; } } if (typeof items === 'object') { sum += 1; }"), readTwice},
 		{"it === other", iterableCounted + "function total(items: Iterable<number>, other: Iterable<number>): number { let sum = items === other ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));", readTwice},
 		{"a default naming it", iterableCounted + "function total(items: Iterable<number>, base: number = typeof items === 'object' ? 1 : 0): number { let sum = base; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2))));", readTwice},
@@ -94,6 +92,23 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
 				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+			}
+		})
+	}
+	// A hand-driven next through the parameter, before the loop or inside its body, is refused before
+	// the proof: a library iterator's next read off an object is the unbound-method rule's (an
+	// inherited library member isn't an own field). That stop fails closed; were it ever lifted, the
+	// second read is counted, and the one-read rule stops the program as not yet built.
+	for _, probe := range []struct{ name, source string }{
+		{"next through the parameter", function("const first = items.next(); if (!first.done) { sum += first.value; } for (const value of items) { sum += value; }")},
+		{"next inside the loop", function("for (const value of items) { items.next(); sum += value; }")},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "(unbound-method)") {
+				t.Fatalf("got %v, want the unbound-method refusal", err)
 			}
 		})
 	}
