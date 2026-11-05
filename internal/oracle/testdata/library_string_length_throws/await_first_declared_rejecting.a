@@ -1,0 +1,7 @@
+// Language's d2 (#c3bk0fp): a function declaration as callee, the promise rejecting with an Error of
+// its own: the await observes it, and the program agrees with Node, printing boom and end.
+async function later(text: string): Promise<string> { if (text === 'a') throw new Error('boom'); return `${text}!`; }
+function wrap(s: string): string { return s; }
+async function run(): Promise<string> { const first = later('a'); return wrap(`${await first}|`); }
+try { console.log(await run()); } catch (error) { console.log(error instanceof Error ? error.message : 'other'); }
+console.log('end');
