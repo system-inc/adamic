@@ -1,0 +1,1860 @@
+{
+  "roots": 79,
+  "movingRoots": 73,
+  "beforeSource": "inherited complete 99l census, with current ordinary baseline probes",
+  "afterSource": "current main ordinary census tool on byte-verified complete final source snapshot",
+  "firstStops": [
+    {
+      "roots": 73,
+      "kind": "Refused",
+      "where": "src/compiler/core.ts:726:12",
+      "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+    },
+    {
+      "roots": 2,
+      "kind": "accepted",
+      "where": "",
+      "reason": ""
+    },
+    {
+      "roots": 1,
+      "kind": "NotYet",
+      "where": "src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+    },
+    {
+      "roots": 1,
+      "kind": "NotYet",
+      "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+    },
+    {
+      "roots": 1,
+      "kind": "NotYet",
+      "where": "src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    },
+    {
+      "roots": 1,
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:167:31",
+      "reason": "a cast the runtime can't check"
+    }
+  ],
+  "movingFirstStops": [
+    {
+      "roots": 73,
+      "kind": "Refused",
+      "where": "src/compiler/core.ts:726:12",
+      "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+    }
+  ],
+  "perFile": [
+    {
+      "root": "_namespaces/ts.moduleSpecifiers.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.569229581
+      },
+      "after": {
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 45.625351508
+      }
+    },
+    {
+      "root": "_namespaces/ts.performance.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.2655064209999995
+      },
+      "after": {
+        "roots": [
+          "_namespaces/ts.performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 41.035801113
+      }
+    },
+    {
+      "root": "_namespaces/ts.ts",
+      "before": {
+        "roots": [
+          "_namespaces/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.414697321
+      },
+      "after": {
+        "roots": [
+          "_namespaces/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 44.459281538
+      }
+    },
+    {
+      "root": "binder.ts",
+      "before": {
+        "roots": [
+          "binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.62329212
+      },
+      "after": {
+        "roots": [
+          "binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 29.116923289
+      }
+    },
+    {
+      "root": "builder.ts",
+      "before": {
+        "roots": [
+          "builder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.558797618
+      },
+      "after": {
+        "roots": [
+          "builder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 62.951408755
+      }
+    },
+    {
+      "root": "builderPublic.ts",
+      "before": {
+        "roots": [
+          "builderPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.487996219
+      },
+      "after": {
+        "roots": [
+          "builderPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 54.424295321
+      }
+    },
+    {
+      "root": "builderState.ts",
+      "before": {
+        "roots": [
+          "builderState.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.384780178
+      },
+      "after": {
+        "roots": [
+          "builderState.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 56.144182109
+      }
+    },
+    {
+      "root": "builderStatePublic.ts",
+      "before": {
+        "roots": [
+          "builderStatePublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.440898277
+      },
+      "after": {
+        "roots": [
+          "builderStatePublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 64.218729754
+      }
+    },
+    {
+      "root": "checker.ts",
+      "before": {
+        "roots": [
+          "checker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.480509576
+      },
+      "after": {
+        "roots": [
+          "checker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.313016435
+      }
+    },
+    {
+      "root": "commandLineParser.ts",
+      "before": {
+        "roots": [
+          "commandLineParser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.596756529
+      },
+      "after": {
+        "roots": [
+          "commandLineParser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 35.003896991
+      }
+    },
+    {
+      "root": "core.ts",
+      "before": {
+        "roots": [
+          "core.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 7.568427745
+      },
+      "after": {
+        "roots": [
+          "core.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 40.024352927
+      }
+    },
+    {
+      "root": "corePublic.ts",
+      "before": {
+        "roots": [
+          "corePublic.ts"
+        ],
+        "kind": "accepted",
+        "seconds": 0.023621897
+      },
+      "after": {
+        "roots": [
+          "corePublic.ts"
+        ],
+        "kind": "accepted",
+        "seconds": 0.139005003
+      }
+    },
+    {
+      "root": "debug.ts",
+      "before": {
+        "roots": [
+          "debug.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+        "seconds": 2.036900345
+      },
+      "after": {
+        "roots": [
+          "debug.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+        "seconds": 28.312046433
+      }
+    },
+    {
+      "root": "diagnosticInformationMap.generated.ts",
+      "before": {
+        "roots": [
+          "diagnosticInformationMap.generated.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "seconds": 2.068028377
+      },
+      "after": {
+        "roots": [
+          "diagnosticInformationMap.generated.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "seconds": 17.013704372
+      }
+    },
+    {
+      "root": "emitter.ts",
+      "before": {
+        "roots": [
+          "emitter.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.439718594
+      },
+      "after": {
+        "roots": [
+          "emitter.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 33.455728761
+      }
+    },
+    {
+      "root": "executeCommandLine.ts",
+      "before": {
+        "roots": [
+          "executeCommandLine.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.599985316
+      },
+      "after": {
+        "roots": [
+          "executeCommandLine.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 31.186798894
+      }
+    },
+    {
+      "root": "expressionToTypeNode.ts",
+      "before": {
+        "roots": [
+          "expressionToTypeNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.345460097
+      },
+      "after": {
+        "roots": [
+          "expressionToTypeNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 36.232020911
+      }
+    },
+    {
+      "root": "factory/baseNodeFactory.ts",
+      "before": {
+        "roots": [
+          "factory/baseNodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.403503193
+      },
+      "after": {
+        "roots": [
+          "factory/baseNodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 24.135758959
+      }
+    },
+    {
+      "root": "factory/emitHelpers.ts",
+      "before": {
+        "roots": [
+          "factory/emitHelpers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.4904798360000004
+      },
+      "after": {
+        "roots": [
+          "factory/emitHelpers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 43.41797392
+      }
+    },
+    {
+      "root": "factory/emitNode.ts",
+      "before": {
+        "roots": [
+          "factory/emitNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.457236403
+      },
+      "after": {
+        "roots": [
+          "factory/emitNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 33.400089489
+      }
+    },
+    {
+      "root": "factory/nodeChildren.ts",
+      "before": {
+        "roots": [
+          "factory/nodeChildren.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.518033759
+      },
+      "after": {
+        "roots": [
+          "factory/nodeChildren.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 27.349056729
+      }
+    },
+    {
+      "root": "factory/nodeConverters.ts",
+      "before": {
+        "roots": [
+          "factory/nodeConverters.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.587901987
+      },
+      "after": {
+        "roots": [
+          "factory/nodeConverters.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.565849529
+      }
+    },
+    {
+      "root": "factory/nodeFactory.ts",
+      "before": {
+        "roots": [
+          "factory/nodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 6.580557444
+      },
+      "after": {
+        "roots": [
+          "factory/nodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 87.205423033
+      }
+    },
+    {
+      "root": "factory/nodeTests.ts",
+      "before": {
+        "roots": [
+          "factory/nodeTests.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.478595866
+      },
+      "after": {
+        "roots": [
+          "factory/nodeTests.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 40.81692324
+      }
+    },
+    {
+      "root": "factory/parenthesizerRules.ts",
+      "before": {
+        "roots": [
+          "factory/parenthesizerRules.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.445816187
+      },
+      "after": {
+        "roots": [
+          "factory/parenthesizerRules.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 37.786783404
+      }
+    },
+    {
+      "root": "factory/utilities.ts",
+      "before": {
+        "roots": [
+          "factory/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.560544518
+      },
+      "after": {
+        "roots": [
+          "factory/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 132.689463982
+      }
+    },
+    {
+      "root": "factory/utilitiesPublic.ts",
+      "before": {
+        "roots": [
+          "factory/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.4274796290000005
+      },
+      "after": {
+        "roots": [
+          "factory/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 39.646238982
+      }
+    },
+    {
+      "root": "hostErrors.ts",
+      "before": {
+        "roots": [
+          "hostErrors.ts"
+        ],
+        "kind": "accepted",
+        "seconds": 0.030790531
+      },
+      "after": {
+        "roots": [
+          "hostErrors.ts"
+        ],
+        "kind": "accepted",
+        "seconds": 0.061871415
+      }
+    },
+    {
+      "root": "moduleNameResolver.ts",
+      "before": {
+        "roots": [
+          "moduleNameResolver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.583529613
+      },
+      "after": {
+        "roots": [
+          "moduleNameResolver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 53.841298223
+      }
+    },
+    {
+      "root": "moduleSpecifiers.ts",
+      "before": {
+        "roots": [
+          "moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.270169436
+      },
+      "after": {
+        "roots": [
+          "moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 29.896919531
+      }
+    },
+    {
+      "root": "parser.ts",
+      "before": {
+        "roots": [
+          "parser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.359582218
+      },
+      "after": {
+        "roots": [
+          "parser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 43.899223613
+      }
+    },
+    {
+      "root": "path.ts",
+      "before": {
+        "roots": [
+          "path.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.523638265
+      },
+      "after": {
+        "roots": [
+          "path.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 53.279412826
+      }
+    },
+    {
+      "root": "performance.ts",
+      "before": {
+        "roots": [
+          "performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.344423582
+      },
+      "after": {
+        "roots": [
+          "performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 34.857301449
+      }
+    },
+    {
+      "root": "performanceCore.ts",
+      "before": {
+        "roots": [
+          "performanceCore.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.387686714
+      },
+      "after": {
+        "roots": [
+          "performanceCore.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 27.607001436
+      }
+    },
+    {
+      "root": "program.ts",
+      "before": {
+        "roots": [
+          "program.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.445625745
+      },
+      "after": {
+        "roots": [
+          "program.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 33.015882902
+      }
+    },
+    {
+      "root": "programDiagnostics.ts",
+      "before": {
+        "roots": [
+          "programDiagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.372717986
+      },
+      "after": {
+        "roots": [
+          "programDiagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 30.923745828
+      }
+    },
+    {
+      "root": "resolutionCache.ts",
+      "before": {
+        "roots": [
+          "resolutionCache.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.467393068
+      },
+      "after": {
+        "roots": [
+          "resolutionCache.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 48.285114526
+      }
+    },
+    {
+      "root": "scanner.ts",
+      "before": {
+        "roots": [
+          "scanner.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.452267407
+      },
+      "after": {
+        "roots": [
+          "scanner.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 31.935553933
+      }
+    },
+    {
+      "root": "semver.ts",
+      "before": {
+        "roots": [
+          "semver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.316123269
+      },
+      "after": {
+        "roots": [
+          "semver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 32.752810126
+      }
+    },
+    {
+      "root": "sourcemap.ts",
+      "before": {
+        "roots": [
+          "sourcemap.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.340533443
+      },
+      "after": {
+        "roots": [
+          "sourcemap.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 47.613016558
+      }
+    },
+    {
+      "root": "symbolWalker.ts",
+      "before": {
+        "roots": [
+          "symbolWalker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.391181881
+      },
+      "after": {
+        "roots": [
+          "symbolWalker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.535433772
+      }
+    },
+    {
+      "root": "sys.ts",
+      "before": {
+        "roots": [
+          "sys.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.463663134
+      },
+      "after": {
+        "roots": [
+          "sys.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 20.424523534
+      }
+    },
+    {
+      "root": "tracing.ts",
+      "before": {
+        "roots": [
+          "tracing.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.37932534
+      },
+      "after": {
+        "roots": [
+          "tracing.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.507830554
+      }
+    },
+    {
+      "root": "transformer.ts",
+      "before": {
+        "roots": [
+          "transformer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.536706995
+      },
+      "after": {
+        "roots": [
+          "transformer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 34.127453488
+      }
+    },
+    {
+      "root": "transformers/classFields.ts",
+      "before": {
+        "roots": [
+          "transformers/classFields.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.378234928
+      },
+      "after": {
+        "roots": [
+          "transformers/classFields.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 25.642971484
+      }
+    },
+    {
+      "root": "transformers/classThis.ts",
+      "before": {
+        "roots": [
+          "transformers/classThis.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.504983322
+      },
+      "after": {
+        "roots": [
+          "transformers/classThis.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 31.727662182
+      }
+    },
+    {
+      "root": "transformers/declarations.ts",
+      "before": {
+        "roots": [
+          "transformers/declarations.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.452413372
+      },
+      "after": {
+        "roots": [
+          "transformers/declarations.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 27.646379908
+      }
+    },
+    {
+      "root": "transformers/declarations/diagnostics.ts",
+      "before": {
+        "roots": [
+          "transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.448772634
+      },
+      "after": {
+        "roots": [
+          "transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 29.501368821
+      }
+    },
+    {
+      "root": "transformers/destructuring.ts",
+      "before": {
+        "roots": [
+          "transformers/destructuring.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.403705589
+      },
+      "after": {
+        "roots": [
+          "transformers/destructuring.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 36.820041622
+      }
+    },
+    {
+      "root": "transformers/es2015.ts",
+      "before": {
+        "roots": [
+          "transformers/es2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.485523778
+      },
+      "after": {
+        "roots": [
+          "transformers/es2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.771128283
+      }
+    },
+    {
+      "root": "transformers/es2016.ts",
+      "before": {
+        "roots": [
+          "transformers/es2016.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.325660981
+      },
+      "after": {
+        "roots": [
+          "transformers/es2016.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.564334127
+      }
+    },
+    {
+      "root": "transformers/es2017.ts",
+      "before": {
+        "roots": [
+          "transformers/es2017.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.348233154
+      },
+      "after": {
+        "roots": [
+          "transformers/es2017.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 41.188776524
+      }
+    },
+    {
+      "root": "transformers/es2018.ts",
+      "before": {
+        "roots": [
+          "transformers/es2018.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.485339054
+      },
+      "after": {
+        "roots": [
+          "transformers/es2018.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 24.962607674
+      }
+    },
+    {
+      "root": "transformers/es2019.ts",
+      "before": {
+        "roots": [
+          "transformers/es2019.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.495996575
+      },
+      "after": {
+        "roots": [
+          "transformers/es2019.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 22.929590241
+      }
+    },
+    {
+      "root": "transformers/es2020.ts",
+      "before": {
+        "roots": [
+          "transformers/es2020.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.516715458
+      },
+      "after": {
+        "roots": [
+          "transformers/es2020.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.821939665
+      }
+    },
+    {
+      "root": "transformers/es2021.ts",
+      "before": {
+        "roots": [
+          "transformers/es2021.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.53794995
+      },
+      "after": {
+        "roots": [
+          "transformers/es2021.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.243195902
+      }
+    },
+    {
+      "root": "transformers/esDecorators.ts",
+      "before": {
+        "roots": [
+          "transformers/esDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.535187842
+      },
+      "after": {
+        "roots": [
+          "transformers/esDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 35.945333391
+      }
+    },
+    {
+      "root": "transformers/esnext.ts",
+      "before": {
+        "roots": [
+          "transformers/esnext.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.4573918280000004
+      },
+      "after": {
+        "roots": [
+          "transformers/esnext.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 27.217524064
+      }
+    },
+    {
+      "root": "transformers/generators.ts",
+      "before": {
+        "roots": [
+          "transformers/generators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.533987926
+      },
+      "after": {
+        "roots": [
+          "transformers/generators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 22.542664173
+      }
+    },
+    {
+      "root": "transformers/jsx.ts",
+      "before": {
+        "roots": [
+          "transformers/jsx.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.452320679
+      },
+      "after": {
+        "roots": [
+          "transformers/jsx.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.51393638
+      }
+    },
+    {
+      "root": "transformers/legacyDecorators.ts",
+      "before": {
+        "roots": [
+          "transformers/legacyDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.528126744
+      },
+      "after": {
+        "roots": [
+          "transformers/legacyDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 32.871167481
+      }
+    },
+    {
+      "root": "transformers/module/esnextAnd2015.ts",
+      "before": {
+        "roots": [
+          "transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.518543162
+      },
+      "after": {
+        "roots": [
+          "transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.280113356
+      }
+    },
+    {
+      "root": "transformers/module/impliedNodeFormatDependent.ts",
+      "before": {
+        "roots": [
+          "transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.42028287
+      },
+      "after": {
+        "roots": [
+          "transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 24.49133815
+      }
+    },
+    {
+      "root": "transformers/module/module.ts",
+      "before": {
+        "roots": [
+          "transformers/module/module.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.917131082
+      },
+      "after": {
+        "roots": [
+          "transformers/module/module.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 23.978003915
+      }
+    },
+    {
+      "root": "transformers/module/system.ts",
+      "before": {
+        "roots": [
+          "transformers/module/system.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 8.03825823
+      },
+      "after": {
+        "roots": [
+          "transformers/module/system.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 24.98764712
+      }
+    },
+    {
+      "root": "transformers/namedEvaluation.ts",
+      "before": {
+        "roots": [
+          "transformers/namedEvaluation.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.768648411
+      },
+      "after": {
+        "roots": [
+          "transformers/namedEvaluation.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 27.641107051
+      }
+    },
+    {
+      "root": "transformers/taggedTemplate.ts",
+      "before": {
+        "roots": [
+          "transformers/taggedTemplate.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.69543852
+      },
+      "after": {
+        "roots": [
+          "transformers/taggedTemplate.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 22.522406319
+      }
+    },
+    {
+      "root": "transformers/ts.ts",
+      "before": {
+        "roots": [
+          "transformers/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.810844329
+      },
+      "after": {
+        "roots": [
+          "transformers/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 28.754577171
+      }
+    },
+    {
+      "root": "transformers/typeSerializer.ts",
+      "before": {
+        "roots": [
+          "transformers/typeSerializer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 8.903224637
+      },
+      "after": {
+        "roots": [
+          "transformers/typeSerializer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 48.580951359
+      }
+    },
+    {
+      "root": "transformers/utilities.ts",
+      "before": {
+        "roots": [
+          "transformers/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.939513382
+      },
+      "after": {
+        "roots": [
+          "transformers/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.336711409
+      }
+    },
+    {
+      "root": "tsbuild.ts",
+      "before": {
+        "roots": [
+          "tsbuild.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.609128125
+      },
+      "after": {
+        "roots": [
+          "tsbuild.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.968778028
+      }
+    },
+    {
+      "root": "tsbuildPublic.ts",
+      "before": {
+        "roots": [
+          "tsbuildPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.357667641
+      },
+      "after": {
+        "roots": [
+          "tsbuildPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 26.362856338
+      }
+    },
+    {
+      "root": "types.ts",
+      "before": {
+        "roots": [
+          "types.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "seconds": 2.133909565
+      },
+      "after": {
+        "roots": [
+          "types.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "seconds": 9.977239909
+      }
+    },
+    {
+      "root": "utilities.ts",
+      "before": {
+        "roots": [
+          "utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.58525234
+      },
+      "after": {
+        "roots": [
+          "utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 31.920930896
+      }
+    },
+    {
+      "root": "utilitiesPublic.ts",
+      "before": {
+        "roots": [
+          "utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.599510925
+      },
+      "after": {
+        "roots": [
+          "utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 23.742343213
+      }
+    },
+    {
+      "root": "visitorPublic.ts",
+      "before": {
+        "roots": [
+          "visitorPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.716468739
+      },
+      "after": {
+        "roots": [
+          "visitorPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 22.749562079
+      }
+    },
+    {
+      "root": "watch.ts",
+      "before": {
+        "roots": [
+          "watch.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.763667355
+      },
+      "after": {
+        "roots": [
+          "watch.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 21.934368513
+      }
+    },
+    {
+      "root": "watchPublic.ts",
+      "before": {
+        "roots": [
+          "watchPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.621842324
+      },
+      "after": {
+        "roots": [
+          "watchPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 22.485084827
+      }
+    },
+    {
+      "root": "watchUtilities.ts",
+      "before": {
+        "roots": [
+          "watchUtilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:409:37",
+        "reason": "a value of type U[] | undefined seen as {}[] | undefined, which can write {} where U is read",
+        "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "seconds": 7.712185231
+      },
+      "after": {
+        "roots": [
+          "watchUtilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "fix": "take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+        "seconds": 23.222924556
+      }
+    }
+  ],
+  "wholeProgram": {
+    "roots": 79,
+    "kind": "error",
+    "reason": "lower: stage 0 compiles a program from one entry file, got 79",
+    "seconds": 15.860946289,
+    "expectedSingleEntryLimit": true
+  }
+}

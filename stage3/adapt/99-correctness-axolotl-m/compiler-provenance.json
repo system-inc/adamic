@@ -1,0 +1,40 @@
+{
+  "deliverableBase": "d84653a75d406ee39713ac78377573443563b0fb",
+  "compilerMain": "529b6fdb427a7fa7ccd9bdf58d4347e72e49f16c",
+  "inheritedBaselineCompilerMain": "99449b40bc54c2539b7b30f2840371b332957b0f",
+  "compilerSourcesIdenticalToBase": true,
+  "compilerSourcesIdenticalToInheritedBaseline": true,
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "stockTypeScript": "6.0.3",
+  "proofProductKey": "998e1b3fa226bf535e9273d4a0c22d4df48952eaf45f29d55020f698db40b0c7",
+  "compilerBuildExit": 0,
+  "compilerBuildCommand": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/main-bin/",
+    "./cmd/adamic",
+    "./stage3/census/tool"
+  ],
+  "compilerBuildDirectory": "/workspace/adamic-main",
+  "sharedPinnedDependencyCheckout": "/workspace/adamic/cohere",
+  "inheritedGOFLAGS": "-buildvcs=false -trimpath",
+  "ordinaryMeter": true,
+  "overlays": false,
+  "refusalSuppression": false,
+  "backend": false,
+  "partialRootFallback": false,
+  "binaries": {
+    "adamic": {
+      "sha256": "ce1791dc31335580ab19ea6a35d7f78f20ce8b00cef34fb3b12a427077bb1e19",
+      "bytes": 41781268
+    },
+    "tool": {
+      "sha256": "0d7b38cdc866c0a97b3f7a9973d1cee82084039d244372c5a21e1a3ad88d2ec4",
+      "bytes": 35647543
+    }
+  },
+  "adapterSha256": "08e0209ee46ce345a1b48a25b1f1b7bbbe47418d55e029d8cf1d39e3ece094b9"
+}

@@ -1,0 +1,403 @@
+[
+  {
+    "name": "setup",
+    "command": [
+      "timeout",
+      "--kill-after=60s",
+      "1800",
+      "bash",
+      "cloud/setup.sh"
+    ],
+    "cwd": "/workspace/adamic",
+    "environment": {
+      "GOPROXY": "https://proxy.golang.org|direct"
+    },
+    "exit": 0,
+    "seconds": 1698.823
+  },
+  {
+    "name": "api-tests-direct",
+    "command": [
+      "python3",
+      "-E",
+      "-S",
+      "-B",
+      "-m",
+      "unittest",
+      "test_generate_api"
+    ],
+    "cwd": "/workspace/adamic/stage3/lane",
+    "exit": 0,
+    "seconds": 204.73453050199987
+  },
+  {
+    "name": "apply-after",
+    "command": [
+      "stage3/apply.sh",
+      "--build-product",
+      "/workspace/flatmap-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1543.7835133069998
+  },
+  {
+    "name": "apply-replay",
+    "command": [
+      "stage3/apply.sh",
+      "/workspace/flatmap-replay"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 70.63418114000069
+  },
+  {
+    "name": "build-after",
+    "command": [
+      "npm",
+      "run",
+      "build:compiler"
+    ],
+    "cwd": "/workspace/flatmap-after",
+    "exit": 0,
+    "seconds": 108.18822187099977
+  },
+  {
+    "name": "build-before",
+    "command": [
+      "npm",
+      "run",
+      "build:compiler"
+    ],
+    "cwd": "/workspace/flatmap-before",
+    "exit": 0,
+    "seconds": 135.51869941299992
+  },
+  {
+    "name": "census-after",
+    "command": [
+      "/workspace/scratch/main-bin/tool",
+      "/workspace/flatmap-probe/src/compiler",
+      "/workspace/scratch/census-after.jsonl"
+    ],
+    "cwd": "/workspace/adamic-main",
+    "exit": 0,
+    "seconds": 2697.2742437890006
+  },
+  {
+    "name": "census-before",
+    "command": [
+      "/workspace/scratch/main-bin/tool",
+      "/workspace/flatmap-before/src/compiler",
+      "/workspace/scratch/census-before.jsonl"
+    ],
+    "cwd": "/workspace/adamic-main",
+    "exit": -15,
+    "seconds": 202.67206579999993
+  },
+  {
+    "name": "comparison",
+    "command": [
+      "node",
+      "/workspace/scratch/compare.cjs",
+      "/workspace/flatmap-before",
+      "/workspace/flatmap-after",
+      "/workspace/flatmap-replay",
+      "/workspace/flatmap-probe"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.910740411000006
+  },
+  {
+    "name": "contract-final",
+    "command": [
+      "node",
+      "/workspace/scratch/contract.cjs",
+      "/workspace/flatmap-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 8.105068480000227
+  },
+  {
+    "name": "contract",
+    "command": [
+      "node",
+      "stage3/adapt/99-correctness-axolotl-m/contract.cjs",
+      "/workspace/flatmap-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 6.09127522100016
+  },
+  {
+    "name": "lane-fixtures-heap",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 1,
+    "seconds": 226.99915874999988,
+    "environment": {
+      "NODE_COMPILE_CACHE": "/workspace/scratch/flatmap-node-compile-cache",
+      "NODE_PATH": "/workspace/adamic/stage3/api/node_modules",
+      "NODE_OPTIONS_append": "--max-semi-space-size=128"
+    }
+  },
+  {
+    "name": "lane-fixtures-node-cache",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 1,
+    "seconds": 232.38215923200005,
+    "environment": {
+      "NODE_COMPILE_CACHE": "/workspace/scratch/flatmap-node-compile-cache",
+      "NODE_PATH": "/workspace/adamic/stage3/api/node_modules"
+    }
+  },
+  {
+    "name": "lane-fixtures-retry",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 1,
+    "seconds": 247.70344076499987
+  },
+  {
+    "name": "lane-fixtures",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-parallel=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 1,
+    "seconds": 377.72069081100017
+  },
+  {
+    "name": "probe-append",
+    "command": [
+      "/workspace/scratch/main-bin/adamic",
+      "c",
+      "/workspace/flatmap-probe/src/compiler/core.ts"
+    ],
+    "cwd": "/workspace/adamic-main",
+    "exit": 1,
+    "seconds": 40.397270973000104
+  },
+  {
+    "name": "shards",
+    "command": [
+      "python3",
+      "stage3/lane/generate_shards.py",
+      "--check"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.28711443500014866
+  },
+  {
+    "name": "types-after",
+    "command": [
+      "/workspace/scratch/main-bin/adamic",
+      "types",
+      "/workspace/flatmap-probe/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/flatmap-probe/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/flatmap-probe/src/compiler/_namespaces/ts.ts",
+      "/workspace/flatmap-probe/src/compiler/binder.ts",
+      "/workspace/flatmap-probe/src/compiler/builder.ts",
+      "/workspace/flatmap-probe/src/compiler/builderPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/builderState.ts",
+      "/workspace/flatmap-probe/src/compiler/builderStatePublic.ts",
+      "/workspace/flatmap-probe/src/compiler/checker.ts",
+      "/workspace/flatmap-probe/src/compiler/commandLineParser.ts",
+      "/workspace/flatmap-probe/src/compiler/core.ts",
+      "/workspace/flatmap-probe/src/compiler/corePublic.ts",
+      "/workspace/flatmap-probe/src/compiler/debug.ts",
+      "/workspace/flatmap-probe/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/flatmap-probe/src/compiler/emitter.ts",
+      "/workspace/flatmap-probe/src/compiler/executeCommandLine.ts",
+      "/workspace/flatmap-probe/src/compiler/expressionToTypeNode.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/emitHelpers.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/emitNode.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/nodeChildren.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/nodeConverters.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/nodeFactory.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/nodeTests.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/utilities.ts",
+      "/workspace/flatmap-probe/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/hostErrors.ts",
+      "/workspace/flatmap-probe/src/compiler/moduleNameResolver.ts",
+      "/workspace/flatmap-probe/src/compiler/moduleSpecifiers.ts",
+      "/workspace/flatmap-probe/src/compiler/parser.ts",
+      "/workspace/flatmap-probe/src/compiler/path.ts",
+      "/workspace/flatmap-probe/src/compiler/performance.ts",
+      "/workspace/flatmap-probe/src/compiler/performanceCore.ts",
+      "/workspace/flatmap-probe/src/compiler/program.ts",
+      "/workspace/flatmap-probe/src/compiler/programDiagnostics.ts",
+      "/workspace/flatmap-probe/src/compiler/resolutionCache.ts",
+      "/workspace/flatmap-probe/src/compiler/scanner.ts",
+      "/workspace/flatmap-probe/src/compiler/semver.ts",
+      "/workspace/flatmap-probe/src/compiler/sourcemap.ts",
+      "/workspace/flatmap-probe/src/compiler/symbolWalker.ts",
+      "/workspace/flatmap-probe/src/compiler/sys.ts",
+      "/workspace/flatmap-probe/src/compiler/tracing.ts",
+      "/workspace/flatmap-probe/src/compiler/transformer.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/classFields.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/classThis.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/declarations.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/destructuring.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2015.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2016.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2017.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2018.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2019.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2020.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/es2021.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/esDecorators.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/esnext.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/generators.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/jsx.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/module/module.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/module/system.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/ts.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/flatmap-probe/src/compiler/transformers/utilities.ts",
+      "/workspace/flatmap-probe/src/compiler/tsbuild.ts",
+      "/workspace/flatmap-probe/src/compiler/tsbuildPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/types.ts",
+      "/workspace/flatmap-probe/src/compiler/utilities.ts",
+      "/workspace/flatmap-probe/src/compiler/utilitiesPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/visitorPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/watch.ts",
+      "/workspace/flatmap-probe/src/compiler/watchPublic.ts",
+      "/workspace/flatmap-probe/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic-main",
+    "exit": 0,
+    "seconds": 22.045963131999997
+  },
+  {
+    "name": "types-before",
+    "command": [
+      "/workspace/scratch/main-bin/adamic",
+      "types",
+      "/workspace/flatmap-before/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/flatmap-before/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/flatmap-before/src/compiler/_namespaces/ts.ts",
+      "/workspace/flatmap-before/src/compiler/binder.ts",
+      "/workspace/flatmap-before/src/compiler/builder.ts",
+      "/workspace/flatmap-before/src/compiler/builderPublic.ts",
+      "/workspace/flatmap-before/src/compiler/builderState.ts",
+      "/workspace/flatmap-before/src/compiler/builderStatePublic.ts",
+      "/workspace/flatmap-before/src/compiler/checker.ts",
+      "/workspace/flatmap-before/src/compiler/commandLineParser.ts",
+      "/workspace/flatmap-before/src/compiler/core.ts",
+      "/workspace/flatmap-before/src/compiler/corePublic.ts",
+      "/workspace/flatmap-before/src/compiler/debug.ts",
+      "/workspace/flatmap-before/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/flatmap-before/src/compiler/emitter.ts",
+      "/workspace/flatmap-before/src/compiler/executeCommandLine.ts",
+      "/workspace/flatmap-before/src/compiler/expressionToTypeNode.ts",
+      "/workspace/flatmap-before/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/flatmap-before/src/compiler/factory/emitHelpers.ts",
+      "/workspace/flatmap-before/src/compiler/factory/emitNode.ts",
+      "/workspace/flatmap-before/src/compiler/factory/nodeChildren.ts",
+      "/workspace/flatmap-before/src/compiler/factory/nodeConverters.ts",
+      "/workspace/flatmap-before/src/compiler/factory/nodeFactory.ts",
+      "/workspace/flatmap-before/src/compiler/factory/nodeTests.ts",
+      "/workspace/flatmap-before/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/flatmap-before/src/compiler/factory/utilities.ts",
+      "/workspace/flatmap-before/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/flatmap-before/src/compiler/hostErrors.ts",
+      "/workspace/flatmap-before/src/compiler/moduleNameResolver.ts",
+      "/workspace/flatmap-before/src/compiler/moduleSpecifiers.ts",
+      "/workspace/flatmap-before/src/compiler/parser.ts",
+      "/workspace/flatmap-before/src/compiler/path.ts",
+      "/workspace/flatmap-before/src/compiler/performance.ts",
+      "/workspace/flatmap-before/src/compiler/performanceCore.ts",
+      "/workspace/flatmap-before/src/compiler/program.ts",
+      "/workspace/flatmap-before/src/compiler/programDiagnostics.ts",
+      "/workspace/flatmap-before/src/compiler/resolutionCache.ts",
+      "/workspace/flatmap-before/src/compiler/scanner.ts",
+      "/workspace/flatmap-before/src/compiler/semver.ts",
+      "/workspace/flatmap-before/src/compiler/sourcemap.ts",
+      "/workspace/flatmap-before/src/compiler/symbolWalker.ts",
+      "/workspace/flatmap-before/src/compiler/sys.ts",
+      "/workspace/flatmap-before/src/compiler/tracing.ts",
+      "/workspace/flatmap-before/src/compiler/transformer.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/classFields.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/classThis.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/declarations.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/destructuring.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2015.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2016.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2017.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2018.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2019.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2020.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/es2021.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/esDecorators.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/esnext.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/generators.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/jsx.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/module/module.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/module/system.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/ts.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/flatmap-before/src/compiler/transformers/utilities.ts",
+      "/workspace/flatmap-before/src/compiler/tsbuild.ts",
+      "/workspace/flatmap-before/src/compiler/tsbuildPublic.ts",
+      "/workspace/flatmap-before/src/compiler/types.ts",
+      "/workspace/flatmap-before/src/compiler/utilities.ts",
+      "/workspace/flatmap-before/src/compiler/utilitiesPublic.ts",
+      "/workspace/flatmap-before/src/compiler/visitorPublic.ts",
+      "/workspace/flatmap-before/src/compiler/watch.ts",
+      "/workspace/flatmap-before/src/compiler/watchPublic.ts",
+      "/workspace/flatmap-before/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic-main",
+    "exit": 0,
+    "seconds": 30.407782993000183
+  }
+]
