@@ -72,13 +72,17 @@ type Variant struct {
 	Requires string
 }
 
+// oracleWASI is the setting the wasm variants require, read by a constant name so the census of an archive's path can
+// hold the read to its reason (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds).
+const oracleWASI = "ADAMIC_ORACLE_WASI"
+
 var Variants = []Variant{
 	{"sanitized", native.Options{Sanitize: true}, ""},
 	{"release", native.Options{}, ""},
 	{"shipped", native.Options{Release: true}, ""},
 	{"counted", native.Options{Count: true}, ""},
-	{"wasm", native.Options{Target: "wasm32-wasi"}, "ADAMIC_ORACLE_WASI"},
-	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, "ADAMIC_ORACLE_WASI"},
+	{"wasm", native.Options{Target: "wasm32-wasi"}, oracleWASI},
+	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWASI},
 }
 
 // Groups is how many product tests each variant's archives are cut into.
@@ -214,7 +218,8 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 	return buildcache.BuiltElsewhere(t, what, Inputs(request), fmt.Sprintf("%s%d", owners, index%Groups), func(directory string) error { return request.Build(directory, 4, jobserver) })
 }
 
-// variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have.
+// variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have: the
+// one setting a variant requires is oracleWASI, and a variant naming another is skipped until it's read here by name.
 func variantNamed(t testing.TB, name string) Variant {
 	t.Helper()
 	index := slices.IndexFunc(Variants, func(variant Variant) bool { return variant.Name == name })
@@ -222,7 +227,7 @@ func variantNamed(t testing.TB, name string) Variant {
 		t.Fatalf("no runtime variant %q", name)
 	}
 	variant := Variants[index]
-	if variant.Requires != "" && os.Getenv(variant.Requires) != "1" {
+	if variant.Requires != "" && (variant.Requires != oracleWASI || os.Getenv(oracleWASI) != "1") {
 		t.Skipf("set %s=1", variant.Requires)
 	}
 	return variant

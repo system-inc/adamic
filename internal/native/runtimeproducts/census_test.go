@@ -169,7 +169,7 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 // caller.
 //
 // The package variables scheduling names (schedulingState) are let be written by code the reach doesn't take in a
-// declared file, and by a reached function code outside the reach calls.
+// declared file, and by a reached function code outside the reach calls, and be exported.
 //
 // Empty when the build is complete by its declared files and leanSlice.
 func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string, programsByPath bool, followed map[string][]string) ([]string, error) {
@@ -470,8 +470,8 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		if content, err := os.ReadFile(file); err == nil && strings.Contains(string(content), "//go:linkname") {
 			findings[fmt.Sprintf("%s holds a go:linkname, which the census can't follow", filepath.Base(file))] = true
 		}
-		// M2: a reached package variable another package could write is beyond the census.
-		if variable, ok := object.(*types.Var); ok && variable.Exported() {
+		// M2: a reached package variable another package could write is beyond the census, unless scheduling names it.
+		if variable, ok := object.(*types.Var); ok && variable.Exported() && !scheduled(variable, checked, scheduling) {
 			findings[fmt.Sprintf("%s, which the build reads, is exported, so a package the census doesn't read can write it", object.Name())] = true
 		}
 	}
@@ -854,7 +854,7 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // tests and supplier, native's request and the build its window runs, and the jobserver handed to it.
 var buildPath = map[string][]string{
 	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "Inputs", "Declared"},
-	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build"},
+	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
 	modulePath + "/internal/ccjobserver":            {"Process"},
 }
 
@@ -872,11 +872,12 @@ func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
 // An archive's path to its build reads nothing in process that its key doesn't hold (Node's must 2 on #gr5y0yf item 1):
 // from runtimeproducts' product tests and its supplier, through native's request and the jobserver to the build its
 // window runs, no environment but what each package's list names with its reason, no package variable of another
-// package, no package variable written outside its initializer but scheduling's, and nothing the census can't follow.
+// package, no package variable written outside its initializer or exported but what each package's state names with
+// its reason, and nothing the census can't follow. clang's environment is toolchain.Env's, buildcache's slice.
 // Each package of the path is held by a census of its own from the entries buildPath names, and a reach into another
 // package must be one of that package's entries, or a keyedValues function, whose result the key holds. Its recipe is
 // the import closure (buildcache's leanRecipeOf), so declared is each package whole. Mutants that each fail it: an
-// os.Getenv planted in Build; Build reading another package's variable; native's entries left without Options.String.
+// os.Getenv planted in Build; Build reading another package's variable; native's entries left without UseJobserver.
 func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
@@ -897,8 +898,8 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 		environment map[string]string
 	}
 	packages := map[string]pathPackage{
-		modulePath + "/internal/native/runtimeproducts": {ownExports, ownTree, true, nil, runtimeproductsEnvironment},
-		modulePath + "/internal/native":                 {nativeExports, nativeTree, nativeLean, schedulingState, requestEnvironment},
+		modulePath + "/internal/native/runtimeproducts": {ownExports, ownTree, true, productsState, runtimeproductsEnvironment},
+		modulePath + "/internal/native":                 {nativeExports, nativeTree, nativeLean, requestState, requestEnvironment},
 		modulePath + "/internal/ccjobserver":            {nativeExports, nativeTree, false, jobserverState, jobserverEnvironment},
 	}
 	var findings []string
@@ -921,13 +922,40 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 }
 
 // runtimeproductsEnvironment, requestEnvironment and jobserverEnvironment are the environment variables each package of
-// an archive's path may name, each with its reason.
-var runtimeproductsEnvironment = map[string]string{}
-var requestEnvironment = map[string]string{"ADAMIC_BUILD_LOG": buildLogReading}
-var jobserverEnvironment = map[string]string{}
+// an archive's path may name, each with its reason: one that never reaches what an archive is built from, or one whose
+// value the archive's key holds.
+var runtimeproductsEnvironment = map[string]string{
+	"ADAMIC_ORACLE_WASI": "decides only whether a wasm variant's product test runs or skips (variantNamed), never what an archive is built from",
+}
+var requestEnvironment = map[string]string{
+	"ADAMIC_BUILD_LOG":      buildLogReading,
+	"WASI_SYSROOT":          "a wasm request's --sysroot flag, a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation; otherwise it only refuses a request (ValidateOptions)",
+	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte",
+}
+var jobserverEnvironment = map[string]string{
+	"ADAMIC_CC_JOBSERVER": "names the FIFO of the compile token pool handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
+}
+
+// requestState are internal/native's package variables an archive's request reads that code outside its reach may
+// write, each with its reason: the build's own scheduling, and what decides only when a compile runs or what a request
+// remembers of one whose result the key holds.
+var requestState = map[string]string{
+	"jobserver":        schedulingState["jobserver"],
+	"processJobserver": "the process's compile token pool the header scan behind RuntimeRequestFor runs clang -M under (UseJobserver): when it runs, never what it lists",
+	"headerScans":      "the process's memo of the header scan, by the runtime key of the same sources, flags and compiler: what it holds is the request's headers part, which the key holds (TestRuntimeProductKeyHoldsEveryPart)",
+}
 
 // jobserverState are ccjobserver's package variables that decide when a compile runs, never what one writes.
-var jobserverState = map[string]string{}
+var jobserverState = map[string]string{
+	"process": "the jobserver ADAMIC_CC_JOBSERVER names, handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
+	"failed":  "why that jobserver couldn't be opened, which fails the build rather than running it unbounded",
+}
+
+// productsState are runtimeproducts' exported tables an archive's path reads, each with its reason.
+var productsState = map[string]string{
+	"Sets":     "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"Variants": "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+}
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
 // (agreementproducts.NativeFiles), no package of the tree but buildcache's slice, and nothing of the process: no runtime
