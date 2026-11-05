@@ -1,0 +1,385 @@
+{
+  "before": {
+    "checkerDiagnostics": [],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:299:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10387,
+        "body_end": 10615,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "filterMutate",
+        "top": "/workspace/s-before/src/compiler/core.ts:299:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10682,
+        "body_end": 10710,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/s-before/src/compiler/core.ts:311:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:1569:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55402,
+        "body_end": 56497,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/s-before/src/compiler/core.ts:1569:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:1581:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55684,
+        "body_end": 56416,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "dequeue",
+        "parent": "/workspace/s-before/src/compiler/core.ts:1569:1",
+        "top": "/workspace/s-before/src/compiler/core.ts:1569:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:2590:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-before/src/compiler/core.ts:2590:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:2592:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-before/src/compiler/core.ts:2592:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-before/src/compiler/core.ts:2594:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92675,
+        "body_end": 92925,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-before/src/compiler/core.ts:2594:1"
+      }
+    ],
+    "siteFindings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-before/src/compiler/core.ts:1581:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/s-before/src/compiler/core.ts:1586:24",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/s-before/src/compiler/core.ts:1586:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-before/src/compiler/core.ts:2594:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/s-before/src/compiler/core.ts:2601:16",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/s-before/src/compiler/core.ts:2601:16: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-before/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/s-before/src/compiler/core.ts:312:5",
+        "reason": "assigning a field of a value",
+        "text": "/workspace/s-before/src/compiler/core.ts:312:5: stage 0 can't lower assigning a field of a value yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-before/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/s-before/src/compiler/core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/s-before/src/compiler/core.ts:312:5: stage 0 can't lower assigning a field of a value yet",
+        "start": 10684,
+        "end": 10707
+      }
+    ]
+  },
+  "after": {
+    "checkerDiagnostics": [],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:299:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10387,
+        "body_end": 10614,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "filterMutate",
+        "top": "/workspace/s-probe/src/compiler/core.ts:299:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10681,
+        "body_end": 10708,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/s-probe/src/compiler/core.ts:311:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:1569:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55400,
+        "body_end": 56494,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/s-probe/src/compiler/core.ts:1569:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:1581:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55682,
+        "body_end": 56413,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "dequeue",
+        "parent": "/workspace/s-probe/src/compiler/core.ts:1569:1",
+        "top": "/workspace/s-probe/src/compiler/core.ts:1569:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:2590:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-probe/src/compiler/core.ts:2590:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:2592:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-probe/src/compiler/core.ts:2592:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-probe/src/compiler/core.ts:2594:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92636,
+        "body_end": 92867,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-probe/src/compiler/core.ts:2594:1"
+      }
+    ],
+    "siteFindings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-probe/src/compiler/core.ts:1581:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/s-probe/src/compiler/core.ts:1586:24",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/s-probe/src/compiler/core.ts:1586:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-probe/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/s-probe/src/compiler/core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/s-probe/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-probe/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/s-probe/src/compiler/core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/s-probe/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10683,
+        "end": 10705
+      }
+    ]
+  },
+  "mutant": {
+    "checkerDiagnostics": [],
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:299:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10387,
+        "body_end": 10615,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "filterMutate",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:299:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10682,
+        "body_end": 10709,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:311:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:1569:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55401,
+        "body_end": 56495,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:1569:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:1581:5",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55683,
+        "body_end": 56414,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "dequeue",
+        "parent": "/workspace/s-mutant/src/compiler/core.ts:1569:1",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:1569:1",
+        "depth": 1
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:2590:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:2590:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:2592:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:2592:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:2594:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 92637,
+        "body_end": 92868,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "skipWhile",
+        "top": "/workspace/s-mutant/src/compiler/core.ts:2594:1"
+      }
+    ],
+    "siteFindings": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-mutant/src/compiler/core.ts:1581:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:1586:24",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/s-mutant/src/compiler/core.ts:1586:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-mutant/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/s-mutant/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/s-mutant/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/s-mutant/src/compiler/core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/s-mutant/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10684,
+        "end": 10706
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "sourceFiles": 746,
+  "changedSources": [
+    "compiler/core.ts"
+  ],
+  "onlyPinnedOwnersChanged": true,
+  "skipWhileJavascriptIdentical": true,
+  "dequeueCastUnchanged": true,
+  "declarations": [
+    {
+      "file": "lib/typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 588452,
+      "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+      "skipWhileIdentifiers": 0
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "skipWhileIdentifiers": 0
+    },
+    {
+      "file": "lib/tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "skipWhileIdentifiers": 0
+    },
+    {
+      "file": "built/local/tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "skipWhileIdentifiers": 0
+    }
+  ]
+}

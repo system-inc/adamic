@@ -1,0 +1,19 @@
+{
+  "caller": "transformers/ts.ts:1089 injectClassTypeMetadata",
+  "before": {
+    "file": "/workspace/s-before/src/compiler/transformers/ts.ts",
+    "line": 1089,
+    "result": "(AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | InKeyword | ... 7 more ... | Decorator)[] | undefined",
+    "parentResult": "Modifier[] | undefined",
+    "source": "filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier)"
+  },
+  "after": {
+    "file": "/workspace/s2-after/src/compiler/transformers/ts.ts",
+    "line": 1089,
+    "result": "(AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | DefaultKeyword | ... 9 more ... | Decorator)[] | undefined",
+    "parentResult": "Modifier[] | undefined",
+    "source": "filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier)"
+  },
+  "filterResultUnchanged": true,
+  "callerCheckNeeded": false
+}

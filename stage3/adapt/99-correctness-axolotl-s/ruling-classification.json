@@ -1,0 +1,19 @@
+{
+  "main": "82b0c076395636800764ed1af7ada569681fc2ae",
+  "observed": "NotYet",
+  "implementation": {
+    "file": "internal/lower/class.go",
+    "line": 471,
+    "text": "return nil, l.notYet(target, \"assigning a field of a \"+typeName(object.Type()))"
+  },
+  "ruling": {
+    "file": "docs/rulings.md",
+    "lines": [
+      285,
+      439
+    ],
+    "classification": "Refused",
+    "sha256": "096e2a69b9816eb3d0897ca7e45ff5defe5488839abdbbc32292c621621349b1"
+  },
+  "followUp": "Adamic authorizes the splice edits and recording actual main classifications; enforcement of Refused is owed by #53r37a3."
+}

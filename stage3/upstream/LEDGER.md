@@ -629,3 +629,50 @@ Suggested upstream change: assign `cachedFunc.assertion`. Alternatively, have
 shouldAssertFunction return `shouldAssert(level)` without replacing anything,
 which removes the cache and the restore loop. That is what our fork does. This
 draft makes no claim about which one upstream prefers.
+
+## 9. skipWhile promises that every suffix element fails its predicate
+
+Status: soundness adaptation 99s under Adamic's Nov 5 ruling for #b5w3ycg;
+draft issue, not filed.
+Upstream: TypeScript 6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8.
+Location: src/compiler/core.ts:2572-2585, skipWhile's three declarations and
+its returned suffix cast.
+
+The declared `Exclude<T, U>[]` result is false. The loop proves that the first
+returned element fails the predicate, but never tests later returned elements.
+
+Node counterexample, using the actual owner transpiled by witness.cjs:
+
+```js
+skipWhile([1, "x", 2], x => typeof x === "number"); // ["x", 2]
+```
+
+The declared result excludes number, yet the second returned element is 2.
+Before and after our patch Node returns the same array, with length 2.
+No extra predicate call or runtime check is introduced.
+
+Our patch: stage3/adapt/99-correctness-axolotl-s/adapt.cjs changes all three
+return types to `T[]` (retaining `| undefined` in the two optional signatures)
+and removes `as Exclude<T, U>[]` from the returned slice. The only adapted-src
+caller, injectClassTypeMetadata in transformers/ts.ts, filters the result with
+isModifier at its own use and does not read the old exclusion narrowing.
+
+### Draft GitHub issue
+
+Title: skipWhile's type predicate overload incorrectly narrows the entire suffix
+
+Version: TypeScript 6.0.3, reproduced on Node 24.19.0.
+
+Minimal reproduction in an internal compiler test:
+
+```ts
+const values: (number | string)[] = [1, "x", 2];
+const suffix = skipWhile(values, (x): x is number => typeof x === "number");
+// Inferred string[], actual ["x", 2].
+for (const value of suffix) value.toUpperCase(); // throws for 2
+```
+
+Expected: the suffix has type `(number | string)[]`, since skipWhile stops
+checking at the first failed predicate. Actual: the declared result is string[].
+Suggested upstream change: return `T[]`, retaining the undefined result for
+undefined input, and remove the suffix cast. This correction changes types only.

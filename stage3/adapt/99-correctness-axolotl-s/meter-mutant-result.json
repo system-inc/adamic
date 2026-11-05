@@ -1,0 +1,10 @@
+{
+  "status": "NOT_PROVEN_RED",
+  "restoredStatement": "array.length = outIndex;",
+  "tree": "/workspace/s-mutant",
+  "onlyChangeFromAcceptedSnapshot": true,
+  "reason": "filterMutate remains deferred_generic_instantiation, instantiated=false; no compiler finding at restored statement. No compiler-red proof is claimed.",
+  "requiredLengthClassification": "Refused",
+  "observedClearLengthClassification": "NotYet",
+  "main": "82b0c076395636800764ed1af7ada569681fc2ae"
+}
