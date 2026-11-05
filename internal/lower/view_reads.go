@@ -50,7 +50,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		return viewReadsNoField
 	case ir.JSONEncode:
 		return viewReadNotYet
-	case ir.CheckedCast, ir.DynamicProperty:
+	case ir.CheckedCast, ir.DynamicProperty, ir.ViewElement:
 		return viewReadChecks
 	case ir.DynamicKeyedProperty:
 		// As DynamicProperty: what it reads, it reads by the allocation's own runtime shape and
