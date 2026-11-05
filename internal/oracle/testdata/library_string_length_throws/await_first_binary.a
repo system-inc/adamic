@@ -1,0 +1,6 @@
+// Language's c9 (#c3bk0fp): the await first in the binary concatenation consumes the promise, so
+// the program lowers and agrees with Node.
+async function later(text: string): Promise<string> { return `${text}!`; }
+const big = "x";
+async function run(): Promise<string> { const first = later("a"); return (await first) + big; }
+console.log(await run());
