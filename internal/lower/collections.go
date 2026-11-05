@@ -333,6 +333,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 // destructured (held as heldAs): a tuple's elements by position, an object's fields by name.
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
+	if tuple && heldAs == ir.Array && l.matchArray(destructured) {
+		return l.destructureMatch(pattern, held)
+	}
 	if tuple && !checker.IsTupleType(destructured) {
 		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
 	}
