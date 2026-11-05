@@ -1,0 +1,27 @@
+[
+  {
+    "variant": "calls",
+    "removed": [],
+    "added": [],
+    "coreFindingsBefore": 100,
+    "coreFindingsAfter": 100
+  },
+  {
+    "variant": "returns",
+    "removed": [
+      [
+        "Refused",
+        "726",
+        "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      ],
+      [
+        "Refused",
+        "728",
+        "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold"
+      ]
+    ],
+    "added": [],
+    "coreFindingsBefore": 100,
+    "coreFindingsAfter": 97
+  }
+]

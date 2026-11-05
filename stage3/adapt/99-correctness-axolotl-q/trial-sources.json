@@ -1,0 +1,54 @@
+{
+  "baselineCoreSha256": "7f1a66180d7dc63033f9aab117e88ee33fb21e9169e93d4a1a344589aef5b18d",
+  "acceptedCoreSha256": "273133f9c289af51604cf558f60c212f20e7840b1c63e15a311d9cc37e4b69ac",
+  "trials": [
+    {
+      "site": "H02-calls",
+      "baselineOnly": true,
+      "coreSha256": "e490226dd244e472e86d45f685bbeb947aecc755d0e591ab8403550d1d639805",
+      "patch": "H02-calls.patch.gz"
+    },
+    {
+      "site": "H02-returns",
+      "baselineOnly": true,
+      "coreSha256": "60e0be00fae735fd927b7ab6d98054064cb6f7930fbd9cfd1c0c48590ee18fc7",
+      "patch": "H02-returns.patch.gz"
+    },
+    {
+      "site": "H02-map-only",
+      "baselineOnly": true,
+      "coreSha256": "5bd72d3ea8338b5713eabcddd335d3a10ae35494bb92e8398db2f18568f4a5cf",
+      "patch": "H02-map-only.patch.gz"
+    },
+    {
+      "site": "H01",
+      "baselineOnly": true,
+      "coreSha256": "3534fee4bd9645c46efd83fd22c94336fa904f40ffc1618028d5e81ee8914cc6",
+      "patch": "H01.patch.gz"
+    },
+    {
+      "site": "H04",
+      "baselineOnly": true,
+      "coreSha256": "c7c93dd5e63eb758103ad3bbe50b41f7f86e25498fa45598ec6c44e2d07ed0f2",
+      "patch": "H04.patch.gz"
+    },
+    {
+      "site": "H05",
+      "baselineOnly": true,
+      "coreSha256": "1d87d900458cc296bcb94da788b34c321352fa9d299de40c2556d50fbd62f5fa",
+      "patch": "H05.patch.gz"
+    },
+    {
+      "site": "H03",
+      "baselineOnly": true,
+      "coreSha256": "59f1ef6a14ca2a1ec049979b067c451efe78a499ef3c72094206576f535ef4eb",
+      "patch": "H03.patch.gz"
+    },
+    {
+      "site": "concatenate",
+      "baselineOnly": true,
+      "coreSha256": "553f0ea0f948e17b350601f808fa132f0d6c13dbb9e975356d93a3c5ed73afde",
+      "patch": "concatenate.patch.gz"
+    }
+  ]
+}
