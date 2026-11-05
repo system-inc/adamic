@@ -1460,6 +1460,20 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		arguments = append(arguments, lowered)
 	}
 	if name == "slice" {
+		// An absent bound is the start's 0 or the end's length, which +Infinity clamps to (array.c's
+		// adamic_array_slice), as string slice reads one (library_string.go). A bound held as maybe a number is
+		// evaluated once, in its place, and only a missing one takes its default.
+		for index, argument := range arguments {
+			fallback := ir.NumberConstant{Value: 0}
+			if index == 1 {
+				fallback.Value = math.Inf(1)
+			}
+			if _, absent := argument.(ir.Undefined); absent {
+				arguments[index] = fallback
+			} else if argument.Type() == ir.MaybeNumber {
+				arguments[index] = ir.Coalesce{Value: argument, Fallback: fallback, Of: ir.Number}
+			}
+		}
 		for _, argument := range arguments {
 			if argument.Type() != ir.Number {
 				return nil, true, l.notYet(node, "slice with an index that isn't a number")
