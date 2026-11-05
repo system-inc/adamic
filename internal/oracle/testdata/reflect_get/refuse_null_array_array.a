@@ -1,0 +1,6 @@
+// An array of arrays or null holds null as a null pointer too, so it's refused where it's viewed as
+// unknown (#ys4naww, Language's k12). Node prints null.
+import { propertyOf } from './hostErrors.ts';
+
+const grid: (number[] | null)[] = [[1], null];
+console.log(propertyOf(grid, '1') === null ? 'null' : 'not null');

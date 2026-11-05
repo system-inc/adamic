@@ -1,0 +1,10 @@
+// An object whose field holds an array of objects or null is refused where it's viewed as unknown,
+// though the field itself isn't nullable: the unknown hands out the array by a run-time key read,
+// and the next read would take its null for undefined (#ys4naww). Node prints null.
+import { propertyOf } from './hostErrors.ts';
+
+class Point {
+	x = 1;
+}
+const holder = { items: [new Point(), null] as (Point | null)[] };
+console.log(propertyOf(propertyOf(holder, 'items'), '1') === null ? 'null' : 'not null');
