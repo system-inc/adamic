@@ -1,4 +1,4 @@
-// a-check: refused a void-returning function at the initializer site through <1> seen as () => unknown
+// a-check: refused a void-returning function at the initializer site through <Result> seen as () => unknown
 interface Holder<Result> { readonly read: () => Result; }
 const make: () => void = () => 42;
 const holder: Holder<() => void> = { read: () => make };

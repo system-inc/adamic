@@ -67,7 +67,7 @@ func TestVoidWideningIsRefused(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 36 {
-		t.Fatalf("found %d refused programs, want 36", programs)
+	if programs != 39 {
+		t.Fatalf("found %d refused programs, want 39", programs)
 	}
 }

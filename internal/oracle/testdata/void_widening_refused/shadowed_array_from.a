@@ -1,0 +1,4 @@
+// a-check: refused a void value at the argument site through [Symbol.iterator]().next()<TReturn> seen as any
+function* numbers() { yield 1; yield 2; }
+const Array = { from(values: Iterable<number>): number[] { const out: number[] = []; for (const value of values) out.push(value); return out; } };
+console.log(Array.from(numbers()).join(','));

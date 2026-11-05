@@ -1,0 +1,9 @@
+// a-check: refused a void value at the argument site through [Symbol.iterator]()<TReturn> seen as any
+class Pair implements Iterable<number, void> {
+    [Symbol.iterator](): Iterator<number, void> {
+        let index = 0;
+        return { next: (): IteratorResult<number, void> => index < 2 ? { value: ++index, done: false } : { value: undefined, done: true } };
+    }
+}
+function total(values: Iterable<number>): number { let sum = 0; for (const value of values) { sum += value; } return sum; }
+console.log(String(total(new Pair())));
