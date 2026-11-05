@@ -3293,9 +3293,12 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 // A runtime archive's settled key moves with every package runtimeproducts imports, and never with a package of the tree
 // outside its import closure (Node's must 1 on #gr5y0yf item 1): its lean recipe is derived from the caller's imports
 // as the build settles (leanRecipeOf), never named. In a tree of its own, runtimeproducts imports internal/native, which
-// imports internal/ir, and internal/lower sits beside them, imported by none: an edit of native or of ir, or a file added
-// to ir, moves the key, and an edit of lower leaves it. Mutants that each fail it: the caller listed without what it
-// links; the caller's lean recipe swapped for buildcache's own.
+// imports internal/ir, and internal/lower sits beside them, imported only by a file of native a build tag leaves out: an
+// edit of native or of ir, or a file added to ir, moves the key, and an edit of lower leaves it. The closure is listed
+// under the settling binary's own build settings, by the function that lists its whole recipe (recipeListed): under
+// -tags=fancy, which compiles the tagged file in, the same edit of lower moves the key. Mutants that each fail it: the
+// caller listed without what it links; the caller's lean recipe swapped for buildcache's own; the lean listing run
+// without the binary's settings.
 // Not parallel: newRig, and it replaces leanRecipeFor.
 func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 	caller := modulePath + "/internal/native/runtimeproducts"
@@ -3305,13 +3308,14 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 		"internal/native/native.go":                          "package native\n\nimport _ \"github.com/system-inc/adamic/internal/ir\"\n",
 		"internal/ir/ir.go":                                  "package ir\n",
 		"internal/lower/lower.go":                            "package lower\n",
+		"internal/native/fancy.go":                           "//go:build fancy\n\npackage native\n\nimport _ \"github.com/system-inc/adamic/internal/lower\"\n",
 	}
-	settled := func(edited map[string]string) string {
+	settledUnder := func(settings []string, edited map[string]string) string {
 		t.Helper()
 		r := newRig(t)
-		// The rig journals no process, so the settling binary is named as a test binary's would be.
+		// The rig journals no process, so the settling binary is named as a test binary's would be, with settings.
 		leanRecipeFor = func(root, called string, process journalEntry) recipe {
-			process.Package = buildcachePackage + ".test"
+			process.Package, process.Settings = buildcachePackage+".test", settings
 			return leanRecipeOf(root, called, process)
 		}
 		for name, content := range tree {
@@ -3335,6 +3339,10 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 		t.Fatalf("no lean settlement: settled %q, refused %q", settlement.Settled, settlement.Refused)
 		return ""
 	}
+	settled := func(edited map[string]string) string {
+		t.Helper()
+		return settledUnder(nil, edited)
+	}
 	base := settled(nil)
 	for name, edited := range map[string]map[string]string{
 		"an edit of internal/native, which runtimeproducts imports": {"internal/native/native.go": tree["internal/native/native.go"] + "\nconst Edited = 1\n"},
@@ -3347,6 +3355,10 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 	}
 	if key := settled(map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"}); key != base {
 		t.Errorf("an edit of internal/lower, outside runtimeproducts' import closure, moved the archive's key from %s to %s", base[:12], key[:12])
+	}
+	fancy := []string{"-tags=fancy"}
+	if tagged, key := settledUnder(fancy, nil), settledUnder(fancy, map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"}); key == tagged {
+		t.Errorf("under -tags=fancy, which compiles native's tagged file and its import of internal/lower in, an edit of lower left the archive's key at %s", tagged[:12])
 	}
 }
 
