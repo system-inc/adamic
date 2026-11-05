@@ -1,0 +1,32 @@
+{
+  "base": "b729c7e07010fe6db34c6afc1d11c8ca63a86ae3",
+  "main": "82b0c076395636800764ed1af7ada569681fc2ae",
+  "onlyAdaptationInputDifferences": [
+    "99-correctness-axolotl-l",
+    "99-correctness-axolotl-m",
+    "99-correctness-axolotl-q"
+  ],
+  "commonApplyParserSourceAndOracleInputsIdentical": true,
+  "reversedOwners": [
+    "deduplicateRelational",
+    "indicesOf",
+    "cartesianProductWorker",
+    "isNodeLikeSystem",
+    "flatMap",
+    "flatten"
+  ],
+  "mainCorePreimageSha256": "7576add7360cbe959e5ec29a8c9b6f0acbed6db459bccab4bd88a17683e891d7",
+  "coreJavascript": [
+    {
+      "removeComments": false,
+      "byteIdentical": true,
+      "sha256": "5dfe133e4cc0b9d06db5ec8a644a27988e6713901698b0413c75698597be860c"
+    },
+    {
+      "removeComments": true,
+      "byteIdentical": true,
+      "sha256": "c770cebcc6e45911562f4c74543249ecbc2b336fe6cda6557099a2fbb1ba9848"
+    }
+  ],
+  "scope": "The reference is a measured base oracle; its only source differences from main are these erased core owners. This is runtime-artifact equivalence, not a separate fresh main oracle invocation."
+}
