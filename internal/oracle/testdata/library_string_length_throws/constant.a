@@ -9,8 +9,8 @@ function shown(text: string, value: number): void {
 	console.log(String(value));
 	console.log(value.toString());
 	console.log(String(value > 1));
-	console.log(text.indexOf('b'));
-	console.log(text.split(',').length);
+	console.log(String(text.indexOf('b')));
+	console.log(String(text.split(',').length));
 }
 for (const value of [1.5, -2]) {
 	try {
