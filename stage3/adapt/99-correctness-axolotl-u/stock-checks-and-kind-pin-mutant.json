@@ -1,0 +1,63 @@
+{
+  "ts": "6.0.3",
+  "options": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "/workspace/adamic/stage3/api/node_modules/@types"
+    ]
+  },
+  "results": [
+    {
+      "name": "before",
+      "tree": "/workspace/scratch/99u-main",
+      "roots": 79,
+      "diagnostics": []
+    },
+    {
+      "name": "after",
+      "tree": "/workspace/scratch/99u-measured",
+      "roots": 79,
+      "diagnostics": []
+    },
+    {
+      "name": "kind-pin-mutant",
+      "tree": "/workspace/scratch/99u-measured",
+      "roots": 79,
+      "changed": {
+        "file": "/workspace/scratch/99u-measured/src/compiler/utilities.ts",
+        "removedLine": "case SyntaxKind.Parameter:",
+        "line": 12066
+      },
+      "diagnostics": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 12080,
+          "code": 2345,
+          "message": "Argument of type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 340 more ... | SyntaxKind.Count' is not assignable to parameter of type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count'.\n  Type 'SyntaxKind.Parameter' is not assignable to type 'SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count'."
+        }
+      ]
+    },
+    {
+      "name": "debug-type-mutant",
+      "tree": "/workspace/scratch/99u-control-first",
+      "roots": 79,
+      "diagnostics": []
+    }
+  ]
+}

@@ -1,0 +1,2380 @@
+{
+  "ordinary": {
+    "before": {
+      "roots": [
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.66828536
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/_namespaces/ts.performance.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 21.419250066
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/_namespaces/ts.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 32.494854679
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 30.754168147
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/builder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 24.516035277
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/builderPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.91471915
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/builderState.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.90301339
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/builderStatePublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.264339593
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/checker.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.836216309
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/commandLineParser.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.384029333
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/core.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-main/src/compiler/debug.ts:243:59",
+          "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+          "seconds": 12.471940995
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/corePublic.ts"
+          ],
+          "kind": "accepted",
+          "seconds": 0.023698175
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/debug.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-main/src/compiler/semver.ts:71:9",
+          "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+          "seconds": 3.361358086
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/diagnosticInformationMap.generated.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-main/src/compiler/commandLineParser.ts:293:35",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+          "seconds": 3.064680902
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/emitter.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.161982545
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/executeCommandLine.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.49149114
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/expressionToTypeNode.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.430889663
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/baseNodeFactory.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.080302909
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/emitHelpers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.239900036
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/emitNode.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 18.367327569
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/nodeChildren.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 28.377572132
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/nodeConverters.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 31.241690496
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/nodeFactory.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 23.612806215
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/nodeTests.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.747509382
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/parenthesizerRules.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.453743355
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.16105035
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/factory/utilitiesPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.441796918
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/hostErrors.ts"
+          ],
+          "kind": "accepted",
+          "seconds": 0.091164461
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/moduleNameResolver.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.364038599
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/moduleSpecifiers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.877637173
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/parser.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.800843931
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/path.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.999639881
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/performance.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.997309779
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/performanceCore.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.911836181
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/program.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.508658518
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/programDiagnostics.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.01280154
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/resolutionCache.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.536633195
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/scanner.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.31329327
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/semver.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.570111466
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/sourcemap.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.824256573
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/symbolWalker.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.46762893
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/sys.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.316527567
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/tracing.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.553313425
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformer.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.408655993
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/classFields.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.44534786
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/classThis.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.302253615
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/declarations.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.065984202
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.350274902
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/destructuring.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.350501888
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2015.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.519875019
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2016.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.536083608
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2017.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.413785683
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2018.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.429754416
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2019.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.37439315
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2020.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.405964485
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/es2021.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.515789823
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/esDecorators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.531121033
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/esnext.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.840040162
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/generators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.052889042
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/jsx.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.594303241
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/legacyDecorators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.489412453
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/module/esnextAnd2015.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.789936897
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.589978012
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/module/module.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.163091036
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/module/system.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.83116709
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/namedEvaluation.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.200176621
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/taggedTemplate.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.572366104
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/ts.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.353467142
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/typeSerializer.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.986518674
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/transformers/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.259973392
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/tsbuild.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.942944487
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/tsbuildPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.445923659
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/types.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-main/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+          "seconds": 2.903172876
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.298819297
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/utilitiesPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.556922274
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/visitorPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.016747537
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/watch.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.43120882
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/watchPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.593580869
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-main/src/compiler/watchUtilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-main/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.052329141
+        }
+      ],
+      "groups": [
+        {
+          "count": 73,
+          "kind": "Refused",
+          "where": "src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:243:59",
+          "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+        },
+        {
+          "count": 2,
+          "kind": "accepted",
+          "where": "",
+          "reason": ""
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/semver.ts:71:9",
+          "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/commandLineParser.ts:293:35",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+        }
+      ]
+    },
+    "after": {
+      "roots": [
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.692207916
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/_namespaces/ts.performance.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.223456437
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/_namespaces/ts.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.767516432
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/binder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.686860789
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/builder.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.424346977999999
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/builderPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.286861896
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/builderState.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.801304537
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/builderStatePublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.572984275
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/checker.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.758302055
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/commandLineParser.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 13.310273185
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/core.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-measured/src/compiler/debug.ts:243:59",
+          "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+          "seconds": 11.185055427
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/corePublic.ts"
+          ],
+          "kind": "accepted",
+          "seconds": 0.034435771
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/debug.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-measured/src/compiler/semver.ts:71:9",
+          "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+          "seconds": 2.794065745
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/diagnosticInformationMap.generated.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-measured/src/compiler/commandLineParser.ts:293:35",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+          "seconds": 2.66855011
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/emitter.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.165208078
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/executeCommandLine.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.281806614
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/expressionToTypeNode.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.638136942
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/baseNodeFactory.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.929660072
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/emitHelpers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.556777402
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/emitNode.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.276257736
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/nodeChildren.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.464390377
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/nodeConverters.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.578618037
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/nodeFactory.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.386158066
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/nodeTests.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.824727374
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/parenthesizerRules.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.528704466
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.963406909
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/factory/utilitiesPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.073178559
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/hostErrors.ts"
+          ],
+          "kind": "accepted",
+          "seconds": 0.046070018
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/moduleNameResolver.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.518100451
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/moduleSpecifiers.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.724832285
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/parser.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.225872197
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/path.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.534235041
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/performance.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.362160718
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/performanceCore.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.467978853
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/program.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.344630826
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/programDiagnostics.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.46758985
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/resolutionCache.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.415551295
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/scanner.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.490326247
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/semver.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.298895925
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/sourcemap.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.446503209
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/symbolWalker.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.405083126
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/sys.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.390126744
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/tracing.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.159444816
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformer.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.653533267
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/classFields.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.307935071
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/classThis.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.571911229
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/declarations.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.467909888
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.175203249
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.643679046
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2015.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.190446324
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2016.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 21.496518057
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2017.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 28.214830338
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2018.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 25.426230624
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2019.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.99288639
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2020.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 13.695657747
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/es2021.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 13.278819216
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/esDecorators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.428084032
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/esnext.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.903971407
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/generators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 15.099067299
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/jsx.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.051580308
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/legacyDecorators.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.025034818
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/module/esnextAnd2015.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 14.103470782
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 12.627489531
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/module/module.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.14631472
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/module/system.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.495245857
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/namedEvaluation.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.981872436
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/taggedTemplate.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.64685249
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/ts.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 11.25901957
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/typeSerializer.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 10.55080898
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/transformers/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.423283436
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/tsbuild.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.756993419
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/tsbuildPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.700982059
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/types.ts"
+          ],
+          "kind": "NotYet",
+          "where": "/workspace/scratch/99u-measured/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+          "seconds": 2.5700450200000002
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/utilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.542886886
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/utilitiesPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.697593323
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/visitorPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.74423142
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/watch.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.659931425
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/watchPublic.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.534930573
+        },
+        {
+          "roots": [
+            "/workspace/scratch/99u-measured/src/compiler/watchUtilities.ts"
+          ],
+          "kind": "Refused",
+          "where": "/workspace/scratch/99u-measured/src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check",
+          "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "seconds": 9.297272744
+        }
+      ],
+      "groups": [
+        {
+          "count": 73,
+          "kind": "Refused",
+          "where": "src/compiler/core.ts:736:36",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:243:59",
+          "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+        },
+        {
+          "count": 2,
+          "kind": "accepted",
+          "where": "",
+          "reason": ""
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/semver.ts:71:9",
+          "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/commandLineParser.ts:293:35",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+        },
+        {
+          "count": 1,
+          "kind": "NotYet",
+          "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+          "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+        }
+      ]
+    }
+  },
+  "ownerObservationMethod": "meter LatentReplay full-body selection on complete 79-root project; all findings retained, both no-output guards checked; not an entry/root subset",
+  "owners": {
+    "before": {
+      "isDeclarationWithTypeParameters": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 75434,
+          "body_end": 75831,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isDeclarationWithTypeParameters",
+          "top": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1"
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2233:5",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 75436,
+            "end": 75490
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2241:59",
+            "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2241:59: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2241:13",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2241:59: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+            "start": 75755,
+            "end": 75821
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2232:100"
+      },
+      "isDeclarationWithTypeParameterChildren": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 75965,
+          "body_end": 76977,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isDeclarationWithTypeParameterChildren",
+          "top": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1"
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2247:5",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 75967,
+            "end": 76028
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31",
+            "reason": "a value of type T",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2270:13",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet",
+            "start": 76902,
+            "end": 76940
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-main/src/compiler/utilities.ts:2246:114"
+      },
+      "isPrimitiveLiteralValue": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 498642,
+          "body_end": 499507,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isPrimitiveLiteralValue",
+          "top": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1"
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/debug.ts:344:5",
+            "reason": "checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+            "text": "/workspace/scratch/99u-main/src/compiler/debug.ts:344:5: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; } yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12034:5",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/debug.ts:344:5: stage 0 can't lower checked predicate overload target PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; } yet",
+            "start": 498644,
+            "end": 498685
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12046:41",
+            "reason": "a value of type UnaryExpression & (BigIntLiteral | NumericLiteral)",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12046:41: stage 0 can't lower a value of type UnaryExpression & (BigIntLiteral | NumericLiteral) yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12046:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12046:41: stage 0 can't lower a value of type UnaryExpression & (BigIntLiteral | NumericLiteral) yet",
+            "start": 499134,
+            "end": 499242
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12049:41",
+            "reason": "a value of type UnaryExpression & NumericLiteral",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12049:41: stage 0 can't lower a value of type UnaryExpression & NumericLiteral yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12049:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12049:41: stage 0 can't lower a value of type UnaryExpression & NumericLiteral yet",
+            "start": 499316,
+            "end": 499372
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31",
+            "reason": "a value of type T",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12053:13",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet",
+            "start": 499432,
+            "end": 499470
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12033:107"
+      },
+      "hasInferredType": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 499835,
+          "body_end": 500608,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "hasInferredType",
+          "top": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1"
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12068:5",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 499837,
+            "end": 499877
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31",
+            "reason": "a value of type T",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12085:13",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet",
+            "start": 500533,
+            "end": 500571
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-main/src/compiler/utilities.ts:12067:70"
+      },
+      "createGetIsolatedDeclarationErrors.getDiagnostic": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 37595,
+          "body_end": 39647,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getDiagnostic",
+          "parent": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+          "top": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+          "depth": 1
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/99u-main/src/compiler/utilitiesPublic.ts:786:1",
+            "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined; make the implementation result covariant with every overload result"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:665:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined; make the implementation result covariant with every overload result",
+            "start": 37597,
+            "end": 37667
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:666:13",
+            "reason": "reading heritageClause",
+            "text": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:666:13: stage 0 can't lower reading heritageClause yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:666:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:666:13: stage 0 can't lower reading heritageClause yet",
+            "start": 37667,
+            "end": 37842
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:669:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 37842,
+            "end": 38037
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:672:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 38037,
+            "end": 38099
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31",
+            "reason": "a value of type T",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:702:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-main/src/compiler/core.ts:2502:31: stage 0 can't lower a value of type T yet",
+            "start": 39520,
+            "end": 39562
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-main/src/compiler/transformers/declarations/diagnostics.ts:664:40"
+      }
+    },
+    "after": {
+      "isDeclarationWithTypeParameters": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 75434,
+          "body_end": 75708,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isDeclarationWithTypeParameters",
+          "top": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:1"
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2239:13",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 75632,
+            "end": 75698
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2232:100"
+      },
+      "isDeclarationWithTypeParameterChildren": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2244:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 75842,
+          "body_end": 76858,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isDeclarationWithTypeParameterChildren",
+          "top": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2244:1"
+        },
+        "findings": [],
+        "selectedAt": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:2244:114"
+      },
+      "isPrimitiveLiteralValue": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12030:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 498523,
+          "body_end": 499450,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isPrimitiveLiteralValue",
+          "top": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12030:1"
+        },
+        "findings": [],
+        "selectedAt": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12030:107"
+      },
+      "hasInferredType": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12064:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 499778,
+          "body_end": 500555,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "hasInferredType",
+          "top": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12064:1"
+        },
+        "findings": [],
+        "selectedAt": "/workspace/scratch/99u-measured/src/compiler/utilities.ts:12064:70"
+      },
+      "createGetIsolatedDeclarationErrors.getDiagnostic": {
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 37838,
+          "body_end": 40677,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getDiagnostic",
+          "parent": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:615:1",
+          "top": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:615:1",
+          "depth": 1
+        },
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/99u-measured/src/compiler/utilitiesPublic.ts:786:1",
+            "reason": "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined",
+            "text": "/workspace/scratch/99u-measured/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined; make the implementation result covariant with every overload result"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:674:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/utilitiesPublic.ts:786:1: Adamic 0.1 refuses overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined; make the implementation result covariant with every overload result",
+            "start": 37840,
+            "end": 37910
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:675:13",
+            "reason": "reading heritageClause",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:675:13: stage 0 can't lower reading heritageClause yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:675:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:675:13: stage 0 can't lower reading heritageClause yet",
+            "start": 37910,
+            "end": 38085
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1109:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:678:9",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 38085,
+            "end": 38280
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:684:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 38394,
+            "end": 38469
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:700:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 39344,
+            "end": 39529
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:703:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 39627,
+            "end": 39682
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:308:9",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:308:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:707:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:308:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 39839,
+            "end": 39930
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:192:9",
+            "reason": "writing a checked object field without its source-slot type certificate",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:5",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:720:17",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/99u-measured/src/compiler/transformers/destructuring.ts:192:9: stage 0 can't lower writing a checked object field without its source-slot type certificate yet",
+            "start": 40592,
+            "end": 40659
+          }
+        ],
+        "selectedAt": "/workspace/scratch/99u-measured/src/compiler/transformers/declarations/diagnostics.ts:673:40"
+      }
+    }
+  }
+}

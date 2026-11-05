@@ -1,0 +1,90 @@
+// Select complete owners through the meter's existing guarded full attempt path.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+)
+
+type request struct {
+	Owner string `json:"owner"`
+	Where string `json:"where"`
+}
+
+func main() {
+	project := flag.String("project", "", "complete compiler source directory")
+	sites := flag.String("sites", "", "JSON array of exact owner positions")
+	flag.Parse()
+	if *project == "" || *sites == "" {
+		panic("project and sites required")
+	}
+	if err := os.Setenv("LATENT_FULL", "1"); err != nil {
+		panic(err)
+	}
+	var paths []string
+	err := filepath.WalkDir(*project, func(path string, entry os.DirEntry, failure error) error {
+		if failure != nil {
+			return failure
+		}
+		if !entry.IsDir() && filepath.Ext(path) == ".ts" {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+	sort.Strings(paths)
+	if len(paths) != 79 {
+		panic("expected all 79 compiler roots")
+	}
+	program, err := load.LatentLoad(paths)
+	if err != nil {
+		panic(err)
+	}
+	diagnostics := program.LatentDiagnostics()
+	if len(diagnostics) != 0 {
+		panic(fmt.Sprint(diagnostics))
+	}
+	output, failure := lower.Lower(context.Background(), program)
+	if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+		panic("usable IR escaped")
+	}
+	exposed, failure := load.Load(paths)
+	if exposed != nil || failure == nil {
+		panic("ordinary loader exposed a program")
+	}
+	data, err := os.ReadFile(*sites)
+	if err != nil {
+		panic(err)
+	}
+	var requests []request
+	if err := json.Unmarshal(data, &requests); err != nil {
+		panic(err)
+	}
+	encoder := json.NewEncoder(os.Stdout)
+	if err := encoder.Encode(map[string]any{"roots": len(paths), "checker_diagnostics": len(diagnostics), "no_output_guards_passed": true, "method": "meter full-body replay selection; no signature matching requested"}); err != nil {
+		panic(err)
+	}
+	for _, target := range requests {
+		// The supported replay selector returns the entire attempted owner even when
+		// no exact finding signature matches. No diagnostic or refusal is suppressed.
+		record, signatureError := lower.LatentReplay(context.Background(), program, target.Where, "NotYet", "owner observation, no signature requested")
+		if len(record.Units) != 1 || record.Units[0].Status != "attempted" {
+			panic("owner not attempted: " + target.Owner)
+		}
+		row := map[string]any{"owner": target.Owner, "selected_at": target.Where, "record": record, "signature_check_not_requested": fmt.Sprint(signatureError)}
+		if err := encoder.Encode(row); err != nil {
+			panic(err)
+		}
+		fmt.Fprintln(os.Stderr, target.Owner, len(record.Findings), "findings")
+	}
+}

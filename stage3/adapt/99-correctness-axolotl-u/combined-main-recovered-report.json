@@ -1,0 +1,19 @@
+{
+  "base": "31d7a244808fa8092643926d21ab9d310a54cce3",
+  "tree": "/workspace/scratch/99u-final31-main",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "observedRawIdentityEvents": 212734,
+  "allIdentityMultiplicitiesEven": true,
+  "testProcessExitObservedInLog": 1,
+  "wrapperReportWasMissingAfterDisconnect": true,
+  "wrapperExitAndWallTimeNotClaimed": true,
+  "recovery": "The unmodified oracle completed its upstream test process before the executor disconnected. Verify the completed log, every raw identity event and every baseline file without inventing missing wrapper timing or exit metadata.",
+  "logSha256": "fbab79321e7e2a70bcbc61330062fb47e8e59e1089fbc327133585e5e28f63fe"
+}
