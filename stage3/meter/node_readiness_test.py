@@ -1,4 +1,4 @@
-"""Exercise the actual ES-module Node probe, including const-enum import elision."""
+"""Exercise the actual ES-module Node probe, preserving value imports used only as types."""
 from pathlib import Path
 import tempfile
 import unittest
@@ -13,8 +13,8 @@ class NodeReadinessTests(unittest.TestCase):
             tree = Path(temporary) / 'tree'
             tree.mkdir()
             sources = {
-                'flags.ts': 'throw new Error("elided import ran"); export const enum Flag { Yes = 1 }\n',
-                'clean.ts': 'import {Flag} from "./flags.js"; if (Flag.Yes !== 1) throw new Error("bad enum");\n',
+                'flags.ts': 'throw new Error("verbatim import ran"); export const enum Flag { Yes = 1 }\n',
+                'clean.ts': 'import type {Flag} from "./flags.js"; export type Clean = Flag;\n',
                 'cycle.ts': 'import {other} from "./dependency.js"; export let early: number = other;\n',
                 'dependency.ts': 'import {early} from "./cycle.js"; export let other: number = early;\n',
                 'exit.ts': 'process.exit(1);\n',
@@ -38,6 +38,19 @@ class NodeReadinessTests(unittest.TestCase):
             self.assertIsNone(timed_out['exit'])
             self.assertFalse(timed_out['throws'])
             self.assertTrue((logs / 'results.json').is_file())
+
+    def test_value_import_used_only_as_type_keeps_its_evaluation_edge(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            tree = Path(temporary)
+            (tree / 'flags.ts').write_text(
+                'throw new Error("verbatim import ran"); export const enum Flag { Yes = 1 }\n')
+            root = tree / 'main.ts'
+            root.write_text('import {Flag} from "./flags.js"; export type OnlyAType = Flag;\n')
+            result = run_roots(tree, [root], tree / 'logs')[str(root)]
+            self.assertEqual(result['build_exit'], 0)
+            self.assertTrue(result['throws'], result)
+            self.assertEqual(result['exit'], 1)
+            self.assertEqual(result['first_error'], 'Error: verbatim import ran')
 
     def test_build_failure_cannot_prove_node_throws(self):
         with tempfile.TemporaryDirectory() as temporary:

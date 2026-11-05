@@ -8,6 +8,18 @@ import subprocess
 import tempfile
 
 
+# Mirror compilerOptions() in internal/load/load.go. All checks share that loader's
+# ES2024, ESNext/bundler, forced-module graph, including value imports used only
+# as types. In particular, verbatimModuleSyntax also preserves const enums.
+LOADER_OPTIONS = {
+    'strict': True, 'noUncheckedIndexedAccess': True, 'exactOptionalPropertyTypes': True,
+    'erasableSyntaxOnly': False, 'verbatimModuleSyntax': True,
+    'allowImportingTsExtensions': True, 'noEmit': True, 'module': 'ESNext',
+    'moduleDetection': 'force', 'moduleResolution': 'bundler', 'target': 'ES2024',
+    'lib': ['es2024'], 'types': [],
+}
+
+
 def command(args, log, timeout):
     with log.open('w') as output:
         try:
@@ -32,11 +44,16 @@ def run_roots(tree, roots, logs, timeout=5, build_timeout=60):
     version = (logs / 'node-version.log').read_text().strip() if version_exit == 0 else None
     with tempfile.TemporaryDirectory(prefix='meter-node-') as temporary:
         output = Path(temporary)
-        # Do not bundle or preserve const enums: use tsc's own import elision and module order.
-        build_exit, build_timeout_hit = command([
-            'tsc', '--ignoreConfig', '--noCheck', '--module', 'esnext', '--moduleResolution', 'bundler',
-            '--target', 'es2022', '--sourceMap', '--rootDir', str(tree), '--outDir', str(output),
-            *roots], logs / 'build.log', build_timeout)
+        # The census already checked the program. Override only emission settings:
+        # noCheck avoids a second checker; rewriting TS extensions lets emitted JS
+        # resolve those imports. Neither setting elides a module evaluation edge.
+        options = dict(LOADER_OPTIONS, noEmit=False, noCheck=True,
+                       rewriteRelativeImportExtensions=True, sourceMap=True,
+                       rootDir=str(tree), outDir=str(output))
+        config = output / 'tsconfig.json'
+        config.write_text(json.dumps({'compilerOptions': options, 'files': roots}))
+        build_exit, build_timeout_hit = command(
+            ['tsc', '--project', str(config)], logs / 'build.log', build_timeout)
         (output / 'package.json').write_text('{"type":"module"}\n')
         results = {}
         for index, root in enumerate(roots):
@@ -54,6 +71,7 @@ def run_roots(tree, roots, logs, timeout=5, build_timeout=60):
                 result['first_error'] = ('Node v24 unavailable' if not version or not version.startswith('v24.')
                                          else 'TypeScript emit failed or timed out')
             results[root] = result
+    (logs / 'compiler-options.json').write_text(json.dumps(options, indent=2) + '\n')
     (logs / 'results.json').write_text(json.dumps(results, indent=2) + '\n')
     return results
 
