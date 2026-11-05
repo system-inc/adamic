@@ -128,8 +128,9 @@ async generator, rule 2400, among them).
   parent's frame, which needs a canonical environment a generator's cells can be; a method needs
   `this`.
 - **A generic generator's instance whose `T` isn't one present slot**, a union or `unknown` among
-  them, and a parameter typed by a view, `Iterable<T>`, which a for-of in the body can't step until
-  the erased view is built (#qk8rztp S2b). tsc's own `mapIterator` stops there, at its for-of.
+  them, and a for-of in the body over an `Iterable<T>` parameter handed anything but a collection's
+  iterator (the view above). tsc's own `mapIterator` handed an array stops, since an array is no
+  origin a view admits, and handed a Map's `keys()` it lowers.
 - **`yield*`.** Delegation forwards `next`, `return` and `throw` and closes its inner iterator.
 - **A yield inside `try`**, and with it any `finally` around a yield. A throw or a return delivered
   at a yield, and `return()` running a `finally`, need resume modes the frame doesn't have yet.
