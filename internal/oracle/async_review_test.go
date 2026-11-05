@@ -35,9 +35,10 @@ var asyncReviewCases = []struct{ path, output, reason, location string }{
 	{"refused/modules/main.a", "a1\nb\na2\n", "top-level await outside the entry module", "suspended.a:2:"},
 	{"refused/maybe_boolean_and.a", "undefined\n", "await inside maybe-boolean logical operands", "maybe_boolean_and.a:3:"},
 	// Its task makes strings outside a try, each of which can throw past V8's longest string
-	// (ir.StringLengthMayThrow), so it may reject, and awaiting the first task's promise can leave the
-	// second's rejection unobserved (#c3bk0fp). accepted/concurrent_plain.a keeps the interleaving.
-	{"refused/concurrent.a", "one:start\ntwo:start\none:resume\ntwo:resume\none:ok|caught:two\n", "a promise not awaited in the same function before an escaping completion", "concurrent.a:14:"},
+	// (ir.StringLengthMayThrow), so it may reject, and the template awaiting the first task's promise
+	// can throw before the second's is awaited: NotYet, named for the limit, at that template (Adamic's
+	// ruling on #c3bk0fp). accepted/concurrent_plain.a keeps the interleaving.
+	{"refused/concurrent.a", "one:start\ntwo:start\none:resume\ntwo:resume\none:ok|caught:two\n", "an await in an async function whose completion may throw at the string-length limit before every pending promise is awaited", "concurrent.a:15:"},
 }
 
 func init() {
