@@ -1,4 +1,4 @@
-// Timers use the POSIX monotonic clock, including strict C11 builds without -pthread.
+// Timers use the POSIX monotonic clock and sources POSIX poll, including strict C11 builds without -pthread.
 #if defined(__linux__)
 #define _POSIX_C_SOURCE 200809L
 #endif
@@ -157,16 +157,22 @@ static void abandon(adamic_async_promise *promise, bool cancelling) {
 void adamic_async_cancel(adamic_async_promise *promise) { abandon(promise, true); }
 static void drain_jobs(void);
 #ifndef ADAMIC_TARGET_WASI
+#include <poll.h>
 static int timer_wait_ms(void);
+static size_t source_count(void);
+static void source_poll_set(struct pollfd *descriptors);
+static void source_record(const struct pollfd *descriptors);
 #endif
 #include "async_host_impl.h"
 #include "timers_impl.h"
+#include "sources_impl.h"
 
 void adamic_async_teardown(void) {
 #ifdef ADAMIC_NODE_HOST
     adamic_fs_file_watch_shutdown();
 #endif
     timer_shutdown();
+    source_shutdown();
     host_shutdown();
     while (subscriptions != NULL) abandon(subscriptions->promise, false);
 }
@@ -186,7 +192,7 @@ void adamic_async_run(void) {
     if (host_started) host_loop_thread();
     drain_jobs();
     for (;;) {
-        if (!host_live() && !timer_live()) break;
+        if (!host_live() && !timer_live() && !source_live()) break;
         adamic_host_stdout_refresh();
         /* A timer phase takes the deadlines ready at this turn. An interval
          * rearmed during a slow callback waits for another turn, so ready host
@@ -199,8 +205,11 @@ void adamic_async_run(void) {
             if (!due || !timer_dispatch()) break;
             drain_jobs();
         }
+        /* A source phase dispatches what the last wait recorded, each source at
+         * most once, so one its dispatch leaves readable cannot starve the rest. */
+        while (source_dispatch()) drain_jobs();
         adamic_host_process_completions();
-        if (!host_live() && !timer_live()) break;
+        if (!host_live() && !timer_live() && !source_live()) break;
         host_wait_hook();
     }
     adamic_async_teardown();
