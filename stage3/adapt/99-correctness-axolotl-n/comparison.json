@@ -1,0 +1,99 @@
+{
+  "stockTypeScript": "6.0.3",
+  "outputs": [
+    {
+      "path": "built/local/_tsc.js",
+      "bytes": 6242668,
+      "sha256": "34d5cdcff90706277c4f85ef723068e194a3dda78695dd1b63c6761b6dab03f5",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/typescript.js",
+      "bytes": 9150295,
+      "sha256": "4905fc12eac83f529b8e6417de03d7d6b3e611cd987ead502b444d012d437aff",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "byteIdentical": true
+    }
+  ],
+  "declarations": [
+    {
+      "path": "built/local/typescript.d.ts",
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "byteIdentical": true
+    },
+    {
+      "path": "built/local/tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "byteIdentical": true
+    }
+  ],
+  "transpiles": [
+    {
+      "removeComments": false,
+      "bytes": 51748,
+      "sha256": "c0d89cee68836e768393b23cc0a7bb44d99870fb835452f5ab9026b1795a7f4c",
+      "byteIdentical": true
+    },
+    {
+      "removeComments": true,
+      "bytes": 48664,
+      "sha256": "170475384cfe82b17fd3856c741076daea8f536e8cfce421f82631c6e5932db7",
+      "byteIdentical": true
+    }
+  ],
+  "sourceFiles": 746,
+  "changedSources": [
+    "compiler/debug.ts"
+  ],
+  "syntaxCountsBefore": {
+    "casts": 47,
+    "explicitAny": 0
+  },
+  "syntaxCountsAfter": {
+    "casts": 47,
+    "explicitAny": 0
+  }
+}

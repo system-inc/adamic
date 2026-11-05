@@ -1,0 +1,210 @@
+[
+  {
+    "site": "CW093",
+    "hand": "H06",
+    "owner": "assertEachNode",
+    "inputWhere": "src/compiler/debug.ts:288:72",
+    "decision": "dropped",
+    "why": "The four original refusals disappear, but assertNotNode gains two recorded weak/strong retention NotYet findings. The coordinated parameter edit is dropped under the no-new-finding contract."
+  },
+  {
+    "site": "CW095",
+    "hand": "H06",
+    "owner": "assertNode",
+    "inputWhere": "src/compiler/debug.ts:301:98",
+    "decision": "dropped",
+    "why": "The four original refusals disappear, but assertNotNode gains two recorded weak/strong retention NotYet findings. The coordinated parameter edit is dropped under the no-new-finding contract."
+  },
+  {
+    "site": "CW096",
+    "hand": "H06",
+    "owner": "assertNotNode",
+    "inputWhere": "src/compiler/debug.ts:314:108",
+    "decision": "dropped",
+    "why": "The four original refusals disappear, but assertNotNode gains two recorded weak/strong retention NotYet findings. The coordinated parameter edit is dropped under the no-new-finding contract."
+  },
+  {
+    "site": "CW097",
+    "hand": "H06",
+    "owner": "assertOptionalNode",
+    "inputWhere": "src/compiler/debug.ts:328:98",
+    "decision": "dropped",
+    "why": "The four original refusals disappear, but assertNotNode gains two recorded weak/strong retention NotYet findings. The coordinated parameter edit is dropped under the no-new-finding contract."
+  },
+  {
+    "site": "CW102",
+    "hand": "H07",
+    "owner": "formatSyntaxKind",
+    "inputWhere": "src/compiler/debug.ts:445:34",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW104",
+    "hand": "H07",
+    "owner": "formatSnippetKind",
+    "inputWhere": "src/compiler/debug.ts:449:34",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW106",
+    "hand": "H07",
+    "owner": "formatScriptKind",
+    "inputWhere": "src/compiler/debug.ts:453:34",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW108",
+    "hand": "H07",
+    "owner": "formatNodeFlags",
+    "inputWhere": "src/compiler/debug.ts:457:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW110",
+    "hand": "H07",
+    "owner": "formatNodeCheckFlags",
+    "inputWhere": "src/compiler/debug.ts:461:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW112",
+    "hand": "H07",
+    "owner": "formatModifierFlags",
+    "inputWhere": "src/compiler/debug.ts:465:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW114",
+    "hand": "H07",
+    "owner": "formatTransformFlags",
+    "inputWhere": "src/compiler/debug.ts:469:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW116",
+    "hand": "H07",
+    "owner": "formatEmitFlags",
+    "inputWhere": "src/compiler/debug.ts:473:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW118",
+    "hand": "H07",
+    "owner": "formatSymbolFlags",
+    "inputWhere": "src/compiler/debug.ts:477:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW120",
+    "hand": "H07",
+    "owner": "formatTypeFlags",
+    "inputWhere": "src/compiler/debug.ts:481:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW122",
+    "hand": "H07",
+    "owner": "formatSignatureFlags",
+    "inputWhere": "src/compiler/debug.ts:485:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW124",
+    "hand": "H07",
+    "owner": "formatObjectFlags",
+    "inputWhere": "src/compiler/debug.ts:489:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW126",
+    "hand": "H07",
+    "owner": "formatFlowFlags",
+    "inputWhere": "src/compiler/debug.ts:493:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW128",
+    "hand": "H07",
+    "owner": "formatRelationComparisonResult",
+    "inputWhere": "src/compiler/debug.ts:497:36",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW130",
+    "hand": "H07",
+    "owner": "formatCheckMode",
+    "inputWhere": "src/compiler/debug.ts:501:34",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW132",
+    "hand": "H07",
+    "owner": "formatSignatureCheckMode",
+    "inputWhere": "src/compiler/debug.ts:505:34",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW134",
+    "hand": "H07",
+    "owner": "formatTypeFacts",
+    "inputWhere": "src/compiler/debug.ts:509:35",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW136",
+    "hand": "H07",
+    "owner": "attachFlowNodeDebugInfoWorker.get",
+    "inputWhere": "src/compiler/debug.ts:540:56",
+    "decision": "dropped",
+    "why": "The required enum-storage transition is absent: zero enum-view records.go storage NotYet findings. The trial adds two readonly-to-mutable cache-storage scan findings and 17 reading-ts lowering stops. The coordinated view/helper edit is dropped."
+  },
+  {
+    "site": "CW155",
+    "hand": "H08",
+    "owner": "formatControlFlowGraph.buildGraphNode",
+    "inputWhere": "src/compiler/debug.ts:1014:29",
+    "decision": "dropped",
+    "why": "This main tree constructs the literal in links[id] = graphNode = {...}; there is no const node declaration to annotate. Introducing a local changes JavaScript, and a new cast is forbidden. No edit is shipped."
+  },
+  {
+    "site": "CW156",
+    "hand": "H09",
+    "owner": "formatControlFlowGraph.computeColumnWidths",
+    "inputWhere": "src/compiler/debug.ts:1057:39",
+    "decision": "dropped",
+    "why": "Array<number>(height) removes the original number initializer finding but adds Array-as-value lowering and a new string initializer scan finding elsewhere in renderGraph. The trial also exposes inherited fill storage. Dropped under the no-new-finding contract."
+  },
+  {
+    "site": "CW157",
+    "hand": "H10",
+    "owner": "formatControlFlowGraph.renderFlowNode",
+    "inputWhere": "src/compiler/debug.ts:1120:30",
+    "decision": "kept",
+    "why": "Readonly parameter and corresponding readonly predicate target remove CW157. The independent census and real pair show no new finding, site, first-stop movement or regression."
+  },
+  {
+    "site": "CW158",
+    "hand": "H11",
+    "owner": "formatControlFlowGraph.renderGraph",
+    "inputWhere": "src/compiler/debug.ts:1133:48",
+    "decision": "dropped",
+    "why": "Explicit Connection arguments remove the enum-slot refusal, but renderGraph gains an Array-as-value lowering finding; inherited fill storage is also exposed. Dropped under the no-new-finding contract."
+  }
+]
