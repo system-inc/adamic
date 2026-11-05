@@ -21,7 +21,8 @@ function safe(target: Named, name: string): string {
 }
 
 const open: Named = { name: 'open', size: 1 };
-const shut: Named = { name: 'shut', size: 2 };
+// Unannotated, so its literal proves the shape Object.freeze is given (lower's exactObject).
+const shut = { name: 'shut', size: 2 };
 Object.freeze(shut);
 console.log(safe(open, 'first'));
 console.log(safe(shut, 'second'));
