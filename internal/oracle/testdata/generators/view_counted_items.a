@@ -1,0 +1,33 @@
+// Lower's question on #qk8rztp S2c-1 commit 2: the dispatch declares its item at the top of each
+// pass and each arm assigns it, so a counted item, an object holding a built string here, must start
+// empty, take each step's value releasing the last, and be let go of at the end of each pass, on a
+// return out of the loop as on its end. A string item can't reach this path yet: Iterable<string> is
+// held as a union, whose view a generator can't feed in S2c-1, so the item is an object.
+interface Label {
+    readonly text: string;
+}
+function* labels(count: number): Generator<Label, void, undefined> {
+    for(let index = 0; index < count; index++) {
+        yield { text: `gen ${'g'.repeat(index + 1)}` };
+    }
+}
+function joined(items: Iterable<Label>): string {
+    const parts: string[] = [];
+    for (const label of items) {
+        parts.push(label.text);
+    }
+    return parts.join('|');
+}
+function first(items: Iterable<Label>): string {
+    for (const label of items) {
+        return `first ${label.text}`;
+    }
+    return 'none';
+}
+const byName = new Map<string, Label>([['a', { text: 'x' + String(3) }], ['b', { text: `y${String(4)}` }]]);
+console.log(joined(labels(3)));
+console.log(joined(byName.values()));
+console.log(joined(labels(0)));
+console.log(first(labels(2)));
+console.log(first(byName.values()));
+console.log(first(new Map<string, Label>().values()));

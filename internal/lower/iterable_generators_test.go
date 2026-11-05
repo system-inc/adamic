@@ -371,3 +371,29 @@ func TestLibraryIteratorLoopIsItsStepAndItsBody(t *testing.T) {
 		t.Fatalf("libraryIteratorLoop's locals changed: %+v", l.result.Locals)
 	}
 }
+
+// A view's dispatch reads its held local's next once, in its collection arm, after the collection
+// test, and checkGeneratorRoads holds it to that: one next per collection test, so a second next of
+// the local is never taken for the dispatch's own (Lower's must on #qk8rztp S2c-1, her option (b)).
+// A program's xs.next() on an IterableIterator<T> parameter a generator feeds stops before that
+// (the unbound-method row above); this builds the case by hand, a dispatched local with an extra
+// next, so checkGeneratorRoads' compiler bug is what's shown. Mutant: the check back to
+// reads == stepped + nexts, and this goes red.
+func TestGeneratorRoadsRefuseAnotherNextOfADispatchedLocal(t *testing.T) {
+	t.Parallel()
+	held := ir.Read{Local: 0, Of: ir.Object}
+	next := ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}}
+	program := &ir.Program{
+		Locals: []ir.Local{{Name: "iterator", Type: ir.Object, Function: -1}},
+		Main: []ir.Statement{ir.Block{Closes: 1, Body: []ir.Statement{
+			ir.Declare{Local: 0, Value: ir.Undefined{Of: ir.Object}},
+			ir.Evaluate{Value: ir.IsCollectionIterator{Value: held}},
+			next,
+			next,
+		}}},
+	}
+	err := checkGeneratorRoads(program)
+	if err == nil || !strings.Contains(err.Error(), "compiler bug") {
+		t.Fatalf("got %v, want checkGeneratorRoads' compiler bug for a second next of the view's local", err)
+	}
+}
