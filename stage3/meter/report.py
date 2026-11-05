@@ -286,28 +286,50 @@ def root_order_checks(tree, run, records):
                   and row['kind'] in ('NotYet', 'Refused') and row.get('reason') in READINESS_REASONS
                   and stop_file(row['where']) in attempted - readiness]
     probes = run_roots(tree, [row['roots'][0] for row in candidates], run / 'node-readiness')
-    return [{'root': site_where(row['roots'][0]), 'where': site_where(row['where']),
-             'reason': row['reason'], 'node': probes[str(Path(row['roots'][0]).resolve())]}
-            for row in candidates]
+    checks = []
+    for row in candidates:
+        root = str(Path(row['roots'][0]).resolve())
+        first = next((finding for record in latent[1:] for finding in record.get('findings') or []
+                      if stop_file(finding['where']) == root), None)
+        checks.append({'root': site_where(root), 'where': site_where(row['where']),
+                       'reason': row['reason'], 'node': probes[root],
+                       'entry_file_attempted': root in attempted,
+                       'entry_next_stop': None if first is None else {
+                           'kind': first['kind'], 'where': site_where(first['where']),
+                           'reason': first['reason'], 'source': 'entry census'}})
+    return checks
+
+
+def artifact_lowers_whole(artifact):
+    return artifact['entry_file_attempted'] and artifact['entry_next_stop'] is None
 
 
 def root_order_table(label, result):
     totals = result['totals']
     lines = ['', f"Lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
              f"root-order artifacts: {len(result.get('root_order_artifacts', []))}.",
-             '', '| Root | Stop | Reason | Node result | Classification |',
-             '| --- | --- | --- | --- | --- |']
+             '', '| Root | Stop | Reason | Node result | Classification | File result from entry census |',
+             '| --- | --- | --- | --- | --- | --- |']
     for row in result.get('readiness_node_checks', []):
         node = row['node']
         outcome = ('Node throws here as well' if node['throws'] else
                    'Node runs clean' if node['exit'] == 0 else 'Node probe inconclusive')
         outcome += f"; exit {node['exit']}; {node['first_error']}"
         classification = 'root-order artifact' if node['throws'] else 'counts against root file'
-        cells = [row['root'], row['where'], row['reason'], outcome, classification]
+        entry_result = ''
+        if node['throws']:
+            stop = row['entry_next_stop']
+            if stop is not None:
+                entry_result = f"{stop['kind']} {stop['where']}: {stop['reason']} (read from the entry census)"
+            elif row['entry_file_attempted']:
+                entry_result = 'units attempted; no findings; lowers whole'
+            else:
+                entry_result = 'no units attempted; lowering unproven'
+        cells = [row['root'], row['where'], row['reason'], outcome, classification, entry_result]
         lines.append('| ' + ' | '.join(escape(cell).replace('|', '&#124;').replace('\n', ' ')
                                       for cell in cells) + ' |')
     if not result.get('readiness_node_checks', []):
-        lines.append('| No qualifying readiness stops | | | | |')
+        lines.append('| No qualifying readiness stops | | | | | |')
     return lines
 
 
@@ -365,10 +387,13 @@ def report(tree, run, stamp, compiler_commit=None):
         raise ValueError('census coverage incomplete: per-file or whole-program rows missing')
     checks = root_order_checks(tree, run, records)
     artifacts = [row for row in checks if row['node']['throws']]
-    artifact_roots = {row['root'] for row in artifacts}
+    artifact_roots = {row['root']: row for row in artifacts}
     for row in rows.values():
         if row['file'] in artifact_roots:
-            row['lowering'] = True
+            artifact = artifact_roots[row['file']]
+            row['lowering'] = artifact_lowers_whole(artifact)
+            row['lowering_stop'] = artifact['entry_next_stop']
+            row['lowering_evidence'] = 'entry census'
     files = [rows[name] for name in sorted(rows)]
     totals = {
         'files': len(files),
@@ -441,7 +466,7 @@ def write_readme(run, result, revision='HEAD'):
     if not previous:
         lines += ['', 'No previous committed paired run was found.']
     lines += root_order_table('main', result['trees']['main'])
-    lines += ['', 'Lowering includes readiness artifacts verified against the entry order and Node. No native output is claimed.', '']
+    lines += ['', 'For artifact roots, lowering requires attempted file units and no entry-census finding. No native output is claimed.', '']
     (run / 'README.md').write_text('\n'.join(lines))
 
 
@@ -535,7 +560,8 @@ if __name__ == '__main__':
         roots = [row for row in records if len(row['roots']) == 1
                  and Path(row['roots'][0]).suffix in ('.ts', '.a')]
         result = {'readiness_node_checks': checks, 'root_order_artifacts': artifacts,
-                  'totals': {'lowering': sum(row['kind'] == 'accepted' for row in roots) + len(artifacts),
+                  'totals': {'lowering': sum(row['kind'] == 'accepted' for row in roots)
+                                         + sum(artifact_lowers_whole(row) for row in artifacts),
                              'source_files': len(roots)}}
         (run / 'root-order.json').write_text(json.dumps(result, indent=2) + '\n')
         lines = ['Recorded roots only; census coverage is not asserted.'] + root_order_table('recorded roots', result)
