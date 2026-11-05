@@ -243,7 +243,18 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if l.censusNullableOverloadResult(produced, promised) {
 			return nil // Each resolved call proves the result or checks its presence.
 		}
-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced), Fix: "make the implementation result covariant with every overload result"}
+		proven, failed := l.predicateOverloadResultProven(implementation, overload)
+		if proven {
+			// Every call's callback is proven where it's passed: an overload's predicate parameter whose
+			// implementation takes a plain boolean callback isn't a checked claim (checkedFunctionTypeClaim), so
+			// predicateArguments demands a named function or arrow whose body proves both branches.
+			return nil
+		}
+		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
+		if failed != nil {
+			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
+		}
+		return &Refused{Where: l.program.Where(overload), What: what, Fix: "make the implementation result covariant with every overload result"}
 	}
 	return nil
 }
