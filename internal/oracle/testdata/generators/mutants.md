@@ -136,3 +136,15 @@ S2c-1 (a generator's call into a one-read Iterable<T> parameter), each one exact
 q3's retain around a step and a return (runtime/generator.c) has no mutant row: no program reaches
 it yet, since no slot but the consumer's holds a generator, so nothing a resume runs can let go of
 the last holder. It becomes live with stored generators (S2c-4 on).
+
+S2c-3 (a generator's call into an `Iterable<T> | undefined` parameter, tsc's firstOrUndefinedIterator),
+each one exact line, run by `s2c3-proof.sh` with the one test it must turn red. Not yet run on a box:
+the Red column says what each must do.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The undefined-test exemption removed | lower/iterable_views.go, `generatorParameter`: `if undefinedTestOf(node, parameter) {` made `if false && undefinedTestOf(node, parameter) {` | first_or_undefined.a: the parameter's undefined test counts as a read, and it stops NotYet, "read 2 times" |
+| The exemption widened to a null test | lower/local_uses.go, `undefinedTestOf`: `if !isTest {` made to take an `ir.IsNull` of the read as a test too | TestNullishIterableParameterStopsOnEveryOtherRoad (internal/lower): the null-test row lowers |
+| The door widened to `\| null` | lower/generators.go, `iterableParameter`: `if member.Flags()&checker.TypeFlagsUndefined != 0 {` made to count `TypeFlagsNull` too | the same test's `\| null` row: it reaches the one-read rule, whose null test counts, and stops "read 2 times" instead of at the call |
+| The union-held slot let through | lower/iterable_views.go, `generatorParameter`: `case l.generatorArguments[of.Site-1].nullable && ...:` made `case false && ...:` | the same test's `Iterable<string> \| undefined` row: it no longer stops as held as a union |
+| The door's nullable arm shut | lower/generators.go, `iterableParameter`: `return nullable, nullable` made `return false, false` | first_or_undefined.a: its generator's call is no longer an argument the door admits nor a stepped site, so it stops, refused by the void rules for its `void` TReturn or, if they let it by, not yet as a generator used other than by a consumer |
