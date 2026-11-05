@@ -12,7 +12,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 GROUPS = {
     'meter': ['stage3/meter/report_test.py', 'stage3/meter/entry_test.py',
-              'stage3/meter/compiler_test.py'],
+              'stage3/meter/compiler_test.py', 'stage3/meter/node_readiness_test.py'],
     'census': ['stage3/census/latent/replay/replay_test.py'],
 }
 

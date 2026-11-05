@@ -8,6 +8,8 @@ from pathlib import Path
 import subprocess
 import sys
 
+from node_readiness import run_roots
+
 
 MEASUREMENT = 'measured on a checker-rejected program'
 ENTRY_MEASUREMENT = 'measured on a checker-clean entry-root program'
@@ -256,6 +258,59 @@ def unowned_table(trees):
     return ordered, lines
 
 
+READINESS_REASONS = {
+    'reading an enum before its runtime initialization; move the call after the enum declaration',
+    'a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration',
+}
+
+
+def stop_file(where):
+    return str(Path(where.rsplit(':', 2)[0]).resolve())
+
+
+def root_order_checks(tree, run, records):
+    """Use the entry's attempted units and all its finding locations, never root attribution."""
+    path = run / 'tsc/latent.jsonl'
+    if not path.exists():
+        return []
+    entry = entry_summary(tree, run / 'tsc')
+    if entry['lowering_census'] is None:
+        return []
+    latent = [json.loads(line) for line in path.read_text().splitlines()]
+    attempted = {str(Path(row['file']).resolve()) for row in latent[1:]
+                 if any(unit['status'] in ('attempted', 'panic', 'speculative')
+                        for unit in row.get('units', []))}
+    readiness = {stop_file(finding['where']) for row in latent[1:]
+                 for finding in row.get('findings') or [] if finding['reason'] in READINESS_REASONS}
+    candidates = [row for row in records if len(row['roots']) == 1
+                  and row['kind'] in ('NotYet', 'Refused') and row.get('reason') in READINESS_REASONS
+                  and stop_file(row['where']) in attempted - readiness]
+    probes = run_roots(tree, [row['roots'][0] for row in candidates], run / 'node-readiness')
+    return [{'root': site_where(row['roots'][0]), 'where': site_where(row['where']),
+             'reason': row['reason'], 'node': probes[str(Path(row['roots'][0]).resolve())]}
+            for row in candidates]
+
+
+def root_order_table(label, result):
+    totals = result['totals']
+    lines = ['', f"Lowering, {label}: {totals['lowering']}/{totals['source_files']}; "
+             f"root-order artifacts: {len(result.get('root_order_artifacts', []))}.",
+             '', '| Root | Stop | Reason | Node result | Classification |',
+             '| --- | --- | --- | --- | --- |']
+    for row in result.get('readiness_node_checks', []):
+        node = row['node']
+        outcome = ('Node throws here as well' if node['throws'] else
+                   'Node runs clean' if node['exit'] == 0 else 'Node probe inconclusive')
+        outcome += f"; exit {node['exit']}; {node['first_error']}"
+        classification = 'root-order artifact' if node['throws'] else 'counts against root file'
+        cells = [row['root'], row['where'], row['reason'], outcome, classification]
+        lines.append('| ' + ' | '.join(escape(cell).replace('|', '&#124;').replace('\n', ' ')
+                                      for cell in cells) + ' |')
+    if not result.get('readiness_node_checks', []):
+        lines.append('| No qualifying readiness stops | | | | |')
+    return lines
+
+
 def report(tree, run, stamp, compiler_commit=None):
     compiler = tree / 'src/compiler'
     expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}
@@ -308,6 +363,12 @@ def report(tree, run, stamp, compiler_commit=None):
         }
     if set(rows) != set(expected) or whole is None:
         raise ValueError('census coverage incomplete: per-file or whole-program rows missing')
+    checks = root_order_checks(tree, run, records)
+    artifacts = [row for row in checks if row['node']['throws']]
+    artifact_roots = {row['root'] for row in artifacts}
+    for row in rows.values():
+        if row['file'] in artifact_roots:
+            row['lowering'] = True
     files = [rows[name] for name in sorted(rows)]
     totals = {
         'files': len(files),
@@ -325,6 +386,8 @@ def report(tree, run, stamp, compiler_commit=None):
         'unlocated_diagnostics': len(unlocated),
         'external_diagnostics': len(external),
         'files': files,
+        'root_order_artifacts': artifacts,
+        'readiness_node_checks': checks,
         'totals': totals,
         'whole_program': {key: value for key, value in whole.items() if key != 'diagnostics'},
         'whole_program_diagnostics': len(whole.get('diagnostics', [])),
@@ -341,6 +404,7 @@ def report(tree, run, stamp, compiler_commit=None):
               f"Lowering: {totals['lowering']}/{totals['source_files']} source files.",
               f"All files: {totals['files']}; JSON inputs fail the source-extension gate.",
               'Blocked means lowering was not attempted because the checker/input gate failed.', '']
+    lines += root_order_table('file roots', result)
     (run / 'report.md').write_text('\n'.join(lines))
     return result
 
@@ -376,7 +440,8 @@ def write_readme(run, result, revision='HEAD'):
                                       str(tree['tsc_entry']['whole_program_diagnostics'])]) + ' |')
     if not previous:
         lines += ['', 'No previous committed paired run was found.']
-    lines += ['', 'Lowering counts ordinary successful IR lowering. No native output is claimed.', '']
+    lines += root_order_table('main', result['trees']['main'])
+    lines += ['', 'Lowering includes readiness artifacts verified against the entry order and Node. No native output is claimed.', '']
     (run / 'README.md').write_text('\n'.join(lines))
 
 
@@ -447,6 +512,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
                 cells.append('absent' if row is None else 'pass' if row[key] else 'fail')
         lines.append('| ' + ' | '.join([name, *cells]) + ' |')
     for label in trees:
+        lines += root_order_table(label, trees[label])
         lines += entry_table(label, trees[label]['tsc_entry'])
     lines += unowned_lines
     for label in trees:
@@ -461,7 +527,21 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 4:
+    if len(sys.argv) == 4 and sys.argv[1] == '--root-order-only':
+        tree, run = (Path(value).resolve() for value in sys.argv[2:])
+        records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
+        checks = root_order_checks(tree, run, records)
+        artifacts = [row for row in checks if row['node']['throws']]
+        roots = [row for row in records if len(row['roots']) == 1
+                 and Path(row['roots'][0]).suffix in ('.ts', '.a')]
+        result = {'readiness_node_checks': checks, 'root_order_artifacts': artifacts,
+                  'totals': {'lowering': sum(row['kind'] == 'accepted' for row in roots) + len(artifacts),
+                             'source_files': len(roots)}}
+        (run / 'root-order.json').write_text(json.dumps(result, indent=2) + '\n')
+        lines = ['Recorded roots only; census coverage is not asserted.'] + root_order_table('recorded roots', result)
+        (run / 'root-order.md').write_text('\n'.join(lines) + '\n')
+        print('\n'.join(lines))
+    elif len(sys.argv) == 4:
         report(Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(), sys.argv[3])
     else:
         report_pair(Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve(),
