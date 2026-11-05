@@ -14,6 +14,8 @@ func (Yield) Type() Type { return 0 }
 // owned. Once the body has finished, or a throw has left it, it is the zero value of Of and
 // GeneratorDone says so; a throw leaves the pending exception set, which the caller tests first when
 // Function's ResumeMayThrow says one can. Function is the generator function the frame was made by.
+// Generator is a Generator, or, in an iterable view's dispatch only, the Object-typed local the view
+// holds, after IsGenerator said it is one (checkGeneratorRoads).
 type GeneratorNext struct {
 	Generator Expression
 	Function  int
@@ -21,6 +23,25 @@ type GeneratorNext struct {
 }
 
 func (g GeneratorNext) Type() Type { return g.Of }
+
+// IterableOf is a generator held where a slot typed Iterable<T> or IterableIterator<T> is, an
+// object: the only door from a Generator value to an Object-typed slot (Compiler, on #qk8rztp S2c-1).
+// It is a direct call's argument and nothing else (checkGeneratorRoads), and it adds no retain or
+// release of its own: the call's result is the caller's temporary, the callee borrows it, and the
+// caller lets go of it after the call. Natively it is a pointer cast; on JavaScript, the value.
+type IterableOf struct {
+	Value Expression
+	Site  int // one-based site, resolved by lowering only for diagnostics
+}
+
+func (IterableOf) Type() Type { return Object }
+
+// IsGenerator is whether the object an iterable view holds is a generator, read from its heap kind,
+// never its static type: the view's per-step dispatch (lower/iterable_views.go) steps one only by
+// GeneratorNext and GeneratorDone.
+type IsGenerator struct{ Value Expression }
+
+func (IsGenerator) Type() Type { return Boolean }
 
 // GeneratorDone is whether the generator's last GeneratorNext found the body finished.
 type GeneratorDone struct {

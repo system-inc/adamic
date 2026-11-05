@@ -90,6 +90,8 @@ var writesNothing = []struct {
 	{ir.HasOwn{}, "tests for an own field"},
 	{ir.HasProperty{}, "tests for a field without reading it"},
 	{ir.InstanceOf{}, "tests a class chain"},
+	{ir.IterableOf{}, "the generator its call made, seen as the object an Iterable<T> slot holds"},
+	{ir.IsGenerator{}, "tests a reference's heap kind"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
 	{ir.JSONDecode{}, "parses a string into a new value without calling user code"},

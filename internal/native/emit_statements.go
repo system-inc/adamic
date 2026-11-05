@@ -242,6 +242,12 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.counterBlock(statement) {
 			break
 		}
+		if statement.Closes != 0 {
+			if e.closes == nil {
+				e.closes = map[string]bool{}
+			}
+			e.closes[e.localName(statement.Closes-1)] = true
+		}
 		e.line("{")
 		e.nested(statement.Body, nil)
 		e.line("}")

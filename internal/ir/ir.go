@@ -1411,8 +1411,14 @@ type (
 		PerIteration []int
 	}
 
-	// Block is a scope: locals declared in it are released when it ends.
-	Block struct{ Body []Statement }
+	// Block is a scope: locals declared in it are released when it ends. Closes, when set, is one
+	// more than the local of an iterable view's dispatch (lower/iterable_views.go): every way out of
+	// the block, its end, a break, a return, a throw or a jump to an outer label, closes the iterator
+	// that local holds before letting go of it, as a for-of's exit calls return() (#qk8rztp S2c-1).
+	Block struct {
+		Body   []Statement
+		Closes int
+	}
 
 	// ForOf runs Body once per element of Iterable, with the element in Local. Over an array, its
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the

@@ -113,3 +113,18 @@ red:
 | The held iterator's frame cell not counted | native/generator.go, `generatorFunction`'s `counted`: `return e.program.Locals[local].IterationCell \|\| e.program.Locals[local].Type.IsReference()` made to answer false for a local whose name starts `iterator` (the view's held iterator, libraryIteratorLoop's local) | map_iterator_entries.a and map_defined_iterator.a: the cell is never released at finish or by the drop walk, a counted leak of the iterator, its next closure and its state, and of the collection the state keeps (and under LeakSanitizer on the box) |
 | The view arm skipped | lower/object.go, `forOf`: `if held, isView := l.iterableViewElement(iterated); isView {` made `...; false && isView {` | map_iterator_entries.a, NotYet "for...of over an object" at its for-of; map_defined_iterator.a is held as a union and still lowers |
 | The union view arm skipped | lower/object.go, `forOf`'s union case: `held, isView := l.iterableViewElement(iterated)` followed by `; isView = false` | map_defined_iterator.a, NotYet "for...of over a union of differently held members" |
+
+S2c-1 (a generator's call into a one-read Iterable<T> parameter), each one exact line, run by
+`s2c1-proof.sh` with the one test it must turn red:
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The one-read check dropped | lower/iterable_views.go, `generatorParameter`: `if reads != 1 {` made `if false && reads != 1 {` | TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad (internal/lower): the next-through-the-parameter, typeof, next-inside-the-loop, labeled-break, identity and default rows compile |
+| Widened to a stored generator | lower/expression.go, `call`'s plain generator arm: `if l.iterableArgument(node) {` made `if true {` | the same test's stored-generator row: the stored call goes through IterableOf into a local, and checkGeneratorRoads says so as a compiler bug instead of the stored-generator stop |
+| The close at the break dropped | native/emit_ownership.go, `releaseScopes`: the `adamic_iterator_close` line made `(void)` of the local | view_outer_loop.a, natively: the second and third passes resume the generator and print its next values, where Node prints nothing |
+| The dispatch's generator arm removed | lower/iterable_views.go, `dispatchView`: the kind test's condition, `ir.Unary{Operator: ir.Not, Operand: ir.IsGenerator{Value: held}}`, made `ir.BooleanConstant{Value: true}` | every fixture with a view a generator feeds (array_from_view.a, elementwise_view.a, view_outer_loop.a, view_throw.a): the loud default panics, a compiler bug naming the site |
+| IterableOf counted fresh | native/region.go, `freshValue`: IterableOf's `return false` made `return true` | TestIterableOfIsNeverFresh (internal/native) |
+
+q3's retain around a step and a return (runtime/generator.c) has no mutant row: no program reaches
+it yet, since no slot but the consumer's holds a generator, so nothing a resume runs can let go of
+the last holder. It becomes live with stored generators (S2c-4 on).

@@ -177,6 +177,9 @@ func (plan *regionPlan) freshValue(value ir.Expression) bool {
 		return true
 	case ir.Call:
 		return plan.regionTarget(value) >= 0
+	case ir.IterableOf:
+		// A generator seen as an object: its storage is a frame, never an object a region can hold.
+		return false
 	}
 	return false
 }
