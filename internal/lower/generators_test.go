@@ -26,7 +26,6 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 		{"returned", numbers + "function make(): Generator<number, undefined, undefined> { return numbers(2); } for (const value of make()) { console.log(String(value)); }", "used other than by a for-of"},
 		{"put in an array", numbers + "const all = [numbers(1), numbers(2)]; console.log(String(all.length));", "used other than by a for-of"},
 		{"Array.from with a mapper", numbers + "console.log(Array.from(numbers(3), (value: number): number => value * 2).join(','));", "Array.from with a mapper"},
-		{"new Set", numbers + "console.log(String(new Set(numbers(3)).size));", "consumed by new Set"},
 		{"destructured", numbers + "const [first] = numbers(3); console.log(String(first));", "consumed by destructuring"},
 		{"spread inside a generator", numbers + "function* outer(): Generator<number, undefined, undefined> { const all = [...numbers(2)]; yield all.length; } for (const value of outer()) { console.log(String(value)); }", "inside an async function or a generator"},
 		{"read through a view", numbers + "const view: Iterable<number> = numbers(2); for (const value of view) { console.log(String(value)); }", "used other than by a for-of"},
