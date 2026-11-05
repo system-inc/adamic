@@ -158,6 +158,11 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 													 input, (double)previous,
 													 adamic_string_length(input), true)});
 		result = adamic_array_join(pieces, &adamic_string_empty, adamic_join_strings);
+		// Past V8's longest: no string, as when the callback throws.
+		if (adamic_thrown != NULL) {
+			adamic_release(result);
+			result = NULL;
+		}
 	}
 	adamic_release(pieces);
 	return result;

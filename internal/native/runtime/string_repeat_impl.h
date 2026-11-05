@@ -23,7 +23,9 @@ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
 	if (string->length == 0 || count == 0) {
 		return adamic_retain((adamic_string *)&adamic_string_empty);
 	}
-	adamic_string_check_length(adamic_string_length(string) * count);
+	if (!adamic_string_check_length(adamic_string_length(string) * count)) {
+		return adamic_retain(&adamic_string_empty);
+	}
 	return repeat_unchecked(string, count);
 }
 
@@ -33,7 +35,9 @@ adamic_string *adamic_string_pad(const adamic_string *string, double target, con
 	if (target <= length || fill->length == 0) {
 		return adamic_retain((adamic_string *)string);
 	}
-	adamic_string_check_length(target);
+	if (!adamic_string_check_length(target)) {
+		return adamic_retain(&adamic_string_empty);
+	}
 	// The fill, repeated and cut to exactly the missing number of UTF-16 units: whole fills, then the
 	// start of one more, so nothing on the way is longer than the result.
 	double missing = target - length;

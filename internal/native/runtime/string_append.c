@@ -47,7 +47,11 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
 		for (size_t index = 0; index < count; index++) {
 			units += adamic_string_length(parts[index]);
 		}
-		adamic_string_check_length(units);
+		// Too long: the caller's reference comes back as it was, since text = text + more throws
+		// before text is written.
+		if (!adamic_string_check_length(units)) {
+			return string;
+		}
 	}
 	// text += text can't be written in place: joining halves where the pieces meet would rewrite the
 	// bytes the copy of text is still reading. Room is never as much as the length today (a string
