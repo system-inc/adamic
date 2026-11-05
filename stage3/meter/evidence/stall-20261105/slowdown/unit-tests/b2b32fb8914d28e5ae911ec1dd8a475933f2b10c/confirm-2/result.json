@@ -1,0 +1,18 @@
+{
+  "commit": "b2b32fb8914d28e5ae911ec1dd8a475933f2b10c",
+  "label": "confirm-2",
+  "reused_binary": "/tmp/meter-stall-20261105/slowdown/unit-tests/b2b32fb8914d28e5ae911ec1dd8a475933f2b10c/confirm-1/unit",
+  "run_seconds": 156.30938663399957,
+  "exit": 0,
+  "threshold_seconds": 70.80688432650001,
+  "hard_timeout_seconds": 412.72938069,
+  "unit_time": {
+    "snapshot_wall_seconds": 2.632257677999999,
+    "snapshot_cpu_seconds": 4.575076000000067,
+    "file": "/tmp/meter-stall-20261105/adapted/src/compiler/tracing.ts",
+    "where": "/tmp/meter-stall-20261105/adapted/src/compiler/tracing.ts:218:5",
+    "wall_seconds": 122.499521396,
+    "cpu_seconds": 160.94841200000002
+  },
+  "bisect_exit": 1
+}

@@ -1,0 +1,49 @@
+File: good-census
+Build ID: d316ed7b975946eab780968e5cd485ce9a815359
+Type: cpu
+Time: 2026-11-05 17:53:07 UTC
+Duration: 60.01s, Total samples = 84.58s (140.95%)
+Showing nodes accounting for 25.09s, 29.66% of 84.58s total
+Dropped 796 nodes (cum <= 0.42s)
+Showing top 40 nodes out of 189
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%     48.21s 57.00%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
+         0     0%     0%     48.14s 56.92%  github.com/system-inc/adamic/internal/lower.(*lowering).statement (inline)
+         0     0%     0%     48.10s 56.87%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0%     0%     48.02s 56.77%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+     0.02s 0.024% 0.024%     47.64s 56.33%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0% 0.024%     45.41s 53.69%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSnapshot
+     0.01s 0.012% 0.035%     45.37s 53.64%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSnapshotRaw
+         0     0% 0.035%     45.36s 53.63%  github.com/system-inc/adamic/internal/lower.latentCopyPointer_lowering
+         0     0% 0.035%     45.36s 53.63%  github.com/system-inc/adamic/internal/lower.latentCopy_lowering
+         0     0% 0.035%     45.13s 53.36%  github.com/system-inc/adamic/internal/lower.latentFullSelected.func3
+         0     0% 0.035%     44.26s 52.33%  github.com/system-inc/adamic/internal/lower.latentFullSelected
+         0     0% 0.035%     43.86s 51.86%  github.com/system-inc/adamic/internal/lower.latentFull (inline)
+         0     0% 0.035%     43.86s 51.86%  github.com/system-inc/adamic/internal/lower.latentRun
+         0     0% 0.035%     43.30s 51.19%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8]
+     3.71s  4.39%  4.42%     43.29s 51.18%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8].func1
+         0     0%  4.42%     42.99s 50.83%  github.com/system-inc/adamic/internal/lower.Latent
+         0     0%  4.42%     42.41s 50.14%  main.main
+         0     0%  4.42%     41.85s 49.48%  runtime.main
+         0     0%  4.42%     39.02s 46.13%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw
+     0.02s 0.024%  4.45%     31.42s 37.15%  runtime.systemstack
+         0     0%  4.45%     29.30s 34.64%  runtime.gcBgMarkWorker
+     0.01s 0.012%  4.46%     29.25s 34.58%  runtime.gcBgMarkWorker.func2
+     0.23s  0.27%  4.73%     29.23s 34.56%  runtime.gcDrain
+         0     0%  4.73%     27.89s 32.97%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0%  4.73%     27.89s 32.97%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+         0     0%  4.73%     27.84s 32.92%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0%  4.73%     27.83s 32.90%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0%  4.73%     27.70s 32.75%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (partial-inline)
+         0     0%  4.73%     23.61s 27.91%  github.com/system-inc/adamic/internal/lower.(*lowering).nestedDeclarations
+         0     0%  4.73%     23.09s 27.30%  github.com/system-inc/adamic/internal/lower.(*lowering).call
+         0     0%  4.73%        23s 27.19%  github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+         0     0%  4.73%     21.79s 25.76%  runtime.gcDrainMarkWorkerIdle (inline)
+     4.94s  5.84% 10.57%     21.18s 25.04%  runtime.scanObject
+         0     0% 10.57%     20.85s 24.65%  github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement
+         0     0% 10.57%     19.63s 23.21%  github.com/system-inc/adamic/internal/lower.(*lowering).closure
+     1.61s  1.90% 12.47%     18.19s 21.51%  github.com/system-inc/adamic/internal/lower.latentPrivateIRField
+         0     0% 12.47%     17.09s 20.21%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+         0     0% 12.47%     16.22s 19.18%  github.com/system-inc/adamic/internal/lower.(*lowering).callClosure
+     9.29s 10.98% 23.46%     14.52s 17.17%  reflect.(*rtype).Field
+     5.25s  6.21% 29.66%     10.19s 12.05%  runtime.tryDeferToSpanScan

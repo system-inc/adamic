@@ -1,3 +1,5 @@
+Follow-up slowdown measurement and first bad commit: [SLOWDOWN.md](SLOWDOWN.md).
+
 # Meter stall investigation, 2026-11-05, fq9ycej
 
 Stopped with evidence, without a first bad commit. The prescribed 15-minute no-output cutoff fires while this reproduction is still making progress. Its SIGQUIT stack is in the latent overlay's state copier, not a wait. Neither declaration singled out by the observations is a demonstrated infinite loop. Reporting a first bad commit from the initial three-minute replay predicate would be incorrect.

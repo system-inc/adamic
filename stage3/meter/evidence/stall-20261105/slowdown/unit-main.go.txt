@@ -1,0 +1,22 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "time"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main(){
+ started:=time.Now()
+ p,err:=load.LatentLoad([]string{os.Args[1]});if err!=nil{panic(err)}
+ p.LatentEntryReach()
+ times,err:=os.Create(os.Args[3]);if err!=nil{panic(err)};defer times.Close()
+ record,failure:=lower.MeterTimedReplay(context.Background(),p,os.Args[2],times)
+
+ if err=json.NewEncoder(os.Stdout).Encode(record);err!=nil{panic(err)}
+ if failure!=nil{fmt.Fprintln(os.Stderr,failure)}
+ fmt.Fprintln(os.Stderr,"completed",time.Since(started))
+ if len(record.Units)!=1{panic("expected exactly one selected unit")}
+}

@@ -1,0 +1,9 @@
+{
+  "unit": "src/compiler/tracing.ts:218:5",
+  "good_seconds": 4.037308423,
+  "bad_seconds": 137.57646023,
+  "threshold_seconds": 70.80688432650001,
+  "hard_timeout_seconds": 412.72938069,
+  "frozen_utc": "2026-11-05T18:26:11.604741+00:00",
+  "basis": "completed full-pass unit timers, excluding load and per-file registration"
+}

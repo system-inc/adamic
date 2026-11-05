@@ -1,0 +1,5 @@
+go version go1.27.1 linux/amd64
+Linux dda8e081444a 6.18.57 #1 SMP Tue Oct 20 21:56:04 UTC 2026 x86_64 GNU/Linux
+os.cpu_count=5
+/sys/fs/cgroup/cpu.max=400000 100000
+/sys/fs/cgroup/memory.max=17179869184

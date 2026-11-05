@@ -1,0 +1,18 @@
+{
+  "commit": "4a8171994b6a63a42962ddaa462aa28d8e9caa3d",
+  "label": "confirm-1",
+  "threshold_seconds": 70.80688432650001,
+  "hard_timeout_seconds": 412.72938069,
+  "build_seconds": 63.67252243299936,
+  "run_seconds": 22.532036670999332,
+  "exit": 0,
+  "unit_time": {
+    "snapshot_wall_seconds": 2.9482990580000017,
+    "snapshot_cpu_seconds": 4.19330099999997,
+    "file": "/tmp/meter-stall-20261105/adapted/src/compiler/tracing.ts",
+    "where": "/tmp/meter-stall-20261105/adapted/src/compiler/tracing.ts:218:5",
+    "wall_seconds": 5.206438718,
+    "cpu_seconds": 6.471522999999998
+  },
+  "bisect_exit": 0
+}

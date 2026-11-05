@@ -1,0 +1,32 @@
+| Declaration and unit identity | Good s | Bad s | Increase s | Ratio | Good snapshot s | Bad snapshot s |
+|---|---:|---:|---:|---:|---:|---:|
+| dumpTypes (`src/compiler/tracing.ts:218:5`) | 4.037 | 137.576 | 133.539 | 34.08x | 2.136 | 2.442 |
+| assertOptionalToken (`src/compiler/debug.ts:316:5`) | 0.589 | 67.355 | 66.767 | 114.44x | 0.404 | 31.385 |
+| createDirectoryWatcher (`src/compiler/sys.ts:422:5`) | 1.170 | 58.458 | 57.288 | 49.98x | 0.645 | 1.337 |
+| assertOptionalToken (`src/compiler/debug.ts:315:5`) | 0.346 | 57.422 | 57.076 | 165.73x | 0.183 | 1.314 |
+| symbolName (`src/compiler/utilitiesPublic.ts:870:1`) | 3.630 | 58.868 | 55.239 | 16.22x | 0.257 | 0.216 |
+| isParameterPropertyDeclaration (`src/compiler/utilitiesPublic.ts:615:1`) | 0.803 | 45.006 | 44.202 | 56.03x | 0.078 | 0.160 |
+| createScanner (`src/compiler/scanner.ts:1023:1`) | 149.153 | 190.655 | 41.502 | 1.28x | 147.511 | 188.542 |
+| createUseFsEventsOnParentDirectoryWatchFile (`src/compiler/sys.ts:386:1`) | 9.242 | 50.551 | 41.309 | 5.47x | 5.347 | 3.465 |
+| isEmptyBindingElement (`src/compiler/utilitiesPublic.ts:629:1`) | 1.093 | 37.272 | 36.179 | 34.11x | 0.109 | 0.126 |
+| getTypeParameterOwner (`src/compiler/utilitiesPublic.ts:603:1`) | 1.482 | 22.140 | 20.658 | 14.94x | 0.847 | 0.196 |
+| nodeHasName (`src/compiler/utilitiesPublic.ts:931:1`) | 0.755 | 19.281 | 18.525 | 25.52x | 0.184 | 0.134 |
+| getCombinedFlags (`src/compiler/utilitiesPublic.ts:644:1`) | 1.022 | 18.158 | 17.136 | 17.78x | 0.487 | 0.502 |
+| attachFlowNodeDebugInfoWorker (`src/compiler/debug.ts:495:5`) | 0.167 | 11.112 | 10.944 | 66.37x | 0.147 | 9.907 |
+| buildPartRegExp (`src/compiler/semver.ts:35:1`) | 0.221 | 8.138 | 7.917 | 36.84x | 0.219 | 8.096 |
+| EntityNameExpression (`src/compiler/types.ts:2965:1`) | 0.150 | 7.598 | 7.448 | 50.76x | 0.147 | 7.598 |
+| attachFlowNodeDebugInfo (`src/compiler/debug.ts:531:5`) | 0.333 | 7.272 | 6.939 | 21.84x | 0.300 | 7.245 |
+| Version (`src/compiler/semver.ts:46:1`) | 9.286 | 15.075 | 5.789 | 1.62x | 7.096 | 7.623 |
+| Debug (`src/compiler/debug.ts:111:1`) | 3.796 | 9.429 | 5.633 | 2.48x | 3.788 | 9.419 |
+| EntityNameOrEntityNameExpression (`src/compiler/types.ts:2966:1`) | 0.199 | 5.815 | 5.616 | 29.21x | 0.199 | 5.815 |
+| PropertyAccessExpression (`src/compiler/types.ts:2969:1`) | 0.064 | 3.935 | 3.872 | 61.69x | 0.064 | 3.935 |
+| AccessExpression (`src/compiler/types.ts:2967:1`) | 0.197 | 3.807 | 3.611 | 19.37x | 0.197 | 3.807 |
+| numericIdentifierRegExp (`src/compiler/semver.ts:39:1`) | 0.323 | 3.492 | 3.169 | 10.82x | 0.322 | 3.476 |
+| scanNumberFragment (`src/compiler/scanner.ts:1172:5`) | 1.649 | 4.783 | 3.134 | 2.90x | 1.638 | 4.592 |
+| createDirectoryWatcher (`src/compiler/sys.ts:635:5`) | 2.421 | 5.321 | 2.900 | 2.20x | 1.889 | 4.262 |
+| getNodeSystem (`src/compiler/sys.ts:1473:5`) | 12.551 | 15.226 | 2.675 | 1.21x | 10.894 | 13.217 |
+| getRelativePathFromDirectory (`src/compiler/path.ts:1039:1`) | 0.455 | 2.489 | 2.034 | 5.47x | 0.394 | 2.055 |
+| watchFile (`src/compiler/sys.ts:471:5`) | 1.252 | 3.240 | 1.988 | 2.59x | 1.049 | 2.986 |
+| PrivateIdentifierPropertyAccessExpression (`src/compiler/types.ts:2977:1`) | 0.087 | 1.838 | 1.751 | 21.05x | 0.087 | 1.838 |
+| onWatchedFileStat (`src/compiler/sys.ts:544:1`) | 0.485 | 2.232 | 1.747 | 4.61x | 0.411 | 1.907 |
+| scheduleUpdateChildWatches (`src/compiler/sys.ts:763:5`) | 0.382 | 1.890 | 1.508 | 4.94x | 0.332 | 1.565 |

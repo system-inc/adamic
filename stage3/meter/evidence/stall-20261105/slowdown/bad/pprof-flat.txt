@@ -1,0 +1,49 @@
+File: bad-census
+Build ID: d04205d5e6eae7ba4a9b9b9332e8ebb08ebd1ea6
+Type: cpu
+Time: 2026-11-05 18:23:08 UTC
+Duration: 60.01s, Total samples = 44.86s (74.76%)
+Showing nodes accounting for 31.93s, 71.18% of 44.86s total
+Dropped 576 nodes (cum <= 0.22s)
+Showing top 40 nodes out of 197
+      flat  flat%   sum%        cum   cum%
+     3.18s  7.09%  7.09%      3.18s  7.09%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     2.89s  6.44% 13.53%      3.33s  7.42%  github.com/microsoft/TypeScript/tsc/internal/ast.IsFunctionLikeKind (inline)
+     1.90s  4.24% 17.77%      8.30s 18.50%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+     1.89s  4.21% 21.98%     34.98s 77.98%  github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+     1.85s  4.12% 26.10%      1.85s  4.12%  runtime.asyncPreempt
+     1.49s  3.32% 29.42%      4.84s 10.79%  runtime.mapaccess2_fast64
+     1.42s  3.17% 32.59%      1.42s  3.17%  runtime.memclrNoHeapPointers
+     1.40s  3.12% 35.71%      3.82s  8.52%  runtime.scanObject
+     0.97s  2.16% 37.87%      1.15s  2.56%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSourceFileOfNode
+     0.96s  2.14% 40.01%        39s 86.94%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     0.84s  1.87% 41.89%      0.84s  1.87%  internal/runtime/maps.memHashAES
+     0.73s  1.63% 43.51%      0.81s  1.81%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getLateBoundSymbol
+     0.70s  1.56% 45.07%     38.98s 86.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     0.69s  1.54% 46.61%     16.76s 37.36%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+     0.69s  1.54% 48.15%      0.69s  1.54%  internal/runtime/maps.memHash64AES
+     0.66s  1.47% 49.62%      4.13s  9.21%  github.com/microsoft/TypeScript/tsc/internal/ast.IsFunctionLike
+     0.66s  1.47% 51.09%      0.98s  2.18%  runtime.findObject
+     0.63s  1.40% 52.50%      1.29s  2.88%  runtime.tryDeferToSpanScan
+     0.61s  1.36% 53.86%      2.20s  4.90%  runtime.mapaccess2_faststr
+     0.57s  1.27% 55.13%      0.97s  2.16%  github.com/microsoft/TypeScript/tsc/internal/ast.IsThisInTypeQuery
+     0.54s  1.20% 56.33%     38.98s 86.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     0.53s  1.18% 57.51%      0.53s  1.18%  runtime.spanClass.sizeclass (inline)
+     0.42s  0.94% 58.45%      1.65s  3.68%  github.com/system-inc/adamic/internal/lower.ESMModuleOrder.func1
+     0.41s  0.91% 59.36%      0.44s  0.98%  github.com/microsoft/TypeScript/tsc/internal/binder.isSelfReferenceLocation
+     0.40s  0.89% 60.25%     11.27s 25.12%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfNameOrPropertyAccessExpression
+     0.40s  0.89% 61.15%      5.69s 12.68%  runtime.mapassign_fast64ptr
+     0.39s  0.87% 62.02%      0.53s  1.18%  github.com/microsoft/TypeScript/tsc/internal/binder.getIsDeferredContext
+     0.36s   0.8% 62.82%      0.36s   0.8%  internal/runtime/maps.(*groupsReference).group (inline)
+     0.35s  0.78% 63.60%      0.36s   0.8%  github.com/microsoft/TypeScript/tsc/internal/ast.IsTypeNodeKind (inline)
+     0.35s  0.78% 64.38%      0.78s  1.74%  github.com/microsoft/TypeScript/tsc/internal/ast.visitModifiers (inline)
+     0.34s  0.76% 65.14%      0.34s  0.76%  internal/runtime/maps.h1 (inline)
+     0.33s  0.74% 65.87%      0.33s  0.74%  internal/runtime/maps.(*ctrlGroup).setEmpty (inline)
+     0.32s  0.71% 66.58%      0.32s  0.71%  internal/runtime/maps.(*groupReference).key (inline)
+     0.31s  0.69% 67.28%     38.98s 86.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     0.30s  0.67% 67.94%      0.33s  0.74%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).DeclarationData (inline)
+     0.30s  0.67% 68.61%      0.44s  0.98%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text
+     0.30s  0.67% 69.28%      0.31s  0.69%  github.com/microsoft/TypeScript/tsc/internal/ast.IsIdentifier (partial-inline)
+     0.30s  0.67% 69.95%      8.86s 19.75%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveEntityName
+     0.28s  0.62% 70.58%      0.30s  0.67%  github.com/microsoft/TypeScript/tsc/internal/ast.isFunctionLikeDeclarationKind (inline)
+     0.27s   0.6% 71.18%      0.30s  0.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).LocalsContainerData (inline)

@@ -1,0 +1,49 @@
+File: unit
+Build ID: d10a19632157c8a5f9a923e68374471b9b2d8a09
+Type: cpu
+Time: 2026-11-05 18:53:19 UTC
+Duration: 6.43s, Total samples = 8.17s (127.01%)
+Showing nodes accounting for 1.20s, 14.69% of 8.17s total
+Dropped 440 nodes (cum <= 0.04s)
+Showing top 40 nodes out of 221
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      5.57s 68.18%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
+         0     0%     0%      5.52s 67.56%  github.com/system-inc/adamic/internal/lower.(*lowering).statement (inline)
+         0     0%     0%      5.52s 67.56%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0%     0%      5.02s 61.44%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0%     0%         5s 61.20%  github.com/system-inc/adamic/internal/lower.latentFullSelected.func3
+         0     0%     0%      4.98s 60.95%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0%     0%      4.92s 60.22%  github.com/system-inc/adamic/internal/lower.latentFullSelected
+         0     0%     0%      4.85s 59.36%  github.com/system-inc/adamic/internal/lower.LatentReplay
+         0     0%     0%      4.80s 58.75%  github.com/system-inc/adamic/internal/lower.MeterTimedReplay
+         0     0%     0%      4.80s 58.75%  main.main
+         0     0%     0%      4.77s 58.38%  runtime.main
+         0     0%     0%      4.41s 53.98%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw
+         0     0%     0%      3.96s 48.47%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSnapshot
+         0     0%     0%      3.95s 48.35%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSnapshotRaw
+         0     0%     0%      3.95s 48.35%  github.com/system-inc/adamic/internal/lower.latentCopyPointer_lowering
+         0     0%     0%      3.95s 48.35%  github.com/system-inc/adamic/internal/lower.latentCopy_lowering
+         0     0%     0%      3.80s 46.51%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8]
+     0.31s  3.79%  3.79%      3.78s 46.27%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8].func1
+         0     0%  3.79%      3.63s 44.43%  github.com/system-inc/adamic/internal/lower.(*lowering).forStatement
+     0.01s  0.12%  3.92%      2.03s 24.85%  runtime.systemstack
+         0     0%  3.92%      1.92s 23.50%  runtime.gcBgMarkWorker
+         0     0%  3.92%      1.91s 23.38%  runtime.gcBgMarkWorker.func2
+     0.03s  0.37%  4.28%      1.91s 23.38%  runtime.gcDrain
+         0     0%  4.28%      1.79s 21.91%  github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement
+     0.15s  1.84%  6.12%      1.78s 21.79%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%  6.12%      1.78s 21.79%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+     0.04s  0.49%  6.61%      1.77s 21.66%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     0.02s  0.24%  6.85%      1.77s 21.66%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%  6.85%      1.77s 21.66%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+     0.07s  0.86%  7.71%      1.75s 21.42%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%  7.71%      1.75s 21.42%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+         0     0%  7.71%      1.73s 21.18%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0%  7.71%      1.69s 20.69%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+         0     0%  7.71%      1.49s 18.24%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+     0.08s  0.98%  8.69%      1.49s 18.24%  reflect.Value.Set
+     0.38s  4.65% 13.34%      1.42s 17.38%  runtime.scanObject
+         0     0% 13.34%      1.41s 17.26%  runtime.gcDrainMarkWorkerIdle (inline)
+         0     0% 13.34%      1.23s 15.06%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+     0.11s  1.35% 14.69%      1.17s 14.32%  github.com/system-inc/adamic/internal/lower.latentPrivateIRField
+         0     0% 14.69%      1.12s 13.71%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild

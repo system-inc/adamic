@@ -1,0 +1,4 @@
+const fs=require('fs');const ts=require('/tmp/meter-stall-20261105/source/stage3/api/node_modules/typescript');
+const root='/tmp/meter-stall-20261105/slowdown';const data=JSON.parse(fs.readFileSync(root+'/comparison.json','utf8'));const maps=new Map();
+for(const row of data.top30){const m=row.unit.match(/^(.*):(\d+):(\d+)$/);const file=m[1];let map=maps.get(file);if(!map){map=new Map();const sf=ts.createSourceFile(file,fs.readFileSync('/tmp/meter-stall-20261105/adapted/'+file,'utf8'),ts.ScriptTarget.Latest,true);function visit(n){const p=sf.getLineAndCharacterOfPosition(n.getStart(sf));let name=n.name?.getText(sf);if(n.kind===ts.SyntaxKind.VariableStatement)name=n.declarationList.declarations.map(x=>x.name.getText(sf)).join(', ');if(name)map.set(`${p.line+1}:${p.character+1}`,name);ts.forEachChild(n,visit)}visit(sf);maps.set(file,map)}row.declaration=map.get(m[2]+':'+m[3])||''}
+fs.writeFileSync(root+'/top30-named.json',JSON.stringify(data.top30,null,2)+'\n');

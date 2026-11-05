@@ -1,0 +1,39 @@
+File: unit
+Build ID: d10a19632157c8a5f9a923e68374471b9b2d8a09
+Type: cpu
+Time: 2026-11-05 18:53:19 UTC
+Duration: 6.43s, Total samples = 8.17s (127.01%)
+Showing nodes accounting for 5.70s, 69.77% of 8.17s total
+Dropped 440 nodes (cum <= 0.04s)
+Showing top 30 nodes out of 221
+      flat  flat%   sum%        cum   cum%
+     1.06s 12.97% 12.97%      1.06s 12.97%  runtime.memmove
+     0.70s  8.57% 21.54%      1.03s 12.61%  reflect.(*rtype).Field
+     0.38s  4.65% 26.19%      1.42s 17.38%  runtime.scanObject
+     0.36s  4.41% 30.60%      0.36s  4.41%  runtime.memclrNoHeapPointers
+     0.33s  4.04% 34.64%      0.44s  5.39%  runtime.findObject
+     0.31s  3.79% 38.43%      3.78s 46.27%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8].func1
+     0.28s  3.43% 41.86%      0.57s  6.98%  runtime.tryDeferToSpanScan
+     0.20s  2.45% 44.31%      0.20s  2.45%  runtime.spanClass.sizeclass (inline)
+     0.18s  2.20% 46.51%      0.18s  2.20%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     0.15s  1.84% 48.35%      1.78s 21.79%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     0.15s  1.84% 50.18%      0.70s  8.57%  github.com/system-inc/adamic/internal/lower.(*lowering).erasedMethodField.func1
+     0.15s  1.84% 52.02%      0.33s  4.04%  reflect.(*structType).Field
+     0.14s  1.71% 53.73%      0.20s  2.45%  reflect.Value.Field
+     0.11s  1.35% 55.08%      1.17s 14.32%  github.com/system-inc/adamic/internal/lower.latentPrivateIRField
+     0.11s  1.35% 56.43%      0.17s  2.08%  reflect.Value.assignTo
+     0.10s  1.22% 57.65%      0.29s  3.55%  github.com/system-inc/adamic/internal/lower.(*lowering).reserveFactoryFields.func1
+     0.09s  1.10% 58.75%      0.09s  1.10%  internal/runtime/maps.(*ctrlGroup).setEmpty (inline)
+     0.09s  1.10% 59.85%      0.09s  1.10%  internal/runtime/maps.memHashAES
+     0.08s  0.98% 60.83%      0.08s  0.98%  internal/abi.Name.ReadVarint (inline)
+     0.08s  0.98% 61.81%      1.49s 18.24%  reflect.Value.Set
+     0.08s  0.98% 62.79%      0.08s  0.98%  runtime.asyncPreempt
+     0.08s  0.98% 63.77%      0.08s  0.98%  runtime.spanOf (inline)
+     0.07s  0.86% 64.63%      1.75s 21.42%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     0.07s  0.86% 65.48%      0.11s  1.35%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseViewElementReads.func1
+     0.07s  0.86% 66.34%      0.16s  1.96%  runtime.greyobject
+     0.06s  0.73% 67.07%      0.06s  0.73%  internal/abi.Name.IsExported (inline)
+     0.06s  0.73% 67.81%      0.06s  0.73%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     0.06s  0.73% 68.54%      0.06s  0.73%  runtime.typePointers.nextFast (inline)
+     0.05s  0.61% 69.16%      1.11s 13.59%  reflect.typedmemmove
+     0.05s  0.61% 69.77%      0.23s  2.82%  runtime.mapaccess2_fast64

@@ -1,0 +1,49 @@
+File: unit
+Build ID: dfb5d62f4a7c9490799064921a019a03c4374388
+Type: cpu
+Time: 2026-11-05 18:46:16 UTC
+Duration: 106.23s, Total samples = 107.14s (100.86%)
+Showing nodes accounting for 20.28s, 18.93% of 107.14s total
+Dropped 810 nodes (cum <= 0.54s)
+Showing top 40 nodes out of 203
+      flat  flat%   sum%        cum   cum%
+     2.23s  2.08%  2.08%     90.67s 84.63%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     1.10s  1.03%  3.11%     90.57s 84.53%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     1.86s  1.74%  4.84%     90.57s 84.53%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     0.67s  0.63%  5.47%     90.52s 84.49%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     0.02s 0.019%  5.49%     89.06s 83.12%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+     0.08s 0.075%  5.56%     87.84s 81.99%  github.com/system-inc/adamic/internal/lower.(*lowering).view.func1
+         0     0%  5.56%     87.42s 81.59%  github.com/system-inc/adamic/internal/lower.(*lowering).plainReceiver
+         0     0%  5.56%     87.36s 81.54%  github.com/system-inc/adamic/internal/lower.(*lowering).viewFieldReceiverTypeID
+         0     0%  5.56%     87.28s 81.46%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedViewReceiverField
+         0     0%  5.56%     86.75s 80.97%  github.com/system-inc/adamic/internal/lower.(*lowering).moduleOrder
+     4.57s  4.27%  9.83%     81.83s 76.38%  github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads.func1
+     0.07s 0.065%  9.89%     81.60s 76.16%  github.com/system-inc/adamic/internal/lower.(*lowering).proveModuleReads
+     0.01s 0.0093%  9.90%     67.15s 62.68%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+     0.03s 0.028%  9.93%     67.14s 62.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+     0.03s 0.028%  9.96%     66.75s 62.30%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+     0.01s 0.0093%  9.97%     66.29s 61.87%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+     0.18s  0.17% 10.14%     62.02s 57.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+         0     0% 10.14%     53.41s 49.85%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild (inline)
+     0.15s  0.14% 10.28%     51.92s 48.46%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAssignment).ForEachChild
+     0.06s 0.056% 10.33%     44.32s 41.37%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+     0.02s 0.019% 10.35%     43.31s 40.42%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+     0.26s  0.24% 10.59%     43.11s 40.24%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetSymbolAtLocation
+     1.64s  1.53% 12.12%     42.58s 39.74%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+     0.01s 0.0093% 12.13%     34.35s 32.06%  github.com/microsoft/TypeScript/tsc/internal/ast.(*AsExpression).ForEachChild (inline)
+     0.11s   0.1% 12.24%     29.94s 27.94%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAccessExpression).ForEachChild
+     0.65s  0.61% 12.84%     29.55s 27.58%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfNameOrPropertyAccessExpression
+         0     0% 12.84%     24.54s 22.90%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+     0.01s 0.0093% 12.85%     24.02s 22.42%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+     0.72s  0.67% 13.52%     23.95s 22.35%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).resolveEntityName
+     5.77s  5.39% 18.91%     22.26s 20.78%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
+         0     0% 18.91%     22.11s 20.64%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)
+         0     0% 18.91%     21.69s 20.24%  github.com/system-inc/adamic/internal/lower.(*lowering).view
+         0     0% 18.91%     20.67s 19.29%  github.com/system-inc/adamic/internal/lower.(*lowering).structuralViewCast
+         0     0% 18.91%     19.51s 18.21%  github.com/system-inc/adamic/internal/lower.(*lowering).cast
+         0     0% 18.91%     19.17s 17.89%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0% 18.91%     18.20s 16.99%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+     0.02s 0.019% 18.93%     17.39s 16.23%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild
+         0     0% 18.93%     17.18s 16.04%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+         0     0% 18.93%     16.17s 15.09%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0% 18.93%     15.72s 14.67%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
