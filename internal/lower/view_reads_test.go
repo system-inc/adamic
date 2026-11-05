@@ -43,6 +43,11 @@ var viewChecks = []viewReadExample{
 
 // viewNotYet read fields raw, and are NotYet where their operand may hold a viewed value.
 var viewNotYet = []viewReadExample{
+	{ir.ParallelMap{}, "parallel workers have no checked element handout yet"},
+	{ir.ObjectCall{Method: "values", Arguments: []ir.Expression{ir.Read{Of: ir.Array}}}, "Object.values reads an array's elements whole"},
+	{ir.ObjectCall{Method: "entries", Arguments: []ir.Expression{ir.Read{Of: ir.Array}}}, "Object.entries reads an array's elements whole"},
+	{ir.JSONStringify{Value: ir.Read{Of: ir.Array}}, "JSON.stringify reads an array's elements whole"},
+	{ir.CollectionIterator{Collection: ir.Read{Of: ir.Array}}, "a stored array iterator has no checked handout"},
 	{ir.ArrayConcat{}, "an array road whose element handouts are not checked yet"},
 	{ir.ArrayFill{}, "an array road whose element handouts are not checked yet"},
 	{ir.ArrayFrom{}, "an array road whose element handouts are not checked yet"},
@@ -135,7 +140,6 @@ var viewNoField = []viewReadExample{
 	{ir.ObjectKeys{}, "an object's own keys, no field's value"},
 	{ir.ObjectLiteral{}, "a new object of the values it's given, moved"},
 	{ir.OwnFunction{}, "tests an own property by the object's own runtime shape, never a view's claim"},
-	{ir.ParallelMap{}, "moves items to workers, whose reads are classed where they are"},
 	{ir.PhantomMember{}, "a member read from a primitive"},
 	{ir.PlaceholderUse{}, "the placeholder's value itself, once its readiness flag is checked (slice 5)"},
 	{ir.ProcessCall{}, "a host operation on the prelude's process"},
