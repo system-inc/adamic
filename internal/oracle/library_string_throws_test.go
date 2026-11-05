@@ -48,9 +48,9 @@ func TestLibraryStringThrowsCaught(t *testing.T) {
 	}
 }
 
-// One of the four forms written out, the form left out, and code points written out as integers from
-// 0 to 0x10FFFF, beside fromCharCode, which never throws: none is a call that can throw, so no function
-// is marked as one that can, and the C tests the pending word nowhere.
+// Code points written out as integers from 0 to 0x10FFFF, beside fromCharCode, which never throws:
+// none is a call that can throw, so no function is marked as one that can, and the C tests the pending
+// word nowhere. normalize always can, past V8's longest string (ir/string_throws.go).
 func TestLibraryStringConstantsDoNotCheck(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_throws/constant.a"))

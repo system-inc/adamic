@@ -1,0 +1,68 @@
+// A string past V8's longest made in a function leaves it, and its caller's catch takes the RangeError:
+// directly, through a function value map calls, through parallelMap's work, whose throw comes back
+// through the pool to the caller, and through a finally that runs on the way out.
+import { parallelMap } from 'adamic';
+
+const half = 'ab'.repeat(2 ** 27);
+
+function doubled(text: string): string {
+	return `${text}${text}`;
+}
+
+function measured(text: string): string {
+	try {
+		return `${doubled(text).length}`;
+	} catch (error) {
+		if (error instanceof Error) {
+			return `caught ${error.name}|${error.message}`;
+		}
+		return 'not an error';
+	}
+}
+console.log(measured('ab'));
+console.log(measured(half));
+
+// No catch here: the finally runs, and the error goes on to the caller's.
+function guarded(text: string): number {
+	try {
+		return [text, text].join('').length;
+	} finally {
+		console.log(`finally after ${text.length}`);
+	}
+}
+for (const text of ['xy', half]) {
+	try {
+		console.log(guarded(text));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+	} finally {
+		console.log('outer finally');
+	}
+}
+
+// Through a function value the runtime's loop calls: the array map was building is let go.
+for (const text of ['cd', half]) {
+	try {
+		const lengths = [1, 2].map((count) => text.padEnd(text.length * count + 1, text).length);
+		console.log(lengths.join(' '));
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${error.name}: ${error.message}`);
+		}
+	}
+}
+
+// Through parallelMap's work: the second item's pad is past the limit.
+const targets: readonly number[] = [3, 536870889];
+try {
+	const lengths = parallelMap(targets, (target) => 'a'.padStart(target, 'xy').length);
+	console.log(lengths.join(' '));
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(`parallel ${error.name}: ${error.message}`);
+	}
+}
+console.log('done');
