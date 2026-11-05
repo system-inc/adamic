@@ -129,19 +129,29 @@ func TestGenericGeneratorCalledOtherThanByItsNameIsNotYet(t *testing.T) {
 	}
 }
 
-// tsc's own mapIterator (core.ts:332-336), instantiated over an array, lowers as far as its for-of
-// over iter, an Iterable<T> the body can't step until the erased view is built (#qk8rztp S2b), and
-// stops there, at that line, never compiling.
-func TestTscMapIteratorStopsAtItsIterableForOf(t *testing.T) {
+// tsc's own mapIterator (core.ts:332-336). Its for-of over iter is a view since S2b-1b
+// (iterable_views.go), so instantiated over an array it stops at the array, never compiling. Either
+// the argument stops where it goes into Iterable<number> (shape_fit.go), or, if that check doesn't
+// reach a generic generator's argument, the view's proof stops at the for-of, the array an unproven
+// origin. Both are right; which one fires first is the box run's to say, and this pin can then be held
+// to that one. Handed a Map's keys(), mapIterator lowers.
+func TestTscMapIteratorOverAnArrayStops(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `export function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown> {
+	const mapIterator = `export function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown> {
     for (const x of iter) {
         yield mapFn(x);
     }
 }
-console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));`)
+`
+	_, err := lowerSource(t, mapIterator+`console.log([...mapIterator([1, 2, 3], x => x * 2)].join(","));`)
 	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.Where, "main.a:2:21") || !strings.Contains(gap.What, "for...of over an object") {
-		t.Fatalf("got %v, want a NotYet at 2:21, the for-of over iter", err)
+	atArgument := errors.As(err, &gap) && strings.Contains(gap.Where, "main.a:6:29") && strings.Contains(gap.What, "an array going where a plain object type is held")
+	atView := errors.As(err, &gap) && strings.Contains(gap.Where, "main.a:2:21") && strings.Contains(gap.What, "a view over an iterable of unproven origin")
+	if !atArgument && !atView {
+		t.Fatalf("got %v, want a NotYet at the array (6:29) or at the view's for-of (2:21)", err)
+	}
+	keys := "const ids = new Map<number, string>();\nfor (let index = 1; index < 4; index++) { ids.set(index * 10, `id ${String(index)}`); }\n"
+	if _, err := lowerSource(t, mapIterator+keys+`console.log([...mapIterator(ids.keys(), x => x + 1)].join(","));`); err != nil {
+		t.Fatalf("over a Map's keys(): %v", err)
 	}
 }

@@ -297,7 +297,7 @@
     "tsc": [
       "src/compiler/core.ts:332"
     ],
-    "reason": "for...of over an object",
+    "reason": "an array going where a plain object type is held",
     "node": {
       "stdout": "2,4,6\n",
       "stderr": "",
@@ -305,7 +305,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/25_map_generator.a:4:21: stage 0 can't lower for...of over an object yet"
+      "what": "stage3/fixtures/objects/25_map_generator.a:8:29: stage 0 can't lower an array going where a plain object type is held yet"
     }
   },
   {
