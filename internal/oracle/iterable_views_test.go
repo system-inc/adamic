@@ -12,8 +12,9 @@ import (
 // with. Each program in testdata/iterable_views agrees with Node natively, sanitized and on the
 // JavaScript backend, and leaks nothing: entries destructured and read as a pair, from two callers
 // with two maps; a Set's and a Map's values through one parameter; an iterator already stepped, so
-// the view sees only the rest; and a loop that adds to the map it walks, which Node's iterator visits.
-// Keys and values are built, never only literals. The mutants are in testdata/iterable_views/mutants.md.
+// the view sees only the rest; a loop that adds to the map it walks, which Node's iterator visits, and
+// one that deletes from it; and an Iterable<string> slot, held as a union and read through a checked
+// unbox. Keys and values are built, never only literals. The mutants are in testdata/iterable_views/mutants.md.
 func TestIterableViewsAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/iterable_views"
@@ -33,7 +34,7 @@ func TestIterableViewsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 4 {
-		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 6 {
+		t.Fatalf("%d programs in %s, want 6: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

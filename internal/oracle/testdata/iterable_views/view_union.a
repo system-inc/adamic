@@ -1,0 +1,24 @@
+// An Iterable<string> slot is held as a union, since a string fits it too. Every origin here is a
+// collection's iterator, so the loop reads the slot as one through a checked unbox, the parameter
+// handed a Set's values() and a Map's keys(), and the local a Set's keys().
+function shout(items: Iterable<string>): string {
+    const parts: string[] = [];
+    for(const word of items) {
+        parts.push(word.toUpperCase());
+    }
+    return parts.join(' ');
+}
+const words = new Set<string>();
+for(let index = 0; index < 3; index++) {
+    words.add(`word ${'z'.repeat(index + 1)}`);
+}
+const labels = new Map<string, number>();
+for(let index = 4; index < 6; index++) {
+    labels.set(`label ${String(index)}`, index);
+}
+console.log(shout(words.values()));
+console.log(shout(labels.keys()));
+const kept: Iterable<string> = words.keys();
+for(const word of kept) {
+    console.log(String(word.length));
+}

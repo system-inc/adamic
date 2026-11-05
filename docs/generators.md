@@ -44,12 +44,15 @@ void-container classifier, as Adamic ruled on #qk8rztp; `generatorStepped`). Any
 reaches the TReturn, a stored generator among them, stays judged by the void rules.
 
 A `for...of` over a parameter or local typed `Iterable<T>` or `IterableIterator<T>`, a view, lowers
-when every value that can reach it is a Map's or a Set's `keys()`, `values()` or `entries()`, held as
-the view reads `T`. It runs that iterator's own loop. Lowering proves it once every call is in
-(lower/iterable_views.go, held by `internal/oracle/testdata/iterable_views/`). Any other origin, or
-one that holds its steps otherwise, stops as not yet built: an array, a generator, a string, a Map
-itself, a program's own iterator, the parameter of a function used as a value or of an object
-literal's method, a field. `next(x)`, `return()` and `throw()` through a view don't lower either.
+when every value that can reach it is a Map's or a Set's `keys()`, `values()` or `entries()`, held
+as the view reads `T`. It runs that iterator's own loop. `Iterable<string>` is held as a union,
+since a string fits it too, and its loop reads the slot as the iterator through a checked unbox.
+Lowering proves it once every call is in (lower/iterable_views.go, held by
+`internal/oracle/testdata/iterable_views/`). Any other origin, or one that holds its steps
+otherwise, stops as not yet built: an array, a generator, a string, a Map itself, a program's own
+iterator, the parameter of a function used as a value, of an object literal's method or of a host
+callback, a field, a record's or a Map's value. `next(x)`, `return()` and `throw()` through a view
+don't lower either.
 
 ## How it runs
 
