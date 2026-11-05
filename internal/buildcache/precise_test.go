@@ -3309,7 +3309,11 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 	settled := func(edited map[string]string) string {
 		t.Helper()
 		r := newRig(t)
-		leanRecipeFor = leanRecipeOf
+		// The rig journals no process, so the settling binary is named as a test binary's would be.
+		leanRecipeFor = func(root, called string, process journalEntry) recipe {
+			process.Package = buildcachePackage + ".test"
+			return leanRecipeOf(root, called, process)
+		}
 		for name, content := range tree {
 			write(t, r.root, name, content)
 		}
