@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Require one red regression for each direction of the root-order ruling."""
+"""Require both ruling directions and the verbatim-import regression to go red."""
 from pathlib import Path
 import subprocess
 import sys
@@ -31,4 +31,23 @@ for name, before, after, test in mutants:
         print(text, end='')
         if result.returncode == 0 or 'FAIL: ' + test not in text or 'AssertionError:' not in text:
             raise AssertionError(name + ' survived or failed for another reason')
-print('Both root-order mutants went red on their named tests.')
+source = (meter / 'node_readiness.py').read_text()
+before = "'verbatimModuleSyntax': True"
+assert source.count(before) == 1
+with tempfile.TemporaryDirectory(prefix='meter-node-elision-mutant-') as temporary:
+    scratch = Path(temporary)
+    (scratch / 'node_readiness.py').write_text(source.replace(before, "'verbatimModuleSyntax': False"))
+    test = 'test_value_import_used_only_as_type_keeps_its_evaluation_edge'
+    program = ('import sys,unittest; sys.path.insert(0,' + repr(str(scratch)) + '); '
+               'sys.path.insert(1,' + repr(str(meter)) + '); import node_readiness_test; '
+               'unittest.main(module=node_readiness_test,defaultTest=' + repr('NodeReadinessTests.' + test) + ')')
+    path = scratch / 'test.log'
+    with path.open('w') as output:
+        result = subprocess.run([sys.executable, '-E', '-S', '-B', '-c', program],
+                                stdout=output, stderr=output)
+    text = path.read_text()
+    print('elide-value-import-used-only-as-type: ' + test)
+    print(text, end='')
+    if result.returncode == 0 or 'FAIL: ' + test not in text or 'AssertionError:' not in text:
+        raise AssertionError('value-import elision mutant survived or failed for another reason')
+print('Both root-order mutants and the value-import elision mutant went red on their named tests.')
