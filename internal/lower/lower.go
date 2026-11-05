@@ -194,7 +194,7 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		//  3. No generator value reaches a slot: expression.go stops every value use but an Iterable<T>
 		//     argument, and checkGeneratorRoads holds the lowered program to that
 		//     (TestProgramRegionGeneratorStoredInFieldStops, TestProgramRegionGeneratorPushedIntoArrayStops,
-		//     TestProgramRegionGeneratorCapturedByClosureStops), and an Iterable<T> parameter one is
+		//     TestProgramRegionGeneratorHeldInLocalStops), and an Iterable<T> parameter one is
 		//     passed into stays one for-of's alone (TestProgramRegionGeneratorParameterStoredInFieldStops,
 		//     TestProgramRegionGeneratorParameterCapturedByClosureStops).
 		// When a generator can be stored in a slot (#qk8rztp S2c-4), the cycle walk needs the frame's
