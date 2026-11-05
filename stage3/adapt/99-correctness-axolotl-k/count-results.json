@@ -1,0 +1,168 @@
+{
+  "baseCommit": "6761c7374aa7169c73602b6a74bc281b879a640d",
+  "sourceCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "debugBranchCommit": "b1eb58de534346dba084923acbc617a0abb75913",
+  "requiredProperties": {
+    "messageText": {
+      "pristineLine": 7249,
+      "adaptedLine": 7260
+    },
+    "category": {
+      "pristineLine": 7250,
+      "adaptedLine": 7261
+    },
+    "code": {
+      "pristineLine": 7251,
+      "adaptedLine": 7262
+    }
+  },
+  "typeFile": "src/compiler/types.ts",
+  "reusableDefinitions": {
+    "file": "src/compiler/builder.ts",
+    "repopulateInfoChainLines": [
+      115,
+      118
+    ],
+    "serializedChainLines": [
+      121,
+      123
+    ],
+    "unionLine": 126
+  },
+  "DebugAssert": {
+    "ungated": true,
+    "adaptedDebugBranchLines": [
+      192,
+      200
+    ]
+  },
+  "counts": {
+    "noInfo": 7,
+    "noInfoNonFull": 0,
+    "self": 6,
+    "selfNonFull": 0
+  },
+  "counterFiles": [
+    "5358.json"
+  ],
+  "orderingConflict": {
+    "realOrder": [
+      "99-cli-debug-assertion-level",
+      "99-correctness-axolotl-j",
+      "99-correctness-axolotl-k",
+      "99-wasm-crypto-import"
+    ],
+    "explanation": "No name can sort after 99j and before 99-cli under the sorted directory order used by apply.py."
+  },
+  "adaptationCreated": false,
+  "pushed": false,
+  "countOracle": {
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "runners": "all",
+    "workers": 8,
+    "tests": null,
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 7.102
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 21.935
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 305.671
+      }
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "failureTitles": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ]
+  },
+  "main-retryOracle": {
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "runners": "all",
+    "workers": 8,
+    "tests": null,
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 2.357
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 1.644
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 260.053
+      }
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "failureTitles": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ]
+  },
+  "identities": {
+    "equal": true,
+    "count": 106367,
+    "counts": {
+      "fail": 1,
+      "pass": 106366
+    },
+    "instrumentedSha256": "35ed5757eee73a8de6e2b23e1f52b783920efbdfe36b5d5ee56c8e092cdab782",
+    "mainSha256": "35ed5757eee73a8de6e2b23e1f52b783920efbdfe36b5d5ee56c8e092cdab782"
+  },
+  "orderingResolution": "The user explicitly authorized 99-correctness-axolotl-k after 99j and before 99-wasm; 99-cli may sort earlier."
+}

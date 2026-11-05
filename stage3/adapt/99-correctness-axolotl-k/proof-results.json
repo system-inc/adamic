@@ -1,0 +1,89 @@
+{
+  "task": "#b5w3ycg",
+  "baseCommit": "6761c7374aa7169c73602b6a74bc281b879a640d",
+  "allRequiredMeasuredChecksPass": true,
+  "stockTypescript": {
+    "version": "6.0.3",
+    "candidateProjectDiagnostics": 0
+  },
+  "adamicTypes": {
+    "roots": 79,
+    "beforeExit": 0,
+    "afterExit": 0,
+    "beforeDiagnostics": 0,
+    "afterDiagnostics": 0
+  },
+  "witnesses": {
+    "exit": 0,
+    "validCases": 11,
+    "beforeAfterIdentical": true,
+    "invalidCasesGuarded": 4
+  },
+  "mutant": {
+    "expectedExit": 1,
+    "observedExit": 1,
+    "invalidCasesGuarded": 0,
+    "red": true
+  },
+  "contract": {
+    "refusals": 13,
+    "unrelatedEditAccepted": true,
+    "noWriteSecondRun": true
+  },
+  "coreJavascript": {
+    "byteIdentical": true,
+    "sha256": "5dfe133e4cc0b9d06db5ec8a644a27988e6713901698b0413c75698597be860c",
+    "artifactBefore": "samemap-final-witnesses-core-before.js",
+    "artifactAfter": "samemap-final-witnesses-core-after.js"
+  },
+  "oracle": {
+    "status": "pass",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "identitiesEqual": true,
+    "identitySha256": "35ed5757eee73a8de6e2b23e1f52b783920efbdfe36b5d5ee56c8e092cdab782",
+    "fullApplyExit": 0
+  },
+  "publicDeclarations": {
+    "typescript.d.ts": {
+      "byteIdentical": true,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "bytes": 593502
+    },
+    "tsserverlibrary.d.ts": {
+      "byteIdentical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "bytes": 866
+    }
+  },
+  "generateShardsCheckExit": 0,
+  "goLaneFixtures": {
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "-skip",
+      "TestShard_|TestProduct_",
+      "./stage3/lane/"
+    ],
+    "exit": 0
+  },
+  "census": {
+    "roots": 79,
+    "movedPastCore356": 73,
+    "newFirstStops": [
+      {
+        "kind": "Refused",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "count": 73,
+        "locations": [
+          "src/compiler/core.ts:381:26"
+        ]
+      }
+    ],
+    "mainMatchesPinnedS2a": true
+  }
+}

@@ -1,0 +1,447 @@
+{
+  "mutant": false,
+  "validOutputsIdentical": true,
+  "beforeRows": [
+    {
+      "name": "unchanged",
+      "output": {
+        "messageText": "ordinary",
+        "category": 1,
+        "code": 1234
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        "ordinary"
+      ]
+    },
+    {
+      "name": "unchanged-nested",
+      "output": {
+        "messageText": "parent",
+        "category": 1,
+        "code": 1234,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ]
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        "parent",
+        "leaf"
+      ]
+    },
+    {
+      "name": "zero-fields",
+      "output": {
+        "messageText": "",
+        "category": 0,
+        "code": 0
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        ""
+      ]
+    },
+    {
+      "name": "full-repopulate-mode",
+      "output": {
+        "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+        "category": 3,
+        "code": 1480,
+        "repopulateInfo": {
+          "returns": true
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        "mode"
+      ]
+    },
+    {
+      "name": "full-repopulate-module",
+      "output": {
+        "messageText": "Try `npm i --save-dev @types/missing` if it exists or add a new declaration (.d.ts) file containing `declare module 'missing';`",
+        "category": 1,
+        "code": 7035,
+        "repopulateInfo": {
+          "returns": {
+            "moduleReference": "missing"
+          }
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        "module"
+      ]
+    },
+    {
+      "name": "repopulate-mode",
+      "output": {
+        "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+        "category": 3,
+        "code": 1480,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ],
+        "repopulateInfo": {
+          "returns": true
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        true,
+        "leaf"
+      ]
+    },
+    {
+      "name": "repopulate-module",
+      "output": {
+        "messageText": "Try `npm i --save-dev @types/missing` if it exists or add a new declaration (.d.ts) file containing `declare module 'missing';`",
+        "category": 1,
+        "code": 7035,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ],
+        "repopulateInfo": {
+          "returns": {
+            "moduleReference": "missing"
+          }
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        {
+          "moduleReference": "missing"
+        },
+        "leaf"
+      ]
+    },
+    {
+      "name": "parent-of-repopulated",
+      "output": {
+        "messageText": "parent",
+        "category": 1,
+        "code": 1234,
+        "next": [
+          {
+            "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+            "category": 3,
+            "code": 1480,
+            "repopulateInfo": {
+              "returns": true
+            }
+          }
+        ]
+      },
+      "same": false,
+      "sameNext": false,
+      "calls": [
+        "parent",
+        true
+      ]
+    },
+    {
+      "name": "mixed-array",
+      "output": [
+        {
+          "messageText": "leaf",
+          "category": 1,
+          "code": 1234
+        },
+        {
+          "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+          "category": 3,
+          "code": 1480,
+          "repopulateInfo": {
+            "returns": true
+          }
+        }
+      ],
+      "same": false,
+      "calls": [
+        "leaf",
+        true
+      ]
+    },
+    {
+      "name": "empty-array",
+      "output": [],
+      "same": true,
+      "calls": []
+    },
+    {
+      "name": "undefined-array",
+      "output": "undefined",
+      "same": true,
+      "calls": []
+    }
+  ],
+  "afterRows": [
+    {
+      "name": "unchanged",
+      "output": {
+        "messageText": "ordinary",
+        "category": 1,
+        "code": 1234
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        "ordinary"
+      ]
+    },
+    {
+      "name": "unchanged-nested",
+      "output": {
+        "messageText": "parent",
+        "category": 1,
+        "code": 1234,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ]
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        "parent",
+        "leaf"
+      ]
+    },
+    {
+      "name": "zero-fields",
+      "output": {
+        "messageText": "",
+        "category": 0,
+        "code": 0
+      },
+      "same": true,
+      "sameNext": true,
+      "calls": [
+        ""
+      ]
+    },
+    {
+      "name": "full-repopulate-mode",
+      "output": {
+        "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+        "category": 3,
+        "code": 1480,
+        "repopulateInfo": {
+          "returns": true
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        "mode"
+      ]
+    },
+    {
+      "name": "full-repopulate-module",
+      "output": {
+        "messageText": "Try `npm i --save-dev @types/missing` if it exists or add a new declaration (.d.ts) file containing `declare module 'missing';`",
+        "category": 1,
+        "code": 7035,
+        "repopulateInfo": {
+          "returns": {
+            "moduleReference": "missing"
+          }
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        "module"
+      ]
+    },
+    {
+      "name": "repopulate-mode",
+      "output": {
+        "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+        "category": 3,
+        "code": 1480,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ],
+        "repopulateInfo": {
+          "returns": true
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        true,
+        "leaf"
+      ]
+    },
+    {
+      "name": "repopulate-module",
+      "output": {
+        "messageText": "Try `npm i --save-dev @types/missing` if it exists or add a new declaration (.d.ts) file containing `declare module 'missing';`",
+        "category": 1,
+        "code": 7035,
+        "next": [
+          {
+            "messageText": "leaf",
+            "category": 1,
+            "code": 1234
+          }
+        ],
+        "repopulateInfo": {
+          "returns": {
+            "moduleReference": "missing"
+          }
+        }
+      },
+      "same": false,
+      "sameNext": true,
+      "calls": [
+        {
+          "moduleReference": "missing"
+        },
+        "leaf"
+      ]
+    },
+    {
+      "name": "parent-of-repopulated",
+      "output": {
+        "messageText": "parent",
+        "category": 1,
+        "code": 1234,
+        "next": [
+          {
+            "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+            "category": 3,
+            "code": 1480,
+            "repopulateInfo": {
+              "returns": true
+            }
+          }
+        ]
+      },
+      "same": false,
+      "sameNext": false,
+      "calls": [
+        "parent",
+        true
+      ]
+    },
+    {
+      "name": "mixed-array",
+      "output": [
+        {
+          "messageText": "leaf",
+          "category": 1,
+          "code": 1234
+        },
+        {
+          "messageText": "To convert this file to an ECMAScript module, change its file extension to '.mts' or create a local package.json file with `{ \"type\": \"module\" }`.",
+          "category": 3,
+          "code": 1480,
+          "repopulateInfo": {
+            "returns": true
+          }
+        }
+      ],
+      "same": false,
+      "calls": [
+        "leaf",
+        true
+      ]
+    },
+    {
+      "name": "empty-array",
+      "output": [],
+      "same": true,
+      "calls": []
+    },
+    {
+      "name": "undefined-array",
+      "output": "undefined",
+      "same": true,
+      "calls": []
+    }
+  ],
+  "invalid": [
+    {
+      "missing": [
+        "messageText"
+      ],
+      "before": {
+        "returnedOriginal": true
+      },
+      "after": {
+        "error": "Debug Failure. False expression."
+      },
+      "guarded": true
+    },
+    {
+      "missing": [
+        "category"
+      ],
+      "before": {
+        "returnedOriginal": true
+      },
+      "after": {
+        "error": "Debug Failure. False expression."
+      },
+      "guarded": true
+    },
+    {
+      "missing": [
+        "code"
+      ],
+      "before": {
+        "returnedOriginal": true
+      },
+      "after": {
+        "error": "Debug Failure. False expression."
+      },
+      "guarded": true
+    },
+    {
+      "missing": [
+        "messageText",
+        "category",
+        "code"
+      ],
+      "before": {
+        "returnedOriginal": true
+      },
+      "after": {
+        "error": "Debug Failure. False expression."
+      },
+      "guarded": true
+    }
+  ],
+  "coreJavascriptIdentical": true,
+  "coreJavascriptSha256": "5dfe133e4cc0b9d06db5ec8a644a27988e6713901698b0413c75698597be860c",
+  "pass": true
+}
