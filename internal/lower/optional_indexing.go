@@ -46,7 +46,14 @@ func (l *lowering) optionalIndexValue(node *ast.Node, base ir.Expression) (ir.Ex
 				return nil, err
 			}
 		}
-		value = ir.ArrayIndex{Array: base, Index: index, Element: element}
+		if base.Type().IsTypedArray() {
+			value = ir.ArrayIndex{Array: base, Index: index, Element: element}
+		} else {
+			value, err = l.viewArrayIndex(node, access.Expression, ir.ArrayIndex{Array: base, Index: index, Element: element})
+			if err != nil {
+				return nil, err
+			}
+		}
 	}
 	return value, nil
 }

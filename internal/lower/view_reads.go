@@ -1,6 +1,9 @@
 package lower
 
-import "github.com/system-inc/adamic/internal/ir"
+import (
+	"github.com/system-inc/adamic/internal/ir"
+	"reflect"
+)
 
 // viewRead is what an IR expression does with an object operand it holds, for checked views. A
 // value a view admitted stays a checked value under every type it's later seen as (Adamic's rule on
@@ -25,6 +28,33 @@ const (
 // viewReadOf is the one table: each IR expression with an operand, by its class, which the
 // post-lowering passes read. Zero is an expression nobody has classed.
 func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
+	if road, known := viewArrayRoads[reflect.TypeOf(expression)]; known && !road.handout && !road.noElement {
+		return viewReadNotYet
+	}
+	switch value := expression.(type) {
+	case ir.ArrayMap:
+		if value.ElementCheck != nil {
+			return viewReadChecks
+		}
+		return viewReadsNoField
+	case ir.ArrayVisit:
+		if value.ElementCheck != nil {
+			return viewReadChecks
+		}
+		return viewReadsNoField
+	case ir.ArrayReduce:
+		if value.ElementCheck != nil {
+			return viewReadChecks
+		}
+		return viewReadsNoField
+	case ir.ArrayLiteral:
+		for _, spread := range value.Spread {
+			if spread {
+				return viewReadNotYet
+			}
+		}
+		return viewReadsNoField
+	}
 	switch value := expression.(type) {
 	case ir.Property:
 		if program.CheckedRead(value) {

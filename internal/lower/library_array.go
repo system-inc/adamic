@@ -38,6 +38,9 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if err != nil {
 		return nil, true, err
 	}
+	if name != "findLast" && name != "findLastIndex" {
+		l.recordViewArrayUse(node, array, name)
+	}
 	switch name {
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
@@ -536,7 +539,13 @@ func (l *lowering) libraryArrayForOf(node *ast.Node) ([]ir.Statement, bool, erro
 	}
 	source, index := local("array_iterator_source", ir.Array), local("array_iterator_index", ir.Number)
 	read := func(local int) ir.Expression { return ir.Read{Local: local, Of: l.result.Locals[local].Type} }
-	value := ir.Expression(ir.ArrayIndex{Array: read(source), Index: read(index), Element: element})
+	value, err := l.viewArrayIndex(node, access.Expression, ir.ArrayIndex{Array: read(source), Index: read(index), Element: element})
+	if err != nil {
+		return nil, true, err
+	}
+	if name != "values" {
+		l.recordViewArrayUse(node, array, name)
+	}
 	if value.Type().IsMaybe() && value.Type() != element {
 		value = ir.Unwrap{Value: value}
 	}

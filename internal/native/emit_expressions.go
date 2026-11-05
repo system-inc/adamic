@@ -12,6 +12,8 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.ViewElement:
+		return e.viewElement(expression)
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray, ir.TypedArraySort:
 		return e.typedArrayValue(expression)
 	case ir.HasProperty:
@@ -429,8 +431,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return result
 	case ir.ArrayMap:
-		if mapped, ok := e.mapped(expression); ok {
-			return mapped
+		if expression.ElementCheck == nil {
+			if mapped, ok := e.mapped(expression); ok {
+				return mapped
+			}
 		}
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
@@ -449,8 +453,18 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t}")
 		e.indent++
 		element := e.temporary()
-		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		input := fmt.Sprintf("%s->elements[%s]", source, index)
+		checked := ""
+		if expression.ElementCheck != nil {
+			checked = e.temporary()
+			e.line("adamic_value %s = %s.payload;", checked, e.checkedElement(expression.ElementCheck, source, index, false, expression.Element))
+			input = checked
+		}
+		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, input, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
 		e.line("adamic_value %s = %s;", element, call)
+		if checked != "" && expression.Element.IsReference() {
+			e.line("adamic_release(%s.reference);", checked)
+		}
 		// What's mapped so far is the statement's, let go with its temporaries.
 		e.closureThrown()
 		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
