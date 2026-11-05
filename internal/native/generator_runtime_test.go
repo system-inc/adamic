@@ -181,7 +181,10 @@ func TestGeneratorRuntimeReturnWhileRunning(t *testing.T) {
 // S2c-1 commit 3). Mutant: the NULL test dropped, and the read faults under ASan.
 func TestGeneratorRuntimeIsNull(t *testing.T) {
 	t.Parallel()
-	generatorRuntimeGuard(t, "is", "0 0 1\n", "return value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_generator;", "return ((const adamic_heap *)value)->kind == adamic_kind_generator;", "SEGV")
+	// The harness's undefined-behavior sanitizer stops the mutant's read of a `NULL` heap header
+	// before it can fault, so the mutant is caught in its words, not as a segmentation fault (Loom's
+	// red on chg_rkwdewter).
+	generatorRuntimeGuard(t, "is", "0 0 1\n", "return value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_generator;", "return ((const adamic_heap *)value)->kind == adamic_kind_generator;", "member access within null pointer")
 }
 
 func TestGeneratorRuntimeInitialize(t *testing.T) {
