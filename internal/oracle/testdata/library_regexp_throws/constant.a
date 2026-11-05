@@ -16,7 +16,7 @@ for (const text of ['adamic', 'strings', 'rhythm']) {
 	try {
 		const tally = tallied(text);
 		console.log(tally.text);
-		console.log(tally.count);
+		console.log(String(tally.count));
 	} catch {
 		console.log('never');
 	}
