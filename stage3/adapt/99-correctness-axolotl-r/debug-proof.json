@@ -1,0 +1,52 @@
+{
+  "file": "/workspace/scratch/99r/before/src/compiler/debug.ts",
+  "functions": [
+    {
+      "name": "setAssertionLevel",
+      "line": 157,
+      "text": "export function setAssertionLevel(level: AssertionLevel): void {\r\n        currentAssertionLevel = level;\r\n    }"
+    },
+    {
+      "name": "getAssertionLevel",
+      "line": 153,
+      "text": "export function getAssertionLevel(): AssertionLevel {\r\n        return currentAssertionLevel;\r\n    }"
+    },
+    {
+      "name": "fail",
+      "line": 175,
+      "text": "export function fail(message?: string, stackCrawlMark?: AnyFunction): never {\r\n        // eslint-disable-next-line no-debugger\r\n        debugger;\r\n        const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\r\n        if (Error.captureStackTrace) {\r\n            Error.captureStackTrace(e, stackCrawlMark || fail);\r\n        }\r\n        throw e;\r\n    }"
+    },
+    {
+      "name": "assertIsDefined",
+      "line": 227,
+      "text": "export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: AnyFunction): asserts value is NonNullable<T> {\r\n        // eslint-disable-next-line no-restricted-syntax\r\n        if (value === undefined || value === null) {\r\n            fail(message, stackCrawlMark || assertIsDefined);\r\n        }\r\n    }"
+    },
+    {
+      "name": "checkDefined",
+      "line": 234,
+      "text": "export function checkDefined<T>(value: T | null | undefined, message?: string, stackCrawlMark?: AnyFunction): T { // eslint-disable-line no-restricted-syntax\r\n        assertIsDefined(value, message, stackCrawlMark || checkDefined);\r\n        return value;\r\n    }"
+    }
+  ],
+  "rows": [
+    {
+      "level": 0,
+      "undefinedThrows": "Debug Failure.",
+      "definedReturns": "ok"
+    },
+    {
+      "level": 1,
+      "undefinedThrows": "Debug Failure.",
+      "definedReturns": "ok"
+    },
+    {
+      "level": 2,
+      "undefinedThrows": "Debug Failure.",
+      "definedReturns": "ok"
+    },
+    {
+      "level": 3,
+      "undefinedThrows": "Debug Failure.",
+      "definedReturns": "ok"
+    }
+  ]
+}

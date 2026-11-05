@@ -1,0 +1,25 @@
+[
+  {
+    "owner": "concatenate",
+    "implementationByteIdentical": true,
+    "implementationSha256": "655efed131b61fb8fa680f3c81e4fda96262ded5730e76d9eca14685faca7fb2",
+    "removedOverloads": [
+      "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[];",
+      "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[];"
+    ],
+    "addedOverloads": [
+      "export function concatenate<T>(array1: T[] | undefined, array2: T[]): T[] | undefined;",
+      "export function concatenate<T>(array1: readonly T[] | undefined, array2: readonly T[]): readonly T[] | undefined;"
+    ]
+  },
+  {
+    "owner": "relativeComplement",
+    "implementationByteIdentical": true,
+    "implementationSha256": "c1c158e06fd668a8fc8ca4d46fcf23d118396338112ee9a51ca618ed9501c090",
+    "removedOverloads": [],
+    "addedOverloads": [
+      "export function relativeComplement<T>(arrayA: T[], arrayB: T[], comparer: Comparer<T>): T[];",
+      "export function relativeComplement<T>(arrayA: T[] | undefined, arrayB: T[] | undefined, comparer: Comparer<T>): T[] | undefined;"
+    ]
+  }
+]
