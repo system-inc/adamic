@@ -1,0 +1,140 @@
+[
+  {
+    "rank": 1,
+    "name": "isTypeOnlyExportDeclaration",
+    "where": "src/compiler/utilitiesPublic.ts:1550:1",
+    "original_wall_seconds": 20.0837745
+  },
+  {
+    "rank": 2,
+    "name": "isTypeOnlyImportDeclaration",
+    "where": "src/compiler/utilitiesPublic.ts:1536:1",
+    "original_wall_seconds": 19.49929551
+  },
+  {
+    "rank": 3,
+    "name": "isOutermostOptionalChain",
+    "where": "src/compiler/utilitiesPublic.ts:1416:1",
+    "original_wall_seconds": 19.104008504
+  },
+  {
+    "rank": 4,
+    "name": "isImportOrExportSpecifier",
+    "where": "src/compiler/utilitiesPublic.ts:1532:1",
+    "original_wall_seconds": 19.067756227
+  },
+  {
+    "rank": 5,
+    "name": "symbolName",
+    "where": "src/compiler/utilitiesPublic.ts:870:1",
+    "original_wall_seconds": 18.860237965
+  },
+  {
+    "rank": 6,
+    "name": "isExpressionOfOptionalChainRoot",
+    "where": "src/compiler/utilitiesPublic.ts:1399:1",
+    "original_wall_seconds": 18.766600222
+  },
+  {
+    "rank": 7,
+    "name": "isOptionalChainRoot",
+    "where": "src/compiler/utilitiesPublic.ts:1390:1",
+    "original_wall_seconds": 18.703679682
+  },
+  {
+    "rank": 8,
+    "name": "isImportAttributeName",
+    "where": "src/compiler/utilitiesPublic.ts:1574:1",
+    "original_wall_seconds": 18.664011295999998
+  },
+  {
+    "rank": 9,
+    "name": "getJSDocImplementsTags",
+    "where": "src/compiler/utilitiesPublic.ts:1116:1",
+    "original_wall_seconds": 18.408508794
+  },
+  {
+    "rank": 10,
+    "name": "isNullishCoalesce",
+    "where": "src/compiler/utilitiesPublic.ts:1422:1",
+    "original_wall_seconds": 18.403524428
+  },
+  {
+    "rank": 11,
+    "name": "getAssignedName",
+    "where": "src/compiler/utilitiesPublic.ts:1004:1",
+    "original_wall_seconds": 18.361774332
+  },
+  {
+    "rank": 12,
+    "name": "getJSDocReturnType",
+    "where": "src/compiler/utilitiesPublic.ts:1239:1",
+    "original_wall_seconds": 18.356834105
+  },
+  {
+    "rank": 13,
+    "name": "isCallChain",
+    "where": "src/compiler/utilitiesPublic.ts:1376:1",
+    "original_wall_seconds": 18.351808592
+  },
+  {
+    "rank": 14,
+    "name": "isNonNullChain",
+    "where": "src/compiler/utilitiesPublic.ts:1437:1",
+    "original_wall_seconds": 18.285506138
+  },
+  {
+    "rank": 15,
+    "name": "isNamedDeclaration",
+    "where": "src/compiler/utilitiesPublic.ts:946:1",
+    "original_wall_seconds": 18.275165033
+  },
+  {
+    "rank": 16,
+    "name": "isConstTypeReference",
+    "where": "src/compiler/utilitiesPublic.ts:1426:1",
+    "original_wall_seconds": 18.26232296
+  },
+  {
+    "rank": 17,
+    "name": "isParameterPropertyDeclaration",
+    "where": "src/compiler/utilitiesPublic.ts:615:1",
+    "original_wall_seconds": 17.536698266
+  },
+  {
+    "rank": 18,
+    "name": "getTypeParameterOwner",
+    "where": "src/compiler/utilitiesPublic.ts:603:1",
+    "original_wall_seconds": 9.347668765
+  },
+  {
+    "rank": 19,
+    "name": "getCombinedFlags",
+    "where": "src/compiler/utilitiesPublic.ts:644:1",
+    "original_wall_seconds": 9.304374763
+  },
+  {
+    "rank": 20,
+    "name": "isElementAccessChain",
+    "where": "src/compiler/utilitiesPublic.ts:1372:1",
+    "original_wall_seconds": 9.295668018
+  },
+  {
+    "rank": 21,
+    "name": "isGeneratedIdentifier",
+    "where": "src/compiler/utilitiesPublic.ts:1581:1",
+    "original_wall_seconds": 9.20910308
+  },
+  {
+    "rank": 22,
+    "name": "isPropertyAccessChain",
+    "where": "src/compiler/utilitiesPublic.ts:1368:1",
+    "original_wall_seconds": 9.16823194
+  },
+  {
+    "rank": 23,
+    "name": "getJSDocTagsWorker",
+    "where": "src/compiler/utilitiesPublic.ts:1257:1",
+    "original_wall_seconds": 9.087283803
+  }
+]
