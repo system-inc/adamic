@@ -294,6 +294,7 @@ type lowering struct {
 	programCandidates    map[*checker.Type]*ast.Node
 	entry                *ast.SourceFile
 	asyncSites           []*ast.Node
+	stringSites          []*ast.Node
 	asyncPayloadFailures []error
 
 	// V2 retains exact logical producer types for union member certification.
