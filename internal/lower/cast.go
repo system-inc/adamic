@@ -27,6 +27,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if proof.construction {
 		return l.constructLiteral(node)
 	}
+	if proof.brandMint != nil {
+		return l.brandMintValue(node, as, proof.brandMint)
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
