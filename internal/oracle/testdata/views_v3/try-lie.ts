@@ -7,7 +7,7 @@ const view = base as SyntaxList;
 console.log('before');
 try {
 	const child=view._children[0];
-	console.log(String(child.kind));
+	console.log(String(child?.kind));
 } catch {
 	console.log('caught');
 }
