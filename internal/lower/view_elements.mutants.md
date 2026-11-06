@@ -11,3 +11,15 @@ Each is one edit, run on a house box, then put back.
 | An empty pre-pass, no fallback | the empty pre-pass, and lower.go, `lowerCheckedWithCycleTypes`: the misses ignored, so the first lowering stands | internal/oracle TestViewArrays, every lie fixture that views an array reads its lie raw and exits 0 |
 | An unrecorded miss | view_unions_dispatch.go, `unionAggregateContract`: the miss never appended | internal/lower TestViewElementKeyMissesAnUnseenArray, a contract for an array the pre-pass never saw passes unnoticed |
 | An unrelated read rebuilt from its type | view_arrays.go, `checkViewArrays`: the unrelated ViewElement put back with `Element: value.Of.Present()`, not `value.Element` | internal/oracle TestViewArrays/unrelated-maybe, the `(number \| undefined)[]` read takes a plain number's layout and disagrees with Node |
+
+## Fixtures that wait on the unknown[] head (#6wfvfhm, Lower's ruling 3)
+
+V3 keeps main's unknown[] refusals, so these internal/oracle/testdata/views_v3 fixtures are out of TestViewArrays' list until that head lands. Each one's point is the unknown[] road itself, which no typed array reaches.
+
+- tagged-null-read.ts: a null in tagged storage read back through a `readonly unknown[]` parameter, which main stops as an array of unknown with erased element storage.
+- unknown-wide.ts: a viewed `readonly Node[]` that holds a number, read through a `readonly unknown[]` parameter, the same erased storage stop.
+- unknown-null.ts: a viewed `readonly Node[]` that holds a legacy null, read through a `readonly unknown[]` parameter, the same stop before its legacy nullable-pointer one.
+- unknown-scalar.ts: a plain `number[]` read through a `readonly unknown[]` parameter, no view at all, the same stop.
+- guard-ref-push.ts: pins unknownArrayMutation's reference push into an unknown[], whose literal main refuses as narrower first.
+- guard-index-write.ts: pins unknownArrayMutation's index write into an unknown[], whose literal main refuses as narrower first.
+- per-read.ts, its first half: it was a lie pushed through the unknown[] alias between two checked reads, ArrayPush's UnknownElements. A push through a typed alias of a viewed array stops as a read through push, so per-read.ts now holds the lie from the start, at the second read only.
