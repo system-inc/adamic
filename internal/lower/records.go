@@ -448,6 +448,10 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 	if source == nil {
 		return nil
 	}
+	// A .ts view may drop a named contract its reads hold (droppedContractRead); .a refuses it at the
+	// write (#bq3fvdt), in recordDeclaredKeyRefusal before this rule.
+	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+	defer func() { l.droppedContractsRead = false }()
 	own := l.checker.GetTypeAtLocation(source)
 	if stored, literal := l.branchesStoredAs(source, target); literal && stored {
 		return nil

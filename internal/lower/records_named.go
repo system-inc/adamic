@@ -313,7 +313,7 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 // Erasing or widening a named contract would allow another alias to write through
 // the index signature. Storage identity alone is not a proof of that relation.
 func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	for _, pair := range [][3]*checker.Type{{from, to, viewed}, {to, from, inside}} {
+	for index, pair := range [][3]*checker.Type{{from, to, viewed}, {to, from, inside}} {
 		if len(l.checker.GetIndexInfosOfType(pair[0])) == 0 {
 			continue // Finite partial records retain their existing element invariance rule.
 		}
@@ -321,7 +321,8 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 			other := l.checker.GetPropertyOfType(pair[1], property.Name)
 			t := l.checker.GetNonMissingTypeOfSymbol(property)
 			if other == nil {
-				if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t) {
+				// A .ts view may drop the source's own contract (droppedContractRead), never add one.
+				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) {
 					return false
 				}
 				continue
@@ -333,4 +334,42 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 		}
 	}
 	return true
+}
+
+// droppedContractRead is whether a .ts view (droppedContractsRead, set by recordStorageView) may drop
+// a named property of type t, declared by the record seen, whose index signature holds held, through a
+// record whose index signature holds seen: tsc's CompilerOptions and WatchOptions seen as OptionsBase
+// (commandLineParser.ts's serializeOptionBaseObject and handleOptionConfigDirTemplateSubstitution), and
+// CompilerOptions seen as MapLike (builder.ts's getOwnKeys). No copy is made, so the object keeps its
+// identity. What the view writes under the name through its index signature is any value of seen, and
+// isn't stopped at the write: the reads hold the contract, as recordComputedEntry leaves a computed
+// entry to them, on Language's three conditions (#6c4swvt, 2026-11-06 03:08Z):
+//   - (a) Both index value types keep one representation, so a read through either reads the slot as it
+//     is stored, and keep everything inside them alike (sameKeeping).
+//   - (b) The property is one of its own index signature's values, so its value is stored at the index's
+//     representation and a read through the index reads its bytes.
+//   - (c) Every named read of the record's value is checked at run time by its declared type, whatever
+//     the receiver it's read through: the slot is boxed as a union, so each read goes through
+//     recordReadType, and the property's representation is one readGuardedInUnionSlot proves stops on a
+//     lie (a scalar's exact tag, a heap member's checked narrow) or is not yet at the read (an array, a
+//     Map). A function's tag says only "function", and a union is read unchecked, so neither is dropped.
+//
+// A readonly property is dropped on the same conditions: the view may write under its name, and the
+// read holds what it finds there as it does any other write through an index signature. The other way,
+// a record seen as one declaring a property its index signature can't hold (Record<string,
+// CompilerOptionsValue> seen as CompilerOptions, or the as CompilerOptions back-cast), keeps the stop.
+func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
+	if !l.droppedContractsRead {
+		return false
+	}
+	of, known := l.recordStorageType(held)
+	viewedOf, viewedKnown := l.recordStorageType(seen)
+	if !known || !viewedKnown || of != viewedOf || !l.sameKeeping(held, seen, map[[2]*checker.Type]bool{}) {
+		return false
+	}
+	if !l.checker.IsTypeAssignableTo(t, held) {
+		return false
+	}
+	stored, known := l.representation(t)
+	return of == ir.Union && known && readGuardedInUnionSlot[stored.Present()]
 }

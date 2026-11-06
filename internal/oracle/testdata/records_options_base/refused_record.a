@@ -1,0 +1,16 @@
+// The view getOwnKeys makes, a CompilerOptions seen as a library Record whose index signature drops strict, in .a:
+// #bq3fvdt ruled that .a refuses it, and the view stays stopped here.
+interface CompilerOptions {
+    strict?: boolean;
+    outDir?: string;
+    [option: string]: string | number | boolean | undefined;
+}
+function count(options: Record<string, string | number | boolean | undefined>): number {
+    let keys = 0;
+    for (const name in options) {
+        keys += name.length > 0 ? 1 : 0;
+    }
+    return keys;
+}
+const options: CompilerOptions = { strict: true, outDir: "out" };
+console.log(`${count(options)}`);

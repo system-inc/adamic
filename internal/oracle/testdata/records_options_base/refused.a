@@ -1,0 +1,19 @@
+// The view tsc's commandLineParser makes, a CompilerOptions seen as OptionsBase, in .a: #bq3fvdt ruled that .a
+// refuses it at the write, so a declared property narrower than OptionsBase's index stays refused here.
+interface CompilerOptions {
+    strict?: boolean;
+    outDir?: string;
+    [option: string]: string | number | boolean | undefined;
+}
+interface OptionsBase {
+    [option: string]: string | number | boolean | undefined;
+}
+function count(options: OptionsBase): number {
+    let keys = 0;
+    for (const name in options) {
+        keys += name.length > 0 ? 1 : 0;
+    }
+    return keys;
+}
+const options: CompilerOptions = { strict: true, outDir: "out" };
+console.log(`${count(options)}`);
