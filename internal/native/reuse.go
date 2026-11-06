@@ -342,6 +342,10 @@ func reachesGlobal(program *ir.Program, expression ir.Expression, global int, se
 	case ir.GeneratorNext:
 		// A step runs the body of the generator its frame was made by.
 		return touches(program, expression.Function, global, seen)
+	case ir.IteratorNext:
+		// A hand-driven next() steps a generator as GeneratorNext does, and a collection's iterator
+		// by the runtime's own next, which runs nothing of the program's.
+		return touches(program, expression.Function, global, seen)
 	case ir.RegExpCall:
 		return expression.Replacement != nil
 	case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:

@@ -185,6 +185,33 @@ func (e *emitter) generatorNext(next ir.GeneratorNext) string {
 	return result
 }
 
+// iteratorNext emits a hand-driven next() through a view a generator feeds (ir.IteratorNext):
+// runtime/generator.c's adamic_iterator_next steps a generator, or runs a collection's iterator's own
+// next, and gives the result object owned, so it is the statement's temporary like any call's. A
+// throw out of the body builds nothing and gives `NULL` (Memory's rule 3 on #qk8rztp S2c-2b), and the
+// test right after takes the throw before anything reads the result; the ladder's release of that
+// `NULL` temporary on the way out is a no-op. The yields' representation goes as its enum
+// adamic_ir_type, which the helper turns into the result's slot and its byte, as collection_next's.
+func (e *emitter) iteratorNext(next ir.IteratorNext) string {
+	iterator := e.value(next.Iterator)
+	result := e.own(ir.Object, fmt.Sprintf("adamic_iterator_next(%s, %s, %s)", iterator, irTypeName(next.Of), cString(next.Site)))
+	if e.program.IteratorNextMayThrow(next) {
+		e.checkThrown()
+	}
+	return result
+}
+
+// irTypeName is a representation as the C name of its enum adamic_ir_type (adamic.h), which
+// TestIRTypeTags holds to ir.TypeTags.
+func irTypeName(of ir.Type) string {
+	for name, tag := range ir.TypeTags() {
+		if tag == of {
+			return "adamic_ir_" + name
+		}
+	}
+	panic(fmt.Sprintf("native: a representation with no ir type tag (%d)", of))
+}
+
 // generatorPointer is a step's generator as the runtime takes it. An iterable view's dispatch steps
 // the object it holds, which IsGenerator has just said is a generator (lower/iterable_views.go).
 func generatorPointer(generator ir.Expression, value string) string {

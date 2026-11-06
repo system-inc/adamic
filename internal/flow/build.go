@@ -592,6 +592,11 @@ func canThrow(program *ir.Program, instruction *Instruction, lengths bool) bool 
 				if program.GeneratorNextMayThrow(value.Interface().(ir.GeneratorNext)) {
 					throws = true
 				}
+			case iteratorNextType:
+				// A hand-driven next steps a generator as GeneratorNext does.
+				if program.IteratorNextMayThrow(value.Interface().(ir.IteratorNext)) {
+					throws = true
+				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosureMayThrow(value.Interface().(ir.Expression)) {
@@ -627,6 +632,7 @@ var (
 	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
 
 	generatorNextType = reflect.TypeOf(ir.GeneratorNext{})
+	iteratorNextType  = reflect.TypeOf(ir.IteratorNext{})
 )
 
 func (b *builder) linkLabels(names []string, target BlockId) {
