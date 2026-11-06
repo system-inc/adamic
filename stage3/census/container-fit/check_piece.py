@@ -30,4 +30,5 @@ paths=subprocess.check_output(['git','diff','--cached','--name-only'],cwd=R,text
 subprocess.run(['git','diff','--cached','--check'],cwd=R,check=True)
 if paths:subprocess.run(['git','commit','-m','stage3/census: verify paired container fit '+pid],cwd=R,check=True)
 with (E/'publication.log').open('a') as f:subprocess.run(['timeout','--kill-after=10s','120','git','push','origin','HEAD:refs/heads/typescript/container-fit-census'],cwd=R,stdout=f,stderr=subprocess.STDOUT,check=True)
-print(json.dumps(summary),flush=True)
+print(json.dumps(dict(piece=pid,first_stop_changes=summary['first_stop_changes'],regressions=summary['regressions'],cap_rows=len(caps),byte_identity=bool(byte))),flush=True)
+if caps:print('N=4096 IS TOO LOW: see saved cap rows for '+pid,flush=True)
