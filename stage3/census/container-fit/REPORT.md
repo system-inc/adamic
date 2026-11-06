@@ -29,3 +29,4 @@ These are partial paired results. Final cohort tables, full regression lists, wa
 | q02 | 1 | 0 | 0 | equal |
 | q03 | 0 | 0 | 0 | equal |
 | q04 | 0 | 0 | 0 | equal |
+| q05 | 0 | 0 | 0 | equal |
