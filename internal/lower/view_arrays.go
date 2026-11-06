@@ -731,11 +731,12 @@ func (l *lowering) erasedWritableViewCast(node *ast.Node) error {
 	if !l.viewMakesArrayWritable(target, map[*checker.Type]bool{}) {
 		return nil
 	}
-	// A brand mint's unknown hop erases nothing: brandMintOf judges the operand under it, which must
-	// relate to the brand's mutable base, so a readonly array, viewed or not, is never minted writable
-	// (#gb0fqaa). Seen as its base, tsc's SortedArray<T> is a writable array, and without this every
-	// `xs as unknown as SortedArray<T>` would stop here.
-	if operand, from := l.mintOperand(node.AsAsExpression()); l.brandMintOf(operand, from, target) != nil {
+	// A cast to a phantom brand (tsc's SortedArray<T>, #gb0fqaa) is castProof's to judge: a mint, whose
+	// operand under the unknown hop must relate to the brand's mutable base, so no readonly array is ever
+	// minted writable, or else a refusal naming the fix. Seen as its base, SortedArray<T> is a writable
+	// array, and this stop, which only words the cast earlier, would replace both. checkViewArrays still
+	// judges every recorded cast's reach.
+	if base, _ := l.phantomExtension(target); base != nil {
 		return nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression))

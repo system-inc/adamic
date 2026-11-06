@@ -554,18 +554,18 @@ use(raw);
 	}
 }
 
-// A brand mint through an unknown hop isn't an erased operand made writable: brandMintOf judges the
-// value under the hop, and it must relate to the brand's mutable base, so no readonly array is minted
-// writable. Since #gb0fqaa reads SortedArray<T> as its base, a writable array, erasedWritableViewCast
-// saw `xs as unknown as SortedArray<number>` as one. The readonly row is the control: it isn't a mint,
-// and it stops here as before.
+// A cast to a phantom brand is castProof's to judge, never erasedWritableViewCast's: since #gb0fqaa reads
+// SortedArray<T> as its base, a writable array, the writable-cast stop saw `xs as unknown as
+// SortedArray<number>` as one, and stopped main's mints and replaced main's refusal of the casts that
+// aren't mints (TestBrandMintRecognitionIsExact). The plain array row is the control: a readonly array
+// made writable through an unknown hop still stops here.
 func TestViewWritableCastLeavesBrandMints(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSourceAs(t, brandMintPrelude+"const xs: number[] = [1, 2];\nconst sorted = xs as unknown as SortedArray<number>;\nconsole.log(String(sorted.length));\n", ".ts")
 	if err != nil {
 		t.Fatalf("a mint from a mutable array stopped: %v", err)
 	}
-	_, err = lowerSourceAs(t, brandMintPrelude+"const xs: readonly number[] = [1, 2];\nconst sorted = xs as unknown as SortedArray<number>;\nconsole.log(String(sorted.length));\n", ".ts")
+	_, err = lowerSourceAs(t, "const xs: readonly number[] = [1, 2];\nconst writable = xs as unknown as number[];\nconsole.log(String(writable.length));\n", ".ts")
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || notYet.What != "a cast that makes a viewed readonly array writable" {
 		t.Fatalf("got %v, want the readonly array's writable cast to stop", err)
