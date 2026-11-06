@@ -162,27 +162,29 @@ func TestNodeWatchInheritedOnMutant(t *testing.T) {
 }
 
 // An 'error' listener whose parameter Node's Error can't be type-checks only through on's general
-// overload, whose listener takes ...args: any[] (events.d.ts:878). There the method relation refuses
-// it before lowering, so the any never hands the program a value (host-any.md's Modelled entry). A
-// listener the Error can be picks the typed overload instead. Mutant: the relation's parameter
-// refusal skipped (invariance.go, widened's callable parameters) lets each of these lower.
+// overload, whose listener takes ...args: any[] (events.d.ts:878), and never lowers: it stops at the
+// listener, through whichever rule meets it first on the way there, the any relation's argument-site
+// NotYet, the nominal-class refusal or the method relation's parameter refusal. So the any never
+// hands the program a value (host-any.md's Modelled entry). A listener the Error can be picks the
+// typed overload instead. Mutant: those three stops skipped together lets each of these lower.
 func TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused(t *testing.T) {
 	t.Parallel()
 	prefix := `import * as fs from 'node:fs';
 function listener(_eventType: string, _filename: string | null): void {}
 const watcher = fs.watch('.', {persistent: true}, listener);
 `
-	for _, probe := range []struct{ name, code, taking string }{
-		{"map", `watcher.on('error', (seen: Map<string, number>) => { console.log(seen.get('x')); });`, "Map<string, number>"},
-		{"class", "class Shape { area = 1; }\nwatcher.on('error', (seen: Shape) => { console.log(seen.area); });", "Shape"},
-		{"primitive union", `watcher.on('error', (seen: number | boolean) => { console.log(typeof seen); });`, "number | boolean"},
-		{"string union", `watcher.on('error', (seen: string | number) => { console.log(typeof seen); });`, "string | number"},
+	for _, probe := range []struct{ name, code, at string }{
+		{"map", `watcher.on('error', (seen: Map<string, number>) => { console.log(seen.get('x')); });`, "main.a:4:21:"},
+		{"class", "class Shape { area = 1; }\nwatcher.on('error', (seen: Shape) => { console.log(seen.area); });", "main.a:5:21:"},
+		{"primitive union", `watcher.on('error', (seen: number | boolean) => { console.log(typeof seen); });`, "main.a:4:21:"},
+		{"string union", `watcher.on('error', (seen: string | number) => { console.log(typeof seen); });`, "main.a:4:21:"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, prefix+probe.code)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a function taking "+probe.taking+" seen as one taking ") {
-				t.Fatalf("want the method relation's refusal of a function taking %s, got %v", probe.taking, err)
+			var notYet *NotYet
+			if !errors.As(err, &refused) && !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.at) {
+				t.Fatalf("want a stop at the listener (%s), got %v", probe.at, err)
 			}
 		})
 	}

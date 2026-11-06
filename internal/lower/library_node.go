@@ -87,7 +87,15 @@ func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member 
 		return nil, false
 	}
 	return func(member *ast.Symbol) bool {
-		return nodeLibraryMemberImplemented(member) || implementedNodeMembers[owner+"."+member.Name]
+		if nodeLibraryMemberImplemented(member) {
+			return true
+		}
+		// The owner's key is for a member the host type inherits, named by a declaration elsewhere. A
+		// member it declares itself already has that name, and nodeLibraryMemberImplemented has judged
+		// it with its namespace: inspector's Debugger.CallFrame.url and Runtime.CallFrame.url share one
+		// flat name, told apart only there.
+		key := owner + "." + member.Name
+		return key != nodeLibraryName(member) && implementedNodeMembers[key]
 	}, true
 }
 
