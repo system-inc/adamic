@@ -13,6 +13,7 @@ const options = {strict:true, strictBindCallApply:true, useUnknownInCatchVariabl
  moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,
  lib:['lib.es2024.d.ts'],types:[]};
 let roots;
+let compilerOptions=options;
 if (fixture) roots = [path.join(tree,'fixture.ts')];
 else {
  const configPath = path.join(tree,'src/compiler/tsconfig.json');
@@ -21,8 +22,9 @@ else {
  const parsed = ts.parseJsonConfigFileContent(config.config,ts.sys,path.dirname(configPath),options,configPath);
  if (parsed.errors.length) throw Error(JSON.stringify(parsed.errors));
  roots = [path.join(tree,'src/tsc/tsc.ts')];
+ compilerOptions=parsed.options;
 }
-const program = ts.createProgram({rootNames:roots,options}), checker = program.getTypeChecker();
+const program = ts.createProgram({rootNames:roots,options:compilerOptions}), checker = program.getTypeChecker();
 // Broad source inventory, deliberately independent of checked-view admission.
 function arrayShape(t, seen = new Set()) {
  if (seen.has(t)) return {array:false,readonly:false};
@@ -78,10 +80,12 @@ for(const source of program.getSourceFiles().filter(f=>fixture?roots.includes(f.
 fs.writeFileSync(out+'.jsonl.gz',zlib.gzipSync(rows.map(r=>JSON.stringify(r)).join('\n')+(rows.length?'\n':''),{mtime:0}));
 function group(key) {
  const m={};
+ if(key==='form') for(const k of ['index','at','for-of','spread','slice','map','forEach']) m[k]={upper_bound:0,readonly_subset:0};
  for(const r of rows) {const k=r[key];m[k]||={upper_bound:0,readonly_subset:0};m[k].upper_bound++;m[k].readonly_subset+=+r.readonly;}
  return Object.fromEntries(Object.entries(m).sort((a,b)=>b[1].upper_bound-a[1].upper_bound||a[0].localeCompare(b[0])));
 }
-const summary={typescript:ts.version,label:'source upper bound on what the head can check; not admission',
+const seven=new Set(['index','at','for-of','spread','slice','map','forEach']);
+const summary={typescript:ts.version,seven_form_upper_bound:rows.filter(r=>seven.has(r.form)).length,seven_form_readonly_subset:rows.filter(r=>seven.has(r.form)&&r.readonly).length,label:'source upper bound on what the head can check; not admission',
  readonly_label:'narrower subset containing a readonly array or readonly tuple receiver arm; not admission',
  upper_bound:rows.length,readonly_subset:rows.filter(r=>r.readonly).length,forms:group('form'),files:group('file')};
 fs.writeFileSync(out+'.json',JSON.stringify(summary,null,2)+'\n');

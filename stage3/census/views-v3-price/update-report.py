@@ -37,6 +37,7 @@ lines+=['','## Broad source upper bound','',
 '',
 'The source fixture includes mutable and readonly arrays, union, tuple, mutable tuple and intersection receivers. It expects 12 reads with 10 in the readonly subset. The index-skipping mutant fails the same assertion.','']
 if source:
+ lines += [f"Seven fixture forms alone: {source['seven_form_upper_bound']:,} reads; readonly subset {source['seven_form_readonly_subset']:,}. Additional named array roads account for the remainder of the broader total.",'']
  for title,key in [('Per form','forms'),('Top ten files','files'),('Per file','files')]:
   lines += ['### '+title,'','| '+('Form' if key=='forms' else 'File')+' | Upper bound | Readonly subset |','|---|---:|---:|']
   for name,r in list(source[key].items())[:10 if title=='Top ten files' else None]:lines.append(f"| {name} | {r['upper_bound']} | {r['readonly_subset']} |")

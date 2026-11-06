@@ -1,8 +1,8 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 0 completed paired file pieces.
+**Exact latent closure totals: incomplete.** 0 completed paired file pieces of 81.
 
-**Source upper bound and readonly subset: pending completed main apply.**
+**Source upper bound: 2,861; readonly subset: 1,302.** Neither is the admission rule.
 
 | Latent measure (observed pieces only) | Main | Head |
 |---|---:|---:|
@@ -48,6 +48,109 @@ Stock TypeScript 6.0.3, with the options from void-intersections/count.cjs, enum
 
 The source fixture includes mutable and readonly arrays, union, tuple, mutable tuple and intersection receivers. It expects 12 reads with 10 in the readonly subset. The index-skipping mutant fails the same assertion.
 
+Seven fixture forms alone: 2,518 reads; readonly subset 1,216. Additional named array roads account for the remainder of the broader total.
+
+### Per form
+
+| Form | Upper bound | Readonly subset |
+|---|---:|---:|
+| index | 1327 | 695 |
+| for-of | 623 | 312 |
+| spread | 278 | 43 |
+| slice | 117 | 76 |
+| map | 113 | 59 |
+| forEach | 60 | 31 |
+| join | 55 | 3 |
+| pop | 48 | 0 |
+| indexOf | 44 | 34 |
+| filter | 42 | 16 |
+| some | 33 | 17 |
+| find | 30 | 1 |
+| sort | 23 | 0 |
+| splice | 21 | 0 |
+| includes | 18 | 6 |
+| every | 12 | 6 |
+| concat | 6 | 1 |
+| shift | 6 | 0 |
+| findIndex | 4 | 2 |
+| copyWithin | 1 | 0 |
+| at | 0 | 0 |
+### Top ten files
+
+| File | Upper bound | Readonly subset |
+|---|---:|---:|
+| src/compiler/checker.ts | 1243 | 569 |
+| src/compiler/utilities.ts | 155 | 74 |
+| src/compiler/core.ts | 131 | 82 |
+| src/compiler/program.ts | 115 | 63 |
+| src/compiler/commandLineParser.ts | 87 | 31 |
+| src/compiler/builder.ts | 75 | 27 |
+| src/compiler/parser.ts | 60 | 20 |
+| src/compiler/transformers/generators.ts | 59 | 15 |
+| src/compiler/moduleNameResolver.ts | 58 | 12 |
+| src/compiler/transformers/es2015.ts | 57 | 40 |
+### Per file
+
+| File | Upper bound | Readonly subset |
+|---|---:|---:|
+| src/compiler/checker.ts | 1243 | 569 |
+| src/compiler/utilities.ts | 155 | 74 |
+| src/compiler/core.ts | 131 | 82 |
+| src/compiler/program.ts | 115 | 63 |
+| src/compiler/commandLineParser.ts | 87 | 31 |
+| src/compiler/builder.ts | 75 | 27 |
+| src/compiler/parser.ts | 60 | 20 |
+| src/compiler/transformers/generators.ts | 59 | 15 |
+| src/compiler/moduleNameResolver.ts | 58 | 12 |
+| src/compiler/transformers/es2015.ts | 57 | 40 |
+| src/compiler/debug.ts | 54 | 6 |
+| src/compiler/emitter.ts | 51 | 24 |
+| src/compiler/executeCommandLine.ts | 50 | 8 |
+| src/compiler/transformers/module/module.ts | 40 | 14 |
+| src/compiler/tsbuildPublic.ts | 37 | 20 |
+| src/compiler/factory/utilities.ts | 33 | 7 |
+| src/compiler/factory/nodeFactory.ts | 32 | 15 |
+| src/compiler/binder.ts | 30 | 19 |
+| src/compiler/utilitiesPublic.ts | 30 | 24 |
+| src/compiler/moduleSpecifiers.ts | 29 | 14 |
+| src/compiler/watch.ts | 29 | 11 |
+| src/compiler/transformers/module/system.ts | 28 | 8 |
+| src/compiler/path.ts | 27 | 8 |
+| src/compiler/programDiagnostics.ts | 20 | 5 |
+| src/compiler/sourcemap.ts | 20 | 7 |
+| src/compiler/transformer.ts | 20 | 4 |
+| src/compiler/transformers/classFields.ts | 18 | 14 |
+| src/compiler/scanner.ts | 17 | 9 |
+| src/compiler/sys.ts | 17 | 4 |
+| src/compiler/semver.ts | 16 | 6 |
+| src/compiler/expressionToTypeNode.ts | 15 | 15 |
+| src/compiler/resolutionCache.ts | 15 | 7 |
+| src/compiler/transformers/declarations.ts | 14 | 4 |
+| src/compiler/transformers/module/esnextAnd2015.ts | 14 | 9 |
+| src/compiler/builderState.ts | 13 | 7 |
+| src/compiler/transformers/es2018.ts | 13 | 9 |
+| src/compiler/transformers/jsx.ts | 13 | 11 |
+| src/compiler/watchUtilities.ts | 13 | 0 |
+| src/compiler/transformers/es2017.ts | 12 | 11 |
+| src/compiler/transformers/esnext.ts | 12 | 11 |
+| src/compiler/tracing.ts | 11 | 3 |
+| src/compiler/transformers/esDecorators.ts | 9 | 5 |
+| src/compiler/transformers/utilities.ts | 9 | 8 |
+| src/compiler/symbolWalker.ts | 7 | 4 |
+| src/compiler/transformers/legacyDecorators.ts | 7 | 5 |
+| src/compiler/transformers/namedEvaluation.ts | 7 | 5 |
+| src/compiler/transformers/destructuring.ts | 6 | 4 |
+| src/compiler/visitorPublic.ts | 6 | 6 |
+| src/compiler/factory/emitHelpers.ts | 5 | 4 |
+| src/compiler/factory/emitNode.ts | 4 | 0 |
+| src/compiler/transformers/ts.ts | 4 | 4 |
+| src/compiler/transformers/classThis.ts | 3 | 3 |
+| src/compiler/watchPublic.ts | 3 | 1 |
+| src/compiler/factory/nodeConverters.ts | 2 | 2 |
+| src/compiler/transformers/es2020.ts | 2 | 0 |
+| src/compiler/transformers/typeSerializer.ts | 2 | 2 |
+| src/compiler/transformers/declarations/diagnostics.ts | 1 | 1 |
+| src/compiler/transformers/taggedTemplate.ts | 1 | 1 |
 
 ## Evidence and status
 
