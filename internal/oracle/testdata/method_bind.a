@@ -56,3 +56,7 @@ function methodA(): string { console.log("method a"); return "owned" + String(ef
 function methodB(): string { console.log("method b"); throw new Error("fixed"); }
 try { throwingHost.m?.bind(throwingHost, methodA(), methodB()); }
 catch { console.log("method caught"); }
+
+class StaticHost { static m(): string { return "static"; } }
+function bindStatic(h: typeof StaticHost): () => string { return h.m.bind(h); }
+console.log(bindStatic(StaticHost)());
