@@ -213,19 +213,22 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 type accessorReach struct {
 	graph  *allocationFlowGraph
 	owners map[int]map[string]bool
+	// classes is the class each owning allocation is made as, whose chain spreadGetters walks.
+	classes map[int]int
 }
 
 func newAccessorReach(program *ir.Program) *accessorReach {
 	numbered := *program
 	numbered.Functions = append([]ir.Function(nil), program.Functions...)
 	assignAllocationSites(&numbered)
-	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}}
+	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}, classes: map[int]int{}}
 	own := func(node any) bool {
 		literal, isLiteral := node.(ir.ObjectLiteral)
 		if !isLiteral || literal.Class == 0 || len(literal.GraphTypes) == 0 {
 			return true
 		}
 		site := literal.GraphTypes[len(literal.GraphTypes)-1]
+		reach.classes[site] = literal.Class
 		// An object owns its class's accessors and every base's, as adamic_accessor_find finds them.
 		for class := literal.Class; class != 0; class = program.Classes[class-1].Base {
 			for _, accessor := range program.Classes[class-1].Accessors {
@@ -391,6 +394,7 @@ func (l *lowering) finishAccessors() error {
 			case ir.ObjectLiteral:
 				if expression.Spread != nil {
 					expression.NoReuse = true
+					expression.SpreadGetters = l.spreadGetters(reach, original.(ir.ObjectLiteral).Spread)
 					node = expression
 				}
 			case ir.Property:
@@ -471,6 +475,42 @@ func (l *lowering) hasAccessorStorage(proven *checker.Type) bool {
 		}
 	}
 	return false
+}
+
+// spreadGetters is the getters a spread of source may run (ir.ObjectLiteral's SpreadGetters): each
+// getter of the class chain of every allocation that can reach source, read from the accessor
+// registry, an object literal's synthetic class and a base's included, and every registered getter
+// when the reach is unknown, so it fails closed. A fresh data literal reaches none. It is judged by
+// flow and never by source's static type: a class instance whose getter satisfies a declared plain
+// field is assignable to that type, so a type test would fail open (Memory's and Compiler's ruling on
+// #qk8rztp S2c-2b).
+func (l *lowering) spreadGetters(reach *accessorReach, source ir.Expression) []int {
+	if plainDataSpreadSource(source) {
+		return nil
+	}
+	var getters []int
+	seen := map[int]bool{}
+	chain := func(class int) {
+		for ; class != 0; class = l.result.Classes[class-1].Base {
+			for _, accessor := range l.result.Classes[class-1].Accessors {
+				if accessor.Getter >= 0 && !seen[accessor.Getter] {
+					seen[accessor.Getter] = true
+					getters = append(getters, accessor.Getter)
+				}
+			}
+		}
+	}
+	allocations := reach.graph.ReachingAllocations(source)
+	if allocations.Unknown {
+		for class := range l.result.Classes {
+			chain(class + 1)
+		}
+		return getters
+	}
+	for _, site := range allocations.Sites {
+		chain(reach.classes[site])
+	}
+	return getters
 }
 
 // Until spread callbacks are explicit calls in the flow graph, their exception edges must not be lost.
