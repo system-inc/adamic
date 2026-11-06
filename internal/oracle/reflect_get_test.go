@@ -46,7 +46,15 @@ func reflectGetFixture(t *testing.T, name string) string {
 // fields panic natively (#2ncah99); keyed_array_element boxing a number array's elements as
 // references, so array_reads.a's numbers are read as pointers natively; keyed_array's index bound
 // taken as <= length, so array_reads.a's reads at length read past the last element natively
-// (#ys4naww).
+// (#ys4naww). #g187f1e's: one closure's length changed in dynamic_keyed_names.h, so
+// array_methods.a's map has the wrong length natively; an array's toString handed Object.prototype's
+// closure, so array_methods.a's toString is an object's natively; a closure made for each read in
+// place of the immortal one, so array_methods.a's map read twice isn't itself natively; the
+// helper's inherited-name answer dropped back to undefined, so array_methods.a's names read
+// undefined on the JavaScript backend; keyed_tuple_slot boxing every slot by dynamic_slot, so
+// tuple_reads.a's entries pairs panic natively, and boxing a runtime pair by its kinds before its
+// bytes, so tuple_maybe_set.a's undefined reads as a number natively; the emitter's registration of
+// a Map's pair shape dropped, so tuple_collections.a's map spread panics natively.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -65,6 +73,13 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
 		{"array_reads.a", arrayReadsAnswers},
 		{"stop_array.a", "before\nnumber\n"},
+		{"array_methods.a", arrayMethodsAnswers},
+		{"stop_array_method.a", "before\nfunction\n"},
+		{"tuple_reads.a", tupleReadsAnswers},
+		{"tuple_collections.a", tupleCollectionsAnswers},
+		{"tuple_maybe_set.a", "pair 0 0 undefined\npair 0 1 undefined\npair 0 length number 2\npair 1 0 number 4\npair 1 1 number 4\npair 1 length number 2\n"},
+		{"stop_tuple.a", "before\nnumber\n"},
+		{"stop_tuple_indices.a", "before\nnumber\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -148,6 +163,130 @@ absent 1 undefined
 either 0 null
 either 1 undefined
 either 2 object there
+`
+
+// arrayMethodsAnswers is what array_methods.a prints on Node.
+const arrayMethodsAnswers = `constructor: function 1
+at: function 1
+concat: function 1
+copyWithin: function 2
+fill: function 1
+find: function 1
+findIndex: function 1
+findLast: function 1
+findLastIndex: function 1
+lastIndexOf: function 1
+pop: function 0
+push: function 1
+reverse: function 0
+shift: function 0
+unshift: function 1
+slice: function 2
+sort: function 1
+splice: function 2
+includes: function 1
+indexOf: function 1
+join: function 1
+keys: function 0
+entries: function 0
+values: function 0
+forEach: function 1
+filter: function 1
+flat: function 0
+flatMap: function 1
+map: function 1
+every: function 1
+some: function 1
+reduce: function 1
+reduceRight: function 1
+toReversed: function 0
+toSorted: function 1
+toSpliced: function 2
+with: function 2
+toLocaleString: function 0
+toString: function 0
+valueOf: function 0
+hasOwnProperty: function 1
+isPrototypeOf: function 1
+propertyIsEnumerable: function 1
+__defineGetter__: function 2
+__defineSetter__: function 2
+__lookupGetter__: function 1
+__lookupSetter__: function 1
+map from two arrays: true
+map read twice: true
+map is filter: false
+constructor is an object's: false
+toString is an object's: false
+toLocaleString is an object's: false
+valueOf is an object's: true
+hasOwnProperty is an object's: true
+`
+
+// tupleReadsAnswers is what tuple_reads.a prints on Node.
+const tupleReadsAnswers = `literal 0 number 1.5
+literal 1 string one
+literal 2 undefined
+literal length number 2
+literal map is an array's: true
+literal missing undefined
+flags 0 boolean true
+flags 1 number 2
+flags 2 undefined
+flags length number 2
+flags map is an array's: true
+flags missing undefined
+nullable 0 null
+nullable 1 string two
+nullable 2 undefined
+nullable length number 2
+nullable map is an array's: true
+nullable missing undefined
+number entry 0 string b
+number entry 1 number 2
+number entry 2 undefined
+number entry length number 2
+number entry map is an array's: true
+number entry missing undefined
+string entry 0 string c
+string entry 1 string see
+string entry 2 undefined
+string entry length number 2
+string entry map is an array's: true
+string entry missing undefined
+boolean entry 0 string off
+boolean entry 1 boolean false
+boolean entry 2 undefined
+boolean entry length number 2
+boolean entry map is an array's: true
+boolean entry missing undefined
+indices 0 number 1
+indices 1 number 2
+indices 2 undefined
+indices length number 2
+indices map is an array's: true
+indices missing undefined
+`
+
+// tupleCollectionsAnswers is what tuple_collections.a prints on Node.
+const tupleCollectionsAnswers = `map spread 0 string on
+map spread 1 boolean true
+map spread 2 undefined
+map spread length number 2
+map spread map is an array's: true
+map spread missing undefined
+map entries 0 number 1
+map entries 1 number 10
+map entries 2 undefined
+map entries length number 2
+map entries map is an array's: true
+map entries missing undefined
+set entries 0 number 7
+set entries 1 number 7
+set entries 2 undefined
+set entries length number 2
+set entries map is an array's: true
+set entries missing undefined
 `
 
 // undefinedSpreadAnswers is what undefined_spread.a prints on Node.
@@ -251,9 +390,6 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_keys_iterator.a", "iterator\n", "OwnKeys", "", "iterator\nkeys []\n"},
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
-	{"stop_array_method.a", "before\n", "ArrayPrototype", "map", "before\nfunction\n"},
-	{"stop_tuple.a", "before\n", "Tuple", "0", "before\nnumber\n"},
-	{"stop_tuple_indices.a", "before\n", "Tuple", "0", "before\nnumber\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
 }
 
@@ -298,10 +434,7 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
 // (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
 // adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
-// native's slots. stop_array_method.a's mutants are keyed_array's inherited-name stop dropped
-// natively, and the helper's, so map reads undefined on each (#ys4naww). stop_tuple_indices.a's is
-// the helper's marking of a match's indices pairs dropped, so the JavaScript backend reads the pair
-// as an array where native stops.
+// native's slots.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {
@@ -441,6 +574,14 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		{"refuse_null_object_array_field.a", "refuse_null_object_array_field.a:10:35", nullableArrayRefusal},
 		{"refuse_null_object_array_array.a", "refuse_null_object_array_array.a:10:35", nullableArrayRefusal},
 		{"refuse_null_object_array_record.a", "refuse_null_object_array_record.a:10:35", nullableArrayRefusal},
+		// A tuple an unknown reaches is read as an array (#g187f1e), so one whose length natively its
+		// shape can't say is NotYet where it's viewed, and so is one whose null its slot holds as a null
+		// pointer, as such an array is. tuple_reads.a's string | null slot is the control, boxed as a
+		// Union, which answers null. Mutants: unknownView's variableTuple test dropped, so the optional
+		// row lowers and natively reads [1]'s length as 2; nullableReferenceArray's tuple step dropped,
+		// so the null row lowers and natively reads null as undefined.
+		{"refuse_tuple_optional.a", "refuse_tuple_optional.a:11:39", "a tuple with optional or rest elements viewed as unknown or object (tuple length)"},
+		{"refuse_tuple_null.a", "refuse_tuple_null.a:11:37", nullableArrayRefusal},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()

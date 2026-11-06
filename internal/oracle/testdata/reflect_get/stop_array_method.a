@@ -1,6 +1,6 @@
-// A name an array inherits stops on both backends (#ys4naww): Array.prototype's methods aren't read
-// by a run-time key yet, where an array's own indexes and length are (array_reads.a). Node prints
-// function.
+// A name an array inherits answers on both backends as Node's does (#g187f1e), where it once
+// stopped (#ys4naww): Array.prototype's map is a function, as array_methods.a's every other name
+// is. Node prints function.
 import { propertyOf } from './hostErrors.ts';
 
 console.log('before');

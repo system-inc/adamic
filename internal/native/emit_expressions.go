@@ -563,6 +563,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
+		// map.c writes no representation bytes into a pair, so a run-time key read boxes a scalar slot
+		// by the shape's registered types (union.c's keyed_tuple_slot), registered here as a literal's
+		// are, not only once some literal of the same shape has been made.
+		if e.dynamicProperties() {
+			e.line("adamic_register_shape_types(&%s_metadata);", pair)
+		}
 		return e.programArray(e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes, expression.ProgramRegion), expression.ProgramRegion)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)

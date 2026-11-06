@@ -29,18 +29,8 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// missing name would read a method as undefined.
 	{"Primitive", "a primitive receiver's properties aren't read yet"},
 	{"Function", "a function's properties aren't read by a run-time key yet"},
-	// An array answers its indexes, its length and a match's own fields (#ys4naww), and reads any other
-	// name as undefined but the ones it inherits, Array.prototype's and Object.prototype's, which stop:
-	// a method read would hand out a function no call can reach yet.
-	{"ArrayPrototype", "an array's methods aren't read by a run-time key yet"},
 	{"Collection", "a Map's or a Set's properties aren't read by a run-time key yet"},
 	{"TypedArray", "a typed array's properties aren't read by a run-time key yet"},
-	// Lowering refuses a tuple viewed as unknown, but one still reaches the read as a value an unknown
-	// holds: an object's field, an array's element, an Object.entries pair, a match's indices pair.
-	// Natively a tuple is an object marked tuple, whose runtime-made pairs carry no slot types, so it
-	// isn't read as an array yet. The JavaScript backend marks the same values (adamicTuple), so both
-	// stop alike.
-	{"Tuple", "a tuple's properties aren't read by a run-time key yet"},
 	{"StaticClass", "a class's static properties aren't read by a run-time key yet"},
 	{"RuntimeValue", "this runtime value's properties aren't read by a run-time key yet"},
 	// A class keeps its private fields under names beginning with #, as string keys on the JavaScript
@@ -72,17 +62,43 @@ var DynamicKeyedPrototypeMethods = []string{
 // constructor, the __proto__ accessor, and the ten methods.
 var DynamicKeyedPrototypeNames = append([]string{"constructor", "__proto__"}, DynamicKeyedPrototypeMethods...)
 
+// DynamicKeyedFunction is a function a run-time key read hands out under its name, and its length on
+// Node, which natively its closure carries.
+type DynamicKeyedFunction struct {
+	Name   string
+	Length int
+}
+
+// DynamicKeyedFunctions are such functions, in a table's order.
+type DynamicKeyedFunctions []DynamicKeyedFunction
+
+// Names are the functions' names, in order.
+func (functions DynamicKeyedFunctions) Names() []string {
+	names := []string{}
+	for _, function := range functions {
+		names = append(names, function.Name)
+	}
+	return names
+}
+
 // DynamicKeyedArrayPrototypeNames are Object.getOwnPropertyNames(Array.prototype) on Node, less
-// length, which every array holds as its own. An array inherits each of them, and Object.prototype's
-// names too (DynamicKeyedPrototypeNames), so a run-time key read of any stops (ArrayPrototype).
-// TestDynamicKeyedArrayPrototypeNamesAreNodes holds this list to the pinned Node's both ways, so a
-// name Node adds goes red rather than reading undefined.
-var DynamicKeyedArrayPrototypeNames = []string{
-	"constructor", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex",
-	"lastIndexOf", "pop", "push", "reverse", "shift", "unshift", "slice", "sort", "splice", "includes",
-	"indexOf", "join", "keys", "entries", "values", "forEach", "filter", "flat", "flatMap", "map", "every",
-	"some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with", "toLocaleString",
-	"toString",
+// length, which every array holds as its own, each with Node's Array.prototype[name].length. An array
+// and a tuple inherit each of them, and Object.prototype's names too (DynamicKeyedPrototypeNames), and
+// a run-time key read hands one out as Node does (#g187f1e): on the JavaScript backend Node's own,
+// natively one immortal closure for each name with this length (union.c, from
+// dynamic_keyed_names.h), whose call stops loudly. An array's constructor, toString and toLocaleString
+// are these, never Object.prototype's. TestDynamicKeyedArrayPrototypeNamesAreNodes and
+// TestDynamicKeyedArrayPrototypeLengthsAreNodes hold this table to the pinned Node's both ways, so a
+// name Node adds goes red rather than reading undefined, and a length that drifts goes red rather than
+// reading wrong.
+var DynamicKeyedArrayPrototypeNames = DynamicKeyedFunctions{
+	{"constructor", 1}, {"at", 1}, {"concat", 1}, {"copyWithin", 2}, {"fill", 1}, {"find", 1},
+	{"findIndex", 1}, {"findLast", 1}, {"findLastIndex", 1}, {"lastIndexOf", 1}, {"pop", 0}, {"push", 1},
+	{"reverse", 0}, {"shift", 0}, {"unshift", 1}, {"slice", 2}, {"sort", 1}, {"splice", 2},
+	{"includes", 1}, {"indexOf", 1}, {"join", 1}, {"keys", 0}, {"entries", 0}, {"values", 0},
+	{"forEach", 1}, {"filter", 1}, {"flat", 0}, {"flatMap", 1}, {"map", 1}, {"every", 1}, {"some", 1},
+	{"reduce", 1}, {"reduceRight", 1}, {"toReversed", 0}, {"toSorted", 1}, {"toSpliced", 2},
+	{"with", 2}, {"toLocaleString", 0}, {"toString", 0},
 }
 
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't
