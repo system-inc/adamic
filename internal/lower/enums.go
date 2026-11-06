@@ -39,32 +39,60 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
 }
 
-// The whole declaration is open; a member-specific literal is a smaller promise.
+// The whole declaration is open; a member-specific literal is a smaller promise. openNumericEnumType is
+// whether a type, less null and undefined, is exactly one numeric enum's whole type: its own type, or a
+// union naming every member and nothing else. wholeNumericEnums decides it, as it decides
+// holdsOpenNumericEnum, so the open-enum tag walk and the arm filter read one definition (#4cfvp4q).
 func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
-	proven = l.checker.GetNonNullableType(proven)
-	identity := l.enumIdentity(proven)
-	if !l.numericEnum(identity) {
-		return false
-	}
-	whole := l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())
-	if proven == whole {
-		return true
-	}
-	if proven.Flags()&checker.TypeFlagsUnion == 0 || whole.Flags()&checker.TypeFlagsUnion == 0 || len(proven.Types()) != len(whole.Types()) {
-		return false
-	}
-	for _, member := range whole.Types() {
-		found := false
-		for _, part := range proven.Types() {
-			if part == member {
-				found = true
-			}
+	members := flattenedMembers(l.checker.GetNonNullableType(proven))
+	whole, impure := l.wholeNumericEnums(members)
+	return !impure && len(whole) == 1 && whole[0].size == len(members)
+}
+
+// wholeNumericEnum is a numeric enum all of whose members a union's flattened members hold, with its
+// member count.
+type wholeNumericEnum struct {
+	symbol *ast.Symbol
+	size   int
+}
+
+// wholeNumericEnums is, over a union's flattened members, each numeric enum all of whose members are
+// there: its whole type, which tsc flattens into the enum's own members, inside a wider union or not. A
+// member count is the enum's whole type's, so members tsc dedupes by value count once. impure is whether
+// some member is an enum-literal number of an enum that isn't purely numeric, which each caller judges
+// for itself: the arm filter fails closed on it, and openNumericEnumType answers no.
+func (l *lowering) wholeNumericEnums(members []*checker.Type) (whole []wholeNumericEnum, impure bool) {
+	present := map[*ast.Symbol]int{}
+	order := []*ast.Symbol{}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsEnumLiteral == 0 || member.Flags()&checker.TypeFlagsNumberLiteral == 0 {
+			continue
 		}
-		if !found {
-			return false
+		identity := l.enumIdentity(member)
+		if identity == nil || !l.numericEnum(identity) {
+			impure = true
+			continue
+		}
+		if present[identity] == 0 {
+			order = append(order, identity)
+		}
+		present[identity]++
+	}
+	for _, identity := range order {
+		size := len(flattenedMembers(l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())))
+		if present[identity] >= size {
+			whole = append(whole, wholeNumericEnum{symbol: identity, size: size})
 		}
 	}
-	return true
+	return whole, impure
+}
+
+// flattenedMembers is a union's members, or the type alone.
+func flattenedMembers(proven *checker.Type) []*checker.Type {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		return proven.Types()
+	}
+	return []*checker.Type{proven}
 }
 
 func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
