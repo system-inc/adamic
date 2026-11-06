@@ -1,0 +1,24 @@
+// debug.ts's formatSyntaxKind shape, from Correctness's census on #52zja36: a const enum declared in
+// another module of an export * barrel, read through the barrel's namespace inside a function of the
+// entry and handed to formatEnum, which walks it with for...in and a run-time key read.
+import * as ts from './barrel.a';
+
+type View = Readonly<Record<string, string | number>>;
+
+function formatEnum(value: number, enumObject: View): string {
+	const names: string[] = [];
+	for (const name in enumObject) {
+		const member = enumObject[name];
+		if (typeof member === "number" && member === value) {
+			names.push(name);
+		}
+	}
+	return names.length > 0 ? names.join("|") : `${value}`;
+}
+
+function formatSyntaxKind(kind: number): string {
+	return formatEnum(kind, (ts as Readonly<Record<"ConstKind", View>>).ConstKind);
+}
+
+console.log(`${formatSyntaxKind(2)} ${formatSyntaxKind(3)} ${formatSyntaxKind(9)}`);
+console.log(Object.keys({ tscUsesKeys: 1 }).join(","));

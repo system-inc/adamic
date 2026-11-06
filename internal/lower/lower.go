@@ -245,6 +245,9 @@ type lowering struct {
 	slots slotTargets
 	// voidHolders memoizes holdsVoid: whether a type holds void at a position (#p7t8tmh).
 	voidHolders map[*checker.Type]bool
+	// constEnumReach is every const enum the program reaches as a value (reachedConstEnums), by its
+	// symbol, found once.
+	constEnumReach map[*ast.Symbol]bool
 	// voidBound is, while a generic body instantiated at void is judged, each type parameter bound to
 	// void (true) or to a type holding void (false), and genericVoidVerdicts what each judgment found.
 	voidBound           map[*checker.Type]bool
