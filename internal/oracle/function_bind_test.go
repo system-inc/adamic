@@ -186,3 +186,27 @@ func TestMethodBindCheckedReceiver(t *testing.T) {
 		t.Fatalf("want the existing checked receiver cast refusal, got %v", err)
 	}
 }
+
+// Expected native failures use run/disagreement, separately from Node's TypeError.
+func TestMethodBindRecordNonfunction(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_record_nonfunction.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode == 0 || !strings.Contains(string(truth.stderr), "TypeError") {
+		t.Fatalf("source Node must throw TypeError: %+v", truth)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: TypeError: record key 'm' is not a function\n")}
+	sanitized, _ := nativelyUncached(t, program)
+	for _, got := range []run{sanitized, releasedUncached(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Fatalf("%s: %+v", diff, got)
+		}
+	}
+}
