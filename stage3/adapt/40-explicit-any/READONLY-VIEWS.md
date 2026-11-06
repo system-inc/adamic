@@ -3,7 +3,7 @@
 Status: verification resumed with the corrected paired replay condition.
 Base: origin/main 63e14a0b2b61cf251ad74292e42d5fd09af804b3.
 
-Exactly 21 replacement strings change in class-rules.json:
+The 21 requested replacement strings change in class-rules.json:
 
 - Rules 72 through 89 and 91 use
   `Readonly<Record<"K", Readonly<Record<string, string | number>>>>`.
@@ -15,7 +15,11 @@ Exactly 21 replacement strings change in class-rules.json:
 The outer Readonly describes a namespace field that cannot be assigned, and
 its inner Readonly describes a read view of the enum table. No cast is added.
 Every other rule and every non-replacement field is unchanged. Rule 70's Map
-key is unchanged; no further body edit has been established as necessary.
+key also uses `Readonly<Record<string, string | number>>`. The initial after
+latent census exposed two new storage-view NotYet diagnostics in getEnumMembers
+at cache.get and cache.set. The identity cache only holds keys and never writes
+through them, so its key annotation must accept the same readonly view. This is
+the additional body type authorized in the brief; no cast or runtime code changes.
 class-proof.cjs's declaration projection and Boolean-map mutant now use the
 readonly parameter spelling. Earlier enum-display evidence remains historical.
 

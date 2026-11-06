@@ -280,7 +280,7 @@
       "line": 420,
       "column": 37,
       "originalLine": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();",
-      "replacement": "Record<string, string | number>",
+      "replacement": "Readonly<Record<string, string | number>>",
       "parentKind": "NewExpression"
     },
     {
