@@ -30,6 +30,8 @@ var compilerSites = map[string]string{
 	"bench/run.go:describeMachine":                                                                    "prints clang's version for a benchmark's header; compiles nothing",
 	"cmd/adamic-admission-delta/main.go:run":                                                          "checks clang resolves before any native observation, so a missing toolchain is a void, not a red; compiles nothing",
 	"cmd/adamic-gate/main.go:buildFlags":                                                              "records clang's version in a gate's machine line; compiles nothing",
+	"cmd/adamic/main.go:clangVersion":                                                                 "runs clang --version only, to name it in adamic --version's bug-report line; compiles nothing",
+	"cmd/adamic/command_guards_test.go:TestVersionNamesCommitGoAndClang":                              "runs clang --version only, to read the line adamic --version should print; compiles nothing",
 	"stage1/cohere/cssnumbers/shards_test.go:numbersClangToolchain":                                   "checks clang runs before naming it in a key; compiles nothing",
 	"stage1/cohere/cssstrings/shards_test.go:stringsClangToolchain":                                   "checks clang runs before naming it in a key; compiles nothing",
 	"bridge/tsgo/products_test.go:buildBridgeProduct":                                                 "bridge's own C test driver, compiled from the repository by relative names with its compilation directory named \".\"",
