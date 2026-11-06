@@ -1,6 +1,6 @@
-// A host object stops for every key (#ey7aysy): a matchAll iterator has no own input on Node, and
-// native's shape holds its private input, regex and done, which a run-time key read handed out
-// before. Node prints undefined.
+// A matchAll iterator has no own input on Node, and native's shape holds its private input, regex and
+// done, which a run-time key read handed out before it stopped (#ey7aysy). It now answers on both
+// backends as Node's does (#zhrjf2t), never reading a slot (matchall_reads.a). Node prints undefined.
 import { propertyOf } from './hostErrors.ts';
 
 const matches = 'ab'.matchAll(/a/g);

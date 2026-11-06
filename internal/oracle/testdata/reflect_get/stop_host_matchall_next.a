@@ -1,6 +1,6 @@
-// A host object stops for every key (#ey7aysy): a matchAll iterator's next is its prototype's method
-// on Node, which native's shape doesn't hold, so it read undefined on both backends before. Node
-// prints function.
+// A matchAll iterator's next is its prototype's method on Node, which native's shape doesn't hold, so
+// it read undefined on both backends before it stopped (#ey7aysy). It now answers on both backends as
+// Node's does (#zhrjf2t), natively an immortal closure (matchall_reads.a). Node prints function.
 import { propertyOf } from './hostErrors.ts';
 
 const matches = 'ab'.matchAll(/a/g);

@@ -101,6 +101,21 @@ var DynamicKeyedArrayPrototypeNames = DynamicKeyedFunctions{
 	{"with", 2}, {"toLocaleString", 0}, {"toString", 0},
 }
 
+// DynamicKeyedRegExpStringIteratorNames are the string-keyed names a matchAll iterator inherits on
+// Node, each with the length of the function a read hands out: Object.getOwnPropertyNames of its
+// prototype, %RegExpStringIteratorPrototype% (next), and then of Iterator.prototype, whose constructor
+// is an accessor whose getter answers Iterator. The iterator has no own property, and above
+// Iterator.prototype is Object.prototype (DynamicKeyedPrototypeNames). A run-time key read of the
+// iterator hands one out as Node does (#zhrjf2t, the first host shape it lifts): on the JavaScript
+// backend Node's own, natively one immortal closure for each name with this length (union.c, from
+// dynamic_keyed_names.h), whose call stops loudly. TestDynamicKeyedRegExpStringIteratorNamesAreNodes
+// and TestDynamicKeyedRegExpStringIteratorLengthsAreNodes hold this table to the pinned Node's both
+// ways.
+var DynamicKeyedRegExpStringIteratorNames = DynamicKeyedFunctions{
+	{"next", 0}, {"constructor", 0}, {"reduce", 1}, {"toArray", 0}, {"forEach", 1}, {"some", 1},
+	{"every", 1}, {"find", 1}, {"map", 1}, {"filter", 1}, {"take", 1}, {"drop", 1}, {"flatMap", 1},
+}
+
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't
 // have, so on an Error they stop on both backends even where one side has the name: every Error's
 // stack, an Error's cause, and a system error's errno, syscall, path and dest. Natively most host
