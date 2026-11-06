@@ -73,9 +73,38 @@ static const bool pair_references[][2] = {{false, false}, {false, true}, {true, 
 static const adamic_field_kind pair_kinds[][2] = {{adamic_field_number, adamic_field_number}, {adamic_field_number, adamic_field_boolean}, {adamic_field_number, adamic_field_reference}, {adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}, {adamic_field_reference, adamic_field_number}, {adamic_field_reference, adamic_field_boolean}, {adamic_field_reference, adamic_field_reference}};
 static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[0]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[1]}, {2, pair_names, pair_references[1], &adamic_host_methods, pair_kinds[2]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[3]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[4]}, {2, pair_names, pair_references[1], &adamic_host_methods, pair_kinds[5]}, {2, pair_names, pair_references[2], &adamic_host_methods, pair_kinds[6]}, {2, pair_names, pair_references[2], &adamic_host_methods, pair_kinds[7]}, {2, pair_names, pair_references[3], &adamic_host_methods, pair_kinds[8]}};
 
-// These are ir.Type's scalar representations; all other accepted collection elements are counted.
+// adamic_iterator_result (adamic.h) is the one place a step result is built, a collection's and a
+// string's alike. At done a number or a boolean kind's value holds the packed absent maybe-number, as
+// its representation byte then says MaybeNumber, which union.c's dynamic_slot reads first.
+adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag) {
+	adamic_object *result = adamic_object_new(&result_shapes[kind]);
+	adamic_register_shape_types(&result_metadata[kind]);
+	result->slots[1].boolean = !present;
+	adamic_object_field_types(result)[1] = adamic_ir_Boolean;
+	adamic_object_field_types(result)[0] = element_tag;
+	if (present) {
+		result->slots[0] = element;
+	} else if (kind == adamic_field_reference) {
+		result->slots[0].reference = NULL;
+	} else {
+		result->slots[0].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
+	}
+	return result;
+}
+
+// A collection's element is one of ir.Type's scalar representations Number, Boolean and MaybeNumber,
+// or counted. Anything else, MaybeBoolean among them, would be retained as a pointer it isn't, so it
+// stops as a compiler bug: the lowering keeps every other representation out of a collection.
 static bool collection_reference(int type) {
-	return type != adamic_ir_Number && type != adamic_ir_Boolean && type != adamic_ir_MaybeNumber;
+	if (type == adamic_ir_Number || type == adamic_ir_Boolean || type == adamic_ir_MaybeNumber) {
+		return false;
+	}
+	if (adamic_ir_type_reference((enum adamic_ir_type)type)) {
+		return true;
+	}
+	char message[160];
+	int length = snprintf(message, sizeof message, "compiler bug: a collection element of representation %d is neither a number, a boolean, a maybe-number nor counted", type);
+	adamic_panic(message, length < 0 ? 0 : (size_t)length < sizeof message ? (size_t)length : sizeof message - 1);
 }
 
 static adamic_field_kind collection_kind(int type) {
@@ -94,20 +123,14 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	bool set = state->slots[4].boolean;
 	bool reference = part == 3 || collection_reference(part == 1 || set ? key_type : value_type);
 	adamic_field_kind result_kind = part == 3 ? adamic_field_reference : collection_kind(part == 1 || set ? key_type : value_type);
-	adamic_object *result = adamic_object_new(&result_shapes[result_kind]);
-	adamic_register_shape_types(&result_metadata[result_kind]);
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
-	result->slots[1].boolean = !present;
-	adamic_object_field_types(result)[1] = 2;
-	adamic_object_field_types(result)[0] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
+	unsigned char element_tag = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
 	if (!present) {
-		if (!reference) {
-			result->slots[0].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
-		}
-		return (adamic_value){.reference = result};
+		return (adamic_value){.reference = adamic_iterator_result(result_kind, false, (adamic_value){0}, element_tag)};
 	}
 	if (set) { value = key; value_type = key_type; }
+	adamic_value element;
 	if (part == 3) {
 		int shape = collection_kind(key_type) * 3 + collection_kind(value_type);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
@@ -118,18 +141,18 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
 		if (collection_reference(value_type)) { adamic_retain(value.reference); }
-		result->slots[0].reference = pair;
+		element.reference = pair;
 	} else {
 		int type = part == 1 || set ? key_type : value_type;
-		adamic_value element = part == 1 || set ? key : value;
+		element = part == 1 || set ? key : value;
+		// The map lends its element, and the result is given one of its own.
 		if (reference) { adamic_retain(element.reference); }
 		if (type == adamic_ir_Number) {
 			// IteratorResult<number, undefined>.value reads the same packed word until narrowed.
 			element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number});
 		}
-		result->slots[0] = element;
 	}
-	return (adamic_value){.reference = result};
+	return (adamic_value){.reference = adamic_iterator_result(result_kind, true, element, element_tag)};
 }
 
 bool adamic_collection_iterator_is(const void *value) {
@@ -180,15 +203,13 @@ static adamic_value string_next(adamic_closure *self, adamic_value *arguments) {
 	adamic_object *state = self->cells[0]->value.reference;
 	adamic_string *string = state->slots[0].reference;
 	size_t offset = (size_t)state->slots[1].number;
-	adamic_object *result = adamic_object_new(&result_shapes[adamic_field_reference]);
-	adamic_register_shape_types(&result_metadata[adamic_field_reference]);
-	result->slots[1].boolean = offset >= string->length;
-	if (offset < string->length) {
-		size_t size = adamic_string_next(string, offset);
-		result->slots[0].reference = adamic_string_slice_bytes(string, offset, size);
-		state->slots[1].number = (double)(offset + size);
+	if (offset >= string->length) {
+		return (adamic_value){.reference = adamic_iterator_result(adamic_field_reference, false, (adamic_value){0}, adamic_ir_String)};
 	}
-	return (adamic_value){.reference = result};
+	size_t size = adamic_string_next(string, offset);
+	state->slots[1].number = (double)(offset + size);
+	adamic_value element = {.reference = adamic_string_slice_bytes(string, offset, size)};
+	return (adamic_value){.reference = adamic_iterator_result(adamic_field_reference, true, element, adamic_ir_String)};
 }
 
 adamic_object *adamic_string_iterator(adamic_string *string) {
