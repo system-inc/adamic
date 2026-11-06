@@ -313,6 +313,30 @@
       "times_sha256": "2020316ef495fbe4446934b4ea2eda8aa0536cb4f7a261afafc801d896a36c17",
       "unit_wall_seconds": 459.70195991500003,
       "unit_cpu_seconds": 511.49344800000006
+    },
+    "p06": {
+      "identity": {
+        "schema": 1,
+        "label": "head",
+        "piece": "p06",
+        "plan_sha256": "c028b544d5695bce350d42b224dcdd4b30fc45898f4c6e064f3f6c258a4cda33",
+        "selection_sha256": "23041a026779c835edaed5b3e7d2895911c7bd7649b2d760596180c0f4d45e7d",
+        "binary_sha256": "f559657d3235c041bc6c550db01b9a091da2019dd8fd3dd614512c765f36d640",
+        "source_manifest_sha256": "a6efcf70dc06e41587289ae002591fd75e11fc211de14f706e1c56f28a500ce0"
+      },
+      "start_utc": "2026-11-06T00:12:58.919092+00:00",
+      "expected_units": 167,
+      "expected_timed_units": 156,
+      "estimated_seconds": 572.645775202,
+      "returncode": 0,
+      "end_utc": "2026-11-06T00:22:15.768323+00:00",
+      "process_wall_seconds": 556.8492659469994,
+      "process_cpu_seconds": 623.9803770000003,
+      "failure": null,
+      "latent_sha256": "c65b25a4584d4127270a5a61009ec0f53e763484c4561d7fc11caa4ff84b24b7",
+      "times_sha256": "e3c20b8d21e577465b97a695497ec8c688ff780a233276539717b91c252983b8",
+      "unit_wall_seconds": 438.718747043,
+      "unit_cpu_seconds": 485.83726800000017
     }
   }
 }
