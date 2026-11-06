@@ -402,3 +402,23 @@ console.log(String(names.length));
 		t.Fatalf("an array contract the pre-pass never saw passed unnoticed: misses %v", keyed.key.misses)
 	}
 }
+
+// An unrelated read isn't an unreachable one: an any hop hands a viewed Node allocation to an Other[]
+// that relates to Node neither way, so the key gives it no check, and it must stop where its array can
+// reach a viewed allocation rather than read Other's layout raw (Lower's must on #6wfvfhm). Mutant: the
+// unrelated put-back moved above demanded, as it was; this lowers.
+func TestViewElementUnrelatedButReachableStops(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSourceAs(t, `interface Node { readonly kind: number; }
+interface Other { readonly name: string; }
+const raw: unknown = JSON.parse('[{"kind": 1}]');
+const nodes = raw as readonly Node[];
+const a: any = nodes;
+const others: Other[] = a;
+console.log(String(others[0].name.length));
+`, ".ts")
+	if err == nil {
+		t.Fatal("an Other[] reached from a viewed Node[] through any lowers its element read raw")
+	}
+	t.Logf("stops: %v", err)
+}
