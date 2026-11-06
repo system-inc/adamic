@@ -1,0 +1,111 @@
+// A hand-driven next() through an IterableIterator<T> parameter a generator's direct call feeds
+// (#qk8rztp S2c-2b), each next an IteratorNext whose result the runtime builds of the step's value,
+// moved in. Memory's pins: P1 is checker.ts:21636's loop over a generator yielding diagnostics, an
+// optional field among them, run to done (elaborate); P2 leaves it by break after one step
+// (firstOnly) and by return after two (firstLate), the frame still suspended when its caller lets
+// go of it. A number generator goes through firstTwo, a status kept across a later next(), each
+// still reading its own value, since every result is a fresh object, and through exhausted, which
+// asks next() again after done. keptNames keeps every status and reads each after the walk, through
+// done's narrowing again, and firstOrMissing takes the narrowed `| undefined` form. Names and numbers
+// are built, never only literals.
+interface Diagnostic {
+    readonly errorNode: string;
+    readonly innerExpression?: string;
+}
+function* diagnostics(names: readonly string[], base: number): Generator<Diagnostic, undefined, undefined> {
+    for (let index = 0; index < names.length; index++) {
+        const name = `${names[index] ?? 'none'}#${String(base + index)}`;
+        if (index % 2 === 0) {
+            yield { errorNode: name, innerExpression: `${name}.inner` };
+        } else {
+            yield { errorNode: name };
+        }
+    }
+}
+function* counted(limit: number, step: number): Generator<number, undefined, undefined> {
+    for (let index = 0; index < limit; index++) {
+        yield index * step + 1;
+    }
+}
+function elaborate(iterator: IterableIterator<Diagnostic>): string {
+    let reported = '';
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        const { errorNode, innerExpression } = status.value;
+        reported += `${errorNode}:${innerExpression ?? 'none'} `;
+    }
+    return reported;
+}
+function firstOnly(iterator: IterableIterator<Diagnostic>): string {
+    let found = 'none';
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        found = status.value.errorNode;
+        break;
+    }
+    return found;
+}
+function firstLate(iterator: IterableIterator<Diagnostic>): string {
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        if (status.value.innerExpression === undefined) {
+            return status.value.errorNode;
+        }
+    }
+    return 'none';
+}
+function firstTwo(numbers: IterableIterator<number>): number {
+    const first = numbers.next();
+    const second = numbers.next();
+    let total = 0;
+    if (!first.done) {
+        total += first.value;
+    }
+    if (!second.done) {
+        total += second.value * 10;
+    }
+    return total;
+}
+function exhausted(numbers: IterableIterator<number>): string {
+    let steps = 0;
+    for (let status = numbers.next(); !status.done; status = numbers.next()) {
+        steps++;
+    }
+    const again = numbers.next();
+    return `${String(steps)} ${again.done ? 'done' : 'more'}`;
+}
+function keptNames(iterator: IterableIterator<Diagnostic>): string {
+    const statuses: IteratorResult<Diagnostic>[] = [];
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        statuses.push(status);
+    }
+    let names = '';
+    for (const status of statuses) {
+        if (!status.done) {
+            names += `${status.value.errorNode};`;
+        }
+    }
+    return names;
+}
+function firstOrMissing(numbers: IterableIterator<number> | undefined): number {
+    if (numbers === undefined) {
+        return -1;
+    }
+    const status = numbers.next();
+    if (status.done) {
+        return -2;
+    }
+    return status.value;
+}
+const names: string[] = [];
+for (let index = 0; index < 4; index++) {
+    names.push(`node${'*'.repeat(index)}`);
+}
+console.log(elaborate(diagnostics(names, 3)));
+console.log(elaborate(diagnostics([], 1)));
+console.log(firstOnly(diagnostics(names, 5)));
+console.log(firstLate(diagnostics(names, 7)));
+console.log(firstLate(diagnostics(['single'], 2)));
+console.log(String(firstTwo(counted(3, 4))));
+console.log(String(firstTwo(counted(1, 9))));
+console.log(exhausted(counted(4, 2)));
+console.log(keptNames(diagnostics(names, 11)));
+console.log(String(firstOrMissing(counted(2, 6))));
+console.log(String(firstOrMissing(counted(0, 1))));
