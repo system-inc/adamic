@@ -1,0 +1,19 @@
+// The region happens: look only reads what make built, so the statement that hands make(7) to look
+// allocates the point in its region and lets it go when it ends. The label is built at runtime, since
+// an immortal string literal would hide a use after free in the stores beside this one.
+interface P {
+	readonly x: number;
+	readonly label: string;
+}
+
+function make(n: number): P {
+	return { x: n, label: `p${n}` };
+}
+
+function look(p: P): number {
+	return p.x + p.label.length;
+}
+
+let total = 0;
+total += look(make(7));
+console.log(`${total}`);
