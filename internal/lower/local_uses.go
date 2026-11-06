@@ -90,6 +90,7 @@ var localFields = map[string]localField{
 	"BoundClosure.GraphTypes":         {why: "allocation sites and graph types"},
 	"IteratorNext.Function":           {why: "a function's index"},
 	"MakeClosure.Function":            {why: "a function's index"},
+	"ObjectLiteral.SpreadGetters":     {why: "functions' indexes"},
 	"Method.Function":                 {why: "a function's index"},
 	"InstanceOf.Class":                {why: "a class's index"},
 	"ObjectLiteral.Class":             {why: "a class's index"},

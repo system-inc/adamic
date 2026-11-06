@@ -348,6 +348,18 @@ func reachesGlobal(program *ir.Program, expression ir.Expression, global int, se
 		return touches(program, expression.Function, global, seen)
 	case ir.RegExpCall:
 		return expression.Replacement != nil
+	case ir.ObjectLiteral:
+		// A spread runs every getter its source may own (SpreadGetters), a set lowering reads by
+		// flow off the accessor registry, never off the source's type, since a getter satisfies a
+		// declared plain field (Memory's and Compiler's ruling on #qk8rztp S2c-2b). Without a spread
+		// it runs nothing.
+		found := false
+		for _, getter := range expression.SpreadGetters {
+			if touches(program, getter, global, seen) {
+				found = true
+			}
+		}
+		return found
 	case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 		return true
 	case ir.JSONEncode, ir.FileStatus, ir.NodeFSFile, ir.NodeHostCall, ir.ProcessCall, ir.ProgramArguments, ir.ReadDirectory, ir.ReadTextFile, ir.WriteTextFile:
