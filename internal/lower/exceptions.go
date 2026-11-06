@@ -261,13 +261,11 @@ func (l *lowering) exceptions() error {
 // throwsOut reports whether a throw can leave statements: a throw, a call to a function that can
 // throw (through a function value too, a sort's comparator among them), or a read or write in its
 // temporal dead zone (ir.Program's DeadZoneMayThrow), that isn't inside a try's body with a catch.
+// A checked view's element read isn't one: its failed check is a panic, exit 70 on both backends,
+// which no catch takes (internal/oracle's view-array try pin).
 func (l *lowering) throwsOut(statements []ir.Statement) bool {
 	found := false
 	walk(statements, func(node any) bool {
-		if viewArrayHandoutChecks(node) {
-			found = true
-			return false
-		}
 		switch node := node.(type) {
 		case ir.Try:
 			if node.HasCatch {
@@ -297,7 +295,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || l.result.FrozenWriteMayThrow(node)
 		case ir.PhantomMember:
 			found = found || !node.Optional
-		case ir.Throw, ir.ViewElement:
+		case ir.Throw:
 			found = true
 		case ir.RecordCall, ir.RecordCoalesce:
 			found = found || l.result.RecordWriteMayThrow(node)

@@ -11,7 +11,7 @@ import (
 
 func TestViewArrays(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"tagged-null-read", "tagged-null-lie", "guard-forwarded", "guard-ref-push", "guard-index-write", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "unknown-null", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-lie", "renamed-lie", "unknown-scalar", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "at-lie", "per-read", "bounds", "unknown-wide", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
+	for _, name := range []string{"tagged-null-read", "tagged-null-lie", "guard-forwarded", "guard-ref-push", "guard-index-write", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "unknown-null", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-lie", "renamed-lie", "unknown-scalar", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "at-lie", "per-read", "bounds", "unknown-wide", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("testdata/views_v3/" + name + ".ts")
@@ -51,7 +51,17 @@ func TestViewArrays(t *testing.T) {
 			}
 			lying := strings.HasSuffix(name, "-lie") || name == "per-read" || name == "object-wide" || name == "generic"
 			sanitized, binary := nativelyUncached(t, program)
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+			backends := map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)}
+			// A failed check is a panic, never a throw: the program's own catch can't take it on any
+			// backend, so each one exits 70 with the same words and none prints 'caught'.
+			if name == "try-lie" {
+				for backend, got := range backends {
+					if got.exitCode != 70 || strings.Contains(string(got.stdout), "caught") || string(got.stderr) != string(backends["native"].stderr) {
+						t.Fatalf("%s: a failed element check inside a try with a catch: %#v; native stderr %q", backend, got, backends["native"].stderr)
+					}
+				}
+			}
+			for backend, got := range backends {
 				if !lying {
 					if diff := disagreement(node, got); diff != "" {
 						t.Fatalf("%s: %s; %#v", backend, diff, got)

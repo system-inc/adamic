@@ -578,21 +578,6 @@ func (l *lowering) erasedWritableViewCast(node *ast.Node) error {
 	return nil
 }
 
-// Implicit handouts have the same failure summary as an explicit ViewElement.
-func viewArrayHandoutChecks(node any) bool {
-	switch value := node.(type) {
-	case ir.ForOf:
-		return value.ElementCheck != nil
-	case ir.ArrayMap:
-		return value.ElementCheck != nil
-	case ir.ArrayVisit:
-		return value.ElementCheck != nil
-	case ir.ArrayReduce:
-		return value.ElementCheck != nil
-	}
-	return false
-}
-
 // Reference arrays currently share NULL for legacy null and undefined slots.
 // Until storage preserves a distinct tag, an erased or checked handout cannot
 // reconstruct that value from its heap header. Never guess from the static view.
