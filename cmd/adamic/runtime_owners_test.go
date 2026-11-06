@@ -35,7 +35,7 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, product := range commandRuntimes {
-		if product.options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
+		if product.options.Target == "wasm32-wasi" && os.Getenv("WASI_SYSROOT") == "" {
 			continue
 		}
 		request, err := native.RuntimeRequestFor(product.options, product.features...)
@@ -71,7 +71,7 @@ func productsBuildKey(t *testing.T, root, key string, features []string) bool {
 		return false
 	}
 	for _, variant := range runtimeproducts.Variants {
-		if variant.Options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
+		if variant.Options.Target == "wasm32-wasi" && os.Getenv("WASI_SYSROOT") == "" {
 			continue
 		}
 		request, err := native.RuntimeRequestFor(variant.Options, features...)

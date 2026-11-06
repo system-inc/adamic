@@ -15,17 +15,26 @@ import (
 // It's Build for a lean product (buildcache.LeanProductOf), whose build is a function of what it's handed alone. Build
 // reads the process's runtime supplier or the runtime cache for its archive, the process's jobserver,
 // ADAMIC_NATIVE_SPLIT, the temporary directory `TMPDIR` names for its build directory, and the clang `PATH` finds;
-// BuildLean reads none of them, nor any other environment, so it refuses what would: a target (WASI_SYSROOT), a split
-// build (the unit cache), a compiler named by anything but an absolute path, and a program linking the regexp
-// compiler's archive, which it isn't handed. Its build directory is build, beside output, made at the start and removed
-// at the end, so a trace of it reads one spelling every run. runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles
-// holds its reach to agreementproducts.NativeFiles, and every program it starts to a path it's handed.
+// BuildLean reads none of them, so it refuses what would: a wasm32-wasi target (WASI_SYSROOT), a split build (the unit
+// cache), a compiler named by anything but an absolute path, and a program linking the regexp compiler's archive, which
+// it isn't handed. The one environment it reads is the build's platform, `GOOS` and `GOARCH` (buildPlatform), which
+// resolves an empty target to the build's triple, as Flags resolves it for the key that holds its flags. Its build
+// directory is build, beside output, made at the start and removed at the end, so a trace of it reads one spelling every
+// run. runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles holds its reach to agreementproducts.NativeFiles, and
+// every program it starts to a path it's handed.
 func BuildLean(compiler string, sourcePath string, archiveDirectory string, output string, options Options, jobserver *Jobserver) error {
-	if options.Target != "" || options.Request || options.Split {
-		return fmt.Errorf("native: a lean build is one native translation unit, with no target, request or split: %+v", options)
+	if options.Target == "wasm32-wasi" || options.Request || options.Split {
+		return fmt.Errorf("native: a lean build is one native translation unit, with no wasm32-wasi target, request or split: %+v", options)
 	}
 	if !filepath.IsAbs(compiler) {
 		return fmt.Errorf("native: a lean build runs the compiler it's handed by its absolute path, not %q", compiler)
+	}
+	options, err := ResolveTarget(options)
+	if err != nil {
+		return err
+	}
+	if err := nativeTargetRefusal(options.Target); err != nil {
+		return err
 	}
 	source, err := os.ReadFile(sourcePath)
 	if err != nil {

@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-// BuildLean refuses a target before it reads anything, so the WASI_SYSROOT runtimeproducts' leanEnvironment lets its
-// reach name, read by Flags for wasm32-wasi alone, is never read on its path: the census follows every call and can't
-// tell Flags is called only after the refusal, so this holds it. Handed wasm32-wasi while WASI_SYSROOT names a directory
+// BuildLean refuses a wasm32-wasi target before it reads anything, so the WASI_SYSROOT runtimeproducts'
+// leanEnvironment lets its reach name, read by Flags for wasm32-wasi alone, is never read on its path: the census
+// follows every call and can't tell Flags is called only after the refusal, so this holds it. Handed wasm32-wasi while WASI_SYSROOT names a directory
 // that isn't there, with a compiler and a source that aren't there either, it fails with its own refusal, not
 // ValidateOptions' (WASI_SYSROOT is not a directory) or a read's, and makes nothing beside its output, not even its build
 // directory. Mutants: BuildLean validating its options first; the refusal moved after the source's read.
@@ -23,7 +23,7 @@ func TestBuildLeanRefusesATargetFirst(t *testing.T) {
 	}
 	err := BuildLean(filepath.Join(directory, "absent-clang"), filepath.Join(directory, "absent.c"), filepath.Join(directory, "absent-archive"),
 		filepath.Join(output, "native"), Options{Target: "wasm32-wasi"}, nil)
-	if err == nil || !strings.HasPrefix(err.Error(), "native: a lean build is one native translation unit, with no target") {
+	if err == nil || !strings.HasPrefix(err.Error(), "native: a lean build is one native translation unit, with no wasm32-wasi target") {
 		t.Fatalf("a wasm32-wasi lean build: %v, want BuildLean's refusal of a target", err)
 	}
 	entries, err := os.ReadDir(output)
