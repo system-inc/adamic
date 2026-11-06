@@ -97,6 +97,66 @@ void adamic_iterator_close(void *value) {
     }
 }
 
+/* Only emitted code reaches a hand-driven next(), whose proof listed every origin, so this is its bug. */
+static _Noreturn void hand_next_bug(const char *site, const char *what) {
+    char message[256];
+    int length = snprintf(message, sizeof message, "compiler bug: the hand-driven next() at %s %s", site, what);
+    adamic_panic(message, length < 0 ? 0 : (size_t)length < sizeof message ? (size_t)length : sizeof message - 1);
+}
+
+/* A step that left no throw, as a fresh result built by the one builder collection_next shares
+ * (map_set.c), so a result's shape, slots and representation bytes never differ by origin. The
+ * yielded value is the caller's (generator.h) and is moved in, with no retain. The element goes in
+ * as collection_next passes its own: a number packed as number | undefined, and at done the absent
+ * word for a scalar or NULL for a reference, never the done frame's zero, which is no value.
+ * Whether the step was present is read from the frame after the step, never before it: the frame is
+ * done exactly when the step that just ran completed it (Memory's should on #qk8rztp). */
+static adamic_object *generator_result(const adamic_generator *generator, adamic_field_kind kind, enum adamic_ir_type element_type, adamic_value yielded) {
+    bool present = !adamic_generator_done(generator);
+    unsigned char tag = kind == adamic_field_reference ? (unsigned char)element_type : kind == adamic_field_boolean && present ? adamic_ir_Boolean : adamic_ir_MaybeNumber;
+    if (!present && kind == adamic_field_reference) {
+        yielded.reference = NULL;
+    } else if (!present) {
+        yielded.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
+    } else if (kind == adamic_field_number) {
+        yielded.number = adamic_maybe_number_pack((adamic_maybe_number){true, yielded.number});
+    }
+    return adamic_iterator_result(kind, present, yielded, tag);
+}
+
+adamic_object *adamic_iterator_next(void *iterator, enum adamic_ir_type element_type, const char *site) {
+    if (adamic_generator_is(iterator)) {
+        /* The yields a result holds, as an allowlist (Adamic and Language on #qk8rztp S2c-2b): any
+         * other kind, a maybe-boolean whose byte would be read as a pointer among them, never steps. */
+        adamic_field_kind kind = adamic_field_reference;
+        if (element_type == adamic_ir_Number) {
+            kind = adamic_field_number;
+        } else if (element_type == adamic_ir_Boolean) {
+            kind = adamic_field_boolean;
+        } else if (!adamic_ir_type_reference(element_type)) {
+            hand_next_bug(site, "steps a generator whose yields no result holds");
+        }
+        /* The step retains the frame around its resume (q3), as every step does. */
+        adamic_generator *generator = iterator;
+        adamic_value yielded = adamic_generator_next(generator);
+        if (adamic_thrown != NULL) {
+            /* A throw builds nothing: the body has finished, finish released its cells, and the
+             * caller's ladder takes the throw out (Memory's rule 3 on #qk8rztp S2c-2b). */
+            return NULL;
+        }
+        return generator_result(generator, kind, element_type, yielded);
+    }
+    if (adamic_collection_iterator_is(iterator)) {
+        /* Its own next, called as a call through the iterator's next field is: the closure held
+         * across the call, no arguments, and the result it builds handed back owned. */
+        adamic_closure *next = adamic_retain(((adamic_object *)iterator)->slots[0].reference);
+        adamic_value result = adamic_closure_call(next, NULL, 0);
+        adamic_release(next);
+        return result.reference;
+    }
+    hand_next_bug(site, "steps a value that is neither a generator nor a collection's iterator");
+}
+
 /* One walk at every state: a dead cell is already NULL, a borrowed one is
  * skipped, and after finish nothing is left to drop. */
 void adamic_generator_free_children(void *value, void (*drop)(void *)) {
