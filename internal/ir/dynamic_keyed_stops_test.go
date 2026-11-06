@@ -252,3 +252,35 @@ func TestDynamicKeyedStatsFieldNamesAreNodes(t *testing.T) {
 		t.Errorf("Node's Stats has the fields %q beyond native's four, where DynamicKeyedStatsFieldNames holds %q", unheld, DynamicKeyedStatsFieldNames)
 	}
 }
+
+// A run-time key read of a Stats is closed against the pinned Node's Stats both ways (Adamic's
+// conditions on #zhrjf2t): every own key of a real fs.statSync result, every accessor and every
+// function of Stats.prototype and StatsBase.prototype is in exactly one of native's held fields
+// (statsHeldNames), DynamicKeyedStatsNames and DynamicKeyedStatsFieldNames, so no name of Node's
+// reaches the undefined a run-time key read gives any other key, and no name in the three is one Node
+// lacks. Object.prototype's names, above StatsBase.prototype, answer as on any object. Mutant: ino
+// dropped from DynamicKeyedStatsFieldNames, so Node's ino would read undefined natively.
+func TestDynamicKeyedStatsChainIsClosed(t *testing.T) {
+	t.Parallel()
+	layout := dynamicKeyedStatsLayoutOfNode(t)
+	chain := slices.Concat(layout.Own, layout.Accessors, layout.Functions, layout.Neither)
+	tables := map[string][]string{"statsHeldNames": statsHeldNames, "DynamicKeyedStatsNames": DynamicKeyedStatsNames.Names(), "DynamicKeyedStatsFieldNames": DynamicKeyedStatsFieldNames}
+	for _, name := range chain {
+		holders := []string{}
+		for table, names := range tables {
+			if slices.Contains(names, name) {
+				holders = append(holders, table)
+			}
+		}
+		if len(holders) != 1 {
+			t.Errorf("Node's Stats has %s, which %d of the held fields, the functions and the stop list hold (%q), not one", name, len(holders), holders)
+		}
+	}
+	for table, names := range tables {
+		for _, name := range names {
+			if !slices.Contains(chain, name) {
+				t.Errorf("%s holds %s, which isn't one of Node's Stats names", table, name)
+			}
+		}
+	}
+}

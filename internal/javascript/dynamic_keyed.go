@@ -102,7 +102,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicRegExpStringIteratorPrototype) return value[key];\n")
 	// So does a Stats (#zhrjf2t), as native's keyed_stats does, but for a field native doesn't hold,
 	// which stops here as it does there, though Node's own Stats holds it.
-	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicStatsPrototype) return adamicDynamicKeyedStatsFieldNames.has(key) ? adamicDynamicStop('RuntimeValue', key) : value[key];\n")
+	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicStatsPrototype) return adamicDynamicKeyedStatsFieldNames.has(key) ? adamicDynamicStop('StatsField', key) : value[key];\n")
 	// host is the one predicate for a value whose prototype isn't Object's, a program class's instance
 	// aside (#ey7aysy, Adamic's ruling on #0sps03r), native's host_object (union.c) on this backend's
 	// objects: a Stats, a Dirent, an AdamicIterator, a match's groups object, process.memoryUsage()'s
