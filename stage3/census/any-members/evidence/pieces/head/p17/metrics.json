@@ -1,0 +1,24 @@
+{
+  "identity": {
+    "schema": 1,
+    "label": "head",
+    "piece": "p17",
+    "plan_sha256": "c028b544d5695bce350d42b224dcdd4b30fc45898f4c6e064f3f6c258a4cda33",
+    "selection_sha256": "9a45e287732069de297ec0528b4d3e25cd5b4138d8a0f26f9fd8b47d6d7e8369",
+    "binary_sha256": "f559657d3235c041bc6c550db01b9a091da2019dd8fd3dd614512c765f36d640",
+    "source_manifest_sha256": "a6efcf70dc06e41587289ae002591fd75e11fc211de14f706e1c56f28a500ce0"
+  },
+  "start_utc": "2026-11-06T02:09:03.415975+00:00",
+  "expected_units": 55,
+  "expected_timed_units": 55,
+  "estimated_seconds": 346.1400907820001,
+  "returncode": 0,
+  "end_utc": "2026-11-06T02:14:00.880300+00:00",
+  "process_wall_seconds": 297.464420753,
+  "process_cpu_seconds": 332.7775819999988,
+  "failure": null,
+  "latent_sha256": "8a53238fe3c07e7138ac5a881cf21d41e64d17e6ceafbaa491588fbbb1b622ee",
+  "times_sha256": "6d8a163b21f349b56613673911c7b0c795d277e7cb42e6a017fa1574c66744c1",
+  "unit_wall_seconds": 261.797600929,
+  "unit_cpu_seconds": 290.4468199999999
+}
