@@ -1,20 +1,19 @@
 {
   "task": "52zja36",
   "base": "63e14a0b2b61cf251ad74292e42d5fd09af804b3",
-  "status": "stopped",
-  "reason": "ordered adapter replay refuses on both baseline and amended tree",
-  "adaptation": "30-indexed-reads",
-  "owner": "addRange",
-  "site": "core.ts:992:21",
-  "message": "declined site changed: core.ts:992:21",
-  "debug_owner_conflict": "not established: ordered replay stopped before later adapters",
-  "checks": {
-    "1": "both full applies pass; replay 00,10,20 zero changed files; 30 refuses without writes",
-    "2": "focused enum planner passes; full stage3 consumer tests not run",
-    "3": "not run",
-    "4": "focused complete source file JS transpilation identical; baseline normal compiler build passes; full artifact comparison not run",
-    "5": "ordinary baseline census interrupted after replay refusal; no complete comparison or latent site stops",
-    "6": "not run"
+  "status": "ordinary final census running; all other checks complete",
+  "owner_conflicts": [],
+  "requested_rule_changes": 21,
+  "additional_rule": {
+    "id": 70,
+    "reason": "readonly identity-cache key removes two new storage stops"
   },
-  "additional_rule_changes": []
+  "checks": {
+    "1": "pass: baseline and final full applies pass; 80 paired replay outcomes identical including existing refusals",
+    "2": "pass: final enum class proof, 8 mutants, generate_shards --check, lane tests",
+    "3": "pass: all 79 roots; exit 0 and zero diagnostics",
+    "4": "pass: all 9 JavaScript files and both public declarations byte-identical; no public lines moved",
+    "5": "all 19 cast scans Refused before -> expected namespace NotYet final; ordinary before complete, final running",
+    "6": "pass: final inner-only SyntaxKind mutant still Refused at invariance.go:673"
+  }
 }
