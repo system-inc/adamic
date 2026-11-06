@@ -1,0 +1,86 @@
+{
+  "preparation": {
+    "key": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+    "tree": "/workspace/scratch/95h-oracle-artifacts/2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35/tree",
+    "cache_hit": false,
+    "seconds": 284.032,
+    "artifact": "/workspace/scratch/95h-oracle-artifacts/2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+    "api_digest": "1512f1871eebe448dac94546c5a6337daa1cb64ff20c80f3d9e93f85a0f48dce"
+  },
+  "ready": {
+    "key": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+    "inputs": {
+      "files": "340c5e7f975c775252e8d8b62de3c81817c152b281ee0d64f9a87acfeb56519f",
+      "tools": {
+        "node": "v24.19.0",
+        "npm": "11.9.0",
+        "git": "git version 2.52.0",
+        "python3": "Python 3.12.14"
+      },
+      "preparation": "17a48460f44f46025f29ada928c5a796e3973ba39e9f84fce9e5dfcc4cbbdc90",
+      "platform": "linux/x64"
+    },
+    "payload": "2f325b010ef8f2546031560e5a338e15ffe65fcec1c125e3d212ebdf9d53b173",
+    "phases": {
+      "apply": {
+        "exit": 0,
+        "seconds": 251.02
+      },
+      "install": {
+        "exit": 0,
+        "seconds": 2.104
+      },
+      "build": {
+        "exit": 0,
+        "seconds": 20.361
+      },
+      "harness": {
+        "exit": 0,
+        "seconds": 0.836
+      }
+    },
+    "seconds": 284.032
+  },
+  "sourceFiles": 746,
+  "sourceBytesIdenticalToProvenAfter": true,
+  "compilerJavaScript": [
+    {
+      "file": "_tsc.js",
+      "sha256": "bd1cde0a5298a738752cdbb4a924c77f60b6430c7a7bc988edc06db7464469e7"
+    },
+    {
+      "file": "_tsserver.js",
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "file": "tsc.js",
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "file": "tsserver.js",
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "file": "typescript.js",
+      "sha256": "785ab31a6ab02aaf2449ef3b924eeda21650840620d5dbb94105615de2866e53"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "file": "watchGuard.js",
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "publicDeclarationsIdenticalToProvenAfter": true,
+  "under25Minutes": true
+}
