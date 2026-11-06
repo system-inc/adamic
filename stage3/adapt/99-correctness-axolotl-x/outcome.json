@@ -1,6 +1,6 @@
 {
-  "status": "stopped",
-  "stopped_at": "check 1 revised paired replay: affected-file refusal guard",
+  "status": "in_progress",
+  "stopped_at": null,
   "rewritten": 46,
   "left": 0,
   "imports_removed": 6,
@@ -13,46 +13,9 @@
     "checked_roots": 79,
     "bytes_and_mtime_preserved": true
   },
-  "stop": {
-    "adapter": "40-explicit-any",
-    "condition": "refusal names a file 99x edits",
-    "recordsIdentical": true,
-    "refusal": "missing reviewed brands: src/compiler/builder.ts",
-    "before": [
-      {
-        "key": "__incrementalBuildInfoFileIdBrand",
-        "owner": "IncrementalBuildInfoFileId",
-        "pinnedLine": 1074,
-        "actualLine": 1098,
-        "text": "__incrementalBuildInfoFileIdBrand: undefined;"
-      },
-      {
-        "key": "__incrementalBuildInfoFileIdListIdBrand",
-        "owner": "IncrementalBuildInfoFileIdListId",
-        "pinnedLine": 1076,
-        "actualLine": 1100,
-        "text": "__incrementalBuildInfoFileIdListIdBrand: undefined;"
-      }
-    ],
-    "after": [
-      {
-        "key": "__incrementalBuildInfoFileIdBrand",
-        "owner": "IncrementalBuildInfoFileId",
-        "pinnedLine": 1074,
-        "actualLine": 1097,
-        "text": "__incrementalBuildInfoFileIdBrand: undefined;"
-      },
-      {
-        "key": "__incrementalBuildInfoFileIdListIdBrand",
-        "owner": "IncrementalBuildInfoFileIdListId",
-        "pinnedLine": 1076,
-        "actualLine": 1099,
-        "text": "__incrementalBuildInfoFileIdListIdBrand: undefined;"
-      }
-    ]
-  },
+  "stop": null,
   "checks": {
-    "2": "not run: stopped at check 1",
+    "2": "pass: 79 roots, exit 0, zero diagnostics",
     "3": "not run: stopped at check 1",
     "4": "not run: stopped at check 1",
     "5": "not run: stopped at check 1",
@@ -101,27 +64,7 @@
     "records_identical": true,
     "diff_bytes": 0,
     "complete": false,
-    "failures": [
-      {
-        "adapter": "40-explicit-any",
-        "reason": "refusal names a 99x file or owner",
-        "label": "before",
-        "files": [
-          "builder.ts"
-        ],
-        "owners": [],
-        "refusal": "{\"owners\":0,\"removed\":0}\n/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at /workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0"
-      },
-      {
-        "adapter": "40-explicit-any",
-        "reason": "refusal names a 99x file or owner",
-        "label": "after",
-        "files": [
-          "builder.ts"
-        ],
-        "owners": [],
-        "refusal": "{\"owners\":0,\"removed\":0}\n/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at /workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0"
-      }
-    ]
+    "failures": [],
+    "condition": "outcome equality only; shared refusals are baseline"
   }
 }

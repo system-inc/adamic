@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
 """Compare ordered replay outcomes on independent main and main-plus-99x trees."""
 import difflib
-import hashlib
 import json
 import os
 from pathlib import Path
-import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 
-repo, baseline, accepted, output = map(lambda s: Path(s).resolve(), sys.argv[1:])
-output.mkdir(parents=True, exist_ok=False)
+repo, baseline, accepted, output = map(lambda s: Path(s).resolve(), sys.argv[1:5])
+resume = '--resume' in sys.argv[5:]
+output.mkdir(parents=True, exist_ok=resume)
 env = dict(os.environ, NODE_PATH=str(repo / 'stage3/api/node_modules'))
-owned = ['builder.ts', 'checker.ts', 'program.ts', 'tsbuildPublic.ts', 'watch.ts', 'watchPublic.ts']
-pins = json.loads((repo / 'stage3/adapt/99-correctness-axolotl-x/owners.json').read_text())
-owner_names = sorted({p['owner'].split('.')[-1] for p in pins})
 
 def snapshot(tree):
     # Retain bytes so actual adapter edits can be measured independently of its report.
@@ -39,17 +35,20 @@ def run(label, tree, directory):
             old = b[0] if b else b''
             new = a[0] if a else b''
             diff = list(difflib.unified_diff(old.decode(errors='backslashreplace').splitlines(True), new.decode(errors='backslashreplace').splitlines(True), fromfile='before/'+name, tofile='after/'+name))
-            edits.append(dict(file=name, added=sum(s.startswith('+') and not s.startswith('+++') for s in diff), removed=sum(s.startswith('-') and not s.startswith('---') for s in diff)))
+            changes = [dict(before=''.join(old.decode(errors='backslashreplace').splitlines(True)[i:j]), after=''.join(new.decode(errors='backslashreplace').splitlines(True)[k:l])) for op,i,j,k,l in difflib.SequenceMatcher(None,old.decode(errors='backslashreplace').splitlines(True),new.decode(errors='backslashreplace').splitlines(True)).get_opcodes() if op!='equal']
+            edits.append(dict(file=name, changes=changes, added=sum(s.startswith('+') and not s.startswith('+++') for s in diff), removed=sum(s.startswith('-') and not s.startswith('---') for s in diff)))
             with (logdir / (directory.name + '.patch')).open('a') as patch:
                 patch.write(''.join(diff))
     text = (logdir / (directory.name + '.log')).read_text()
     refusal = text.strip().replace(str(tree), '<tree>') if result.returncode else None
     return dict(adapter=directory.name, exit=result.returncode, files_written=writes, edits=edits, refusal=refusal)
 
-records = {'before': [], 'after': []}
+records = {label: json.loads((output/(label+'.json')).read_text()) if resume else [] for label in ['before','after']}
+assert [r['adapter'] for r in records['before']] == [r['adapter'] for r in records['after']]
+done = {r['adapter'] for r in records['after']}
 failures = []
 for directory in sorted((repo / 'stage3/adapt').iterdir()):
-    if not directory.is_dir():
+    if not directory.is_dir() or directory.name in done:
         continue
     if directory.name == '99-correctness-axolotl-x':
         records['before'].append(dict(adapter=directory.name, excluded='99x is absent from main'))
@@ -62,12 +61,6 @@ for directory in sorted((repo / 'stage3/adapt').iterdir()):
         records['after'].append(a)
         if b != a:
             failures.append(dict(adapter=directory.name, reason='replay outcome differs', before=b, after=a))
-        for label, record in [('before', b), ('after', a)]:
-            refusal = record['refusal'] or ''
-            files = [name for name in owned if re.search(r'(?<![A-Za-z0-9_])'+re.escape(name)+r'(?=[:\s\"\x27]|$)', refusal)]
-            owners = [name for name in owner_names if re.search(r'\b'+re.escape(name)+r'\b', refusal)]
-            if files or owners:
-                failures.append(dict(adapter=directory.name, reason='refusal names a 99x file or owner', label=label, files=files, owners=owners, refusal=refusal))
     for label, rows in records.items():
         (output / (label+'.json')).write_text(json.dumps(rows, indent=2)+'\n')
     # Exclude only 99x itself from the equality comparison.

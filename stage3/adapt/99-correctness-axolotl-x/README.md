@@ -105,22 +105,15 @@ the full baseline apply passed. New logs supersede the historical stop.
 PROOF.md records the current checks. Tests write logs outside this hashed
 directory while running; completed evidence is copied here before publication.
 
-## Current stopping point
+## Current verification
 
-The user superseded the initial zero-refusal replay condition with a paired
-comparison of main and main plus 99x, plus a guard against refusals naming any
-of 99x's six source files or named owners. Eight adapters were compared.
-Both records are identical and their diff is empty. The revised file guard
-then failed at 40-explicit-any: both trees refuse with
-`missing reviewed brands: src/compiler/builder.ts`.
+The final replay condition compares outcomes only: files written, edits and
+exact refusal text must match between main and main plus 99x, except 99x itself.
+Shared refusals, including 40's builder.ts brand refusal, are recorded baseline
+outcomes. The old file-name and owner-name guard has been removed, and replay
+is continuing from the eight matching records.
 
-The brand owners are IncrementalBuildInfoFileId and
-IncrementalBuildInfoFileIdListId, outside the 15 named function owners in 99x.
-40 pins their absolute lines, which already differ on main. This result does
-not establish a new 99x regression, but it fails the requested file-name guard.
-The run stopped there. Both records, their empty diff, all raw logs and the
-owner/line diagnosis are retained under paired-replay/ and in PROOF.md.
-
-Both full applies and 99x's own contracts and direct replay passed. Checks
-2 through 6 remain unrun. The 46 rewritten sites have not been certified by
-those remaining checks. This branch is incomplete and is not ready to land.
+Check 2 passes: adamic types on all 79 compiler roots exits 0 with zero
+diagnostics. All 46 sites remain rewritten. Both full applies, owner contracts
+and 99x's direct no-write replay passed earlier. JavaScript, oracle, negative
+witness and census verification are in progress. See PROOF.md.

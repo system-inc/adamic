@@ -1,3 +1,18 @@
+# Current continuation: baseline equality is the only replay condition
+
+The user superseded both earlier replay conditions. A shared refusal is a
+baseline outcome regardless of file or owner names. 40-explicit-any's builder.ts
+brand refusal is a recorded baseline, not a check failure. The paired replay
+has resumed after its eight matching outcomes and is comparing every remaining
+adapter; only a difference between the trees stops it. Earlier stopping notes
+below are historical.
+
+Check 2 has now passed: adamic types received all 79 sorted compiler roots
+from /workspace/bind-after in one invocation, exited 0 in 3.650 seconds and
+reported zero diagnostics. The complete type listing is types-after.log.gz;
+arguments, root count, timing and exit are in types-after.json. All 46 sites
+remain rewritten, zero are left as written, and no cast was added.
+
 # 99x proof: revised check 1 stops at the affected-file guard
 
 The user replaced the original zero-refusal replay rule with a paired replay
