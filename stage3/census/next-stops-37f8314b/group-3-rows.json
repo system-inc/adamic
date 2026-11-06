@@ -1,0 +1,202 @@
+[
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 25.237863428
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/sys.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 52.461480334
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 20.935860716
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 19.940051354
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 21.919631222
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 25.889291114
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 22.633066593
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 23.995342986
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 19.993558479
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 20.421252506
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 34.164446381
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 30.558168412
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 32.430108175
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 23.011942643
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 24.554150341
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 26.923036675
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 26.871327984
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 20.515286857
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 19.858135414
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-37f8314b-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-37f8314b-adapted/src/compiler/core.ts:1049:34",
+    "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+    "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+    "seconds": 49.280638883
+  }
+]
