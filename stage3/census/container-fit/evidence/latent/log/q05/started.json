@@ -1,0 +1,19 @@
+{
+  "hostname": "6feab438e03f",
+  "binary_sha256": "1b71cf293205d59c15fb8ab5e037f5124b7650d9869a1b5702f73d307bc386cb",
+  "utc": "2026-11-06T04:38:42.315763+00:00",
+  "command": [
+    "/workspace/container-fit-build-v2/log/latent",
+    "/workspace/container-fit-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/container-fit/evidence/latent/log/q05/records.jsonl"
+  ],
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_SPECULATIVE": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TIMES": "/workspace/adamic/stage3/census/container-fit/evidence/latent/log/q05/times.jsonl",
+    "ANY_MEMBERS_CENSUS_ROOT": "/workspace/container-fit-adapted",
+    "ANY_MEMBERS_CENSUS_PIECE": "/workspace/adamic/stage3/census/container-fit/evidence/latent/log/q05/selection.json",
+    "ADAMIC_FIT_PAIRS_LOG": "/workspace/adamic/stage3/census/container-fit/evidence/latent/log/q05/pairs.log"
+  }
+}
