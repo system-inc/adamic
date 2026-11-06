@@ -583,7 +583,7 @@ func writes(expression ir.Expression) bool {
 		return call.Method != "split" && call.Method != "matchAll" && call.Method != "iteratorDone"
 	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete, ir.MapClear, ir.SetAdd:
 		return true
-	case ir.GeneratorNext:
+	case ir.GeneratorNext, ir.IteratorNext:
 		// A step moves the generator it's handed on, and its body may write what the frame holds.
 		return true
 	}
@@ -607,7 +607,7 @@ func callsBack(expression ir.Expression) bool {
 	case ir.JSONEncode, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:
 		return true
 	// A step runs the generator's body, which may call anything.
-	case ir.GeneratorNext:
+	case ir.GeneratorNext, ir.IteratorNext:
 		return true
 	}
 	return false

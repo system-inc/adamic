@@ -312,6 +312,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.GeneratorNext:
 			found = found || l.result.GeneratorNextMayThrow(node)
+		case ir.IteratorNext:
+			found = found || l.result.IteratorNextMayThrow(node)
 		case ir.RegExpCall:
 			if (node.Replacement != nil && l.result.ClosuresMayThrow) || l.result.GlobalFlagMayThrow(node) {
 				found = true
