@@ -152,6 +152,9 @@ func (p *Program) ClosureDiscard(call Expression) Discard {
 // so the methods it can find are bounded by name, by every method table that holds one
 // (MethodsNamed). Any other call has no such arm.
 func (p *Program) MethodDiscard(call CallClosure) Discard {
+	if call.BoundName != "" {
+		return p.ReturnsDiscard(p.MethodsNamed(call.BoundName))
+	}
 	property, isProperty := call.Closure.(Property)
 	if !isProperty || !property.Method {
 		return DiscardNothing
