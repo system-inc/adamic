@@ -71,7 +71,13 @@ var runtimeEnvironment = map[string]string{
 var leanEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG": buildLogReading,
 	"WASI_SYSROOT":     "read by Flags for a wasm32-wasi target alone, which BuildLean refuses before it calls Flags (native's TestBuildLeanRefusesATargetFirst)",
+	"GOOS":             buildPlatformReading,
+	"GOARCH":           buildPlatformReading,
 }
+
+// buildPlatformReading is why a native build may read `GOOS` and `GOARCH`, the build's platform (native's buildPlatform,
+// #5xsd2ha). The key reads them in the same process as the build, so the two can't part.
+const buildPlatformReading = "the build's platform, resolving an empty target to its triple, which reaches clang as Flags' --target and so every key holding the flags (an agreement native's among native.Flags, an archive's among its Parts and Portable, native's TestAProductKeysEachArchApart), and choosing an ELF or a Mach-O link for that platform"
 
 // programStarts are the calls that start or find a program by a name, each as go/types names a function, with the index
 // of the argument naming it. A bare name, with no path separator, is found on `PATH` or under the tools directories
@@ -853,11 +859,12 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 
 // buildPath are the entries of an archive's path to its build, by package, each held by a census of its package's own
 // (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), and what each may reach of the next: runtimeproducts' product
-// tests and supplier, a program region's archive (ProgramArchive), native's request and the build its window runs, and
-// the jobserver handed to it. Every exported function of runtimeproducts is one of its entries.
+// tests and supplier, a program region's archive (ProgramArchive), native's request and the build its window runs, the
+// resolution a request's options are compared to a variant's by (ResolveTarget), and the jobserver handed to it. Every
+// exported function of runtimeproducts is one of its entries.
 var buildPath = map[string][]string{
 	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "ProgramArchive", "Inputs", "Declared"},
-	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
+	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver", "ResolveTarget"},
 	modulePath + "/internal/ccjobserver":            {"Process"},
 }
 
@@ -967,6 +974,8 @@ var requestEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG":      buildLogReading,
 	"WASI_SYSROOT":          "a wasm request's --sysroot flag, exactly what the variable holds and none on another request (TestTheSysrootReadIsTheSysrootFlag), a part of the request's Portable the key holds (TestRuntimeProductKeyHoldsEveryPart), relocated from the compiler's installation, and the compiler beside it, which the key holds by its report; otherwise it only refuses a request (ValidateOptions)",
 	"ADAMIC_PROGRAM_REGION": "only refuses a request for options a program region can't take (ValidateOptions), never reaches a flag or a byte (TestAProgramRegionOnlyRefusesARequest)",
+	"GOOS":                  buildPlatformReading,
+	"GOARCH":                buildPlatformReading,
 }
 var jobserverEnvironment = map[string]string{
 	"ADAMIC_CC_JOBSERVER": "names the FIFO of the compile token pool handed to the build: when clang runs, never what it writes (TestTheJobserverNeverReachesAnArchivesBytes)",
