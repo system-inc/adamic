@@ -1116,7 +1116,7 @@ var productsState = map[string]string{
 	"Sets":            "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 	"Variants":        "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 	"ProgramVariants": "decides which options a program region's archives are asked for with (ProgramArchive); each request's options are its key's flags, a program region's -DADAMIC_PROGRAM_REGION among them (TestAProgramRegionKeysItsArchiveApart), so a write elsewhere asks for another archive, never other bytes under one key",
-	"CommandVariants": "decides which options cmd/adamic's archives are asked for with (CommandArchive); each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
+	"CommandVariants": "decides which options cmd/adamic's archives are asked for with (CommandArchive); each request's options are its key's flags, as Inputs holds every portable part of the request (cmd/adamic's TestCommandRuntimeProductKeyHoldsEveryPart), so a write elsewhere asks for another archive, never other bytes under one key",
 }
 
 // A program region's archive is keyed apart from the plain one by what the region changes in it, its flag (Node's
