@@ -1,0 +1,29 @@
+{
+  "task": "52zja36",
+  "base": "63e14a0b2b61cf251ad74292e42d5fd09af804b3",
+  "status": "complete",
+  "owner_conflicts": [],
+  "requested_rule_changes": 21,
+  "additional_rule": {
+    "id": 70,
+    "reason": "readonly identity-cache key removes two new storage stops"
+  },
+  "checks": {
+    "1": "pass: baseline and final full applies pass; 80 paired replay outcomes identical including existing refusals",
+    "2": "pass: final enum class proof, 8 mutants, generate_shards --check, lane tests",
+    "3": "pass: all 79 roots; exit 0 and zero diagnostics",
+    "4": "pass: all 9 JavaScript files and both public declarations byte-identical; no public lines moved",
+    "5": "pass: all 19 cast scans Refused -> namespace NotYet; all 79 ordinary roots have identical first stops; no new debug Refused findings",
+    "6": "pass: final inner-only SyntaxKind mutant still Refused at invariance.go:673"
+  },
+  "ordinary_counts_each": {
+    "Refused": 73,
+    "NotYet": 4,
+    "accepted": 2
+  },
+  "changed_first_stops": [],
+  "site_stop_counts": {
+    "before_Refused": 19,
+    "final_NotYet": 19
+  }
+}

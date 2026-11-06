@@ -1,0 +1,22 @@
+[
+  {
+    "adaptation": "00-setup",
+    "exit": 0,
+    "changed_files": []
+  },
+  {
+    "adaptation": "10-type-imports",
+    "exit": 0,
+    "changed_files": []
+  },
+  {
+    "adaptation": "20-optional-declarations",
+    "exit": 0,
+    "changed_files": []
+  },
+  {
+    "adaptation": "30-indexed-reads",
+    "exit": 1,
+    "changed_files": []
+  }
+]

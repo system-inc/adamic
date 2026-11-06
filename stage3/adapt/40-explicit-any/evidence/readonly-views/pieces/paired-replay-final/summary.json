@@ -1,0 +1,12 @@
+{
+  "adapters_each": 80,
+  "identical_outcomes": 80,
+  "differences": [],
+  "exit_counts_each": {
+    "0": 65,
+    "1": 15
+  },
+  "write_calls_each": 0,
+  "written_files_by_adapter": {},
+  "normalization": "replace each tree root by <tree>; retain exact stdout and stderr including edits/refusal text"
+}

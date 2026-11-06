@@ -1,0 +1,1425 @@
+{
+  "roots_each": 79,
+  "normalization": "remove tree prefix from all embedded strings; omit timing only",
+  "kinds": {
+    "before": {
+      "Refused": 73,
+      "NotYet": 4,
+      "accepted": 2
+    },
+    "final": {
+      "Refused": 73,
+      "NotYet": 4,
+      "accepted": 2
+    }
+  },
+  "changed_first_stops": [],
+  "records": {
+    "before": {
+      "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/_namespaces/ts.performance.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/_namespaces/ts.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/binder.ts": {
+        "roots": [
+          "src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builder.ts": {
+        "roots": [
+          "src/compiler/builder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderPublic.ts": {
+        "roots": [
+          "src/compiler/builderPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderState.ts": {
+        "roots": [
+          "src/compiler/builderState.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderStatePublic.ts": {
+        "roots": [
+          "src/compiler/builderStatePublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/checker.ts": {
+        "roots": [
+          "src/compiler/checker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/commandLineParser.ts": {
+        "roots": [
+          "src/compiler/commandLineParser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/core.ts": {
+        "roots": [
+          "src/compiler/core.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      "src/compiler/corePublic.ts": {
+        "roots": [
+          "src/compiler/corePublic.ts"
+        ],
+        "kind": "accepted"
+      },
+      "src/compiler/debug.ts": {
+        "roots": [
+          "src/compiler/debug.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      "src/compiler/diagnosticInformationMap.generated.ts": {
+        "roots": [
+          "src/compiler/diagnosticInformationMap.generated.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "src/compiler/emitter.ts": {
+        "roots": [
+          "src/compiler/emitter.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/executeCommandLine.ts": {
+        "roots": [
+          "src/compiler/executeCommandLine.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/expressionToTypeNode.ts": {
+        "roots": [
+          "src/compiler/expressionToTypeNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/baseNodeFactory.ts": {
+        "roots": [
+          "src/compiler/factory/baseNodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/emitHelpers.ts": {
+        "roots": [
+          "src/compiler/factory/emitHelpers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/emitNode.ts": {
+        "roots": [
+          "src/compiler/factory/emitNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeChildren.ts": {
+        "roots": [
+          "src/compiler/factory/nodeChildren.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeConverters.ts": {
+        "roots": [
+          "src/compiler/factory/nodeConverters.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeFactory.ts": {
+        "roots": [
+          "src/compiler/factory/nodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeTests.ts": {
+        "roots": [
+          "src/compiler/factory/nodeTests.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/parenthesizerRules.ts": {
+        "roots": [
+          "src/compiler/factory/parenthesizerRules.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/utilities.ts": {
+        "roots": [
+          "src/compiler/factory/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/utilitiesPublic.ts": {
+        "roots": [
+          "src/compiler/factory/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/hostErrors.ts": {
+        "roots": [
+          "src/compiler/hostErrors.ts"
+        ],
+        "kind": "accepted"
+      },
+      "src/compiler/moduleNameResolver.ts": {
+        "roots": [
+          "src/compiler/moduleNameResolver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/moduleSpecifiers.ts": {
+        "roots": [
+          "src/compiler/moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/parser.ts": {
+        "roots": [
+          "src/compiler/parser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/path.ts": {
+        "roots": [
+          "src/compiler/path.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/performance.ts": {
+        "roots": [
+          "src/compiler/performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/performanceCore.ts": {
+        "roots": [
+          "src/compiler/performanceCore.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/program.ts": {
+        "roots": [
+          "src/compiler/program.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/programDiagnostics.ts": {
+        "roots": [
+          "src/compiler/programDiagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/resolutionCache.ts": {
+        "roots": [
+          "src/compiler/resolutionCache.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/scanner.ts": {
+        "roots": [
+          "src/compiler/scanner.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/semver.ts": {
+        "roots": [
+          "src/compiler/semver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/sourcemap.ts": {
+        "roots": [
+          "src/compiler/sourcemap.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/symbolWalker.ts": {
+        "roots": [
+          "src/compiler/symbolWalker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/sys.ts": {
+        "roots": [
+          "src/compiler/sys.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tracing.ts": {
+        "roots": [
+          "src/compiler/tracing.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformer.ts": {
+        "roots": [
+          "src/compiler/transformer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/classFields.ts": {
+        "roots": [
+          "src/compiler/transformers/classFields.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/classThis.ts": {
+        "roots": [
+          "src/compiler/transformers/classThis.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/declarations.ts": {
+        "roots": [
+          "src/compiler/transformers/declarations.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/declarations/diagnostics.ts": {
+        "roots": [
+          "src/compiler/transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/destructuring.ts": {
+        "roots": [
+          "src/compiler/transformers/destructuring.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2015.ts": {
+        "roots": [
+          "src/compiler/transformers/es2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2016.ts": {
+        "roots": [
+          "src/compiler/transformers/es2016.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2017.ts": {
+        "roots": [
+          "src/compiler/transformers/es2017.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2018.ts": {
+        "roots": [
+          "src/compiler/transformers/es2018.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2019.ts": {
+        "roots": [
+          "src/compiler/transformers/es2019.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2020.ts": {
+        "roots": [
+          "src/compiler/transformers/es2020.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2021.ts": {
+        "roots": [
+          "src/compiler/transformers/es2021.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/esDecorators.ts": {
+        "roots": [
+          "src/compiler/transformers/esDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/esnext.ts": {
+        "roots": [
+          "src/compiler/transformers/esnext.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/generators.ts": {
+        "roots": [
+          "src/compiler/transformers/generators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/jsx.ts": {
+        "roots": [
+          "src/compiler/transformers/jsx.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/legacyDecorators.ts": {
+        "roots": [
+          "src/compiler/transformers/legacyDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/esnextAnd2015.ts": {
+        "roots": [
+          "src/compiler/transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+        "roots": [
+          "src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/module.ts": {
+        "roots": [
+          "src/compiler/transformers/module/module.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/system.ts": {
+        "roots": [
+          "src/compiler/transformers/module/system.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/namedEvaluation.ts": {
+        "roots": [
+          "src/compiler/transformers/namedEvaluation.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/taggedTemplate.ts": {
+        "roots": [
+          "src/compiler/transformers/taggedTemplate.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/ts.ts": {
+        "roots": [
+          "src/compiler/transformers/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/typeSerializer.ts": {
+        "roots": [
+          "src/compiler/transformers/typeSerializer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/utilities.ts": {
+        "roots": [
+          "src/compiler/transformers/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tsbuild.ts": {
+        "roots": [
+          "src/compiler/tsbuild.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tsbuildPublic.ts": {
+        "roots": [
+          "src/compiler/tsbuildPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/types.ts": {
+        "roots": [
+          "src/compiler/types.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "src/compiler/utilities.ts": {
+        "roots": [
+          "src/compiler/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/utilitiesPublic.ts": {
+        "roots": [
+          "src/compiler/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/visitorPublic.ts": {
+        "roots": [
+          "src/compiler/visitorPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watch.ts": {
+        "roots": [
+          "src/compiler/watch.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watchPublic.ts": {
+        "roots": [
+          "src/compiler/watchPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watchUtilities.ts": {
+        "roots": [
+          "src/compiler/watchUtilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    },
+    "final": {
+      "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/_namespaces/ts.performance.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/_namespaces/ts.ts": {
+        "roots": [
+          "src/compiler/_namespaces/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/binder.ts": {
+        "roots": [
+          "src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builder.ts": {
+        "roots": [
+          "src/compiler/builder.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderPublic.ts": {
+        "roots": [
+          "src/compiler/builderPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderState.ts": {
+        "roots": [
+          "src/compiler/builderState.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/builderStatePublic.ts": {
+        "roots": [
+          "src/compiler/builderStatePublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/checker.ts": {
+        "roots": [
+          "src/compiler/checker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/commandLineParser.ts": {
+        "roots": [
+          "src/compiler/commandLineParser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/core.ts": {
+        "roots": [
+          "src/compiler/core.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      "src/compiler/corePublic.ts": {
+        "roots": [
+          "src/compiler/corePublic.ts"
+        ],
+        "kind": "accepted"
+      },
+      "src/compiler/debug.ts": {
+        "roots": [
+          "src/compiler/debug.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      "src/compiler/diagnosticInformationMap.generated.ts": {
+        "roots": [
+          "src/compiler/diagnosticInformationMap.generated.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "src/compiler/emitter.ts": {
+        "roots": [
+          "src/compiler/emitter.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/executeCommandLine.ts": {
+        "roots": [
+          "src/compiler/executeCommandLine.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/expressionToTypeNode.ts": {
+        "roots": [
+          "src/compiler/expressionToTypeNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/baseNodeFactory.ts": {
+        "roots": [
+          "src/compiler/factory/baseNodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/emitHelpers.ts": {
+        "roots": [
+          "src/compiler/factory/emitHelpers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/emitNode.ts": {
+        "roots": [
+          "src/compiler/factory/emitNode.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeChildren.ts": {
+        "roots": [
+          "src/compiler/factory/nodeChildren.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeConverters.ts": {
+        "roots": [
+          "src/compiler/factory/nodeConverters.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeFactory.ts": {
+        "roots": [
+          "src/compiler/factory/nodeFactory.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/nodeTests.ts": {
+        "roots": [
+          "src/compiler/factory/nodeTests.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/parenthesizerRules.ts": {
+        "roots": [
+          "src/compiler/factory/parenthesizerRules.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/utilities.ts": {
+        "roots": [
+          "src/compiler/factory/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/factory/utilitiesPublic.ts": {
+        "roots": [
+          "src/compiler/factory/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/hostErrors.ts": {
+        "roots": [
+          "src/compiler/hostErrors.ts"
+        ],
+        "kind": "accepted"
+      },
+      "src/compiler/moduleNameResolver.ts": {
+        "roots": [
+          "src/compiler/moduleNameResolver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/moduleSpecifiers.ts": {
+        "roots": [
+          "src/compiler/moduleSpecifiers.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/parser.ts": {
+        "roots": [
+          "src/compiler/parser.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/path.ts": {
+        "roots": [
+          "src/compiler/path.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/performance.ts": {
+        "roots": [
+          "src/compiler/performance.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/performanceCore.ts": {
+        "roots": [
+          "src/compiler/performanceCore.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/program.ts": {
+        "roots": [
+          "src/compiler/program.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/programDiagnostics.ts": {
+        "roots": [
+          "src/compiler/programDiagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/resolutionCache.ts": {
+        "roots": [
+          "src/compiler/resolutionCache.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/scanner.ts": {
+        "roots": [
+          "src/compiler/scanner.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/semver.ts": {
+        "roots": [
+          "src/compiler/semver.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/sourcemap.ts": {
+        "roots": [
+          "src/compiler/sourcemap.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/symbolWalker.ts": {
+        "roots": [
+          "src/compiler/symbolWalker.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/sys.ts": {
+        "roots": [
+          "src/compiler/sys.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tracing.ts": {
+        "roots": [
+          "src/compiler/tracing.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformer.ts": {
+        "roots": [
+          "src/compiler/transformer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/classFields.ts": {
+        "roots": [
+          "src/compiler/transformers/classFields.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/classThis.ts": {
+        "roots": [
+          "src/compiler/transformers/classThis.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/declarations.ts": {
+        "roots": [
+          "src/compiler/transformers/declarations.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/declarations/diagnostics.ts": {
+        "roots": [
+          "src/compiler/transformers/declarations/diagnostics.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/destructuring.ts": {
+        "roots": [
+          "src/compiler/transformers/destructuring.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2015.ts": {
+        "roots": [
+          "src/compiler/transformers/es2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2016.ts": {
+        "roots": [
+          "src/compiler/transformers/es2016.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2017.ts": {
+        "roots": [
+          "src/compiler/transformers/es2017.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2018.ts": {
+        "roots": [
+          "src/compiler/transformers/es2018.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2019.ts": {
+        "roots": [
+          "src/compiler/transformers/es2019.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2020.ts": {
+        "roots": [
+          "src/compiler/transformers/es2020.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/es2021.ts": {
+        "roots": [
+          "src/compiler/transformers/es2021.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/esDecorators.ts": {
+        "roots": [
+          "src/compiler/transformers/esDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/esnext.ts": {
+        "roots": [
+          "src/compiler/transformers/esnext.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/generators.ts": {
+        "roots": [
+          "src/compiler/transformers/generators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/jsx.ts": {
+        "roots": [
+          "src/compiler/transformers/jsx.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/legacyDecorators.ts": {
+        "roots": [
+          "src/compiler/transformers/legacyDecorators.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/esnextAnd2015.ts": {
+        "roots": [
+          "src/compiler/transformers/module/esnextAnd2015.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+        "roots": [
+          "src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/module.ts": {
+        "roots": [
+          "src/compiler/transformers/module/module.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/module/system.ts": {
+        "roots": [
+          "src/compiler/transformers/module/system.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/namedEvaluation.ts": {
+        "roots": [
+          "src/compiler/transformers/namedEvaluation.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/taggedTemplate.ts": {
+        "roots": [
+          "src/compiler/transformers/taggedTemplate.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/ts.ts": {
+        "roots": [
+          "src/compiler/transformers/ts.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/typeSerializer.ts": {
+        "roots": [
+          "src/compiler/transformers/typeSerializer.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/transformers/utilities.ts": {
+        "roots": [
+          "src/compiler/transformers/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tsbuild.ts": {
+        "roots": [
+          "src/compiler/tsbuild.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/tsbuildPublic.ts": {
+        "roots": [
+          "src/compiler/tsbuildPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/types.ts": {
+        "roots": [
+          "src/compiler/types.ts"
+        ],
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      "src/compiler/utilities.ts": {
+        "roots": [
+          "src/compiler/utilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/utilitiesPublic.ts": {
+        "roots": [
+          "src/compiler/utilitiesPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/visitorPublic.ts": {
+        "roots": [
+          "src/compiler/visitorPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watch.ts": {
+        "roots": [
+          "src/compiler/watch.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watchPublic.ts": {
+        "roots": [
+          "src/compiler/watchPublic.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "src/compiler/watchUtilities.ts": {
+        "roots": [
+          "src/compiler/watchUtilities.ts"
+        ],
+        "kind": "Refused",
+        "where": "src/compiler/core.ts:810:89",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    }
+  }
+}

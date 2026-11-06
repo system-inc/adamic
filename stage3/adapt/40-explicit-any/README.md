@@ -1,5 +1,8 @@
 # Explicit any owner adaptation (partial)
 
+The enum namespace views now use double Readonly under task 52zja36.
+See [READONLY-VIEWS.md](READONLY-VIEWS.md) for the amendment and verification status.
+
 Current progress: 75 tokens removed, 135 left. The opaque solution-builder timer slot uses unknown; see [TIMER-SLOT.md](TIMER-SLOT.md). Four Error host-member assertions are removed; see [ERROR-HOST.md](ERROR-HOST.md). The 36 phantom brand sites use undefined, isArray takes unknown, and the filesystem stat local carries Stats | Dirent | undefined. See [BRANDS-UNDEFINED.md](BRANDS-UNDEFINED.md) and [PROGRESS.md](PROGRESS.md)
 for the combined 10+30+40 proof and reproduction. The section below records
 the original three-owner proof and its historical commands.
