@@ -41,6 +41,9 @@ var DynamicKeyedStops = []DynamicKeyedStop{
 	// carries as a value, and a record may hold the name as its own where Node's setter took it.
 	{"Proto", "__proto__ isn't read by a run-time key yet"},
 	{"ErrorProperty", "an Error property Node sets and the native Error lacks isn't read yet"},
+	// A Stats answers what native's shape holds (#zhrjf2t), and a field Node gives it beyond those
+	// (DynamicKeyedStatsFieldNames) stops in narrower words than a host object's, until #6xfkdwj.
+	{"StatsField", "this Stats field isn't held natively yet"},
 	{"ObjectLiteralGetter", "an object literal's getter isn't read by a run-time key yet"},
 	{"SetterOnly", "a setter without a getter isn't read by a run-time key yet"},
 	{"Method", "a method isn't read by a run-time key yet"},
@@ -139,8 +142,9 @@ var DynamicKeyedStatsNames = DynamicKeyedFunctions{
 
 // DynamicKeyedStatsFieldNames are the fields Node gives an fs.Stats that native's Stats doesn't hold:
 // its own numbers, then Stats.prototype's date accessors, less the four node_fs_file.c's stat shape
-// holds (size, mtimeMs, mtime and atime). A run-time key read of one stops on both backends rather
-// than answer a value native would have to make up (#zhrjf2t; #6xfkdwj fills them).
+// holds (size, mtimeMs, mtime and atime). A run-time key read of one stops on both backends in the
+// StatsField form rather than answer a value native would have to make up (#zhrjf2t; #6xfkdwj fills
+// them).
 // TestDynamicKeyedStatsFieldNamesAreNodes holds this list to the pinned Node's, in order.
 var DynamicKeyedStatsFieldNames = []string{
 	"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "blocks", "atimeMs", "ctimeMs",
