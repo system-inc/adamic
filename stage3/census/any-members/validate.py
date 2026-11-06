@@ -1,117 +1,123 @@
-"""Independent arithmetic and provenance checks over the saved census artifacts."""
-import collections
+"""Independently check the saved piece arithmetic, admission gate and feature results."""
+from collections import Counter,defaultdict
 import gzip
 import hashlib
 import json
-import sys
 from pathlib import Path
+import subprocess
 
-out = Path(__file__).resolve().parent
-e = out / 'evidence'
-delta = json.loads((out / 'delta.json').read_text())
-def observed(label, suffix):
-    prefix = delta.get('head_evidence_prefix', 'head') if label == 'head' else label
-    return e / f'{prefix}-{suffix}'
-if delta.get('status') == 'incomplete':
-    streams = {}
-    timers = {}
-    for label in ('base', 'head'):
-        with gzip.open(observed(label, 'latent.jsonl.gz'), 'rt') as f:
-            streams[label] = [json.loads(line) for line in f]
-        with gzip.open(observed(label, 'times.jsonl.gz'), 'rt') as f:
-            timers[label] = [json.loads(line) for line in f]
-        assert streams[label][0]['latent_mode'] == 'first-error'
-        for key in ('wall_seconds', 'cpu_seconds'):
-            assert sum(t[key] for t in timers[label]) == delta['unit_time_sums'][label][key]
-        pins = json.loads((e / f'{label}-actual-pins.json').read_text())
-        assert pins == {'.': delta[f'{label}_commit'], 'cohere': '06af2e399c6c1fb93fd570b774027942747400b4', 'cohere/TypeScript': 'd92d9bfee114c80be2c375d72edae966176e3a4f'}
-        assert not any(json.loads(observed(label, 'post-run-status.json').read_text()).values())
-    assert streams['base'][0] == streams['head'][0]
-    assert len(streams['base']) == 80 and len(streams['head']) == 1
-    assert len(timers['base']) == 4056 and len(timers['head']) == 3153
-    assert delta['foreground_run']['source_hashes_matched'] == 746
-    assert delta['foreground_run']['compiler_commit'] == delta['head_commit']
-    assert 'foreground' in delta['foreground_run']['launch']
-    assert 'returncode' not in delta['foreground_run']
-    assert delta['interruption']['state'] == 'Z'
-    assert delta['prior_interrupted_attempt']['head_completed_timers'] == 3865
-    assert [r['where'] for r in timers['head']] == [r['where'] for r in timers['base'][:3153]]
-    unique = {tuple(f[k] for k in ('kind', 'where', 'reason', 'text')) for row in streams['base'][1:] for f in row['findings']}
-    counter = collections.Counter(key[0] for key in unique)
-    assert delta['counts']['base'] == {kind: counter[kind] for kind in ('NotYet', 'Refused', 'panic', 'error')}
-    assert delta['counts']['head'] is None
-    for key in ('any_member_findings', 'any_member_unit_first_stops', 'regressions', 'new_panics', 'unit_first_stop_delta'):
-        assert delta[key] is None
-    assert delta['pairing_succeeded'] is False
-    assert delta['pairing_error'] == 'unit identities differ'
-    with gzip.open(e / 'rerun-head-pair-error.log.gz', 'rt') as f:
-        assert 'unit identities differ' in f.read()
-    assert not observed('head', 'exit.txt').exists() and not observed('head', 'end.txt').exists()
-    assert (e / 'base-exit.txt').read_text().strip() == '0'
-    assert (e / 'base-memory-before.txt').read_bytes() == (e / 'base-memory-after.txt').read_bytes()
-    stock = json.loads((e / 'stock-units.json').read_text())
-    expected = {u['where'] for row in stock for u in row['units'] if not u['deferred_generic']}
-    assert expected == {r['where'] for r in timers['base']}
-    assert {row['file'] for row in stock} == {row['file'] for row in streams['base'][1:]}
-    tree = out / 'scratch/adapted'
-    manifest = json.loads((e / 'source-manifest.json').read_text())
-    assert manifest == {str(p.relative_to(tree)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree / 'src').rglob('*')) if p.is_file()}
-    for name, digest in json.loads((out / 'artifacts.sha256.json').read_text()).items():
-        assert hashlib.sha256((out / name).read_bytes()).hexdigest() == digest, name
-    print('PASS: complete base counts and stock-unit coverage; matching first-error headers; interrupted foreground head timer prefix and partial sums; preserved first attempt; explicit unknown answers; rejected pairing; exit evidence; source hashes; clean compiler/dependency pins; artifact hashes.')
-    sys.exit(0)
-streams = {}
-for side, label in (('before', 'base'), ('after', 'head')):
-    with gzip.open(observed(label, 'latent.jsonl.gz'), 'rt') as f:
-        rows = [json.loads(line) for line in f]
-    streams[label] = rows
-    assert rows[0]['latent_mode'] == 'first-error'
-    unique = {tuple(f[k] for k in ('kind', 'where', 'reason', 'text')) for row in rows[1:] for f in row['findings']}
-    counts = dict(collections.Counter(k[0] for k in unique))
-    assert counts == delta['raw_findings']['totals'][side]
-    with gzip.open(observed(label, 'times.jsonl.gz'), 'rt') as f:
-        timers = [json.loads(line) for line in f]
-    assert len(timers) == delta['unit_time_sample_counts'][label]
-    assert len({t['where'] for t in timers}) == len(timers)
-    for key in ('wall_seconds', 'cpu_seconds'):
-        assert sum(t[key] for t in timers) == delta['unit_time_sums'][label][key]
-    assert observed(label, 'exit.txt').read_text().strip() == '0'
-    assert observed(label, 'memory-before.txt').read_bytes() == observed(label, 'memory-after.txt').read_bytes()
-    assert not (e / f'{label}-status.txt').read_text()
-assert streams['base'][0] == streams['head'][0]
-assert len(streams['base']) == len(streams['head'])
-first_by_label = {}
-for label, rows in streams.items():
-    stops = {}
-    for row in rows[1:]:
-        for f in row['findings']:
-            if f['phase'] == 'lowering':
-                stops.setdefault(f['unit'], (f['where'], f['kind'], f['reason']))
-    first_by_label[label] = stops
-all_units = {u['where'] for row in streams['base'][1:] for u in row['units']}
-changed = {u for u in all_units if first_by_label['base'].get(u) != first_by_label['head'].get(u)}
-assert changed == {r['unit']['where'] for r in delta['raw_findings']['unit_first_stop_delta']}
-first = {}
-for row in streams['head'][1:]:
-    for f in row['findings']:
-        if f['phase'] == 'lowering':
-            first.setdefault(f['unit'], f)
-expected = {tuple(f[k] for k in ('kind', 'where', 'reason', 'text', 'unit', 'phase')) for row in streams['head'][1:] for f in row['findings'] if f['reason'].startswith('a member typed any')}
-actual = {tuple(r['finding'][k] for k in ('kind', 'where', 'reason', 'text', 'unit', 'phase')) for r in delta['any_member_findings']}
-assert expected == actual
-for r in delta['any_member_findings']:
-    f = r['finding']
-    assert r['is_unit_first_stop'] == (f['phase'] == 'lowering' and first.get(f['unit']) == f)
-manifest = json.loads((e / 'source-manifest.json').read_text())
-tree = out / 'scratch/adapted'
-assert manifest == {str(p.relative_to(tree)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree / 'src').rglob('*')) if p.is_file()}
-for label, commit in (('base', delta['base_commit']), ('head', delta['head_commit'])):
-    pins = json.loads((e / f'{label}-actual-pins.json').read_text())
-    assert pins == {'.': commit, 'cohere': '06af2e399c6c1fb93fd570b774027942747400b4', 'cohere/TypeScript': 'd92d9bfee114c80be2c375d72edae966176e3a4f'}
-stock = json.loads((e / 'stock-units.json').read_text())
-stock_attempts = {u['where'] for row in stock for u in row['units'] if not u['deferred_generic']}
-if not streams['base'][0]['checker_rejected']:
-    for label, rows in streams.items():
-        attempted = {u['where'] for row in rows[1:] for u in row['units'] if u['status'] in ('attempted', 'panic')}
-        assert attempted == stock_attempts
-print('PASS: unique kind counts, timing sums and attempt counts, first-error headers, complete any-member ownership and first-stop flags, exit/status/memory records, dependency pins, and unchanged adapted source hashes.')
+O=Path(__file__).resolve().parent;E=O/'evidence';P=E/'pieces'
+def read(p):return json.loads(p.read_text())
+def load(p):
+    with gzip.open(p,'rt') as f:return [json.loads(l) for l in f]
+def norm(v):
+    if isinstance(v,str):return v.replace(str(O/'scratch/adapted')+'/', '')
+    if isinstance(v,list):return [norm(x) for x in v]
+    if isinstance(v,dict):return {k:norm(x) for k,x in v.items()}
+    return v
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def us(rows):return {u['where']:u for r in rows[1:] for u in r['units']}
+def lowers(rows):
+    out=defaultdict(list)
+    for r in rows[1:]:
+        for f in r['findings']:
+            if f['phase']=='lowering':out[f['unit']].append(f)
+    return out
+def fk(f):return tuple(f[k] for k in ('kind','where','reason','text'))
+def occurrences(rows):return [f for r in rows[1:] for f in r['findings']]
+def counts(rows):
+    c=Counter(k[0] for k in {fk(f) for f in occurrences(rows)})
+    return {k:c[k] for k in ('NotYet','Refused','panic','error')}
+
+d=read(O/'delta.json');proof=read(P/'union-proof.json');plan=read(P/'plan.json');builds=read(P/'builds.json')
+assert d['status']=='complete' and d['latent_mode']=='first-error'
+assert sha(O.parent/'pair/pair.py')==d['pair_py_sha256']==read(E/'provenance.json')['pair_py_sha256']
+whole=norm(load(E/'base-latent.jsonl.gz'));wu=us(whole);wl=lowers(whole)
+stock={u['where'] for r in read(E/'stock-units.json') for u in r['units']}
+assert stock==set(wu) and len(wu)==4555
+assign=Counter(w for p in plan['pieces'] for w in p['expected_units'])
+assert assign==Counter({w:1 for w in wu})
+streams={};timers={}
+for label,side in [('base','before'),('head','after')]:
+    allu=[];allt=[];rawfind=[]
+    for piece in plan['pieces']:
+        folder=P/label/piece['id'];m=read(folder/'metrics.json');c=read(folder/'checkpoint.json');i=m['identity']
+        assert m==read(P/'INDEX.json')[label][piece['id']] and m['returncode']==0 and m['failure'] is None
+        assert 0<m['process_wall_seconds']<1200
+        assert i['label']==label and i['piece']==piece['id']
+        assert i['plan_sha256']==sha(P/'plan.json') and i['selection_sha256']==sha(P/(piece['id']+'.selection.json'))
+        assert i['binary_sha256']==builds[label]['binary_sha256'] and i['source_manifest_sha256']==sha(E/'source-manifest.json')
+        assert (folder/'memory-before.txt').read_bytes()==(folder/'memory-after.txt').read_bytes()
+        for kind in ('latent','times'):
+            assert hashlib.sha256(gzip.decompress((folder/(kind+'.jsonl.gz')).read_bytes())).hexdigest()==m[kind+'_sha256']==c[kind+'_sha256']
+        rows=norm(load(folder/'latent.jsonl.gz'));ts=norm(load(folder/'times.jsonl.gz'))
+        assert rows[0]==whole[0] and rows[0]['latent_mode']=='first-error'
+        assert Counter(r['file'] for r in rows[1:])==Counter(f['file'] for f in piece['files'])
+        owners=[u['where'] for r in rows[1:] for u in r['units']]
+        assert Counter(owners)==Counter({w:1 for w in piece['expected_units']})
+        assert Counter(t['where'] for t in ts)==Counter({w:1 for w in piece['expected_timed_units']})
+        assert all(f['unit'] in owners for f in occurrences(rows) if f['phase']=='lowering')
+        allu+=owners;allt+=ts;rawfind+=occurrences(rows)
+    rows=load(P/(label+'-union.jsonl.gz'));streams[label]=rows;timers[label]=allt
+    assert rows[0]==whole[0] and set(us(rows))==stock and Counter(allu)==assign
+    assert len(allt)==len({t['where'] for t in allt})==4056
+    assert {fk(f) for f in occurrences(rows)}=={fk(f) for f in rawfind}
+    assert counts(rows)==d['counts'][label]
+    for kind in ('NotYet','Refused','panic','error'):
+        assert d['raw_findings']['totals'][side].get(kind,0)==d['counts'][label][kind]
+    for k in ('wall_seconds','cpu_seconds'):assert sum(t[k] for t in allt)==d['unit_time_sums'][label][k]
+    pins=read(E/(label+'-actual-pins.json'))
+    assert pins=={'.':d[label+'_commit'],'cohere':'06af2e399c6c1fb93fd570b774027942747400b4','cohere/TypeScript':'d92d9bfee114c80be2c375d72edae966176e3a4f'}
+    assert not any(read(E/(label+'-post-run-status.json')).values())
+
+bu=us(streams['base']);bl=lowers(streams['base']);hu=us(streams['head']);hl=lowers(streams['head'])
+assert all(wl[w]==bl[w] for w in wu)
+differences={w for w in wu if wu[w]!=bu[w] or wl[w]!=bl[w]}
+assert differences==set(proof['excluded_units'])=={r['where'] for r in proof['unit_differences']}
+assert len(differences)==65 and proof['agreeing_units']==4490 and proof['agreeing_timed_units']==4056
+for w in differences:
+    assert wu[w]['instantiated'] is True and bu[w]['instantiated'] is False
+    assert wu[w]['status']=='deferred_generic_instantiation' and bu[w]['status']=='deferred_generic_instantiation'
+    assert {k:v for k,v in wu[w].items() if k!='instantiated'}=={k:v for k,v in bu[w].items() if k!='instantiated'}
+for w,b in zip(whole[1:],streams['base'][1:]):
+    assert {k:v for k,v in w.items() if k not in ('units','findings')}=={k:v for k,v in b.items() if k not in ('units','findings')}
+    assert [f for f in w['findings'] if f['phase']!='lowering']==[f for f in b['findings'] if f['phase']!='lowering']
+assert proof['first_stop_differences']==0 and not proof['scan_differences']
+for label in streams:
+    filtered=load(P/(label+'-paired.jsonl.gz'))
+    assert set(us(filtered))==stock-differences
+    assert all(f['unit'] not in differences for f in occurrences(filtered) if f['phase']=='lowering')
+    assert occurrences(filtered)==occurrences(streams[label])
+assert counts(whole)==d['whole_base_counts']==d['counts']['base']
+# Independently recompute raw first-stop changes, newly failing units and sites.
+compact=lambda f:fk(f)[:3] if f else None
+first=lambda ll,w:ll[w][0] if ll[w] else None
+changed={w for w in stock-differences if compact(first(bl,w))!=compact(first(hl,w))}
+assert changed=={r['unit']['where'] for r in d['raw_findings']['unit_first_stop_delta']}
+basekeys={fk(f) for f in occurrences(streams['base'])};basewhere={f['where'] for f in occurrences(streams['base'])}
+new={fk(f) for f in occurrences(streams['head'])}-basekeys
+assert new=={fk(r['finding']) for r in d['raw_findings']['new_findings']}
+newscan={fk(f) for f in occurrences(streams['head']) if f['phase']=='refusal_scan' and f['where'] not in basewhere}
+reg=d['raw_findings']['regressions']
+assert newscan=={fk(r['finding']) for r in reg if r['type']=='previously_finding_free_scan_site'}
+assert {w for w in stock-differences if not bl[w] and hl[w]}=={r['unit']['where'] for r in reg if r['type']=='previously_finding_free_unit'}
+assert not changed and len(newscan)==1 and not any(f['kind']=='panic' for f in occurrences(streams['head']))
+# Check all any-member occurrences, including old NotYet reasons, and lexical owner flags.
+afields=('kind','where','reason','text','unit','phase')
+expected={tuple(f[k] for k in afields) for f in occurrences(streams['head']) if f['reason'].startswith('a member typed any')}
+assert expected=={tuple(r['finding'][k] for k in afields) for r in d['any_member_findings']}
+assert len(expected)==12 and d['any_member_unit_first_stops']==0
+for r in d['any_member_findings']:
+    f=r['finding'];w=r['lexical_owner']['where'];assert r['lexical_owner']==hu[w]
+    assert r['lexical_owner_first_lowering_stop']==first(hl,w)
+    assert r['is_unit_first_stop']==(f['phase']=='lowering' and first(hl,f['unit'])==f)
+    assert r['is_lexical_owner_first_stop']==bool(hl[w] and fk(hl[w][0])==fk(f))
+    assert not r['is_lexical_owner_first_stop'] and r['present_on_base']==(fk(f) in basekeys)
+assert sum(not r['present_on_base'] for r in d['any_member_findings'])==1
+manifest=read(E/'source-manifest.json');tree=O/'scratch/adapted'
+assert manifest=={str(p.relative_to(tree)):sha(p) for p in sorted((tree/'src').rglob('*')) if p.is_file()}
+for name in ('base-latent.jsonl.gz','base-times.jsonl.gz'):
+    original=subprocess.check_output(['git','show','711cca91ed2928b618cb207b1b8152c22eb65ebe:stage3/census/any-members/evidence/'+name],cwd=O)
+    assert original==(E/name).read_bytes()
+for name,digest in read(O/'artifacts.sha256.json').items():assert sha(O/name)==digest,name
+print('PASS: 46 successful checkpoints and hashes; exact disjoint 4555-unit / 4056-timer inventories; source and dependency pins; whole-base streams byte-preserved; base union has only 65 deferred witness changes, zero first-stop or scan differences; exclusions applied symmetrically; 12 any-member scan findings, zero unit first stops; one new scan regression, zero changed first stops or panics; kind counts and timing sums; artifact hashes.')

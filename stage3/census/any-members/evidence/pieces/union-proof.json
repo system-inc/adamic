@@ -1,0 +1,1084 @@
+{
+  "schema": 1,
+  "mode": "first-error",
+  "source_files": 746,
+  "compiler_files": 79,
+  "units": 4555,
+  "timed_units": 4056,
+  "pieces_per_label": 23,
+  "successful_children": 46,
+  "unit_differences": [
+    {
+      "where": "src/compiler/core.ts:22:1",
+      "name": "length",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:33:1",
+      "name": "forEach",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:67:1",
+      "name": "firstDefined",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:145:1",
+      "name": "every",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:166:1",
+      "name": "find",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:198:1",
+      "name": "findIndex",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:242:1",
+      "name": "countWhere",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:299:1",
+      "name": "filterMutate",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:332:1",
+      "name": "mapIterator",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:350:1",
+      "name": "sameMap",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:375:1",
+      "name": "flatten",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:399:1",
+      "name": "flatMap",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:494:1",
+      "name": "mapDefined",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:509:1",
+      "name": "mapDefinedIterator",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:529:1",
+      "name": "tryAddToSet",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:672:1",
+      "name": "concatenate",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:814:1",
+      "name": "arrayIsEqualTo",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:926:1",
+      "name": "append",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1038:1",
+      "name": "toSorted",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1083:1",
+      "name": "firstOrUndefined",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1121:1",
+      "name": "last",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1186:1",
+      "name": "binarySearch",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1202:1",
+      "name": "binarySearchKey",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1287:1",
+      "name": "getOwnKeys",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1341:1",
+      "name": "arrayFrom",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1350:1",
+      "name": "assign",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1370:1",
+      "name": "equalOwnProperties",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1409:1",
+      "name": "arrayToMap",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1569:1",
+      "name": "createQueue",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1793:1",
+      "name": "tryCast",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1798:1",
+      "name": "cast",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1906:1",
+      "name": "memoize",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:1922:1",
+      "name": "memoizeOne",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:2017:1",
+      "name": "maxBy",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:2469:1",
+      "name": "and",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/core.ts:2483:1",
+      "name": "or",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/factory/emitNode.ts:102:1",
+      "name": "addEmitFlags",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/factory/emitNode.ts:175:1",
+      "name": "setStartsOnNewLine",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/factory/nodeFactory.ts:7420:1",
+      "name": "setOriginalNode",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/factory/utilities.ts:654:1",
+      "name": "skipOuterExpressions",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/factory/utilitiesPublic.ts:10:1",
+      "name": "setTextRange",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/path.ts:1096:1",
+      "name": "forEachAncestorDirectory",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:295:1",
+      "name": "createSolutionBuilderHostBase",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:318:1",
+      "name": "createSolutionBuilderWithWatchHost",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:746:1",
+      "name": "forEachEntry",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:762:1",
+      "name": "forEachKey",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8210:1",
+      "name": "mutateMapSkippingNewValues",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8251:1",
+      "name": "mutateMap",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:8316:1",
+      "name": "addToSeen",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:10196:1",
+      "name": "changeExtension",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:10657:1",
+      "name": "setTextRangeEnd",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:10667:1",
+      "name": "setTextRangePosEnd",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:10706:1",
+      "name": "setParent",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilities.ts:12175:1",
+      "name": "forEachDynamicImportOrRequireCall",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:766:1",
+      "name": "getOriginalNode",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:786:1",
+      "name": "findAncestor",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/utilitiesPublic.ts:826:1",
+      "name": "getParseTreeNode",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:142:1",
+      "name": "visitNode",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/visitorPublic.ts:598:1",
+      "name": "visitEachChild",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:564:1",
+      "name": "emitFilesAndReportErrors",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:634:1",
+      "name": "emitFilesAndReportErrorsAndGetExitStatus",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:843:1",
+      "name": "createProgramHost",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:871:1",
+      "name": "createWatchCompilerHost",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:923:1",
+      "name": "createWatchCompilerHostOfConfigFile",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    },
+    {
+      "where": "src/compiler/watch.ts:955:1",
+      "name": "createWatchCompilerHostOfFilesAndCompilerOptions",
+      "metadata_changes": {
+        "instantiated": {
+          "whole": true,
+          "pieces": false
+        }
+      },
+      "whole_lowering": [],
+      "pieces_lowering": [],
+      "first_stop_equal": true,
+      "explanation": "Only the deferred-generic instantiated witness changed: this owner piece does not run callers in other pieces. The census-wide witness map annotates units after all selected calls finish.",
+      "classification": "witness_only"
+    }
+  ],
+  "scan_differences": [],
+  "excluded_units": [
+    "src/compiler/core.ts:1038:1",
+    "src/compiler/core.ts:1083:1",
+    "src/compiler/core.ts:1121:1",
+    "src/compiler/core.ts:1186:1",
+    "src/compiler/core.ts:1202:1",
+    "src/compiler/core.ts:1287:1",
+    "src/compiler/core.ts:1341:1",
+    "src/compiler/core.ts:1350:1",
+    "src/compiler/core.ts:1370:1",
+    "src/compiler/core.ts:1409:1",
+    "src/compiler/core.ts:145:1",
+    "src/compiler/core.ts:1569:1",
+    "src/compiler/core.ts:166:1",
+    "src/compiler/core.ts:1793:1",
+    "src/compiler/core.ts:1798:1",
+    "src/compiler/core.ts:1906:1",
+    "src/compiler/core.ts:1922:1",
+    "src/compiler/core.ts:198:1",
+    "src/compiler/core.ts:2017:1",
+    "src/compiler/core.ts:22:1",
+    "src/compiler/core.ts:242:1",
+    "src/compiler/core.ts:2469:1",
+    "src/compiler/core.ts:2483:1",
+    "src/compiler/core.ts:299:1",
+    "src/compiler/core.ts:332:1",
+    "src/compiler/core.ts:33:1",
+    "src/compiler/core.ts:350:1",
+    "src/compiler/core.ts:375:1",
+    "src/compiler/core.ts:399:1",
+    "src/compiler/core.ts:494:1",
+    "src/compiler/core.ts:509:1",
+    "src/compiler/core.ts:529:1",
+    "src/compiler/core.ts:672:1",
+    "src/compiler/core.ts:67:1",
+    "src/compiler/core.ts:814:1",
+    "src/compiler/core.ts:926:1",
+    "src/compiler/factory/emitNode.ts:102:1",
+    "src/compiler/factory/emitNode.ts:175:1",
+    "src/compiler/factory/nodeFactory.ts:7420:1",
+    "src/compiler/factory/utilities.ts:654:1",
+    "src/compiler/factory/utilitiesPublic.ts:10:1",
+    "src/compiler/path.ts:1096:1",
+    "src/compiler/tsbuildPublic.ts:295:1",
+    "src/compiler/tsbuildPublic.ts:318:1",
+    "src/compiler/utilities.ts:10196:1",
+    "src/compiler/utilities.ts:10657:1",
+    "src/compiler/utilities.ts:10667:1",
+    "src/compiler/utilities.ts:10706:1",
+    "src/compiler/utilities.ts:12175:1",
+    "src/compiler/utilities.ts:746:1",
+    "src/compiler/utilities.ts:762:1",
+    "src/compiler/utilities.ts:8210:1",
+    "src/compiler/utilities.ts:8251:1",
+    "src/compiler/utilities.ts:8316:1",
+    "src/compiler/utilitiesPublic.ts:766:1",
+    "src/compiler/utilitiesPublic.ts:786:1",
+    "src/compiler/utilitiesPublic.ts:826:1",
+    "src/compiler/visitorPublic.ts:142:1",
+    "src/compiler/visitorPublic.ts:598:1",
+    "src/compiler/watch.ts:564:1",
+    "src/compiler/watch.ts:634:1",
+    "src/compiler/watch.ts:843:1",
+    "src/compiler/watch.ts:871:1",
+    "src/compiler/watch.ts:923:1",
+    "src/compiler/watch.ts:955:1"
+  ],
+  "agreeing_units": 4490,
+  "agreeing_timed_units": 4056,
+  "first_stop_differences": 0,
+  "repeated_scans": [
+    {
+      "label": "base",
+      "file": "src/compiler/utilities.ts",
+      "copies": 12,
+      "scan_findings": 310
+    },
+    {
+      "label": "base",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "copies": 4,
+      "scan_findings": 57
+    },
+    {
+      "label": "head",
+      "file": "src/compiler/utilities.ts",
+      "copies": 12,
+      "scan_findings": 310
+    },
+    {
+      "label": "head",
+      "file": "src/compiler/utilitiesPublic.ts",
+      "copies": 4,
+      "scan_findings": 57
+    }
+  ]
+}

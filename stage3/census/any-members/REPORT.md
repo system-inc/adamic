@@ -1,67 +1,87 @@
-# Paired any-members census (tmdhz1d): stopped
+# Paired any-members census (tmdhz1d)
 
-**Piece measurements in progress. Any-member findings and first stops remain unknown until the matching pieces and base-union check finish.**
+**Head any-member findings: 12. Unit first stops among them: 0.**
 
-The bounded piece plan and admission checks are in [PIECES.md](PIECES.md). Completed pieces will be committed and pushed individually. The stopped whole-run evidence below remains historical.
+All 12 are refusal-scan findings: 11 existing NotYet findings and one new Refused finding. None matches the first lowering stop of its lexical owning unit. Scan `unit` fields can be file-wide bookkeeping locations, so both the raw scan owner and independently resolved lexical top-level owner are retained below and in delta.json.
 
-The head findings list is unavailable. The foreground rerun completed 3,153 of 4,056 timed attempts before interruption. Its compiler was found defunct, and only the measurement header survived. No head member location, owner unit, full reason, or first-stop status can be recovered from unit timers.
+- `src/compiler/builder.ts:393:42`; lexical owner `src/compiler/builder.ts:321:1` (createBuilderProgramState); raw scan owner `src/compiler/builder.ts:2508:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (keys()next()<1>) related to undefined at the assignment site`
+- `src/compiler/commandLineParser.ts:2278:82`; lexical owner `src/compiler/commandLineParser.ts:2278:1` (parseConfigFileTextToJson); raw scan owner `src/compiler/commandLineParser.ts:2278:1`; phase `refusal_scan`; unit first stop: no; present on base: no. Full reason: `a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked`
+- `src/compiler/commandLineParser.ts:3839:20`; lexical owner `src/compiler/commandLineParser.ts:3823:1` (convertJsonOption); raw scan owner `src/compiler/commandLineParser.ts:4323:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any ([]) related to string at the return site`
+- `src/compiler/core.ts:1066:97`; lexical owner `src/compiler/core.ts:1066:1` (KindVariableStatement); raw scan owner `src/compiler/core.ts:2614:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (()) related to T | undefined at the initializer site`
+- `src/compiler/debug.ts:1036:39`; lexical owner `src/compiler/debug.ts:111:1` (Debug); raw scan owner `src/compiler/debug.ts:1234:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any ([]) related to number at the initializer site`
+- `src/compiler/emitter.ts:2941:40`; lexical owner `src/compiler/emitter.ts:1211:1` (createPrinter); raw scan owner `src/compiler/emitter.ts:6379:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any ((0)) related to Expression at the assignment site`
+- `src/compiler/factory/nodeFactory.ts:6098:17`; lexical owner `src/compiler/factory/nodeFactory.ts:492:1` (createNodeFactory); raw scan owner `src/compiler/factory/nodeFactory.ts:7543:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (set(0)) related to number | undefined at the object field site`
+- `src/compiler/parser.ts:1253:17`; lexical owner `src/compiler/parser.ts:1249:1` (forEachChild); raw scan owner `src/compiler/parser.ts:10824:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (167(0)) related to QualifiedName at the assertion site`
+- `src/compiler/sys.ts:382:121`; lexical owner `src/compiler/sys.ts:249:1` (createDynamicPriorityPollingWatchFile); raw scan owner `src/compiler/sys.ts:1976:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any ((0)) related to string at the relation site`
+- `src/compiler/tsbuildPublic.ts:2068:69`; lexical owner `src/compiler/tsbuildPublic.ts:2060:1` (scheduleBuildInvalidatedProject); raw scan owner `src/compiler/tsbuildPublic.ts:2494:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any ((0)) related to string at the argument site`
+- `src/compiler/utilities.ts:8555:49`; lexical owner `src/compiler/utilities.ts:8555:1` (KindVariableStatement); raw scan owner `src/compiler/utilities.ts:12451:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (getTokenConstructor()) related to new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind> at the initializer site`
+- `src/compiler/visitorPublic.ts:603:17`; lexical owner `src/compiler/visitorPublic.ts:598:1` (visitEachChild); raw scan owner `src/compiler/visitorPublic.ts:1809:1`; phase `refusal_scan`; unit first stop: no; present on base: yes. Full reason: `a member typed any (167(0)) related to QualifiedName at the assertion site`
 
-## Regressions
+Base `b0efce6dce1cd7445ed8a570aecac387a4a7d684`. Head `66fff4ecc05c3bfb2258cf4bb2a7b0a2b762c59b` (one commit on base).
 
-**Unknown:** previously finding-free units or sites that stop on head, new panics, and units whose first lowering stop changed cannot be assessed. No empty regression list or zero-panic claim is made for head.
+TypeScript v6.0.3, upstream `050880ce59e30b356b686bd3144efe24f875ebc8`. Cohere `06af2e399c6c1fb93fd570b774027942747400b4`; checker `d92d9bfee114c80be2c375d72edae966176e3a4f`.
 
-Main stage3/census/pair was attempted on these saved streams and refused them with `unit identities differ`. Its traceback is in `evidence/rerun-head-pair-error.log.gz`. `delta.json` uses null for unavailable answers.
+Box `3cbd7fe9a660`: 5 available processors, CPU quota 4 cores, cgroup memory limit 16 GiB. Host metadata is retained in `evidence/box.json` and `evidence/cgroup.json`.
 
-## Pins and box
+## Base union admission check
 
-Base: `origin/main` at `b0efce6dce1cd7445ed8a570aecac387a4a7d684`. Head: `optimizer/any-members-3` at `66fff4ecc05c3bfb2258cf4bb2a7b0a2b762c59b`, one commit directly on base.
+All 23 base pieces and 23 matching head pieces completed, each exited 0, with all 79 compiler files, 4,555 unique units and 4,056 unique timed attempts per compiler. All 746 adapted source hashes still match the original manifest. The longest child was 639.408 seconds, well inside 30 minutes.
 
-TypeScript v6.0.3, upstream commit `050880ce59e30b356b686bd3144efe24f875ebc8`.
+The base union differs from the whole base in **65 deferred-generic instantiated flags only**. All 4,555 units retain the same ordered lowering findings and first stop; all file scans and declaration inventories agree. Exactly 4,490 units agree in every field, including all 4,056 timed units. The 65 differing deferred units are excluded from both pairing streams. `UNION.md` lists every differing unit, its old and new flag, and the reason; `evidence/pieces/union-proof.json` retains exact machine-readable differences.
 
-Box: cloud host `3cbd7fe9a660`; 5 available processors; CPU quota 400000/100000 us (4 cores); cgroup memory limit 17179869184 bytes (16 GiB). Host memory is `18440100 kB`. Go 1.27.1 linux/amd64; Node v24.19.0.
+A piece can change a deferred generic witness because later callers in other pieces are absent from its census-wide witness map. That map annotates `instantiated` after selected calls finish; this metadata does not itself select the first lowering stop. The absence of first-stop differences here is measured, not assumed. Witness bits are neither ORed nor masked to claim equality. The gate also compares ordered lowering findings and every other unit field, not just first stops.
 
-## Unique finding kinds
+## Regressions and changed first stops
 
-Meter definition: unique `(kind, where, reason, text)` across attempts. The head header is not a finding-free census.
+### Raw Findings
 
-| Kind | Base, complete | Head |
-| --- | ---: | --- |
-| NotYet | 620 | unknown |
-| Refused | 4708 | unknown |
-| panic | 0 | unknown |
-| error | 0 | unknown |
+Regressions: 1. Changed unit first stops: 0. New finding sites: 1.
+
+- previously_finding_free_scan_site: `src/compiler/commandLineParser.ts:2278:82`; owner `src/compiler/commandLineParser.ts:2278:1`; Refused: a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked
+- New site `src/compiler/commandLineParser.ts:2278:82`; owner `src/compiler/commandLineParser.ts:2278:1`; phase `refusal_scan`; Refused: a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked
+### Distinct Reads
+
+Regressions: 1. Changed unit first stops: 0. New finding sites: 1.
+
+- previously_finding_free_scan_site: `src/compiler/commandLineParser.ts:2278:82`; owner `src/compiler/commandLineParser.ts:2278:1`; Refused: a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked
+- New site `src/compiler/commandLineParser.ts:2278:82`; owner `src/compiler/commandLineParser.ts:2278:1`; phase `refusal_scan`; Refused: a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked
+
+## Unique findings
+
+Counts deduplicate `(kind, where, reason, text)` across attempts, as the meter does. Repeated file scans count once. Counts cover the full piece unions; excluding the 65 deferred units removes no findings, so the paired counts are identical. Whole-base counts also match.
+
+| Kind | Base | Head |
+| --- | ---: | ---: |
+| NotYet | 620 | 620 |
+| Refused | 4708 | 4709 |
+| panic | 0 | 0 |
+| error | 0 | 0 |
 
 ## Unit lowering time on this box
 
-No base was rerun. This table uses the retained complete base and the latest foreground head attempt on the same box. Head is interrupted and partial. These sums are not comparable full-run totals. Timers include unit registration, synchronous dependency lowering and recovery; they exclude checker work, file scans and other shared setup. The active interrupted unit has no completed timer.
+One sample per compiler, assembled from the matching sequential pieces. These are sums of all 4,056 unit timers, including synchronous dependency work. Checker work, file scans and shared process setup are excluded. Base runs before head within each piece; this is not a benchmark distribution.
 
-| Sum | Base, 4,056 completed attempts | Foreground head rerun, 3,153 completed attempts only |
-| --- | ---: | ---: |
-| wall_seconds | 5902.087133 | 2990.183421 |
-| cpu_seconds | 6887.892272 | 3458.155521 |
+| Sum | Base seconds | Head seconds | Head minus base |
+| --- | ---: | ---: | ---: |
+| wall_seconds | 5572.796798 | 5527.646214 | -45.150584 |
+| cpu_seconds | 6199.835964 | 6151.315293 | -48.520671 |
 
-## Method and stopping evidence
+Earlier whole-base reference: wall 5902.087133 s; CPU 6887.892272 s. The piece sample repeats setup and resets process caches, so it is not substituted for whole-run timing. Successful child process wall sums: base 7767.960 s; head 7680.524 s. All per-unit deltas are in `delta.json`.
 
-Read `typescript/kind-predicate-census` (`33dca393`) REPORT.md and compare.py, and the meter launcher and README. Built one adapted tree with b0efce6d stage3/apply.sh, its lockfile-pinned API packages and the upstream pin above. Both census tools were separately built from their exact compiler commits with recorded cohere/checker pins, main make_overlay.py, gofmt, and `go build -buildvcs=false -overlay=... ./stage3/census/latent/tool`. The adaptation and census inputs do not differ between the compiler pins. The head also changes interface-downcast test fixtures, outside those inputs.
+## Method and evidence
 
-The retained base finished before either head attempt. The foreground rerun reused the verified head binary and the same adapted tree: all 746 source hashes matched the manifest before launch and after interruption. Both used this invocation:
+Copied the method after reading `typescript/kind-predicate-census` REPORT.md and compare.py at `33dca393`, and the meter invocation. One shared adapted tree was built with base `stage3/apply.sh` and lockfile-pinned API packages. Adaptation and census inputs are unchanged between compiler pins; the head also changes unrelated interface-downcast fixtures. The exact compiler/dependency pins, original binary hashes and source manifest remain under `evidence/`.
 
-```sh
-LATENT_TIMES=times.jsonl LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 latent-census ADAPTED/src/compiler latent.jsonl
-```
+Existing speculative-only piece support and its union proof were read. It cannot select first-error attempts, so the new measurement helper adds file and top-level-unit scheduling guards to the same no-output latent overlays. It leaves body lowering, registration, dependencies, generic deferral and witness recording unchanged. Each process still loads the complete compiler program. Mode-off output equality for both compilers and an actual cross-file witness difference were checked on a fixture; dropped pieces, duplicate pieces and a finding moved outside its assigned unit were rejected. See `evidence/pieces/selector-audit.json`, the selector patches and `first-error-piece.go.txt`.
 
-No base rerun, full mode, entry mode, backend, replay, or subset run was performed. Base started at 16:43:29 UTC and finished at 18:49:21 UTC (7,552 seconds), exiting 0 with all 79 compiler files and 4,056 timed attempts. Its attempted-unit identities independently match the stock TypeScript top-level catalog.
+Ordinary files form seven disjoint file groups. Utilities and utilitiesPublic exceed a safe whole-file budget, so their top-level units form sixteen disjoint chunks. Every unit is assigned exactly once. Repeated file scans are checked identical and retained once; declaration inventories are not summed. Cost estimates use the retained base LATENT_TIMES. See `PIECES.md` and `evidence/pieces/plan.json`.
 
-Foreground head rerun started at 2026-11-05T20:54:59.377910+00:00. Its last completed timer was written at 2026-11-05T22:10:00.284428+00:00 for `src/compiler/utilities.ts:4407:1`. The interrupted current unit is not identified by that previous-unit timer.
+Each process runs sequentially in first-error mode with `LATENT_FULL=0`, `LATENT_SPECULATIVE=0`, `LATENT_ASSERT_NO_OUTPUT=1`, `LATENT_TIMES` and the explicit selection file. The hard child limit is 20 minutes; five minutes without timer progress requests a goroutine dump and stops. No successful child hit either limit. Header-only finding buffers are expected while timers progress because Latent finalizes deferred witnesses before flushing. No mode switch or backend invocation occurred.
 
-The foreground supervisor awaited the compiler and recorded timer progress every 30 seconds; it used no detached or background shell job. No other work was performed while the census ran. The tool wait was then reported as aborted and the environment reannounced as starting. On reconnection, head PID 11440 was defunct (state Z, parent PID 1). No supervisor exit code or end timestamp was saved. The termination cause is not established. Process snapshots, progress logs, timestamps and memory counters are retained under the rerun-head prefix.
+Every completed child was committed immediately to scratch Git, then losslessly archived and committed on this report branch. Checkpoint IDs and hashes are beside each stream. Two interrupted unfinished piece attempts were retried; neither supplies observations here. A transient remote `commit_refs_rules` error delayed ordinary pushes, and a later ordinary push published the pending commits. Every successful checkpoint has now been pushed. Earlier incomplete whole-head attempts remain as historical evidence and supply no findings to this result.
 
-The findings files stayed at their headers while timers advanced. This revision deliberately buffers every file record in `Latent` until all callers finish, to finalize deferred-generic instantiation witnesses (`stage3/census/latent/lower.go.txt:213`, the Latent wrapper). Base emitted all its records only at completion. This was observable progress, not a live timer stall; no mode was switched. After interruption the head was already dead, so a goroutine dump could not be obtained. The logs contain no crash diagnosis.
+Before feature pairing, `union.py` checked every base unit against the retained complete whole stream and wrote the admission proof. The actual result was reported before invoking main `stage3/census/pair`. Pairing uses shared source hashes and exact offsets, retaining raw findings and normalized access-chain reads. Only lowering-phase events define unit first stops; scan owners remain separate. `delta.json` retains every transition, regression and any-member owner. `pair-report.md` retains the standard report.
 
-The first head attempt remains preserved: it had 3,865 completed timers before interruption at 20:45 UTC. The explicitly requested foreground rerun is a separate attempt with 3,153 completed timers. Neither emitted a file finding record, so their timer streams cannot be combined into a paired finding ledger. No additional census was launched after the foreground attempt died. No zero result is inferred from either lost buffer.
+The checker accepted the program: checker_rejected=false, with no diagnostics. The fixed measurement label in the raw streams is retained verbatim. Finding-free applies to these eligible first-error attempts and scans; it does not establish complete lowering past earlier stops or native compilation, nor supply whole-run witness flags for the head.
 
-Both headers agree and report first-error mode with zero checker diagnostics (`checker_rejected=false`). The tool retains its fixed measurement label verbatim in the streams. Ordinary Load/Lower output guards were enabled. Compiler and dependency trees are clean, and all 746 adapted source hashes still match the pre-run manifest.
-
-## Evidence and validation
-
-The compressed streams preserve every saved record, with the shared absolute adapted prefix normalized to relative paths as in the reference method. Full and partial timer streams, logs, source hashes, stock unit catalog, compiler/dependency pins, binary hashes/build metadata and process snapshots are under `evidence/`. `compare.py` uses main stage3/census/pair and refuses to manufacture a comparison when either stream is incomplete. `validate.py` checks the saved evidence and explicit unknown answers; see `validation.txt`.
+`validate.py` independently checks union arithmetic, admission exclusions, first stops, kind counts, timings, source/pin provenance and artifact hashes. See `validation.txt`.

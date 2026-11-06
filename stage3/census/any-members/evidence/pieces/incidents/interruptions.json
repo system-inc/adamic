@@ -1,0 +1,21 @@
+[
+  {
+    "directory": "p03-interrupted-1793920651",
+    "note": {
+      "observed_utc": "2026-11-05T23:17:23.320920+00:00",
+      "state": "incomplete; no live census process on reconnection",
+      "completed_piece_runs_preserved": 7,
+      "latest_report_commit": "c9b5cb32d62bccf49c0b4dbefc91ca2afffcfb56",
+      "action": "resume completed checkpoints; repeat only unfinished head p03"
+    }
+  },
+  {
+    "directory": "p04-interrupted-1793921875",
+    "note": {
+      "observed_utc": "2026-11-05T23:37:52.894991+00:00",
+      "state": "incomplete; no live census process on reconnection",
+      "completed_piece_runs_preserved": 9,
+      "action": "reuse completed checkpoints; repeat only unfinished head p04"
+    }
+  }
+]
