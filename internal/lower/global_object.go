@@ -134,6 +134,7 @@ func (l *lowering) globalObjectValueUse(node *ast.Node) error {
 		ast.KindDeleteExpression, ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression, ast.KindObjectLiteralExpression,
 		ast.KindArrayLiteralExpression, ast.KindArrowFunction, ast.KindFunctionExpression, ast.KindClassExpression:
 		// Their type is a primitive, or an object or function they make: never the global object.
+		// ThisKeyword is deliberately not among them: a this parameter may be typeof globalThis.
 		return nil
 	}
 	if !l.globalObject(node) {
