@@ -37,6 +37,7 @@ These are partial paired results. Final cohort tables, full regression lists, wa
 | p11 | 0 | 0 | 0 | not requested |
 | p12 | 0 | 0 | 0 | not requested |
 | p13 | 0 | 0 | 0 | not requested |
+| p14 | 1 | 0 | 0 | not requested |
 | q00 | 5 | 0 | 0 | equal |
 | q01 | 0 | 0 | 0 | equal |
 | q02 | 1 | 0 | 0 | equal |
