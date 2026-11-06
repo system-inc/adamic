@@ -1,0 +1,944 @@
+[
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 11.519064006,
+    "root": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 11.372225188,
+    "root": "src/compiler/_namespaces/ts.performance.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.041408395,
+    "root": "src/compiler/_namespaces/ts.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.635518849,
+    "root": "src/compiler/binder.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.910161781,
+    "root": "src/compiler/builder.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.401906861,
+    "root": "src/compiler/builderPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.589822207,
+    "root": "src/compiler/builderState.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.150311526,
+    "root": "src/compiler/builderStatePublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.131976131,
+    "root": "src/compiler/checker.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.518451176,
+    "root": "src/compiler/commandLineParser.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "src/compiler/debug.ts:243:59",
+    "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+    "seconds": 8.941666069,
+    "root": "src/compiler/core.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.042304349,
+    "root": "src/compiler/corePublic.ts",
+    "where": "",
+    "reason": "",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 2.677800491,
+    "root": "src/compiler/debug.ts",
+    "root_order_artifact": true
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 2.542291039,
+    "root": "src/compiler/diagnosticInformationMap.generated.ts",
+    "root_order_artifact": true
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.811309327,
+    "root": "src/compiler/emitter.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.597471255,
+    "root": "src/compiler/executeCommandLine.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.327874546,
+    "root": "src/compiler/expressionToTypeNode.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.880607774,
+    "root": "src/compiler/factory/baseNodeFactory.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.687761554,
+    "root": "src/compiler/factory/emitHelpers.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.529876479,
+    "root": "src/compiler/factory/emitNode.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.657808106,
+    "root": "src/compiler/factory/nodeChildren.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.240530318,
+    "root": "src/compiler/factory/nodeConverters.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 8.529877835,
+    "root": "src/compiler/factory/nodeFactory.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.406479413,
+    "root": "src/compiler/factory/nodeTests.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.078257149,
+    "root": "src/compiler/factory/parenthesizerRules.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.572577771,
+    "root": "src/compiler/factory/utilities.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 11.190649335,
+    "root": "src/compiler/factory/utilitiesPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/hostErrors.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.032011718,
+    "root": "src/compiler/hostErrors.ts",
+    "where": "",
+    "reason": "",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.252486822,
+    "root": "src/compiler/moduleNameResolver.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.322724841,
+    "root": "src/compiler/moduleSpecifiers.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/parser.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.243276527,
+    "root": "src/compiler/parser.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/path.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.066490851,
+    "root": "src/compiler/path.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.461537474,
+    "root": "src/compiler/performance.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/performanceCore.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.247819663,
+    "root": "src/compiler/performanceCore.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/program.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.368401766,
+    "root": "src/compiler/program.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.182392647,
+    "root": "src/compiler/programDiagnostics.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 8.904293419,
+    "root": "src/compiler/resolutionCache.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/scanner.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.810757969,
+    "root": "src/compiler/scanner.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.623849471,
+    "root": "src/compiler/semver.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/sourcemap.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.195539897,
+    "root": "src/compiler/sourcemap.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.91015235,
+    "root": "src/compiler/symbolWalker.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/sys.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.389849372,
+    "root": "src/compiler/sys.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.317090067,
+    "root": "src/compiler/tracing.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.445576946,
+    "root": "src/compiler/transformer.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 11.292056721,
+    "root": "src/compiler/transformers/classFields.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 16.56973629,
+    "root": "src/compiler/transformers/classThis.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 12.214893987,
+    "root": "src/compiler/transformers/declarations/diagnostics.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.86868043,
+    "root": "src/compiler/transformers/declarations.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.967492403,
+    "root": "src/compiler/transformers/destructuring.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.816260087,
+    "root": "src/compiler/transformers/es2015.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.492792109,
+    "root": "src/compiler/transformers/es2016.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.329854885,
+    "root": "src/compiler/transformers/es2017.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.268665305,
+    "root": "src/compiler/transformers/es2018.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.33293978,
+    "root": "src/compiler/transformers/es2019.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.383309139,
+    "root": "src/compiler/transformers/es2020.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.144358655,
+    "root": "src/compiler/transformers/es2021.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.088634477,
+    "root": "src/compiler/transformers/esDecorators.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.592061126,
+    "root": "src/compiler/transformers/esnext.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.500734444,
+    "root": "src/compiler/transformers/generators.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.386568024,
+    "root": "src/compiler/transformers/jsx.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/legacyDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.299195998,
+    "root": "src/compiler/transformers/legacyDecorators.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.327489703,
+    "root": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.565682269,
+    "root": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/module/module.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.558666342,
+    "root": "src/compiler/transformers/module/module.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/module/system.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.328678725,
+    "root": "src/compiler/transformers/module/system.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/namedEvaluation.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.184756832,
+    "root": "src/compiler/transformers/namedEvaluation.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/taggedTemplate.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.913291577,
+    "root": "src/compiler/transformers/taggedTemplate.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.263259719,
+    "root": "src/compiler/transformers/ts.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/typeSerializer.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.050379938,
+    "root": "src/compiler/transformers/typeSerializer.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/transformers/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.31289769,
+    "root": "src/compiler/transformers/utilities.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/tsbuild.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.395809058,
+    "root": "src/compiler/tsbuild.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.645407735,
+    "root": "src/compiler/tsbuildPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/types.ts"
+    ],
+    "kind": "NotYet",
+    "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 2.421094257,
+    "root": "src/compiler/types.ts",
+    "root_order_artifact": true
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.450545651,
+    "root": "src/compiler/utilities.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.75512862,
+    "root": "src/compiler/utilitiesPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/visitorPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.596794658,
+    "root": "src/compiler/visitorPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/watch.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.601657717,
+    "root": "src/compiler/watch.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/watchPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 10.298270842,
+    "root": "src/compiler/watchPublic.ts",
+    "root_order_artifact": false
+  },
+  {
+    "roots": [
+      "/workspace/scratch/next-stops-adapted/src/compiler/watchUtilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "src/compiler/core.ts:810:89",
+    "reason": "a cast the runtime can't check",
+    "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "seconds": 9.567233274,
+    "root": "src/compiler/watchUtilities.ts",
+    "root_order_artifact": false
+  }
+]
