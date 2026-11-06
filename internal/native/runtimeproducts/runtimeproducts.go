@@ -139,7 +139,9 @@ func Declared(request native.RuntimeRequest) error {
 	// Split and Jobs govern generated program units, not runtime compilation.
 	options := request.Options
 	options.Split, options.Jobs = false, 0
-	variantDeclared := slices.ContainsFunc(Variants, func(variant Variant) bool { return variant.Options == options })
+	// A request's options name its triple, and a variant's native options leave it empty for the build's own, so the two
+	// are compared resolved.
+	variantDeclared := slices.ContainsFunc(Variants, func(variant Variant) bool { return sameResolved(variant.Options, options) })
 	if setDeclared && variantDeclared {
 		return nil
 	}
@@ -280,7 +282,7 @@ func leanArchive(t testing.TB, kind string, variants []Variant, list string, opt
 	if !slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) }) {
 		t.Fatalf("runtimeproducts: undeclared %s runtime feature set: %v: add the set to Sets", kind, features)
 	}
-	index := slices.IndexFunc(variants, func(variant Variant) bool { return variant.Options == options })
+	index := slices.IndexFunc(variants, func(variant Variant) bool { return sameResolved(variant.Options, options) })
 	if index < 0 {
 		t.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
 	}
@@ -294,6 +296,18 @@ func leanArchive(t testing.TB, kind string, variants []Variant, list string, opt
 		t.Fatal(err)
 	}
 	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, workers, jobserver) })
+}
+
+// sameResolved says whether options and other are the same once each target is resolved (native.ResolveTarget): an
+// empty target is the build's own triple, so a variant's native options are the ones a request names that triple in.
+// A platform the triple table has no row for is no variant's.
+func sameResolved(options native.Options, other native.Options) bool {
+	resolved, err := native.ResolveTarget(options)
+	if err != nil {
+		return false
+	}
+	resolvedOther, err := native.ResolveTarget(other)
+	return err == nil && resolved == resolvedOther
 }
 
 // variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have

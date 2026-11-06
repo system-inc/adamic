@@ -49,7 +49,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		switch arguments[index] {
 		case "--target":
 			index++
-			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
+			if index >= len(arguments) || options.Target == "wasm32-wasi" || arguments[index] != "wasm32-wasi" {
 				fmt.Fprintln(os.Stderr, usage)
 				return 2
 			}
@@ -93,7 +93,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		fmt.Fprintln(os.Stderr, "adamic: export ABI requires wasm32-wasi")
 		return 1
 	}
-	if options.Target != "" && archive != "" {
+	if options.Target == "wasm32-wasi" && archive != "" {
 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
 		return 1
 	}

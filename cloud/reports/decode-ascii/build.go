@@ -63,7 +63,7 @@ func main() {
 		arguments = append(arguments, path)
 	}
 	arguments = append(arguments, "-lm")
-	if options.Target != "" {
+	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, native.WASILinkFlags(options)...)
 	}
 	command := exec.Command(compiler, arguments...)
