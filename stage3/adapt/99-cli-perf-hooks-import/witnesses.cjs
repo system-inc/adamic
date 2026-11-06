@@ -9,13 +9,15 @@
 // Node and, when the gates' switch names one, on internal/hostconfiguration's node-without-inspector.
 // A recorded row runs both sides with isNodeLikeSystem's require test removed in memory, as Correctness's change
 // to 99q will have it. With --mutant, the after tree's guard reads `isNodeLikeSystem() || perfHooks.performance`.
+// tryGetPerformance's return type and PerformanceTime's readonly timeOrigin are types: both sides strip them, so the
+// rows read the same JavaScript as without them, and the after tree must carry both.
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
 const { execFileSync } = require("node:child_process");
 const { pathToFileURL } = require("node:url");
 const ts = require(process.env.CENSUS_TYPESCRIPT || "typescript");
-const { anchorText, importText } = require("./adapt.cjs");
+const { anchorText, importText, header, timeOrigin } = require("./adapt.cjs");
 const { nodeFor } = require("../../../internal/hostconfiguration/configuration.cjs");
 const registry = require("../../../internal/hostconfiguration/configurations.json");
 
@@ -47,7 +49,7 @@ function performanceSource(tree, mutant) {
         assert.equal(text.split(guard).length - 1, 1, "mutant site drift");
         text = text.replace(guard, mutation);
     }
-    return { text, imports: text.includes(importText) };
+    return { text, imports: text.includes(importText), typed: text.includes(header.adapted) && text.includes(timeOrigin.adapted) };
 }
 
 function strip(text) {
@@ -159,7 +161,7 @@ function observe(directory, tree, mutant, noInspector) {
         write(file, text + "\n");
         result[name] = node ? run(node, directory, file) : { skipped: `set ${registry["node-without-inspector"].environment}` };
     }
-    return { imports: performance.imports, result };
+    return { imports: performance.imports, typed: performance.typed, result };
 }
 
 const browserGlobal = { hooks: true, shouldWriteNativeEvents: true, performance: "node:perf_hooks performance", performanceTime: true, timestamp: true, path: "the browser global" };
@@ -190,6 +192,7 @@ function main() {
     const sides = { original: observe(path.join(scratch, "original"), before, false, noInspector), adapted: observe(path.join(scratch, "adapted"), after, mutant, noInspector) };
     assert(!sides.original.imports, "the before tree is already adapted");
     assert(sides.adapted.imports, "the after tree is not adapted");
+    assert(!sides.original.typed && sides.adapted.typed, "the return type and readonly timeOrigin are not exactly the after tree's");
     const results = Object.keys(sides.original.result).map(name => {
         const result = { row: name, original: sides.original.result[name], adapted: sides.adapted.result[name] };
         if (ruled[name]) result.asRuled = [result.original, result.adapted].every(side => Object.keys(ruled[name]).every(key => JSON.stringify(side[key]) === JSON.stringify(ruled[name][key])));
