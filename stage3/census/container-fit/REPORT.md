@@ -25,3 +25,4 @@ These are partial paired results. Final cohort tables, full regression lists, wa
 | Piece | Changed first stops | Regressions | Cap rows | Public byte check |
 | --- | ---: | ---: | ---: | --- |
 | q00 | 5 | 0 | 0 | equal |
+| q01 | 0 | 0 | 0 | equal |
