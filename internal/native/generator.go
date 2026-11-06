@@ -107,11 +107,15 @@ func (e *emitter) generatorFunction(index int) string {
 				panic("native: a generator returning a value")
 			}
 			e.end()
+			// Nothing may follow finish but the return: finish releases self and the frame's cells, and
+			// the resume's local self is borrowed from the frame (Memory's should on #qk8rztp S3a).
 			e.line("adamic_generator_finish(frame); return;")
 		case *flow.Throw:
 			// finish releases frame->error, so the error leaves the frame first and is the pending
 			// exception the step's caller tests.
 			e.line("adamic_object *thrown = frame->error; frame->error = NULL;")
+			// As at a return, nothing reads self or a cell after finish: setting the pending exception
+			// from a local and returning is all that follows it.
 			e.line("adamic_generator_finish(frame); adamic_thrown = thrown; return;")
 		default:
 			panic(fmt.Sprintf("native: unproved generator terminal %T", terminal))
