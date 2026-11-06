@@ -5,13 +5,21 @@ p=pathlib.Path(__file__).resolve().parent
 plan=json.loads((p/'plan.json').read_text())['files']
 # Small entry/namespace files first, then compiler files; each eventual file appears once.
 plan=sorted(plan,key=lambda n:(n.startswith('src/compiler/'),n))
-completed={json.loads(x.read_text())['file'] for x in (p/'pieces').glob('*.json')} if (p/'pieces').exists() else set()
-remaining=[n for n in plan if n not in completed][:int(sys.argv[1]) if len(sys.argv)>1 else 4]
+groups=[json.loads(x.read_text()) for x in (p/'pieces').glob('*.json')] if (p/'pieces').exists() else []
+completed={r['file'] for g in groups for r in g.get('records',[g])}
+remaining=[n for n in plan if n not in completed]
+batches=[];batch=[];size=0
 for name in remaining:
- stem=name.replace('/','_').removesuffix('.ts')
+ weight=(pathlib.Path('/workspace/v3-main-adapted-complete')/name).stat().st_size
+ if batch and (len(batch)>=5 or size+weight>200000):batches.append(batch);batch=[];size=0
+ batch.append(name);size+=weight
+if batch:batches.append(batch)
+for names in batches[:int(sys.argv[1]) if len(sys.argv)>1 else 4]:
+ name=','.join(names)
+ stem=names[0].replace('/','_').removesuffix('.ts') if len(names)==1 else 'group_'+hashlib.sha256('\n'.join(names).encode()).hexdigest()[:12]
  logpath=pathlib.Path('/workspace/scratch')/('v3-piece-'+stem+'.log')
  with logpath.open('w') as log:
-  process=subprocess.Popen(['python3',str(p/'run-piece.py'),name],stdout=log,stderr=log,start_new_session=True)
+  process=subprocess.Popen(['python3',str(p/'run-piece.py'),*names],stdout=log,stderr=log,start_new_session=True)
   try:code=process.wait(timeout=24*60)
   except BaseException:
    os.killpg(process.pid,signal.SIGTERM)

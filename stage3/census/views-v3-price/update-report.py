@@ -3,6 +3,7 @@
 import hashlib,json,pathlib
 p=pathlib.Path(__file__).resolve().parent
 pieces=[json.loads(x.read_text()) for x in sorted((p/'pieces').glob('*.json'))] if (p/'pieces').exists() else []
+pieces=[r for group in pieces for r in group.get('records',[group])]
 source=json.loads((p/'source-summary.json').read_text()) if (p/'source-summary.json').exists() else None
 plan=json.loads((p/'plan.json').read_text()) if (p/'plan.json').exists() else {}
 complete=bool(plan) and len(pieces)==len(plan['files'])
@@ -20,7 +21,7 @@ lines+=['','Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linu
 '',
 'The meter retains partial IR after statement rollback and omits final whole-program validation and pruning. attempted excludes skips and deferred generics; ir_observed counts attempts whose snapshot reached the counter; finding_free_attempted counts attempted units with no lowering-phase finding. The finding-free columns supply a strict meaning of units lowered without claiming successful whole-program compilation.',
 '',
-'Each piece selects one file in the full tsc entry closure with LATENT_FULL=1 and LATENT_ONLY_FILE. Deferred instantiated witnesses have that piece context. The unmodified meter and counted binaries run with the identical selection. Removing only view_elements, view_element_checks and ir_measured from the raw counted bytes must reproduce the entire meter output byte for byte on both compilers. The ordinary fields, with only absolute adapted roots canonicalized, are passed to stage3/census/pair. Source bytes must match. All four runs and pairing share a 23-minute deadline; successful pieces are committed and plainly pushed.',
+'Each piece selects one or several files in the full tsc entry closure with LATENT_FULL=1 and LATENT_ONLY_FILE. Deferred instantiated witnesses have that piece context. Small files may share a piece to amortize project loading; no file appears in two completed pieces. The unmodified meter and counted binaries run with the identical selection. Removing only view_elements, view_element_checks and ir_measured from the raw counted bytes must reproduce the entire meter output byte for byte on both compilers. The ordinary fields, with only absolute adapted roots canonicalized, are passed to stage3/census/pair. Source bytes must match. All four runs and pairing share a 23-minute deadline; successful pieces are committed and plainly pushed.',
 '',
 'The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), map-good (1,1), for-of-good (1,1). Main gives (0,0) for all three. Both skip-kind mutants fail the same known-count assertions. A separate shared-pointer probe confirms one check reached three ways counts once, and its skip-check mutant fails. Every other latent field is byte-identical on both trees for the fixtures and mutants. counter-proof.json and counter-proof.tar.gz retain this proof.','',
 '## Per-file latent counts','',
