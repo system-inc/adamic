@@ -13,6 +13,7 @@ import (
 
 // tsc's four shapes and a mint over a union element from a mixed literal, run on Node and through the JavaScript backend, which
 // must print the same: a branded array's length, elements and methods are its base array's (#gb0fqaa).
+// The union row prints by iteration, since join over a union element is a stop on main for any array.
 // The native backend is held by the oracle, which has no fixture for these yet (unbranded.mutants.md).
 // Mutant: unbranded returning t; each row stops NotYet at the value.
 func TestUnbrandedArraysAgreeWithNode(t *testing.T) {
@@ -33,7 +34,11 @@ const sorted = toSorted([3, 1, 2], (a, b) => a - b);
 console.log(String(sorted.length) + ' ' + sorted.join(',') + ' ' + String(sorted[0]));
 const mixed = [0, 'one'] as unknown as SortedArray<number | string>;
 mixed.push('two');
-console.log(String(mixed.length) + ' ' + mixed.join(','));
+let parts = '';
+for (const value of mixed) {
+	parts += String(value) + ';';
+}
+console.log(String(mixed.length) + ' ' + parts);
 let total = 0;
 for (const value of sorted) {
 	total += value;
