@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "file": "src/compiler/watch.ts",
+      "all_units": false,
+      "units": [
+        "src/compiler/watch.ts:673:1"
+      ]
+    }
+  ],
+  "expected_units": [
+    "src/compiler/watch.ts:673:1"
+  ],
+  "reference": "src/compiler/watch.ts:673:1",
+  "name": "createWatchHost"
+}
