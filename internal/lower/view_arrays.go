@@ -338,9 +338,6 @@ func (l *lowering) checkViewArrays() error {
 			array = value.Array
 			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, ViewType: value.ViewType}
 		case ir.ArrayPush:
-			if value.UnknownElements {
-				return node
-			}
 			array = value.Array
 		case ir.ArrayIndex:
 			element = value

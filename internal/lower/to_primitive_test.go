@@ -271,19 +271,18 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 	}
 }
 
-// Unknown[] now has union storage. The mixed scalar/nullish literal agrees with
-// Node. The reference cycle still stops: its unknown owner has no ownership
-// schema, and admitting the reference push would leak the cycle.
+// Language's probes over unknown[] (tp_probes.ts on #09dvwny), as written: each refuses at compile
+// time, alike on both backends, where Node prints a,b,|a,b, b,a,|b,a,| and a,,,b|a,,,b|. The first,
+// ["a"] into unknown[], stops at the narrower-literal refusal (object.go) before its storage is asked;
+// the second, a mixed literal, at unknown[]'s erased element storage. internal/oracle's probes.a holds
+// the same arrays of Item beside Node. The day either refusal lifts, this goes red, and the probe
+// joins probes.a or meets the next refusal, named.
 func TestToPrimitiveProbesOfUnknownArrays(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, refusal string }{
-		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst a: unknown[] = [\"a\"];\nconst b: unknown[] = [\"b\", a];\na.push(b);\nconsole.log(show(a) + \" \" + show(b));\n", "a reference write into an unknown array whose ownership is not proven"},
-		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst arr: unknown[] = [\"a\", null, undefined, \"b\"];\nconsole.log(show(arr));\n", ""},
+		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst a: unknown[] = [\"a\"];\nconst b: unknown[] = [\"b\", a];\na.push(b);\nconsole.log(show(a) + \" \" + show(b));\n", "union-typed array built from a narrower literal"},
+		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst arr: unknown[] = [\"a\", null, undefined, \"b\"];\nconsole.log(show(arr));\n", "an array of unknown with erased element storage"},
 	} {
-		if probe.refusal == "" {
-			lowersAndAgreesWithNode(t, probe.source)
-			continue
-		}
 		_, err := lowerSource(t, probe.source)
 		if err == nil || !strings.Contains(err.Error(), probe.refusal) {
 			t.Errorf("want %q, got %v: %q", probe.refusal, err, probe.source)
