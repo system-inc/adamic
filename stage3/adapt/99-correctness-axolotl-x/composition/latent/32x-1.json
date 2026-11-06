@@ -1,0 +1,24 @@
+{
+  "label": "32x",
+  "index": 1,
+  "reference": "src/compiler/watch.ts:673:1",
+  "name": "createWatchHost",
+  "actual": "src/compiler/watch.ts:672:1",
+  "checker_rejected": false,
+  "stop": {
+    "kind": "NotYet",
+    "where": "src/compiler/watch.ts:676:20",
+    "reason": "a call through ?. (an optional call)"
+  },
+  "metrics": {
+    "command": [
+      "/workspace/scratch/bind2/latent-build/latent",
+      "/workspace/bind2-32x-tree/src/compiler",
+      "/workspace/scratch/bind2/latent-raw-32x-1/records.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 15.984775250000894,
+    "limit_seconds": 1440
+  },
+  "binary_sha256": "7db83476ddb4fb4cdf931b8be5cfc4ef2214ff62d3ccdd5e935803f8f200e937"
+}
