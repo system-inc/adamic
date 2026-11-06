@@ -23,6 +23,17 @@ witnesses have pass scope, so grouping changes which callers contribute them.
 This is the same finding that requires latent.jsonl to remain buffered.
 
 The existing atom-piece support is speculative-only and bypasses the full-mode
-private-field cache. Checker.ts alone cannot meet the time bound as a full-mode
-file group. The choice of full-mode unit selection or speculative checker pieces
-has been raised explicitly; no speculative result is presented as cache proof.
+private-field cache. Oversized files therefore use a symmetric proof-only unit
+selector in both scratch overlays. No shipped census template or compiler file
+is changed for selection. `build-bounded.py` records that transformation and
+`validate-selector.py` verifies unfiltered byte identity and exact selected-unit
+coverage. `unit-plan.json` partitions the remaining 9,905 candidate identities
+into 257 pieces. The original six-file and fourteen-file groups cover the other
+809 candidates. The complete inventory has 10,714 unique candidate identities.
+
+`run-units.py` runs two independent pairs concurrently, with before then after
+inside each pair, `GOMEMLIMIT=4GiB` on both sides, and a 1,200-second wall cap.
+These wall times are resource bounds, not a performance benchmark. Completed
+results are atomically saved, committed and plainly pushed under a publication
+lock. Restarts validate saved binary/plan/output hashes and resume remaining
+work. No speculative result is presented as cache proof.
