@@ -104,3 +104,14 @@ also read. Setup completed successfully, the pinned source was cloned, and
 the full baseline apply passed. New logs supersede the historical stop.
 PROOF.md records the current checks. Tests write logs outside this hashed
 directory while running; completed evidence is copied here before publication.
+
+## Current stopping point
+
+Both full applies passed, and 99x's own contracts and replay passed. Check 1's
+ordered replay then stopped at 30-indexed-reads with
+`declined site changed: core.ts:992:21`, owner addRange. The rejected expression
+is from[i]!, and core.ts is identical in baseline and after. The first three
+replayed adapters made no writes; the refusing adapter also made no writes.
+Checks 2 through 6 were not run under the task's stop rule. The 46 rewritten
+sites have not been certified by those remaining checks. See PROOF.md and
+outcome.json. This branch is incomplete and is not ready to land.

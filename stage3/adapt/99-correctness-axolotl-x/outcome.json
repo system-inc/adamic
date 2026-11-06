@@ -1,0 +1,88 @@
+{
+  "status": "stopped",
+  "stopped_at": "check 1 ordered replay",
+  "rewritten": 46,
+  "left": 0,
+  "imports_removed": 6,
+  "owners": 15,
+  "baseline_apply_exit": 0,
+  "after_apply_exit": 0,
+  "self_replay": {
+    "files": 0,
+    "rewrites": 0,
+    "checked_roots": 79,
+    "bytes_and_mtime_preserved": true
+  },
+  "stop": {
+    "adapter": "30-indexed-reads",
+    "exit": 1,
+    "message": "declined site changed: core.ts:992:21",
+    "site": {
+      "file": "core.ts",
+      "line": 992,
+      "column": 21,
+      "function": "addRange",
+      "expression": "from[i]",
+      "occurrence": 2,
+      "total": 2,
+      "action": "decline",
+      "class": "U-position",
+      "invariant": "addRange explicitly handles absence nearby; preserve the repeated read after its test even though the checker cannot narrow it."
+    },
+    "actual": {
+      "owner": "addRange",
+      "line": 1002,
+      "column": 21,
+      "node": "from[i]",
+      "parent": "from[i]!"
+    },
+    "coreIdenticalBeforeAfter": true,
+    "coreSha256": "3dde48b17a7ea7c9475f28b0dfa1b8c3a407f6b4966c4f6f6c4e6769e4920f3e",
+    "filesWritten": 0
+  },
+  "checks": {
+    "2": "not run: stopped at check 1",
+    "3": "not run: stopped at check 1",
+    "4": "not run: stopped at check 1",
+    "5": "not run: stopped at check 1",
+    "6": "not run: stopped at check 1"
+  },
+  "CW051": [
+    {
+      "unit": "src/compiler/checker.ts:54277:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    },
+    {
+      "unit": "src/compiler/watch.ts:673:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    },
+    {
+      "unit": "src/compiler/watchPublic.ts:123:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    },
+    {
+      "unit": "src/compiler/executeCommandLine.ts:812:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    },
+    {
+      "unit": "src/compiler/executeCommandLine.ts:1011:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    },
+    {
+      "unit": "src/compiler/executeCommandLine.ts:1034:1",
+      "before": null,
+      "after": null,
+      "status": "not measured: stopped at check 1"
+    }
+  ]
+}
