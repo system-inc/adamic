@@ -641,10 +641,9 @@ type (
 
 	// ArrayPush is Array.push(Value): it appends and is the new length.
 	ArrayPush struct {
-		UnknownElements bool // An original mutable unknown[] alias can write between checked reads.
-		Array           Expression
-		Value           Expression
-		Element         Type
+		Array   Expression
+		Value   Expression
+		Element Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site int
