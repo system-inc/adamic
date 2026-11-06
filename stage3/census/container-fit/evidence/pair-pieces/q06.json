@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 2,
+        "after": 1,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102798
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102778
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102778
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102669
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 102757,
+          "body_end": 103000,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isRestParameter"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 31,
+        "NotYet": 8
+      },
+      "after": {
+        "Refused": 31,
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 2,
+        "after": 1,
+        "lowered": 1,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 0,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102798
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102778
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102778
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          102669
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 102757,
+          "body_end": 103000,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isRestParameter"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2638:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 30,
+        "NotYet": 8
+      },
+      "after": {
+        "Refused": 30,
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
