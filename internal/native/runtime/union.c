@@ -761,6 +761,15 @@ static adamic_heap *keyed_regexp_string_iterator(const adamic_string *key) {
 	return prototype_value(key);
 }
 
+// keyed_stats_shape is the fs.Stats shape node_fs_file.c published (adamic_keyed_stats_shape_publish),
+// or null before any Stats is made. A release store publishes it and an acquire load reads it, so a
+// thread that reads a Stats made on another sees the shape it was made with.
+static const adamic_shape *_Atomic keyed_stats_shape;
+
+void adamic_keyed_stats_shape_publish(const adamic_shape *shape) {
+	atomic_store_explicit(&keyed_stats_shape, shape, memory_order_release);
+}
+
 // The fields node_fs_file.c's stat shape holds that Node's Stats has too, which a run-time key read
 // answers from the shape's slots: its stat_fields, less the private _fsFileMode.
 static const char *const stats_held_names[] = {"size", "mtimeMs", "mtime", "atime"};
@@ -831,9 +840,11 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	// A matchAll iterator answers as Node's does (#zhrjf2t), known by its shape, before the host test and
 	// before any slot is read, since its slots are private. __proto__ has stopped above, as on an object.
 	if (adamic_regex_iterator_is(object)) return keyed_regexp_string_iterator(key);
-	// So does a Stats, known by its shape too (adamic_fs_file_is_stats), reading only the slots that
-	// hold what Node's own fields hold.
-	if (adamic_fs_file_is_stats(object)) return keyed_stats(object, key);
+	// So does a Stats, known by the shape node_fs_file.c published (keyed_stats_shape), reading only the
+	// slots that hold what Node's own fields hold. union.c never calls into node_fs_file.c, which a
+	// runtime without the fs doesn't link.
+	const adamic_shape *stats_shape = atomic_load_explicit(&keyed_stats_shape, memory_order_acquire);
+	if (stats_shape != NULL && object->shape == stats_shape) return keyed_stats(object, key);
 	// Any other host object stops for every key, before its own slots are read: a slot may be internal,
 	// its name may be Node's prototype member (a Dirent's isFile), or Node may hold a field native's
 	// shape doesn't (memoryUsage's rss). An Error isn't one: its own fields answer as Node's do, and its

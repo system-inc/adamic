@@ -499,6 +499,7 @@ static adamic_object *file_stat_value(const struct stat *information) {
     double atime = (double)information->st_atim.tv_sec * 1000 + (double)information->st_atim.tv_nsec / 1000000;
     double mtime = (double)information->st_mtim.tv_sec * 1000 + (double)information->st_mtim.tv_nsec / 1000000;
 #endif
+    adamic_keyed_stats_shape_publish(&stat_shape);
     adamic_object *result = adamic_object_new(&stat_shape);
     result->slots[0].number = (double)information->st_size;
     result->slots[1].number = mtime;
