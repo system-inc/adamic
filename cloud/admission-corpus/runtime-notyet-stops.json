@@ -222,6 +222,18 @@
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'toString')\n"
+    },
+    "a017b704fa779028d15e46a892de58c2fde6a8cc099d024df0319e496be4339a": {
+      "path": "internal/oracle/testdata/reflect_get/stop_function_length.a",
+      "ruling_task": "#zhrjf2t",
+      "lifting_task": "#xdcec18",
+      "stderr": "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'length')\n"
+    },
+    "f4dc4dad73d4dacac76ac9cd3f2e06bfce38e37a666286407a9ae204a5fa4915": {
+      "path": "internal/oracle/testdata/reflect_get/stop_function_length_iterator.a",
+      "ruling_task": "#zhrjf2t",
+      "lifting_task": "#xdcec18",
+      "stderr": "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'length')\n"
     }
   }
 }
