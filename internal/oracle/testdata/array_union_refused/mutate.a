@@ -1,0 +1,4 @@
+function mutate(array: string[][] | readonly (string | readonly string[] | undefined)[]): void {
+    array.push(["x"]);
+}
+mutate([["a"]]);

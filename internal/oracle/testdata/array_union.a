@@ -1,0 +1,66 @@
+class Extension {
+    constructor(public name: string) {}
+}
+function flattenExtensions(array: Extension[][] | readonly (readonly Extension[] | Extension | undefined)[], label: string): void {
+    const result: Extension[] = [];
+    for (let i = 0; i < array.length; i++) {
+        const value = array[i];
+        console.log(label + "-is-array:" + Array.isArray(value));
+        if (value) {
+            if (Array.isArray(value)) {
+                for (let j = 0; j < value.length; j++) {
+                    const element = value[j];
+                    if (element !== undefined) result.push(element);
+                }
+            } else if (value instanceof Extension) {
+                result.push(value);
+            }
+        }
+    }
+    for (const value of result) console.log(label + "-flat:" + value.name);
+    console.log(label + "-first:" + typeof array[0]);
+    console.log(label + "-missing:" + (array[99] === undefined));
+    console.log(label + "-missing-is-array:" + Array.isArray(array[99]));
+}
+function flattenStrings(array: string[][] | readonly (string | readonly string[] | undefined)[], label: string): void {
+    const result: string[] = [];
+    for (let i = 0; i < array.length; i++) {
+        const value = array[i];
+        console.log(label + "-is-array:" + Array.isArray(value));
+        if (value) {
+            if (Array.isArray(value)) {
+                for (let j = 0; j < value.length; j++) {
+                    const element = value[j];
+                    if (element !== undefined) result.push(element);
+                }
+            } else if (typeof value === "string") {
+                result.push(value);
+            }
+        }
+    }
+    for (const value of result) console.log(label + "-flat:" + value);
+    console.log(label + "-first:" + typeof array[0]);
+    console.log(label + "-first-is-c:" + (array[0] === "c"));
+    console.log(label + "-missing:" + (array[99] === undefined));
+    console.log(label + "-missing-is-array:" + Array.isArray(array[99]));
+}
+const extensionMutable: Extension[][] = [[new Extension("a")], [new Extension("b")]];
+const extensionReadonly: readonly (readonly Extension[] | Extension | undefined)[] = [new Extension("c"), [new Extension("d")], undefined];
+const stringMutable: string[][] = [["a"], ["b"]];
+const stringReadonly: readonly (string | readonly string[] | undefined)[] = ["c", ["d"], undefined];
+flattenExtensions(extensionMutable, "em");
+flattenExtensions(extensionReadonly, "er");
+flattenStrings(stringMutable, "sm");
+flattenStrings(stringReadonly, "sr");
+
+// The checker keeps the class narrowing across replaceArrayUnionClass(), which
+// installs an array read from the readonly arm. The separate probe calls this.
+let arrayUnionNarrowedValue: Extension | readonly Extension[] | undefined;
+function replaceArrayUnionClass(): void { arrayUnionNarrowedValue = extensionReadonly[1]; }
+function arrayUnionClassNarrowing(): void {
+    arrayUnionNarrowedValue = new Extension("before");
+    if (arrayUnionNarrowedValue instanceof Extension) {
+        replaceArrayUnionClass();
+        console.log("er-class-read-is-array:" + Array.isArray(arrayUnionNarrowedValue));
+    }
+}
