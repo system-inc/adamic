@@ -105,5 +105,6 @@ func (l *lowering) functionObservation(node *ast.Node) (ir.Expression, bool, err
 	if err != nil {
 		return nil, true, err
 	}
+	l.graphDynamicSite = node
 	return ir.Narrow{Value: ir.DynamicProperty{Object: fit(value, ir.Union), Name: name}, To: ir.Number}, true, nil
 }
