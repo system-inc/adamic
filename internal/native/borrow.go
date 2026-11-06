@@ -97,7 +97,7 @@ func pureKind(expression ir.Expression) bool {
 		ir.CharCodeAt, ir.StringIndex, ir.ArrayIndex, ir.Property, ir.MapGet, ir.MapHas, ir.MapSize, ir.HasOwn,
 		ir.IsUndefined, ir.Unwrap, ir.MaybeOf, ir.Box, ir.Narrow, ir.TypeOf, ir.Conditional, ir.Coalesce,
 		ir.MathCall, ir.NumberCall, ir.ToFixed, ir.NumberFormat, ir.Trim, ir.StringCall, ir.CodePoints,
-		ir.ArraySearch, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
+		ir.ArraySearch, ir.ViewElement, ir.CheckedCast, ir.UnionToString, ir.MaybeToString, ir.Defined, ir.InstanceOf:
 	default:
 		return false
 	}
