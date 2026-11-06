@@ -4,7 +4,8 @@
 // narrows it so value reads T. It is fed a Map's values() and a Set's values() at two call sites.
 // firstTwo keeps one status across a later next(), and each still reads its own value, since every
 // result is a fresh object. exhausted asks next() again after done, which answers done again.
-// firstOrMissing takes the `| undefined` form, tested first. Nothing here enumerates a result's
+// firstOrMissing takes the `| undefined` form, tested first. keptNames stores each status and reads
+// it after the walk, through done's narrowing again, a control (Language's s10, Compiler's ask). Nothing here enumerates a result's
 // keys, whose order is #7nw4kgj's. Names and numbers are built, never only literals.
 interface Entry {
     readonly name: string;
@@ -56,6 +57,19 @@ function firstOrMissing(numbers: IterableIterator<number> | undefined): number {
     }
     return status.value;
 }
+function keptNames(iterator: IterableIterator<Entry>): string {
+    const statuses: IteratorResult<Entry>[] = [];
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        statuses.push(status);
+    }
+    let names = '';
+    for (const status of statuses) {
+        if (!status.done) {
+            names += `${status.value.name};`;
+        }
+    }
+    return names;
+}
 const entries = new Map<string, Entry>();
 const kept = new Set<Entry>();
 for (let index = 0; index < 4; index++) {
@@ -80,3 +94,4 @@ console.log(String(firstTwo(odd.values())));
 console.log(exhausted(odd.keys()));
 console.log(String(firstOrMissing(sizes.values())));
 console.log(String(firstOrMissing(new Map<string, number>().values())));
+console.log(keptNames(entries.values()));
