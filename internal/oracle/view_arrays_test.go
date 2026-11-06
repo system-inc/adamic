@@ -12,7 +12,7 @@ import (
 
 func TestViewArrays(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
+	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-scalar", "storage-reference-lie", "storage-boolean-lie", "storage-maybe-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("testdata/views_v3/" + name + ".ts")
@@ -82,6 +82,14 @@ func TestViewArrays(t *testing.T) {
 					found := ", found number\n"
 					if name == "tagged-null-lie" {
 						found = ", found null\n"
+					}
+					switch name {
+					case "storage-reference-lie":
+						found = ", found reference storage\n"
+					case "storage-boolean-lie":
+						found = ", found boolean\n"
+					case "storage-maybe-lie":
+						found = ", found undefined\n"
 					}
 					if strings.Contains(name, "result-lie") || name == "generic-object-lie" {
 						found = ", found object\n"
