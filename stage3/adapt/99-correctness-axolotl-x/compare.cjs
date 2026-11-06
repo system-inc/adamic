@@ -62,7 +62,6 @@ function inspect(file,text,side) {
     temps(source,source);
     const transformed=ts.transform(source,[context=>{
         function visit(n) {
-            // Only _tsc loses the now-unreferenced core helper. Its source body is unchanged.
             // All handed-off original calls remain, so both bundles retain the core helper.
             if(ts.isParenthesizedExpression(n)&&canonical.has(unwrap(n)))return visit(unwrap(n));
             const bound=canonical.get(n);

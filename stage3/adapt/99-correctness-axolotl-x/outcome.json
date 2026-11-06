@@ -16,11 +16,11 @@
   "stop": null,
   "checks": {
     "1": "pass: all 80 baseline outcomes identical; 99x after replay zero writes",
-    "2": "pending rerun for ownership revision",
-    "3": "pending rerun for ownership revision",
+    "2": "pass: 79 roots, zero diagnostics",
+    "3": "pass: nine JavaScript products; exactly 28 sites in each compiler bundle",
     "4": "pending rerun for ownership revision",
-    "5": "pending rerun for ownership revision",
-    "6": "pending rerun for ownership revision"
+    "5": "pass: restored builder emitBuildInfo call detected as exactly one source site",
+    "6": "pass: all 79 ordinary first stops unchanged; six latent units measured on both trees"
   },
   "CW051": [
     {
@@ -33,11 +33,11 @@
       },
       "after": {
         "kind": "NotYet",
-        "where": "src/compiler/checker.ts:54278:37",
+        "where": "src/compiler/checker.ts:54279:37",
         "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
       },
-      "before_seconds": 306.2567265099997,
-      "after_seconds": 393.4464036500003
+      "before_seconds": 212.2272378409998,
+      "after_seconds": 208.45632206400023
     },
     {
       "reference": "src/compiler/watch.ts:673:1",
@@ -49,11 +49,11 @@
       },
       "after": {
         "kind": "NotYet",
-        "where": "src/compiler/watch.ts:676:20",
+        "where": "src/compiler/watch.ts:677:20",
         "reason": "a call through ?. (an optional call)"
       },
-      "before_seconds": 30.31467190100011,
-      "after_seconds": 38.999557105999884
+      "before_seconds": 14.293788348999442,
+      "after_seconds": 12.759140281000327
     },
     {
       "reference": "src/compiler/watchPublic.ts:123:1",
@@ -68,8 +68,8 @@
         "where": "src/compiler/watchPublic.ts:124:23",
         "reason": "a call through ?. (an optional call)"
       },
-      "before_seconds": 50.308863314000064,
-      "after_seconds": 35.69395453900006
+      "before_seconds": 12.438277790999564,
+      "after_seconds": 13.20835125800113
     },
     {
       "reference": "src/compiler/executeCommandLine.ts:812:1",
@@ -81,11 +81,11 @@
       },
       "after": {
         "kind": "NotYet",
-        "where": "src/compiler/watch.ts:855:19",
+        "where": "src/compiler/core.ts:1533:12",
         "reason": "a call through ?. (an optional call)"
       },
-      "before_seconds": 37.64360363100013,
-      "after_seconds": 27.863907746000223
+      "before_seconds": 13.80048164300024,
+      "after_seconds": 14.447455993999029
     },
     {
       "reference": "src/compiler/executeCommandLine.ts:1011:1",
@@ -97,11 +97,11 @@
       },
       "after": {
         "kind": "NotYet",
-        "where": "src/compiler/watch.ts:855:19",
+        "where": "src/compiler/core.ts:1533:12",
         "reason": "a call through ?. (an optional call)"
       },
-      "before_seconds": 30.60584311799994,
-      "after_seconds": 40.45128683999974
+      "before_seconds": 13.297977639998862,
+      "after_seconds": 12.876587976999872
     },
     {
       "reference": "src/compiler/executeCommandLine.ts:1034:1",
@@ -113,11 +113,11 @@
       },
       "after": {
         "kind": "NotYet",
-        "where": "src/compiler/watch.ts:855:19",
+        "where": "src/compiler/core.ts:1533:12",
         "reason": "a call through ?. (an optional call)"
       },
-      "before_seconds": 37.827965038,
-      "after_seconds": 26.57674100299937
+      "before_seconds": 13.138028667000981,
+      "after_seconds": 12.975200267001128
     }
   ],
   "paired_replay": {
