@@ -46,14 +46,42 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 	return false
 }
 
-// iteratorResultField reports whether done or value is read off an iterator result whose only
-// library roots are IteratorReturnResult's: the plain object next returns, both fields required and
-// own, never a prototype member. The prelude's Map and Set iterators return one as their done arm,
-// so inference reads that arm as the iterator's return rather than its value.
-func (l *lowering) iteratorResultField(symbol *ast.Symbol) bool {
+// iteratorResultField reports whether done or value is read off a library iterator result as an own
+// field, never a prototype member: a result object next returns holds both as its own on Node, whatever
+// made it. It's the one home of that rule (#5t28afa), asked by every property read, element read and
+// destructuring, in two arms:
+//   - every library root of symbol is IteratorReturnResult's, both fields required and own. The prelude's
+//     Map and Set iterators return one as their done arm, so inference reads that arm as the iterator's
+//     return rather than its value;
+//   - for a read off receiver (nil for a destructuring, which keeps the first arm alone, as before this
+//     move), every member of the receiver's type is the library's IteratorYieldResult or
+//     IteratorReturnResult, the result a hand-driven next() gives (#qk8rztp S2c-2a).
+func (l *lowering) iteratorResultField(receiver *ast.Node, symbol *ast.Symbol) bool {
 	if symbol == nil || (symbol.Name != "done" && symbol.Name != "value") {
 		return false
 	}
+	if l.iteratorReturnResultRoots(symbol) {
+		return true
+	}
+	if receiver == nil {
+		return false
+	}
+	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	members := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		members = proven.Types()
+	}
+	for _, member := range members {
+		if !l.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult") {
+			return false
+		}
+	}
+	return true
+}
+
+// iteratorReturnResultRoots reports whether every library root of symbol is declared in
+// IteratorReturnResult.
+func (l *lowering) iteratorReturnResultRoots(symbol *ast.Symbol) bool {
 	for _, root := range l.checker.GetRootSymbols(symbol) {
 		for _, declaration := range root.Declarations {
 			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {

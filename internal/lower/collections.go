@@ -411,7 +411,7 @@ func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type
 	if property == nil {
 		return nil, l.notYet(where, "destructuring a field the type doesn't name")
 	}
-	ownResultField := l.iteratorResultField(property)
+	ownResultField := l.iteratorResultField(nil, property)
 	if l.inheritedLibrarySymbol(property) && !ownResultField {
 		return nil, l.prototypeRead(where, field)
 	}
