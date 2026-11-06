@@ -84,6 +84,11 @@ func (l *lowering) unionAggregateContract(node *ast.Node, target *checker.Type) 
 		if element == nil {
 			return 0, l.notYet(node, "an unavailable array union element")
 		}
+		// Every array a view holds is made here. One whose element the key's pre-pass didn't see
+		// fails the key closed (viewElementKey).
+		if key := l.elementKey; key != nil && !key.every && !key.viewed[element] {
+			key.misses = append(key.misses, contract.Name)
+		}
 		child, err := l.viewContract(node, element)
 		if err != nil {
 			return 0, err
