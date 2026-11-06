@@ -622,6 +622,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return ir.BooleanConstant{Value: node.Kind == ast.KindTrueKeyword}, nil
 	case ast.KindIdentifier:
+		if row, _ := l.hostBindingOf(node); row != nil {
+			// hostBindingRefusal admits only a typeof or a read its guard proves dead, and neither reaches here.
+			return nil, errors.New("lower: compiler bug: " + l.program.Where(node) + ": a read of the host binding " + row.Name + " reached lowering")
+		}
 		if value, known, err := l.libraryGlobalValue(node); known {
 			return value, err
 		}
@@ -667,6 +671,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, handled, err := l.hostBindingTypeOf(node); handled {
+			return value, err
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -720,6 +727,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				return lowered, nil
 			}
 			return l.classInstanceOf(node)
+		}
+		if value, handled, err := l.hostBindingAnd(node); handled {
+			return value, err
 		}
 		if value, handled, err := l.methodPresenceAnd(node); handled {
 			return value, err
@@ -1211,6 +1221,9 @@ func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
 		return nil, err
+	}
+	if symbol := l.hostBindingGuard(conditional.Condition); symbol != nil {
+		return l.hostBindingConditional(node, condition, symbol)
 	}
 	if l.isNever(conditional.WhenTrue) || l.isNever(conditional.WhenFalse) {
 		return l.conditionalNever(node, condition)

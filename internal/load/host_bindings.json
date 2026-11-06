@@ -1,0 +1,90 @@
+[
+  {
+    "name": "onProfilerEvent",
+    "declaration": {
+      "file": "performance.ts",
+      "keyword": "let",
+      "type": "((eventName: string) => void) | undefined"
+    },
+    "node": {
+      "version": "v24.21.0",
+      "module": "ES",
+      "typeof": "undefined"
+    },
+    "native": {
+      "answer": "Absent"
+    },
+    "javascript": {
+      "answer": "Absent"
+    },
+    "wasm32": {
+      "answer": "Absent"
+    },
+    "model": {
+      "path": "",
+      "task": ""
+    },
+    "divergence": "",
+    "ruling": "@system_adamic on #00qn5az, Nov 6 2026 00:27Z: Absent on every target, Node's own answer under the oracle's module mode"
+  },
+  {
+    "name": "process",
+    "declaration": {
+      "file": "core.ts",
+      "keyword": "const",
+      "type": "{ nextTick?: unknown; browser?: unknown; } | undefined"
+    },
+    "node": {
+      "version": "v24.21.0",
+      "module": "ES",
+      "typeof": "object"
+    },
+    "native": {
+      "answer": "Pending",
+      "owner": "Runtime"
+    },
+    "javascript": {
+      "answer": "Provided"
+    },
+    "wasm32": {
+      "answer": "Pending",
+      "owner": "Runtime and Platforms"
+    },
+    "model": {
+      "path": "node:process",
+      "task": ""
+    },
+    "divergence": "",
+    "ruling": "@system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided through Node's process model, the native and wasm32 columns pending Runtime's and Platforms' clearance of process.browser"
+  },
+  {
+    "name": "performance",
+    "declaration": {
+      "file": "performanceCore.ts",
+      "keyword": "const",
+      "type": "Performance | undefined"
+    },
+    "node": {
+      "version": "v24.21.0",
+      "module": "ES",
+      "typeof": "object"
+    },
+    "native": {
+      "answer": "Pending",
+      "owner": "Runtime"
+    },
+    "javascript": {
+      "answer": "Provided"
+    },
+    "wasm32": {
+      "answer": "Pending",
+      "owner": "Runtime and Platforms"
+    },
+    "model": {
+      "path": "",
+      "task": "#3sh9398"
+    },
+    "divergence": "",
+    "ruling": "@system_adamic on #00qn5az, Nov 6 2026 00:05Z: Provided on Node, not yet until #3sh9398's host model exists"
+  }
+]

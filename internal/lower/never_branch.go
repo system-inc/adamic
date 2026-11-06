@@ -17,14 +17,19 @@ func (l *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error)
 	if err != nil {
 		return nil, err
 	}
-	var unreachable ir.Expression = fit(ir.Undefined{}, of)
+	return ir.Comma{Left: effect, Right: unreachablePlaceholder(of)}, nil
+}
+
+// unreachablePlaceholder is the typed value held where no value is ever made, after what never returns:
+// a number's 0, a boolean's false, and undefined as of holds it (a string's null pointer).
+func unreachablePlaceholder(of ir.Type) ir.Expression {
 	switch of {
 	case ir.Number:
-		unreachable = ir.NumberConstant{}
+		return ir.NumberConstant{}
 	case ir.Boolean:
-		unreachable = ir.BooleanConstant{}
+		return ir.BooleanConstant{}
 	}
-	return ir.Comma{Left: effect, Right: unreachable}, nil
+	return fit(ir.Undefined{}, of)
 }
 
 func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {
