@@ -1,0 +1,15 @@
+{
+  "src_compiler_semver-main-meter": {
+    "stem": "src_compiler_semver",
+    "label": "main",
+    "variant": "meter",
+    "elapsed_seconds_upper_bound": 67.63048517900006,
+    "exit_verification": "child exit status 0",
+    "files": [
+      "src/compiler/semver.ts"
+    ],
+    "output_sha256": "7cb0a34fe631d84d6ebb3acacf7e8b6f71723981d4faeb3642837a3ccac85ef1",
+    "archive_sha256": "77ef15fbaeb2547f3dd4d0dd1536ccf1cd34fd793a4f1f2392bd91e418753b59",
+    "archive": "legs/src_compiler_semver-main-meter.tar.gz"
+  }
+}
