@@ -436,7 +436,7 @@ func (l *lowering) appendsBetween(observation *nullishObservation, read *ast.Nod
 		}
 		call := node.AsCallExpression()
 		callee := ast.SkipParentheses(call.Expression)
-		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "push" || !l.declaredByLibrary(l.checker.GetSymbolAtLocation(callee.Name())) || !l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
+		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "push" || !l.declaredByLibrary(l.checker.GetSymbolAtLocation(callee.Name())) || !l.isArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))) {
 			return
 		}
 		for _, argument := range call.Arguments.Nodes {
