@@ -42,6 +42,7 @@ var viewChecks = []viewReadExample{
 
 // viewNotYet read fields raw, and are NotYet where their operand may hold a viewed value.
 var viewNotYet = []viewReadExample{
+	{ir.BoundMethod{}, "reads its method through raw dispatch; its registered receiver read refuses viewed reach"},
 	{ir.Property{ViewReceiverTypeID: 2, Name: "text"}, "a field read through a receiver type no view checks it under (checkViewWidenedReads)"},
 	{ir.ObjectLiteral{Spread: ir.Read{}}, "copies its spread source's fields whole (checkViewCopies)"},
 	{ir.ObjectCall{Method: "assign"}, "copies each source's fields whole (checkViewCopies)"},
