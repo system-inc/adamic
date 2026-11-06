@@ -187,6 +187,22 @@ static void numbering_resume(adamic_generator *generator, adamic_value *yielded)
 }
 static const adamic_generator_code numbering = {"numbering", numbering_resume};
 
+/* One boolean, then done. */
+static void flagging_resume(adamic_generator *generator, adamic_value *yielded) {
+    switch (generator->state) {
+        case 0:
+            yielded->boolean = true;
+            generator->state = 1;
+            generator->status = adamic_generator_status_suspended;
+            return;
+        case 1:
+            adamic_generator_finish(generator);
+            return;
+    }
+    assert(!"unknown state");
+}
+static const adamic_generator_code flagging = {"flagging", flagging_resume};
+
 /* A hand-driven next()'s result as the emitter will read it, by its slots after #7nw4kgj: value in
  * slot 0, done in slot 1. A string value is printed borrowed, never released here. */
 static bool result_done(const adamic_object *result) {
@@ -378,6 +394,21 @@ int main(int argc, char **argv) {
                 show_keys(finished);
             }
             adamic_release(finished);
+        }
+        adamic_release(generator);
+    } else if (strcmp(mode, "next_done_boolean") == 0) {
+        /* P4's boolean row: a boolean generator stepped to done, then once more, its value read as
+         * the emitter reads boolean | undefined, by the slot's maybe-boolean byte, with its
+         * representation byte beside it. Present, it is the boolean under Boolean; done, it is
+         * undefined under MaybeBoolean, which the builder writes (#ak92fcp), never the absent
+         * maybe-number word, whose low byte reads true. */
+        adamic_generator *generator = adamic_generator_new(0, &flagging);
+        for (int step = 0; step < 3; step++) {
+            adamic_object *status = adamic_iterator_next(generator, adamic_ir_Boolean, hand_site);
+            adamic_maybe_boolean value = adamic_maybe_boolean_unpack(status->slots[0].maybe_boolean);
+            assert(result_done(status) == (step != 0));
+            printf("%s %d\n", !value.present ? "undefined" : value.boolean ? "true" : "false", adamic_object_field_types(status)[0]);
+            adamic_release(status);
         }
         adamic_release(generator);
     } else if (strcmp(mode, "next_collection") == 0) {
