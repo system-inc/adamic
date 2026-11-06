@@ -40,3 +40,19 @@ const typed: (a: number, b: number) => number = arrow;
 console.log(String(typed.bind(undefined, 6)(7)));
 const callbacks: { fn: (a: number, b: number) => number } = { fn: arrow };
 console.log(String(callbacks.fn.bind({ ignored: true }, 8)(9)));
+
+const absentProperty: { f?: () => number } = {};
+const otherReceiver = {};
+const absentPropertyBound = absentProperty.f?.bind(otherReceiver);
+console.log(typeof absentPropertyBound);
+const presentProperty: { f?: () => number } = { f: () => 42 };
+const presentPropertyBound = presentProperty.f?.bind(otherReceiver);
+console.log(typeof presentPropertyBound);
+if (presentPropertyBound !== undefined) console.log(String(presentPropertyBound()));
+function propertyFixed(): number { console.log("property fixed"); return 1; }
+const absentFixedProperty: { f?: (x: number) => number } = {};
+const absentFixedBound = absentFixedProperty.f?.bind(otherReceiver, propertyFixed());
+console.log(typeof absentFixedBound);
+const nullProperty: { f: ((x: number) => number) | null } = { f: null };
+const nullPropertyBound = nullProperty.f?.bind(otherReceiver, propertyFixed());
+console.log(typeof nullPropertyBound);
