@@ -54,7 +54,12 @@ func reflectGetFixture(t *testing.T, name string) string {
 // undefined on the JavaScript backend; keyed_tuple_slot boxing every slot by dynamic_slot, so
 // tuple_reads.a's entries pairs panic natively, and boxing a runtime pair by its kinds before its
 // bytes, so tuple_maybe_set.a's undefined reads as a number natively; the emitter's registration of
-// a Map's pair shape dropped, so tuple_collections.a's map spread panics natively.
+// a Map's pair shape dropped, so tuple_collections.a's map spread panics natively. #zhrjf2t's, a
+// matchAll iterator's: one closure's length changed in dynamic_keyed_names.h, so matchall_reads.a's
+// map has the wrong length natively; the iterator's input slot handed out, as before its stop, so
+// matchall_reads.a's input is a string natively; a closure made for each read in place of the
+// immortal one, so its next read twice isn't itself natively; the helper's iterator answer dropped,
+// and its RuntimeValue stop put back natively, so matchall_reads.a stops at next on each.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -80,6 +85,9 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"tuple_maybe_set.a", "pair 0 0 undefined\npair 0 1 undefined\npair 0 length number 2\npair 1 0 number 4\npair 1 1 number 4\npair 1 length number 2\n"},
 		{"stop_tuple.a", "before\nnumber\n"},
 		{"stop_tuple_indices.a", "before\nnumber\n"},
+		{"matchall_reads.a", matchAllReadsAnswers},
+		{"stop_host_matchall_input.a", "iterator\nundefined\n"},
+		{"stop_host_matchall_next.a", "iterator\nfunction\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -268,6 +276,49 @@ indices map is an array's: true
 indices missing undefined
 `
 
+// matchAllReadsAnswers is what matchall_reads.a prints on Node.
+const matchAllReadsAnswers = `next: function 0
+constructor: function 0
+reduce: function 1
+toArray: function 0
+forEach: function 1
+some: function 1
+every: function 1
+find: function 1
+map: function 1
+filter: function 1
+take: function 1
+drop: function 1
+flatMap: function 1
+toString: function 0
+toLocaleString: function 0
+valueOf: function 0
+hasOwnProperty: function 1
+isPrototypeOf: function 1
+propertyIsEnumerable: function 1
+__defineGetter__: function 2
+__defineSetter__: function 2
+__lookupGetter__: function 1
+__lookupSetter__: function 1
+input: undefined
+regex: undefined
+done: undefined
+lastIndex: undefined
+missing: undefined
+next from two iterators: true
+next read twice: true
+next is map: false
+constructor from two iterators: true
+constructor is an object's: false
+map is an array's: false
+toString is an object's: true
+hasOwnProperty is an object's: true
+next match: a1 at 0
+match a2 at 3 digit 2
+match a4 at 9 digit 4
+done: true
+`
+
 // tupleCollectionsAnswers is what tuple_collections.a prints on Node.
 const tupleCollectionsAnswers = `map spread 0 string on
 map spread 1 boolean true
@@ -368,8 +419,6 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_host_stats_method.a", "directory\n", "RuntimeValue", "isFile", "directory\nfunction\n"},
 	{"stop_host_stats_field.a", "directory\n", "RuntimeValue", "dev", "directory\nnumber\n"},
 	{"stop_host_stats_size.a", "directory\n", "RuntimeValue", "size", "directory\nnumber\n"},
-	{"stop_host_matchall_input.a", "iterator\n", "RuntimeValue", "input", "iterator\nundefined\n"},
-	{"stop_host_matchall_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
 	{"stop_host_memory_heap.a", "memory number\n", "RuntimeValue", "heapUsed", "memory number\nnumber\n"},
@@ -391,6 +440,8 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
+	{"stop_function_length.a", "map function\n", "Function", "length", "map function\nnumber\n"},
+	{"stop_function_length_iterator.a", "next function\n", "Function", "length", "next function\nnumber\n"},
 }
 
 // reflectGetStop is the run a stop fixture makes on each backend: what it printed, and the stop's
@@ -434,7 +485,9 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
 // (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
 // adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
-// native's slots.
+// native's slots. The stop_function_length rows read a function the read handed out by a key in turn:
+// natively a closure, on the JavaScript backend Node's own function. Their mutant is the helper's
+// typeof function test dropped, so that backend stops in the runtime value's words.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

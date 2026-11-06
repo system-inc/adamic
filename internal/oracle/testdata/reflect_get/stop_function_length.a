@@ -1,0 +1,8 @@
+// A function a run-time key read hands out, read by a key in turn, stops on both backends alike in
+// the Function form: natively an array's map is a closure, and on the JavaScript backend it is Node's
+// own function, which stopped as a runtime value before. Node prints map function and then number.
+import { propertyOf } from './hostErrors.ts';
+
+const map = propertyOf([1], 'map');
+console.log(`map ${typeof map}`);
+console.log(typeof propertyOf(map, 'length'));

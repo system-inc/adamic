@@ -36,6 +36,8 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		builder.WriteString("const " + list.name + " = new Set([" + strings.Join(quoted, ", ") + "]);\n")
 	}
 	builder.WriteString("const adamicDynamicStop = (stop, key) => panic(`${adamicDynamicKeyedStops[stop]} (reading '${key}')`);\n")
+	// %RegExpStringIteratorPrototype%, held once: a matchAll iterator on this backend is Node's own.
+	builder.WriteString("const adamicRegExpStringIteratorPrototype = Object.getPrototypeOf(''.matchAll(/(?:)/g));\n")
 	classes := len(program.Classes) > 0
 	if classes {
 		tables := []string{}
@@ -80,11 +82,21 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		// A class's static side is a function on this backend, a class object natively.
 		builder.WriteString("\tif (id !== undefined && adamicClasses[id - 1].static) return adamicDynamicStop('StaticClass', key);\n")
 	}
+	// A program's function is an AdamicClosure, which stopped above, so a function here is Node's own,
+	// one this helper handed out (an array's map, a matchAll iterator's next, Object.prototype's
+	// toString), where native hands out an immortal closure: it stops in the Function form, as the
+	// closure does natively, never as a runtime value. A program class's static side is a function on
+	// this backend too, so its own stop comes first.
+	builder.WriteString("\tif (typeof value === 'function') return adamicDynamicStop('Function', key);\n")
 	builder.WriteString("\tif (typeof value !== 'object' || value instanceof Promise) return adamicDynamicStop('RuntimeValue', key);\n")
 	builder.WriteString("\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n")
 	builder.WriteString("\tif (key === '__proto__') return adamicDynamicStop('Proto', key);\n")
 	builder.WriteString("\tconst error = value instanceof Error;\n")
 	builder.WriteString("\tif (error && adamicDynamicKeyedErrorNames.has(key)) return adamicDynamicStop('ErrorProperty', key);\n")
+	// A matchAll iterator answers as Node's does (#zhrjf2t), Node's own member or undefined, before the
+	// host test, as native's keyed_regexp_string_iterator does: native knows it by its shape
+	// (adamic_regex_iterator_is), this backend by its prototype.
+	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicRegExpStringIteratorPrototype) return value[key];\n")
 	// host is the one predicate for a value whose prototype isn't Object's, a program class's instance
 	// aside (#ey7aysy, Adamic's ruling on #0sps03r), native's host_object (union.c) on this backend's
 	// objects: a Stats, a Dirent, an AdamicIterator, a match's groups object, process.memoryUsage()'s
