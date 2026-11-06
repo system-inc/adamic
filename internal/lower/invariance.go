@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -477,6 +479,14 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	case node.Kind == ast.KindShorthandPropertyAssignment:
 		// { pets } is { pets: pets }: the variable seen as the literal's property.
 		literal := l.slotType(node.Parent)
+		if os.Getenv("ADAMIC_SHORTHAND_PROBE") != "" {
+			text := "<nil>"
+			if literal != nil {
+				text = l.checker.TypeToString(literal)
+			}
+			has := literal != nil && l.checker.GetPropertyOfType(literal, node.Name().Text()) != nil
+			fmt.Fprintf(os.Stderr, "probe shorthand %s: slot %s, property found %t, own %s\n", l.program.Where(node), text, has, l.checker.TypeToString(l.checker.GetTypeAtLocation(node.Name())))
+		}
 		if literal == nil {
 			return nil
 		}
@@ -553,6 +563,16 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 				}
 			}
 		}
+	}
+	if os.Getenv("ADAMIC_SHORTHAND_PROBE") != "" && (node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindShorthandPropertyAssignment || node.Kind == ast.KindIdentifier) {
+		ownText, contextualText := "<nil>", "<nil>"
+		if own != nil {
+			ownText = l.checker.TypeToString(own)
+		}
+		if contextual != nil {
+			contextualText = l.checker.TypeToString(contextual)
+		}
+		fmt.Fprintf(os.Stderr, "probe judged %s kind %v: own %s, contextual %s, found %t\n", l.program.Where(node), node.Kind, ownText, contextualText, found != nil)
 	}
 	if found == nil {
 		return nil
