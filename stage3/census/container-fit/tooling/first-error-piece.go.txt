@@ -44,10 +44,10 @@ func anyMembersCensusSelected(file, unit string) bool {
  root := strings.TrimSuffix(os.Getenv("ANY_MEMBERS_CENSUS_ROOT"), "/") + "/"
  file, unit = strings.TrimPrefix(file, root), strings.TrimPrefix(unit, root)
  selected, found := anyMembersCensusFiles[file]
- if found && unit != "" && (selected.AllUnits || anyMembersCensusUnits[file][unit]) {
+ if found && (unit == "" || selected.AllUnits || anyMembersCensusUnits[file][unit]) {
   if path := os.Getenv("ADAMIC_FIT_PAIRS_LOG"); path != "" {
    if f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
-    f.WriteString("unit "+unit+"\n"); f.Close()
+    if unit == "" { f.WriteString("scan "+file+"\n") } else { f.WriteString("unit "+unit+"\n") }; f.Close()
    }
   }
  }

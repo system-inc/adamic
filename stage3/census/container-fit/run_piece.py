@@ -14,7 +14,7 @@ if a.label=='log':env['ADAMIC_FIT_PAIRS_LOG']=str(D/'pairs.log')
 cmd=[str(B/a.label/('latent' if a.mode=='latent' else 'census')),str(T/'src/compiler'),str(D/'records.jsonl')]
 binary_sha=hashlib.sha256(pathlib.Path(cmd[0]).read_bytes()).hexdigest()
 assert binary_sha==json.loads((O/'evidence/latent-build'/(a.label+'.json')).read_text())['selector_sha256']
-start=time.monotonic();dump('started.json',dict(binary_sha256=binary_sha,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=cmd,environment={k:env[k] for k in env if k.startswith(('LATENT_','ANY_MEMBERS_','ADAMIC_FIT_'))}))
+start=time.monotonic();dump('started.json',dict(hostname=os.uname().nodename,binary_sha256=binary_sha,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=cmd,environment={k:env[k] for k in env if k.startswith(('LATENT_','ANY_MEMBERS_','ADAMIC_FIT_'))}))
 with (D/'process.log').open('w') as log:
  child=subprocess.Popen(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
  try:

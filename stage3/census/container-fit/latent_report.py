@@ -92,6 +92,7 @@ for pid in plan['pieces']:
  with gzip.open(E/'latent/log'/pid/'pairs.log.gz','rt') as f:
   for line_number,line in enumerate(f,1):
    line=line.rstrip('\n')
+   if line.startswith('scan '):owner=None;continue
    if line.startswith('unit '):owner=line[5:];continue
    m=pattern.fullmatch(line);assert m,line
    j,p,k=map(int,m.groups()[:3]);walk_count+=1;judged.append(j);past.append(p)
