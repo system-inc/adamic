@@ -113,19 +113,18 @@ static _Noreturn void hand_next_bug(const char *site, const char *what) {
 
 /* A step that left no throw, as a fresh result built by the one builder collection_next shares
  * (map_set.c), so a result's shape, slots and representation bytes never differ by origin. The
- * yielded value is the caller's (generator.h) and is moved in, with no retain. The element goes in
- * as collection_next passes its own: a number packed as number | undefined, and at done the absent
- * word for a scalar or NULL for a reference, never the done frame's zero, which is no value.
+ * yielded value is the caller's (generator.h) and is moved in, with no retain, a number packed as
+ * number | undefined, as collection_next packs its own. The tag is the value's representation byte
+ * as a present step holds it: a number's is MaybeNumber, a boolean's Boolean, a reference's its type.
+ * At done nothing is computed here: the element is unread, and the builder writes the absent form
+ * itself, `NULL`, the absent maybe-number or the absent maybe-boolean with its MaybeBoolean byte, as
+ * its contract says (Memory's ruling on #ak92fcp), so the done frame's zero is never the value.
  * Whether the step was present is read from the frame after the step, never before it: the frame is
  * done exactly when the step that just ran completed it (Memory's should on #qk8rztp). */
 static adamic_object *generator_result(const adamic_generator *generator, adamic_field_kind kind, enum adamic_ir_type element_type, adamic_value yielded) {
     bool present = !adamic_generator_done(generator);
-    unsigned char tag = kind == adamic_field_reference ? (unsigned char)element_type : kind == adamic_field_boolean && present ? adamic_ir_Boolean : adamic_ir_MaybeNumber;
-    if (!present && kind == adamic_field_reference) {
-        yielded.reference = NULL;
-    } else if (!present) {
-        yielded.number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
-    } else if (kind == adamic_field_number) {
+    unsigned char tag = kind == adamic_field_reference ? (unsigned char)element_type : kind == adamic_field_number ? adamic_ir_MaybeNumber : adamic_ir_Boolean;
+    if (present && kind == adamic_field_number) {
         yielded.number = adamic_maybe_number_pack((adamic_maybe_number){true, yielded.number});
     }
     return adamic_iterator_result(kind, present, yielded, tag);
