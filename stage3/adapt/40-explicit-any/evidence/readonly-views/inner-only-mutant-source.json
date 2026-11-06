@@ -1,0 +1,9 @@
+{
+  "changed_files": [
+    "src/compiler/debug.ts"
+  ],
+  "old": "Readonly<Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>>",
+  "new": "Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>",
+  "before_sha256": "1259b2a32b245a29d4ddb47c5c1d4a8a2e6fc46c98c8d94d267a418228b41985",
+  "mutant_sha256": "6151f5d635899996820ecbc3554f5e7bac40b728e0031f1ebc76b8ce7b0850d0"
+}

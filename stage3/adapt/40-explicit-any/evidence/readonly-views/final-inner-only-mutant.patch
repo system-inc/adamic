@@ -1,0 +1,11 @@
+--- final/debug.ts
++++ inner-only-mutant/debug.ts
+@@ -421,7 +421,7 @@
+     }
+ 
+     export function formatSyntaxKind(kind: SyntaxKind | undefined): string {
+-        return formatEnum(kind, (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string | number>>>>).SyntaxKind, /*isFlags*/ false);
++        return formatEnum(kind, (ts as Record<"SyntaxKind", Readonly<Record<string, string | number>>>).SyntaxKind, /*isFlags*/ false);
+     }
+ 
+     export function formatSnippetKind(kind: SnippetKind | undefined): string {

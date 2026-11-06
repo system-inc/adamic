@@ -1,0 +1,306 @@
+[
+  {
+    "id": 72,
+    "file": "src/compiler/debug.ts",
+    "key": "SyntaxKind",
+    "original_line": 445,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:424:34",
+      "owner": "formatSyntaxKind",
+      "type": "Record<\"SyntaxKind\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:424:34",
+      "owner": "formatSyntaxKind",
+      "type": "Readonly<Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 73,
+    "file": "src/compiler/debug.ts",
+    "key": "SnippetKind",
+    "original_line": 449,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:428:34",
+      "owner": "formatSnippetKind",
+      "type": "Record<\"SnippetKind\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:428:34",
+      "owner": "formatSnippetKind",
+      "type": "Readonly<Record<\"SnippetKind\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 74,
+    "file": "src/compiler/debug.ts",
+    "key": "ScriptKind",
+    "original_line": 453,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:432:34",
+      "owner": "formatScriptKind",
+      "type": "Record<\"ScriptKind\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:432:34",
+      "owner": "formatScriptKind",
+      "type": "Readonly<Record<\"ScriptKind\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 75,
+    "file": "src/compiler/debug.ts",
+    "key": "NodeFlags",
+    "original_line": 457,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:436:35",
+      "owner": "formatNodeFlags",
+      "type": "Record<\"NodeFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:436:35",
+      "owner": "formatNodeFlags",
+      "type": "Readonly<Record<\"NodeFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 76,
+    "file": "src/compiler/debug.ts",
+    "key": "NodeCheckFlags",
+    "original_line": 461,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:440:35",
+      "owner": "formatNodeCheckFlags",
+      "type": "Record<\"NodeCheckFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:440:35",
+      "owner": "formatNodeCheckFlags",
+      "type": "Readonly<Record<\"NodeCheckFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 77,
+    "file": "src/compiler/debug.ts",
+    "key": "ModifierFlags",
+    "original_line": 465,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:444:35",
+      "owner": "formatModifierFlags",
+      "type": "Record<\"ModifierFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:444:35",
+      "owner": "formatModifierFlags",
+      "type": "Readonly<Record<\"ModifierFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 78,
+    "file": "src/compiler/debug.ts",
+    "key": "TransformFlags",
+    "original_line": 469,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:448:35",
+      "owner": "formatTransformFlags",
+      "type": "Record<\"TransformFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:448:35",
+      "owner": "formatTransformFlags",
+      "type": "Readonly<Record<\"TransformFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 79,
+    "file": "src/compiler/debug.ts",
+    "key": "EmitFlags",
+    "original_line": 473,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:452:35",
+      "owner": "formatEmitFlags",
+      "type": "Record<\"EmitFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:452:35",
+      "owner": "formatEmitFlags",
+      "type": "Readonly<Record<\"EmitFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 80,
+    "file": "src/compiler/debug.ts",
+    "key": "SymbolFlags",
+    "original_line": 477,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:456:35",
+      "owner": "formatSymbolFlags",
+      "type": "Record<\"SymbolFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:456:35",
+      "owner": "formatSymbolFlags",
+      "type": "Readonly<Record<\"SymbolFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 81,
+    "file": "src/compiler/debug.ts",
+    "key": "TypeFlags",
+    "original_line": 481,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:460:35",
+      "owner": "formatTypeFlags",
+      "type": "Record<\"TypeFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:460:35",
+      "owner": "formatTypeFlags",
+      "type": "Readonly<Record<\"TypeFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 82,
+    "file": "src/compiler/debug.ts",
+    "key": "SignatureFlags",
+    "original_line": 485,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:464:35",
+      "owner": "formatSignatureFlags",
+      "type": "Record<\"SignatureFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:464:35",
+      "owner": "formatSignatureFlags",
+      "type": "Readonly<Record<\"SignatureFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 83,
+    "file": "src/compiler/debug.ts",
+    "key": "ObjectFlags",
+    "original_line": 489,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:468:35",
+      "owner": "formatObjectFlags",
+      "type": "Record<\"ObjectFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:468:35",
+      "owner": "formatObjectFlags",
+      "type": "Readonly<Record<\"ObjectFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 84,
+    "file": "src/compiler/debug.ts",
+    "key": "FlowFlags",
+    "original_line": 493,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:472:35",
+      "owner": "formatFlowFlags",
+      "type": "Record<\"FlowFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:472:35",
+      "owner": "formatFlowFlags",
+      "type": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 85,
+    "file": "src/compiler/debug.ts",
+    "key": "RelationComparisonResult",
+    "original_line": 497,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:476:36",
+      "owner": "formatRelationComparisonResult",
+      "type": "Record<\"RelationComparisonResult\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:476:36",
+      "owner": "formatRelationComparisonResult",
+      "type": "Readonly<Record<\"RelationComparisonResult\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 86,
+    "file": "src/compiler/debug.ts",
+    "key": "CheckMode",
+    "original_line": 501,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:480:34",
+      "owner": "formatCheckMode",
+      "type": "Record<\"CheckMode\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:480:34",
+      "owner": "formatCheckMode",
+      "type": "Readonly<Record<\"CheckMode\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 87,
+    "file": "src/compiler/debug.ts",
+    "key": "SignatureCheckMode",
+    "original_line": 505,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:484:34",
+      "owner": "formatSignatureCheckMode",
+      "type": "Record<\"SignatureCheckMode\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:484:34",
+      "owner": "formatSignatureCheckMode",
+      "type": "Readonly<Record<\"SignatureCheckMode\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 88,
+    "file": "src/compiler/debug.ts",
+    "key": "TypeFacts",
+    "original_line": 509,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:488:35",
+      "owner": "formatTypeFacts",
+      "type": "Record<\"TypeFacts\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:488:35",
+      "owner": "formatTypeFacts",
+      "type": "Readonly<Record<\"TypeFacts\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 89,
+    "file": "src/compiler/debug.ts",
+    "key": "FlowFlags",
+    "original_line": 540,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/debug.ts:519:56",
+      "owner": "attachFlowNodeDebugInfoWorker",
+      "type": "Record<\"FlowFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/debug.ts:519:56",
+      "owner": "attachFlowNodeDebugInfoWorker",
+      "type": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  },
+  {
+    "id": 91,
+    "file": "src/compiler/emitter.ts",
+    "key": "GeneratedIdentifierFlags",
+    "original_line": 5790,
+    "before": {
+      "where": "/workspace/scratch/ro-before/src/compiler/emitter.ts:5790:141",
+      "owner": "makeName",
+      "type": "Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>"
+    },
+    "after": {
+      "where": "/workspace/scratch/ro-final/src/compiler/emitter.ts:5790:141",
+      "owner": "makeName",
+      "type": "Readonly<Record<\"GeneratedIdentifierFlags\", Readonly<Record<string, string | number>>>>"
+    }
+  }
+]
