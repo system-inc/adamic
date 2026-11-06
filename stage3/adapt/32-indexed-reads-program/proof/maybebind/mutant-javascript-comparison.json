@@ -1,0 +1,93 @@
+{
+  "pass": false,
+  "files": [
+    {
+      "file": "_tsc.js",
+      "byteIdentical": false,
+      "renames": [],
+      "expectedSites": 12,
+      "boundSites": 11,
+      "remainingOriginal": [
+        {
+          "owner": "createCompilerHostFromProgramHost",
+          "receiver": "host",
+          "member": "getDefaultLibLocation",
+          "form": "original"
+        }
+      ],
+      "generatedTemps": 11,
+      "inventoryEqual": true,
+      "normalizedEqual": false,
+      "pass": false,
+      "beforeSha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff",
+      "afterSha256": "e68bf3f985331e3a7185f52d5040aba0bb1a8e0a3d6cc4f6c5bf777d82621431"
+    },
+    {
+      "file": "_tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsc.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "typescript.js",
+      "byteIdentical": false,
+      "renames": [],
+      "expectedSites": 12,
+      "boundSites": 11,
+      "remainingOriginal": [
+        {
+          "owner": "createCompilerHostFromProgramHost",
+          "receiver": "host",
+          "member": "getDefaultLibLocation",
+          "form": "original"
+        }
+      ],
+      "generatedTemps": 11,
+      "inventoryEqual": true,
+      "normalizedEqual": false,
+      "pass": false,
+      "beforeSha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e",
+      "afterSha256": "d1eee16129592a8d707980a0e82c2d9154882491e5a05e746334ff39469d90b0"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "watchGuard.js",
+      "byteIdentical": true,
+      "pass": true
+    }
+  ],
+  "unexpectedSites": [
+    {
+      "file": "watch.ts",
+      "line": 761,
+      "column": 32,
+      "owner": "createCompilerHostFromProgramHost",
+      "receiver": "host",
+      "member": "getDefaultLibLocation",
+      "form": "original"
+    }
+  ]
+}

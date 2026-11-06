@@ -1,0 +1,27 @@
+{
+  "base": "322f80565edaa978d928ca559803c578ed67c105",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "branch99x": "a6d5f494e46262f805e5be76a4d7c108fe6a3a6c",
+  "adapterHashes": {
+    "adapt.cjs": "a8fdfe0d558ce56a3f52675bde79e846d25f44095be7872917914d757267e4c5",
+    "maybebind.cjs": "eeb3fd124b539a4e529152f9cd73a531ab95db7cc8446d38a6e79af0b8e3cfb5",
+    "maybebind-sites.json": "d081657c1eba149844410481daca5ed596d630c845d806e75a8c774e8e46dd0d",
+    "public-host-guards.cjs": "4e7e66f2d89f90f3f73dda4a29801b581f8ad1041ac18a4d8b3070f98807b9fb",
+    "public-host-guards.json": "d15d2f37a42a36ac215fb186abb3a79115451749f7a6bd2346b8fe53b165d54e"
+  },
+  "ordinaryCompilerSha256": "77431ef998c9b64eadd9c8e46e63bfdfa474f332a54a250edc093abaaf51db35",
+  "latentCompiler": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/32-latent-build/overlay.json",
+      "-o",
+      "/workspace/scratch/32-latent-build/latent",
+      "./stage3/census/latent/tool"
+    ],
+    "compiler_commit": "322f80565edaa978d928ca559803c578ed67c105",
+    "binary_sha256": "7db83476ddb4fb4cdf931b8be5cfc4ef2214ff62d3ccdd5e935803f8f200e937",
+    "selector_sha256": "88d06007e00e8199f9b57cf94ead5d3e5a7d1e6a9b8d0d2dc0d02fed35dfc377"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "status": "stopped",
+  "reason": "Unchanged 99x requires all eighteen handed-off maybeBind calls, including these twelve, to remain. It refuses the after tree before writing. Updating 99x is outside the directory allowed by this task.",
+  "checks": {
+    "1": {
+      "status": "pass",
+      "before_exit": 0,
+      "after_exit": 0,
+      "before_tree": "/workspace/32-before-final",
+      "after_tree": "/workspace/32-after-final",
+      "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product TREE",
+      "invalid_attempts": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies."
+    },
+    "2": {
+      "status": "pass",
+      "adapters": 81,
+      "differences": 0,
+      "adapter32_before": "handoff producer runtime drift: appendSourceMap",
+      "adapter32_after": "handoff producer runtime drift: appendSourceMap",
+      "continued_after_refusals": true
+    },
+    "3": {
+      "status": "pass",
+      "roots": 79,
+      "exit": 0,
+      "diagnostics": 0
+    },
+    "4": {
+      "status": "pass",
+      "javascriptFiles": 9,
+      "byteIdentical": 7,
+      "changedBundles": {
+        "_tsc.js": 12,
+        "typescript.js": 12
+      },
+      "renames": [],
+      "publicDeclarationsByteIdentical": true
+    },
+    "5": {
+      "status": "pass",
+      "halfOwnerRefusesWithoutWrites": true,
+      "foreignSymbolRefusesWithoutWrites": true,
+      "restoredSite": "watch.ts:761:32 createCompilerHostFromProgramHost host.getDefaultLibLocation",
+      "reportedIn": [
+        "_tsc.js",
+        "typescript.js"
+      ]
+    },
+    "6": {
+      "status": "not-run",
+      "reason": "Stopped under the user stopping rule after proving the 99x composition blocker. Oracle preparation was terminated; no whole lane or shard result is claimed.",
+      "shardsRun": 0
+    },
+    "7": {
+      "status": "blocked",
+      "measured": [
+        "main",
+        "main-plus-32",
+        "main-plus-99x"
+      ],
+      "blocked": "main-plus-32-plus-99x",
+      "refusal": "handed-off maybeBind site inventory drift",
+      "details": "latent-summary.json"
+    }
+  }
+}

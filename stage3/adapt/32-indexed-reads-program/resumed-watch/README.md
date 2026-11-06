@@ -12,8 +12,9 @@ Watch is **2 -> 0**, whole-tree findings **321 -> 314**, and whole original file
 **53 -> 54 of 78**. No finding is added elsewhere. The three preceding handoff
 closures remain zero: parser.ts, factory/emitNode.ts and transformers/utilities.ts.
 
-The existing returned host objects explicitly store undefined via maybeBind,
-whose body is fn?.bind(obj). The owning host declarations therefore need truthful
+The returned host objects explicitly store the bound method or undefined via
+X.m?.bind(X), folded into 32 under task kpp0f8s. The previous maybeBind
+helper has body fn?.bind(obj), with the same values at these slots. The owning host declarations therefore need truthful
 undefined unions. public-host-sites.json lists exactly 15 declarations: 11
 public and four internal. Method type extraction retains the original signature
 and its bivariant method parameters while allowing an explicitly absent value.

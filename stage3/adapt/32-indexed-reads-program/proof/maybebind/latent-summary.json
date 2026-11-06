@@ -1,0 +1,178 @@
+[
+  {
+    "configuration": "main",
+    "units": [
+      {
+        "name": "performBuild",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:812:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfConfigFile",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1011:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfFilesAndCompilerOptions",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1034:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      }
+    ],
+    "exit": 0
+  },
+  {
+    "configuration": "main-plus-32",
+    "units": [
+      {
+        "name": "performBuild",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:812:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/watch.ts:856:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/watch.ts:856:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfConfigFile",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1011:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/watch.ts:856:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/watch.ts:856:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfFilesAndCompilerOptions",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1034:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/watch.ts:856:19",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/watch.ts:856:19: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      }
+    ],
+    "exit": 0
+  },
+  {
+    "configuration": "main-plus-99x",
+    "units": [
+      {
+        "name": "performBuild",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:812:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfConfigFile",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1011:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      },
+      {
+        "name": "createWatchOfFilesAndCompilerOptions",
+        "status": "attempted",
+        "stops": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "src/compiler/executeCommandLine.ts:1034:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "src/compiler/core.ts:1533:12",
+            "reason": "a call through ?. (an optional call)",
+            "text": "src/compiler/core.ts:1533:12: stage 0 can't lower a call through ?. (an optional call) yet"
+          }
+        ]
+      }
+    ],
+    "exit": 0
+  },
+  {
+    "configuration": "main-plus-32-plus-99x",
+    "status": "blocked",
+    "reason": "unchanged 99x refuses handed-off maybeBind site inventory drift after the twelve rewrites"
+  }
+]
