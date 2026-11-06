@@ -1,0 +1,56 @@
+[
+  {
+    "name": "core.ts adapted, performanceCore.ts original",
+    "exit": 1,
+    "refusal": "half-adapted tree: core.ts adapted, performanceCore.ts original",
+    "unchanged": true
+  },
+  {
+    "name": "core.ts original, performanceCore.ts adapted",
+    "exit": 1,
+    "refusal": "half-adapted tree: core.ts original, performanceCore.ts adapted",
+    "unchanged": true
+  },
+  {
+    "name": "the require test removed, its declaration kept",
+    "exit": 1,
+    "refusal": "half-adapted core.ts: isNodeLikeSystem body adapted, require declaration original",
+    "unchanged": true
+  },
+  {
+    "name": "the import added, the rest original",
+    "exit": 1,
+    "refusal": "half-adapted performanceCore.ts: import adapted, binding original, require declaration original",
+    "unchanged": true
+  },
+  {
+    "name": "adapted, 65's declaration kept",
+    "exit": 1,
+    "refusal": "half-adapted performanceCore.ts: import adapted, binding adapted, require declaration original",
+    "unchanged": true
+  },
+  {
+    "name": "99q's before text, `(process as any).browser`",
+    "exit": 1,
+    "refusal": "uninventoried isNodeLikeSystem body: {\r\n    // This is defined here rather than in sys.ts to prevent a cycle from its\r\n    // use in performanceCore.ts.\r\n    return typeof process !== \"undefined\"\r\n        && !!process.nextTick\r\n        && !(process as any).browser\r\n        && typeof require !== \"undefined\";\r\n}\n\n0 !== 1",
+    "unchanged": true
+  },
+  {
+    "name": "original, with require read in another function",
+    "exit": 1,
+    "refusal": "core.ts names require outside the reviewed sites\n\n3 !== 2",
+    "unchanged": true
+  },
+  {
+    "name": "original, perfHooks already named",
+    "exit": 1,
+    "refusal": "performanceCore.ts names perfHooks outside the reviewed sites\n\n1 !== 0",
+    "unchanged": true
+  },
+  {
+    "name": "adapted, the binding outside its try block",
+    "exit": 1,
+    "refusal": "the perf_hooks binding left its try block",
+    "unchanged": true
+  }
+]

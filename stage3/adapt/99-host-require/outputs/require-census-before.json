@@ -1,0 +1,399 @@
+{
+  "files": 81,
+  "directories": [
+    "src/compiler",
+    "src/tsc"
+  ],
+  "rows": [
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "line": 35,
+      "kind": "call require(\"perf_hooks\") in tryGetPerformance",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "const { performance } = require(\"perf_hooks\") as { performance?: Performance | undefined };"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 64,
+      "kind": "call require(\"fs\") in startTracing",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "fs = require(\"fs\");"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 3669,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* - import x = require(\"mod\");"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "line": 773,
+      "kind": "string",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "_0_can_only_be_imported_by_using_import_1_require_2_or_a_default_import: diag(2616, DiagnosticCategory.Error, \"_0_can_only_be_imported_by_using_import_1_require"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "line": 774,
+      "kind": "string",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "_0_can_only_be_imported_by_using_import_1_require_2_or_by_turning_on_the_esModuleInterop_flag_and_using_a_default_import: diag(2617, DiagnosticCategory.Error, \""
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3831,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* exactly one argument (of the form 'require(\"name\")')."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3868,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* Like {@link isVariableDeclarationInitializedToRequire} but allows things like `require(\"...\").foo.bar` or `require(\"...\")[\"baz\"]`."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3868,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* Like {@link isVariableDeclarationInitializedToRequire} but allows things like `require(\"...\").foo.bar` or `require(\"...\")[\"baz\"]`."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12092,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// require('module').builtinModules.filter(x => !x.match(/^(?:_|node:)/))"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12153,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// require('module').builtinModules.filter(x => x.startsWith('node:'))"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 744,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// When we emit to a non-ES module, generate a synthetic `import tslib = require(\"tslib\")` to be further transformed."
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5935,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "//      var foo3 = require(\"subfolder"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1673,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* No way to do this with `require()`: https://github.com/nodejs/node/issues/5963"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3875,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// const dep_1 = __importDefault(require(\"./dep.mjs\")); // wraps like { default: require(\"./dep.mjs\") }"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3875,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// const dep_1 = __importDefault(require(\"./dep.mjs\")); // wraps like { default: require(\"./dep.mjs\") }"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3876,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// dep_1.default; // require(\"./dep.mjs\") -> the `module.exports` export value"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3880,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// const dep_1 = require(\"./dep.mjs\"); // the `module.exports` export value (could be primitive)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10195,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// import Foo_1 = require(\"./exporter\");"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10201,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// This is needed because in JS, statements like `const x = require(\"./f\")` support both type and value lookup, even if they're"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10417,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// const { SomeClass } = require('./lib');"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10454,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// commonjs require: const x = require('y')"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10456,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// const x = require('y').z"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10457,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "const initializer = (node as VariableDeclaration).initializer! as PropertyAccessExpression; // require('y').z"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10460,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// import _x = require('y');"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10461,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "context.approximateLength += 22 + specifier.length + idText(uniqueName).length; // `import uniqueName = require(\"specifier\");`"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10493,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// an external `import localName = require(\"whatever\")`"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48285,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// import a = e.x; in module augmentation is ok, but not import a = require('fs)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50296,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// 1). import x = require(\"./mo/*gotToDefinitionHere*/d\")"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 212,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// import x = require(\"mod\")"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1243,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "//          ? __resolved.then(function () { return require(x); }) /*CommonJs Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1244,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "//          : new Promise(function (_a, _b) { require([x], _a, _b); }); /*Amd Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1277,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "//     new Promise(function (_a, _b) { require([x], _a, _b); }); /*Amd Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1335,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// Promise.resolve(`${x}`).then((s) => require(s)) /*CommonJs Require*/"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1339,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "// Otherwise, we inline it in require() so that it's statically analyzable"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 1534,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* Creates a `require()` call to import an external module."
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 203,
+      "kind": "comment",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "* Creates a `require()` call to import an external module."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1591,
+      "kind": "call require(\"source-map-support\") in tryEnableSourceMapsForHost < getNodeSystem",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "require(\"source-map-support\").install();"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1613,
+      "kind": "call require(modulePath) in getNodeSystem",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "return { module: require(modulePath), modulePath, error: undefined };"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1644,
+      "kind": "call require(\"inspector\") in enableCPUProfiler < getNodeSystem",
+      "reachedFrom": [
+        "src/compiler/sys.ts",
+        "src/tsc/tsc.ts"
+      ],
+      "text": "const inspector: typeof import(\"inspector\") = require(\"inspector\");"
+    }
+  ]
+}

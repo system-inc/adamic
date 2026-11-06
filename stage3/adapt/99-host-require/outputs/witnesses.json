@@ -1,0 +1,105 @@
+{
+  "node": "v24.21.0",
+  "typescript": "6.0.3",
+  "mutant": false,
+  "cases": 6,
+  "failed": [],
+  "moved": [
+    "ES module, Node",
+    "performanceCore, ES module",
+    "src/compiler, ES module"
+  ],
+  "results": [
+    {
+      "row": "ES module, Node",
+      "original": {
+        "isNodeLikeSystem": false,
+        "require": "undefined"
+      },
+      "adapted": {
+        "isNodeLikeSystem": true,
+        "require": "undefined"
+      },
+      "asRuled": true
+    },
+    {
+      "row": "ES module, process.browser set",
+      "original": {
+        "isNodeLikeSystem": false,
+        "require": "undefined"
+      },
+      "adapted": {
+        "isNodeLikeSystem": false,
+        "require": "undefined"
+      },
+      "asRuled": true
+    },
+    {
+      "row": "CommonJS, Node",
+      "original": {
+        "isNodeLikeSystem": true,
+        "require": "function"
+      },
+      "adapted": {
+        "isNodeLikeSystem": true,
+        "require": "function"
+      },
+      "asRuled": true
+    },
+    {
+      "row": "performanceCore, ES module",
+      "original": {
+        "hooks": true,
+        "shouldWriteNativeEvents": true,
+        "performance": "node:perf_hooks performance",
+        "performanceTime": true,
+        "timestamp": true,
+        "path": "the browser global"
+      },
+      "adapted": {
+        "hooks": true,
+        "shouldWriteNativeEvents": false,
+        "performance": "node:perf_hooks performance",
+        "performanceTime": true,
+        "timestamp": true,
+        "path": "node:perf_hooks"
+      },
+      "asRuled": true
+    },
+    {
+      "row": "performanceCore, CommonJS",
+      "original": {
+        "hooks": true,
+        "shouldWriteNativeEvents": false,
+        "performance": "node:perf_hooks performance",
+        "performanceTime": true,
+        "timestamp": true,
+        "path": "node:perf_hooks"
+      },
+      "adapted": {
+        "hooks": true,
+        "shouldWriteNativeEvents": false,
+        "performance": "node:perf_hooks performance",
+        "performanceTime": true,
+        "timestamp": true,
+        "path": "node:perf_hooks"
+      },
+      "asRuled": true
+    },
+    {
+      "row": "src/compiler, ES module",
+      "original": {
+        "loaded": true,
+        "isNodeLikeSystem": false,
+        "sys": "undefined"
+      },
+      "adapted": {
+        "loaded": false,
+        "threw": "ReferenceError",
+        "message": "__filename is not defined in ES module scope",
+        "at": "isFileSystemCaseSensitive src/compiler/sys.ts:1722:41"
+      },
+      "recorded": true
+    }
+  ]
+}
