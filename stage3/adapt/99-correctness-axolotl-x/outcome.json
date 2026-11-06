@@ -5,6 +5,7 @@
   "own_rewrites": 28,
   "owner_pins_unchanged": true,
   "contracts": "pass",
-  "matrix": "pending",
-  "oracles": "pending"
+  "matrix": "pass: all four candidates; 79 roots each; exact source and JavaScript scope; byte/mtime replay",
+  "oracles": "in_progress: two suites of whole lane and 398 standard shards",
+  "CW051": "pass: all six units measured on main and main plus 32 plus 99x"
 }
