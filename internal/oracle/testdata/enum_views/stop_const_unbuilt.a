@@ -1,0 +1,4 @@
+// A const enum read through the namespace cast has no object to read yet, so the cast stays as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"ConstOrdered", Readonly<Record<string, string | number>>>>).ConstOrdered;
+console.log(Object.keys(view).join(","));

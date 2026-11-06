@@ -1,0 +1,4 @@
+// K isn't one string literal, so the cast is the namespace object used as a value, as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"SyntaxKind" | "FlowFlags", Readonly<Record<string, string | number>>>>).SyntaxKind;
+console.log(Object.keys(view).join(","));

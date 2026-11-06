@@ -1,0 +1,4 @@
+// Language's order on #6c4swvt: integer keys first, ascending, below 2^32 - 1, then every other key in
+// insertion order, with -1, 1.5 and 4294967296 among them, and the last alias winning E[1].
+export enum Ordered { B = 2, A = 1, N = -1, F = 1.5, Big = 4294967296, Alias = 1, Z = 0 }
+export const enum ConstOrdered { B = 2, A = 1, N = -1, F = 1.5, Big = 4294967296, Alias = 1, Z = 0 }

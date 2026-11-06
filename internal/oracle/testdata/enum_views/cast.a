@@ -1,0 +1,31 @@
+// The namespace cast tsc's debug.ts reads its enums through, in the form Correctness's adaptation
+// gives it: the enum's live binding, the same object every read, so an identity Map hits.
+import * as ts from './barrel.a';
+import { Ordered, SyntaxKind } from './barrel.a';
+
+type View = Readonly<Record<string, string | number>>;
+
+function same(left: View, right: View): boolean {
+	return left === right;
+}
+
+const first = (ts as Readonly<Record<"Ordered", View>>).Ordered;
+const second = (ts as Readonly<Record<"Ordered", View>>).Ordered;
+console.log(`${first === second} ${same(first, Ordered)} ${same(first, SyntaxKind)}`);
+console.log(Object.keys(first).join(","));
+
+const cache = new Map<View, number>();
+let walks = 0;
+function members(enumObject: View): number {
+	const existing = cache.get(enumObject);
+	if (existing !== undefined) {
+		return existing;
+	}
+	walks++;
+	cache.set(enumObject, walks);
+	return walks;
+}
+const kinds = members((ts as Readonly<Record<"SyntaxKind", View>>).SyntaxKind);
+const again = members((ts as Readonly<Record<"SyntaxKind", View>>).SyntaxKind);
+const flags = members((ts as Readonly<Record<"FlowFlags", View>>).FlowFlags);
+console.log(`${kinds} ${again} ${flags} walks=${walks} size=${cache.size}`);

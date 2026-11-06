@@ -1,0 +1,4 @@
+// A view of string alone over a numeric enum: tsc refuses the cast (TS2352), as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string>>>>).SyntaxKind;
+console.log(Object.keys(view).join(","));

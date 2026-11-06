@@ -1,0 +1,4 @@
+// K resolves to a plain object, not an enum, so the cast stays as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"table", Readonly<Record<string, string | number>>>>).table;
+console.log(Object.keys(view).join(","));
