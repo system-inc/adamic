@@ -12,7 +12,7 @@ returns bound to X; undefined returns undefined; any other truthy value throws
 TypeError at .bind in both. core.ts's maybeBind body must remain unchanged.
 
 Requested inventory: 46 sites across builder.ts (3), checker.ts (2),
-program.ts (9), tsbuildPublic.ts (8), watch.ts (16), watchPublic.ts (8).
+program.ts (8), tsbuildPublic.ts (8), watch.ts (16), watchPublic.ts (9).
 These are task-supplied counts, not a measured AST inventory. All 46 requested
 sites remain as written because implementation never began. Rewritten: 0.
 No import specifier was removed. No casts were added.
