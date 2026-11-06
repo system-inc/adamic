@@ -472,10 +472,10 @@ console.log('before');
 	}
 }
 
-// The caller uses inferred's unwritten SyntaxList claim, not declared's Claimed claim. This
-// doesn't miss: collectViewedElements sees declared's TypePredicate node and follows Claimed's
-// _children to Node before lowering. The generic present and direct tag-comparison shapes make
-// no view. This pins the pre-pass road, not the second lowering (#6wfvfhm).
+// The caller uses inferred's unwritten SyntaxList claim, not declared's Claimed claim. The
+// pre-pass sees Claimed's Node element. Even when SyntaxList narrows _children to Special[],
+// lowering builds only Claimed's array contract: the miss test uses identity, while the read
+// key relates Special to Node and checks it on the first lowering (#6wfvfhm).
 func TestViewElementKeySeesInferredPredicateWrapper(t *testing.T) {
 	t.Parallel()
 	const source = `interface Node { readonly kind: number; }
@@ -491,34 +491,65 @@ function use(x: SyntaxList | Other) {
 const raw: SyntaxList = {kind: 1, label: 'list', _children: [{kind: 1}]};
 use(raw);
 `
-	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", source))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if keyed.key.every || len(keyed.key.order) != 1 || len(keyed.key.misses) != 0 {
-		t.Fatalf("keyed every %t, viewed %d, missed %v", keyed.key.every, len(keyed.key.order), keyed.key.misses)
-	}
-	if viewed := keyed.lowering.checker.TypeToString(keyed.key.order[0]); viewed != "Node" {
-		t.Fatalf("the written claim collected %s, want Node", viewed)
-	}
-	inferred := false
-	for _, statement := range keyed.entry.Statements.Nodes {
-		if statement.Kind == ast.KindFunctionDeclaration && statement.Name().Text() == "inferred" {
-			claim := predicateOfSignature(keyed.lowering.checker, keyed.lowering.checker.GetSignatureFromDeclaration(statement))
-			inferred = statement.Type() == nil && claim != nil && claim.Type() != nil && keyed.lowering.checker.TypeToString(claim.Type()) == "SyntaxList"
-		}
-	}
-	if !inferred {
-		t.Fatal("the wrapper no longer infers a SyntaxList predicate")
-	}
-	if reads, handouts := loweredElementChecks(keyed.lowering.result); len(reads) != 1 || reads[0] != "Node" || handouts != 0 {
-		t.Fatalf("the first lowering lost the Node check: reads %v, handouts %d", reads, handouts)
-	}
-	program, err := lowerSourceAs(t, source, ".ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if reads, handouts := loweredElementChecks(program); len(reads) != 1 || reads[0] != "Node" || handouts != 0 {
-		t.Fatalf("the inferred predicate's read is unchecked: reads %v, handouts %d", reads, handouts)
+	const specialSource = `interface Node { readonly kind: number; }
+interface Special extends Node { readonly special: true; }
+interface Base { readonly kind: number; }
+interface Claimed extends Base { readonly kind: 1; readonly _children: readonly Node[]; }
+interface SyntaxList extends Claimed { readonly label: string; readonly _children: readonly Special[]; }
+interface Other extends Base { readonly kind: 2; }
+function declared(x: Base): x is Claimed { return x.kind === 1; }
+function inferred(x: SyntaxList | Other) { return declared(x); }
+function use(x: SyntaxList | Other) {
+    console.log(String(inferred(x) && (x._children[0]?.kind ?? 0) > 0));
+}
+const raw: SyntaxList = {kind: 1, label: 'list', _children: [{kind: 1, special: true}]};
+use(raw);
+`
+	for _, row := range []struct{ name, source, element string }{
+		{"Node", source, "Node"},
+		{"Special", specialSource, "Special"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			source := row.source
+			keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", source))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if keyed.key.every || len(keyed.key.order) != 1 || len(keyed.key.misses) != 0 {
+				t.Fatalf("keyed every %t, viewed %d, missed %v", keyed.key.every, len(keyed.key.order), keyed.key.misses)
+			}
+			if viewed := keyed.lowering.checker.TypeToString(keyed.key.order[0]); viewed != "Node" {
+				t.Fatalf("the written claim collected %s, want Node", viewed)
+			}
+			inferred := false
+			for _, statement := range keyed.entry.Statements.Nodes {
+				if statement.Kind == ast.KindFunctionDeclaration && statement.Name().Text() == "inferred" {
+					claim := predicateOfSignature(keyed.lowering.checker, keyed.lowering.checker.GetSignatureFromDeclaration(statement))
+					inferred = statement.Type() == nil && claim != nil && claim.Type() != nil && keyed.lowering.checker.TypeToString(claim.Type()) == "SyntaxList"
+				}
+			}
+			if !inferred {
+				t.Fatal("the wrapper no longer infers a SyntaxList predicate")
+			}
+			var arrays []string
+			for _, contract := range keyed.lowering.result.ViewContracts {
+				if contract.Kind == ir.ViewArray {
+					arrays = append(arrays, contract.Name)
+				}
+			}
+			reads, handouts := loweredElementChecks(keyed.lowering.result)
+			t.Logf("order=[%s], misses=%v, reads=%v, handouts=%d, array contracts=%v", keyed.lowering.checker.TypeToString(keyed.key.order[0]), keyed.key.misses, reads, handouts, arrays)
+			if len(reads) != 1 || reads[0] != row.element || handouts != 0 {
+				t.Fatalf("the first lowering lost the %s check: reads %v, handouts %d", row.element, reads, handouts)
+			}
+			program, err := lowerSourceAs(t, source, ".ts")
+			if err != nil {
+				t.Fatal(err)
+			}
+			if reads, handouts := loweredElementChecks(program); len(reads) != 1 || reads[0] != row.element || handouts != 0 {
+				t.Fatalf("the inferred predicate's read is unchecked: reads %v, handouts %d", reads, handouts)
+			}
+		})
 	}
 }
