@@ -1,0 +1,5 @@
+// Node keeps the first receiver, and prepends both sets of arguments.
+function f(a: number, b: number): number { return a + b; }
+const bound = f.bind(undefined, 1);
+const twice = bound.bind({ ignored: true }, 2);
+console.log(String(twice()));

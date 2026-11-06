@@ -364,6 +364,21 @@ adamic_closure *adamic_counted_closure_canonical_graph(adamic_cell *identity, ad
 void adamic_closure_uncache(adamic_closure *closure);
 #endif
 
+// A bound closure uses the same allocation and captured-cell links as a closure.
+// Cell zero owns the target, cell one owns thisArg, and the rest own fixed values.
+// Its generated adapter packs fixed values before incoming values without taking them.
+adamic_closure *adamic_bound_closure_new(adamic_code code, size_t count);
+void adamic_closure_free_children(adamic_closure *closure, void (*drop)(void *));
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_bound_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_bound_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *arguments, size_t argument_count, size_t packed_size);
+
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
 	adamic_heap heap;
