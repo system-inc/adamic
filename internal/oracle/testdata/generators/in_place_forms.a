@@ -1,0 +1,52 @@
+// The forms of a generator written in place and called that lower (#qk8rztp S3b): parentheses around
+// it, arguments for its parameters, its call in an arrow inside the function, whose captures the arrow
+// forwards, two textually equal ones, each a function and a frame of its own, and its call into a
+// one-read Iterable<T> parameter. A plain function* infers a void TReturn, which neither the for-of nor
+// the parameter's one for-of reads.
+function total(items: Iterable<number>): number {
+    let sum = 0;
+    for (const value of items) {
+        sum += value;
+    }
+    return sum;
+}
+function host(base: number, tag: string): string {
+    const parts: string[] = [];
+    for (const value of (((function* (from: number, step: number) {
+        yield from;
+        yield from + step;
+    })))(base, 10)) {
+        parts.push(`${tag}${String(value)}`);
+    }
+    const twice = (): string => {
+        let seen = '';
+        for (const value of (function* () {
+            yield base;
+            yield base * 2;
+        })()) {
+            seen += `(${String(value)})`;
+        }
+        for (const value of (function* () {
+            yield base;
+            yield base * 2;
+        })()) {
+            seen += `{${String(value)}}`;
+        }
+        return seen;
+    };
+    parts.push(twice());
+    parts.push(
+        String(
+            total(
+                (function* (count: number) {
+                    for (let index = 0; index < count; index++) {
+                        yield index + base;
+                    }
+                })(3),
+            ),
+        ),
+    );
+    return parts.join(' ');
+}
+console.log(host(5, `t${String(1)}`));
+console.log(host(-1, 'u'));

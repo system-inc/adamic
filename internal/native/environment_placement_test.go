@@ -456,6 +456,12 @@ func TestEnvironmentPlacementNestedGenerator(t *testing.T) {
 	if got := placements("../oracle/testdata/generators/nested_stack_parent.a"); got[0] != environmentHeap {
 		t.Errorf("the nested generator's parent placed %d, want counted heap", got[0])
 	}
+	// A generator written in place reading the parent's parameters (#qk8rztp S3b): its carrier is a
+	// closure of its own, made for a call direct to it, which suspends, so the same rule keeps the
+	// environment on the heap.
+	if got := placements("../oracle/testdata/generators/in_place_environment.a"); got[0] != environmentHeap {
+		t.Errorf("the parent of a generator written in place placed %d, want counted heap", got[0])
+	}
 	control := filepath.Join(t.TempDir(), "nested-function.a")
 	const source = "function host(first: string, second: string): string {\n" +
 		"    const pair = `${first}+${second}`;\n" +
