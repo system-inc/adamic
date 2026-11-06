@@ -14,12 +14,18 @@ for (const callback of array) console.log(callback());
 const captured = (): string => escaped();
 console.log(captured());
 interface P { m: () => string }
-const replaceable: P = { m: (): string => "first" };
+// The returned closure is built outside the host's allocation region, and
+// no local keeps it after this factory returns.
+function makeOldMethod(seed: number): () => string {
+  const result = "first" + String(seed);
+  return (): string => result;
+}
+const replaceable: P = { m: makeOldMethod(7) };
 const old = replaceable.m.bind(replaceable);
 replaceable.m = (): string => "second";
 console.log(old());
 let effects = 0;
-function fixed(): string { effects++; return "fixed" + String(effects); }
+function fixed(): string { console.log("fixed evaluated"); effects++; return "fixed" + String(effects); }
 interface Optional { m?: (a: string) => string }
 const missing: Optional = {};
 const absent = missing.m?.bind(missing, fixed());
