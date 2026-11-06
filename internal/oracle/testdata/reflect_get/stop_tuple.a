@@ -1,5 +1,6 @@
-// A tuple an unknown holds stops on both backends: lowering refuses a tuple viewed as unknown, but a
-// run-time key read can still reach one, an object's field here. Node prints number.
+// A tuple an unknown holds, an object's field here, answers by the array rule on both backends as
+// Node's does (#g187f1e), where it once stopped: lowering refuses a tuple viewed as unknown, but a
+// run-time key read can still reach one (tuple_reads.a reads each maker's). Node prints number.
 import { propertyOf } from './hostErrors.ts';
 
 const holder = { pair: [1, 2] as [number, number] };

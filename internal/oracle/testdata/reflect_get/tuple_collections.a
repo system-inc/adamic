@@ -1,0 +1,34 @@
+// The pairs a Map and a Set hand out, read by a run-time key, answer by the array rule as Node's do
+// (#g187f1e): a Map's spread and Array.from of its entries(), whose pairs are made with the
+// program's own shape and read by its registered types, though no literal of that shape is ever
+// made, and a Set's entries(), whose pairs the runtime makes with representation bytes.
+import { propertyOf } from './hostErrors.ts';
+
+function show(label: string, value: unknown): void {
+	if (typeof value === 'string') console.log(`${label} string ${value}`);
+	else if (typeof value === 'number') console.log(`${label} number ${String(value)}`);
+	else if (typeof value === 'boolean') console.log(`${label} boolean ${value ? 'true' : 'false'}`);
+	else console.log(`${label} ${typeof value}`);
+}
+
+function read(label: string, tuple: unknown): void {
+	show(`${label} 0`, propertyOf(tuple, '0'));
+	show(`${label} 1`, propertyOf(tuple, '1'));
+	show(`${label} 2`, propertyOf(tuple, '2'));
+	show(`${label} length`, propertyOf(tuple, 'length'));
+	console.log(`${label} map is an array's: ${String(propertyOf(tuple, 'map') === propertyOf([0], 'map'))}`);
+	show(`${label} missing`, propertyOf(tuple, 'missing'));
+}
+
+const flags = new Map<string, boolean>();
+flags.set('on', true);
+const flagPairs = [...flags];
+read('map spread', propertyOf(flagPairs, '0'));
+const counts = new Map<number, number>();
+counts.set(1, 10);
+const countPairs = Array.from(counts.entries());
+read('map entries', propertyOf(countPairs, '0'));
+const sizes = new Set<number>();
+sizes.add(7);
+const sizePairs = [...sizes.entries()];
+read('set entries', propertyOf(sizePairs, '0'));

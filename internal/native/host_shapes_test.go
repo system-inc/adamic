@@ -104,9 +104,10 @@ func (row hostShapeRow) key() string {
 const (
 	hostShapeRuntime = "internal/native/runtime/"
 	plainFixture     = "prototype_runtime_plain.a"
-	// A tuple stops as an array before the host test, so its flag is never read; it's set so that
-	// nothing reads one as a plain object if that order ever changes.
-	tupleReason = "a tuple, an array on Node, which stops as one before the host test"
+	// A tuple is read as an array before the host test (union.c's keyed_tuple, #g187f1e), where the
+	// flag marks a pair the runtime made without representation bytes, whose slots its shape's kinds
+	// box; it also keeps one from being read as a plain object if that order ever changes.
+	tupleReason = "a tuple, an array on Node, read as one before the host test (tuple_reads.a)"
 	// The words of the refusals that keep an unreachable shape from a run-time key read, lower's
 	// NotYets for an opaque host value and an object with a nullable field viewed as unknown, and
 	// for a regular expression whose pattern isn't a constant.
@@ -325,7 +326,7 @@ var hostShapeReaders = []struct {
 	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
 	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
 	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
-	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, or by keyed_array for an array's own properties", "", ""},
+	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, or by keyed_array and keyed_tuple for an array's or a tuple's own properties", "", ""},
 }
 
 // hostShapeDoors are the closed doors with no runtime reader of their own: lowering refuses the
