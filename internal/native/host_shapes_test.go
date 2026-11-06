@@ -164,6 +164,7 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "node_fs_file.c", name: "date_shape", verdict: hostShapeUnreachable, refusal: "date.a", refused: opaqueRefusal},
 	{file: hostShapeRuntime + "node_fs_file.c", scope: "realpath_system_error", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_host_stats_method.a"},
+	{file: hostShapeRuntime + "node_fs_watch_impl.h", name: "fs_watcher_shape", verdict: hostShapeHost, stop: "stop_host_watcher.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "host_directory_error", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_process.c", scope: "adamic_node_memory_usage", name: "shape", verdict: hostShapeHost, stop: "stop_host_memory_field.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "entry", name: "shape", verdict: hostShapeHost, stop: "stop_host_performance_mark.a"},
@@ -206,6 +207,7 @@ var hostShapeWrappers = []struct {
 }{
 	{"internal/javascript/library_map_set.go", "class AdamicIterator {", "new AdamicIterator(", hostShapeRuntime + "map_set.c  iterator_shape[0]"},
 	{"internal/javascript/library_node_process.go", "class AdamicHostObject {}", "Object.setPrototypeOf(usage, AdamicHostObject.prototype)", hostShapeRuntime + "node_process.c adamic_node_memory_usage shape[0]"},
+	{"internal/javascript/library_node_fs_file.go", "class AdamicFSWatcher {", "new AdamicFSWatcher(", hostShapeRuntime + "node_fs_watch_impl.h  fs_watcher_shape[0]"},
 }
 
 // hostShapeEntrances are the runtime's entrances by which a name or a key reaches a value viewed as

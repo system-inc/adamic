@@ -1,0 +1,11 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// A lone watcher that closes itself from its listener: the program exits, its source gone with it.
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-'));
+const watcher = fs.watch(directory, {persistent: true}, (eventType, filename) => {
+ console.log(`${eventType} ${filename ?? 'null'}`);
+ watcher.close();
+ fs.rmSync(directory, {recursive: true, force: true});
+});
+fs.writeFileSync(join(directory, 'end'), '');

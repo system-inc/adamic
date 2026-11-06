@@ -1,0 +1,15 @@
+const fs = require('node:fs');
+const path = require('node:path');
+// The harness's rename mode on Node: the same directory, the same operations before the loop runs.
+const directory = fs.mkdtempSync(path.join(process.env.TMPDIR || '/tmp', 'adamic-fswatch-'));
+fs.writeFileSync(path.join(directory, 'b.txt'), '');
+const watcher = fs.watch(directory, {persistent: true}, (type, name) => {
+ console.log(`${type} ${name}`);
+ if (name === 'end') watcher.close();
+});
+fs.renameSync(path.join(directory, 'b.txt'), path.join(directory, 'c.txt'));
+fs.writeFileSync(path.join(directory, 'end'), '');
+process.on('exit', () => {
+ console.log('done');
+ fs.rmSync(directory, {recursive: true, force: true});
+});

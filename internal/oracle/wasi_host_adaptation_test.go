@@ -193,18 +193,22 @@ int main(void) {
 	t.Log("removed precision guard compiled and ran cleanly; only Node stdout caught silent rounding")
 }
 
-// The private include defines public fs entry points too. Expand it before
+// The private includes define public fs entry points too. Expand them before
 // renaming so each probe owns one complete, renamed implementation. Kept at
 // the end so existing optional-WASI skip sites retain their source positions.
 func wasiFileMutantImplementation(t *testing.T, data []byte) string {
 	t.Helper()
-	const include = `#include "node_watch_file_impl.h"`
-	if strings.Count(string(data), include) != 1 {
-		t.Fatal("watch implementation include changed")
+	implementation := string(data)
+	for _, name := range []string{"node_watch_file_impl.h", "node_fs_watch_impl.h"} {
+		include := `#include "` + name + `"`
+		if strings.Count(implementation, include) != 1 {
+			t.Fatal("watch implementation include changed: " + name)
+		}
+		header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		implementation = strings.Replace(implementation, include, string(header), 1)
 	}
-	header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_watch_file_impl.h"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	return strings.Replace(string(data), include, string(header), 1)
+	return implementation
 }

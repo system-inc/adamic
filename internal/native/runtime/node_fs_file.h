@@ -53,3 +53,9 @@ void adamic_fs_file_realpath_walk_error(const adamic_string *, int, const char *
 double adamic_fs_file_watch(const adamic_string *, bool, double, adamic_closure *);
 double adamic_fs_file_unwatch(const adamic_string *, adamic_closure *);
 void adamic_fs_file_watch_shutdown(void);
+
+// fs.watch's FSWatcher, whose close and on capture its watcher's identity. Open
+// watchers hold their object and listeners until close or loop shutdown.
+adamic_object *adamic_fs_file_host_watch(const adamic_string *, bool, bool, adamic_closure *);
+adamic_object *adamic_fs_file_host_watch_on(adamic_object *, adamic_closure *);
+void adamic_fs_file_host_watch_shutdown(void);
