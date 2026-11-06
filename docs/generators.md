@@ -83,7 +83,8 @@ An `IterableIterator<T>` parameter can also be stepped by hand, `x.next()` with 
 checker.ts:21636's loop does, when every value that can reach it is a Map's or a Set's iterator
 (#qk8rztp S2c-2a). The call keeps its receiver, the runtime-built iterator, whose `next` is its own
 closure, so the library-member guard lets that one call by; a detached `next`, `next?.()`,
-`return()` and `throw()` stay refused, and `next(x)` stays not yet built. The result's `done` and
+`return()` and `throw()` stay refused, and `next(x)` stays not yet built, as does a for-of beside
+the nexts over the same parameter, an interleaving nothing has held to Node. The result's `done` and
 `value` are read off the fresh object each call returns: `value` is `T` only where `done` has
 narrowed it, and anywhere else it is `any`, which the any rules stop. A generator's call into such a
 parameter stays not yet built, since its step hands back its value, not a result (S2c-2b).
