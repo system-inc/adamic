@@ -113,6 +113,35 @@ static const char *const adamic_dynamic_keyed_regexp_string_iterator_names[] = {
 	"flatMap",
 };
 
+static const char *const adamic_dynamic_keyed_stats_names[] = {
+	"constructor",
+	"_checkModeProperty",
+	"isDirectory",
+	"isFile",
+	"isBlockDevice",
+	"isCharacterDevice",
+	"isSymbolicLink",
+	"isFIFO",
+	"isSocket",
+};
+
+static const char *const adamic_dynamic_keyed_stats_field_names[] = {
+	"dev",
+	"mode",
+	"nlink",
+	"uid",
+	"gid",
+	"rdev",
+	"blksize",
+	"ino",
+	"blocks",
+	"atimeMs",
+	"ctimeMs",
+	"birthtimeMs",
+	"ctime",
+	"birthtime",
+};
+
 static const char *const adamic_dynamic_keyed_error_names[] = {
 	"stack",
 	"cause",
@@ -181,5 +210,17 @@ static const char *const adamic_dynamic_keyed_error_names[] = {
 	function(10, 1) \
 	function(11, 1) \
 	function(12, 1)
+
+// Each of adamic_dynamic_keyed_stats_names by its index, with Node's length for it.
+#define ADAMIC_DYNAMIC_KEYED_STATS_FUNCTIONS(function) \
+	function(0, 14) \
+	function(1, 1) \
+	function(2, 0) \
+	function(3, 0) \
+	function(4, 0) \
+	function(5, 0) \
+	function(6, 0) \
+	function(7, 0) \
+	function(8, 0)
 
 #endif

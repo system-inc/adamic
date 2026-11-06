@@ -1,0 +1,33 @@
+// An fs.Stats read by a run-time key answers what native holds as Node does (#zhrjf2t): size and
+// mtimeMs are the static read's numbers, mtime and atime its Dates, the same object on every read,
+// and each function it inherits, Stats.prototype's and StatsBase.prototype's, is one function from
+// every Stats and every read with Node's length, constructor Stats. Object.prototype's names are an
+// object's, and native's private _fsFileMode reads undefined, as any other key does.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+const other = fs.statSync('.');
+console.log(`size is the static read's: ${String(propertyOf(stats, 'size') === stats.size)}`);
+console.log(`mtimeMs is the static read's: ${String(propertyOf(stats, 'mtimeMs') === stats.mtimeMs)}`);
+const mtime = propertyOf(stats, 'mtime');
+console.log(`mtime: ${typeof mtime}, the static read's ${String(mtime === stats.mtime)}, read twice ${String(mtime === propertyOf(stats, 'mtime'))}`);
+const atime = propertyOf(stats, 'atime');
+console.log(`atime: ${typeof atime}, the static read's ${String(atime === stats.atime)}, read twice ${String(atime === propertyOf(stats, 'atime'))}`);
+console.log(`mtime is atime: ${String(mtime === atime)}`);
+const names = [
+	'constructor', '_checkModeProperty', 'isDirectory', 'isFile', 'isBlockDevice', 'isCharacterDevice', 'isSymbolicLink',
+	'isFIFO', 'isSocket', 'toString', 'valueOf', 'hasOwnProperty', '_fsFileMode', 'missing',
+];
+for (const name of names) {
+	const value = propertyOf(stats, name);
+	if (typeof value === 'function') console.log(`${name}: function ${String(value.length)}`);
+	else console.log(`${name}: ${typeof value}`);
+}
+const object = { present: 'here' };
+console.log(`constructor from two Stats: ${String(propertyOf(stats, 'constructor') === propertyOf(other, 'constructor'))}`);
+console.log(`constructor is an object's: ${String(propertyOf(stats, 'constructor') === propertyOf(object, 'constructor'))}`);
+console.log(`isFile from two Stats: ${String(propertyOf(stats, 'isFile') === propertyOf(other, 'isFile'))}`);
+console.log(`isFile is isDirectory: ${String(propertyOf(stats, 'isFile') === propertyOf(stats, 'isDirectory'))}`);
+console.log(`toString is an object's: ${String(propertyOf(stats, 'toString') === propertyOf(object, 'toString'))}`);
+console.log(`still a directory: ${String(stats.isDirectory())}`);

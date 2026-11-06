@@ -1,0 +1,11 @@
+// A Stats' mtime, which a run-time key read hands out as Node's does (#zhrjf2t, stats_reads.a), is
+// node_fs_file.c's Date, a host object, so a run-time key read of the Date in turn stops for every
+// key, as on any host object (#ey7aysy). Node prints function.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+const mtime = propertyOf(stats, 'mtime');
+console.log(`mtime ${typeof mtime}`);
+const value = propertyOf(mtime, 'getTime');
+console.log(typeof value);

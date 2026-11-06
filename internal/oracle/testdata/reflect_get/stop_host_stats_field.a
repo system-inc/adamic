@@ -1,6 +1,7 @@
-// A host object stops for every key (#ey7aysy): a Stats' dev is Node's own field, which native's
-// shape doesn't hold, so it read undefined natively and a number on the JavaScript backend before.
-// Node prints number.
+// A Stats' dev is Node's own field, which native's shape doesn't hold, so it read undefined natively
+// and a number on the JavaScript backend before it stopped (#ey7aysy). While a Stats' other reads
+// answer (#zhrjf2t, stats_reads.a), a field native doesn't hold still stops on both backends rather
+// than make up a value (#6xfkdwj fills it). Node prints number.
 import * as fs from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 
