@@ -13,7 +13,9 @@ import (
 // with T a number, a string and an object. add is Compiler's, add<T>(to: T[], value: T) handed a Dog[]
 // and an Animal, T inferred and written. p01 to p03 are Language's: a T nested beside { kind: string }
 // in an array, a Map's value and a field, which the body may honestly write { kind: "other" } into, and
-// p04 is her control, keepFirst<T>(to: T[]) pushing its own to[0] back. Each program's whole stop is
+// p04 is her control, keepFirst<T>(to: T[]) pushing its own to[0] back. add_structural (add over
+// interfaces, so no nominal rule) and p05 (p01 with T unconstrained, so no binding is judged) are the
+// rows only the argument site can refuse. Each program's whole stop is
 // pinned in its .stop file, or "lowers", and a lowering one is held to Node on release, sanitized native
 // and JavaScript. MUTANTS.
 func TestInferredBindingNestedTypeParameter(t *testing.T) {
@@ -69,7 +71,7 @@ func TestInferredBindingNestedTypeParameter(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 18 {
-		t.Fatalf("found %d programs, want 18", programs)
+	if programs != 22 {
+		t.Fatalf("found %d programs, want 22", programs)
 	}
 }

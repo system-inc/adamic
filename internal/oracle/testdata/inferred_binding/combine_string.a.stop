@@ -1,1 +1,1 @@
-lowers
+internal/oracle/testdata/inferred_binding/combine_string.a:20:13: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: combine's T = void (read from the signature), read at internal/oracle/testdata/inferred_binding/combine_string.a:15:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)

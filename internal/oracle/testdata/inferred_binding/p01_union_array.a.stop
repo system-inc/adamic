@@ -1,1 +1,1 @@
-pending
+internal/oracle/testdata/inferred_binding/p01_union_array.a:9:1: Adamic 0.1 refuses a value of type Tagged seen as { kind: string; }, which can write string where "x" is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
