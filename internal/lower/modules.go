@@ -151,7 +151,14 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				}
 			}
 		case ast.KindEnumDeclaration:
-			if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+			// Every enum with an object is declared here, before any function body lowers: a const enum
+			// a namespace cast reaches inside a function, as each of debug.ts's formatters does, reads
+			// its binding before the declaring module's statements are lowered (#52zja36).
+			built, err := l.enumObjectBuilt(statement)
+			if err != nil {
+				return err
+			}
+			if built {
 				local, err := l.enumLocal(statement)
 				if err != nil {
 					return err

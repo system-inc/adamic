@@ -1,4 +1,6 @@
-// A const enum read through the namespace cast has no object to read yet, so the cast stays as on main.
+// The unbuilt pin: const enums the program reads only by named member reads, through the barrel's
+// namespace and through a named import, are never reached as a value, so they get no object and no
+// binding (rulings.md:218), and their reads inline and agree with Node.
 import * as ts from './barrel.a';
-const view = (ts as Readonly<Record<"ConstOrdered", Readonly<Record<string, string | number>>>>).ConstOrdered;
-console.log(Object.keys(view).join(","));
+import { ConstKind } from './barrel.a';
+console.log(`${ConstKind.Identifier} ${ts.ConstKind.Count} ${ts.ConstOrdered.Alias} ${ts.ConstOrdered.Big}`);
