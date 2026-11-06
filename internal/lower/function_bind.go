@@ -298,6 +298,9 @@ func (l *lowering) bindReceiverRule(node *ast.Node) error {
 	if _, builtin := l.libraryMethod(target, map[*ast.Symbol]bool{}); builtin {
 		return nil
 	}
+	if l.inheritedLibraryMember(target) {
+		return l.notYet(node, "bind of an inherited library function without a declared callback type")
+	}
 	receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
 	if !ast.IsIdentifier(receiver) {
 		if receiver.Kind == ast.KindCallExpression {
