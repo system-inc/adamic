@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var methodBindFixtures = []string{"method_bind.a", "bind_cycle_fixed_arrow.a", "bind_cycle_fixed_bound.a", "bind_cycle_host_arrow.a", "bind_cycle_host_bound.a", "bind_cycle_cache_arrow.a", "bind_cycle_cache_bound.a"}
+var methodBindFixtures = []string{"method_bind.a", "method_bind_lifetime.a", "bind_cycle_fixed_arrow.a", "bind_cycle_fixed_bound.a", "bind_cycle_host_arrow.a", "bind_cycle_host_bound.a", "bind_cycle_cache_arrow.a", "bind_cycle_cache_bound.a"}
 
 func init() {
 	for _, name := range methodBindFixtures {
