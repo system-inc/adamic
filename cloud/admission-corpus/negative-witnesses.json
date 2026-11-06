@@ -536,6 +536,18 @@
       "type_correct_sha256": "ef4275f69c886d314514fcaa9ec53a253bf4c1ae4f29328deda45614203b83a0",
       "exit": 70,
       "stderr": "adamic: panic: element read failed: view._children's element, in for...of is not a Node; expected Node, found number\n"
+    },
+    "1c22cbb8a7fee78c9bd87b0cb73103a48cbe375e4542aae94686873546266b67": {
+      "form": "checked_boundary",
+      "ruling_task": "#6wfvfhm",
+      "ruling": "Adamic, Nov 6",
+      "declaration": "internal/oracle/testdata/views_v3/object-wide.ts:4",
+      "declared_type": "object",
+      "repair_from": "_children:[7]",
+      "repair_to": "_children:[{kind:7}]",
+      "type_correct_sha256": "69bc790791d9ac7a66e4646d8c56c60fcc9ebf1fa9e740f3208843c455d9cd3f",
+      "exit": 70,
+      "stderr": "adamic: panic: element read failed: wide.xs[0] is not a object; expected object, found number\n"
     }
   }
 }
