@@ -135,9 +135,9 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	if (adamic_record_is(object)) {
 		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
 		const adamic_value *slot = adamic_record_get_own(object, &key);
-		if (slot == NULL) { return NULL; }
+		if (slot == NULL || slot->reference == NULL) { return NULL; }
 		const adamic_heap *reference = slot->reference;
-		if (reference != NULL && reference->kind == adamic_kind_closure) { return slot->reference; }
+		if (reference->kind == adamic_kind_closure) { return slot->reference; }
 		size_t capacity = strlen(name) + 64;
 		char *message = malloc(capacity);
 		if (message == NULL) {
