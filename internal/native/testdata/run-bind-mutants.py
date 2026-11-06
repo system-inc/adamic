@@ -12,7 +12,8 @@ logs = Path('/tmp/adamic-bind-mutants')
 logs.mkdir(exist_ok=True)
 lower = Path('internal/lower/function_bind.go')
 emit = Path('internal/native/emit_expressions.go')
-originals = {path: path.read_text() for path in [lower, emit]}
+flow = Path('internal/flow/async_normalize.go')
+originals = {path: path.read_text() for path in [lower, emit, flow]}
 
 def change(text, old, new):
     if text.count(old) != 1:
@@ -38,12 +39,16 @@ def late_lookup(text):
 def dropped_optional(text):
     return change(text, 'if !expression.Optional {\n\t\treturn makeValue()\n\t}', 'if true {\n\t\treturn makeValue()\n\t}')
 
+def allowed_suspension(text):
+    return change(text, '\tcase ir.BoundMethod:\n\t\t// The lookup and nullish guard must precede a suspending fixed operand.\n\t\t// Generic operand normalization would move that operand before both.\n\t\tn.failure = n.errorAt(value, "suspension inside method binding operands is not yet proven")\n\t\treturn value\n', '')
+
 mutants = [
  ('repeated-fixed', lower, repeated_fixed, '^TestFunctionBind$', 'javascript: stdout differs'),
  ('widened-path', lower, widened_path, '^TestMethodBindRefusals$/^path$', 'got <nil>'),
  ('dropped-links', lower, dropped_links, '^TestMethodBind$/^bind_cycle_cache_bound[.]a$', 'ERROR: LeakSanitizer'),
  ('dropped-optional', emit, dropped_optional, '^TestMethodBind$/^method_bind[.]a$', 'native stdout differs'),
  ('late-lookup', lower, late_lookup, '^TestMethodBind$/^method_bind[.]a$', 'javascript stdout differs'),
+ ('allowed-suspension', flow, allowed_suspension, '^TestMethodBindRefusals$/^async_fixed$', 'got <nil>'),
 ]
 results = []
 try:
@@ -70,4 +75,4 @@ finally:
     subprocess.run(['git', 'diff', '--exit-code'], check=True, stdout=subprocess.DEVNULL)
 if not all(result['caught'] for result in results):
     raise SystemExit('one or more mutants were not caught by the required semantic check')
-print('five bind mutants caught; every tracked source restored byte for byte', flush=True)
+print(f'{len(mutants)} bind mutants caught; every tracked source restored byte for byte', flush=True)
