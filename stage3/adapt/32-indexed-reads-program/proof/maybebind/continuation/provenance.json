@@ -1,0 +1,160 @@
+{
+  "main": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+  "fold": "997331ef1ec86480f47f3710fd43e1150407dafc",
+  "adapter99x": "5fa773b799e417c568ae62a4003a801333b87714",
+  "foldBaseRetainedInMain": true,
+  "ancestryCommand": "git merge-base --is-ancestor 322f80565 12fec995",
+  "functionalInputs": {
+    "adapt.cjs": "a8fdfe0d558ce56a3f52675bde79e846d25f44095be7872917914d757267e4c5",
+    "maybebind.cjs": "eeb3fd124b539a4e529152f9cd73a531ab95db7cc8446d38a6e79af0b8e3cfb5",
+    "maybebind-sites.json": "d081657c1eba149844410481daca5ed596d630c845d806e75a8c774e8e46dd0d",
+    "public-host-guards.cjs": "4e7e66f2d89f90f3f73dda4a29801b581f8ad1041ac18a4d8b3070f98807b9fb",
+    "public-host-guards.json": "d15d2f37a42a36ac215fb186abb3a79115451749f7a6bd2346b8fe53b165d54e"
+  },
+  "functionalInputsUnchanged": true,
+  "completeCompilerSourceTreesIdenticalToPriorProof": {
+    "before": true,
+    "after": true
+  },
+  "ordinaryCompilerSha256": "93a5fb523b826d65285d71aacdc0e5fd6186938e652282e9f793cbf2f8ba77bb",
+  "types": {
+    "roots": 79,
+    "exit": 0,
+    "diagnostics": 0,
+    "stderrBytes": 0,
+    "command": [
+      "/workspace/scratch/32r-adamic",
+      "types",
+      "/workspace/scratch/32r-after/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/32r-after/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/32r-after/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/32r-after/src/compiler/binder.ts",
+      "/workspace/scratch/32r-after/src/compiler/builder.ts",
+      "/workspace/scratch/32r-after/src/compiler/builderPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/builderState.ts",
+      "/workspace/scratch/32r-after/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/checker.ts",
+      "/workspace/scratch/32r-after/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/32r-after/src/compiler/core.ts",
+      "/workspace/scratch/32r-after/src/compiler/corePublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/debug.ts",
+      "/workspace/scratch/32r-after/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/32r-after/src/compiler/emitter.ts",
+      "/workspace/scratch/32r-after/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/32r-after/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/32r-after/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/hostErrors.ts",
+      "/workspace/scratch/32r-after/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/32r-after/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/32r-after/src/compiler/parser.ts",
+      "/workspace/scratch/32r-after/src/compiler/path.ts",
+      "/workspace/scratch/32r-after/src/compiler/performance.ts",
+      "/workspace/scratch/32r-after/src/compiler/performanceCore.ts",
+      "/workspace/scratch/32r-after/src/compiler/program.ts",
+      "/workspace/scratch/32r-after/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/32r-after/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/32r-after/src/compiler/scanner.ts",
+      "/workspace/scratch/32r-after/src/compiler/semver.ts",
+      "/workspace/scratch/32r-after/src/compiler/sourcemap.ts",
+      "/workspace/scratch/32r-after/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/32r-after/src/compiler/sys.ts",
+      "/workspace/scratch/32r-after/src/compiler/tracing.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformer.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/32r-after/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/32r-after/src/compiler/tsbuild.ts",
+      "/workspace/scratch/32r-after/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/types.ts",
+      "/workspace/scratch/32r-after/src/compiler/utilities.ts",
+      "/workspace/scratch/32r-after/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/watch.ts",
+      "/workspace/scratch/32r-after/src/compiler/watchPublic.ts",
+      "/workspace/scratch/32r-after/src/compiler/watchUtilities.ts"
+    ],
+    "seconds": 6.995546199001183
+  },
+  "fullApplyBeforeExit": 0,
+  "fullApplyAfterExit": 0,
+  "oracle": {
+    "artifact": "/workspace/scratch/32r-oracle-cache/f4ab6e3781735849373980c5e56144882874214b09237d1cc5b44afa929e9099",
+    "ready": {
+      "key": "f4ab6e3781735849373980c5e56144882874214b09237d1cc5b44afa929e9099",
+      "inputs": {
+        "files": "f910624c4c126e3427236f98b353cc2f3f82356bd852e13991ee36f5bf901d2e",
+        "tools": {
+          "node": "v24.19.0",
+          "npm": "11.9.0",
+          "git": "git version 2.52.0",
+          "python3": "Python 3.12.14"
+        },
+        "preparation": "17a48460f44f46025f29ada928c5a796e3973ba39e9f84fce9e5dfcc4cbbdc90",
+        "platform": "linux/x64"
+      },
+      "payload": "04017ac2393e199fa86a98d2bd69c00f86a4dee1f6377f0bb1f084d3ceb4785b",
+      "phases": {
+        "apply": {
+          "exit": 0,
+          "seconds": 12.174
+        },
+        "install": {
+          "exit": 0,
+          "seconds": 3.918
+        },
+        "build": {
+          "exit": 0,
+          "seconds": 36.574
+        },
+        "harness": {
+          "exit": 0,
+          "seconds": 1.708
+        }
+      },
+      "seconds": 87.875
+    },
+    "allCompilerSourcesEqual": true,
+    "preparation": {
+      "command": [
+        "python3",
+        "stage3/lane/prepare_shards.py",
+        "/workspace/scratch/32r-oracle-cache"
+      ],
+      "exit": 0,
+      "seconds": 87.9990876539996,
+      "limit_seconds": 1440
+    }
+  }
+}

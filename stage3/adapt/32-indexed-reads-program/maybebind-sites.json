@@ -1,0 +1,134 @@
+[
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "getDefaultLibLocation",
+    "line": 761,
+    "before": "maybeBind(host, host.getDefaultLibLocation)",
+    "after": "host.getDefaultLibLocation?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "trace",
+    "line": 774,
+    "before": "maybeBind(host, host.trace)",
+    "after": "host.trace?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "directoryStructureHost",
+    "member": "directoryExists",
+    "line": 775,
+    "before": "maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)",
+    "after": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "directoryStructureHost",
+    "member": "getDirectories",
+    "line": 776,
+    "before": "maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)",
+    "after": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "realpath",
+    "line": 777,
+    "before": "maybeBind(host, host.realpath)",
+    "after": "host.realpath?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "getEnvironmentVariable",
+    "line": 778,
+    "before": "maybeBind(host, host.getEnvironmentVariable)",
+    "after": "host.getEnvironmentVariable?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "createHash",
+    "line": 779,
+    "before": "maybeBind(host, host.createHash)",
+    "after": "host.createHash?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "receiver": "host",
+    "member": "readDirectory",
+    "line": 780,
+    "before": "maybeBind(host, host.readDirectory)",
+    "after": "host.readDirectory?.bind(host)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createProgramHost",
+    "receiver": "system",
+    "member": "realpath",
+    "line": 856,
+    "before": "maybeBind(system, system.realpath)",
+    "after": "system.realpath?.bind(system)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createProgramHost",
+    "receiver": "system",
+    "member": "getEnvironmentVariable",
+    "line": 857,
+    "before": "maybeBind(system, system.getEnvironmentVariable)",
+    "after": "system.getEnvironmentVariable?.bind(system)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createProgramHost",
+    "receiver": "system",
+    "member": "createHash",
+    "line": 861,
+    "before": "maybeBind(system, system.createHash)",
+    "after": "system.createHash?.bind(system)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createProgramHost",
+    "receiver": "system",
+    "member": "now",
+    "line": 864,
+    "before": "maybeBind(system, system.now)",
+    "after": "system.now?.bind(system)",
+    "javascriptChanging": true,
+    "task": "kpp0f8s"
+  }
+]
