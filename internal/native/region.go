@@ -549,6 +549,8 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 			// A named function expression can return or store its current carrier.
 			// No caller-specific self identity is represented in this proof.
 			return len(cells) != 0
+		case ir.BoundClosure:
+			return derived(ir.MakeClosure{Function: value.Function})
 		case ir.MakeClosure:
 			for _, local := range plan.program.Functions[value.Function].Environment {
 				if cells[local] || aliases[local] {

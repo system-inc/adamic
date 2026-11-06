@@ -1,0 +1,9 @@
+// Node: 1. Runtime-key reads must not invent a descriptor.
+function propertyOf(value: unknown, key: string): unknown {
+  if (value === null || value === undefined) return undefined;
+  return Reflect.get(Object(value), key, value);
+}
+function f(a: number, b: number): number { return a + b; }
+const bound = f.bind(undefined, 1);
+const key = "lengt" + "h";
+console.log(typeof propertyOf(bound, key));
