@@ -1,0 +1,40 @@
+{
+  "files": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+  ],
+  "records": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "mode": "full selected-file group in complete tsc closure",
+      "sides": {
+        "main": {
+          "view_elements": 0,
+          "view_element_checks": 0,
+          "units": 1,
+          "attempted": 1,
+          "ir_observed": 1,
+          "finding_free_attempted": 1,
+          "finding_free_view_elements": 0,
+          "finding_free_view_element_checks": 0,
+          "meter_byte_identical": true,
+          "baseline_sha256": "c23608d52975a4cf59994b65644ae5807df7bd73fc5cf340b663cbe2bcb952c9",
+          "source_sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+        },
+        "head": {
+          "view_elements": 0,
+          "view_element_checks": 0,
+          "units": 1,
+          "attempted": 1,
+          "ir_observed": 1,
+          "finding_free_attempted": 1,
+          "finding_free_view_elements": 0,
+          "finding_free_view_element_checks": 0,
+          "meter_byte_identical": true,
+          "baseline_sha256": "059b3ce24cef0d164777e325abc2cd0f19a82fad9e0f4cae1a1681efd9448a6b",
+          "source_sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+        }
+      }
+    }
+  ],
+  "elapsed_seconds": 128.4685821359999
+}
