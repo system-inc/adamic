@@ -53,3 +53,30 @@ The latent overlay addition, known-count lowered fixture, skipped-node mutant,
 byte-identity checks, paired closure pieces, pairing and ranking tables have not
 been implemented or run at this checkpoint. There are no tsc totals or top-file
 rankings to report yet.
+
+## Stop point
+
+Stopped at source admission validation. The draft is not an exact port of the
+head's representation- and producer-sensitive admission rule. Its fixture and
+mutant validate only enumeration. Publishing a numeric ceiling from it would
+claim evidence this run does not have. This is an implementation/validation gap,
+not a network denial or an assertion that the requested measurement is impossible.
+
+The requested setup command was started. Tool and submodule setup completed;
+its final Go cache-warming build was interrupted. The pinned main apply was
+started from its own detached worktree and interrupted during
+`20-optional-declarations`, before completing the adapted product. No tsc source
+counter was run on that partial tree. No head apply or latent run was started.
+All live setup and apply descendants started by this task were terminated.
+
+`raw-checkpoint.tar.gz` contains setup/apply logs, the successful seven-read
+fixture and rejected six-read mutant observations, provenance and hashes of the
+**partial** adapted src tree. These hashes identify interrupted work only.
+The archive contains no tsc census records. `SHA256SUMS` identifies the archive;
+an inner SHA256SUMS identifies each evidence file. Rebuild it with
+`python3 stage3/census/views-v3-price/pack-checkpoint.py` on this box.
+
+To resume: finish the source admission port and prove it against the head,
+prepare a fresh completed main apply, and run the source census. Then implement
+and validate the reflection overlay, including byte-identity against the meter,
+before committing and pushing each paired latent piece under 25 minutes.
