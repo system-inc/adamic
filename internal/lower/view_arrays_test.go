@@ -411,17 +411,19 @@ func TestViewElementUnrelatedButReachableStops(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSourceAs(t, `interface Node { readonly kind: number; }
 interface Other { readonly name: string; }
-const raw: unknown = JSON.parse('[{"kind": 1}]');
-const nodes = raw as readonly Node[];
-const a: any = nodes;
-const others: Other[] = a;
+interface Base { readonly tag: 1; }
+interface SyntaxList extends Base { readonly _children: readonly Node[]; }
+const raw = {tag: 1 as const, _children: [{kind: 1}]};
+const base: Base = raw;
+const view = base as SyntaxList;
+const a: any = view._children;
+const others: readonly Other[] = a;
 console.log(String(others[0]?.name.length));
 `, ".ts")
-	// Only a lowering stop counts: a program that fails to load proves nothing about the read.
+	// Only this rule's stop counts: a load error, or an earlier refusal of the cast or the any hop,
+	// would hide whether the unrelated read itself stops.
 	var notYet *NotYet
-	var refused *Refused
-	if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-		t.Fatalf("got %v, want the Other[] read reached from a viewed Node[] through any stopped by lowering, not read raw", err)
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "checked view's array read through") {
+		t.Fatalf("got %v, want the Other[] read reached from a viewed Node[] through any stopped as a checked view's array read", err)
 	}
-	t.Logf("stops: %v", err)
 }
