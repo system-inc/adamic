@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
@@ -54,31 +55,16 @@ func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 	}
 }
 
-// The triple table holds four rows and nothing else (#5xsd2ha): each platform's triple, Debian's spelling on linux and
-// Apple's on macOS; any other pair refused by its name; and ValidateOptions taking each linux triple, the host's own
-// darwin one alone, and refusing a darwin triple for another platform as a cross build no SDK is pinned for. Mutants:
-// a row's triple misspelled; a fifth row; the darwin refusal dropped.
-func TestTheTripleTable(t *testing.T) {
+// ValidateOptions takes each linux triple of the table (toolchain's TestTheTripleTable holds its rows), the host's own
+// darwin one alone, and refuses a darwin triple for another platform as a cross build no SDK is pinned for, and a
+// triple the table doesn't hold. Mutant: the darwin refusal dropped.
+func TestValidateOptionsTakesTheTable(t *testing.T) {
 	t.Parallel()
 	want := map[[2]string]string{
 		{"linux", "amd64"}:  "x86_64-linux-gnu",
 		{"linux", "arm64"}:  "aarch64-linux-gnu",
 		{"darwin", "arm64"}: "arm64-apple-macosx",
 		{"darwin", "amd64"}: "x86_64-apple-macosx",
-	}
-	for platform, triple := range want {
-		if got, err := Triple(platform[0], platform[1]); err != nil || got != triple {
-			t.Errorf("Triple(%s, %s) is %q, %v; want %s", platform[0], platform[1], got, err, triple)
-		}
-	}
-	if len(triples) != len(want) {
-		t.Errorf("the table holds %d rows, want the %d above", len(triples), len(want))
-	}
-	for _, platform := range [][2]string{{"windows", "amd64"}, {"linux", "riscv64"}, {"darwin", "386"}, {"", ""}} {
-		_, err := Triple(platform[0], platform[1])
-		if err == nil || !strings.Contains(err.Error(), "no native target for "+platform[0]+"/"+platform[1]+":") {
-			t.Errorf("Triple(%q, %q): %v, want a refusal naming the pair", platform[0], platform[1], err)
-		}
 	}
 	for platform, triple := range want {
 		err := ValidateOptions(Options{Target: triple})
@@ -105,7 +91,7 @@ func TestTheTripleTable(t *testing.T) {
 func TestAnEmptyTargetIsTheBuildsTriple(t *testing.T) {
 	t.Setenv("GOOS", "")
 	t.Setenv("GOARCH", "")
-	host, err := Triple(goruntime.GOOS, goruntime.GOARCH)
+	host, err := toolchain.Triple(goruntime.GOOS, goruntime.GOARCH)
 	if err != nil {
 		t.Skipf("this host has no native target: %v", err)
 	}
@@ -115,7 +101,7 @@ func TestAnEmptyTargetIsTheBuildsTriple(t *testing.T) {
 	for _, arch := range []string{"amd64", "arm64"} {
 		t.Setenv("GOOS", "linux")
 		t.Setenv("GOARCH", arch)
-		triple, _ := Triple("linux", arch)
+		triple, _ := toolchain.Triple("linux", arch)
 		if resolved, err := ResolveTarget(Options{}); err != nil || resolved.Target != triple {
 			t.Errorf("for linux/%s the target resolves to %q, %v; want %s", arch, resolved.Target, err, triple)
 		}
@@ -172,11 +158,11 @@ func TestACrossBuildKeysTheBuildsArch(t *testing.T) {
 	}
 	t.Setenv("GOOS", "linux")
 	t.Setenv("GOARCH", other)
-	triple, err := Triple("linux", other)
+	triple, err := toolchain.Triple("linux", other)
 	if err != nil {
 		t.Fatal(err)
 	}
-	hostTriple, err := Triple("linux", goruntime.GOARCH)
+	hostTriple, err := toolchain.Triple("linux", goruntime.GOARCH)
 	if err != nil {
 		t.Fatal(err)
 	}
