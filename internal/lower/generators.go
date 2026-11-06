@@ -609,6 +609,10 @@ func checkGeneratorRoads(program *ir.Program) error {
 	iterables, handed := 0, 0
 	dispatched, stepped, nexts, reads := map[int]bool{}, map[int]int{}, map[int]int{}, map[int]int{}
 	collectionTests := map[int]int{}
+	// A hand-driven next a generator feeds steps its parameter by IteratorNext alone, beside the
+	// parameter's undefined tests (#qk8rztp S2c-2b): a next the rewrite missed would be a CallClosure
+	// reading a generator frame's field, which has none.
+	handNexts, undefinedTests := map[int]int{}, map[int]int{}
 	var visit func(value reflect.Value)
 	visit = func(value reflect.Value) {
 		if !value.IsValid() {
@@ -684,6 +688,14 @@ func checkGeneratorRoads(program *ir.Program) error {
 			} else if ok && read.Of == ir.Object {
 				stepped[read.Local]++
 			}
+		case ir.IteratorNext:
+			if read, ok := iterableViewRead(node.Iterator); ok {
+				handNexts[read.Local]++
+			}
+		case ir.IsUndefined:
+			if read, ok := node.Value.(ir.Read); ok {
+				undefinedTests[read.Local]++
+			}
 		}
 		if expression, ok := value.Interface().(ir.Expression); ok && expression.Type() == ir.Generator {
 			counted++
@@ -707,6 +719,11 @@ func checkGeneratorRoads(program *ir.Program) error {
 		// her option (b)): any other next of the local isn't the dispatch's.
 		if nexts[local] != collectionTests[local] || reads[local] != stepped[local]+nexts[local] {
 			return fmt.Errorf("lower: compiler bug: the iterable view's local %s is read %d times where only its dispatch's %d kind tests and steps may read it", program.Locals[local].Name, reads[local], stepped[local]+nexts[local])
+		}
+	}
+	for local, count := range handNexts {
+		if reads[local] != count+undefinedTests[local] {
+			return fmt.Errorf("lower: compiler bug: the hand-driven view's parameter %s is read %d times where only its %d nexts and %d undefined tests may read it", program.Locals[local].Name, reads[local], count, undefinedTests[local])
 		}
 	}
 	for local, declared := range program.Locals {

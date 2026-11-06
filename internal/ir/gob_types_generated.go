@@ -66,6 +66,7 @@ var gobTypes = []any{
 	IsNull{},
 	IsUndefined{},
 	IterableOf{},
+	IteratorNext{},
 	JSONDecode{},
 	JSONEncode{},
 	JSONNull{},
