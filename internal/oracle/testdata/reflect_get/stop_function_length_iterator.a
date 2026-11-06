@@ -1,0 +1,9 @@
+// A function a run-time key read hands out, read by a key in turn, stops on both backends alike in
+// the Function form: natively a matchAll iterator's next is a closure, and on the JavaScript backend
+// it is Node's own function, which stopped as a runtime value before. Node prints next function and
+// then number.
+import { propertyOf } from './hostErrors.ts';
+
+const next = propertyOf('ab'.matchAll(/a/g), 'next');
+console.log(`next ${typeof next}`);
+console.log(typeof propertyOf(next, 'length'));
