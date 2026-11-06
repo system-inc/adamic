@@ -1,0 +1,21 @@
+// getter_writes_global.a's shape with a class's getter (Memory's and Compiler's ruling on #qk8rztp
+// S2c-2b): Sized's instances are assignable to Tree, so describe's spread takes Sized's getter as one
+// it may run, and reuse doesn't lend or move tree across it. A spread copies own properties only, and
+// a class's getter is its prototype's, so Node runs none: it prints 1 tree1 sized3, then tree1. The
+// rule over-approximates here, the safe direction. describe reads the copy by its named fields,
+// never by Object.keys.
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${String(1)}` };
+class Sized {
+    label = `sized${String(3)}`;
+    get value(): number {
+        tree = { value: 5, label: `swapped${String(5)}` };
+        return 20;
+    }
+}
+function describe(node: Tree, extra: Tree): string {
+    const copy = { ...extra };
+    return `${String(node.value)} ${node.label} ${copy.label}`;
+}
+console.log(describe(tree, new Sized()));
+console.log(tree.label);

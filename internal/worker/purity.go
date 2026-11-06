@@ -91,8 +91,8 @@ func CheckPure(program *ir.Program, function int) error {
 					return err
 				}
 			case ir.ObjectLiteral:
-				// A spread runs every getter its source may own, the set lowering reads by flow off
-				// the accessor registry, never off the source's type (Memory's and Compiler's
+				// A spread runs every getter its source may own, the set lowering reads off the
+				// accessor registry, never a test of the source's type (Memory's and Compiler's
 				// ruling on #qk8rztp S2c-2b), so each must be pure.
 				for _, getter := range node.SpreadGetters {
 					if err := inspect(getter); err != nil {
