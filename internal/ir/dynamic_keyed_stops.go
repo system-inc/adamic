@@ -122,6 +122,31 @@ var DynamicKeyedRegExpStringIteratorNames = DynamicKeyedFunctions{
 	{"every", 1}, {"find", 1}, {"map", 1}, {"filter", 1}, {"take", 1}, {"drop", 1}, {"flatMap", 1},
 }
 
+// DynamicKeyedStatsNames are the functions an fs.Stats inherits on Node, each with the length of the
+// function a read hands out: Stats.prototype's own constructor (Stats) and _checkModeProperty, then
+// StatsBase.prototype's seven is methods, whose own constructor Stats.prototype's shadows. Above
+// StatsBase.prototype is Object.prototype (DynamicKeyedPrototypeNames). Stats.prototype's other names
+// are its four date accessors, which DynamicKeyedStatsFieldNames and native's shape share between
+// them. A run-time key read of a Stats hands one out as Node does (#zhrjf2t, the second host shape
+// it lifts): on the JavaScript backend Node's own, natively one immortal closure for each name with
+// this length (union.c, from dynamic_keyed_names.h), whose call stops loudly, naming the prototype
+// Node's function lives on. TestDynamicKeyedStatsNamesAreNodes and TestDynamicKeyedStatsLengthsAreNodes
+// hold this table to the pinned Node's both ways.
+var DynamicKeyedStatsNames = DynamicKeyedFunctions{
+	{"constructor", 14}, {"_checkModeProperty", 1}, {"isDirectory", 0}, {"isFile", 0}, {"isBlockDevice", 0},
+	{"isCharacterDevice", 0}, {"isSymbolicLink", 0}, {"isFIFO", 0}, {"isSocket", 0},
+}
+
+// DynamicKeyedStatsFieldNames are the fields Node gives an fs.Stats that native's Stats doesn't hold:
+// its own numbers, then Stats.prototype's date accessors, less the four node_fs_file.c's stat shape
+// holds (size, mtimeMs, mtime and atime). A run-time key read of one stops on both backends rather
+// than answer a value native would have to make up (#zhrjf2t; #6xfkdwj fills them).
+// TestDynamicKeyedStatsFieldNamesAreNodes holds this list to the pinned Node's, in order.
+var DynamicKeyedStatsFieldNames = []string{
+	"dev", "mode", "nlink", "uid", "gid", "rdev", "blksize", "ino", "blocks", "atimeMs", "ctimeMs",
+	"birthtimeMs", "ctime", "birthtime",
+}
+
 // DynamicKeyedErrorNames are the properties Node gives its own errors and the native Error doesn't
 // have, so on an Error they stop on both backends even where one side has the name: every Error's
 // stack, an Error's cause, and a system error's errno, syscall, path and dest. Natively most host

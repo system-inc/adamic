@@ -36,7 +36,7 @@ func dynamicKeyedNamesHeader() []byte {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames.Names()}, {"error", ir.DynamicKeyedErrorNames}} {
+	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames.Names()}, {"stats", ir.DynamicKeyedStatsNames.Names()}, {"stats_field", ir.DynamicKeyedStatsFieldNames}, {"error", ir.DynamicKeyedErrorNames}} {
 		fmt.Fprintf(&text, "static const char *const adamic_dynamic_keyed_%s_names[] = {\n", list.name)
 		for _, name := range list.names {
 			fmt.Fprintf(&text, "\t%s,\n", cString(name))
@@ -48,7 +48,7 @@ func dynamicKeyedNamesHeader() []byte {
 	for _, table := range []struct {
 		name      string
 		functions ir.DynamicKeyedFunctions
-	}{{"array_prototype", ir.DynamicKeyedArrayPrototypeNames}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames}} {
+	}{{"array_prototype", ir.DynamicKeyedArrayPrototypeNames}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames}, {"stats", ir.DynamicKeyedStatsNames}} {
 		fmt.Fprintf(&text, "// Each of adamic_dynamic_keyed_%s_names by its index, with Node's length for it.\n", table.name)
 		fmt.Fprintf(&text, "#define ADAMIC_DYNAMIC_KEYED_%s_FUNCTIONS(function) \\\n", strings.ToUpper(table.name))
 		for index, function := range table.functions {
