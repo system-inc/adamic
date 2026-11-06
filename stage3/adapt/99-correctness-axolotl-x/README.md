@@ -105,15 +105,23 @@ the full baseline apply passed. New logs supersede the historical stop.
 PROOF.md records the current checks. Tests write logs outside this hashed
 directory while running; completed evidence is copied here before publication.
 
-## Current verification
+## Current verification and stopping point
 
-The final replay condition compares outcomes only: files written, edits and
-exact refusal text must match between main and main plus 99x, except 99x itself.
-Shared refusals, including 40's builder.ts brand refusal, are recorded baseline
-outcomes. The old file-name and owner-name guard has been removed, and replay
-is continuing from the eight matching records.
+The final replay rule compares outcomes only. Matching refusals, including
+40's builder.ts brand refusal, are baseline records. The first 44 adapter
+pairs match. Pair 45, 95-checker-axolotl-h, differs: main reaches a createProgram
+writer-pin refusal, while after refuses earlier on
+createBasicNodeBuilderModuleSpecifierResolutionHost in checker.ts. That writer
+is one of 99x's owners. Its 95h pin matches main and fails after the two checker
+rewrites. Complete paired records, exact refusal text and their nonempty diff
+are retained under paired-replay/. No other adaptation was modified.
 
-Check 2 passes: adamic types on all 79 compiler roots exits 0 with zero
-diagnostics. All 46 sites remain rewritten. Both full applies, owner contracts
-and 99x's direct no-write replay passed earlier. JavaScript, oracle, negative
-witness and census verification are in progress. See PROOF.md.
+Both full applies, owner contracts and zero-write direct replay pass. The
+79-root type check has zero diagnostics. All nine JavaScript products pass
+the emitted comparison, and the restored-site control detects exactly one
+missed site. The ordinary 79-root census has zero changed first stops, and
+all six CW051 units have before/after measurements. The whole upstream lane
+passes with 106,366 passing, one sanctioned API failure and zero pending.
+The first 40 of 398 standard shards pass; the remaining 358 were not run
+because of the first actual paired-replay difference. See PROOF.md for the
+full measured table and exact stopping point. This branch is not ready to land.

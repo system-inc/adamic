@@ -1,217 +1,235 @@
-# Current continuation: baseline equality is the only replay condition
+# 99x proof: stopped at the first unequal replay outcome
 
-The user superseded both earlier replay conditions. A shared refusal is a
-baseline outcome regardless of file or owner names. 40-explicit-any's builder.ts
-brand refusal is a recorded baseline, not a check failure. The paired replay
-has resumed after its eight matching outcomes and is comparing every remaining
-adapter; only a difference between the trees stops it. Earlier stopping notes
-below are historical.
+The final check 1 condition compares replay outcomes only: files written,
+text edits and exact refusal text must match between main and main plus 99x,
+apart from 99x itself. Shared outcomes are recorded baselines regardless of
+which file or owner they name. No file-name or owner-name guard remains.
 
-Check 2 has now passed: adamic types received all 79 sorted compiler roots
-from /workspace/bind-after in one invocation, exited 0 in 3.650 seconds and
-reported zero diagnostics. The complete type listing is types-after.log.gz;
-arguments, root count, timing and exit are in types-after.json. All 46 sites
-remain rewritten, zero are left as written, and no cast was added.
-
-# 99x proof: revised check 1 stops at the affected-file guard
-
-The user replaced the original zero-refusal replay rule with a paired replay
-comparison. The new records are identical through 40-explicit-any, but both
-refusals name builder.ts, one of the six files covered by the revised rule's
-affected-file condition. That condition fails. The run stopped there; checks
-2 through 6 remain unrun. No new 99x regression is established by this result.
-The adapter is implemented, but the requested verification remains incomplete.
+The first 44 adapter pairs match. Pair 45, 95-checker-axolotl-h, differs.
+The replay stopped there and no later adapter or shard piece was started.
+No other adaptation directory was edited. The branch is not ready to land.
 
 ## Results
 
 | Check | Result |
 | --- | --- |
-| 1 baseline full apply, --build-product | Pass, exit 0 |
-| 1 after full apply, --build-product | Pass, exit 0; 46 rewrites, zero left, six files |
-| 99x owner contract | Pass: six refused malformed states; foreign edit accepted |
-| 99x replay on actual after tree | Zero files and edits; bytes and nanosecond mtimes preserved across 79 roots |
+| 1 full baseline and after applies, --build-product | Both exit 0 |
+| 1 paired replay | First difference at 95-checker-axolotl-h; 44 earlier outcomes match |
+| 99x owner contract | Six malformed/partial states refused; unrelated edit accepted |
+| 99x direct replay | Zero writes and edits; all 79 roots preserve bytes and nanosecond mtimes |
 | CRLF contract | Pass |
-| 1 original ordered replay | Superseded by the user |
-| 1 revised paired replay comparison | Eight adapters compared, identical records, empty diff |
-| 1 revised refusal file/owner guard | Failed at 40-explicit-any: both refusals name builder.ts |
-| 2 Adamic types, all 79 roots | Not run: stopped at check 1 |
-| 3 nine emitted JavaScript files | Not run: stopped at check 1; no emitted diff hunks |
-| 4 upstream oracle and shards | Not run: stopped at check 1 |
-| 5 restored-site negative witness | Fixture and patch prepared; detection not run |
-| 6 latent and ordinary per-file census | Not run: stopped at check 1 |
+| 2 adamic types, all 79 roots together | Exit 0, zero diagnostics |
+| 3 all nine emitted JavaScript products | Pass; seven byte-identical, two contain exactly 46 rewritten sites |
+| 4 unchanged whole lane | PASS: 106,366 passing, one sanctioned API failure, zero pending |
+| 4 standard shards | First 40 of 398 pass; remaining 358 not run after check 1 differs |
+| 5 restored-site negative control | Build exits 0; comparison exits 1 and reports exactly one missed site |
+| 6 ordinary census | All 79 first-stop records unchanged; 73 stop at core.ts:810:89 |
+| 6 CW051 latent census | All six units measured before and after, in 12 bounded pieces |
 
-## Historical stop under the original rule
+Rewritten: 46. Left as written: zero. Six unused import specifiers are removed.
+No cast is added. core.ts and binder.ts source remain byte-identical to main.
 
-The first three adapters, 00-setup, 10-type-imports and
-20-optional-declarations, exited 0 with no byte or mtime changes. The next
-adapter, 30-indexed-reads, exited 1 with:
+## Exact check 1 difference
 
-```text
-declined site changed: core.ts:992:21
-```
+Both sides exit 1 with zero files written and zero edits. Their complete
+refusal text differs because 95h reaches different writer-owner pins:
 
-Its sites.json row names addRange, expression from[i], occurrence 2 of 2,
-action decline. On the completed after tree the expression is at core.ts:1002:21
-and its parent is from[i]!. The stop is in addRange, which is outside this
-adaptation's 15 owners. It is a declined-site guard, not an overlapping owner
-pin refusal. No other adaptation directory was edited.
+| Tree | File | Refused owner |
+| --- | --- | --- |
+| Before, main | src/compiler/program.ts | createProgram |
+| After, main plus 99x | src/compiler/checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost |
 
-core.ts is byte-identical between the successful main baseline and the after
-tree. Its SHA-256 is
-3dde48b17a7ea7c9475f28b0dfa1b8c3a407f6b4966c4f6f6c4e6769e4920f3e.
-That hash is measurement evidence only, never an adaptation precondition.
-replay-stop-detail.json records the complete row, actual AST parent and owner.
-ordered-replay/results.json records exits and changed-file lists; per-adapter
-logs and the driver log are retained alongside it. The failure made zero writes.
+95h asserts `writer owner shape` at adapt.cjs:35. On main, the checker-host
+writer matches its pinned SHA-256 9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1.
+After 99x, that same writer hashes to
+48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3.
+That function is one of 99x's 15 owners and contains its two checker rewrites.
 
-## Commands and provenance
+Main gets past that writer, then hits an existing createProgram mismatch:
+actual 729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854,
+expected 505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152.
+This is not the earlier shared baseline outcome. The first refusal changes,
+and the exact-text records differ under the user's final condition.
 
-The base is unmodified main 3e395f9e5a7038d859ec8930be72cde68d8be3ff. An isolated worktree at
-/workspace/bind-main provided the baseline adaptation set, excluding this
-branch's initial evidence-only directory. The branch was never based on 99w.
-99w's adapt.cjs, README.md and PROOF.md were read at
-06dad75d0bb482b47046370a60341c054899afed. 99k's adapter and documentation were
-read from main. No Apple compiler overlay was used.
+The complete paired records are paired-replay/before.json and after.json.
+Their nonempty records.diff contains the exact differing assertion payloads.
+Every executed adapter has separate compressed logs for both trees.
+final-replay-stop.json maps both refusal hashes to their precise owners;
+replay-checker-owner-hashes.json independently shows the before checker writer
+matches 95h's pin and the after writer does not. 40's builder.ts brand refusal,
+30's addRange refusal and all other matching failures remain baseline records.
+Historical stop files from superseded rules are retained as audit history.
+
+## Provenance and reproduction
+
+Base: unmodified main 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
+Upstream: TypeScript 6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
+99w's adapt.cjs, README.md and PROOF.md were read from
+06dad75d0bb482b47046370a60341c054899afed; 99k's adapter and documentation were
+read from main. This branch was never based on 99w. No Apple compiler overlay
+or compiler implementation change was used.
+
+After sourcing /workspace/adamic-tools/env.sh, cloud/setup.sh completed and
+npm ci installed stage3/api's pinned packages. Setup does not supply the
+upstream source checkout, so the authorized Microsoft TypeScript pin was
+cloned into /workspace/typescript-source. Both full applies used --build-product:
 
 ```sh
-source /workspace/adamic-tools/env.sh
-bash cloud/setup.sh > /workspace/scratch/bind-setup.log 2>&1
-npm ci --prefix stage3/api > /workspace/scratch/bind-npm-api.log 2>&1
-# Setup does not supply the upstream source checkout; clone the authorized pin.
-git clone --filter=blob:none --no-checkout https://github.com/microsoft/TypeScript.git /workspace/typescript-source
-git -C /workspace/typescript-source checkout 050880ce59e30b356b686bd3144efe24f875ebc8
-# Run from /workspace/bind-main for the baseline:
+# From an isolated main worktree at /workspace/bind-main:
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product /workspace/bind-before
-# Run from this branch for the after tree:
+# From this branch, after generating the owner pins:
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product /workspace/bind-after
-NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-x/generate.cjs /workspace/bind-before /workspace/typescript-source
 NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-x/contract.cjs /workspace/bind-before
-python3 stage3/adapt/99-correctness-axolotl-x/replay.py /workspace/adamic /workspace/bind-after /workspace/scratch/bind-ordered-replay
 ```
 
-Pin generation ran after baseline apply and before after apply. The command
-list groups apply commands together for readability. All check outputs went
-to files. Full apply logs are baseline-apply.log.gz and after-apply.log.gz.
-Setup, npm, pin generation, pristine symbol scan, contract and actual-tree
-self replay each have their own compressed logs. The self replay checks all
-79 compiler source files' SHA-256 and nanosecond mtime before and after calling
-adapt on the actual after tree. An unmodified main Adamic and ordinary census
-tool were built successfully, but no type or lowering measurement ran.
+Full logs are baseline-apply.log.gz, after-apply.log.gz, setup.log.gz,
+npm-api.log.gz, generate.log.gz and contract.log.gz. self-replay.log.gz records
+all 79 byte/mtime checks on the actual completed after tree. owners.json pins
+15 exact before/after function texts and their SHA-256 values; no whole-file
+hash gates adaptation. source-delta.json confirms exactly six changed source
+files. Evidence additions change product keys without changing the frozen
+transformation. All commits touch only this directory; every push is plain
+to typescript/maybebind-adapt.
 
-The initial missing-source stop remains in check1-before.log and
-prerequisites.log as historical evidence, superseded by this continuation's
-successful full applies. Completed evidence commits change product keys
-without changing the frozen transformation. All commits touch only this
-directory, and all pushes use typescript/maybebind-adapt without force.
+The revised paired run uses independent copies to preserve both measured trees:
+
+```sh
+python3 stage3/adapt/99-correctness-axolotl-x/paired_replay.py /workspace/adamic /workspace/bind-replay-before /workspace/bind-replay-after /workspace/scratch/bind-paired-replay
+```
+
+It resumed after eight already-matching records with --resume when the user
+removed the old file-name guard. It records actual writes, including writes
+with unchanged bytes, and exact edits/refusals. Only root paths are normalized.
+The replay was paused during the whole lane's CPU-sensitive test run, then
+resumed and reached the first actual outcome difference reported above.
+
+## Check 2
+
+The unmodified main Adamic binary receives all 79 sorted src/compiler .ts
+paths in one invocation. It exits 0 in 3.650 seconds with zero diagnostics.
+The full type listing is types-after.log.gz; exact arguments and timing are
+in types-after.json. No site required fallback or a cast.
+
+## Check 3 and negative control
+
+Both ordinary `npm run build:compiler` builds exit 0 using the same upstream
+lockfile install. Public and internal declaration files are byte-identical;
+javascript/declarations.json records their hashes. Seven of the nine normal
+JavaScript files are byte-identical. _tsc.js and typescript.js each contain
+exactly 46 corresponding compiler-site rewrites. Existing services calls
+outside src/compiler remain unchanged.
+
+Upstream's normal esbuild target expands the new optional bindings into
+conditionals and generated temporaries. _tsc.js eliminates the now-unused
+core helper, which also removes its naming collision with binder's local
+helper. These are automatic emitter consequences of the 46 source rewrites
+and import cleanup, and are visible in the raw hunks below.
+
+compare.cjs parses the complete products with stock TypeScript 6.0.3. It matches
+only the inventoried owner/member pairs and verifies receiver/temporary symbol
+identity. It reconstructs those 46 expressions, normalizes generated temporary
+names and their bookkeeping declarations, parentheses around the reconstructed
+call, the unused _tsc helper, and binder's generated helper name. The remaining
+complete ASTs must be identical. Both changed files pass with 46 expected
+and 46 bound sites each; no other AST difference remains. Complete hashes,
+comparison results, ordinary build logs and raw diffs are under javascript/.
+
+The negative fixture restores one builder.ts call in
+createBuilderProgram.emitBuildInfo, with its required import. Its prepared
+patch exactly matches the actual source delta. The normal build exits 0.
+The same emitted comparison exits 1 and reports exactly one unique original
+site, host.writeFile in emitBuildInfo. Each changed bundle has 45 bound forms
+and that one restored original form; seven files remain byte-identical.
+The exact report, full logs and normalized negative diffs are retained with
+the restored-site fixtures.
+
+## Check 4, completed pieces and stop
+
+A frozen worktree at 21ad49c10 keeps oracle input hashing stable as evidence
+commits are published. Its adapt.cjs, engine.cjs, owners.json and inventory.json
+bytes match this branch, and all 746 src files in its artifact match the
+checked after tree. oracle/source-identity.json records these assertions.
+The unchanged standard prepare_shards.py producer exits 0 in 804.7 seconds;
+apply, locked install, build and harness phases all exit 0.
+
+The unchanged whole lane command is:
+
+```sh
+stage3/lane/run.sh /workspace/scratch/bind-lane-whole --artifact ARTIFACT
+```
+
+It exits 0 with PASS in 365.7 seconds. All runners, eight workers, original
+40-second test timeouts and sanctioned API lines are unchanged. The exact
+result is 106,366 passing, one sanctioned public-API failure and zero pending.
+The complete task observations, execution metadata, report, verdict, raw API
+diff and logs are retained under oracle/whole/.
+
+The first bounded shard piece executes 40 unchanged standard manifest units
+and all 40 pass in 98.4 seconds. Shards use main's supported
+STAGE3_ADAPTED_TREE product path with a symlink-only view of that same artifact
+and its exact locked dependency installation. Standard shard.py performs its
+normal identity, count, timeout and API checks. No test or expected result is
+changed. Each unit's reports, observations and full logs are retained under
+oracle/shards/; piece metrics and driver output are under oracle/pieces/0/.
+Successful redundant scratch views are discarded; all observations and logs
+are retained. The first piece includes the sanctioned API unit.
+
+The check 1 difference was observed after this completed piece. The remaining
+358 shards and the complete shard-to-whole union comparison were not run.
+Check 4 is therefore incomplete, despite the passing whole lane and first
+40 shards. Producer, whole and shard pieces each have a 1440-second outer
+bound and each completed in less than 25 minutes.
+
+## Check 6 ordinary census
+
+Both ordinary runs complete. All 79 single-root TypeScript records are
+present, and every normalized first-stop record is identical. There are zero
+changed first stops. Seventy-three stop at core.ts:810:89 with Refused: a cast
+the runtime can't check. The other six first stops are unchanged as well.
+Their exact kinds, locations and reasons are in census/comparison.json and
+the complete before/after summaries. Raw streams and logs are compressed
+under census/. Non-source JSON rows and the combined-program row emitted by
+the tool are retained but excluded from the 79-root comparison.
 
 ## CW051 before and after
 
-The six unit identifiers below come from typescript/core-walls-sort at
-ad29102e9c145c5b480629227574d2ffa235a4b1. That reference records their shared
-stop as core.ts:1523:12, a call through ?. (an optional call). Those historical
-observations are not new baseline measurements. The container-fit selector
-reference was inspected at 654092b95416580c3e5be1f968fb8b14755b4481.
+The six unit identities come from core-walls-sort at
+ad29102e9c145c5b480629227574d2ffa235a4b1. The unit selector comes from
+container-fit-census at 654092b95416580c3e5be1f968fb8b14755b4481.
+The census-only overlay uses main's existing latent harness; its two added
+hooks select scheduled files and top-level units without changing registration,
+dependency bodies or first-error behavior. Full/speculative modes are disabled.
+All 12 bounded pieces exit 0, each contains exactly one requested attempted
+unit, and every run reports checker_rejected false. File-wide refusal_scan
+findings are retained separately from the selected unit's lowering stop.
+The maximum piece wall time is 393.4 seconds, below 25 minutes.
 
-| Recorded unit | New before run | New after run |
+Historical core-walls locations differ from current main. The helper is now
+at line 1533, and the checker-host unit stops earlier on a method-presence
+boundary. These are the current measured stops, all NotYet:
+
+| Unit | Before | After |
 | --- | --- | --- |
-| src/compiler/checker.ts:54277:1 | Not run | Not run |
-| src/compiler/watch.ts:673:1 | Not run | Not run |
-| src/compiler/watchPublic.ts:123:1 | Not run | Not run |
-| src/compiler/executeCommandLine.ts:812:1 | Not run | Not run |
-| src/compiler/executeCommandLine.ts:1011:1 | Not run | Not run |
-| src/compiler/executeCommandLine.ts:1034:1 | Not run | Not run |
+| createBasicNodeBuilderModuleSpecifierResolutionHost | src/compiler/checker.ts:54279:37 | src/compiler/checker.ts:54278:37 |
+| createWatchHost | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:676:20 |
+| createIncrementalCompilerHost | src/compiler/core.ts:1533:12 | src/compiler/watchPublic.ts:124:23 |
+| performBuild | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
+| createWatchOfConfigFile | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
+| createWatchOfFilesAndCompilerOptions | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
 
-The ordinary 79-root census also did not run; no changed-first-stop result
-is claimed. The negative fixture restores one builder.ts call and its import,
-but its JavaScript comparison did not run. No Go file was added. All processes
-started for this task have exited; no background work remains.
+The checker-host reason on both sides is a presence test of a method whose
+presence the receiver's construction does not prove. All other rows report
+a call through ?. (an optional call), moving from core's helper to the direct
+optional-binding expression. No native-lowering completion is claimed.
+latent/comparison.json retains exact reasons, original unit identifiers and
+timings. Every piece's selection, raw records, log and timers is retained
+under latent/before and latent/after. build_latent.py reproduces the existing
+measurement overlay plus the scheduling-only selector; all added Go sources
+are named .go.txt. No background task or suspended replay remains.
 
-## Revised check 1: paired replay
+## All emitted JavaScript diff hunks
 
-The requested replacement condition compares adapter outcomes between main
-and main plus 99x, excluding 99x itself, and requires that no refusal name any
-of 99x's six source files or its named owners. paired_replay.py implements
-both conditions and stops at their first failure.
-
-Independent copies preserve the successful full-apply trees for future work:
-
-```sh
-cp -a --reflink=auto /workspace/bind-before /workspace/bind-replay-before
-cp -a --reflink=auto /workspace/bind-after /workspace/bind-replay-after
-python3 stage3/adapt/99-correctness-axolotl-x/paired_replay.py /workspace/adamic /workspace/bind-replay-before /workspace/bind-replay-after /workspace/scratch/bind-paired-replay > /workspace/scratch/bind-paired-replay.log 2>&1
-```
-
-For each adapter, snapshots record the actual files written, including writes
-that preserve bytes. Text edits are recorded as affected files and added/removed
-line counts; complete patches are retained if any edit occurs. Neither tree
-had any writes or edits during these eight adapters. A nonzero exit records
-the complete refusal output, with only the tree root normalized to <tree>.
-Raw per-adapter logs are retained for both sides. Failures do not stop traversal
-unless records differ or the refusal names a covered file or owner.
-
-| Adapter | Before | After | Equal |
-| --- | --- | --- | --- |
-| 00-setup | Exit 0, zero writes | Exit 0, zero writes | Yes |
-| 10-type-imports | Exit 0, zero writes | Exit 0, zero writes | Yes |
-| 20-optional-declarations | Exit 0, zero writes | Exit 0, zero writes | Yes |
-| 30-indexed-reads | Refuses core.ts:992:21 | Same refusal | Yes |
-| 31-indexed-reads-checker | Exit 0, zero writes | Exit 0, zero writes | Yes |
-| 32-indexed-reads-program | Refuses appendSourceMap runtime drift | Same refusal | Yes |
-| 33-indexed-reads-emit | Refuses sourcemap.ts:215 site drift | Same refusal | Yes |
-| 40-explicit-any | Refuses missing builder.ts brands | Same refusal | Yes |
-
-The two records are paired-replay/before.json and paired-replay/after.json.
-Their exact diff, paired-replay/records.diff, is empty (zero bytes).
-paired-replay/status.json records the failed affected-file condition.
-The full shared refusal at 40-explicit-any includes:
-
-```text
-Error: missing reviewed brands: src/compiler/builder.ts
-```
-
-40's classes.cjs matches brands by key and absolute line. The relevant owners
-are IncrementalBuildInfoFileId and IncrementalBuildInfoFileIdListId, neither
-of which is one of 99x's named function owners. The brand declarations are
-already typed undefined in both trees. Its reviewed lines are 1074 and 1076;
-main's actual lines are 1098 and 1100, and after's are 1097 and 1099. The one-line
-after shift is the removed maybeBind import. Both trees miss the original
-line pins, so this is a shared baseline failure. The rule's file-name condition
-still fails because it names builder.ts. No other adaptation was changed.
-paired-replay-stop-detail.json retains keys, owners and actual/pinned lines.
-
-The source comparison in source-delta.json confirms that the original complete
-src trees differ in exactly the intended six files, with core.ts unchanged.
-The revised run did not reach 99x or later adapters. 99x's direct no-write
-replay and contracts passed in the earlier completed piece. No types, emitted
-JavaScript, oracle, negative detection or census measurements were added in
-this continuation. The six CW051 rows above remain unmeasured. All processes
-started for this continuation have exited.
-
-## Check 3: all nine ordinary emitted JavaScript products
-
-Both ordinary `npm run build:compiler` builds exit 0 using the same upstream
-lockfile install. Seven top-level JavaScript products are byte-identical.
-_tsc.js and typescript.js each contain exactly the 46 rewritten compiler
-sites. Existing services calls outside src/compiler are preserved.
-
-Upstream targets older JavaScript, so its normal esbuild output expands each
-new optional binding into a conditional plus a generated temporary. _tsc.js
-also eliminates the unused core maybeBind helper and consequently stops
-renaming binder's separate local helper to maybeBind2. These are automatic
-emitter consequences of the 46 rewrites and import cleanup. core.ts and
-binder.ts source remain byte-identical to main.
-
-compare.cjs parses the complete products with stock TypeScript 6.0.3. It matches
-only the 46 inventoried owner/member pairs, verifies receiver and temporary
-binding identities, and reconstructs the original call form for comparison.
-Only compiler temporary names, parentheses around the reconstructed call,
-the unused _tsc helper and binder helper's generated name are normalized.
-The remaining complete ASTs must be identical. Both changed bundles pass,
-with exactly 46 expected and 46 rewritten sites each; no other AST difference
-remains. All nine results and byte hashes are in javascript/comparison.json.
-Complete build and comparison logs are retained in javascript/.
-
-All raw emitted diff hunks follow, including generated declarations and names.
+Seven files have no hunks. The complete raw differences in the other two are:
 
 ### _tsc.js
 
@@ -1219,93 +1237,3 @@ All raw emitted diff hunks follow, including generated declarations and names.
      options,
      baseCompilerOptions,
 ```
-
-## Check 5: one restored-site negative control
-
-In a private copy, the first builder.ts call in
-createBuilderProgram.emitBuildInfo was restored to maybeBind(host,
-host.writeFile), with its required import. The prepared patch exactly matches
-the actual source delta. The ordinary compiler build exits 0.
-
-The same nine-product comparison exits 1 and reports exactly one unique site:
-createBuilderProgram.emitBuildInfo, receiver host, member writeFile. Each of
-the two changed bundles has 45 expected bound forms and exactly that one
-remaining original form; the other seven products remain byte-identical.
-The normalized comparison diff has one restored expression in each bundle.
-This verifies that check 3 detects a missed adaptation site. Full restoration,
-build and comparison logs, the exact report and the two negative diffs are
-retained with the restored-site fixtures.
-
-## Check 6 latent component: all six CW051 units, both trees
-
-All 12 bounded pieces exit 0. The largest piece takes 393.4 seconds, below
-25 minutes. The scheduling selector is copied from the requested container-fit
-reference at 654092b95416580c3e5be1f968fb8b14755b4481. The overlay uses unmodified
-main's latent measurement harness. Its only extra hooks select scheduled files
-and top-level units; registration and dependency bodies remain unchanged.
-All runs report checker_rejected false. Each retained piece contains exactly
-one requested attempted unit and at most one first-error lowering finding.
-File-wide refusal_scan findings are retained but are not unit lowering stops.
-
-The current main baseline differs from the historical core-walls snapshot:
-core's helper is now at line 1533, and the checker-host unit stops first on a
-method-presence boundary. The measured table below reports current main.
-The after locations include the removed import's one-line shift.
-
-| Unit | Before first lowering stop | After first lowering stop |
-| --- | --- | --- |
-| createBasicNodeBuilderModuleSpecifierResolutionHost | NotYet: src/compiler/checker.ts:54279:37 | NotYet: src/compiler/checker.ts:54278:37 |
-| createWatchHost | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:676:20 |
-| createIncrementalCompilerHost | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watchPublic.ts:124:23 |
-| performBuild | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
-| createWatchOfConfigFile | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
-| createWatchOfFilesAndCompilerOptions | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
-
-The checker-host stop on both trees is a presence test of a method whose
-presence the receiver's construction does not prove. The other five units
-stop on a call through ?. before and after: before in core's helper, after
-at the direct optional-binding expression. This measures moved stops and
-does not claim native lowering completes. latent/comparison.json retains all
-exact reasons, reference identifiers and timings. All per-piece records,
-unit plans, logs and timers are retained under latent/before and latent/after.
-
-## Oracle preparation piece
-
-The standard prepare_shards.py producer completed in 804.7 seconds under a
-1440-second outer limit. Apply, locked install, ordinary build and harness
-phases all exit 0. Its source tree is byte-identical across all 746 src files
-to the checked after tree. The frozen worktree at 21ad49c10 has the exact same
-adapt.cjs, engine.cjs, owners.json and inventory.json bytes. Freezing its inputs
-keeps later evidence commits from invalidating the prepared artifact hash.
-The whole lane and shards run its unchanged main lane/oracle code.
-
-The public and internal declaration outputs are byte-identical to baseline;
-their hashes are retained in javascript/declarations.json. Oracle producer
-logs, phase exits and source-identity evidence are under oracle/.
-
-## Check 6 ordinary component: all 79 compiler roots
-
-Both ordinary per-file runs complete successfully. All 79 TypeScript entry
-roots are present on each side, and every normalized first-stop record is
-identical. There are zero changed first stops. Seventy-three roots stop at
-core.ts:810:89 with Refused: a cast the runtime can't check. The other six
-records are unchanged as well; their exact kinds, locations and reasons are
-in census/comparison.json and the two complete summaries.
-
-The ordinary tool also emits rows for non-source JSON files and a combined
-program row. Complete streams are retained; the 79-root comparison selects
-only single-root .ts records. Nothing is suppressed or treated as accepted.
-Census logs and all raw records are retained under census/. This completes
-both ordinary and six-unit latent components of check 6.
-
-## Check 4 whole-lane piece
-
-The unchanged stage3/lane/run.sh --artifact command exits 0 with PASS in
-365.7 seconds, below the 25-minute piece limit. It reports exactly 106,366
-passing tests, one sanctioned public-API failure and zero pending tests.
-All runners, eight workers, original test timeouts and sanctioned API lines
-are unchanged. The oracle uses the frozen verified after-tree artifact.
-The replay was temporarily paused for the whole test's CPU budget and has
-now resumed. Whole task observations, verdict, execution metadata, API diff
-and full logs are retained under oracle/whole/. The 398 standard shards
-are the remaining part of check 4.
