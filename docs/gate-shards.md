@@ -21,7 +21,7 @@ adamic-gate merge -out /workspace/merged /workspace/shard-{0,1,2,3,4,5,6,7}
 adamic-gate compare /workspace/merged /workspace/whole.jsonl
 ```
 
-The external launcher supplies the boxes. Indices are zero based. Each output directory must
+The external launcher supplies the boxes. Indices are zero-based. Each output directory must
 be new. Merge works from the repository checkout used by the workers, re-enumerates it, and
 writes `merged.json` and the concatenated raw `test.jsonl`. A red merge retains its evidence
 and exits 1. Compare exits 1 for a different test name, verdict, or distinct terminal-event
