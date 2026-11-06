@@ -545,6 +545,8 @@ func (a *analysis) origins(value ir.Expression) roots {
 		}
 	case ir.BoundMethod:
 		add(result, a.origins(node.Object))
+		// The saved own closure survives a later replacement of the field.
+		add(result, a.elements(node.Object))
 		for _, fixed := range node.Fixed {
 			add(result, a.origins(fixed))
 		}
