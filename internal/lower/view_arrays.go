@@ -75,6 +75,136 @@ func viewArrayRoadOf(node any) viewArrayRoad {
 	return road
 }
 
+// viewElementKey is which element reads get a checked view's element check (Lower's ruling on
+// #6wfvfhm): a read of E is checked when E is comparable to the element type of an array some view
+// in the program holds, or when E is or holds a type parameter, any or unknown. Viewed is every
+// such element type, collected before any view is made or any read lowers (collectViewedElements).
+// Every checks each read, where the pre-pass can't decide. Misses are the array contracts lowering
+// made whose element viewed lacks: any one means a read may have gone unchecked, and the program
+// is lowered again with every set (lowerCheckedWithCycleTypes).
+type viewElementKey struct {
+	every   bool
+	viewed  map[*checker.Type]bool
+	order   []*checker.Type
+	related map[*checker.Type]bool
+	misses  []string
+}
+
+// collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
+// (a speculation's result is a cast too), so it reads every one in every module the program loads,
+// .a and .ts alike, and collects the element type of every array its target can hold, through
+// the edges viewContract builds contracts along. A target that names a type parameter is
+// instantiated where it lowers, past what the pre-pass can see, so it sets every.
+func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
+	key := l.elementKey
+	if key == nil || key.every {
+		return
+	}
+	key.viewed = map[*checker.Type]bool{}
+	key.related = map[*checker.Type]bool{}
+	seen := map[*checker.Type]bool{}
+	var hold func(target *checker.Type, arm bool)
+	hold = func(target *checker.Type, arm bool) {
+		if target == nil || seen[target] {
+			return
+		}
+		seen[target] = true
+		switch {
+		case target.Flags()&checker.TypeFlagsUnionOrIntersection != 0:
+			for _, member := range target.Types() {
+				hold(member, true)
+			}
+			for _, property := range l.checker.GetPropertiesOfType(target) {
+				hold(l.checker.GetTypeOfSymbol(property), false)
+			}
+		case l.checker.IsArrayType(target):
+			element := l.checker.GetElementTypeOfArrayType(target)
+			if element == nil {
+				key.every = true
+				return
+			}
+			if !key.viewed[element] {
+				key.viewed[element] = true
+				key.order = append(key.order, element)
+			}
+			if element.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || l.mentionsTypeParameter(element, map[*checker.Type]bool{}) {
+				key.every = true
+			}
+			hold(element, false)
+		case checker.IsTupleType(target):
+			for _, element := range l.checker.GetTypeArguments(target) {
+				hold(element, false)
+			}
+		case target.Flags()&checker.TypeFlagsObject != 0:
+			signatures := append(append([]*checker.Signature{}, l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)...), l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)...)
+			if len(signatures) != 0 {
+				// A callable's contract is a leaf, but a callable union arm's holds its parameters
+				// and result (view_unions_callable_members.go).
+				if arm {
+					for _, signature := range signatures {
+						for _, parameter := range signature.Parameters() {
+							hold(l.checker.GetTypeOfSymbol(parameter), false)
+						}
+						hold(l.checker.GetReturnTypeOfSignature(signature), false)
+					}
+				}
+				return
+			}
+			for _, property := range l.checker.GetPropertiesOfType(target) {
+				hold(l.checker.GetTypeOfSymbol(property), false)
+			}
+		}
+	}
+	view := func(target *checker.Type) {
+		if target == nil {
+			return
+		}
+		if l.mentionsTypeParameter(target, map[*checker.Type]bool{}) {
+			key.every = true
+			return
+		}
+		hold(target, false)
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindAsExpression, ast.KindTypeAssertionExpression:
+			view(l.checker.GetTypeAtLocation(node))
+		case ast.KindTypePredicate:
+			if written := node.AsTypePredicateNode().Type; written != nil {
+				view(l.checker.GetTypeAtLocation(written))
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+}
+
+// elementKeyed is whether a read of element is checked. Comparable is assignable either way: a
+// wider read (object, a Node supertype) takes a viewed Node, and so does a narrower one, since
+// filter with a type predicate, or a narrowing, hands a viewed Node out as an Identifier, and Node
+// isn't assignable to Identifier.
+func (l *lowering) elementKeyed(element *checker.Type) bool {
+	key := l.elementKey
+	if key == nil || key.every || element.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || l.mentionsTypeParameter(element, map[*checker.Type]bool{}) {
+		return true
+	}
+	if related, known := key.related[element]; known {
+		return related
+	}
+	related := false
+	for _, viewed := range key.order {
+		if l.checker.IsTypeAssignableTo(viewed, element) || l.checker.IsTypeAssignableTo(element, viewed) {
+			related = true
+			break
+		}
+	}
+	key.related[element] = related
+	return related
+}
+
 func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElementCheck, error) {
 	target := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(source)))
 	element := l.viewArrayElementType(target)
@@ -83,10 +213,19 @@ func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElemen
 	}
 	// The key is the element type, mutable array or readonly: filter, map and slice hand a viewed readonly
 	// array's own elements to a new mutable array, so a mutable array can hold viewed elements too (Lower's seam 1
-	// on #6wfvfhm). The price is a check on every element read of a union array whose element type has a contract,
-	// viewed or not. The check reads its array lent, as ArrayIndex does, so it adds no ownership calls.
+	// on #6wfvfhm). It's scoped by what the program views (viewElementKey), so a program that views no array has
+	// no check at all. The check reads its array lent, as ArrayIndex does, so it adds no ownership calls.
 	element = l.concrete(element)
 	check := &ir.ViewElementCheck{Where: l.program.Where(node), ViewType: l.checker.TypeToString(element)}
+	if !l.elementKeyed(element) {
+		// Where no view holds an array, nothing can demand a check. Where one does, an unrelated
+		// read is marked, so checkViewArrays reads it raw rather than stopping it as unchecked.
+		if len(l.elementKey.order) == 0 {
+			return nil, nil
+		}
+		check.Unrelated = true
+		return check, nil
+	}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return check, nil
 	}
@@ -129,7 +268,7 @@ func (l *lowering) viewArrayIndex(node, source *ast.Node, read ir.ArrayIndex) (i
 	if err != nil || check == nil {
 		return read, err
 	}
-	return ir.ViewElement{Array: read.Array, Index: read.Index, Relative: read.Relative, Contract: check.Contract, Where: check.Where, ViewType: check.ViewType, Of: read.Type()}, nil
+	return ir.ViewElement{Array: read.Array, Index: read.Index, Relative: read.Relative, Contract: check.Contract, Where: check.Where, ViewType: check.ViewType, Of: read.Type(), Unrelated: check.Unrelated, Optional: read.Optional}, nil
 }
 
 func elementContractCheckable(program *ir.Program, id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
@@ -327,6 +466,34 @@ func (l *lowering) checkViewArrays() error {
 		}
 	}
 	rewrite := func(node any) any {
+		// A read the key relates to no viewed element type can't hand out a viewed element. It reads
+		// raw, and nothing here stops it (viewElementKey).
+		switch value := node.(type) {
+		case ir.ViewElement:
+			if value.Unrelated {
+				return ir.ArrayIndex{Array: value.Array, Index: value.Index, Element: value.Of.Present(), Relative: value.Relative, Optional: value.Optional}
+			}
+		case ir.ArrayVisit:
+			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
+				value.ElementCheck = nil
+				return value
+			}
+		case ir.ArrayMap:
+			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
+				value.ElementCheck = nil
+				return value
+			}
+		case ir.ArrayReduce:
+			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
+				value.ElementCheck = nil
+				return value
+			}
+		case ir.ForOf:
+			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
+				value.ElementCheck = nil
+				return value
+			}
+		}
 		var array ir.Expression
 		var check *ir.ViewElementCheck
 		var element ir.Expression
@@ -451,7 +618,7 @@ func (l *lowering) checkViewArrays() error {
 				if value.Contract != 0 && program.ViewContracts[value.Contract-1].Of != 0 {
 					element = program.ViewContracts[value.Contract-1].Of
 				}
-				return ir.ArrayIndex{Array: value.Array, Index: value.Index, Element: element, Relative: value.Relative}
+				return ir.ArrayIndex{Array: value.Array, Index: value.Index, Element: element, Relative: value.Relative, Optional: value.Optional}
 			case ir.ArrayVisit:
 				value.ElementCheck = nil
 				return value
