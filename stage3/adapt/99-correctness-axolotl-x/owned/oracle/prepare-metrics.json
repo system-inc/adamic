@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "stage3/lane/prepare_shards.py",
+    "/workspace/scratch/bind-owned-oracle-cache"
+  ],
+  "exit": 0,
+  "seconds": 436.37386569200044,
+  "limit_seconds": 1440
+}

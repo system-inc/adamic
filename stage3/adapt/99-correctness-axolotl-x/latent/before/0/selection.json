@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "file": "src/compiler/checker.ts",
+      "all_units": false,
+      "units": [
+        "src/compiler/checker.ts:54277:1"
+      ]
+    }
+  ],
+  "expected_units": [
+    "src/compiler/checker.ts:54277:1"
+  ],
+  "reference": "src/compiler/checker.ts:54277:1",
+  "name": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "adapter": "00-setup",
+    "exit": 0,
+    "changed": [],
+    "details": []
+  },
+  {
+    "adapter": "10-type-imports",
+    "exit": 0,
+    "changed": [],
+    "details": []
+  },
+  {
+    "adapter": "20-optional-declarations",
+    "exit": 0,
+    "changed": [],
+    "details": []
+  },
+  {
+    "adapter": "30-indexed-reads",
+    "exit": 1,
+    "changed": [],
+    "details": []
+  }
+]

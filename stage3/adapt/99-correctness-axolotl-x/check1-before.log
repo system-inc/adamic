@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/apply.py", line 398, in <module>
+    main()
+  File "/workspace/adamic/stage3/apply.py", line 382, in main
+    build_product(out)
+  File "/workspace/adamic/stage3/apply.py", line 259, in build_product
+    source = typescript_source(pin)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/apply.py", line 175, in typescript_source
+    raise RuntimeError(f'set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs\' TypeScript {pin["tag"]} '
+RuntimeError: set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs' TypeScript v6.0.3 checkout at 050880ce59e30b356b686bd3144efe24f875ebc8

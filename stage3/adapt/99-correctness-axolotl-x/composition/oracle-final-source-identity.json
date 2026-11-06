@@ -1,0 +1,48 @@
+{
+  "status": "pass",
+  "reason": "Final validation counts parenthesized and other symbol-resolved core call expressions independently of rewrite eligibility.",
+  "matrix_unchanged": true,
+  "oracle_outputs_identical": {
+    "x": {
+      "artifact": "5fcfc5270530759801cf7fe8e6c69fb058ff0fda2c00130ac52e1eac78d4cadd",
+      "source_files_identical": 746,
+      "all_nine_javascript_products_byte_identical": true,
+      "javascript_sha256": {
+        "_tsc.js": "b31e7853d13f1992fe3dd3678e222e95ccc5f5323903e5e40780a1ccbbb85f7b",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "typescript.js": "fa93cabe664186db0fd054dd08d628c1b780840c0576506fdedd2aaf04aa7dbd",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+      },
+      "final_apply_commit": "db6657e7072eec12fbfbc1fcf11062e3e0777315"
+    },
+    "32x": {
+      "artifact": "505930e71d900a91e886e3d153b169858decc4c848b3b2214c56010dc0608c8b",
+      "source_files_identical": 746,
+      "all_nine_javascript_products_byte_identical": true,
+      "javascript_sha256": {
+        "_tsc.js": "38a4eff303802ef2fcb8c0950e2bd0ad897bce9898753c5822db8f26f91b6882",
+        "_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "typescript.js": "b39bc726223227b185e3549e078c20b2cf988abc3c5afc0592ee48626dd1cce2",
+        "typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+      },
+      "final_apply_commit": "f443fb837a0c0aa46c0945cc7b6360be68c24c2a"
+    }
+  },
+  "functional_sha256": {
+    "adapt.cjs": "9f3a54fe444253b2a6e401786cbc8c57b72ea6477a8f50df007df2cb431a899b",
+    "engine.cjs": "6c3408be945d8076ca6a0c0c5a775c861d85f48376ced6bcb5bf104c520a8c43",
+    "owners.json": "14b27a27bbf30fe7f05ee4cef69e8940bc4e1186008e3923f186d5c893bf02cc",
+    "inventory.json": "82a5245a0fed0acfba3bd87e0f8b12bc294e06afe9b40c1b35a23d3f45de967d",
+    "ownership.json": "93416f7ab138fafaa4ca7a93187b1efa7e37d8ceec975a35d1ebf2a95f702838"
+  }
+}

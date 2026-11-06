@@ -1,0 +1,11 @@
+$ git rev-parse origin/main
+3e395f9e5a7038d859ec8930be72cde68d8be3ff
+exit=0
+$ git ls-tree -r origin/main -- stage3/adapt/99-correctness-axolotl-w
+exit=0
+$ git ls-tree -r 476f8ba24e8ac62a8903ffb33e1f2f9abd4c81dc -- stage3/adapt/99-correctness-axolotl-w
+exit=0
+$ git ls-tree -r 0f613b285cc0d3314f1217b78f65ad94571c5547 -- stage3/adapt/99-correctness-axolotl-w
+exit=0
+$ git ls-tree -r d2a1fe4dbfed89c49d89751a164e7484e7f27575 -- stage3/adapt/99-correctness-axolotl-w
+exit=0

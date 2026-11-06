@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "all_units": false,
+      "units": [
+        "src/compiler/watchPublic.ts:122:1"
+      ]
+    }
+  ],
+  "expected_units": [
+    "src/compiler/watchPublic.ts:122:1"
+  ],
+  "reference": "src/compiler/watchPublic.ts:123:1",
+  "name": "createIncrementalCompilerHost"
+}

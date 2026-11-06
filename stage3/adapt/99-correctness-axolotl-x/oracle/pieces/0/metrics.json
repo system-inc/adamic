@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "stage3/adapt/99-correctness-axolotl-x/run_oracle_piece.py",
+    "/workspace/bind-oracle-repo",
+    "/workspace/scratch/bind-oracle-cache/a30ca2fc7dfbcd9e9772e5b5169680dcc34b99e80283c7ed075dc738f65fa973",
+    "/workspace/scratch/bind-oracle-shards",
+    "0"
+  ],
+  "exit": 0,
+  "seconds": 98.4230210830001,
+  "limit_seconds": 1440
+}

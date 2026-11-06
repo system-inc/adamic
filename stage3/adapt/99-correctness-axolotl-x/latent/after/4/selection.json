@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "all_units": false,
+      "units": [
+        "src/compiler/executeCommandLine.ts:1011:1"
+      ]
+    }
+  ],
+  "expected_units": [
+    "src/compiler/executeCommandLine.ts:1011:1"
+  ],
+  "reference": "src/compiler/executeCommandLine.ts:1011:1",
+  "name": "createWatchOfConfigFile"
+}

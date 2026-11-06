@@ -1,0 +1,42 @@
+{
+  "roots": 79,
+  "changed": [],
+  "before_stop_counts": [
+    {
+      "kind": "Refused",
+      "where": "src/compiler/core.ts:810:89",
+      "reason": "a cast the runtime can't check",
+      "count": 73
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:243:59",
+      "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+      "count": 1
+    },
+    {
+      "kind": "accepted",
+      "where": null,
+      "reason": null,
+      "count": 2
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "count": 1
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "count": 1
+    },
+    {
+      "kind": "NotYet",
+      "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "count": 1
+    }
+  ]
+}
