@@ -15,6 +15,9 @@ import (
 func TestRefusalRulesRunInOrder(t *testing.T) {
 	t.Parallel()
 	expected := []string{
+		// hostBindingGlobalThisRefusal stops a write through globalThis naming a host binding as its own
+		// ruling says, before a rule that meets globalThis or delete first would call it something else.
+		"50 hostBindingGlobalThisRefusal",
 		"100 unionSlotWriteRefusal",
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",
@@ -46,6 +49,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"2050 classDeadZoneGap",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",
+		"2250 hostBindingRefusal",
 		"2300 operatorRefusal",
 		"2400 asyncGeneratorRefusal",
 		"2600 argumentsObjectRefusal",
