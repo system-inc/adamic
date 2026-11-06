@@ -1,0 +1,1322 @@
+[
+  {
+    "identity": [
+      "src/compiler/binder.ts",
+      "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+      13602
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/binder.ts:422:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 13730,
+      "body_end": 15599,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getModuleInstanceStateForAliasTarget"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:422:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:427:31",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/binder.ts:427:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/binder.ts:422:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/factory/nodeFactory.ts",
+      "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+      326259
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/factory/nodeFactory.ts:7286:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 326367,
+      "body_end": 326477,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "propagateNameFlags"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/nodeFactory.ts:7286:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeFactory.ts:7287:33",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/factory/nodeFactory.ts:7287:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/nodeFactory.ts:7286:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/nodeFactory.ts:7287:20",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/factory/nodeFactory.ts:7287:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/factory/utilities.ts",
+      "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+      31637
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/factory/utilities.ts:786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 31823,
+      "body_end": 32635,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getLocalNameForExternalImport"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/utilities.ts:786:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/utilities.ts:788:98",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/factory/utilities.ts:788:98: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/factory/utilities.ts",
+      "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+      41039
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/factory/utilities.ts:1008:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 41196,
+      "body_end": 41436,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getPropertyNameOfBindingOrAssignmentElement"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/utilities.ts:1008:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/utilities.ts:1010:55",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/factory/utilities.ts:1010:55: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/factory/utilities.ts",
+      "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+      75659
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/factory/utilities.ts:1739:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 75735,
+      "body_end": 76633,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "containsObjectRestOrSpread"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/utilities.ts:1739:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/utilities.ts:1746:47",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/factory/utilities.ts:1746:47: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/factory/utilities.ts:1739:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/factory/utilities.ts:1746:27",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/factory/utilities.ts:1746:27: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/parser.ts",
+      "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+      79757
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/parser.ts:1414:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 79882,
+      "body_end": 80232,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "parseIsolatedJSDocComment"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/parser.ts:1414:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/parser.ts:1419:38",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/parser.ts:1419:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/program.ts",
+      "2c7047197c8eb011a3e1201b20c88f5164806471e513b4415d877b8855afee67",
+      35094
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/program.ts:885:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 35216,
+      "body_end": 35389,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isExclusivelyTypeOnlyImportOrExport"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:885:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:886:29",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/program.ts:886:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/program.ts:885:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/program.ts:886:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/program.ts:886:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/declarations.ts",
+      "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd",
+      7118
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/transformers/declarations.ts:259:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 7221,
+      "body_end": 95637,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "transformDeclarations"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/declarations.ts:259:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/declarations.ts:314:51",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/transformers/declarations.ts:314:51: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/declarations.ts:259:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/declarations/diagnostics.ts",
+      "b1ba366b350ca654bc9b5c627e846bf86dd120a706e2c5edeb500ac28627e24d",
+      9673
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/transformers/declarations/diagnostics.ts:247:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 9806,
+      "body_end": 33374,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createGetSymbolAccessibilityDiagnosticForNode"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/declarations/diagnostics.ts:247:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/declarations/diagnostics.ts:294:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/transformers/declarations/diagnostics.ts:294:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/declarations/diagnostics.ts:247:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/transformers/declarations/diagnostics.ts:322:24",
+      "reason": "a cast the runtime can't check",
+      "text": "src/compiler/transformers/declarations/diagnostics.ts:322:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/destructuring.ts",
+      "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+      25082
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/transformers/destructuring.ts:522:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 25171,
+      "body_end": 25806,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isSimpleBindingOrAssignmentElement"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/destructuring.ts:522:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/destructuring.ts:524:40",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/transformers/destructuring.ts:524:40: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/destructuring.ts:522:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/destructuring.ts:524:20",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/transformers/destructuring.ts:524:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/utilities.ts",
+      "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      15268
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/transformers/utilities.ts:355:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 15466,
+      "body_end": 16204,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "collectExportedVariableInfo"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/utilities.ts:355:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/utilities.ts:356:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/transformers/utilities.ts:356:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/utilities.ts:355:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/utilities.ts:356:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/transformers/utilities.ts:356:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/transformers/utilities.ts",
+      "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      34766
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/transformers/utilities.ts:866:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 34820,
+      "body_end": 34883,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isSimpleParameter"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/utilities.ts:866:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/transformers/utilities.ts:867:46",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/transformers/utilities.ts:867:46: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/transformers/utilities.ts:866:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      45583
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:1295:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 45657,
+      "body_end": 45819,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isExportNamespaceAsDefaultDeclaration"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:1295:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:1296:83",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:1296:83: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      79697
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2346:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 79795,
+      "body_end": 79883,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "declarationNameToString"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2346:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2347:34",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2347:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      88469
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2537:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 88550,
+      "body_end": 93007,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getErrorSpanForNode"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2537:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2567:25",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2567:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2537:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1034:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      94073
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2658:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 94166,
+      "body_end": 94262,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isVarAwaitUsing"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2658:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2659:34",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2659:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      94400
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2666:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 94488,
+      "body_end": 94579,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isVarUsing"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2666:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2667:34",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2667:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      94717
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2674:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 94805,
+      "body_end": 94896,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isVarConst"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2674:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2675:34",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2675:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      95060
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2682:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 95152,
+      "body_end": 95384,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isVarConstLike"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2682:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2683:49",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2683:49: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      97213
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:2742:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 97266,
+      "body_end": 97338,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isHoistedVariable"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2742:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:2743:25",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:2743:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:2742:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      150835
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:3928:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 150930,
+      "body_end": 151392,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getEffectiveInitializer"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:3928:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:3930:20",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:3930:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:3928:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:1109:17",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      151515
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:3945:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 151616,
+      "body_end": 151749,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getDeclaredExpandoInitializer"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:3945:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:3947:66",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:3947:66: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:3945:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:7560:1",
+      "reason": "checked predicate overload target BindableStaticElementAccessExpression",
+      "text": "src/compiler/utilities.ts:7560:1: stage 0 can't lower checked predicate overload target BindableStaticElementAccessExpression yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      184789
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:4698:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 184841,
+      "body_end": 185068,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "ownsJSDocTag"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:4698:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4699:29",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:4699:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:4698:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4702:39",
+      "reason": "a value of type HasJSDoc",
+      "text": "src/compiler/utilities.ts:4702:39: stage 0 can't lower a value of type HasJSDoc yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      187225
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:4764:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 187391,
+      "body_end": 187812,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getEffectiveContainerForJSDocTemplateTag"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:4764:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:4765:17",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:4765:17: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:4764:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      267915
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:6790:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 267995,
+      "body_end": 268046,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "parameterIsThisKeyword"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:6790:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:6791:29",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:6791:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      272783
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:6920:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 272854,
+      "body_end": 273029,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isNonTypeAliasTemplate"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:6920:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:6921:31",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:6921:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:6920:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/binder.ts:2258:13",
+      "reason": "writing a checked object field without its source-slot type certificate",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      294407
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:7452:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 294565,
+      "body_end": 295101,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "tryGetClassImplementingOrExtendingExpressionWithTypeArguments"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:7452:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:7458:48",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:7458:48: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilities.ts",
+      "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      445725
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilities.ts:11079:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 445802,
+      "body_end": 446101,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isJSDocOptionalParameter"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilities.ts:11079:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilities.ts:11080:23",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilities.ts:11080:23: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": null
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      23769
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:619:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 23849,
+      "body_end": 23976,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isEmptyBindingPattern"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:620:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:620:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:619:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:620:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      24249
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:629:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 24339,
+      "body_end": 24457,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isEmptyBindingElement"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:629:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:630:29",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:630:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:629:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:630:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      24461
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:636:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 24578,
+      "body_end": 24728,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "walkUpBindingElementsAndPatterns"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:636:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:638:29",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:638:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:636:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:638:12",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      36174
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:925:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 36263,
+      "body_end": 36373,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getDeclarationIdentifier"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:925:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:927:33",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:927:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:925:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:927:20",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      41073
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:1036:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 41187,
+      "body_end": 42045,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getJSDocParameterTagsWorker"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:1036:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:1038:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:1038:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:1036:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:1038:13",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      53120
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:1318:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 53247,
+      "body_end": 54382,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getEffectiveTypeParameterDeclarations"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:1318:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:1319:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:1319:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:1318:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:1319:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:1319:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/utilitiesPublic.ts",
+      "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      102669
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/utilitiesPublic.ts:2638:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 102757,
+      "body_end": 103000,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "isRestParameter"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:2639:38",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/utilitiesPublic.ts:2639:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/utilitiesPublic.ts:2638:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/utilitiesPublic.ts:2639:18",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/utilitiesPublic.ts:2639:18: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  },
+  {
+    "identity": [
+      "src/compiler/visitorPublic.ts",
+      "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+      16539
+    ],
+    "unit": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "src/compiler/visitorPublic.ts:436:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 16646,
+      "body_end": 17072,
+      "instantiated": false,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "addDefaultValueAssignmentIfNeeded"
+    },
+    "base": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/visitorPublic.ts:436:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/visitorPublic.ts:440:26",
+      "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+      "text": "src/compiler/visitorPublic.ts:440:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+    },
+    "head": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "src/compiler/visitorPublic.ts:436:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/visitorPublic.ts:440:9",
+      "reason": "checked predicate membership over an open tag domain",
+      "text": "src/compiler/visitorPublic.ts:440:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+    }
+  }
+]
