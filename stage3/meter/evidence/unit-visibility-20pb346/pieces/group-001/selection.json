@@ -1,0 +1,23 @@
+{
+  "mode": "full",
+  "source": "/workspace/scratch/20pb346-2/adapted/src/compiler",
+  "files": [
+    "corePublic.ts",
+    "core.ts",
+    "debug.ts",
+    "path.ts",
+    "performanceCore.ts",
+    "performance.ts"
+  ],
+  "source_sha256": {
+    "corePublic.ts": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7",
+    "core.ts": "3dde48b17a7ea7c9475f28b0dfa1b8c3a407f6b4966c4f6f6c4e6769e4920f3e",
+    "debug.ts": "7dcbaf5c3365d9eaff05463dd4ff2acd06ea761ac59ba45b885aff4ad1c4474d",
+    "path.ts": "4cf2621fcd2d659c0e7561d9177d0ff10f51e85b6357d91cfd30601ac5f29938",
+    "performanceCore.ts": "9188f7c490a9c716cd1939ea6932a4af1ac1e256c5b042c5b9ad88f2313b4a3b",
+    "performance.ts": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+  },
+  "compiler_base": "d4c6b07aca1a7c55785226563c2ad79d552c1adf",
+  "budget_seconds": 1500,
+  "GOMEMLIMIT": "8GiB"
+}
