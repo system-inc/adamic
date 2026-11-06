@@ -464,8 +464,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "Number."+name)
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
-	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.iteratorResultField(l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), errorClasses...) && (name == "name" || name == "message")) {
+	// guard in lowering too, even when the up-front unbound-method pass has already refused it. The
+	// one callee it lets by is a hand-driven `x.next()` callClosure marked (handDrivenNext): a
+	// direct call keeps its receiver, and checkIterableViews proves the receiver is a runtime-built
+	// iterator, whose next is its own closure (Adamic's (a) on #qk8rztp S2c-2).
+	if l.inheritedLibraryMember(node) && node != l.handNext && !l.iteratorResultField(l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), errorClasses...) && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {

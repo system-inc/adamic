@@ -47,9 +47,13 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 }
 
 // iteratorResultField reports whether done or value is read off an iterator result whose only
-// library roots are IteratorReturnResult's: the plain object next returns, both fields required and
-// own, never a prototype member. The prelude's Map and Set iterators return one as their done arm,
-// so inference reads that arm as the iterator's return rather than its value.
+// library roots are IteratorReturnResult's or IteratorYieldResult's: the plain object next returns,
+// its fields own, never a prototype member. The prelude's Map and Set iterators return one as their
+// done arm, so inference reads that arm as the iterator's return rather than its value. The yield
+// arm is the result of lib's own next(), which a hand-driven loop reads (Adamic's (b) on #qk8rztp
+// S2c-2): its value is T only where done has narrowed the result to that arm, and unnarrowed it is
+// T | any, which is any, stopped by the any rules as any value is; done is `false | undefined` there,
+// read as a maybe-boolean, which the runtime's one-byte boolean answers as present (maybe.c).
 func (l *lowering) iteratorResultField(symbol *ast.Symbol) bool {
 	if symbol == nil || (symbol.Name != "done" && symbol.Name != "value") {
 		return false
@@ -60,7 +64,7 @@ func (l *lowering) iteratorResultField(symbol *ast.Symbol) bool {
 				continue
 			}
 			owner := declaration.Parent
-			if owner == nil || owner.Kind != ast.KindInterfaceDeclaration || owner.Name().Text() != "IteratorReturnResult" {
+			if owner == nil || owner.Kind != ast.KindInterfaceDeclaration || (owner.Name().Text() != "IteratorReturnResult" && owner.Name().Text() != "IteratorYieldResult") {
 				return false
 			}
 		}

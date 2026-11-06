@@ -19,3 +19,16 @@ internal/lower/iterable_views_test.go, and the oracle's is internal/oracle/itera
 | An unproven origin accepted, the string row | as the first row | TestIterableViewsOfOtherOriginsAreNotYet, the string handed to an Iterable<string> slot: it compiles, and only the checked unbox would stop it at run time |
 | A MapIterator or SetIterator slot taken by the arm (equivalent) | `iterableViewElement`: `"MapIterator", "SetIterator"` added to the listed types | green, as it must be: libraryIteratorElement takes every MapIterator- or SetIterator-typed value whose element is one boxed slot before forOf's switch, and the arm asks for the same slot, so no such value reaches it. A generator declared to return one is stepped as a generator before either (declared_iterators.a) |
 | A function value's parameters taken as known | lower/view_flow.go, `newAllocationFlowGraph`'s MakeClosure arm: `graph.unknownParameters[parameter+1] = true` made `_ = parameter` | TestIterableViewsOfOtherOriginsAreNotYet's program arrow row: the arrow's one call, through a local whose closure is constant (ClosureTargets), hands its parameter a Map's values(), so the view is proven and compiles. Inferred, not run: it is red only if ClosureTargets names the arrow for that call, and if it doesn't, the call's arguments never reach the parameter and the row still stops |
+
+## A hand-driven next() through a view (#qk8rztp S2c-2a)
+
+The lower rows are internal/lower/iterable_hand_next_test.go's; run by s2c2a-proof.sh.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The hand view's origins not proven | lower/iterable_views.go, `checkIterableViews`: `if reaches.Unknown \|\| len(unproven) != 0 {` made `if !view.hand && (...) {` | TestHandDrivenNextStopsOnEveryOtherRoad, the arrow row: its parameter's callers are unseen, and it compiles |
+| next(x) let through | lower/expression.go, `callClosure`: `if hand && len(...Arguments.Nodes) != 0 {` made `if false {` | the same test's next(x) row: it stops otherwise, or compiles |
+| IteratorYieldResult's fields not admitted | lower/prototype.go, `iteratorResultField`: the IteratorYieldResult name dropped from the owner test | TestIterableViewsAgreeWithNode, hand_next.a: `status.done` and `status.value` are refused as inherited library members |
+| No hand next let past the guard | lower/object.go, `property`: `node != l.handNext` made `true` | the same fixture: every next() is refused, as on main |
+| A generator into a hand parameter not stopped there | lower/iterable_views.go, `generatorParameter`: the hand loop's test made `&& false` | TestHandDrivenNextStopsOnEveryOtherRoad, the generator row: it stops as one use that isn't a for-of instead |
+| The narrowing check dropped (Adamic's) | none: the narrowing isn't a check of this slice's | an unnarrowed or done-arm `status.value` is `T \| any`, which is any, and the any rules stop it as they stop any value; the two value rows pin that it stops |
