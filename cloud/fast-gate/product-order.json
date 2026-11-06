@@ -2702,6 +2702,13 @@
       "internal/oracle TestProduct_NativeRuntimesSanitized0",
       "internal/oracle TestProduct_NativeRuntimesSanitized1",
       "internal/oracle TestProduct_NativeRuntimesSanitized2"
-    ]
+    ],
+    "internal/native TestProduct_SourcesSanitized": [],
+    "internal/native TestProduct_SourcesRelease": [],
+    "internal/native TestProduct_SourcesCounted": [],
+    "internal/native TestProduct_SourceMutantPredicate": [],
+    "internal/native TestProduct_SourceMutantLiveness": [],
+    "internal/native TestProduct_SourceMutantReadinessLive": [],
+    "internal/native TestProduct_SourceMutantCheckpoint": []
   }
 }
