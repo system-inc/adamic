@@ -1,0 +1,16 @@
+{
+  "exit": 0,
+  "scope": "existing refusal scan only; no unit lowering",
+  "site": {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/ro-before/src/compiler/emitter.ts:5768:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/ro-before/src/compiler/emitter.ts:5790:141",
+    "reason": "a value of type typeof import(\"/workspace/scratch/ro-before/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read",
+    "text": "/workspace/scratch/ro-before/src/compiler/emitter.ts:5790:141: Adamic 0.1 refuses a value of type typeof import(\"/workspace/scratch/ro-before/src/compiler/_namespaces/ts\") seen as Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  "lowering_boundary": "single-unit replay stops earlier at emitter.ts:5790:84 reading autoGenerate; no cast lowering success claimed"
+}

@@ -1,0 +1,31 @@
+{
+  "final_apply_exit": 0,
+  "later_owner_conflicts": [],
+  "debug_ts_edits": [
+    {
+      "adaptation": "41-explicit-any-remaining",
+      "before_git_object": "0cae455e7082fc2346c975b36a438a879e9dac01",
+      "after_git_object": "bca9ac57382fc9fad8a8e3d3e90e0e70f988d68c"
+    },
+    {
+      "adaptation": "76-truthful-casts",
+      "before_git_object": "bca9ac57382fc9fad8a8e3d3e90e0e70f988d68c",
+      "after_git_object": "bbea450ed34837b1a13695587c1a6c5d05ae84c3"
+    },
+    {
+      "adaptation": "99-cli-debug-assertion-level",
+      "before_git_object": "bbea450ed34837b1a13695587c1a6c5d05ae84c3",
+      "after_git_object": "ad1abeceb8cc62763c88946cec070c1a58fae439"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-n",
+      "before_git_object": "ad1abeceb8cc62763c88946cec070c1a58fae439",
+      "after_git_object": "de22fb8866889da0012c1ad856673e5b9059f423"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-t",
+      "before_git_object": "de22fb8866889da0012c1ad856673e5b9059f423",
+      "after_git_object": "a48bb0007fcbfdc814dfec103b47c6cca42f66b9"
+    }
+  ]
+}

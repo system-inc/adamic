@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "failure_source": "internal/lower/invariance.go:673",
+  "only_mutation": "remove SyntaxKind cast outer Readonly",
+  "finding": {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/scratch/ro-cont/inner-only-mutant/src/compiler/debug.ts:423:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/scratch/ro-cont/inner-only-mutant/src/compiler/debug.ts:424:34",
+    "reason": "a value of type typeof import(\"/workspace/scratch/ro-cont/inner-only-mutant/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>, which can write Readonly<Record<string, string | number>> where typeof SyntaxKind is read",
+    "text": "/workspace/scratch/ro-cont/inner-only-mutant/src/compiler/debug.ts:424:34: Adamic 0.1 refuses a value of type typeof import(\"/workspace/scratch/ro-cont/inner-only-mutant/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>, which can write Readonly<Record<string, string | number>> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  }
+}

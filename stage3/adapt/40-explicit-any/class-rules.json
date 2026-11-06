@@ -271,7 +271,7 @@
       "line": 389,
       "column": 55,
       "originalLine": "    export function formatEnum(value = 0, enumObject: any, isFlags?: boolean): string {",
-      "replacement": "Record<string, string | number>",
+      "replacement": "Readonly<Record<string, string | number>>",
       "parentKind": "Parameter"
     },
     {
@@ -280,7 +280,7 @@
       "line": 420,
       "column": 37,
       "originalLine": "    const enumMemberCache = new Map<any, SortedReadonlyArray<[number, string]>>();",
-      "replacement": "Record<string, string | number>",
+      "replacement": "Readonly<Record<string, string | number>>",
       "parentKind": "NewExpression"
     },
     {
@@ -289,7 +289,7 @@
       "line": 422,
       "column": 41,
       "originalLine": "    function getEnumMembers(enumObject: any) {",
-      "replacement": "Record<string, string | number>",
+      "replacement": "Readonly<Record<string, string | number>>",
       "parentKind": "Parameter"
     },
     {
@@ -298,7 +298,7 @@
       "line": 445,
       "column": 40,
       "originalLine": "        return formatEnum(kind, (ts as any).SyntaxKind, /*isFlags*/ false);",
-      "replacement": "Record<\"SyntaxKind\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -307,7 +307,7 @@
       "line": 449,
       "column": 40,
       "originalLine": "        return formatEnum(kind, (ts as any).SnippetKind, /*isFlags*/ false);",
-      "replacement": "Record<\"SnippetKind\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"SnippetKind\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -316,7 +316,7 @@
       "line": 453,
       "column": 40,
       "originalLine": "        return formatEnum(kind, (ts as any).ScriptKind, /*isFlags*/ false);",
-      "replacement": "Record<\"ScriptKind\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"ScriptKind\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -325,7 +325,7 @@
       "line": 457,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).NodeFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"NodeFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"NodeFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -334,7 +334,7 @@
       "line": 461,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).NodeCheckFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"NodeCheckFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"NodeCheckFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -343,7 +343,7 @@
       "line": 465,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).ModifierFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"ModifierFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"ModifierFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -352,7 +352,7 @@
       "line": 469,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).TransformFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"TransformFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"TransformFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -361,7 +361,7 @@
       "line": 473,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).EmitFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"EmitFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"EmitFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -370,7 +370,7 @@
       "line": 477,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).SymbolFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"SymbolFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"SymbolFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -379,7 +379,7 @@
       "line": 481,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).TypeFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"TypeFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"TypeFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -388,7 +388,7 @@
       "line": 485,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).SignatureFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"SignatureFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"SignatureFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -397,7 +397,7 @@
       "line": 489,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).ObjectFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"ObjectFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"ObjectFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -406,7 +406,7 @@
       "line": 493,
       "column": 41,
       "originalLine": "        return formatEnum(flags, (ts as any).FlowFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -415,7 +415,7 @@
       "line": 497,
       "column": 42,
       "originalLine": "        return formatEnum(result, (ts as any).RelationComparisonResult, /*isFlags*/ true);",
-      "replacement": "Record<\"RelationComparisonResult\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"RelationComparisonResult\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -424,7 +424,7 @@
       "line": 501,
       "column": 40,
       "originalLine": "        return formatEnum(mode, (ts as any).CheckMode, /*isFlags*/ true);",
-      "replacement": "Record<\"CheckMode\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"CheckMode\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -433,7 +433,7 @@
       "line": 505,
       "column": 40,
       "originalLine": "        return formatEnum(mode, (ts as any).SignatureCheckMode, /*isFlags*/ true);",
-      "replacement": "Record<\"SignatureCheckMode\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"SignatureCheckMode\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -442,7 +442,7 @@
       "line": 509,
       "column": 41,
       "originalLine": "        return formatEnum(facts, (ts as any).TypeFacts, /*isFlags*/ true);",
-      "replacement": "Record<\"TypeFacts\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"TypeFacts\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -451,7 +451,7 @@
       "line": 540,
       "column": 62,
       "originalLine": "                        return formatEnum(this.flags, (ts as any).FlowFlags, /*isFlags*/ true);",
-      "replacement": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
@@ -460,7 +460,7 @@
       "line": 5790,
       "column": 147,
       "originalLine": "        return Debug.fail(`Unsupported GeneratedIdentifierKind: ${Debug.formatEnum(autoGenerate.flags & GeneratedIdentifierFlags.KindMask, (ts as any).GeneratedIdentifierFlags, /*isFlags*/ true)}.`);",
-      "replacement": "Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>",
+      "replacement": "Readonly<Record<\"GeneratedIdentifierFlags\", Readonly<Record<string, string | number>>>>",
       "parentKind": "AsExpression"
     },
     {
