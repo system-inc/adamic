@@ -131,6 +131,12 @@ func (l *lowering) namespaceCastAccess(node *ast.Node) *ast.Node {
 	return access
 }
 
+// qualifiedNamespaceRead reports whether node, a namespace, is read only for one export: ns.K.
+func (l *lowering) qualifiedNamespaceRead(node *ast.Node) bool {
+	parent := node.Parent
+	return parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.Expression() == node
+}
+
 // namespaceExport is the value a namespace's export name resolves to, through export * and aliases,
 // as recordExports resolves them, or nil. A type-only export has no value.
 func (l *lowering) namespaceExport(namespace *ast.Node, name string) *ast.Symbol {

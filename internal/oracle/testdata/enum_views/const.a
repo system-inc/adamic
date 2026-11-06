@@ -1,0 +1,17 @@
+// A const enum's object is built where the program reaches it as a value, here through the namespace
+// cast, and agrees with Node on every key, typeof and value. ConstKind is reached only by member
+// reads, which inline, so it has no object (rulings.md:218; Adamic's ruling on #52zja36, Nov 6).
+import * as ts from './barrel.a';
+import { ConstKind } from './barrel.a';
+
+type View = Readonly<Record<string, string | number>>;
+
+const view = (ts as Readonly<Record<"ConstOrdered", View>>).ConstOrdered;
+for (const name in view) {
+	const value = view[name];
+	console.log(`${name} ${typeof value} ${value}`);
+}
+const one = ["1"].join("");
+console.log(`${view["1"]} ${view[one]} ${view === (ts as Readonly<Record<"ConstOrdered", View>>).ConstOrdered}`);
+console.log(`${ConstKind.Identifier} ${ts.ConstKind.Count} ${ts.ConstOrdered.Alias}`);
+console.log(Object.keys(view).join(","));

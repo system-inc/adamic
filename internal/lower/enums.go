@@ -217,10 +217,75 @@ func (l *lowering) enumLocal(node *ast.Node) (int, error) {
 	return local, nil
 }
 
-// enumObjectBuilt reports whether an enum declaration has a runtime object: every ordinary enum has
-// one, and no const enum does (rulings.md:218).
+// enumObjectBuilt reports whether an enum declaration has a runtime object: every ordinary enum, and
+// a const enum the program reaches as a value (constEnumReached).
 func (l *lowering) enumObjectBuilt(declaration *ast.Node) bool {
-	return !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst)
+	return !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) || l.constEnumReached(declaration)
+}
+
+// constEnumReached reports whether the program reaches a const enum's object as a value. Node builds
+// every const enum's object, and Lower builds one exactly where it can be observed: the same
+// ObjectLiteral an ordinary enum gets, with member reads still inlined. Nothing reached keeps
+// rulings.md:218, no object and no binding (Adamic's ruling on #52zja36, Nov 6, gated on reach alone,
+// since 0.1's options are fixed in load.go and have no preserveConstEnums).
+func (l *lowering) constEnumReached(declaration *ast.Node) bool {
+	// One declared inside a function or a block (#xpjcdpf) is no namespace's export, and tsc refuses
+	// every other value use of it, so nothing reaches it; an object there would be made each time its
+	// block runs, which no enum's is.
+	if declaration.Parent.Kind != ast.KindSourceFile && declaration.Parent.Kind != ast.KindModuleBlock {
+		return false
+	}
+	if l.constEnumReach == nil {
+		l.constEnumReach = l.reachedConstEnums()
+	}
+	return l.constEnumReach[l.symbol(declaration.Name())]
+}
+
+// reachedConstEnums is every const enum the program reaches as a value, found in one walk of every
+// module. tsc refuses every direct value use of a const enum (TS2475), so the road that reaches one is
+// a namespace object, like tsc's own (ts as ...).SyntaxKind. Reach fails closed: a read of a const
+// enum other than a member read lowering inlines reaches it, and any use of a namespace other than a
+// qualified read reaches every const enum it exports, unless it's the namespace cast, which reaches the
+// one export it names. A program whose modules can't be ordered stops before it's lowered.
+func (l *lowering) reachedConstEnums() map[*ast.Symbol]bool {
+	reached := map[*ast.Symbol]bool{}
+	constEnum := func(symbol *ast.Symbol) bool {
+		return symbol != nil && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Kind == ast.KindEnumDeclaration && ast.HasSyntacticModifier(symbol.ValueDeclaration, ast.ModifierFlagsConst)
+	}
+	modules, _ := l.moduleOrder(l.program.Files()[0])
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if (ast.IsIdentifier(node) || node.Kind == ast.KindPropertyAccessExpression) && l.namespaceValueNode(node) {
+			if symbol := l.symbol(node); constEnum(symbol) && !l.enumMemberReadOf(node) {
+				reached[symbol] = true
+			}
+			if l.moduleNamespace(node) && !l.qualifiedNamespaceRead(node) {
+				if access := l.namespaceCastAccess(node); access != nil {
+					if target := l.namespaceExport(node, access.Name().Text()); constEnum(target) {
+						reached[target] = true
+					}
+				} else {
+					for _, exported := range l.namespaceExportSymbols(node) {
+						if target := l.resolvedExport(exported); constEnum(target) {
+							reached[target] = true
+						}
+					}
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return reached
+}
+
+// enumMemberReadOf reports whether node, a read of an enum, is the receiver of one of its member
+// reads, E.A or E["A"], which lowering inlines for a const enum.
+func (l *lowering) enumMemberReadOf(node *ast.Node) bool {
+	parent := node.Parent
+	return parent != nil && (parent.Kind == ast.KindPropertyAccessExpression || parent.Kind == ast.KindElementAccessExpression) && parent.Expression() == node && l.enumMember(parent) != nil
 }
 
 func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
