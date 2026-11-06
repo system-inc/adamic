@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-06T02:04:04.363480+00:00",
+  "command": [
+    "/workspace/container-fit-build/base/census",
+    "/workspace/container-fit-adapted/src/compiler",
+    "/workspace/adamic/stage3/census/container-fit/evidence/per-file/base/all/records.jsonl"
+  ],
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_SPECULATIVE": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TIMES": "/workspace/adamic/stage3/census/container-fit/evidence/per-file/base/all/times.jsonl",
+    "ANY_MEMBERS_CENSUS_ROOT": "/workspace/container-fit-adapted",
+    "ANY_MEMBERS_CENSUS_PIECE": "/workspace/adamic/stage3/census/container-fit/evidence/per-file/base/all/selection.json"
+  }
+}
