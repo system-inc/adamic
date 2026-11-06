@@ -36,6 +36,10 @@ step() {
 repository=$(cd "$(dirname "$0")/.." && pwd)
 tools=${ADAMIC_TOOLS:-/opt/adamic-tools}
 mkdir -p "$tools/bin" 2> /dev/null || { tools=$HOME/.adamic-tools && mkdir -p "$tools/bin"; }
+# A release-owned env.sh is never rewritten, and nothing below runs over it (cloud/env-owner.sh).
+# shellcheck source=cloud/env-owner.sh
+source "$repository/cloud/env-owner.sh"
+adamic_env_refuse_release_owned "$tools/env.sh"
 gate=/tmp/adamic-gate
 # The input tests drop to uid 65534 when run as root, so everything they touch must be traversable
 # by that user: the temporary directory, and the Node they run.
