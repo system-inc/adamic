@@ -18,7 +18,7 @@ import (
 // object (B2, #52zja36, under Adamic's ruling of Nov 6). Each fixture is held to Node natively under
 // the sanitizers and on the JavaScript backend.
 func init() {
-	for _, name := range []string{"cast", "forin", "members", "keyed_only"} {
+	for _, name := range []string{"cast", "forin", "members", "keyed_only", "const"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -37,16 +37,14 @@ func enumViewFixture(t *testing.T, name string) string {
 
 // The namespace cast is admitted only for one string literal K whose export is an enum with an object,
 // seen through a readonly view whose value type holds the table's values. Every other cast of the
-// namespace stops where it stopped on main: K naming two exports, K naming a plain object, a view
-// narrower than the table's values (a downcast, refused at the cast), and a const enum, which has no
-// object to read.
+// namespace stops where it stopped on main: K naming two exports, K naming a plain object, and a view
+// narrower than the table's values (a downcast, refused at the cast).
 func TestEnumViewCastStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
 		{"stop_key_union.a", "stop_key_union.a:3:15", "an ESM namespace object used as a value"},
 		{"stop_key_object.a", "stop_key_object.a:3:15", "an ESM namespace object used as a value"},
 		{"stop_narrow_view.a", "stop_narrow_view.a:4:15", "Adamic 0.1 refuses a cast the runtime can't check"},
-		{"stop_const_unbuilt.a", "stop_const_unbuilt.a:3:15", "an ESM namespace object used as a value"},
 		{"stop_narrow_view_checked.ts", "stop_narrow_view_checked.ts:4:15", ""},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -131,10 +129,10 @@ func TestEnumViewKeyedReadStopsAlike(t *testing.T) {
 
 // The head's mutant for the materialized table (Library on #52zja36): drop an enum object's reverse
 // keys, the array-index names that hold its members' names, and the key, typeof and value rows go red
-// against Node on both backends.
+// against Node on both backends, for an ordinary enum and a const enum the cast reached alike.
 func TestEnumViewReverseKeysMutant(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ file, enum string }{{"members.a", "Ordered"}} {
+	for _, probe := range []struct{ file, enum string }{{"members.a", "Ordered"}, {"const.a", "ConstOrdered"}} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
 			truth := onNode(t, enumViewFixture(t, probe.file))
@@ -172,5 +170,105 @@ func TestEnumViewReverseKeysMutant(t *testing.T) {
 				t.Logf("%s: reverse keys dropped from %s, caught by Node's stdout", backend, probe.enum)
 			}
 		})
+	}
+}
+
+// A const enum the program reaches only by member reads has no object and no binding, as rulings.md:218
+// has it; one the namespace cast reaches is built once. Mutant: build every const enum regardless of
+// reach, and ConstKind's binding appears (TestConstEnumErasesRuntimeObject goes red with it).
+func TestEnumViewConstBuiltOnlyWhereReached(t *testing.T) {
+	t.Parallel()
+	program, err := lowered(t, enumViewFixture(t, "const.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	built := map[string]int{}
+	for _, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok {
+			if _, isLiteral := declaration.Value.(ir.ObjectLiteral); isLiteral {
+				built[program.Locals[declaration.Local].Name]++
+			}
+		}
+	}
+	if built["ConstOrdered"] != 1 || built["ConstKind"] != 0 {
+		t.Fatalf("want ConstOrdered built once and ConstKind never, got %v", built)
+	}
+}
+
+// debug.ts's formatSyntaxKind shape, the unit Correctness's census found stopping at namespaces.go:94
+// ("an enum read through its namespace without a lowered binding"): ConstKind, declared in another
+// module of an export * barrel and read through the barrel's namespace in a function of the entry, is
+// built, once, and agrees with Node on both backends with no leak. Reach is walked from the entry
+// lowering lowers, so it sees the cast wherever the entry's modules hold it. Mutant: constEnumReached
+// answering false everywhere turns this, and const.a, into the cast's stop, never a wrong read.
+func TestEnumViewFormatConstAgrees(t *testing.T) {
+	t.Parallel()
+	path := enumViewFixture(t, "format_const.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	built := 0
+	for _, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "ConstKind" {
+			built++
+		}
+	}
+	if built != 1 {
+		t.Fatalf("ConstKind built %d times, want once", built)
+	}
+	truth := onNode(t, path)
+	if string(truth.stdout) != "Identifier Count 9\ntscUsesKeys\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	compiled, binary := natively(t, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatalf("leaks: %s", report)
+	}
+}
+
+// The unbuilt pin Lower asked for on #52zja36: const enums read only by member reads, through the
+// barrel's namespace and a named import, are never built, and the reads inline and agree with Node on
+// both backends. Mutant: building every const enum regardless of reach gives ConstKind and
+// ConstOrdered objects here.
+func TestEnumViewConstUnbuiltAgrees(t *testing.T) {
+	t.Parallel()
+	path := enumViewFixture(t, "stop_const_unbuilt.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok {
+			if name := program.Locals[declaration.Local].Name; name == "ConstKind" || name == "ConstOrdered" {
+				t.Fatalf("%s was built, though only its members are read", name)
+			}
+		}
+	}
+	truth := onNode(t, path)
+	if string(truth.stdout) != "2 3 1 4294967296\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	compiled, _ := natively(t, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+		}
+	}
+}
+
+// Lower's question on #52zja36: a const enum read by a literal union key, E[k], never reaches lowering,
+// because tsc refuses it (TS2476), so reach needn't count it as a value read.
+func TestEnumViewConstKeyUnionTscRefuses(t *testing.T) {
+	t.Parallel()
+	_, err := load.Load([]string{enumViewFixture(t, "stop_const_key_union.a")})
+	var checked *load.CheckError
+	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2476") {
+		t.Fatalf("want tsc's TS2476, got %v", err)
 	}
 }

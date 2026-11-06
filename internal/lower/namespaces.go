@@ -88,7 +88,11 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
-	if declaration := l.namespaceEnumView(node); declaration != nil {
+	declaration, err := l.namespaceEnumView(node)
+	if err != nil {
+		return nil, true, err
+	}
+	if declaration != nil {
 		local, found := l.localOf(node, l.symbol(declaration.Name()))
 		if !found {
 			return nil, true, l.notYet(node, "an enum read through its namespace without a lowered binding")
