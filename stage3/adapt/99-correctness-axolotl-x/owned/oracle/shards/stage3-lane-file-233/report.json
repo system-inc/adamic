@@ -1,0 +1,26 @@
+{
+  "name": "stage3-lane-file-233",
+  "counts": {
+    "pass": 423,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "3389fdbd3b737a0d79c952466630d74ec3965e68bab1df0390c36d27c8ab0238",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/bind-owned-oracle-repo/stage3/oracle/run-tasks.cjs",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-file-233/adapted-tree",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-file-233/tasks.json",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-file-233/oracle/worker",
+    "1"
+  ],
+  "failures": [],
+  "seconds": 5.469244186999276
+}
