@@ -1,0 +1,48 @@
+--- before/_tsc.js
++++ normalized-after/_tsc.js
+@@ -91038,10 +91038,11 @@
+   return !!(s.flags & 2 /* HasLiteralTypes */);
+ }
+ function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
++  var _a, _b;
+   return {
+     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
+     getCurrentDirectory: () => host.getCurrentDirectory(),
+-    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
++    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
+     getPackageJsonInfoCache: () => {
+       var _a;
+       return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
+@@ -91055,7 +91056,7 @@
+     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
+     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
+     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
+-    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
++    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
+   };
+ }
+ var SymbolTrackerImpl = class _SymbolTrackerImpl {
+--- before/typescript.js
++++ normalized-after/typescript.js
+@@ -95665,10 +95665,11 @@
+   return !!(s.flags & 2 /* HasLiteralTypes */);
+ }
+ function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
++  var _a, _b;
+   return {
+     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
+     getCurrentDirectory: () => host.getCurrentDirectory(),
+-    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
++    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
+     getPackageJsonInfoCache: () => {
+       var _a;
+       return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
+@@ -95682,7 +95683,7 @@
+     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
+     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
+     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
+-    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
++    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
+   };
+ }
+ var SymbolTrackerImpl = class _SymbolTrackerImpl {

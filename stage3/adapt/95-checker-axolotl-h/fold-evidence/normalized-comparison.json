@@ -1,0 +1,526 @@
+{
+  "status": "pass",
+  "javascriptChanging": true,
+  "emittedFiles": 9,
+  "emitted": [
+    {
+      "name": "_tsc.js",
+      "identical": false,
+      "onlyTwoRewrites": true,
+      "renameProof": {
+        "renames": [
+          {
+            "scope": "binder local function",
+            "before": "maybeBind2",
+            "after": "maybeBind3",
+            "normalization": {
+              "from": "maybeBind3",
+              "to": "maybeBind2"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 2209745,
+                "end": 2209755,
+                "line": 43665,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind2(left)"
+              },
+              {
+                "start": 2210142,
+                "end": 2210152,
+                "line": 43679,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind2(right)"
+              },
+              {
+                "start": 2211283,
+                "end": 2211293,
+                "line": 43710,
+                "column": 14,
+                "role": "declaration",
+                "context": "function maybeBind2(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 2209745,
+                "end": 2209755,
+                "line": 43665,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind3(left)"
+              },
+              {
+                "start": 2210142,
+                "end": 2210152,
+                "line": 43679,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind3(right)"
+              },
+              {
+                "start": 2211283,
+                "end": 2211293,
+                "line": 43710,
+                "column": 14,
+                "role": "declaration",
+                "context": "function maybeBind3(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+              }
+            ]
+          },
+          {
+            "scope": "createBasicNodeBuilderModuleSpecifierResolutionHost.getPackageJsonInfoCache arrow",
+            "before": "_a",
+            "after": "_a2",
+            "normalization": {
+              "from": "_a2",
+              "to": "_a"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 4459853,
+                "end": 4459855,
+                "line": 91046,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4459871,
+                "end": 4459873,
+                "line": 91047,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4459925,
+                "end": 4459927,
+                "line": 91047,
+                "column": 69,
+                "role": "call receiver",
+                "context": "_a.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 4459890,
+                "end": 4459893,
+                "line": 91047,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 4459909,
+                "end": 4459912,
+                "line": 91048,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a2 = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4459964,
+                "end": 4459967,
+                "line": 91048,
+                "column": 70,
+                "role": "call receiver",
+                "context": "_a2.call"
+              }
+            ]
+          }
+        ],
+        "observations": {
+          "before": {
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0,
+            "spellings": [
+              "maybeBind2",
+              "maybeBind3",
+              "_a",
+              "_a2"
+            ]
+          },
+          "after": {
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0,
+            "spellings": [
+              "maybeBind2",
+              "maybeBind3",
+              "_a",
+              "_a2"
+            ]
+          }
+        },
+        "noOtherRenamesAllowed": true
+      },
+      "normalizedSha256": "fe7a03f2c22726cd6d82cd5080c08d01921ed0056eac8a543f390a3270f05529",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 2,
+      "beforeBytes": 6247416,
+      "afterBytes": 6247479,
+      "beforeSha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff",
+      "afterSha256": "bd1cde0a5298a738752cdbb4a924c77f60b6430c7a7bc988edc06db7464469e7"
+    },
+    {
+      "name": "_tsserver.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 27889,
+      "afterBytes": 27889,
+      "beforeSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "afterSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 10364,
+      "afterBytes": 10364,
+      "beforeSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "afterSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "name": "tsc.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 267,
+      "afterBytes": 267,
+      "beforeSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "afterSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "name": "tsserver.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 272,
+      "afterBytes": 272,
+      "beforeSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "afterSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 1013,
+      "afterBytes": 1013,
+      "beforeSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "afterSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "name": "typescript.js",
+      "identical": false,
+      "onlyTwoRewrites": true,
+      "renameProof": {
+        "renames": [
+          {
+            "scope": "binder local function",
+            "before": "maybeBind2",
+            "after": "maybeBind3",
+            "normalization": {
+              "from": "maybeBind3",
+              "to": "maybeBind2"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 2441388,
+                "end": 2441398,
+                "line": 48192,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind2(left)"
+              },
+              {
+                "start": 2441785,
+                "end": 2441795,
+                "line": 48206,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind2(right)"
+              },
+              {
+                "start": 2442927,
+                "end": 2442937,
+                "line": 48237,
+                "column": 14,
+                "role": "declaration",
+                "context": "function maybeBind2(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 2441388,
+                "end": 2441398,
+                "line": 48192,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind3(left)"
+              },
+              {
+                "start": 2441785,
+                "end": 2441795,
+                "line": 48206,
+                "column": 28,
+                "role": "direct call",
+                "context": "maybeBind3(right)"
+              },
+              {
+                "start": 2442927,
+                "end": 2442937,
+                "line": 48237,
+                "column": 14,
+                "role": "declaration",
+                "context": "function maybeBind3(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+              }
+            ]
+          },
+          {
+            "scope": "createBasicNodeBuilderModuleSpecifierResolutionHost.getPackageJsonInfoCache arrow",
+            "before": "_a",
+            "after": "_a2",
+            "normalization": {
+              "from": "_a2",
+              "to": "_a"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 4697931,
+                "end": 4697933,
+                "line": 95673,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4697949,
+                "end": 4697951,
+                "line": 95674,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4698003,
+                "end": 4698005,
+                "line": 95674,
+                "column": 69,
+                "role": "call receiver",
+                "context": "_a.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 4697968,
+                "end": 4697971,
+                "line": 95674,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 4697987,
+                "end": 4697990,
+                "line": 95675,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a2 = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4698042,
+                "end": 4698045,
+                "line": 95675,
+                "column": 70,
+                "role": "call receiver",
+                "context": "_a2.call"
+              }
+            ]
+          }
+        ],
+        "observations": {
+          "before": {
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0,
+            "spellings": [
+              "maybeBind2",
+              "maybeBind3",
+              "_a",
+              "_a2"
+            ]
+          },
+          "after": {
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0,
+            "spellings": [
+              "maybeBind2",
+              "maybeBind3",
+              "_a",
+              "_a2"
+            ]
+          }
+        },
+        "noOtherRenamesAllowed": true
+      },
+      "normalizedSha256": "8f39b0adff9dd5972c4be7c7347016e515ab8ddf3435d4989fd6d314ed6dfbb2",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 2,
+      "beforeBytes": 9154984,
+      "afterBytes": 9155047,
+      "beforeSha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e",
+      "afterSha256": "785ab31a6ab02aaf2449ef3b924eeda21650840620d5dbb94105615de2866e53"
+    },
+    {
+      "name": "typingsInstaller.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 280,
+      "afterBytes": 280,
+      "beforeSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "afterSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "name": "watchGuard.js",
+      "identical": true,
+      "onlyTwoRewrites": true,
+      "unrenamedObservations": {
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0,
+        "spellings": [
+          "maybeBind2",
+          "maybeBind3",
+          "_a",
+          "_a2"
+        ]
+      },
+      "normalizedSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "ownerMatchesExpectedLowering": true,
+      "outsideOwnerIdentical": true,
+      "rewrites": 0,
+      "beforeBytes": 2314,
+      "afterBytes": 2314,
+      "beforeSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "afterSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "identical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "identical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ]
+}

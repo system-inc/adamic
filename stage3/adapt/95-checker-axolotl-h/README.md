@@ -199,7 +199,7 @@ within that owner. The independent verifier checks the same source and emitted
 scope without using the planner. Historical type-only claims above concern
 the original slot widening; they do not classify this fold.
 
-## Fold validation and stop point
+## Historical fold validation and stop point
 
 This is a stopped implementation, not a claim that the task's done condition
 was met. Base is origin/main `7e3c0682da96cbe01f7ae9b9820f1bd8f1993671`.
@@ -263,3 +263,37 @@ node stage3/adapt/95-checker-axolotl-h/compare.cjs BEFORE AFTER
 python3 -B stage3/adapt/95-checker-axolotl-h/replay.py BEFORE_REPO AFTER_REPO BEFORE AFTER NEW_REPLAY_OUTPUT
 # compare.cjs currently exits 1 for the outside-owner bundle rename.
 ```
+
+## Accepted binding normalization, task kpp0f8s continuation
+
+The user accepted esbuild collision renumbering once proved to be only a rename.
+Check 4 now passes after normalizing these two bindings in each of _tsc.js and
+typescript.js:
+
+| Binding scope | Before | After | Before / after occurrences |
+| --- | --- | --- | --- |
+| Binder local function | maybeBind2 | maybeBind3 | 3 / 3: declaration and two direct calls |
+| getPackageJsonInfoCache arrow temporary | _a | _a2 | 3 / 3: declaration, assignment and call receiver |
+
+Every occurrence resolves through the TypeScript symbol table to its unique
+declaration. Corresponding use contexts are identical after renaming. Both
+functions have no escape or alias use of the renamed binding, and no .name read.
+All nine bundles are scanned for string/template literals and property names
+mentioning either spelling of either rename; none exists. The binder's former
+name is absent after, and its new name is absent before. The temporary is scoped
+to its own arrow, whose complete text is identical after name normalization.
+
+[fold-evidence/rename-map.json](fold-evidence/rename-map.json) lists every rename
+and every occurrence, with locations, roles, contexts and counts.
+[fold-evidence/normalized-comparison.json](fold-evidence/normalized-comparison.json)
+contains the symbol and observation proof, nine-file comparison and unchanged
+public declarations. [fold-evidence/normalized-emitted.diff](fold-evidence/normalized-emitted.diff)
+shows all remaining hunks: exactly the two initializer rewrites with the ordinary
+upstream target's optional-chain lowering. No other rename is allowed.
+
+rename-proof.cjs refuses unexpected uses, name observations, count changes and
+missed occurrences. rename-mutant.cjs proves refusal for a string literal, a
+property name, a .name read and an unrenamed call. compare.cjs accepts an optional
+third argument naming a new directory in which to retain the normalized bundles.
+The raw stop evidence above remains available; the normalized result supersedes
+its check 4 failure. The oracle is the next check.

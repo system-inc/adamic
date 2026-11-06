@@ -27,7 +27,11 @@
     "ownerMatchesExpectedLowering": true,
     "outsideOwnerIdentical": false,
     "exit": 1,
-    "stopReason": "esbuild renames binder maybeBind2 to maybeBind3 outside the pinned owner"
+    "stopReason": null,
+    "normalizedExit": 0,
+    "normalizedOutsideOwnerIdentical": true,
+    "normalizationProof": "normalized-comparison.json",
+    "renameMap": "rename-map.json"
   },
   "publicDeclarations": {
     "files": 2,
@@ -41,8 +45,8 @@
     "allRefuseWithoutWrites": true
   },
   "oracle": {
-    "status": "not run",
-    "reason": "stopped at required check 4"
+    "status": "pending",
+    "piecesMaximumSeconds": 1440
   },
   "complete": false
 }
