@@ -2,10 +2,12 @@ package markdownblocks
 
 import (
 	"maps"
+	"os"
 	"slices"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // markdownGoBuild is one Go build's key, by the compilers go builds it with.
@@ -54,9 +56,11 @@ func TestMarkdownGoBuildsKeyTheCompilersEnvGivesGo(t *testing.T) {
 	defaults := markdownGoCompilers()
 	builds := markdownGoBuilds()
 	keys := map[string]string{}
+	// clang and clang++ for the build's triple (toolchain.Compilers, #5xsd2ha).
+	c, cPlusPlus := toolchain.Compilers(os.Environ())
 	for _, build := range builds {
 		inputs := build.inputs(defaults)
-		if !slices.Contains(inputs.Flags, "CC=clang") || !slices.Contains(inputs.Flags, "CXX=clang++") || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
+		if !slices.Contains(inputs.Flags, "CC="+c) || !slices.Contains(inputs.Flags, "CXX="+cPlusPlus) || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
 			t.Fatalf("with CC and CXX unset, %s's key names %+v, want clang, clang++ and clang's report", build.name, defaults)
 		}
 		keys[build.name] = buildcache.NameKey(root, inputs)
