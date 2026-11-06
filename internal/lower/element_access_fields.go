@@ -108,6 +108,39 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 	return l.defined(node, value), nil
 }
 
+// viewKeyedRead reads a readonly string-index view held as the object it views (readonlyObjectView)
+// by a string key, the way tsc's getEnumMembers reads an enum's table, enumObject[name]. It's the
+// run-time key read Reflect.get lowers to, ir.DynamicKeyedProperty: an own data slot answers with its
+// value, a missing name with undefined and an inherited one as Node's, and the result is a union, so
+// typeof value === "number" stays a real check where the view's type says string | number.
+func (l *lowering) viewKeyedRead(node *ast.Node, object ir.Expression) (ir.Expression, bool, error) {
+	access := node.AsElementAccessExpression()
+	if !l.readonlyObjectView(l.checker.GetTypeAtLocation(access.Expression)) {
+		return nil, false, nil
+	}
+	keyType := l.checker.GetTypeAtLocation(access.ArgumentExpression)
+	if held, known := l.representation(keyType); !known || held != ir.String || l.includesNull(keyType) || l.includesUndefined(keyType) {
+		return nil, true, l.notYet(access.ArgumentExpression, "a readonly view read by a key that isn't a string (symbol keys and key coercion)")
+	}
+	key, err := l.expression(access.ArgumentExpression)
+	if err != nil {
+		return nil, true, err
+	}
+	if key.Type() != ir.String {
+		return nil, true, l.notYet(access.ArgumentExpression, "a readonly view read by a key that isn't a string (symbol keys and key coercion)")
+	}
+	// The read can call a class getter the key names, from inside the runtime, so it arms the same
+	// program-wide getter judgment Reflect.get's read does (checkDynamicKeyedGetters).
+	if err := l.checkDynamicKeyedGetterSyntax(node); err != nil {
+		return nil, true, err
+	}
+	if l.dynamicKeyedSite == nil {
+		l.dynamicKeyedSite = node
+	}
+	l.graphDynamicSite = node
+	return ir.DynamicKeyedProperty{Object: fit(object, ir.Union), Key: key}, true, nil
+}
+
 // Indexed narrowing needs the declared field types: a computed access does not
 // necessarily have the symbol that the named-read presence helper uses.
 func (l *lowering) computedFieldPresence(node *ast.Node, value ir.Expression) ir.Expression {

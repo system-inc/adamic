@@ -3,10 +3,13 @@ package oracle
 import (
 	"errors"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 // tsc's debug.ts reads 19 enum objects through its own ESM namespace, each cast to a readonly
@@ -15,7 +18,7 @@ import (
 // object (B2, #52zja36, under Adamic's ruling of Nov 6). Each fixture is held to Node natively under
 // the sanitizers and on the JavaScript backend.
 func init() {
-	for _, name := range []string{"cast", "forin"} {
+	for _, name := range []string{"cast", "forin", "members", "keyed_only"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -71,6 +74,102 @@ func TestEnumViewCastsTscRefuses(t *testing.T) {
 			var checked *load.CheckError
 			if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2352") {
 				t.Fatalf("want tsc's TS2352, got %v", err)
+			}
+		})
+	}
+}
+
+// A run-time key read of the view arms the program-wide judgment of class getters Reflect.get's read
+// does (Lower on #52zja36): a getter that runs code stops at the read, judged by its syntax, and one
+// that may give null held bare stops there once every function is lowered. Mutant: the view's read
+// not setting dynamicKeyedSite lowers stop_getter_null.a.
+func TestEnumViewKeyedReadGetterStops(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, at, what string }{
+		{"stop_getter_effect.a", "stop_getter_effect.a:14:16", "a readonly view read by a run-time key in a program with a class getter that does more than return its fields"},
+		{"stop_getter_null.a", "stop_getter_null.a:16:16", "a readonly view read by a run-time key in a program with a class getter that may give null held bare"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowered(t, enumViewFixture(t, probe.file))
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.what) {
+				t.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
+			}
+		})
+	}
+}
+
+// Where Node answers what no representation holds, the keyed read stops loudly at run time on both
+// backends alike, as Reflect.get's does, and never answers wrong: __proto__ (Object.prototype on
+// Node), and an object literal's getter, which Node runs on every read (Language's p02).
+func TestEnumViewKeyedReadStopsAlike(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, stdout, stderr string }{
+		{"stop_proto.a", "Identifier number\n", "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"},
+		{"stop_literal_getter.a", "", "adamic: panic: an object literal's getter isn't read by a run-time key yet (reading 'a')\n"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowered(t, enumViewFixture(t, probe.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := run{stdout: []byte(probe.stdout), stderr: []byte(probe.stderr), exitCode: 70}
+			compiled, _ := natively(t, program)
+			for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+			if truth := onNode(t, enumViewFixture(t, probe.file)); truth.exitCode != 0 {
+				t.Fatalf("Node: %+v", truth)
+			}
+		})
+	}
+}
+
+// The head's mutant for the materialized table (Library on #52zja36): drop an enum object's reverse
+// keys, the array-index names that hold its members' names, and the key, typeof and value rows go red
+// against Node on both backends.
+func TestEnumViewReverseKeysMutant(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, enum string }{{"members.a", "Ordered"}} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			truth := onNode(t, enumViewFixture(t, probe.file))
+			program, err := lowered(t, enumViewFixture(t, probe.file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			dropped := 0
+			for position, statement := range program.Main {
+				declaration, ok := statement.(ir.Declare)
+				literal, isLiteral := declaration.Value.(ir.ObjectLiteral)
+				if !ok || !isLiteral || program.Locals[declaration.Local].Name != probe.enum {
+					continue
+				}
+				kept := []ir.Field{}
+				for _, field := range literal.Fields {
+					if _, err := strconv.ParseFloat(field.Name, 64); err == nil {
+						dropped++
+						continue
+					}
+					kept = append(kept, field)
+				}
+				literal.Fields = kept
+				declaration.Value = literal
+				program.Main[position] = declaration
+			}
+			if dropped != 6 {
+				t.Fatalf("dropped %d reverse keys from %s, want 6", dropped, probe.enum)
+			}
+			compiled, _ := natively(t, program)
+			for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+				if got.exitCode != 0 || disagreement(truth, got) != "stdout differs" {
+					t.Fatalf("%s: the reverse keys' mutant survived: exit %d, stdout %q, stderr %q", backend, got.exitCode, got.stdout, got.stderr)
+				}
+				t.Logf("%s: reverse keys dropped from %s, caught by Node's stdout", backend, probe.enum)
 			}
 		})
 	}

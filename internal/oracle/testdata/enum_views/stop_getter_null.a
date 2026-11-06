@@ -1,0 +1,17 @@
+// A class getter that may give null held bare, where a run-time key read could call it: NotYet at the
+// view's read once every function is lowered, as Reflect.get's read is (checkDynamicKeyedGetters).
+import * as ts from './barrel.a';
+class Leaf {
+	readonly size: number = 1;
+}
+class Holder {
+	leaf: Leaf | null = null;
+	get current(): Leaf | null {
+		return this.leaf;
+	}
+}
+const holder = new Holder();
+const kinds = (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string | number>>>>).SyntaxKind;
+const name = ["Identifier"].join("");
+console.log(`${kinds[name]} ${holder.current === null}`);
+console.log(Object.keys({ tscUsesKeys: 1 }).join(","));

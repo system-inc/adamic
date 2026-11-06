@@ -230,8 +230,8 @@ type lowering struct {
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
-	// dynamicKeyedSite is the first run-time key read (reflectGet), where checkDynamicKeyedGetters
-	// says why a class getter keeps the program from reading by a run-time key.
+	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
+	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.

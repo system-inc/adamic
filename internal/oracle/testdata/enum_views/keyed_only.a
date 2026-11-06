@@ -1,0 +1,13 @@
+// The program's only run-time key read is an enum's view, so the enum's shape must carry its field
+// types for the keyed read by itself (union.c's dynamic_slot).
+import { SyntaxKind } from './kinds.a';
+
+function read(enumObject: Readonly<Record<string, string | number>>, name: string): string {
+	const value = enumObject[name];
+	return `${name} ${typeof value} ${value}`;
+}
+
+for (const name of ["Identifier", "2", "missing", "Count", "3"]) {
+	console.log(read(SyntaxKind, name));
+}
+console.log(`${Object.keys(SyntaxKind).length}`);

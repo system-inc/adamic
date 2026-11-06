@@ -86,9 +86,18 @@ var dynamicKeyedGetterReturns = []ir.Type{
 // a getter or a method, joined by operators, with no call, no new and no assignment, which can't throw
 // either. An object literal's getter and a static one stop at run time instead, so they aren't asked.
 const (
-	dynamicKeyedGetterSyntax    = "Reflect.get by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)"
-	dynamicKeyedGetterPrimitive = "Reflect.get by a run-time key in a program with a class getter that converts an object field to a primitive (its toString or valueOf would run inside the read, unseen)"
+	dynamicKeyedGetterSyntax    = "in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)"
+	dynamicKeyedGetterPrimitive = "in a program with a class getter that converts an object field to a primitive (its toString or valueOf would run inside the read, unseen)"
 )
+
+// dynamicKeyedRead names the run-time key read a getter judgment stops at: Reflect.get's call, or a
+// readonly view's index (viewKeyedRead).
+func dynamicKeyedRead(site *ast.Node) string {
+	if site.Kind == ast.KindCallExpression {
+		return "Reflect.get by a run-time key"
+	}
+	return "a readonly view read by a run-time key"
+}
 
 // checkDynamicKeyedGetterSyntax judges every module class's getters at the read itself, by their
 // syntax, before any of their bodies need lowering.
@@ -99,7 +108,7 @@ func (l *lowering) checkDynamicKeyedGetterSyntax(node *ast.Node) error {
 				continue
 			}
 			if reason := l.dynamicKeyedGetterBody(member); reason != "" {
-				return l.notYet(node, reason)
+				return l.notYet(node, dynamicKeyedRead(node)+" "+reason)
 			}
 		}
 	}
@@ -123,18 +132,18 @@ func (l *lowering) checkDynamicKeyedGetters() error {
 				continue
 			}
 			if !slices.Contains(dynamicKeyedGetterReturns, l.result.Functions[accessor.Getter].Returns) {
-				return l.notYet(l.dynamicKeyedSite, "Reflect.get by a run-time key in a program with a class getter whose result has no union form yet")
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter whose result has no union form yet")
 			}
 			declaration := l.getterDeclarations[accessor.Getter]
 			if declaration == nil {
-				return l.notYet(l.dynamicKeyedSite, dynamicKeyedGetterSyntax)
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+dynamicKeyedGetterSyntax)
 			}
 			if reason := l.dynamicKeyedGetterBody(declaration); reason != "" {
-				return l.notYet(l.dynamicKeyedSite, reason)
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" "+reason)
 			}
 			result := l.checker.GetTypeAtLocation(declaration.Name())
 			if held, known := l.representation(result); l.includesNull(result) && (!known || held != ir.Union) {
-				return l.notYet(l.dynamicKeyedSite, "Reflect.get by a run-time key in a program with a class getter that may give null held bare (null and undefined slot tags)")
+				return l.notYet(l.dynamicKeyedSite, dynamicKeyedRead(l.dynamicKeyedSite)+" in a program with a class getter that may give null held bare (null and undefined slot tags)")
 			}
 		}
 	}

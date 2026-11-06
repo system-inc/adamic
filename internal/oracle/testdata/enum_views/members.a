@@ -1,0 +1,70 @@
+// tsc's getEnumMembers and formatEnum (debug.ts) over numeric enums read through the namespace cast:
+// for...in gives every key, array indexes first, and a run-time key read gives each value as a union,
+// so typeof value === "number" keeps only the members, since the reverse keys hold their names. The
+// identity Map hits on the second call. tsc calls Object.keys, which keeps a readonly view in the
+// viewed object's own storage (enumerationReadonlyType), as the last line does here.
+import * as ts from './barrel.a';
+
+type View = Readonly<Record<string, string | number>>;
+
+const enumMemberCache = new Map<View, [number, string][]>();
+let walks = 0;
+
+function getEnumMembers(enumObject: View): [number, string][] {
+	const existing = enumMemberCache.get(enumObject);
+	if (existing !== undefined) {
+		return existing;
+	}
+	walks++;
+	const result: [number, string][] = [];
+	for (const name in enumObject) {
+		const value = enumObject[name];
+		if (typeof value === "number") {
+			result.push([value, name]);
+		}
+	}
+	enumMemberCache.set(enumObject, result);
+	return result;
+}
+
+function formatEnum(value: number, enumObject: View): string {
+	for (const [memberValue, memberName] of getEnumMembers(enumObject)) {
+		if (memberValue === value) {
+			return memberName;
+		}
+	}
+	return `${value}`;
+}
+
+const ordered = (ts as Readonly<Record<"Ordered", View>>).Ordered;
+for (const name in ordered) {
+	const value = ordered[name];
+	console.log(`${name} ${typeof value} ${value}`);
+}
+const one = ["1"].join("");
+console.log(`${ordered["1"]} ${ordered[one]}`);
+
+const first = getEnumMembers(ordered);
+const second = getEnumMembers((ts as Readonly<Record<"Ordered", View>>).Ordered);
+console.log(`${first === second} walks=${walks}`);
+console.log(first.map(([value, name]) => `${name}=${value}`).join(","));
+const kinds = (ts as Readonly<Record<"SyntaxKind", View>>).SyntaxKind;
+console.log(`${formatEnum(2, kinds)} ${formatEnum(9, kinds)} ${formatEnum(1, (ts as Readonly<Record<"FlowFlags", View>>).FlowFlags)} walks=${walks}`);
+
+// Names the table doesn't hold: a missing one is undefined, and Object.prototype's answer as Node's.
+for (const name of ["NoSuchMember", "toString", "constructor", "hasOwnProperty", "valueOf"]) {
+	const value = kinds[name];
+	console.log(`${name} ${typeof value} ${value === undefined}`);
+}
+// A value narrowed by typeof is used as what it was narrowed to, never a function read as a string.
+for (const name of ["Identifier", "2", "toString"]) {
+	const value = kinds[name];
+	if (typeof value === "string") {
+		console.log(`${name} ${value.length} ${value.toUpperCase()}`);
+	} else if (typeof value === "number") {
+		console.log(`${name} ${value + 1}`);
+	} else {
+		console.log(`${name} other`);
+	}
+}
+console.log(Object.keys(kinds).join(","));

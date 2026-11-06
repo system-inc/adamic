@@ -1,0 +1,14 @@
+// Language's p02: an object literal's getter seen as the view. Node runs it on every read; the keyed
+// read stops loudly on both backends at it, as Reflect.get's does, never a snapshot.
+type View = Readonly<Record<string, string | number>>;
+let reads = 0;
+const o = { get a(): number { reads++; return reads; }, b: 2 };
+function walk(view: View): string {
+	const rows: string[] = [];
+	for (const key in view) {
+		rows.push(`${key}:${typeof view[key]}`);
+	}
+	return rows.join(",");
+}
+console.log(walk(o));
+console.log(`reads ${reads} ${Object.keys(o).length}`);
