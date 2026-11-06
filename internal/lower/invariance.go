@@ -161,17 +161,8 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
 			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
 		}
-		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
-		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
-			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
-				// tsc relates a method's parameters both ways (method bivariance), so a method taking
-				// a Dog can be seen as one taking any Animal, and handed a Cat.
-				return &widening{source: takes, target: given, parameter: true}
-			}
-			if found := l.widened(given, takes, visited); found != nil {
-				return found
-			}
+		if found := l.widenedParameters(fromSignatures[0], toSignatures[0], visited); found != nil {
+			return found
 		}
 		return l.widened(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]), visited)
 	}
@@ -193,6 +184,25 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	return l.widenedProperties(from, to, nil, false, visited)
+}
+
+// widenedParameters is the half of widened's signature relation that judges what a function is handed:
+// each of from's parameters seen as taking to's at the same position. A literal's method judges its
+// parameters here and what it returns at its own return statements (literalMethodRefusal).
+func (l *lowering) widenedParameters(from *checker.Signature, to *checker.Signature, visited map[[2]*checker.Type]bool) *widening {
+	fromParameters, toParameters := from.Parameters(), to.Parameters()
+	for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+		takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
+		if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
+			// tsc relates a method's parameters both ways (method bivariance), so a method taking
+			// a Dog can be seen as one taking any Animal, and handed a Cat.
+			return &widening{source: takes, target: given, parameter: true}
+		}
+		if found := l.widened(given, takes, visited); found != nil {
+			return found
+		}
+	}
+	return nil
 }
 
 // widenedProperties walks to's properties against from's, but those skip names: each field a slot
@@ -492,27 +502,32 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
 	case node.Kind == ast.KindGetAccessor && literalMember(node):
 		// { get p(): R { return r; } } is r seen as the literal's property p, judged exactly as { p: r } is:
-		// what the getter returns against each slot of p. Nothing judged it before #wjqtypf, since a getter
-		// isn't an expression, so a readonly R went out as a writable W. A getter judges what the property
-		// reads as; a setter beside it is judged in its own case, by what it takes.
+		// each value the getter returns against each slot of p. Nothing judged it before #wjqtypf, since a
+		// getter isn't an expression, so a readonly R went out as a writable W. Each return statement's
+		// value is judged at its own site, not the getter's declared type, so a literal made right there
+		// keeps its freshness (freshOrWidened): `get p(): { readonly t: number } { return { t: 1 }; }` is a
+		// new object at every read, which no other name holds. A getter judges what the property reads as; a
+		// setter beside it is judged in its own case, by what it takes.
 		slots, key, readable := l.literalMemberSlots(node)
 		if !readable {
-			return l.notYet(node, "a getter in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
+			return l.unreadableLiteralMember(node, "a getter")
 		}
-		own = l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(node))
-		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
+		for _, returned := range returnedExpressions(node) {
+			own = l.checker.GetTypeAtLocation(returned)
+			if contextual, found = l.literalMemberWidened(node, returned, own, slots, key); found != nil {
+				break
+			}
+		}
 	case node.Kind == ast.KindSetAccessor && literalMember(node):
 		return l.literalSetterRefusal(node)
 	case node.Kind == ast.KindMethodDeclaration && literalMember(node):
-		// { get(): R { return r; } } is a function seen as the literal's property: widened's signatures
-		// branch relates the two, its parameters both ways and what it returns covariantly, so a method
-		// returning R seen as one returning W is refused there (#wjqtypf).
-		slots, key, readable := l.literalMemberSlots(node)
+		// { get(): R { return r; } } is a function seen as the literal's property, judged in
+		// literalMethodRefusal (#wjqtypf).
+		slots, _, readable := l.literalMemberSlots(node)
 		if !readable {
-			return l.notYet(node, "a method in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
+			return l.unreadableLiteralMember(node, "a method")
 		}
-		own = l.checker.GetTypeAtLocation(node)
-		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
+		return l.literalMethodRefusal(node, slots)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field. It's judged against each member of the
@@ -642,10 +657,11 @@ func literalMember(node *ast.Node) bool {
 
 // unjudgedLiteralMember is not yet for a member of an object literal whose kind refuseWidening doesn't judge
 // (judgedLiteralMembers), wherever a slot names its property: its value would go into that slot unjudged.
-// Where no slot names it, nothing sees it as anything, and it's let through.
+// Where no slot names it, nothing sees it as anything, and it's let through, as is one whose key can't be
+// read into a slot with an index signature (literalSlotIndexed).
 func (l *lowering) unjudgedLiteralMember(member *ast.Node) error {
 	slots, _, readable := l.literalMemberSlots(member)
-	if readable && len(slots) == 0 {
+	if readable && len(slots) == 0 || !readable && l.literalSlotIndexed(member) {
 		return nil
 	}
 	return l.notYet(member, describe(member)+" in an object literal written where a slot names its property, which stage 0 judges for a property, a shorthand, a spread, a getter, a setter and a method only")
@@ -661,7 +677,7 @@ func (l *lowering) unjudgedLiteralMember(member *ast.Node) error {
 func (l *lowering) literalSetterRefusal(member *ast.Node) error {
 	slots, key, readable := l.literalMemberSlots(member)
 	if !readable {
-		return l.notYet(member, "a setter in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
+		return l.unreadableLiteralMember(member, "a setter")
 	}
 	if len(slots) == 0 {
 		return nil
@@ -688,6 +704,120 @@ func (l *lowering) literalSetterRefusal(member *ast.Node) error {
 		}
 	}
 	return l.notYet(member, "a setter with no getter in an object literal written where a slot names its property, which reads as undefined where the slot says it holds "+l.checker.TypeToString(slots[0]))
+}
+
+// literalMethodRefusal judges a method in an object literal against each slot of its property, as a
+// function seen as the slot's: its parameters both ways, as widened's signatures branch relates them
+// (widenedParameters), and each value it returns against the slot's result at its own return statement,
+// not the method's declared result, so a literal made right there keeps its freshness (freshOrWidened):
+// `next() { return { value: 1, done: false }; }` seen as returning `{ value: number; done: boolean }` is
+// a new object every call, which nothing else holds. widened relates a function to one non-generic
+// signature only, so a slot with type parameters (PromiseLike's then<TResult1, TResult2>) or overloads is
+// not yet, never refused by a relation that doesn't hold. An async or generator method's return
+// statements don't give what it returns, a promise or an iterator does, so it's judged whole by widened.
+// A slot with no call signature calls nothing through it, and judges nothing here (#wjqtypf).
+func (l *lowering) literalMethodRefusal(method *ast.Node, slots []*checker.Type) error {
+	own := l.checker.GetTypeAtLocation(method)
+	if generatorDeclaration(method) || ast.HasSyntacticModifier(method, ast.ModifierFlagsAsync) {
+		for _, slot := range slots {
+			if found := l.widened(own, slot, map[[2]*checker.Type]bool{}); found != nil {
+				return l.wideningRefusal(method, own, slot, found)
+			}
+		}
+		return nil
+	}
+	signature := l.checker.GetSignatureFromDeclaration(method)
+	for _, slot := range slots {
+		members := l.definedMembers(slot)
+		for _, member := range members {
+			if len(members) > 1 && !l.checker.IsTypeAssignableTo(own, member) {
+				// Seen as a union, the method is seen as each member it can be, as widened sees one.
+				continue
+			}
+			slotSignatures := l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)
+			if len(slotSignatures) == 0 {
+				continue
+			}
+			if len(slotSignatures) > 1 {
+				return l.notYet(method, "a method in an object literal seen as an overloaded method, which stage 0 doesn't judge yet")
+			}
+			if len(slotSignatures[0].TypeParameters()) > 0 {
+				return l.notYet(method, "a method in an object literal seen as a generic method, which stage 0 doesn't judge yet")
+			}
+			if l.censusDiscardedMarkerPredicate(signature, slotSignatures[0]) {
+				continue
+			}
+			judged := signature
+			if len(judged.TypeParameters()) > 0 {
+				judged = instantiateSignatureInContextOf(l.checker, judged, slotSignatures[0], nil, nil)
+			}
+			result := l.checker.GetReturnTypeOfSignature(slotSignatures[0])
+			if l.censusNeverRestSignature(slotSignatures[0]) {
+				// Handed nothing it can take, so only what it returns is a view (widened's census branch).
+				if source := l.checker.GetReturnTypeOfSignature(judged); !l.checker.IsTypeAssignableTo(source, result) {
+					return l.wideningRefusal(method, own, member, &widening{source: source, target: result})
+				}
+			} else if found := l.widenedParameters(judged, slotSignatures[0], map[[2]*checker.Type]bool{}); found != nil {
+				return l.wideningRefusal(method, own, member, found)
+			}
+			for _, returned := range returnedExpressions(method) {
+				if found := l.freshOrWidened(returned, l.checker.GetTypeAtLocation(returned), result); found != nil {
+					return l.wideningRefusal(method, own, member, found)
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// returnedExpressions is each value a function's own return statements give back, and none of a function
+// or class nested in it, whose returns are its own.
+func returnedExpressions(function *ast.Node) []*ast.Node {
+	var returned []*ast.Node
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if ast.IsFunctionLike(node) || ast.IsClassLike(node) {
+			return false
+		}
+		if node.Kind == ast.KindReturnStatement {
+			if expression := node.AsReturnStatement().Expression; expression != nil {
+				returned = append(returned, expression)
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	if body := function.Body(); body != nil {
+		body.ForEachChild(visit)
+	}
+	return returned
+}
+
+// unreadableLiteralMember is a getter's, a setter's or a method's stop when literalMemberKey can't read its
+// key ([key]() {}). Into a slot with an index signature it's a keyed entry of the literal, the write its
+// direct twin `handlers[key] = value` makes, which the registry's dictionary and declared-key rules judge,
+// so it's let through to them rather than stopped first by a rule that can't read it (#wjqtypf, w10).
+// Anywhere else it's not yet.
+func (l *lowering) unreadableLiteralMember(member *ast.Node, what string) error {
+	if l.literalSlotIndexed(member) {
+		return nil
+	}
+	return l.notYet(member, what+" in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
+}
+
+// literalSlotIndexed is whether a member of an object literal goes into a slot with a string or a number
+// index signature, in any member of it the literal can sit in (literalSlotMembers).
+func (l *lowering) literalSlotIndexed(member *ast.Node) bool {
+	literal := l.slotType(member.Parent)
+	if literal == nil {
+		return false
+	}
+	for _, slotMember := range l.literalSlotMembers(member.Parent, literal) {
+		if l.checker.GetIndexTypeOfType(slotMember, l.checker.GetStringType()) != nil || l.checker.GetIndexTypeOfType(slotMember, l.checker.GetNumberType()) != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // literalMemberSlots is each slot a member of an object literal goes into, with the key it's read under

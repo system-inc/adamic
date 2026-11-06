@@ -13,13 +13,18 @@ import (
 // readonly, and Node and native both printed 1. p01 to p05 are Language's getter probes (a plain return
 // slot, `{ p: W } | undefined`, a const, an inferred return, an argument), and p06 a method `{ get(): R }`
 // returned as `{ get(): W }`; each is refused, as { p: r } is. t01 to t06 are their honest twins, W's own
-// field returned. A getter judges what the property reads as, and a setter is judged on its own, by what it
+// field returned. A getter and a method are judged at each return statement's value, not their declared
+// result, so a literal made right there stays fresh (Lower's ruling on 55507f73): f01, a getter declared
+// `{ readonly t: number }` returning `{ t: 1 }` into `{ p: W }`, lowers, since every read is a new object
+// no other name holds, and a write through W changes nothing a later read sees. A getter judges what the
+// property reads as, and a setter is judged on its own, by what it
 // takes, since tsc relates only the getter's type (Compiler's must on 0ee9e50b): d01, `{ get p(): Dog, set
 // p(v: Dog) }` written into a `{ p: Animal }` slot, is refused, and its twin t07, taking Animal, lowers. d02,
 // the same literal held by a const first and then seen as `{ p: Animal }`, was refused already. A setter
 // alone is not yet wherever a slot names its property (s01), since the property reads as undefined there,
 // unless what it takes is refused first (s02). g01, a getter alone seen as a writable `{ p: W }` and
-// written, throws a TypeError on Node, strict as a module is, and the same on both backends. n01, an arrow
+// written, throws a TypeError on Node, strict as a module is; stage 0 stops it as not yet at the write, a
+// property name whose descriptor has no setter, and its stop is pinned. n01, an arrow
 // returning R seen as one returning W, and n02, a class instance whose method returns R seen through
 // `{ get(): W }`, are the neighbours, refused already. Each program's whole stop is pinned in its .stop
 // file, or "lowers", which runs it on release, sanitized native and the JavaScript backend against Node.
@@ -77,7 +82,7 @@ func TestLiteralMemberSlots(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 40 {
-		t.Fatalf("found %d programs, want 40", programs)
+	if programs != 42 {
+		t.Fatalf("found %d programs, want 42", programs)
 	}
 }
