@@ -730,7 +730,7 @@ var flowCorpusPaths = []string{
 	"../oracle/testdata/new_expression_class_cache_or.a",
 	"../oracle/testdata/new_expression_class_value.a",
 	"../oracle/testdata/new_expression_uint16.a",
-	"../oracle/testdata/new_expression_uint16_notyet.a",
+	"../oracle/testdata/new_expression_uint16_conversion.a",
 	"../oracle/testdata/node_buffer_bom.a",
 	"../oracle/testdata/node_buffer_crypto.a",
 	"../oracle/testdata/node_buffer_digest_twice.a",
@@ -1972,7 +1972,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec,
 		TestFlowProgram____oracle_testdata_new_expression_class_value_a_f485e42005f2,
 		TestFlowProgram____oracle_testdata_new_expression_uint16_a_f98ef2da22a9,
-		TestFlowProgram____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3,
+		TestFlowProgram____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f,
 		TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17,
 		TestFlowProgram____oracle_testdata_node_buffer_crypto_a_edd0dd804f10,
 		TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841,
@@ -3212,7 +3212,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec,
 		TestFlowProgram____oracle_testdata_new_expression_class_value_a_f485e42005f2,
 		TestFlowProgram____oracle_testdata_new_expression_uint16_a_f98ef2da22a9,
-		TestFlowProgram____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3,
+		TestFlowProgram____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f,
 		TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17,
 		TestFlowProgram____oracle_testdata_node_buffer_crypto_a_edd0dd804f10,
 		TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841,
@@ -4452,7 +4452,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec,
 		TestFlowProgram____oracle_testdata_new_expression_class_value_a_f485e42005f2,
 		TestFlowProgram____oracle_testdata_new_expression_uint16_a_f98ef2da22a9,
-		TestFlowProgram____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3,
+		TestFlowProgram____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f,
 		TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17,
 		TestFlowProgram____oracle_testdata_node_buffer_crypto_a_edd0dd804f10,
 		TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841,
@@ -5692,7 +5692,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec,
 		TestFlowProgram____oracle_testdata_new_expression_class_value_a_f485e42005f2,
 		TestFlowProgram____oracle_testdata_new_expression_uint16_a_f98ef2da22a9,
-		TestFlowProgram____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3,
+		TestFlowProgram____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f,
 		TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17,
 		TestFlowProgram____oracle_testdata_node_buffer_crypto_a_edd0dd804f10,
 		TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841,
@@ -10563,7 +10563,7 @@ func TestFlowProgram____oracle_testdata_new_expression_uint16_a_f98ef2da22a9(t *
 	checkAllFlowProgram(t, flowCorpusPaths[725])
 }
 
-func TestFlowProgram____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3(t *testing.T) {
+func TestFlowProgram____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[726])
