@@ -1,6 +1,6 @@
-// A host object stops for every key, not only Object.prototype's names (#ey7aysy): a Stats' isFile is
-// Stats.prototype's method on Node, which native's shape doesn't hold, so it read undefined on both
-// backends before. Node prints function.
+// A Stats' isFile is StatsBase.prototype's method on Node, which native's shape doesn't hold, so it
+// read undefined on both backends before it stopped (#ey7aysy). It now answers on both backends as
+// Node's does (#zhrjf2t), natively an immortal closure (stats_reads.a). Node prints function.
 import * as fs from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 
