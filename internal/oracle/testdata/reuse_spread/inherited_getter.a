@@ -2,8 +2,10 @@
 // ruling on #qk8rztp S2c-2b): Base's instances aren't assignable to Tree, but Derived's are, and its
 // chain holds Base's getter, so describe's spread takes it as one it may run. A spread copies own
 // properties only, so Node runs none: it prints 1 tree1 derived4, then tree1. describe reads the
-// copy by its named fields, never by Object.keys.
-type Tree = { value: number; label: string };
+// copy by its named fields, never by Object.keys. Tree's fields are readonly, as a getter without a
+// setter is, so a Derived is assignable to Tree without lowering's refusal of a readonly field seen
+// as writable.
+type Tree = { readonly value: number; readonly label: string };
 let tree: Tree = { value: 1, label: `tree${String(1)}` };
 class Base {
     get value(): number {
