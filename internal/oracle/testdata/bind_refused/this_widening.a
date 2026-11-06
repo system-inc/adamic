@@ -1,0 +1,5 @@
+// Node calls show without a receiver and throws TypeError. Bind must not lift this body's stop.
+interface Host { name: string }
+function show(this: Host): string { return this.name; }
+const widened: () => string = show;
+console.log(widened());
