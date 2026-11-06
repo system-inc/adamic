@@ -222,7 +222,7 @@ apply's product key. COUNT.md and its scripts retain the complete count method.
 
 ```sh
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/99r/typescript-source stage3/apply.sh BEFORE_TREE
-node stage3/adapt/99-correctness-axolotl-r/contract.cjs BEFORE_TREE
+node stage3/adapt/99-correctness-axolotl-r/contract.cjs BEFORE_TREE /absolute/path/to/built/adamic
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/99r/typescript-source stage3/apply.sh AFTER_TREE
 node stage3/adapt/99-correctness-axolotl-r/adapt.cjs AFTER_TREE
 node stage3/adapt/99-correctness-axolotl-r/debug-proof.cjs AFTER_TREE
@@ -237,3 +237,30 @@ of the new stack. The first command therefore runs from the base checkout. The
 Go command is 99q's fixture command; the full oracle separately runs every
 upstream runner with all eight workers and no filter. Compiler provenance and
 both exact census stack labels are recorded in CENSUS.md.
+
+## 2026-11-06 amendment: readonly toSorted arm
+
+Adamic authorized this amendment to task b5w3ycg at 20:05Z. The empty arm is
+`emptyArray as readonly T[]`; the existing unknown/SortedReadonlyArray mint and
+every other owner are unchanged. MEASURE.md retains the pre-edit evidence and
+the earlier stop; this authorization resolves its cast-free condition.
+
+docs/rulings.md:14 requires Adamic's sound relation, not TypeScript assignability.
+Run `node contract.cjs BEFORE_99R_TREE /absolute/path/to/built/adamic` with stock
+TypeScript 6.0.3 on NODE_PATH. The compiler argument is mandatory, directly or
+through ADAMIC_CONTRACT_COMPILER; there is no TypeScript-only fallback.
+relation-contract.cjs extracts the actual adapted arm, its target, the unchanged
+emptyArray declaration and toSorted's unconstrained T. It emits two small probes
+with number and string instantiations: the actual `as` expression and the same
+source `satisfies` the extracted target. It runs `adamic types` and `adamic c` on
+both. The latter invokes ordinary Load and LowerWithOptions, including castProof
+and provenRelation. The satisfies witness requires an erased sound relation,
+so acceptance as a checked downcast cannot satisfy the contract. No compiler
+source or refusal rule is patched. Set ADAMIC_RELATION_EVIDENCE to retain probes
+and complete outputs at a chosen scratch directory.
+
+castProof's upcast path is internal/lower/cast_proof.go:219-229; it calls
+provenRelation in proven_relations.go:11-30, checking writable slots, optional
+fields and nominal identity after the assignability candidate. cast then erases
+the accepted view. The owner contract also rejects the former mutable arm with
+an otherwise adapted mint as a partial owner.

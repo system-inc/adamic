@@ -196,3 +196,31 @@ stage3/apply.sh --build-product /workspace/scratch/tosorted/before
 # Run from this checkout:
 NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-r/measure-tosorted.cjs /workspace/scratch/tosorted/before
 ```
+
+## 2026-11-06 20:05Z: authorized upcast amendment
+
+The user relayed Adamic's ruling on b5w3ycg: pure upcasts qualify; fold
+`emptyArray as readonly T[]` into 99r. This resolves the stop in the earlier
+measurement section. The earlier closeout JSON remains historical Step 1 evidence.
+
+The applicable rule is docs/rulings.md:14: an as upcast is accepted only under
+Adamic's own sound relation, immutable covariance included, and is then erased.
+The revised contract runs the actual extracted cast and a relation-only satisfies
+witness through the built compiler, not TypeScript assignability as an oracle.
+Both probe functions preserve the shared never[] declaration and unconstrained T,
+and are instantiated for number and string. The readonly-tuple and branded
+downcast mutants turn this relation contract red without owner hash checks.
+The mutable T[] control passes the compiler's checker and fails Lower, proving
+that the check reaches Adamic's writable-slot rule beyond assignability.
+
+Main changed under stage3/adapt/95-checker-axolotl-h after the original base.
+The branch was rebased onto 73cdea837469a7a9e27ff692e747421646a068dd before the
+amendment. The previously pushed d7f59a541 commit is also retained as a merge
+parent, allowing every subsequent push to remain a plain fast-forward push.
+The fresh before apply uses that exact main revision; the after apply uses its
+adaptations plus this amendment. The independent census compares 37f8314b's
+ordinary compiler/tree with the newly based ordinary compiler and amended tree.
+
+Only toSorted's after text and its after hash change in owners.json. Its before
+pin and every other owner remain unchanged. The full source/output comparison
+and census results are recorded by the continuation's proof and census files.

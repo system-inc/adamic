@@ -1,0 +1,94 @@
+{
+  "sourceFiles": 746,
+  "changedSources": [
+    "compiler/core.ts"
+  ],
+  "onlyPinnedOwnersChanged": true,
+  "censusSnapshotSourceBytesIdentical": true,
+  "syntaxBefore": {
+    "casts": 26,
+    "any": 14
+  },
+  "syntaxAfter": {
+    "casts": 27,
+    "any": 14
+  },
+  "coreJavascript": [
+    {
+      "removeComments": false,
+      "byteIdentical": true,
+      "sha256": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+      "bytes": 65100
+    },
+    {
+      "removeComments": true,
+      "byteIdentical": true,
+      "sha256": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+      "bytes": 45987
+    }
+  ],
+  "emittedJavascriptFiles": 9,
+  "emittedJavascriptByteIdentical": true,
+  "emitted": [
+    {
+      "name": "_tsc.js",
+      "bytes": 6247604,
+      "sha256": "72745a412c7bfb2acee732034bfeb86772a31d69e29dc70c1de3dad21db5c2dc"
+    },
+    {
+      "name": "_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "name": "tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "name": "tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "name": "typescript.js",
+      "bytes": 9155172,
+      "sha256": "bebb99e0289fd79f01d121e1fa25d85c738e4996d262ac322382a262e176a67c"
+    },
+    {
+      "name": "typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "name": "watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "byteIdentical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "oracle": "skipped under the type-only exception"
+}
