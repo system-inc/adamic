@@ -1,0 +1,26 @@
+// Profile data needs no runtime inspector module or handle.
+import type { Profiler } from 'node:inspector';
+
+function rewrite(profile: Profiler.Profile): Profiler.Profile {
+    for (const node of profile.nodes) {
+        if (node.callFrame.url) {
+            const url = node.callFrame.url;
+            if (url === 'file:///project/a.ts') {
+                node.callFrame.url = 'a.ts';
+            } else {
+                node.callFrame.url = 'external.js';
+            }
+        }
+    }
+    return profile;
+}
+const profile: Profiler.Profile = {
+    nodes: [
+        { id: 1, callFrame: { functionName: 'first', scriptId: '1', url: 'file:///project/a.ts', lineNumber: 0, columnNumber: 0 } },
+        { id: 2, callFrame: { functionName: 'second', scriptId: '2', url: 'file:///elsewhere/b.ts', lineNumber: 1, columnNumber: 2 } },
+    ],
+    startTime: 0,
+    endTime: 1,
+};
+for (const node of profile.nodes) console.log(node.callFrame.url);
+for (const node of rewrite(profile).nodes) console.log(node.callFrame.url);
