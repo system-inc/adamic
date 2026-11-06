@@ -1,0 +1,22 @@
+package oracle
+
+import (
+	"context"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"path/filepath"
+	"testing"
+)
+
+func TestCombineGapRefusalTrace(t *testing.T) {
+	path, _ := filepath.Abs(filepath.Join(repository, "stage3/census/combine-gap/inferred-combine-number.ts"))
+	p, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), p)
+	if err == nil {
+		t.Fatal("expected refusal")
+	}
+	t.Log(err)
+}

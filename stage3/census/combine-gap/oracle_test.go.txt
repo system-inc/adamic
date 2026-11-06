@@ -1,0 +1,119 @@
+package oracle
+
+import (
+	"encoding/json"
+	"errors"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Loaded into internal/oracle by go -overlay; uses the house oracle, no replacement runner.
+func TestCombineGap(t *testing.T) {
+	root, err := filepath.Abs(filepath.Join(repository, "stage3/census/combine-gap"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths, err := filepath.Glob(filepath.Join(root, "*.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	type row struct {
+		Program    string
+		Verdict    string
+		Reason     string
+		Native     string
+		JavaScript string
+		Findings   string
+	}
+	rows := []row{}
+	save := func() {
+		b, e := json.MarshalIndent(rows, "", "  ")
+		if e != nil {
+			t.Fatal(e)
+		}
+		if e = os.WriteFile(filepath.Join(root, "results.json"), append(b, '\n'), 0644); e != nil {
+			t.Fatal(e)
+		}
+	}
+	for _, path := range paths {
+		stop := false
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			r := row{Program: filepath.Base(path), Native: "n/a", JavaScript: "n/a", Findings: "not run"}
+			program, err := lowered(t, path)
+			if err != nil {
+				var refused *lower.Refused
+				var notyet *lower.NotYet
+				switch {
+				case errors.As(err, &refused):
+					r.Verdict = "Refused"
+					r.Reason = refused.Error()
+					source, e := os.ReadFile(path)
+					if e != nil {
+						t.Fatal(e)
+					}
+					_, body, _ := strings.Cut(string(source), "\n")
+					if e = os.WriteFile(path, []byte("// a-check: refused "+refused.What+"\n"+body), 0644); e != nil {
+						t.Fatal(e)
+					}
+				case errors.As(err, &notyet):
+					r.Verdict = "NotYet"
+					r.Reason = notyet.Error()
+				default:
+					r.Verdict = "error"
+					r.Reason = err.Error()
+					t.Error(err)
+				}
+				rows = append(rows, r)
+				save()
+				t.Logf("%s: %s", r.Verdict, r.Reason)
+				return
+			}
+			r.Verdict = "compiles"
+			truth := onNode(t, path)
+			native, _ := nativelyUncached(t, program)
+			js := onJavaScriptBackend(t, program)
+			r.Native = "y"
+			r.JavaScript = "y"
+			r.Findings = "ASan/UBSan clean"
+			if d := disagreement(truth, native); d != "" {
+				r.Native = "n"
+				r.Findings = d
+				stop = true
+			}
+			if d := disagreement(truth, js); d != "" {
+				r.JavaScript = "n"
+				r.Findings += "; JavaScript " + d
+				stop = true
+			}
+			for label, result := range map[string]run{"node": truth, "native": native, "javascript": js} {
+				prefix := filepath.Join(root, "evidence", strings.TrimSuffix(r.Program, ".ts")+"."+label)
+				if e := os.MkdirAll(filepath.Dir(prefix), 0755); e != nil {
+					t.Fatal(e)
+				}
+				if e := os.WriteFile(prefix+".stdout", result.stdout, 0644); e != nil {
+					t.Fatal(e)
+				}
+				if e := os.WriteFile(prefix+".stderr", result.stderr, 0644); e != nil {
+					t.Fatal(e)
+				}
+				b, e := json.Marshal(result.exitCode)
+				if e != nil {
+					t.Fatal(e)
+				}
+				if e = os.WriteFile(prefix+".exit", append(b, '\n'), 0644); e != nil {
+					t.Fatal(e)
+				}
+			}
+			rows = append(rows, r)
+			save()
+			t.Logf("%+v", r)
+		})
+		if stop {
+			t.Log("Node difference: stop census")
+			return
+		}
+	}
+}

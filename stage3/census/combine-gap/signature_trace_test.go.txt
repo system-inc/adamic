@@ -1,0 +1,59 @@
+package oracle
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestCombineGapSignatures(t *testing.T) {
+	root, _ := filepath.Abs(filepath.Join(repository, "stage3/census/combine-gap"))
+	var output strings.Builder
+	for _, name := range []string{"inferred-combine-number.ts", "explicit-combine-number.ts", "inferred-read-number.ts", "explicit-read-number.ts", "inferred-second-number.ts", "unknown-inferred-concatenate-number.ts"} {
+		p, err := load.Load([]string{filepath.Join(root, name)})
+		if err != nil {
+			t.Fatal(err)
+		}
+		f := p.Files()[0]
+		c, release := p.Checker(context.Background(), f)
+		fmt.Fprintln(&output, name)
+		var visit ast.Visitor
+		visit = func(n *ast.Node) bool {
+			if n.Kind == ast.KindCallExpression {
+				call := n.AsCallExpression()
+				callee := call.Expression
+				if ast.IsIdentifier(callee) && (callee.Text() == "append" || callee.Text() == "second" || callee.Text() == "concatenate") {
+					signature := c.GetResolvedSignature(n)
+					fmt.Fprintf(&output, "  %s %s\n", p.Where(n), callee.Text())
+					if signature != nil {
+						for i, param := range signature.Parameters() {
+							fmt.Fprintf(&output, "    resolved parameter %d: %s\n", i, c.TypeToString(c.GetTypeOfSymbol(param)))
+						}
+						fmt.Fprintf(&output, "    resolved return: %s\n", c.TypeToString(c.GetReturnTypeOfSignature(signature)))
+					}
+					for i, arg := range call.Arguments.Nodes {
+						context := c.GetContextualType(arg, checker.ContextFlagsNone)
+						contextText := "nil"
+						if context != nil {
+							contextText = c.TypeToString(context)
+						}
+						fmt.Fprintf(&output, "    argument %d own=%s contextual=%s\n", i, c.TypeToString(c.GetTypeAtLocation(arg)), contextText)
+					}
+				}
+			}
+			return n.ForEachChild(visit)
+		}
+		f.AsNode().ForEachChild(visit)
+		release()
+	}
+	if err := os.WriteFile(filepath.Join(root, "signature-trace.log"), []byte(output.String()), 0644); err != nil {
+		t.Fatal(err)
+	}
+	t.Log(output.String())
+}

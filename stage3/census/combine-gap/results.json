@@ -1,0 +1,770 @@
+[
+  {
+    "Program": "array-result-unknown-explicit-alias-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-alias-number.ts:25:51: stage 0 can't lower a generic function value without a concrete contextual signature yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-alias-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-alias-object.ts:25:51: stage 0 can't lower a generic function value without a concrete contextual signature yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-alias-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-alias-string.ts:25:51: stage 0 can't lower a generic function value without a concrete contextual signature yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-read-number.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-explicit-read-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-read-object.ts:25:62: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-read-string.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-explicit-second-number.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-explicit-second-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-second-object.ts:26:54: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-second-string.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-explicit-stored-number.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-explicit-stored-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-explicit-stored-object.ts:25:67: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-explicit-stored-string.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "array-result-unknown-inferred-alias-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-alias-number.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-alias-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-alias-object.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-alias-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-alias-string.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-read-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-read-number.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-read-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-read-object.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-read-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-read-string.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-second-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-second-number.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-second-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-second-object.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-second-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-second-string.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-stored-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-stored-number.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-stored-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-stored-object.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "array-result-unknown-inferred-stored-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/array-result-unknown-inferred-stored-string.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-alias-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-alias-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-alias-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-alias-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-alias-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-alias-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-combine-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-combine-number.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-combine-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-combine-object.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-combine-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-combine-string.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-concatenate-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-concatenate-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-concatenate-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-concatenate-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-concatenate-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-concatenate-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-read-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-read-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-read-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-read-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-read-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-read-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-second-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-second-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-second-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-second-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-second-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-second-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-stored-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-stored-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-stored-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-stored-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "explicit-stored-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/explicit-stored-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-alias-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-alias-number.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-alias-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-alias-object.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-alias-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-alias-string.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-combine-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-combine-number.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-combine-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-combine-object.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-combine-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-combine-string.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-concatenate-number.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-concatenate-number.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-concatenate-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-concatenate-object.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-concatenate-string.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-concatenate-string.ts:15:25: stage 0 can't lower a value of type any yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-read-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-read-number.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-read-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-read-object.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-read-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-read-string.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-second-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-second-number.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-second-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-second-object.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-second-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-second-string.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-stored-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-stored-number.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-stored-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-stored-object.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "inferred-stored-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/inferred-stored-string.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-alias-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-number.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-number.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-alias-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-object.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-object.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-alias-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-string.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-alias-string.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-combine-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-combine-number.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-combine-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-combine-object.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-combine-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-combine-string.ts:22:1: Adamic 0.1 refuses overload 1 of combine result T[] | undefined cannot be served by implementation result T | T[] | undefined; make the implementation result covariant with every overload result",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-concatenate-number.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "unknown-explicit-concatenate-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-concatenate-object.ts:23:56: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-concatenate-string.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "unknown-explicit-read-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-number.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-number.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-read-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-object.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-object.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-read-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-string.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-read-string.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-second-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-number.ts:30:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-number.ts:25:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-second-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-object.ts:30:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-object.ts:25:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-second-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-string.ts:30:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-second-string.ts:25:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-stored-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-number.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-number.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-stored-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-object.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-object.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-explicit-stored-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-string.ts:29:16: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: probe's T = void (read from the signature), read at /workspace/adamic/stage3/census/combine-gap/unknown-explicit-stored-string.ts:24:31 as a returned value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-alias-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-alias-number.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-alias-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-alias-object.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-alias-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-alias-string.ts:25:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-combine-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-combine-number.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-combine-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-combine-object.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-combine-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-combine-string.ts:31:72: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-concatenate-number.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "unknown-inferred-concatenate-object.ts",
+    "Verdict": "NotYet",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-concatenate-object.ts:23:53: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-concatenate-string.ts",
+    "Verdict": "compiles",
+    "Reason": "",
+    "Native": "y",
+    "JavaScript": "y",
+    "Findings": "ASan/UBSan clean"
+  },
+  {
+    "Program": "unknown-inferred-read-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-read-number.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-read-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-read-object.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-read-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-read-string.ts:25:59: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-second-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-second-number.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-second-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-second-object.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-second-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-second-string.ts:22:68: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-stored-number.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-stored-number.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-stored-object.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-stored-object.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  },
+  {
+    "Program": "unknown-inferred-stored-string.ts",
+    "Verdict": "Refused",
+    "Reason": "/workspace/adamic/stage3/census/combine-gap/unknown-inferred-stored-string.ts:25:64: Adamic 0.1 refuses a value of type T[] seen as {}[], which can write {} where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "Native": "n/a",
+    "JavaScript": "n/a",
+    "Findings": "not run"
+  }
+]
