@@ -21,7 +21,8 @@ for directory in sorted((repo / 'stage3/adapt').iterdir()):
         result = subprocess.run(['node', str(directory / 'adapt.cjs'), str(tree)], env=env, stdout=log, stderr=subprocess.STDOUT)
     after = snapshot()
     changed = [name for name in before.keys() | after.keys() if before.get(name) != after.get(name)]
-    row = dict(adapter=directory.name, exit=result.returncode, changed=changed)
+    details = [dict(file=name, before_sha256=before.get(name, (None, None))[0], after_sha256=after.get(name, (None, None))[0], before_mtime_ns=before.get(name, (None, None))[1], after_mtime_ns=after.get(name, (None, None))[1]) for name in sorted(changed)]
+    row = dict(adapter=directory.name, exit=result.returncode, changed=sorted(changed), details=details)
     rows.append(row)
     (logdir / 'results.json').write_text(json.dumps(rows, indent=2) + '\n')
     print(json.dumps(row), flush=True)
