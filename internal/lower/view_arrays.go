@@ -467,34 +467,6 @@ func (l *lowering) checkViewArrays() error {
 		}
 	}
 	rewrite := func(node any) any {
-		// A read the key relates to no viewed element type can't hand out a viewed element. It reads
-		// raw, and nothing here stops it (viewElementKey).
-		switch value := node.(type) {
-		case ir.ViewElement:
-			if value.Unrelated {
-				return ir.ArrayIndex{Array: value.Array, Index: value.Index, Element: value.Element, Relative: value.Relative, Optional: value.Optional}
-			}
-		case ir.ArrayVisit:
-			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
-				value.ElementCheck = nil
-				return value
-			}
-		case ir.ArrayMap:
-			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
-				value.ElementCheck = nil
-				return value
-			}
-		case ir.ArrayReduce:
-			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
-				value.ElementCheck = nil
-				return value
-			}
-		case ir.ForOf:
-			if value.ElementCheck != nil && value.ElementCheck.Unrelated {
-				value.ElementCheck = nil
-				return value
-			}
-		}
 		var array ir.Expression
 		var check *ir.ViewElementCheck
 		var element ir.Expression
@@ -504,7 +476,7 @@ func (l *lowering) checkViewArrays() error {
 		case ir.ViewElement:
 			element = value
 			array = value.Array
-			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, View: value.View, ViewType: value.ViewType}
+			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, View: value.View, ViewType: value.ViewType, Unrelated: value.Unrelated}
 		case ir.ArrayPush:
 			array = value.Array
 		case ir.ArrayIndex:
@@ -595,6 +567,32 @@ func (l *lowering) checkViewArrays() error {
 		needed := demanded(array)
 		if viewArrayAggregate(element) {
 			needed = needed || demanded(element)
+		}
+		// A read the key relates to no viewed element type has no check of its own (viewElementKey), but
+		// unrelated isn't unreachable: an any or unknown hop can hand a viewed allocation to an Other[]
+		// that relates to Node neither way (Lower's must on #6wfvfhm). So it reads raw only where its
+		// array can't reach a viewed allocation, as every read here does, and stops where it can.
+		if check != nil && check.Unrelated {
+			if needed {
+				stop(check.Where, road.member)
+				return node
+			}
+			switch value := node.(type) {
+			case ir.ViewElement:
+				return ir.ArrayIndex{Array: value.Array, Index: value.Index, Element: value.Element, Relative: value.Relative, Optional: value.Optional}
+			case ir.ArrayVisit:
+				value.ElementCheck = nil
+				return value
+			case ir.ArrayMap:
+				value.ElementCheck = nil
+				return value
+			case ir.ArrayReduce:
+				value.ElementCheck = nil
+				return value
+			case ir.ForOf:
+				value.ElementCheck = nil
+				return value
+			}
 		}
 		if check != nil && program.ViewLegacyNullArrays && (needed || check.Contract == 0) {
 			if refused == nil {
