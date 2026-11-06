@@ -1,6 +1,6 @@
 # Readonly enum views, task 52zja36
 
-Status: stopped at check 1, with the amendment retained for review.
+Status: verification resumed with the corrected paired replay condition.
 Base: origin/main 63e14a0b2b61cf251ad74292e42d5fd09af804b3.
 
 Exactly 21 replacement strings change in class-rules.json:
@@ -19,31 +19,33 @@ key is unchanged; no further body edit has been established as necessary.
 class-proof.cjs's declaration projection and Boolean-map mutant now use the
 readonly parameter spelling. Earlier enum-display evidence remains historical.
 
-## Stop
+## Check 1: composition and paired replay
 
-Both full applies with --build-product exit 0. Ordered replay over the completed
-after tree records zero changed files for 00-setup, 10-type-imports and
-20-optional-declarations. It then stops, without writes, at 30-indexed-reads:
+Both full applies with --build-product exit 0. The after apply ran every later
+adapter in order over adaptation 40's amended debug.ts. Therefore there is no
+later pinned-owner conflict in that apply. The adapters after 40 that change
+debug.ts, established by the apply's per-adapter before/after Git objects, are:
 
-```
-declined site changed: core.ts:992:21
-```
+- 41-explicit-any-remaining
+- 76-truthful-casts
+- 99-cli-debug-assertion-level
+- 99-correctness-axolotl-n
+- 99-correctness-axolotl-t
 
-The pinned owner is addRange, expression from[i], occurrence 2 of 2, action
-decline. The completed tree contains `to.push(from[i]!)`. The same adapter
-command refuses identically on the baseline full apply. This is a pre-existing
-composition conflict, not evidence of an enum-view conflict. No other adaptation
-directory is edited. Later adapters were not replayed, so no conclusion about
-their debug.ts owner pins is claimed.
+The original whole-tree idempotence condition was corrected by the requester.
+Adaptation 30's addRange refusal at core.ts:992:21 occurs on main's own completed
+tree too, because later adapters change that owner. It is not an amendment
+blocker. The new check replays every adapter on isolated copies of both complete
+trees, continues after refusals, and compares normalized outcomes, allowing only
+adaptation 40's expected difference. Both records and their diff will be retained.
 
-The remaining verification stops here. The ordinary before census was already
-running and was terminated with exit 143; its retained JSONL is partial. There
-is no complete before/after census, no latent run, and no measured per-site
-before/after stop. All 19 sites are explicitly marked unmeasured in
-[evidence/readonly-views/site-stops.json](evidence/readonly-views/site-stops.json).
-The types check, full nine-file artifact comparison, stage3 consumer tests and
-inner-only Readonly mutant have not run. The branch does not meet the full
-six-check acceptance condition.
+## Resumed checks
+
+The first bounded latent piece, full mode restricted to before debug.ts, has
+completed with exit 0. Its observations and timings are under
+`evidence/readonly-views/pieces/latent-before/`. Further results will replace the
+previously unmeasured site ledger as they complete. The original partial ordinary
+before census and the original stop evidence remain retained as historical data.
 
 ## Completed evidence
 
