@@ -59,6 +59,7 @@ func TestGlobalObjectAsAValueIsNotYet(t *testing.T) {
 		{"valueOf through an element-access callee", "", "Reflect.set(globalThis[\"valueOf\"](), \"onProfilerEvent\", fire);\n", "5:13"},
 		{"valueOf through an optional call", "", "Reflect.set(globalThis?.valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
 		{"valueOf through Node's global", node, "console.log(typeof process.argv);\nReflect.set(global.valueOf(), \"onProfilerEvent\", fire);\n", "7:13"},
+		{"Object.defineProperty on globalThis.valueOf()", "", "Object.defineProperty(globalThis.valueOf(), \"onProfilerEvent\", { value: fire });\n", "5:23"},
 		{"valueOf of valueOf", "", "Reflect.set(globalThis.valueOf().valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
