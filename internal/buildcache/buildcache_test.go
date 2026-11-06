@@ -827,6 +827,43 @@ func TestAToolsReportDoesntDependOnWhereItIsInstalled(t *testing.T) {
 	}
 }
 
+// A clang config file is keyed by what it holds and the files it names, never by where it sits (Node's rule on
+// #t3rw158): the same clang and configs kept at two roots, the configs outside clang's installation so its prefix
+// doesn't hide them, report one tool; a config edited, a config it includes edited, or the lld it names rewritten,
+// each reports another. Mutants: the `Configuration file:` line's path left in, so the two roots report apart; a config's
+// content dropped from its line, so an edited config reports the same.
+func TestAClangConfigIsKeyedByWhatItHoldsNotWhereItSits(t *testing.T) {
+	t.Parallel()
+	report := func(edit func(configs string)) string {
+		t.Helper()
+		configs := t.TempDir()
+		write(t, configs, "aarch64-linux-gnu.cfg", "# the target's own config\n--ld-path=<CFGDIR>/ld.lld\n@common.cfg\n")
+		write(t, configs, "common.cfg", "-fno-plt\n")
+		write(t, configs, "ld.lld", "lld 20.1.8\n")
+		if edit != nil {
+			edit(configs)
+		}
+		clang := filepath.Join(t.TempDir(), "llvm", "bin", "fakeclang")
+		writeExecutable(t, clang, "#!/bin/sh\necho 'clang version 20.1.8'\necho 'Target: aarch64-unknown-linux-gnu'\necho 'Configuration file: "+filepath.Join(configs, "aarch64-linux-gnu.cfg")+"'\n")
+		return Tool(clang, "--version")
+	}
+	one, other := report(nil), report(nil)
+	if one != other || strings.Contains(one, "aarch64-linux-gnu.cfg") || !strings.Contains(one, "Configuration file: sha256 ") {
+		t.Fatalf("the same clang and configs at two roots reported\n%s\nand\n%s", one, other)
+	}
+	for name, edit := range map[string]func(configs string){
+		"the config edited": func(configs string) {
+			write(t, configs, "aarch64-linux-gnu.cfg", "--ld-path=<CFGDIR>/ld.lld\n@common.cfg\n-DEDITED\n")
+		},
+		"the config it includes":     func(configs string) { write(t, configs, "common.cfg", "-fplt\n") },
+		"the lld it names rewritten": func(configs string) { write(t, configs, "ld.lld", "lld 20.1.9\n") },
+	} {
+		if report(edit) == one {
+			t.Errorf("%s, the report stayed\n%s", name, one)
+		}
+	}
+}
+
 // Not parallel: Tool writes the package-level tools map.
 func TestToolNamesItselfOnce(t *testing.T) {
 	if value := Tool("go", "version"); !strings.HasPrefix(value, "go version: go version go") {
