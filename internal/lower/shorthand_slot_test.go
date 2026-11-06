@@ -21,7 +21,10 @@ import (
 // beside a spread into a plain { p: W }, refused on main already. The honest twin, a W through the same return, lowers
 // and agrees with Node, and so does an honest spread. Mutants: the shorthand case reading GetPropertyOfType
 // off the literal's slot again, under which the shorthand roads with a union slot lower; and
-// literalSlotMembers answering the whole slot, under which the two union spreads lower.
+// literalSlotMembers answering the whole slot, under which the two union spreads lower; and its
+// empty filter answered as empty, under which a spread into a union it fits only by splitting its
+// discriminant (spread_discriminant_split, Compiler's road on d2a29ebf) lowers. Its shorthand twin is
+// judged against the name's own slot, which reaches W through either member.
 func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, where, seen, only string }{
@@ -35,6 +38,8 @@ func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
 		{"spread_object_union", "interface R { readonly t: number }\ninterface W { t: number }\nconst r: R = { t: 2 };\nconst h = { p: r };\nconst o: { p: W } | { q: number } = { ...h };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(r.t));\n", ":5:39", "{ p: R; } seen as { p: W; }", ""},
 		{"spread_no_union", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } { return { ...h }; }\nconst r: R = { t: 2 };\nmake({ p: r }).p.t = 1;\nconsole.log(String(r.t));\n", ":3:49", "{ p: R; } seen as { p: W; }", ""},
 		{"yield", "interface R { readonly t: number }\ninterface W { t: number }\nfunction* each(p: R): Generator<{ p: W } | undefined> { yield { p }; }\nfor (const o of each({ t: 2 })) { if (o) { o.p.t = 1; } }\nconsole.log('done');\n", ":3:65", "R seen as W", ".ts"},
+		{"spread_discriminant_split", "interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(h: { p: R }, k: 'x' | 'y'): S { return { ...h, k }; }\nconst r: R = { t: 2 };\nmake({ p: r }, 'x').p.t = 1;\nconsole.log(String(r.t));\n", ":4:56", "{ p: R; } seen as { k: \"x\"; p: W; }", ""},
+		{"discriminant_split", "interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(p: R, k: 'x' | 'y'): S { return { p, k }; }\nconst r: R = { t: 2 };\nmake(r, 'x').p.t = 1;\nconsole.log(String(r.t));\n", ":4:49", "R seen as W", ""},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			if probe.only != "" && probe.only != extension {

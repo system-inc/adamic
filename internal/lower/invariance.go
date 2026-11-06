@@ -584,20 +584,31 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	return l.wideningRefusal(node, own, contextual, found)
 }
 
-// literalSlotMembers is each member of an object literal's slot the literal can sit in: the slot itself
-// when it isn't a union, and otherwise every member that isn't a primitive (undefined and null among
-// them) and that the literal's own type is assignable to. A member it isn't assignable to never holds it.
+// literalSlotMembers is each member of an object literal's slot the literal is judged against: the slot
+// itself when it isn't a union, and otherwise every member that isn't a primitive (undefined and null
+// among them) and that the literal's own type is assignable to, since a member it isn't assignable to
+// never holds it. That filter only narrows which members are judged, and it's no relation of its own:
+// tsc lets a literal into a discriminated union it fits as a whole but fits no one member of, by
+// splitting its discriminant (`{ ...h, k }` with k: 'x' | 'y', into `{ k: 'x'; p: W } | { k: 'y'; p: W }`),
+// so when no member passes the filter, every non-primitive member is judged, and the list is never empty
+// while the slot has an object member (#20nf0sm, Compiler's road on d2a29ebf).
 func (l *lowering) literalSlotMembers(literal *ast.Node, slot *checker.Type) []*checker.Type {
 	if slot.Flags()&checker.TypeFlagsUnion == 0 {
 		return []*checker.Type{slot}
 	}
 	own := l.checker.GetTypeAtLocation(literal)
-	var members []*checker.Type
+	var members, objects []*checker.Type
 	for _, member := range slot.Types() {
-		if member.Flags()&checker.TypeFlagsPrimitive != 0 || !l.checker.IsTypeAssignableTo(own, member) {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
-		members = append(members, member)
+		objects = append(objects, member)
+		if l.checker.IsTypeAssignableTo(own, member) {
+			members = append(members, member)
+		}
+	}
+	if len(members) == 0 {
+		return objects
 	}
 	return members
 }
