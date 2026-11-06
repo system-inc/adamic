@@ -33,19 +33,30 @@ bitmask combinations, namespaces and other contracts still need adaptation.
 * `Enum.Member` remains an enum member type in parameters, returns, fields,
   arrays, aliases and generic instantiations. Its runtime representation is the
   corresponding number or string.
-* Const enum members inline, including imported members. No const enum object
-  or binding is allocated. Runtime uses of the const enum object are rejected
-  by TypeScript's checker. Use an ordinary enum for an observable runtime object.
+* Const enum members inline, including imported members. A const enum has an
+  object and a binding only where the program reaches its object as a value,
+  and then it's the object an ordinary enum gets: forward and reverse
+  properties, the last numeric alias winning, built once in its declaring
+  module. TypeScript's checker rejects every direct runtime use of a const enum
+  (TS2475), so what reaches one is a read through a namespace object, as tsc's
+  own `(ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string |
+  number>>>>).SyntaxKind` does. Reach is computed over every module and fails
+  closed: any read of the enum but a member read, and any use of a namespace
+  that exports it but a qualified read or the namespace cast naming another
+  export, builds it. An unreached const enum has no object and no binding, so
+  its C and counts are what they were.
 * A switch on a numeric or string enum must cover its distinct member values or
   have a default. Numeric aliases need only one case. Narrowed member types need
   only their possible values; void switches are checked too.
 
-Adamic compiles a closed, typed program. It does not implement
-`preserveConstEnums` for external, untyped JavaScript consumers. Upstream
-TypeScript's use of that option therefore remains a porting obligation rather
-than an assumed equivalence. The source oracle uses Node 24's independent
-`stripTypeScriptTypes` transform mode, which understands enum syntax; it never
-uses Adamic's lowering to construct the reference output.
+Adamic compiles a closed, typed program under the fixed options in
+`internal/load/load.go`, so no program has a `preserveConstEnums` to read. The
+source oracle builds every const enum's object, as that option does, and Adamic
+builds one exactly where the program can observe it, so reach alone decides
+(ruled by @system_adamic on #52zja36, November 6, 2026, amending the October 6
+const enum ruling where something reaches the object). The source oracle uses
+Node 24's independent `stripTypeScriptTypes` transform mode, which understands
+enum syntax; it never uses Adamic's lowering to construct the reference output.
 
 ## Why the types remain true
 
@@ -148,6 +159,8 @@ Node stdout unchanged and is caught by LeakSanitizer.
 | Permit parameter properties after opening the syntax option | `TestEnumLimitsStayLoud` |
 | Permit merged declarations | `TestEnumLimitsStayLoud` |
 | Materialize an ambient enum | `TestEnumLimitsStayLoud`, explicit constant initializer |
+| Build a const enum's object regardless of reach | `TestEnumViewConstBuiltOnlyWhereReached`, `TestConstEnumErasesRuntimeObject` |
+| Drop a reached const enum's reverse keys | `TestEnumViewReverseKeysMutant` |
 | Permit prototype-changing names | `TestEnumLimitsStayLoud` |
 | Permit numeric members named NaN/Infinity | `TestEnumLimitsStayLoud` |
 | Allocate an erased const enum | `TestConstEnumErasesRuntimeObject` |
