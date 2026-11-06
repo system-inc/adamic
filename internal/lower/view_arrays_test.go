@@ -471,3 +471,54 @@ console.log('before');
 		})
 	}
 }
+
+// The caller uses inferred's unwritten SyntaxList claim, not declared's Claimed claim. This
+// doesn't miss: collectViewedElements sees declared's TypePredicate node and follows Claimed's
+// _children to Node before lowering. The generic present and direct tag-comparison shapes make
+// no view. This pins the pre-pass road, not the second lowering (#6wfvfhm).
+func TestViewElementKeySeesInferredPredicateWrapper(t *testing.T) {
+	t.Parallel()
+	const source = `interface Node { readonly kind: number; }
+interface Base { readonly kind: number; }
+interface Claimed extends Base { readonly kind: 1; readonly _children: readonly Node[]; }
+interface SyntaxList extends Claimed { readonly label: string; }
+interface Other extends Base { readonly kind: 2; }
+function declared(x: Base): x is Claimed { return x.kind === 1; }
+function inferred(x: SyntaxList | Other) { return declared(x); }
+function use(x: SyntaxList | Other) {
+    console.log(String(inferred(x) && (x._children[0]?.kind ?? 0) > 0));
+}
+const raw: SyntaxList = {kind: 1, label: 'list', _children: [{kind: 1}]};
+use(raw);
+`
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if keyed.key.every || len(keyed.key.order) != 1 || len(keyed.key.misses) != 0 {
+		t.Fatalf("keyed every %t, viewed %d, missed %v", keyed.key.every, len(keyed.key.order), keyed.key.misses)
+	}
+	if viewed := keyed.lowering.checker.TypeToString(keyed.key.order[0]); viewed != "Node" {
+		t.Fatalf("the written claim collected %s, want Node", viewed)
+	}
+	inferred := false
+	for _, statement := range keyed.entry.Statements.Nodes {
+		if statement.Kind == ast.KindFunctionDeclaration && statement.Name().Text() == "inferred" {
+			claim := predicateOfSignature(keyed.lowering.checker, keyed.lowering.checker.GetSignatureFromDeclaration(statement))
+			inferred = statement.Type() == nil && claim != nil && claim.Type() != nil && keyed.lowering.checker.TypeToString(claim.Type()) == "SyntaxList"
+		}
+	}
+	if !inferred {
+		t.Fatal("the wrapper no longer infers a SyntaxList predicate")
+	}
+	if reads, handouts := loweredElementChecks(keyed.lowering.result); len(reads) != 1 || reads[0] != "Node" || handouts != 0 {
+		t.Fatalf("the first lowering lost the Node check: reads %v, handouts %d", reads, handouts)
+	}
+	program, err := lowerSourceAs(t, source, ".ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if reads, handouts := loweredElementChecks(program); len(reads) != 1 || reads[0] != "Node" || handouts != 0 {
+		t.Fatalf("the inferred predicate's read is unchecked: reads %v, handouts %d", reads, handouts)
+	}
+}
