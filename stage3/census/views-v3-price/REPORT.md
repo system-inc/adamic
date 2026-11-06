@@ -1,19 +1,19 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 0 completed paired file pieces of 81.
+**Exact latent closure totals: incomplete.** 1 completed paired file pieces of 81.
 
 **Source upper bound: 2,861; readonly subset: 1,302.** Neither is the admission rule.
 
 | Latent measure (observed pieces only) | Main | Head |
 |---|---:|---:|
-| view_elements | Not measured | Not measured |
-| view_element_checks | Not measured | Not measured |
-| units | Not measured | Not measured |
-| attempted | Not measured | Not measured |
-| ir_observed | Not measured | Not measured |
-| finding_free_attempted | Not measured | Not measured |
-| finding_free_view_elements | Not measured | Not measured |
-| finding_free_view_element_checks | Not measured | Not measured |
+| view_elements | 0 | 0 |
+| view_element_checks | 0 | 0 |
+| units | 1 | 1 |
+| attempted | 1 | 1 |
+| ir_observed | 1 | 1 |
+| finding_free_attempted | 1 | 1 |
+| finding_free_view_elements | 0 | 0 |
+| finding_free_view_element_checks | 0 | 0 |
 
 Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.
 Head `9626d0113f08269e519ba216ff7f95ff84af16db`; main `2c3f322975b2dee68889e82eab0bbca324d417a9`.
@@ -34,13 +34,16 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 
 | File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |
 |---|---:|---:|---:|---:|---:|---:|
+| src/tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | 1 |
 
 ## Top ten observed latent files
 
 main:
 
+- src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
 head:
 
+- src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
 
 ## Broad source upper bound
 
