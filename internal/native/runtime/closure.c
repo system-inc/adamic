@@ -180,3 +180,25 @@ void adamic_closure_uncache(adamic_closure *closure) {
 }
 
 #endif
+
+// Fresh on every bind, including a target without captures. The ordinary closure
+// free_children walks these owning cells, so graph and program regions see them too.
+adamic_closure *adamic_bound_closure_new(adamic_code code, size_t count) {
+ return (adamic_closure_new)(code, count);
+}
+
+adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *arguments, size_t argument_count, size_t packed_size) {
+ adamic_closure *target = self->cells[0]->value.reference;
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+ return adamic_closure_receiver_call(target, self->cells[1]->value.reference, arguments, argument_count, packed_size);
+#else
+ (void)packed_size;
+ return adamic_closure_call(target, arguments, argument_count);
+#endif
+}
+
+// Both ordinary and bound closures own cells. The cells, in turn, release their
+// reference-valued contents; bound calls only borrow those contents.
+void adamic_closure_free_children(adamic_closure *closure, void (*drop)(void *)) {
+ for (size_t index = 0; index < closure->count; index++) { drop(closure->cells[index]); }
+}

@@ -175,6 +175,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkBoundArguments(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}

@@ -1,0 +1,4 @@
+// Node: max(0, target length - fixed count), here 1.
+function f(a: number, b: number): number { return a + b; }
+const bound = f.bind(undefined, 1);
+console.log(String(bound.length));
