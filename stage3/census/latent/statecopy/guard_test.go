@@ -312,9 +312,9 @@ func TestLatentSpeculativePrivateIRFields(t *testing.T) {
 		return result
 	}
 	source := "package probe\nimport (\"reflect\"; \"os\"; \"github.com/system-inc/adamic/internal/ir\")\n"
-	source += extract("generated.go", generated, map[string]bool{"latentPrivateIRField": true, "latentSharedIRPointer": true})
+	source += extract("generated.go", generated, map[string]bool{"latentPrivateIRField": true, "latentSharedIRPointer": true, "latentSpecCopyFunction": true, "latentSpecIRMutableFields": true})
 	source += extract(full, nil, map[string]bool{"latentCopyIR": true, "latentEmptyArgumentCache": true})
-	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{"latentSpeculativeEnabled": true, "latentSpecImmutable": true, "latentSpecImmutableTypes": true, "latentSpecMutableFields": true, "latentSpecMutableFieldCache": true, "latentSpecFunctionSchema": true, "latentSpecFunctionSchemas": true})
+	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{"latentSpeculativeEnabled": true, "latentSpecImmutable": true, "latentSpecImmutableTypes": true, "latentSpecMutableFields": true, "latentSpecMutableFieldCache": true})
 	folder := t.TempDir()
 	files := map[string]string{
 		"go.mod":  fmt.Sprintf("module github.com/system-inc/adamic/probe\ngo 1.27.0\nrequire github.com/system-inc/adamic v0.0.0\nreplace github.com/system-inc/adamic => %s\n", root),
@@ -329,6 +329,12 @@ func TestPrivateCopy(t *testing.T) {
  copied := latentCopyIR(p,map[any]any{})
  if !reflect.ValueOf(copied).Elem().FieldByName("methodTables").IsNil() { t.Fatal("speculative copy shares methodTables") }
  if reflect.ValueOf(p).Elem().FieldByName("methodTables").IsNil() { t.Fatal("copy changed source cache") }
+ schema := &ir.JSONDecodeSchema{Nodes: []ir.JSONDecodeNode{{Kind:"witness", LiteralUnits:[]uint16{65}}}}
+ functions := []ir.Function{{Boundary:ir.FunctionBoundary{Parameters:[]ir.BoundaryParameter{{Schema:schema}},Return:schema}}}
+ clone := latentCopyIR(functions,map[any]any{})
+ if clone[0].Boundary.Return == schema || clone[0].Boundary.Parameters[0].Schema != clone[0].Boundary.Return {t.Fatal("boundary schema ownership or graph identity lost")}
+ clone[0].Boundary.Return.Nodes[0].LiteralUnits[0]=66
+ if schema.Nodes[0].LiteralUnits[0]!=65 {t.Fatal("boundary schema aliases source")}
  identity := &ir.GeneratedType{}
  if latentCopyIR(identity,map[any]any{}) != identity { t.Fatal("shared pointer identity changed") }
 }
@@ -347,5 +353,77 @@ func TestPrivateCopy(t *testing.T) {
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("speculative copier: %v\n%s", err, output)
+	}
+}
+
+func TestLatentSpeculativeRefusesUnnamedExportedIRField(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	path := filepath.Join(root, "internal/ir/ir.go")
+	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, []byte("package ir; type Function struct { AddedLater []int }"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		failure := recover()
+		if failure == nil || !strings.Contains(fmt.Sprint(failure), "Function.AddedLater") || !strings.Contains(fmt.Sprint(failure), "ir.go:1") {
+			t.Fatalf("build refusal must name exported field and declaration: %v", failure)
+		}
+	}()
+	generate(root, filepath.Join(root, "internal/lower/lower.go"))
+}
+
+func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	policies := map[string]irFieldPolicy{}
+	for key, value := range irSpecFields {
+		policies[key] = value
+	}
+	delete(policies, "Function.Boundary")
+	defer func() {
+		failure := recover()
+		if failure == nil || !strings.Contains(fmt.Sprint(failure), "Function.Boundary") || !strings.Contains(fmt.Sprint(failure), "isn't named") {
+			t.Fatalf("missing Boundary must fail at generation, naming it: %v", failure)
+		}
+	}()
+	g.checkIRFields(token.NewFileSet(), policies)
+}
+
+func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	declared := map[string]bool{}
+	for name, expression := range g.irTypes {
+		if structure, ok := expression.(*ast.StructType); ok && ast.IsExported(name) {
+			for _, field := range structure.Fields.List {
+				for _, id := range field.Names {
+					if id.IsExported() {
+						declared[name+"."+id.Name] = true
+					}
+				}
+			}
+		}
+	}
+	for key := range irSpecFields {
+		if !declared[key] {
+			t.Errorf("stale speculative field policy %s", key)
+		}
+	}
+	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for _, want := range []string{"result.Boundary = latentCopyIR(value.Boundary, seen)", "result.Source = latentCopyIR(value.Source, seen)"} {
+		if !strings.Contains(generated, want) {
+			t.Errorf("generated function copier lacks %s", want)
+		}
 	}
 }
