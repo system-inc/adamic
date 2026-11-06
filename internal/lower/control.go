@@ -12,8 +12,11 @@ func (l *lowering) ifStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	then, err := l.statement(statement.ThenStatement)
-	if err != nil {
+	var then []ir.Statement
+	if symbol := l.hostBindingGuard(statement.Expression); symbol != nil {
+		// A guard proves an Absent host binding missing, so the then-branch is dead (host_bindings.go).
+		then = []ir.Statement{l.hostBindingDeadRead(symbol)}
+	} else if then, err = l.statement(statement.ThenStatement); err != nil {
 		return nil, err
 	}
 	lowered := ir.If{Condition: condition, Then: then}
