@@ -1219,3 +1219,19 @@ All raw emitted diff hunks follow, including generated declarations and names.
      options,
      baseCompilerOptions,
 ```
+
+## Check 5: one restored-site negative control
+
+In a private copy, the first builder.ts call in
+createBuilderProgram.emitBuildInfo was restored to maybeBind(host,
+host.writeFile), with its required import. The prepared patch exactly matches
+the actual source delta. The ordinary compiler build exits 0.
+
+The same nine-product comparison exits 1 and reports exactly one unique site:
+createBuilderProgram.emitBuildInfo, receiver host, member writeFile. Each of
+the two changed bundles has 45 expected bound forms and exactly that one
+remaining original form; the other seven products remain byte-identical.
+The normalized comparison diff has one restored expression in each bundle.
+This verifies that check 3 detects a missed adaptation site. Full restoration,
+build and comparison logs, the exact report and the two negative diffs are
+retained with the restored-site fixtures.
