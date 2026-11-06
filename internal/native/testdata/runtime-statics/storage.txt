@@ -465,3 +465,11 @@
 `runtime-file:node_fs_watch_impl.h`
 `node_fs_watch_impl.h:fs_watchers:1`
 `node_fs_watch_impl.h:fs_watcher_next_identity:1`
+
+# One loop-owned inotify descriptor; wd lists, source reference state and generations
+# are confined to that same loop thread, including listener microtask checkpoints.
+`node_fs_watch_impl.h:fs_watch_table:1`
+`node_fs_watch_impl.h:fs_watch_descriptor:1`
+`node_fs_watch_impl.h:fs_watch_generation:1`
+`node_fs_watch_impl.h:fs_watch_source:1`
+`node_fs_watch_impl.h:fs_watch_referenced:1`

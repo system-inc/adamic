@@ -3,12 +3,14 @@ package oracle
 import (
 	"bytes"
 	"context"
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -21,10 +23,10 @@ import (
 // fsWatchFixtures are held to Node on native under the sanitizers and on the JavaScript backend
 // here, and run in the ordinary native, JavaScript, gob and counted families too; WASI refuses their
 // host entry by name (wasi_refusals_test.go). Each does its file system work before the loop runs, so
-// both runtimes read the same inotify queue, and each uses one watcher, since Node doesn't define the
-// order across watchers in one turn. The rename row of Node's measured table is the C harness's
+// both runtimes read the same inotify queue. Shared-path pins observe the surviving handle,
+// not an unspecified ordering between independent watchers. The rename row of Node's measured table is the C harness's
 // (internal/native/fswatch_test.go): no program can rename yet.
-var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "two_events"}
+var fsWatchFixtures = []string{"tsc_shape", "write", "create", "unlink", "mkdir", "self_delete", "self_close", "unref", "missing", "close_twice", "on_returns", "two_events", "descriptor_cap", "same_path_close", "same_path_unref", "delete_recreate", "same_path_fanout", "same_path_micro_close"}
 
 func init() {
 	for _, name := range fsWatchFixtures {
@@ -53,10 +55,12 @@ type fsWatchMutation struct {
 
 // fsWatchMutations are real edits to node_fs_watch_impl.h, each turning its named pin red.
 var fsWatchMutations = []fsWatchMutation{
+	{"private-instance-per-watcher", "descriptor_cap", "", "", "TestFSWatchDescriptorCapMatchesNode", "", false},
+	{"rm-watch-on-any-close", "same_path_close", "        if (entry->watchers == NULL) {", "        (void)inotify_rm_watch(fs_watch_descriptor, entry->watch);\n        if (entry->watchers == NULL) {", "TestFSWatchSamePathSurvivesCloseMatchesNode", "", true},
 	{"change-rename-swapped", "create", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
-	{"self-basename-dropped", "write", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
-	{"close-keeps-source", "self_close", "    fs_watcher_stop(watcher);\n", "    /* mutant: the source stays registered */\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
-	{"event-drain-dropped", "two_events", "            adamic_source_drain_jobs();\n", "            /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
+	{"self-basename-dropped", "write", "event->len != 0 ? event->name : entry->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
+	{"close-keeps-source", "self_close", "    if (!open) {\n        fs_watch_source_stop();\n        return;", "    if (!open) {\n        /* mutant: the source stays registered */\n        return;", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
+	{"event-drain-dropped", "two_events", "                adamic_source_drain_jobs();\n", "                /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
 	{"view-name-check-dropped", "view_other_event", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
 }
 
@@ -116,7 +120,9 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 			if err != nil {
 				return err
 			}
-			if entry.Name() == "node_fs_watch_impl.h" {
+			if entry.Name() == "node_fs_watch_impl.h" && variant == "private-instance-per-watcher" {
+				data = []byte(fsWatchPrivateInstanceMutant(t, string(data)))
+			} else if entry.Name() == "node_fs_watch_impl.h" {
 				if strings.Count(string(data), mutation.before) != 1 {
 					return fmt.Errorf("mutant %s must match once", variant)
 				}
@@ -137,7 +143,7 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 func fsWatchAgreement(t *testing.T, name string) {
 	t.Helper()
 	product := fsWatchProduct(t, name, "control")
-	truth := watchFileNode(t, fsWatchPath(t, name))
+	truth := fsWatchNode(t, name, fsWatchPath(t, name))
 	if truth.exitCode != 0 {
 		t.Fatalf("Node watch fixture: %+v", truth)
 	}
@@ -145,9 +151,9 @@ func fsWatchAgreement(t *testing.T, name string) {
 		var got run
 		var expired bool
 		if backend != "javascript" {
-			got, expired = watchFileRun(t, filepath.Join(product, backend))
+			got, expired = fsWatchFixtureRun(t, name, filepath.Join(product, backend))
 		} else {
-			got = watchFileNode(t, filepath.Join(product, "program.mjs"))
+			got = fsWatchNode(t, name, filepath.Join(product, "program.mjs"))
 		}
 		if expired {
 			t.Fatal("fs.watch did not finish by its own 5 s deadline")
@@ -251,7 +257,10 @@ func fsWatchMutant(t *testing.T, name string) {
 	if mutation == nil {
 		t.Fatal(name)
 	}
-	got, expired := watchFileRun(t, filepath.Join(fsWatchProduct(t, mutation.fixture, name), "native"))
+	got, expired := fsWatchFixtureRun(t, mutation.fixture, filepath.Join(fsWatchProduct(t, mutation.fixture, name), "native"))
+	if name == "private-instance-per-watcher" && !bytes.Contains(got.stdout, []byte("EMFILE:")) {
+		t.Fatalf("private instances must hit EMFILE, not a different failure: %+v", got)
+	}
 	if mutation.deadline {
 		if !expired {
 			t.Fatalf("%s must miss its own deadline: %+v", name, got)
@@ -267,7 +276,7 @@ func fsWatchMutant(t *testing.T, name string) {
 			if got.exitCode == 70 && string(got.stderr) == mutation.stop {
 				t.Fatalf("%s survived", name)
 			}
-		} else if difference := disagreement(watchFileNode(t, fsWatchPath(t, mutation.fixture)), got); difference == "" {
+		} else if difference := disagreement(fsWatchNode(t, mutation.fixture, fsWatchPath(t, mutation.fixture)), got); difference == "" {
 			t.Fatalf("%s survived", name)
 		}
 	}
@@ -396,4 +405,139 @@ func TestFSWatchProductOrderIsCurrent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("fs.watch product generator: %v\n%s", err, output)
 	}
+}
+
+// The child replaces itself after setting the limit, so Node and native receive
+// exactly the same limit without a prlimit executable or a new skip site.
+func TestFSWatchLimitedChildExecutesFixture(t *testing.T) {
+	t.Parallel()
+	arguments := flag.Args()
+	if len(arguments) == 0 || arguments[0] != "fs-watch-limit-child" {
+		return
+	}
+	if len(arguments) < 2 {
+		t.Fatal("missing limited child executable")
+	}
+	if err := syscall.Setrlimit(syscall.RLIMIT_NOFILE, &syscall.Rlimit{Cur: 64, Max: 64}); err != nil {
+		t.Fatal(err)
+	}
+	if err := syscall.Exec(arguments[1], arguments[1:], os.Environ()); err != nil {
+		t.Fatal(err)
+	}
+}
+func fsWatchFixtureRun(t *testing.T, fixture, name string, args ...string) (run, bool) {
+	t.Helper()
+	if fixture != "descriptor_cap" {
+		return watchFileRun(t, name, args...)
+	}
+	binary, err := exec.LookPath(name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	helper, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	arguments := append([]string{"-test.run=^TestFSWatchLimitedChildExecutesFixture$", "--", "fs-watch-limit-child", binary}, args...)
+	return watchFileRun(t, helper, arguments...)
+}
+func fsWatchNode(t *testing.T, fixture, path string) run {
+	t.Helper()
+	loader, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	result, expired := fsWatchFixtureRun(t, fixture, "node", "--disable-warning=ExperimentalWarning", loader, path)
+	if expired {
+		t.Fatal("Node watch fixture exceeded its own deadline")
+	}
+	return result
+}
+
+// This resource mutant restores a private, owned inotify instance and kernel
+// watch per handle. Dispatch remains shared, so only the descriptor-cap pin can
+// distinguish it: ordinary event and ownership behavior is otherwise unchanged.
+func fsWatchPrivateInstanceMutant(t *testing.T, source string) string {
+	t.Helper()
+	edits := [][2]string{
+		{"    bool persistent;", "    bool persistent;\n    int private_descriptor;"},
+		{"    fs_watcher_stop(watcher);", "    fs_watcher_stop(watcher);\n    close(watcher->private_descriptor);"},
+		{"    char *name = bytes(path);", "    char *name = bytes(path);\n    int private_descriptor = inotify_init1(IN_NONBLOCK | IN_CLOEXEC);\n    if (private_descriptor == -1) { system_error(errno, \"watch\", name); free(name); return NULL; }"},
+		{"if (fs_watch_descriptor == -1) { system_error(errno, \"watch\", name); free(name); return NULL; }", "if (fs_watch_descriptor == -1) { system_error(errno, \"watch\", name); close(private_descriptor); free(name); return NULL; }"},
+		{"    if (watch == -1) {", "    if (watch == -1) {\n        close(private_descriptor);"},
+		{"    if (fs_watcher_next_identity >", "    if (inotify_add_watch(private_descriptor, name, IN_ATTRIB | IN_CREATE | IN_MODIFY | IN_DELETE | IN_DELETE_SELF | IN_MOVE_SELF | IN_MOVED_FROM | IN_MOVED_TO) == -1) abort();\n    if (fs_watcher_next_identity >"},
+		{".persistent = persistent, .listener", ".private_descriptor = private_descriptor, .persistent = persistent, .listener"},
+	}
+	for _, edit := range edits {
+		if strings.Count(source, edit[0]) != 1 {
+			t.Fatalf("private instance mutant must match once: %q", edit[0])
+		}
+		source = strings.Replace(source, edit[0], edit[1], 1)
+	}
+	return source
+}
+func TestFSWatchDescriptorCapMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "descriptor_cap")
+}
+func TestFSWatchSamePathSurvivesCloseMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "same_path_close")
+}
+func TestFSWatchLastPersistentCloseUnrefsSource(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "same_path_unref")
+}
+func TestFSWatchDeleteRecreateMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "delete_recreate")
+}
+func TestFSWatchMutantPrivateInstancesHitDescriptorCap(t *testing.T) {
+	t.Parallel()
+	fsWatchMutant(t, "private-instance-per-watcher")
+}
+func TestFSWatchMutantRemovingSharedWatchStopsSurvivor(t *testing.T) {
+	t.Parallel()
+	fsWatchMutant(t, "rm-watch-on-any-close")
+}
+func TestProduct_FSWatchDescriptorCap(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "descriptor_cap", "control")
+}
+func TestProduct_FSWatchSamePathClose(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "same_path_close", "control")
+}
+func TestProduct_FSWatchSamePathUnref(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "same_path_unref", "control")
+}
+func TestProduct_FSWatchDeleteRecreate(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "delete_recreate", "control")
+}
+func TestProduct_FSWatchMutantPrivateInstances(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "descriptor_cap", "private-instance-per-watcher")
+}
+func TestProduct_FSWatchMutantRemoveSharedWatch(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "same_path_close", "rm-watch-on-any-close")
+}
+
+func TestFSWatchSamePathFansOutToBothHandles(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "same_path_fanout")
+}
+func TestFSWatchMicrotaskCanCloseSharedSibling(t *testing.T) {
+	t.Parallel()
+	fsWatchAgreement(t, "same_path_micro_close")
+}
+func TestProduct_FSWatchSamePathFanout(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "same_path_fanout", "control")
+}
+func TestProduct_FSWatchSamePathMicroClose(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "same_path_micro_close", "control")
 }

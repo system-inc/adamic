@@ -1,0 +1,16 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-same-'));
+const file = join(directory, 'same.txt');
+fs.writeFileSync(file, 'one');
+const first = fs.watch(file, {persistent: false}, () => { console.log('closed handle fired'); });
+const second = fs.watch(file, {persistent: true}, (eventType, filename) => {
+ if (eventType === 'change') {
+  console.log(`${eventType} ${filename ?? 'null'}`);
+  second.close();
+  fs.rmSync(directory, {recursive: true, force: true});
+ }
+});
+first.close();
+fs.writeFileSync(file, 'two');

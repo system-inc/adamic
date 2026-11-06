@@ -1,0 +1,18 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-fanout-'));
+const file = join(directory, 'same.txt');
+fs.writeFileSync(file, 'one');
+let firstSeen = false;
+let secondSeen = false;
+const first = fs.watch(file, {persistent: true}, () => { firstSeen = true; finish(); });
+const second = fs.watch(file, {persistent: true}, () => { secondSeen = true; finish(); });
+function finish(): void {
+ if (firstSeen && secondSeen) {
+  console.log('both');
+  first.close(); second.close();
+  fs.rmSync(directory, {recursive: true, force: true});
+ }
+}
+fs.writeFileSync(file, 'two');

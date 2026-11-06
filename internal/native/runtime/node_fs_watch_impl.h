@@ -3,10 +3,11 @@
  * darwin waits on kqueue (#d7jggtt) and wasi preview1 has no file system events,
  * so both stop by name at the call.
  *
- * One inotify descriptor and one watch per watcher. Each event maps as libuv's
- * linux.c maps it: IN_ATTRIB or IN_MODIFY alone is 'change', any other bit is
+ * One loop-owned inotify descriptor, with a list of watchers per watch descriptor.
+ * Each event maps as libuv's linux.c maps it: IN_ATTRIB or IN_MODIFY alone is 'change', any other bit is
  * 'rename', and an event on the watched entry itself, which inotify sends without
- * a name, carries the watched path's basename. An open watcher holds its object
+ * a name, carries the wd entry's first path basename, including inode aliases.
+ * An open watcher holds its object
  * and its listeners; close(), the error path and teardown release them. The
  * object's close and on capture the watcher's identity, never the object or the
  * record, so nothing a program holds points back at the runtime. */
@@ -35,11 +36,20 @@ void adamic_fs_file_host_watch_shutdown(void) {}
 typedef struct fs_watcher_listener fs_watcher_listener;
 struct fs_watcher_listener { adamic_closure *callback; fs_watcher_listener *next; };
 typedef struct fs_watcher fs_watcher;
+typedef struct fs_watch_entry fs_watch_entry;
+struct fs_watch_entry {
+    int watch;
+    uintptr_t identity;
+    char *base;
+    fs_watcher *watchers;
+    fs_watch_entry *next;
+};
 struct fs_watcher {
     uintptr_t identity;
-    int descriptor, watch;
-    char *base;
-    adamic_source_handle source;
+    uintptr_t generation;
+    bool persistent;
+    fs_watch_entry *entry;
+    fs_watcher *entry_next;
     adamic_object *object;
     adamic_closure *listener;
     fs_watcher_listener *errors, *errors_last;
@@ -47,6 +57,59 @@ struct fs_watcher {
 };
 static fs_watcher *fs_watchers;
 static uintptr_t fs_watcher_next_identity = 1;
+static fs_watch_entry *fs_watch_table;
+static int fs_watch_descriptor = -1;
+static uintptr_t fs_watch_generation;
+static adamic_source_handle fs_watch_source;
+static bool fs_watch_referenced;
+
+static void fs_watcher_dispatch(void *data, unsigned ready);
+static fs_watch_entry *fs_watch_find(int watch) {
+    for (fs_watch_entry *entry = fs_watch_table; entry != NULL; entry = entry->next)
+        if (entry->watch == watch) return entry;
+    return NULL;
+}
+/* IN_IGNORED retires the kernel watch, not its still-open JavaScript handles.
+ * Detaching them prevents a later close from removing a newly reused wd. */
+static void fs_watch_drop(fs_watch_entry *entry) {
+    fs_watch_entry **at = &fs_watch_table;
+    while (*at != entry) at = &(*at)->next;
+    *at = entry->next;
+    for (fs_watcher *watcher = entry->watchers; watcher != NULL;) {
+        fs_watcher *next = watcher->entry_next;
+        watcher->entry = NULL;
+        watcher->entry_next = NULL;
+        watcher = next;
+    }
+    free(entry->base); free(entry);
+}
+static void fs_watch_source_stop(void) {
+    (void)adamic_source_close(fs_watch_source);
+    fs_watch_source = (adamic_source_handle){0};
+    if (fs_watch_descriptor != -1) close(fs_watch_descriptor);
+    fs_watch_descriptor = -1;
+    fs_watch_referenced = false;
+}
+/* Retiring a source borrows, and does not close, its descriptor. Registration
+ * during dispatch is allowed: a replacement has no ready bits until the wait. */
+static void fs_watch_source_sync(void) {
+    if (fs_watch_descriptor == -1) return;
+    bool open = false, referenced = false;
+    for (fs_watcher *watcher = fs_watchers; watcher != NULL; watcher = watcher->next) {
+        if (watcher->generation != fs_watch_generation) continue;
+        open = true;
+        if (watcher->persistent) referenced = true;
+    }
+    if (!open) {
+        fs_watch_source_stop();
+        return;
+    }
+    if (fs_watch_source.identity != 0 && referenced == fs_watch_referenced) return;
+    (void)adamic_source_close(fs_watch_source);
+    fs_watch_source = adamic_source_register(fs_watch_descriptor, fs_watcher_dispatch,
+        (void *)fs_watch_generation, referenced);
+    fs_watch_referenced = referenced;
+}
 
 static const char *const fs_watcher_names[] = {"close", "on"};
 static const bool fs_watcher_references[] = {true, true};
@@ -62,11 +125,21 @@ static fs_watcher *fs_watcher_open(uintptr_t identity) {
 static fs_watcher *fs_watcher_find(const adamic_closure *method) {
     return fs_watcher_open((uintptr_t)method->cells[0]->value.number);
 }
-/* The source goes with the descriptor: a source left registered after close would
- * keep a lone watcher's loop alive. */
+/* Only the last handle on a wd removes its kernel watch. */
 static void fs_watcher_stop(fs_watcher *watcher) {
-    (void)adamic_source_close(watcher->source);
-    close(watcher->descriptor); /* Its one watch goes with it. */
+    fs_watch_entry *entry = watcher->entry;
+    if (entry != NULL) {
+        fs_watcher **at = &entry->watchers;
+        while (*at != watcher) at = &(*at)->entry_next;
+        *at = watcher->entry_next;
+        watcher->entry = NULL;
+        watcher->entry_next = NULL;
+        if (entry->watchers == NULL) {
+            (void)inotify_rm_watch(fs_watch_descriptor, entry->watch);
+            fs_watch_drop(entry);
+        }
+    }
+    fs_watch_source_sync();
 }
 static void fs_watcher_close(fs_watcher *watcher) {
     fs_watcher **at = &fs_watchers;
@@ -79,7 +152,7 @@ static void fs_watcher_close(fs_watcher *watcher) {
     }
     adamic_release(watcher->listener);
     adamic_release(watcher->object);
-    free(watcher->base); free(watcher);
+    free(watcher);
 }
 /* Node calls a listener with the watcher as this and its own argument count. The
  * slots past that count hold undefined, which every parameter lowering admits holds
@@ -133,37 +206,71 @@ static void fs_watcher_fail(fs_watcher *watcher, const char *reason) {
     }
     adamic_release(object); free(batch);
 }
-/* Reads until EAGAIN. The source's data is the watcher's identity, never the record,
- * and a listener may close the watcher, so each event looks it up again first. */
+/* Pending Runtime's ruling on #9pg753z: retire the failed descriptor first,
+ * then fail its still-open handles in opening order through the existing error
+ * path. A callback may close another affected handle or open a fresh generation;
+ * only the affected generation belongs to this failure. A throw stays uncaught. */
+static void fs_watcher_fail_shared(uintptr_t generation, const char *reason) {
+    fs_watch_source_stop();
+    while (fs_watch_table != NULL) fs_watch_drop(fs_watch_table);
+    uintptr_t last = 0, limit = fs_watcher_next_identity - 1;
+    for (;;) {
+        fs_watcher *chosen = NULL;
+        for (fs_watcher *watcher = fs_watchers; watcher != NULL; watcher = watcher->next)
+            if (watcher->generation == generation && watcher->identity > last && watcher->identity <= limit &&
+                (chosen == NULL || watcher->identity < chosen->identity)) chosen = watcher;
+        if (chosen == NULL) return;
+        last = chosen->identity;
+        fs_watcher_fail(chosen, reason);
+        if (adamic_thrown != NULL) return;
+        adamic_source_drain_jobs();
+        if (adamic_thrown != NULL) return;
+    }
+}
+/* Read until EAGAIN, looking up identities after every callback and checkpoint.
+ * A callback that closes the last handle can open a new descriptor at the same
+ * fd number; its generation must never consume this read's remaining events. */
 static void fs_watcher_dispatch(void *data, unsigned ready) {
-    uintptr_t identity = (uintptr_t)data;
-    fs_watcher *watcher = fs_watcher_open(identity);
-    if (watcher == NULL) return;
+    uintptr_t generation = (uintptr_t)data;
+    if (fs_watch_descriptor == -1 || generation != fs_watch_generation) return;
     if ((ready & adamic_source_error) != 0) {
-        fs_watcher_fail(watcher, "watch: the inotify descriptor hung up or became invalid");
+        fs_watcher_fail_shared(generation, "watch: the inotify descriptor hung up or became invalid");
         return;
     }
     _Alignas(struct inotify_event) char buffer[4096];
     for (;;) {
         ssize_t size;
-        do { size = read(watcher->descriptor, buffer, sizeof buffer); } while (size == -1 && errno == EINTR);
+        do { size = read(fs_watch_descriptor, buffer, sizeof buffer); } while (size == -1 && errno == EINTR);
         if (size == -1 && (errno == EAGAIN || errno == EWOULDBLOCK)) return;
         if (size <= 0) {
-            fs_watcher_fail(watcher, "watch: reading the inotify descriptor failed");
+            fs_watcher_fail_shared(generation, "watch: reading the inotify descriptor failed");
             return;
         }
         for (const char *at = buffer; at < buffer + size;) {
             const struct inotify_event *event = (const struct inotify_event *)(const void *)at;
             at += sizeof *event + event->len;
-            // IN_Q_OVERFLOW carries watch -1, which libuv finds no watcher for and drops.
-            if (event->wd != watcher->watch) continue;
+            // IN_Q_OVERFLOW carries watch -1, which has no table entry.
+            fs_watch_entry *entry = fs_watch_find(event->wd);
+            if (entry == NULL) continue;
+            uintptr_t entry_identity = entry->identity, last = 0, limit = fs_watcher_next_identity - 1;
             const char *type = (event->mask & ~(uint32_t)(IN_ATTRIB | IN_MODIFY)) != 0 ? "rename" : "change";
-            fs_watcher_change(watcher, type, event->len != 0 ? event->name : watcher->base);
-            if (adamic_thrown != NULL) return;
-            // Node takes a microtask checkpoint after each event's callback, so its jobs run
-            // before the next event's listener. They may close the watcher, so look it up after.
-            adamic_source_drain_jobs();
-            if (fs_watcher_open(identity) == NULL) return;
+            for (;;) {
+                fs_watcher *chosen = NULL;
+                for (fs_watcher *watcher = entry->watchers; watcher != NULL; watcher = watcher->entry_next)
+                    if (watcher->identity > last && watcher->identity <= limit &&
+                        (chosen == NULL || watcher->identity < chosen->identity)) chosen = watcher;
+                if (chosen == NULL) break;
+                last = chosen->identity;
+                fs_watcher_change(chosen, type, event->len != 0 ? event->name : entry->base);
+                if (adamic_thrown != NULL) return;
+                // New handles do not receive an event whose dispatch has already begun.
+                adamic_source_drain_jobs();
+                if (adamic_thrown != NULL || fs_watch_descriptor == -1 || generation != fs_watch_generation) return;
+                entry = fs_watch_find(event->wd);
+                if (entry == NULL || entry->identity != entry_identity) break;
+            }
+            if (entry != NULL && entry->identity == entry_identity && (event->mask & IN_IGNORED) != 0)
+                fs_watch_drop(entry);
         }
     }
 }
@@ -221,12 +328,16 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
         return NULL;
     }
     char *name = bytes(path);
-    int descriptor = inotify_init1(IN_NONBLOCK | IN_CLOEXEC);
-    if (descriptor == -1) { system_error(errno, "watch", name); free(name); return NULL; }
-    int watch = inotify_add_watch(descriptor, name, IN_ATTRIB | IN_CREATE | IN_MODIFY | IN_DELETE | IN_DELETE_SELF | IN_MOVE_SELF | IN_MOVED_FROM | IN_MOVED_TO);
+    if (fs_watch_descriptor == -1) {
+        fs_watch_descriptor = inotify_init1(IN_NONBLOCK | IN_CLOEXEC);
+        if (fs_watch_descriptor == -1) { system_error(errno, "watch", name); free(name); return NULL; }
+        if (fs_watch_generation == UINTPTR_MAX) abort();
+        fs_watch_generation++;
+    }
+    int watch = inotify_add_watch(fs_watch_descriptor, name, IN_ATTRIB | IN_CREATE | IN_MODIFY | IN_DELETE | IN_DELETE_SELF | IN_MOVE_SELF | IN_MOVED_FROM | IN_MOVED_TO);
     if (watch == -1) {
         int error = errno;
-        close(descriptor);
+        fs_watch_source_sync();
         if (error == ENOSPC) {
             // Node words its own message for the watch limit (lib/internal/fs/watchers.js).
             size_t length = strlen(name) + 80;
@@ -247,16 +358,28 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
     free(name);
     fs_watcher *watcher = malloc(sizeof *watcher);
     if (base == NULL || watcher == NULL) abort();
-    *watcher = (fs_watcher){.identity = fs_watcher_next_identity++, .descriptor = descriptor, .watch = watch,
-        .base = base, .listener = adamic_retain(listener)};
+    *watcher = (fs_watcher){.identity = fs_watcher_next_identity++, .generation = fs_watch_generation,
+        .persistent = persistent, .listener = adamic_retain(listener)};
+    fs_watch_entry *entry = fs_watch_find(watch);
+    if (entry == NULL) {
+        entry = malloc(sizeof *entry);
+        if (entry == NULL) abort();
+        *entry = (fs_watch_entry){.watch = watch, .identity = watcher->identity, .base = base, .next = fs_watch_table};
+        fs_watch_table = entry;
+    } else {
+        free(base);
+    }
+    watcher->entry = entry;
+    watcher->entry_next = entry->watchers;
+    entry->watchers = watcher;
     adamic_object *object = adamic_object_new(&fs_watcher_shape);
     object->slots[0].reference = fs_watcher_method(fs_watcher_close_method, watcher->identity, 0, false);
     object->slots[1].reference = fs_watcher_method(fs_watcher_on_method, watcher->identity, 2, true);
     watcher->object = adamic_retain(object);
     // Refused under custom host loop hooks in the source's own words.
-    watcher->source = adamic_source_register(descriptor, fs_watcher_dispatch, (void *)watcher->identity, persistent);
     watcher->next = fs_watchers;
     fs_watchers = watcher;
+    fs_watch_source_sync();
     return object;
 }
 /* The direct call, recognized by lowering on an FSWatcher with the literal 'error'.
@@ -273,5 +396,7 @@ adamic_object *adamic_fs_file_host_watch_on(adamic_object *object, adamic_closur
 }
 void adamic_fs_file_host_watch_shutdown(void) {
     while (fs_watchers != NULL) fs_watcher_close(fs_watchers);
+    fs_watch_source_stop();
+    while (fs_watch_table != NULL) fs_watch_drop(fs_watch_table);
 }
 #endif

@@ -117,8 +117,8 @@ func TestFSWatchCustomHooksRefused(t *testing.T) {
 	}
 }
 
-// The error path that calls its listeners but leaves the watcher open: the error bit comes back every
-// turn, and the loop spins past the pin's deadline.
+// Retain both the failed shared source and its watcher: the error bit comes back
+// every turn, and the loop spins past the pin's deadline.
 func TestFSWatchMutantErrorKeepsSource(t *testing.T) {
 	t.Parallel()
 	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-error-keeps-source", native.Options{Release: true}), "error")
@@ -157,6 +157,19 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			return native.Build(code, output, options)
 		case "mutant-error-keeps-source":
 			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchErrorClose, fsWatchErrorMutant)
+			header := filepath.Join(changed.directory, "node_fs_watch_impl.h")
+			contents, err := os.ReadFile(header)
+			if err != nil {
+				return err
+			}
+			before := "    fs_watch_source_stop();\n    while (fs_watch_table != NULL) fs_watch_drop(fs_watch_table);"
+			if strings.Count(string(contents), before) != 1 {
+				return fmt.Errorf("failed shared source mutant must match once")
+			}
+			contents = []byte(strings.Replace(string(contents), before, "    /* mutant: the failed shared source stays registered */\n    while (fs_watch_table != NULL) fs_watch_drop(fs_watch_table);", 1))
+			if err := os.WriteFile(header, contents, 0600); err != nil {
+				return err
+			}
 			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
@@ -195,5 +208,59 @@ func TestFSWatchHarnessProductOrderIsCurrent(t *testing.T) {
 	output, err := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
 	if err != nil {
 		t.Fatalf("fs.watch product generator: %v\n%s", err, output)
+	}
+}
+
+// The callback for handle 1 closes handle 3 and opens a fresh watch. Only handles
+// 1 and 2 from the failed generation receive errors, in opening order; the fresh
+// watch then gets its event. No production hook manufactures a failed read.
+func TestFSWatchSharedReadFailureRetiresAffectedGeneration(t *testing.T) {
+	t.Parallel()
+	fsWatchSharedFailure(t, "shared-read-error", "watch: reading the inotify descriptor failed")
+}
+func TestFSWatchSharedHangupRetiresAffectedGeneration(t *testing.T) {
+	t.Parallel()
+	fsWatchSharedFailure(t, "shared-error", "watch: the inotify descriptor hung up or became invalid")
+}
+func fsWatchSharedFailure(t *testing.T, mode, reason string) {
+	t.Helper()
+	want := "1 Error: " + reason + "\n2 Error: " + reason + "\nrename end\ndone\n"
+	for _, variant := range fsWatchVariants {
+		got, expired := fsWatchRun(t, variant.env, fsWatchProduct(t, variant.name, variant.options), mode)
+		if expired || got.ExitCode != 0 || string(got.Stdout) != want {
+			t.Fatalf("%s: expired %t, %+v", variant.name, expired, got)
+		}
+		if variant.name == "sanitized" {
+			if why := leakcheck.Unbalanced(got); why != "" {
+				t.Fatal(why)
+			}
+		}
+	}
+}
+
+func TestFSWatchSharedInodeKeepsFirstBasename(t *testing.T) {
+	t.Parallel()
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	path, err := filepath.Abs("testdata/fswatch/aliases.cjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth, expired := timerRunWithin(fsWatchHarnessLimit, []string{"TMPDIR=" + t.TempDir()}, node, path)
+	if expired || truth.ExitCode != 0 || string(truth.Stdout) != "change a\nchange a\n" {
+		t.Fatalf("Node aliases: %+v", truth)
+	}
+	for _, variant := range fsWatchVariants {
+		got, expired := fsWatchRun(t, variant.env, fsWatchProduct(t, variant.name, variant.options), "aliases")
+		if expired || got.ExitCode != 0 || string(got.Stdout) != string(truth.Stdout) {
+			t.Fatalf("%s: %+v", variant.name, got)
+		}
+		if variant.name == "sanitized" {
+			if why := leakcheck.Unbalanced(got); why != "" {
+				t.Fatal(why)
+			}
+		}
 	}
 }

@@ -18,9 +18,18 @@ Command after products: go test ./internal/native -count=1 -run 'TestFSWatch' -v
 
 | Mutation | Mode | Named pin | Caught by |
 | --- | --- | --- | --- |
-| The error path calls its listeners and leaves the watcher open | error | TestFSWatchErrorClosesTheWatcher | its own 3 s deadline, the listener called every turn |
+| The error path retains its watcher and the failed shared source | error | TestFSWatchErrorClosesTheWatcher | its own 3 s deadline, the listener called every turn |
 
-The edit, in node_fs_watch_impl.h's fs_watcher_fail, is fs_watcher_close(watcher) replaced by a
-comment. The error bit then comes back every turn, as sources.h says it does until the owner
+The edits, in node_fs_watch_impl.h, omit fs_watcher_close(watcher) in fs_watcher_fail
+and the failed shared descriptor's retirement in fs_watcher_fail_shared. The error bit then comes back every turn, as sources.h says it does until the owner
 closes, and the loop spins. TestFSWatchMutantErrorKeepsSource builds it through timerMutant's
 private runtime copy and RuntimeLibraryForSource, so it compiles; a compile failure never counts.
+
+Shared-source pins (#9pg753z, failure policy pending Runtime's ruling):
+TestFSWatchSharedHangupRetiresAffectedGeneration replaces the shared fd with a hung-up pipe.
+TestFSWatchSharedReadFailureRetiresAffectedGeneration replaces it with an open directory: poll
+reports readability and read fails with EISDIR. No production hook or fabricated errno is used.
+Both pin errors in opening order, an error listener closing a sibling, and a newly opened watch
+surviving the old generation's failure. They run in release and under ASan/UBSan with balanced counts.
+TestFSWatchSharedInodeKeepsFirstBasename holds two hard-link paths to aliases.cjs on Node: both
+self events name the first path, and the entry owns that basename until its last handle closes.

@@ -2792,6 +2792,38 @@
       "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ],
     "internal/oracle TestProduct_FSWatchMutantDrainOncePerRead": [],
-    "internal/oracle TestProduct_FSWatchMutantViewNameCheck": []
+    "internal/oracle TestProduct_FSWatchMutantViewNameCheck": [],
+    "internal/oracle TestProduct_FSWatchDescriptorCap": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_FSWatchSamePathClose": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_FSWatchSamePathUnref": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_FSWatchDeleteRecreate": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_FSWatchMutantPrivateInstances": [],
+    "internal/oracle TestProduct_FSWatchMutantRemoveSharedWatch": [],
+    "internal/oracle TestProduct_FSWatchSamePathFanout": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "internal/oracle TestProduct_FSWatchSamePathMicroClose": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0",
+      "internal/oracle TestProduct_NativeRuntimesSanitized1",
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ]
   }
 }

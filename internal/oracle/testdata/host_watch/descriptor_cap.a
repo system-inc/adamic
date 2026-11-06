@@ -1,0 +1,20 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// The named pin runs Node and every backend under RLIMIT_NOFILE=64. Private
+// inotify instances exhaust it; one loop-owned descriptor holds all 100 watches.
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-cap-'));
+const watchers: fs.FSWatcher[] = [];
+try {
+ for (let i = 0; i < 100; i++) {
+  const file = join(directory, `file${i}`);
+  fs.writeFileSync(file, '');
+  watchers.push(fs.watch(file, {persistent: true}, () => {}));
+ }
+} catch (error) {
+ if (error instanceof Error) console.log(error.message);
+ else console.log('watch failed');
+}
+console.log(`${watchers.length}`);
+for (const watcher of watchers) watcher.close();
+fs.rmSync(directory, {recursive: true, force: true});
