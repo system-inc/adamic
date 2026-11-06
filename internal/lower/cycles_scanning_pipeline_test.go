@@ -17,21 +17,34 @@ var scanningPipelineExempt = map[string]string{
 	"lowering.checkViewOptionalWrites": "judges writes to optional fields; reads the IR, rewrites nothing",
 }
 
-// The frozen scanning reference (scanLowerCheckedWithCycleTypes) and the real pipeline
-// (lowerCheckedWithCycleTypes) lower the same programs for TestCycleFinderEquality, which compares
-// their IR and string tables, so the reference has to call every pass the real one calls, in the
-// same order (Lower, on #qk8rztp S2c-1: the reference missing checkIterableViews left a dispatch's
-// panic message in one string table only). This reads both function bodies and lists, in source
-// order, every call of a lowering method, of flow's and fresh's functions, and of a package
-// function (checkGeneratorRoads, readiness). The set is every call either pipeline makes on the
-// lowering or to a pass, since any of them may rewrite the program. The reference's own cycle
-// finder (scanFindCycles) stands for findCycles, being the thing compared, and
-// scanningPipelineExempt names the judging passes the reference has never called. Mutant: the
-// reference's checkIterableViews call taken out, and this goes red.
+// The frozen scanning reference (scanLowerWithElementKey) and the real pipeline
+// (lowerWithElementKey) lower the same programs for TestCycleFinderEquality, which compares their
+// IR and string tables, so the reference has to call every pass the real one calls, in the same
+// order (Lower, on #qk8rztp S2c-1: the reference missing checkIterableViews left a dispatch's panic
+// message in one string table only). This reads both function bodies and lists, in source order,
+// every call of a lowering method, of flow's and fresh's functions, and of a package function
+// (checkGeneratorRoads, readiness). The set is every call either pipeline makes on the lowering or
+// to a pass, since any of them may rewrite the program. The reference's own cycle finder
+// (scanFindCycles) stands for findCycles, being the thing compared, and scanningPipelineExempt
+// names the judging passes the reference has never called. Each pipeline is entered through a
+// wrapper that lowers again with every element read checked when the key misses
+// (lowerCheckedWithCycleTypes, scanLowerCheckedWithCycleTypes), and the two wrappers make the same
+// calls too. Mutants: the reference's checkIterableViews call taken out, or its
+// collectViewedElements call, and this goes red.
 func TestScanningReferenceCallsEveryPass(t *testing.T) {
 	t.Parallel()
-	pipeline := pipelineCalls(t, "lower.go", "lowerCheckedWithCycleTypes")
-	reference := pipelineCalls(t, "cycles_scanning_reference_test.go", "scanLowerCheckedWithCycleTypes")
+	wrapper := pipelineCalls(t, "lower.go", "lowerCheckedWithCycleTypes")
+	referenceWrapper := pipelineCalls(t, "cycles_scanning_reference_test.go", "scanLowerCheckedWithCycleTypes")
+	for index, call := range referenceWrapper {
+		if call == "scanLowerWithElementKey" {
+			referenceWrapper[index] = "lowerWithElementKey"
+		}
+	}
+	if !slices.Equal(wrapper, referenceWrapper) {
+		t.Fatalf("the scanning reference's wrapper differs from the real pipeline's:\nreal: %v\nreference: %v", wrapper, referenceWrapper)
+	}
+	pipeline := pipelineCalls(t, "lower.go", "lowerWithElementKey")
+	reference := pipelineCalls(t, "cycles_scanning_reference_test.go", "scanLowerWithElementKey")
 	for index, call := range reference {
 		if call == "lowering.scanFindCycles" {
 			reference[index] = "lowering.findCycles"
