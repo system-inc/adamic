@@ -1732,6 +1732,11 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
+	// As lowerCheckedWithCycleTypes does, so a program with a run-time key read and a class getter that
+	// read can't call stops alike in both, at the read (#52zja36's stop_getter_null.a).
+	if err := lowering.checkDynamicKeyedGetters(); err != nil {
+		return nil, err
+	}
 	// As lowerCheckedWithCycleTypes does, so a generator program stops or lowers alike in both.
 	if err := checkGeneratorRoads(lowering.result); err != nil {
 		return nil, err
