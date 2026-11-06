@@ -61,6 +61,18 @@ func TestHandDrivenNextStopsOnEveryOtherRoad(t *testing.T) {
 			}
 		})
 	}
+	// A for-of beside a hand-driven next over the same parameter, in .a and in .ts (Compiler's must).
+	for _, extension := range []string{".a", ".ts"} {
+		mixed := handNumbers + "function both(numbers: IterableIterator<number>): number { let sum = 0; const first = numbers.next(); if (!first.done) { sum += first.value; } for (const value of numbers) { sum += value; } return sum; }\nconsole.log(String(both(sizes.values())));"
+		t.Run("a for-of beside a next in "+extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, mixed, extension)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(gap.What, "a for-of beside a hand-driven next() over the same parameter") {
+				t.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", err)
+			}
+		})
+	}
 	for _, probe := range []struct{ name, source, reason string }{
 		{"a detached next", handNumbers + "function first(numbers: IterableIterator<number>): number { const step = numbers.next; const status = step(); return status.done ? -1 : status.value; }\nconsole.log(String(first(sizes.values())));", "a method read as a value"},
 	} {

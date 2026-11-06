@@ -229,6 +229,20 @@ func (l *lowering) checkIterableViews() error {
 	if len(l.iterableViews) == 0 && len(l.generatorArguments) == 0 {
 		return nil
 	}
+	// A parameter stepped by hand is read only by its no-argument nexts and undefined tests (Adamic's
+	// ruling on #qk8rztp S2c-2a, Compiler's must): a for-of beside them would step the same iterator,
+	// and may close it, in an interleaving nothing has held to Node, so it stops not yet.
+	hands := map[int]bool{}
+	for _, view := range l.iterableViews {
+		if read, isRead := iterableViewRead(view.iterated); isRead && view.hand {
+			hands[read.Local] = true
+		}
+	}
+	for _, view := range l.iterableViews {
+		if read, isRead := iterableViewRead(view.iterated); isRead && !view.hand && hands[read.Local] {
+			return l.notYet(view.where, "a for-of beside a hand-driven next() over the same parameter (#qk8rztp S2c-2a)")
+		}
+	}
 	if err := l.checkGeneratorArguments(); err != nil {
 		return err
 	}

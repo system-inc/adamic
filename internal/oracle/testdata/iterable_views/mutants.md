@@ -28,6 +28,7 @@ The lower rows are internal/lower/iterable_hand_next_test.go's; run by s2c2a-pro
 |---|---|---|
 | The hand view's origins not proven | lower/iterable_views.go, `checkIterableViews`: `if reaches.Unknown \|\| len(unproven) != 0 {` made `if !view.hand && (...) {` | TestHandDrivenNextStopsOnEveryOtherRoad, the arrow row: its parameter's callers are unseen, and it compiles |
 | next(x) let through | lower/expression.go, `callClosure`: `if hand && len(...Arguments.Nodes) != 0 {` made `if false {` | the same test's next(x) row: it stops otherwise, or compiles |
+| A for-of beside a hand next let through | lower/iterable_views.go, `checkIterableViews`: the mixed test made `&& false` | TestHandDrivenNextStopsOnEveryOtherRoad, the mixed rows in .a and .ts: they compile |
 | No hand next let past the guard | lower/object.go, `property`: `node != l.handNext` made `true` | the same fixture: every next() is refused, as on main |
 | A generator into a hand parameter not stopped there | lower/iterable_views.go, `generatorParameter`: the hand loop's test made `&& false` | TestHandDrivenNextStopsOnEveryOtherRoad, the generator row: it stops as one use that isn't a for-of instead |
 | IteratorYieldResult's fields admitted in iteratorResultField (dropped from the head) | an earlier draft let them past prototype.go's owner test | it survived on Golem (job 01M6Q811): hand_next.a's done and value reads lower on main by a road that doesn't reach that guard, so the head doesn't change it. Which road isn't traced yet |
