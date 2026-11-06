@@ -378,30 +378,11 @@ func (l *lowering) unitValues(t *checker.Type) (map[string]bool, bool) {
 // #w7w2asn), exactly as far as the open-enum tag walk trusts it (Language, Nov 5). tsc flattens a union
 // naming every member into the enum's own members, so an enum all of whose members are here is the open
 // type, also inside a wider union (Kind | "x"). An enum-literal number of an enum that isn't purely
-// numeric fails closed.
+// numeric fails closed. wholeNumericEnums decides which enums are whole, as it does for
+// openNumericEnumType (#4cfvp4q).
 func (l *lowering) holdsOpenNumericEnum(members []*checker.Type) bool {
-	present := map[*ast.Symbol]int{}
-	for _, member := range members {
-		if member.Flags()&checker.TypeFlagsEnumLiteral == 0 || member.Flags()&checker.TypeFlagsNumberLiteral == 0 {
-			continue
-		}
-		identity := l.enumIdentity(member)
-		if identity == nil || !l.numericEnum(identity) {
-			return true
-		}
-		present[identity]++
-	}
-	for identity, count := range present {
-		whole := l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())
-		size := 1
-		if whole.Flags()&checker.TypeFlagsUnion != 0 {
-			size = len(whole.Types())
-		}
-		if count >= size {
-			return true
-		}
-	}
-	return false
+	whole, impure := l.wholeNumericEnums(members)
+	return impure || len(whole) > 0
 }
 
 // A function can hand out a void function from its return, or receive one through
