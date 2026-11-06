@@ -451,8 +451,8 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_prototype_class.a", "thing\n", "ClassConstructor", "constructor", "thing\nfunction\n"},
 	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
 	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
-	{"stop_host_stats_field.a", "directory\n", "RuntimeValue", "dev", "directory\nnumber\n"},
-	{"stop_host_stats_ctime.a", "directory\n", "RuntimeValue", "ctime", "directory\nobject\n"},
+	{"stop_host_stats_field.a", "directory\n", "StatsField", "dev", "directory\nnumber\n"},
+	{"stop_host_stats_ctime.a", "directory\n", "StatsField", "ctime", "directory\nobject\n"},
 	{"stop_host_stats_date.a", "mtime object\n", "RuntimeValue", "getTime", "mtime object\nfunction\n"},
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
@@ -503,7 +503,7 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
 // (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
 // The stop_host_stats_ rows are a Stats' fields native doesn't hold (#zhrjf2t), which stop on both
-// backends while its other reads answer (stats_reads.a); their mutant is union.c's keyed_stats
+// backends in the StatsField form while its other reads answer (stats_reads.a); their mutant is union.c's keyed_stats
 // answering such a field undefined, so stop_host_stats_field.a's dev reads undefined natively.
 // stop_host_stats_date.a reads a Stats' mtime, a host Date, by a key in turn. The other stop_host_
 // rows are #ey7aysy's: a host object stops for every key. Their mutants are union.c's guard put back
