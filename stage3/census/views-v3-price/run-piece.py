@@ -5,7 +5,7 @@ Run from report checkout. Commits and plainly pushes each successful piece.
 import hashlib,io,json,os,pathlib,re,signal,subprocess,sys,tarfile,time
 report=pathlib.Path(__file__).resolve().parent
 names=sys.argv[1:];assert names and len(set(names))==len(names)
-stem=names[0].replace('/','_').removesuffix('.ts') if len(names)==1 else 'group_'+hashlib.sha256('\n'.join(names).encode()).hexdigest()[:12]
+stem=names[0].replace('/','_').removesuffix('.ts').replace('.','_') if len(names)==1 else 'group_'+hashlib.sha256('\n'.join(names).encode()).hexdigest()[:12]
 piece=report/'pieces'/stem
 if piece.with_suffix('.tar.gz').exists():raise SystemExit('already recorded')
 scratch=pathlib.Path('/workspace/scratch/v3-pieces')/stem;scratch.mkdir(parents=True,exist_ok=True)

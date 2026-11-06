@@ -161,6 +161,29 @@ Seven fixture forms alone: 2,518 reads; readonly subset 1,216. Additional named 
 | src/compiler/transformers/typeSerializer.ts | 2 | 2 |
 | src/compiler/transformers/declarations/diagnostics.ts | 1 | 1 |
 | src/compiler/transformers/taggedTemplate.ts | 1 | 1 |
+| src/compiler/_namespaces/ts.moduleSpecifiers.ts | 0 | 0 |
+| src/compiler/_namespaces/ts.performance.ts | 0 | 0 |
+| src/compiler/_namespaces/ts.ts | 0 | 0 |
+| src/compiler/builderPublic.ts | 0 | 0 |
+| src/compiler/builderStatePublic.ts | 0 | 0 |
+| src/compiler/corePublic.ts | 0 | 0 |
+| src/compiler/diagnosticInformationMap.generated.ts | 0 | 0 |
+| src/compiler/factory/baseNodeFactory.ts | 0 | 0 |
+| src/compiler/factory/nodeChildren.ts | 0 | 0 |
+| src/compiler/factory/nodeTests.ts | 0 | 0 |
+| src/compiler/factory/parenthesizerRules.ts | 0 | 0 |
+| src/compiler/factory/utilitiesPublic.ts | 0 | 0 |
+| src/compiler/hostErrors.ts | 0 | 0 |
+| src/compiler/performance.ts | 0 | 0 |
+| src/compiler/performanceCore.ts | 0 | 0 |
+| src/compiler/transformers/es2016.ts | 0 | 0 |
+| src/compiler/transformers/es2019.ts | 0 | 0 |
+| src/compiler/transformers/es2021.ts | 0 | 0 |
+| src/compiler/transformers/module/impliedNodeFormatDependent.ts | 0 | 0 |
+| src/compiler/tsbuild.ts | 0 | 0 |
+| src/compiler/types.ts | 0 | 0 |
+| src/tsc/_namespaces/ts.ts | 0 | 0 |
+| src/tsc/tsc.ts | 0 | 0 |
 
 ## Evidence and status
 

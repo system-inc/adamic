@@ -16,7 +16,7 @@ for name in remaining:
 if batch:batches.append(batch)
 for names in batches[:int(sys.argv[1]) if len(sys.argv)>1 else 4]:
  name=','.join(names)
- stem=names[0].replace('/','_').removesuffix('.ts') if len(names)==1 else 'group_'+hashlib.sha256('\n'.join(names).encode()).hexdigest()[:12]
+ stem=names[0].replace('/','_').removesuffix('.ts').replace('.','_') if len(names)==1 else 'group_'+hashlib.sha256('\n'.join(names).encode()).hexdigest()[:12]
  logpath=pathlib.Path('/workspace/scratch')/('v3-piece-'+stem+'.log')
  with logpath.open('w') as log:
   process=subprocess.Popen(['python3',str(p/'run-piece.py'),*names],stdout=log,stderr=log,start_new_session=True)

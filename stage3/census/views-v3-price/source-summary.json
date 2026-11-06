@@ -324,6 +324,98 @@
     "src/compiler/transformers/taggedTemplate.ts": {
       "upper_bound": 1,
       "readonly_subset": 1
+    },
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/_namespaces/ts.performance.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/_namespaces/ts.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/builderPublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/builderStatePublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/corePublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/diagnosticInformationMap.generated.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/baseNodeFactory.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/nodeChildren.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/nodeTests.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/parenthesizerRules.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/utilitiesPublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/hostErrors.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/performance.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/performanceCore.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2016.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2019.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2021.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/tsbuild.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/types.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/tsc/_namespaces/ts.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/tsc/tsc.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
     }
   }
 }
