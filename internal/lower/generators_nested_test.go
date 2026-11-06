@@ -164,6 +164,19 @@ func TestNestedGeneratorRoadsAreNotYet(t *testing.T) {
 		{"a destructuring target", write("[count] = [2];"), written},
 		{"a logical assignment", host("let seen = false;\nfunction* flagged(): Generator<boolean, undefined, undefined> { seen ||= true; yield seen; }\nfor (const value of flagged()) console.log(String(value));"), "where 'seen', a captured local, is written inside a nested generator"},
 		{"a write by an arrow made inside the generator", write("const bump = (): void => { count++; }; bump();"), written},
+		// A prefix update's value is a helper lowering makes, with no declaration of its own, so the
+		// count reaches it by the MakeClosure a function inside makes it with. Mutant: that edge
+		// dropped, and this row lowers.
+		{"a prefix update's helper", host("let n = 0;\nfunction* counted(): Generator<number, undefined, undefined> { yield ++n; }\nfor (const value of counted()) console.log(String(value));"), "where 'n', a captured local, is written inside a nested generator"},
+		// An object literal's getter is a function of its own, declared within the generator, so the
+		// count reaches it by containment (Compiler's rule). Mutant: containment reduced to the
+		// generator's own body, and this row lowers.
+		{"an object literal's getter in the body", host("let n = 0;\nfunction* counted(): Generator<number, undefined, undefined> { const o = { get x(): number { n++; return n; } }; yield o.x; }\nfor (const value of counted()) console.log(String(value));"), "where 'n', a captured local, is written inside a nested generator"},
+		// A named function declared in the body stops first as a nested declaration in a generator
+		// (checkGeneratorBody's NestedFrame clause). Mutant: that clause dropped; the row then stops at
+		// the write count instead, which reaches bump by containment, and reads that stop's words.
+		{"a named function in the body writing a captured local", host("let n = 0;\nfunction* counted(): Generator<number, undefined, undefined> { function bump(): void { n++; } bump(); yield n; }\nfor (const value of counted()) console.log(String(value));"), "declaring a nested function"},
+		{"a class in the body whose method writes a captured local", host("let n = 0;\nfunction* counted(): Generator<number, undefined, undefined> { class Counter { bump(): number { n++; return n; } } yield new Counter().bump(); }\nfor (const value of counted()) console.log(String(value));"), "a class inside a function"},
 		{"a nested generic generator", host("function* inner<U>(seed: U): Generator<U, undefined, undefined> { yield seed; }\nfor (const value of inner(1)) console.log(String(value));"), "declared generic inside a function"},
 		{"inside a generic function", "function host<T>(seed: T): T {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nfor (const value of inner()) console.log(String(value));\nreturn seed;\n}\nconsole.log(host('s'));\n", "declared inside a generic function or class"},
 		{"inside an async function", "async function host(): Promise<void> {\nfunction* inner(): Generator<number, undefined, undefined> { yield 1; }\nfor (const value of inner()) console.log(String(value));\n}\nawait host();\n", "declared inside an async function or a generator"},

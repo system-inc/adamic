@@ -155,7 +155,12 @@ machine over a counted heap frame"), with how each is kept.
    and view fixture: no captured or environment local is a Generator, and no parameter one is handed
    into is captured. Owed at S2c-4, when generators become values, beside q5 on #qk8rztp (reachLinks
    linking a generator type to its frame's cells): reachLinks must also link a generator to its
-   carrier's cells, the edge `self` makes, before that guard can be relaxed.
+   carrier's cells, the edge `self` makes, before that guard can be relaxed. The same day,
+   region.go's environment proof must count every way a generator can outlive its call as keeping
+   its carrier. Today a nested generator's carrier is safe because every consumer finishes with the
+   frame before the parent returns, so the parent's cells never outlive what reads them, whatever
+   placement the proof gives them; once a generator can be held past its call, both edges come due
+   together.
 
 A cell that holds a reference owns its value or holds `NULL`, never a stale pointer, so finishing the
 frame and dropping it are each one walk over the counted cells, whatever the state. A dropped
