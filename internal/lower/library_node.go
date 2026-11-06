@@ -20,6 +20,10 @@ func RegisterNodeLibraryMembers(names ...string) {
 }
 
 func (l *lowering) nodeLibraryMember(node *ast.Node) string {
+	return nodeLibraryName(l.nodeLibrarySymbol(node))
+}
+
+func (l *lowering) nodeLibrarySymbol(node *ast.Node) *ast.Symbol {
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindCallExpression {
 		node = ast.SkipParentheses(node.AsCallExpression().Expression)
@@ -27,7 +31,7 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 	if node.Kind == ast.KindNewExpression {
 		node = ast.SkipParentheses(node.AsNewExpression().Expression)
 	}
-	return nodeLibraryName(l.symbol(node))
+	return l.symbol(node)
 }
 
 // nodeLibraryName is the name a Node library declaration is registered by: its module, the classes
@@ -75,7 +79,7 @@ func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member 
 	if proven == nil || proven.Symbol() == nil || nodeLibraryName(proven.Symbol()) == "" {
 		return nil, false
 	}
-	return func(member *ast.Symbol) bool { return implementedNodeMembers[nodeLibraryName(member)] }, true
+	return nodeLibraryMemberImplemented, true
 }
 
 // nodeHostViewDepth bounds how far nodeHostViewReach follows a view into its members' types, and
@@ -401,7 +405,7 @@ func (l *lowering) nodeHostCallbackArgument(node *ast.Node) error {
 		outer = outer.Parent
 	}
 	parent := outer.Parent
-	if parent == nil || parent.Kind != ast.KindCallExpression && parent.Kind != ast.KindNewExpression || !implementedNodeMembers[l.nodeLibraryMember(parent)] {
+	if parent == nil || parent.Kind != ast.KindCallExpression && parent.Kind != ast.KindNewExpression || !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(parent)) {
 		return nil
 	}
 	for position, argument := range parent.Arguments() {
@@ -520,7 +524,7 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 		return err
 	}
 	name := l.nodeLibraryMember(node)
-	if name != "" && !implementedNodeMembers[name] {
+	if name != "" && !nodeLibraryMemberImplemented(l.nodeLibrarySymbol(node)) {
 		return l.notYet(node, name)
 	}
 	return nil

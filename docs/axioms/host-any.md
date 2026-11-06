@@ -25,6 +25,13 @@ The registered set at `dc8a6497` is 99 names (the console registry's three plus 
 
 **Value-carrying `any`s inside a registered or bound member: none.** So this audit has no Modelled entries yet, and the relation walk's host list is empty.
 
+The Profile data slice (#cn4yapb, November 6, 2026) additionally registers
+Profiler.Profile.nodes, Profiler.ProfileNode.callFrame and Runtime.CallFrame.url
+as ordinary structural fields. Their declared types carry no reachable host any.
+The flat registry names have declaration namespace constraints: Runtime's url
+registration does not admit Debugger.CallFrame.url, directly or through a view.
+The audit follows the same constraints. Session and its methods remain unbound.
+
 ## Corrected
 
 None for `any`. Host corrections that only add truth live in internal/load/host_axioms.json (Lower's loader table, landed 851bb41a), served in place of the published line. Its rows today correct `boolean` and `number` members that are absent off a terminal (tty's isTTY, isRaw, columns, rows and four methods, #jk7tph7). A future `any` correction goes there, counted on tsc first, with a row naming its ruling and Node's measured value.

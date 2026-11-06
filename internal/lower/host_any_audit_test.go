@@ -99,7 +99,7 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 						// Examine every merged declaration, using the production naming rule.
 						one := &ast.Symbol{Name: symbol.Name, Declarations: []*ast.Node{declaration}}
 						member := nodeLibraryName(one)
-						if a.members[member] {
+						if a.admitted(one) {
 							add(member, symbol, declaration)
 						}
 					}
@@ -273,8 +273,7 @@ func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
 			properties := slices.Clone(a.checker.GetPropertiesOfType(typ))
 			sort.Slice(properties, func(i, j int) bool { return properties[i].Name < properties[j].Name })
 			for _, property := range properties {
-				member := nodeLibraryName(property)
-				if !a.members[member] {
+				if !a.admitted(property) {
 					continue
 				} // Gated by rule 800 and host-object coverage.
 				for _, declaration := range property.Declarations {
@@ -290,4 +289,11 @@ func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
 		t.Errorf("%s: value-carrying any at %s (%s)", finding.Root, finding.Path, finding.Where)
 	}
 	t.Logf("audited %d registered/bound names; %d types; %d type/polarity states; %d reachable host anys", len(names), len(a.types), a.states, len(a.findings))
+}
+
+// Bound stdout reads remain audit roots; registered hops use the production
+// declaration check, including namespace-scoped structural members.
+func (a *hostAnyAudit) admitted(symbol *ast.Symbol) bool {
+	name := nodeLibraryName(symbol)
+	return a.members[name] && (!implementedNodeMembers[name] || nodeLibraryMemberImplemented(symbol))
 }
