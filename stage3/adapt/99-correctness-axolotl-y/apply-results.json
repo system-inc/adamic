@@ -1,0 +1,12 @@
+{
+  "before": {
+    "command": "stage3/apply.sh --build-product /workspace/y-before",
+    "exit": 0
+  },
+  "after": {
+    "command": "stage3/apply.sh --build-product /workspace/y-after",
+    "exit": 0
+  },
+  "source": "/workspace/typescript-source",
+  "base": "322f80565edaa978d928ca559803c578ed67c105"
+}
