@@ -38,7 +38,8 @@ The lower rows are internal/lower/iterable_hand_next_test.go's; run by s2c2a-pro
 Run by s2c2b's h3-proof.sh. The lower rows are internal/lower/iterable_hand_next_test.go's, and the
 oracle's are this directory's hand_next_generator.a, hand_next_generator_throw.a, hand_next_mixed.a
 and hand_next_maybe_string.a. The closed defaults' rows are in internal/ir, internal/worker and
-internal/native, and the await's witness is internal/oracle/testdata/reuse_await.
+internal/native, the await's witness is internal/oracle/testdata/reuse_await, and the spread's is
+internal/oracle/testdata/reuse_spread.
 
 | Mutant | Edit | Red |
 |---|---|---|
@@ -55,5 +56,8 @@ internal/native, and the await's witness is internal/oracle/testdata/reuse_await
 | Purity's step not followed | the GeneratorNext arm's `if err := inspect(node.Function); err != nil {` made `if err := error(nil); err != nil {` | TestCheckPureInspectsAGeneratorStepsBody |
 | Reuse's default opened | native/reuse.go, `reachesGlobal`: `return !ir.Inert(expression)` made `return false && ...` | TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal |
 | Reuse's await reaching nothing, main's behavior (Memory's question 1) | native/reuse.go, `reachesGlobal`: `ir.Await` added to the case of an encoding and the host operations, which reach nothing | TestReuseAwaitAgreesWithNode, reuse_await/global_across_await.a, sanitized: swap's write frees a1 while grow's suspended concatenation holds it unretained, and ASan reports heap-use-after-free when it resumes. If the scheduler runs swap only after grow resumes, the row stays green and the awaits want reordering until swap's write lands inside grow's suspension |
+| A spread plain inert again, its getters never recorded (Memory's and Compiler's spread ruling) | lower/class_accessors.go, `finishAccessors`: `expression.SpreadGetters = l.spreadGetters(...)` made `expression.SpreadGetters = nil` | TestReuseSpreadAgreesWithNode, reuse_spread/getter_writes_global.a, sanitized: describe is lent tree, and source's getter replaces tree during the spread, so describe reads the freed tree, heap-use-after-free, if the native emitter lends that argument. If the run shows it SURVIVED, the lend isn't made there and only the next three rows' tests hold the case; a second run of the same edit, TestSpreadRecordsTheGettersItMayRun (internal/lower), goes red on its three getter rows either way |
+| Reuse's spread case dropped | native/reuse.go, `reachesGlobal`'s ObjectLiteral arm: `if touches(program, getter, global, seen) {` made `if false && ...` | Only a unit test: TestReuseTakesASpreadsGettersAsWhatItRuns, on built IR |
+| Purity's spread case dropped | worker/purity.go's ObjectLiteral arm: `if err := inspect(getter); err != nil {` made `if err := error(nil); getter < 0 && err != nil {` | Only a unit test: TestCheckPureInspectsASpreadsGetters, on built IR |
 | Reuse's step not followed | the GeneratorNext arm's `return touches(...)` made `return false` | TestReuseFollowsAGeneratorStepIntoItsBody |
 | A switch's IteratorNext case dropped | flow/infer.go, `callsBack`: `case ir.GeneratorNext, ir.IteratorNext:` made `case ir.GeneratorNext:` | TestEverySwitchOverGeneratorNextNamesIteratorNext (internal/ir), naming infer.go's line |
