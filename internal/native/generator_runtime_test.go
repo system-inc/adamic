@@ -157,6 +157,24 @@ func TestGeneratorRuntimeDropError(t *testing.T) {
 	generatorRuntimeGuard(t, "drop_error", "1\n", "if (generator->error != NULL) { drop(generator->error); }", "(void)0;", "heap values leaked")
 }
 
+// A nested generator's carrier, the closure its entry retains into self (Memory's ruling on #qk8rztp
+// S3a): finish lets go of it and leaves self `NULL`, so a done generator stops pinning its parent's
+// cells, and the harness asserts it `NULL` after the last step. Mutant: finish forgets self's release,
+// and the count leaks the closure at completion. (A finish that skips self whole, leaving it set, is
+// the assert's: the drop walk would let go of it when the done frame goes, so only the parent's cells
+// held for as long as a done frame lives would show it.)
+func TestGeneratorRuntimeFinishSelf(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "self_finish", "1\n3\n2\n", "generator->self = NULL;\n        adamic_release(self);", "generator->self = NULL;\n        (void)self;", "heap values leaked")
+}
+
+// The drop walk lets go of the carrier at every state: a nested generator dropped before its first
+// step releases it with its parameters. Mutant: the walk skips self, and the count leaks.
+func TestGeneratorRuntimeDropSelf(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "self_drop_start", "", "if (generator->self != NULL) { drop(generator->self); }", "(void)0;", "heap values leaked")
+}
+
 // runningPanics is what each mode that calls into a running generator must panic with: the
 // compiler-bug stop names the generator and the verb it was called with.
 var runningPanics = map[string]string{

@@ -15,6 +15,7 @@ adamic_generator *adamic_generator_new(size_t count, const adamic_generator_code
     generator->state = 0;
     generator->status = adamic_generator_status_start;
     generator->error = NULL;
+    generator->self = NULL;
     generator->count = count;
     /* Every cell starts empty and owned by the frame; the initializer writes each one whole. */
     adamic_environment_initialize_cells(&generator->heap, generator->cells, count);
@@ -72,6 +73,12 @@ void adamic_generator_finish(adamic_generator *generator) {
         generator->error = NULL;
         adamic_release(error);
     }
+    /* A done generator stops pinning its parent's cells (Memory, on #qk8rztp S3a). */
+    if (generator->self != NULL) {
+        adamic_closure *self = generator->self;
+        generator->self = NULL;
+        adamic_release(self);
+    }
     generator->status = adamic_generator_status_done;
 }
 
@@ -108,6 +115,7 @@ void adamic_generator_free_children(void *value, void (*drop)(void *)) {
         }
     }
     if (generator->error != NULL) { drop(generator->error); }
+    if (generator->self != NULL) { drop(generator->self); }
 }
 #else
 /* C11 forbids an empty translation unit under -pedantic. */
