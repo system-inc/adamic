@@ -90,7 +90,10 @@ func (functions DynamicKeyedFunctions) Names() []string {
 // are these, never Object.prototype's. TestDynamicKeyedArrayPrototypeNamesAreNodes and
 // TestDynamicKeyedArrayPrototypeLengthsAreNodes hold this table to the pinned Node's both ways, so a
 // name Node adds goes red rather than reading undefined, and a length that drifts goes red rather than
-// reading wrong.
+// reading wrong. A length is read by a static read of the function the key read handed out
+// (array_methods.a), never by a run-time key yet: propertyOf(method, 'length') stops in the Function
+// form on both backends (stop_function_length.a), and the head that lifts that stop pins it printing
+// Node's numbers.
 var DynamicKeyedArrayPrototypeNames = DynamicKeyedFunctions{
 	{"constructor", 1}, {"at", 1}, {"concat", 1}, {"copyWithin", 2}, {"fill", 1}, {"find", 1},
 	{"findIndex", 1}, {"findLast", 1}, {"findLastIndex", 1}, {"lastIndexOf", 1}, {"pop", 0}, {"push", 1},
@@ -110,7 +113,10 @@ var DynamicKeyedArrayPrototypeNames = DynamicKeyedFunctions{
 // backend Node's own, natively one immortal closure for each name with this length (union.c, from
 // dynamic_keyed_names.h), whose call stops loudly. TestDynamicKeyedRegExpStringIteratorNamesAreNodes
 // and TestDynamicKeyedRegExpStringIteratorLengthsAreNodes hold this table to the pinned Node's both
-// ways.
+// ways. A length is read by a static read of the function the key read handed out
+// (matchall_reads.a), never by a run-time key yet: propertyOf(next, 'length') stops in the Function
+// form on both backends (stop_function_length_iterator.a), and the head that lifts that stop pins it
+// printing Node's numbers.
 var DynamicKeyedRegExpStringIteratorNames = DynamicKeyedFunctions{
 	{"next", 0}, {"constructor", 0}, {"reduce", 1}, {"toArray", 0}, {"forEach", 1}, {"some", 1},
 	{"every", 1}, {"find", 1}, {"map", 1}, {"filter", 1}, {"take", 1}, {"drop", 1}, {"flatMap", 1},
