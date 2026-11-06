@@ -1,0 +1,109 @@
+{
+  "sourceFiles": 746,
+  "changedFiles": 2,
+  "declarations": 0,
+  "rewrites": 6,
+  "importsRemoved": 1,
+  "prefix": false,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "file": "src/compiler/checker.ts",
+      "prefixPinsEnforced": false,
+      "pins": [
+        {
+          "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+          "beforeOwner": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+          "afterOwner": "48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3",
+          "beforeLiteral": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+          "afterLiteral": "e6296e4abe989f7b1bc58190c706712874bf38a8ad6ac4ef99b1cdf765d1b8b0"
+        }
+      ],
+      "crlf": {
+        "before": 54451,
+        "after": 54451
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": false,
+          "beforeSha256": "e370fff9275af1ef70422afae7e225f23717b1e1a5260284c0e28dcf0438270f",
+          "afterSha256": "2c58e2f8810b471335ba88a6c76e683c8a546a83c5457d76198649be510204a9"
+        },
+        {
+          "removeComments": true,
+          "identical": false,
+          "beforeSha256": "cc91b37d937720e87b3d36bc60a7b82f660fa90ef0d9752cb4e653766dc5eb6e",
+          "afterSha256": "d16f4190cabd25c76e6fced4aab23e0917979ccdb71ad03ad0f313fa8de5abc0"
+        }
+      ],
+      "beforeSha256": "079a8ba1247751782f63415a574eac72bd5b94864befaa7d465946dbde948891",
+      "afterSha256": "83a7f4bbdb0a7f99c34431ab46ecc6a326a509da471de85c958443188c93d12c"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "prefixPinsEnforced": false,
+      "pins": [
+        {
+          "owner": "createProgram",
+          "beforeOwner": "729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854",
+          "afterOwner": "8df9d52d356dc89a7319c90ecf9730c9e8b6b1341ecba219bd5d1b34eb871960",
+          "beforeLiteral": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+          "afterLiteral": "47d233b0f6b9605ec52b6a93def264b233c3b4027e0c1a95fe26c4e43fd64d0d"
+        },
+        {
+          "owner": "getEmitHost",
+          "beforeOwner": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+          "afterOwner": "ceb37bbd2d3ed71bb13937e7c63431c93d2bb8f6f82da763dd02d19f06d5bce1",
+          "beforeLiteral": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+          "afterLiteral": "d9e618b38d50793233d42f175e40cfffe0f997959e6016ae7161b098367aa5fb"
+        }
+      ],
+      "crlf": {
+        "before": 5202,
+        "after": 5202
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": false,
+          "beforeSha256": "0f807f122643fd8bf06e1db8787c47a26b97b9a9088a88165934ebd134daca7e",
+          "afterSha256": "f6c3b8135a3fd9affdfa267e7c53c909c78c3c76d0cc214d6909c7bb1ba20c31"
+        },
+        {
+          "removeComments": true,
+          "identical": false,
+          "beforeSha256": "cbe318bc7a20b68f86619e37a66613c25592e275baa38c71d305a867c1f254a8",
+          "afterSha256": "3f0233c6ae4e46140708fb29be1a9d21702654881813185494c092f812e7ae29"
+        }
+      ],
+      "beforeSha256": "2c7047197c8eb011a3e1201b20c88f5164806471e513b4415d877b8855afee67",
+      "afterSha256": "26f02eaa1191b9d913537689078530fe816c92c59d3dc18512da6bd126061d7b"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "prefixPinsEnforced": false,
+      "pins": [],
+      "crlf": {
+        "before": 10681,
+        "after": 10681
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": true,
+          "beforeSha256": "d59f6c60111e7ff43e20d24fe7db2f0616a0b0887441f8be655fcb180e3519d3",
+          "afterSha256": "d59f6c60111e7ff43e20d24fe7db2f0616a0b0887441f8be655fcb180e3519d3"
+        },
+        {
+          "removeComments": true,
+          "identical": true,
+          "beforeSha256": "0bd4087d429d65e923f84b508ecae63029ee2fc18cdcb11b2c1fd2eb28820058",
+          "afterSha256": "0bd4087d429d65e923f84b508ecae63029ee2fc18cdcb11b2c1fd2eb28820058"
+        }
+      ],
+      "beforeSha256": "1dc52221c695d3c0beeb9ad926f580fc203eab3b1e68f9871ff3552ec5965146",
+      "afterSha256": "1dc52221c695d3c0beeb9ad926f580fc203eab3b1e68f9871ff3552ec5965146"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "status": "pass",
+  "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+  "frozenCommit": "a35f12a5410ab79d759daed08daf8f1cac0c2183",
+  "preparationSeconds": 284.032,
+  "wholeLaneSeconds": 277.498,
+  "pieces": [
+    {
+      "piece": 1,
+      "start": 0,
+      "end": 40,
+      "units": 40,
+      "seconds": 530.833267433,
+      "commit": "3361b2b87ddcc63640f61bf5303679798932e18c",
+      "status": "pass",
+      "archiveSha256": "d6623107e2083b1645a6cdcfca4babb730c4d92693b271cd4ebbca06cfca7b3b"
+    },
+    {
+      "piece": 2,
+      "start": 40,
+      "end": 80,
+      "units": 40,
+      "seconds": 524.6388042060003,
+      "commit": "f28b5bc02e6b8d91fed88098520637ba238a4ec6",
+      "status": "pass",
+      "archiveSha256": "a6b7df380f962e32d10a0cf03961f1d7cffaf64f005fca6735ae5ca32407f397"
+    },
+    {
+      "piece": 3,
+      "start": 80,
+      "end": 120,
+      "units": 40,
+      "seconds": 527.2483397790002,
+      "commit": "66b405d5f0a89c3e57d48f7f8086291305d57cf3",
+      "status": "pass",
+      "archiveSha256": "3f67ec362d34a71f3935a3112d6b7f1fe95a27733002c2f36c61724aea54595a"
+    },
+    {
+      "piece": 4,
+      "start": 120,
+      "end": 160,
+      "units": 40,
+      "seconds": 529.9108926869999,
+      "commit": "15f8a0a4af4786bdf05d4a40dd70b8cbeaeacdb4",
+      "status": "pass",
+      "archiveSha256": "6bf0db9acbf96b7093a33b3550b89176d264d81904f8604403bd7c531b42709e"
+    },
+    {
+      "piece": 5,
+      "start": 160,
+      "end": 200,
+      "units": 40,
+      "seconds": 530.3765945820005,
+      "commit": "54ab12a17b135fd805f8e6f65fcd63865a006c44",
+      "status": "pass",
+      "archiveSha256": "a02294d3d9ae62c6680fa00b8e1016e7ebf11aee5dd909cb9c04fcc60c90702a"
+    },
+    {
+      "piece": 6,
+      "start": 200,
+      "end": 240,
+      "units": 40,
+      "seconds": 530.9870382429999,
+      "commit": "8a9ba05d7b7de3157d76dab859797a0d3fd429f7",
+      "status": "pass",
+      "archiveSha256": "d0fdc7dd9e0558c31cabff8181023be6cca4b4fa96a9d624d7b94c28782db40b"
+    },
+    {
+      "piece": 7,
+      "start": 240,
+      "end": 280,
+      "units": 40,
+      "seconds": 524.0103343640003,
+      "commit": "cdb07d7fd044c1259b7425229c4ba78b72df00c1",
+      "status": "pass",
+      "archiveSha256": "306e0634272e0ebb8f8a10aebab143f39d6729c4e578627b4fbccd4a205e0ef7"
+    },
+    {
+      "piece": 8,
+      "start": 280,
+      "end": 320,
+      "units": 40,
+      "seconds": 524.2146905099999,
+      "commit": "6ddb4e8fa60c7e60765f26d0bd470eec43b6e8d0",
+      "status": "pass",
+      "archiveSha256": "e53d07e5727cf65f0bf6a1f0dd6d1bb9b0499684067836be08d2db7f20dd573b"
+    },
+    {
+      "piece": 9,
+      "start": 320,
+      "end": 360,
+      "units": 40,
+      "seconds": 518.6113084849994,
+      "commit": "6eb99bc7a9d8e5bf4491766092bad466b58d90b6",
+      "status": "pass",
+      "archiveSha256": "843934efd414cac14494bb679fb682590dd5e48858eacb9b71f2360735d0ddb5"
+    },
+    {
+      "piece": 10,
+      "start": 360,
+      "end": 398,
+      "units": 38,
+      "seconds": 506.33383506599966,
+      "commit": "f076917cd00e08f52fadca41077821936f63cc7a",
+      "status": "pass",
+      "archiveSha256": "aa61d14f6ff0a9438db98b1500f6d58c81318bfa048481b787aff466e743bb20"
+    }
+  ],
+  "allPiecesUnder25Minutes": true,
+  "maximumPieceSeconds": 530.9870382429999,
+  "maximumShardSeconds": 16.957657463000032,
+  "maximumCommandSeconds": 17.034757714999614,
+  "merge": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "whole_counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "units": 398,
+    "tests": 106367,
+    "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "whole_verdict": "pass"
+  },
+  "mergeCommandTimeoutSeconds": 1440,
+  "mergeExit": 0
+}

@@ -1,0 +1,131 @@
+{
+  "status": "pass",
+  "scope": "six owned sites and checker-only import cleanup",
+  "artifact": "972f66fa46df8a2e07b1905b3c832309134d1620a5f2d451dae2232978bb038c",
+  "frozenCommit": "61526db0b0ebee0f30abc42089e79f05a02c9575",
+  "preparationSeconds": 286.585,
+  "wholeLaneSeconds": 284.232,
+  "pieces": [
+    {
+      "piece": 1,
+      "start": 0,
+      "end": 40,
+      "units": 40,
+      "seconds": 529.2662344169985,
+      "commit": "9eb48e8b5a7eb3460ab27d60e743444ff9f13d23",
+      "status": "pass"
+    },
+    {
+      "piece": 2,
+      "start": 40,
+      "end": 80,
+      "units": 40,
+      "seconds": 524.6554822319995,
+      "commit": "0563e70979d5728341dad5d28a1b1d5ef467e26f",
+      "status": "pass"
+    },
+    {
+      "piece": 3,
+      "start": 80,
+      "end": 120,
+      "units": 40,
+      "seconds": 530.5169982669995,
+      "commit": "4512459a682471e9d610745446f3d5cc56834884",
+      "status": "pass"
+    },
+    {
+      "piece": 4,
+      "start": 120,
+      "end": 160,
+      "units": 40,
+      "seconds": 533.8132891860005,
+      "commit": "3576c376b135fe1173d18875b90923fff1ba3fcf",
+      "status": "pass"
+    },
+    {
+      "piece": 5,
+      "start": 160,
+      "end": 200,
+      "units": 40,
+      "seconds": 527.6441139950002,
+      "commit": "54540ab79821d2add50b6ec3411b30682c7daa91",
+      "status": "pass"
+    },
+    {
+      "piece": 6,
+      "start": 200,
+      "end": 240,
+      "units": 40,
+      "seconds": 529.6050808220007,
+      "commit": "5ffb4c0a92b9bcbdadcd3661387417e37f50f85d",
+      "status": "pass"
+    },
+    {
+      "piece": 7,
+      "start": 240,
+      "end": 280,
+      "units": 40,
+      "seconds": 527.4326893109992,
+      "commit": "d0aac133a247310dcf1f2019500ec072d71d4ae8",
+      "status": "pass"
+    },
+    {
+      "piece": 8,
+      "start": 280,
+      "end": 320,
+      "units": 40,
+      "seconds": 526.4198632379994,
+      "commit": "e502d708f58487349d766562d642035f8c427d7b",
+      "status": "pass"
+    },
+    {
+      "piece": 9,
+      "start": 320,
+      "end": 360,
+      "units": 40,
+      "seconds": 521.3471405550008,
+      "commit": "78c9542128e79199f7c4b52c17955d23ad1354c9",
+      "status": "pass"
+    },
+    {
+      "piece": 10,
+      "start": 360,
+      "end": 398,
+      "units": 38,
+      "seconds": 508.46078621000015,
+      "commit": "a4e2e50e5e9e1d85a3e48d6f67c2db0669e8b900",
+      "status": "pass"
+    }
+  ],
+  "allPiecesUnder25Minutes": true,
+  "maximumPieceSeconds": 533.8132891860005,
+  "maximumShardSeconds": 16.537166279998928,
+  "maximumCommandSeconds": 16.59413047199996,
+  "merge": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "whole_counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "units": 398,
+    "tests": 106367,
+    "artifact": "972f66fa46df8a2e07b1905b3c832309134d1620a5f2d451dae2232978bb038c",
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "whole_verdict": "pass"
+  },
+  "mergeSeconds": 4.973531678999279,
+  "rawShardsArchive": "shards.tar.gz",
+  "rawShardsSha256List": "shards.sha256"
+}

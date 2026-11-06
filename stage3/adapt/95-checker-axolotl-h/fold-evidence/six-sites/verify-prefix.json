@@ -1,0 +1,109 @@
+{
+  "sourceFiles": 746,
+  "changedFiles": 3,
+  "declarations": 4,
+  "rewrites": 6,
+  "importsRemoved": 1,
+  "prefix": true,
+  "javascriptChanging": true,
+  "evidence": [
+    {
+      "file": "src/compiler/checker.ts",
+      "prefixPinsEnforced": true,
+      "pins": [
+        {
+          "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+          "beforeOwner": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+          "afterOwner": "48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3",
+          "beforeLiteral": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+          "afterLiteral": "e6296e4abe989f7b1bc58190c706712874bf38a8ad6ac4ef99b1cdf765d1b8b0"
+        }
+      ],
+      "crlf": {
+        "before": 54445,
+        "after": 54445
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": false,
+          "beforeSha256": "82caa8e269e5c8c6b655bc3486ee4c6e1aa4c050da101e12166187f96e258d8d",
+          "afterSha256": "e55c902b9b300180cf98192d6809a55e991fdbbcc1d51c248ded48f231c2b19e"
+        },
+        {
+          "removeComments": true,
+          "identical": false,
+          "beforeSha256": "5dce2cd7e319fa5d44f04751f5ad14d97ea28832c2a145b396f0bed836c48ee5",
+          "afterSha256": "2f577855a545aa3840a8703a563e046abbdebb27b7113299883268c3371b477a"
+        }
+      ],
+      "beforeSha256": "213d3a7a2efe1332bfd4ec580434a77db36f227d75d31f685896940e59d73369",
+      "afterSha256": "0a1605a6e5baf4e51d3d9cb8d2bb55923ef39d6a53941d7aa81e6e403cd08cc2"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "prefixPinsEnforced": true,
+      "pins": [
+        {
+          "owner": "createProgram",
+          "beforeOwner": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+          "afterOwner": "904e66026ef3720eb2ba4f0f6915e20043289c25d4500798ff5ec03a1762e76d",
+          "beforeLiteral": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+          "afterLiteral": "47d233b0f6b9605ec52b6a93def264b233c3b4027e0c1a95fe26c4e43fd64d0d"
+        },
+        {
+          "owner": "getEmitHost",
+          "beforeOwner": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+          "afterOwner": "ceb37bbd2d3ed71bb13937e7c63431c93d2bb8f6f82da763dd02d19f06d5bce1",
+          "beforeLiteral": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+          "afterLiteral": "d9e618b38d50793233d42f175e40cfffe0f997959e6016ae7161b098367aa5fb"
+        }
+      ],
+      "crlf": {
+        "before": 5201,
+        "after": 5201
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": false,
+          "beforeSha256": "bdb9ef4ae1b48e312a69ca8ab22bb300b6d4561fe1b1f22af0b91287c644b1b4",
+          "afterSha256": "05cec728ad9fefdae63ba77d07930128dd64da40f6c0f306f9a252312173f802"
+        },
+        {
+          "removeComments": true,
+          "identical": false,
+          "beforeSha256": "84b071c66e655bc9cc4dcf822e737e85b21f93b393a8c6df5457d97f00a02aba",
+          "afterSha256": "dc5c5f7d06dcf7ac5bbf14ea05b98af2abe611707b9a4df34803414d8bc25e98"
+        }
+      ],
+      "beforeSha256": "be45803f3842bb2e14720aedda5cd3477e63050ba0a6d1d7e9b3fe28e0a603df",
+      "afterSha256": "7bcdbb52014deef8666a7edfaa005e043a2ebe48c38bdcbfdbddba5b9e2b7567"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "prefixPinsEnforced": true,
+      "pins": [],
+      "crlf": {
+        "before": 10681,
+        "after": 10681
+      },
+      "javascript": [
+        {
+          "removeComments": false,
+          "identical": true,
+          "beforeSha256": "d59f6c60111e7ff43e20d24fe7db2f0616a0b0887441f8be655fcb180e3519d3",
+          "afterSha256": "d59f6c60111e7ff43e20d24fe7db2f0616a0b0887441f8be655fcb180e3519d3"
+        },
+        {
+          "removeComments": true,
+          "identical": true,
+          "beforeSha256": "0bd4087d429d65e923f84b508ecae63029ee2fc18cdcb11b2c1fd2eb28820058",
+          "afterSha256": "0bd4087d429d65e923f84b508ecae63029ee2fc18cdcb11b2c1fd2eb28820058"
+        }
+      ],
+      "beforeSha256": "90f36116a519f8be3927ff5a2accad233a86155894c9297e9074bc0d2a801979",
+      "afterSha256": "cfe07a1c225fe39b67a747d2809873f3f9678424970f317e5c2daade1dbac9e6"
+    }
+  ]
+}
