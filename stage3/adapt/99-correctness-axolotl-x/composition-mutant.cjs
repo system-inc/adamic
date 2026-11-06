@@ -25,7 +25,12 @@ try{
  assert.equal(text.split(following).length,2);fs.writeFileSync(f,text.replace(following,pin.before+following));
  refused('unused retained import','builder.ts: half-adapted import: 0 core maybeBind calls');
  reset();for(const site of inventory.left)replace(site);
- // 99x must not inspect replacement bodies. This harmless foreign-owner edit stays opaque.
+ // 99x must not inspect replacement bodies, including other core helper call shapes.
+ const opaqueFile=path.join(scratch,'src/compiler/checker.ts');
+ let opaqueText=fs.readFileSync(opaqueFile,'utf8');
+ const opaqueSite=inventory.left.find(s=>s.file==='checker.ts');
+ opaqueText=opaqueText.replace(opaqueSite.after,'maybeBind(host, undefined)');
+ fs.writeFileSync(opaqueFile,opaqueText);
  const checker=path.join(scratch,'src/compiler/checker.ts');fs.appendFileSync(checker,'\n// foreign owner contract\n');
  const checkerBefore=fs.readFileSync(checker),result=adapt(scratch);assert.equal(result.rewrites,28);assert.equal(result.left,0);
  assert.deepEqual(fs.readFileSync(checker),checkerBefore);

@@ -2,6 +2,12 @@
 const e = require('./engine.cjs');
 const {fs,path,assert,ts} = e;
 const targetKeys=new Set(require('./inventory.json').sites.map(s=>JSON.stringify([s.owner,s.after.match(/\.([A-Za-z0-9_]+)\?\.bind/)[1]])));
+let normalizeAfter;
+function configure(sites,normalize) {
+    targetKeys.clear();
+    for(const s of sites) targetKeys.add(JSON.stringify([s.owner,s.after.match(/\.([A-Za-z0-9_]+)\?\.bind/)[1]]));
+    normalizeAfter=normalize;
+}
 const wanted=s=>targetKeys.has(JSON.stringify([s.owner,s.member]));
 function unwrap(n) { while (ts.isParenthesizedExpression(n)) n=n.expression; return n; }
 function inspect(file,text,side) {
@@ -97,7 +103,8 @@ function compare(beforeTree,afterTree,out) {
     for(const name of names) {
         const before=fs.readFileSync(path.join(b,name),'utf8'),after=fs.readFileSync(path.join(a,name),'utf8');
         if(before===after){rows.push({file:name,byteIdentical:true,pass:true});continue;}
-        const bi=inspect(path.join(b,name),before,'before'),ai=inspect(path.join(a,name),after,'after');
+        const normalizedAfter=normalizeAfter?normalizeAfter(name,before,after):after;
+        const bi=inspect(path.join(b,name),before,'before'),ai=inspect(path.join(a,name),normalizedAfter,'after');
         const original=ai.sites.filter(s=>s.form==='original');
         for(const site of original)unexpected.set(JSON.stringify([site.owner,site.receiver,site.member]),site);
         const strip=sites=>sites.map(({owner,receiver,member})=>JSON.stringify([owner,receiver,member])).sort();
@@ -113,7 +120,7 @@ function compare(beforeTree,afterTree,out) {
     fs.writeFileSync(path.join(out,'comparison.json'),JSON.stringify(result,null,2)+'\n');
     return result;
 }
-module.exports={compare,inspect};
+module.exports={compare,inspect,configure};
 if(require.main===module) {
     assert.equal(process.argv.length,5,'usage: node compare.cjs BEFORE AFTER OUTPUT');
     const result=compare(...process.argv.slice(2).map(p=>path.resolve(p)));

@@ -39,10 +39,12 @@ function adapt(tree) {
     const adapted = inspect(texts,[...scanned.sites,...scanned.refused]);
     const ownership = require('./ownership.json');
     const handed = site => ownership.some(row=>row.file===site.file&&(row.owner===site.owner||site.owner.startsWith(row.owner+'.')));
-    const left = scanned.sites.filter(handed);
-    const owned = scanned.sites.filter(site=>!handed(site));
-    assert.deepEqual(scanned.refused, inventory.refused, 'unexpected refused core maybeBind call');
     const signature = site => JSON.stringify([site.file,site.owner,site.before,site.after]);
+    const handedSignatures = new Set(inventory.left.map(signature));
+    const left = scanned.sites.filter(site => handed(site) && handedSignatures.has(signature(site)));
+    const owned = scanned.sites.filter(site=>!handed(site));
+    const refused = scanned.refused.filter(site => !handed(site));
+    assert.deepEqual(refused, inventory.refused, 'unexpected refused core maybeBind call');
     const under = (site,row) => site.file === row.file && (site.owner === row.owner || site.owner.startsWith(row.owner+'.'));
     for (const row of ownership) {
         const present = left.filter(site => under(site,row));
@@ -51,7 +53,7 @@ function adapt(tree) {
         if (present.length) assert.deepEqual(present.map(signature).sort(),expected.map(signature).sort(),`handed-off owner half folded or inventory drift: ${row.file}:${row.owner}`);
     }
     assert.deepEqual(owned.map(signature).sort(), adapted ? [] : inventory.sites.map(signature).sort(), 'core maybeBind site inventory drift');
-    if (adapted) return {files:0, rewrites:0, left:left.length+scanned.refused.length, javascriptChanging:true};
+    if (adapted) return {files:0, rewrites:0, left:left.length+refused.length, javascriptChanging:true};
     const plans = [];
     for (const file of new Set(owners.map(pin => pin.file))) {
         const name = path.join(tree,'src/compiler',file);
@@ -70,7 +72,7 @@ function adapt(tree) {
     assert(inspect(texts,[...afterScan.sites,...afterScan.refused]), 'invalid planned owners');
     for (const [name,text] of raw) assert.equal(fs.readFileSync(name,'utf8'),text, `${name}: source changed while planning`);
     for (const plan of plans) fs.writeFileSync(plan.name,plan.after);
-    return {files:plans.length, rewrites:owned.length, left:left.length+scanned.refused.length, javascriptChanging:true};
+    return {files:plans.length, rewrites:owned.length, left:left.length+refused.length, javascriptChanging:true};
 }
 module.exports = {adapt, inspect, owners};
 if (require.main === module) {
