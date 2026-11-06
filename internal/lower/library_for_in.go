@@ -21,7 +21,11 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	// calls until their possible shapes and property presence can be proved.
 	isRecord := l.recordElement(proven) != nil
 	_, construction := l.constructionJSON(ast.SkipParentheses(statement.Expression))
-	if !isRecord && !construction && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
+	// A readonly view held as the object it views enumerates what Object.keys over it does: the
+	// object's own keys, array indexes first, absent slots and # names left out (adamic_object_keys).
+	// No prototype carries an enumerable name in a closed program, and an array is never held as one.
+	view := l.readonlyObjectView(proven)
+	if !isRecord && !construction && !view && !l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{}) {
 		return nil, l.notYet(statement.Expression, "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)")
 	}
 	object, err := l.expression(statement.Expression)

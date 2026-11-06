@@ -59,3 +59,11 @@ func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
 	}
 	return false
 }
+
+// readonlyObjectView reports whether a type is a readonly string-index view and nothing else,
+// Readonly<Record<string, V>>, held in the viewed object's own fixed storage because the program's
+// enumeration proof keeps it there (enumerationReadonlyType). Such a view is the object it views:
+// tsc's getEnumMembers reads an enum's table through one (#52zja36).
+func (l *lowering) readonlyObjectView(t *checker.Type) bool {
+	return t.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(t)) == 0 && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 && l.enumerationReadonlyType(t)
+}

@@ -1,0 +1,47 @@
+// for...in over a readonly view held as the object it views enumerates what Object.keys over it does:
+// array indexes first, ascending, then the rest in insertion order (Language's Ordered), absent
+// optional slots and # names left out, and what a mutable alias wrote since the view was made.
+import * as ts from './barrel.a';
+
+type View = Readonly<Record<string, string | number>>;
+
+function keys(view: View): string {
+	const rows: string[] = [];
+	for (const name in view) {
+		rows.push(name);
+	}
+	return rows.join(",");
+}
+
+console.log(keys((ts as Readonly<Record<"Ordered", View>>).Ordered));
+const kinds = (ts as Readonly<Record<"SyntaxKind", View>>).SyntaxKind;
+let length = 0;
+for (const name in kinds) {
+	length += name.length;
+}
+console.log(`${length} ${Object.keys(kinds).length}`);
+console.log(keys({ b: 1, "2": 2, a: 3, "1": 4, "-1": 5, "1.5": 6 }));
+
+type Partial = { a: number; b?: number; c: number };
+function make(withB: boolean): Partial {
+	return withB ? { a: 1, b: 2, c: 3 } : { a: 1, c: 3 };
+}
+const spread: Partial = { ...make(false) };
+console.log(`${keys(make(false))} / ${keys(make(true))} / ${keys(spread)}`);
+
+class Holder {
+	#secret = "s";
+	shown = "v";
+	reveal(): string {
+		return this.#secret;
+	}
+}
+type Shown = { shown: string };
+const holder = new Holder();
+const shown: Shown = holder;
+console.log(`${keys(shown)} ${holder.reveal()}`);
+
+const written = { a: 1, b: "x" };
+const view: View = written;
+written.a = 2;
+console.log(`${keys(view)} ${written.a}`);
