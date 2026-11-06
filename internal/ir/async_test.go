@@ -30,3 +30,15 @@ func TestWatchFileRunsTheLoopWithoutPromises(t *testing.T) {
 		t.Fatal("cancellation alone must not create loop work")
 	}
 }
+
+func TestWatchRunsTheLoopWithoutPromises(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"host_watch", "host_watch_on"} {
+		watch := NodeFSFile{Operation: operation, Of: Object}
+		for _, program := range []*Program{{Main: []Statement{Evaluate{Value: watch}}}, {Functions: []Function{{Body: []Statement{Evaluate{Value: watch}}}}}} {
+			if !program.HasPromises() {
+				t.Fatalf("%s: a retained listener must enter the existing loop", operation)
+			}
+		}
+	}
+}

@@ -12,6 +12,9 @@ func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error) {
 	if value, found, err := l.nodeWatchFile(node); found {
 		return value, true, err
 	}
+	if value, found, err := l.nodeWatch(node); found {
+		return value, true, err
+	}
 	if value, found, err := l.nodeRealpathCall(node); found {
 		return value, true, err
 	}

@@ -1,0 +1,5 @@
+import * as fs from 'node:fs';
+// recursive: true is an arm tsc takes only on win32 and darwin. Here it stops by name; Node watches.
+const watcher = fs.watch('.', {persistent: true, recursive: !fs.existsSync('adamic-fswatch-flat')}, (eventType, filename) => { console.log(`${eventType} ${filename ?? 'null'}`); });
+watcher.close();
+console.log('wrong: watched recursively');

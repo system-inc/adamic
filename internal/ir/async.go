@@ -89,7 +89,7 @@ func containsPromise(value reflect.Value) bool {
 		return false
 	}
 	if value.CanInterface() {
-		if call, ok := value.Interface().(NodeFSFile); ok && call.Operation == "host_watch_file" {
+		if call, ok := value.Interface().(NodeFSFile); ok && call.RetainsListener() {
 			return true
 		}
 		if expression, ok := value.Interface().(Expression); ok && expression.Type() == Promise {

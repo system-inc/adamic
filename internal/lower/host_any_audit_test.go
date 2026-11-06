@@ -78,6 +78,9 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 	a.members["node:tty.WriteStream.columns"] = true
 	l := lowering{program: program, checker: c}
 	seen := map[string]map[*ast.Node]bool{}
+	// owners are the host types a registration may name a member by (nodeHostObject), as
+	// node:fs.FSWatcher.on names the on FSWatcher inherits.
+	owners := map[string]*ast.Node{}
 	add := func(name string, symbol *ast.Symbol, declaration *ast.Node) {
 		if seen[name] == nil {
 			seen[name] = map[*ast.Node]bool{}
@@ -93,6 +96,11 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 		}
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
+			if (node.Kind == ast.KindInterfaceDeclaration || node.Kind == ast.KindClassDeclaration) && node.Name() != nil {
+				if symbol := l.symbol(node.Name()); symbol != nil {
+					owners[nodeLibraryName(symbol)] = node.Name()
+				}
+			}
 			if name := node.Name(); name != nil {
 				if symbol := l.symbol(name); symbol != nil {
 					for _, declaration := range symbol.Declarations {
@@ -127,6 +135,15 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 		if strings.HasPrefix(name, "node:process.") && processType != nil {
 			member := strings.TrimPrefix(name, "node:process.")
 			if symbol := c.GetPropertyOfType(processType, member); symbol != nil {
+				for _, declaration := range symbol.Declarations {
+					if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
+						add(name, symbol, declaration)
+					}
+				}
+			}
+		}
+		if dot := strings.LastIndex(name, "."); len(a.roots[name]) == 0 && dot > 0 && owners[name[:dot]] != nil {
+			if symbol := c.GetPropertyOfType(c.GetTypeAtLocation(owners[name[:dot]]), name[dot+1:]); symbol != nil {
 				for _, declaration := range symbol.Declarations {
 					if load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 						add(name, symbol, declaration)

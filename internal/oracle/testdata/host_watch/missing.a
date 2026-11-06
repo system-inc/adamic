@@ -1,0 +1,11 @@
+import * as fs from 'node:fs';
+// A path that isn't there throws at once, Node's fs error with its code, which tsc's catch reads.
+function errorCode(error: unknown): string | undefined {
+ return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+try {
+ fs.watch('adamic-fswatch-missing', {persistent: true}, (eventType, filename) => { console.log(`wrong ${eventType} ${filename ?? 'null'}`); });
+ console.log('wrong: watched');
+} catch (error) {
+ if (error instanceof Error) console.log(`${errorCode(error) ?? 'none'} ${error.message}`);
+}
