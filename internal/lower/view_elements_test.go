@@ -6,6 +6,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
+// A failed element check is a panic, exit 70 on both backends, which no catch takes. So a checked
+// read is checking, and still no throw: it moves no function onto the throwing paths.
 func TestViewElementFailureSummary(t *testing.T) {
 	t.Parallel()
 	l := &lowering{result: &ir.Program{}}
@@ -13,11 +15,8 @@ func TestViewElementFailureSummary(t *testing.T) {
 	if viewReadOf(l.result, read) != viewReadChecks {
 		t.Fatal("element read is not classified as checking")
 	}
-	if !l.throwsOut([]ir.Statement{ir.Evaluate{Value: read}}) {
-		t.Fatal("element check failure is missing from the function summary")
-	}
-	if !l.throwsOut([]ir.Statement{ir.Evaluate{Value: ir.Comma{Left: read, Right: ir.Defined{Value: ir.Undefined{Of: ir.Object}, Message: "invariant"}}}}) {
-		t.Fatal("a later nonthrowing read erased the element check failure")
+	if l.throwsOut([]ir.Statement{ir.Evaluate{Value: read}}) {
+		t.Fatal("an element check's panic is summarized as a throw a catch could take")
 	}
 }
 
@@ -32,8 +31,8 @@ func TestViewElementImplicitFailureSummary(t *testing.T) {
 		} else {
 			statement = ir.Evaluate{Value: node.(ir.Expression)}
 		}
-		if !l.throwsOut([]ir.Statement{statement}) {
-			t.Errorf("%T lost its element-check failure", node)
+		if l.throwsOut([]ir.Statement{statement}) {
+			t.Errorf("%T's element check is summarized as a throw a catch could take", node)
 		}
 	}
 }
