@@ -13,9 +13,8 @@ import (
 // rewrites the IR or adds to its string table, so leaving one out can't make the two modes'
 // programs differ, only which of two stops a program reports first.
 var scanningPipelineExempt = map[string]string{
-	"lowering.checkRecordGuardedReads":  "judges guarded record reads; reads the IR, rewrites nothing",
-	"lowering.checkDynamicKeyedGetters": "judges class getters behind a run-time key; reads the IR, rewrites nothing",
-	"lowering.checkViewOptionalWrites":  "judges writes to optional fields; reads the IR, rewrites nothing",
+	"lowering.checkRecordGuardedReads": "judges guarded record reads; reads the IR, rewrites nothing",
+	"lowering.checkViewOptionalWrites": "judges writes to optional fields; reads the IR, rewrites nothing",
 }
 
 // The frozen scanning reference (scanLowerCheckedWithCycleTypes) and the real pipeline
