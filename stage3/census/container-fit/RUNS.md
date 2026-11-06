@@ -21,3 +21,5 @@ The previous ordinary 79-root records are unchanged, because the new code only c
 ## Revised public schedule
 
 Initial base p00 timed out at 1,500.120056 seconds and was pushed at 258190b0c. Do not pair or rerun it. INDEX-initial.json preserves the initial plan. Current INDEX.json replaces p00 with q00 onward public chunks; every one needs base, log, and head, with a byte comparison after its head run. Other p01 through p19 remain unchanged. The current index lists exactly one occurrence of every unit.
+
+API orchestration may invoke the independent per-piece calls in order; it does not create a long-lived supervisor process on the box. Every runner still exits after its own push. After the labels for a piece complete, run check_piece.py PIECE as a separate short process to pair it, verify public bytes and push the live index. Stop orchestration at any nonzero exit.
