@@ -25,7 +25,7 @@ exclusively to Library.
 
 ## Nineteen owning-unit results
 
-The expected result is not observed by this latent measurement. All 18 debug.ts
+The expected result is not observed by this latent measurement. All 19
 casts lose the old namespace-value refusal-scan finding, but the 17 formatter
 units stop at the enum read itself. None reaches a later stop or completes.
 The FlowFlags getter owner and emitter's owner are blocked earlier. This report
@@ -76,8 +76,14 @@ it does not by itself establish failure of whole-program production lowering.
 
 The target's complete apply passes. Its 79 compiler source files are byte-for-byte
 identical to the prior adaptation-only tree, as source-audit.json records.
-The separate ordinary 79-root census is still running. A B2 emitter cast scan
-and a representative single-unit confirmation are also being retained.
+The separate ordinary 79-root census is still running. The separate B2 emitter
+scan has no finding on the nineteenth cast's line. Its scan-only driver matches
+all 39 findings from the full B2 debug scan exactly, lowers no units, and keeps
+the no-output guards. It changes only the scratch driver, stored as .go.txt in
+03-scan-and-replay.tar.gz. No production or adaptation-40 source is edited.
+An independent single-unit formatSyntaxKind replay reproduces N1 with exit 0.
+This confirms the missing-binding result without relying on preceding unit
+attempts in the full census.
 
 All raw records are packed in the numbered tar.gz files. SHA256SUMS hashes the
 archives; each archive also contains a SHA256SUMS for its raw member files.
