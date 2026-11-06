@@ -84,7 +84,7 @@ func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElemen
 	// The key is the element type, mutable array or readonly: filter, map and slice hand a viewed readonly
 	// array's own elements to a new mutable array, so a mutable array can hold viewed elements too (Lower's seam 1
 	// on #6wfvfhm). The price is a check on every element read of a union array whose element type has a contract,
-	// viewed or not: map_union_value_contextual_array.a's recorded counts carry it (four retains and four releases).
+	// viewed or not. The check reads its array lent, as ArrayIndex does, so it adds no ownership calls.
 	element = l.concrete(element)
 	check := &ir.ViewElementCheck{Where: l.program.Where(node), ViewType: l.checker.TypeToString(element)}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
