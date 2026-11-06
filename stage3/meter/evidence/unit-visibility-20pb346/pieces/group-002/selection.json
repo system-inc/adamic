@@ -1,0 +1,39 @@
+{
+  "mode": "full",
+  "source": "/workspace/scratch/20pb346-2/adapted/src/compiler",
+  "files": [
+    "_namespaces/ts.moduleSpecifiers.ts",
+    "_namespaces/ts.performance.ts",
+    "_namespaces/ts.ts",
+    "diagnosticInformationMap.generated.ts",
+    "hostErrors.ts",
+    "semver.ts",
+    "tracing.ts",
+    "builderPublic.ts",
+    "builderStatePublic.ts",
+    "programDiagnostics.ts",
+    "sourcemap.ts",
+    "symbolWalker.ts",
+    "tsbuild.ts",
+    "watchUtilities.ts"
+  ],
+  "source_sha256": {
+    "_namespaces/ts.moduleSpecifiers.ts": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+    "_namespaces/ts.performance.ts": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+    "_namespaces/ts.ts": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b",
+    "diagnosticInformationMap.generated.ts": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+    "hostErrors.ts": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c",
+    "semver.ts": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af",
+    "tracing.ts": "f2c22f33bd5ab34b3aae203980931ba32a9ef2ecbc1dfde3fd95cd7080ec94b7",
+    "builderPublic.ts": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+    "builderStatePublic.ts": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+    "programDiagnostics.ts": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+    "sourcemap.ts": "21b405e7d70573550a4b412d924c96e1a8107c5f6f6265a51e3d6f6fb66af255",
+    "symbolWalker.ts": "f8dc15db9cc3afa950a3007f50d3456e91eeedb9891982f10a9e3c64a2a111e6",
+    "tsbuild.ts": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+    "watchUtilities.ts": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+  },
+  "compiler_base": "d4c6b07aca1a7c55785226563c2ad79d552c1adf",
+  "budget_seconds": 1500,
+  "GOMEMLIMIT": "8GiB"
+}

@@ -17,6 +17,9 @@ assert all(Path(f).is_file() and Path(f).is_relative_to(source) for f in selecte
 out=evidence/name
 out.mkdir()
 (out/'selection.json').write_text(json.dumps(dict(mode='full',source=str(source),files=files,source_sha256={f:hashlib.sha256((source/f).read_bytes()).hexdigest() for f in files},compiler_base=subprocess.check_output(['git','rev-parse','origin/main'],cwd=repo,text=True).strip(),budget_seconds=1500,GOMEMLIMIT='8GiB'),indent=2)+'\n')
+def interrupted(signum, frame):
+    raise KeyboardInterrupt
+signal.signal(signal.SIGTERM, interrupted)
 raw={}
 for side in ('before','after'):
     work=root/'piece-runs'/name/side
@@ -51,4 +54,6 @@ for side in ('before','after'):
         (out/'identity.json').write_text(json.dumps(dict(identical=True,bytes=len(data),sha256=result['sha256'],files=len(files),units=result['units']),indent=2)+'\n')
     subprocess.run(['git','add',str(evidence)],cwd=repo,check=True)
     subprocess.run(['git','commit','-m','meter: save '+name+' '+side+' piece evidence'],cwd=repo,check=True,stdout=subprocess.DEVNULL)
+    with (work/'push.txt').open('w') as log:
+        subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/meter-stream-records-2'],cwd=repo,check=True,stdout=log,stderr=subprocess.STDOUT)
     print(json.dumps(result),flush=True)
