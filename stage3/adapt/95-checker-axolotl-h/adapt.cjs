@@ -4,6 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const ts=require(process.env.CENSUS_TYPESCRIPT||'typescript');
 const {compiler,nodes}=require('../47-host-errors/adapt.cjs');
 const inventory=require('./sites.json');
+const {slice,records,importEdit,javascriptEdits}=require('./fold.cjs');
 const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
 const hasUndefined=type=>!!(type.flags&ts.TypeFlags.Undefined)||type.isUnion()&&type.types.some(t=>!!(t.flags&ts.TypeFlags.Undefined));
 function adapt(tree,check=false){
@@ -20,13 +21,15 @@ function adapt(tree,check=false){
   if(type.isUnionOrIntersection())return type.types.some(t=>derives(t,seen));
   return !!(type.flags&ts.TypeFlags.Object)&&!!(type.objectFlags&ts.ObjectFlags.Interface)&&checker.getBaseTypes(type).some(t=>derives(t,seen));
  }
- const observed=[],undefinedSlots=new Set(),inputs=new Set([file]),runtimeEdits=[];
+ const observed=[],undefinedSlots=new Set(),inputs=new Set([file]),runtimeEdits=new Map();
+ const folds=records(ts,program,tree,path,inventory),sites=folds.flatMap(r=>r.sites);assert.equal(sites.length,6,'six owned folds');
+ const plan=(source,edit)=>{if(!runtimeEdits.has(source))runtimeEdits.set(source,[]);runtimeEdits.get(source).push(edit);};
  const symbolAt=node=>{let symbol=checker.getSymbolAtLocation(node);return symbol?.flags&ts.SymbolFlags.Alias?checker.getAliasedSymbol(symbol):symbol;};
  const core=program.getSourceFile(path.join(tree,'src/compiler/core.ts'));
  const helpers=nodes(ts,core,n=>ts.isFunctionDeclaration(n)&&n.name?.text==='maybeBind');
  assert.equal(helpers.length,1,'core maybeBind declaration');
  const maybeBind=symbolAt(helpers[0].name);
- let runtimeSource;
+
  function beforeCall(expression,member){
   assert(ts.isCallExpression(expression)&&!expression.questionDotToken&&!expression.typeArguments&&expression.arguments.length===2,'maybeBind call shape');
   assert(symbolAt(expression.expression)===maybeBind,'core maybeBind symbol');
@@ -46,7 +49,7 @@ function adapt(tree,check=false){
   assert(symbolAt(receiver),'bound receiver symbol');assert(symbolAt(property.expression)===symbolAt(receiver),'same bound receiver symbol');
   assert.equal(property.name.text,member.name,'bound host member');
  }
- const slice=(text,edits)=>{for(const edit of [...edits].sort((a,b)=>b.start-a.start))text=text.slice(0,edit.start)+edit.text+text.slice(edit.end);return text;};
+
  for(const source of program.getSourceFiles()){
   const relative=path.relative(tree,source.fileName);if(!/^src\/(compiler|services)\//.test(relative))continue;
   for(const literal of nodes(ts,source,ts.isObjectLiteralExpression)){
@@ -59,22 +62,29 @@ function adapt(tree,check=false){
    assert.equal(matches.length,1,'literal owner inventory: '+relative+':'+owner.name.text);
    const row=matches[0];observed.push(relative+':'+owner.name.text);inputs.add(source);
    let state='before';
-   const folded=row.members.filter(member=>typeof member.initializer==='object');
-   if(folded.length){
-    assert.equal(folded.length,2,'two folded initializers');runtimeSource=source;
-    const states=folded.map(member=>{
-     const matches=literal.properties.filter(node=>node.name?.getText(source)===member.name);assert.equal(matches.length,1,'folded member');
-     const node=matches[0];assert(ts.isPropertyAssignment(node),'folded property assignment');
-     const text=node.initializer.getText(source);
-     assert([member.initializer.before,member.initializer.after].includes(text),'folded initializer shape');
-     return text===member.initializer.after?'after':'before';
-    });
-    assert(states.every(value=>value===states[0]),'half-adapted checker owner');state=states[0];
-    // Check the literal first so a foreign third member is diagnosed at its hash.
+   const fold=folds.find(record=>record.row===row);
+   if(fold){
+    assert.equal(fold.literal,literal,'same inventoried literal');
+    const owned=sites.filter(site=>site.source===source&&site.node.getStart(source)>=owner.getStart(source)&&site.node.end<=owner.end);
+    const states=owned.map(site=>{const text=site.node.getText(source);assert([site.member.initializer.before,site.member.initializer.after].includes(text),'folded initializer shape');return text===site.member.initializer.after?'after':'before';});
+    assert(states.every(value=>value===states[0]),'half-adapted owner: '+row.owner);state=states[0];
+    const undo=owned.map(site=>({start:site.node.getStart(source)-owner.getStart(source),end:site.node.end-owner.getStart(source),text:site.member.initializer.before}));
+    // Parent createProgram owns the nested getEmitHost changes as well. Its
+    // original owner pin is checked before its literal, including on replay.
+    if(row.owner==='createBasicNodeBuilderModuleSpecifierResolutionHost')assert.equal(hash(literal.getText(source)),state==='after'?row.literalAfterSha256:row.literalBeforeSha256,'whole literal shape: '+row.owner);
+    assert.equal(hash(slice(owner.getText(source),undo)),row.ownerBeforeSha256,'writer owner shape: '+row.owner);
+    assert.equal(hash(owner.getText(source)),state==='after'?row.ownerAfterSha256:row.ownerBeforeSha256,'writer owner state: '+row.owner);
     assert.equal(hash(literal.getText(source)),state==='after'?row.literalAfterSha256:row.literalBeforeSha256,'whole literal shape: '+row.owner);
-    const undo=literal.properties.filter(node=>folded.some(member=>member.name===node.name?.getText(source))).map(node=>({start:node.initializer.getStart(source)-owner.getStart(source),end:node.initializer.end-owner.getStart(source),text:folded.find(member=>member.name===node.name.getText(source)).initializer.before}));
-    assert.equal(hash(slice(owner.getText(source),undo)),row.ownerBeforeSha256,'writer owner before pin: '+row.owner);
-    assert.equal(hash(owner.getText(source)),state==='after'?row.ownerAfterSha256:row.ownerBeforeSha256,'writer owner shape: '+row.owner);
+    if(row.file===inventory.importRemoval.file){
+     const edit=importEdit(ts,source,inventory);assert.equal(!!edit,state==='before','half-adapted checker import');
+     const uses=nodes(ts,source,n=>ts.isIdentifier(n)&&n.text==='maybeBind'&&symbolAt(n)===maybeBind);
+     if(edit){
+      assert.equal(hash(inventory.importRemoval.before),inventory.importRemoval.beforeSha256,'checker import before pin');
+      assert(symbolAt(edit.node.name)===maybeBind,'checker import core symbol');
+      assert.equal(uses.length,3,'only the import and two checker calls');
+      assert(!check,'missing checker import cleanup');plan(source,{...edit,importRemoval:true});
+     }else assert.equal(uses.length,0,'checker import has no remaining use');
+    }
    }else{
     assert.equal(hash(owner.getText(source)),row.ownerBeforeSha256,'writer owner shape: '+row.owner);
     assert.equal(hash(literal.getText(source)),row.literalSha256,'whole literal shape: '+row.owner);
@@ -95,7 +105,7 @@ function adapt(tree,check=false){
     if(foldedMember){
      if(state==='before'){
       beforeCall(expression,member);assert(!check,'missing maybeBind fold: '+member.name);
-      runtimeEdits.push({start:expression.getStart(source),end:expression.end,text:member.initializer.after});
+      plan(source,{start:expression.getStart(source),end:expression.end,text:member.initializer.after});
      }else afterCall(expression,member);
      assert.equal(checker.typeToString(checker.getTypeAtLocation(expression)),member.valueType,'bound value type: '+member.name);
     }
@@ -124,45 +134,38 @@ function adapt(tree,check=false){
   assert.equal(checker.typeToString(checker.getTypeAtLocation(node.name)),row.readType,'unchanged read type');
   if(text===row.before){assert(!check,'missing host slot repair: '+row.name);edits.push({start:node.getStart(file),end:node.end,text:row.after});}
  }
- let changed=slice(file.text,edits);
- assert(runtimeSource,'checker fold owner');
- const runtimeChanged=slice(runtimeSource.text,runtimeEdits);
- assert.equal(ts.createSourceFile(file.fileName,changed,ts.ScriptTarget.Latest,true).parseDiagnostics.length,0,'adapted syntax');
+ const changed=slice(file.text,edits),changedRuntime=new Map();
+ for(const fold of folds)if(!changedRuntime.has(fold.source))changedRuntime.set(fold.source,slice(fold.source.text,runtimeEdits.get(fold.source)||[]));
+ assert.equal(ts.createSourceFile(file.fileName,changed,ts.ScriptTarget.Latest,true).parseDiagnostics.length,0,'adapted types syntax');
  for(const removeComments of [false,true]){
   const options={fileName:file.fileName,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,verbatimModuleSyntax:true,removeComments}};
-  assert.equal(ts.transpileModule(file.text,options).outputText,ts.transpileModule(changed,options).outputText,'JavaScript changed');
+  assert.equal(ts.transpileModule(file.text,options).outputText,ts.transpileModule(changed,options).outputText,'types JavaScript identical');
  }
- // Bind the planned tree again: the optional bind must retain the precise value type.
  const options=program.getCompilerOptions(),virtual=ts.createCompilerHost(options),read=virtual.readFile.bind(virtual);
- virtual.readFile=name=>name===runtimeSource.fileName?runtimeChanged:name===file.fileName?changed:read(name);
- const next=ts.createProgram(program.getRootFileNames(),options,virtual),nextChecker=next.getTypeChecker(),nextSource=next.getSourceFile(runtimeSource.fileName);
- assert.equal(nextSource.parseDiagnostics.length,0,'adapted checker syntax');
- const foldRow=inventory.literals.find(row=>row.ownerAfterSha256);
- const nextOwners=nodes(ts,nextSource,n=>ts.isFunctionDeclaration(n)&&n.name?.text===foldRow.owner);assert.equal(nextOwners.length,1,'adapted checker owner');
- for(const member of foldRow.members.filter(member=>typeof member.initializer==='object')){
-  const properties=nodes(ts,nextOwners[0],n=>ts.isPropertyAssignment(n)&&n.name.getText(nextSource)===member.name);assert.equal(properties.length,1,'adapted folded property');
-  assert.equal(nextChecker.typeToString(nextChecker.getTypeAtLocation(properties[0].initializer)),member.valueType,'adapted bound value type: '+member.name);
- }
- for(const removeComments of [false,true]){
-  const options={fileName:runtimeSource.fileName,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,verbatimModuleSyntax:true,removeComments}};
-  const oldJS=ts.transpileModule(runtimeSource.text,options).outputText,newJS=ts.transpileModule(runtimeChanged,options).outputText;
-  let expected=oldJS;
-  for(const member of foldRow.members.filter(member=>typeof member.initializer==='object')){
-   const before=`${member.name}: ${member.initializer.before}`,after=`${member.name}: ${member.initializer.after}`;
-   // Restrict the emitted check to the pinned owner, too.
-   const source=ts.createSourceFile('checker.js',expected,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
-   const owners=nodes(ts,source,n=>ts.isFunctionDeclaration(n)&&n.name?.text===foldRow.owner);assert.equal(owners.length,1);
-   const text=owners[0].getText(source);if(text.includes(before)){
-    assert.equal(text.split(before).length,2,'one emitted fold');
-    expected=expected.slice(0,owners[0].getStart(source))+text.replace(before,after)+expected.slice(owners[0].end);
-   }else assert(text.includes(after),'emitted folded initializer');
+ const planned=new Map([...changedRuntime].map(([source,text])=>[source.fileName,text]));planned.set(file.fileName,changed);
+ virtual.readFile=name=>planned.has(name)?planned.get(name):read(name);
+ const next=ts.createProgram(program.getRootFileNames(),options,virtual),nextChecker=next.getTypeChecker();
+ for(const fold of folds){
+  const nextSource=next.getSourceFile(fold.source.fileName);assert.equal(nextSource.parseDiagnostics.length,0,'adapted runtime syntax');
+  const nextFold=records(ts,next,tree,path,inventory).find(record=>record.row===fold.row);
+  for(const site of nextFold.sites){
+   assert.equal(site.node.getText(nextSource),site.member.initializer.after,'adapted initializer');
+   assert.equal(nextChecker.typeToString(nextChecker.getTypeAtLocation(site.node)),site.member.valueType,'adapted bound value type: '+site.row.owner+'.'+site.member.name);
   }
-  assert.equal(newJS,expected,'only two checker JavaScript rewrites');
  }
+ for(const [source,text] of changedRuntime)for(const removeComments of [false,true]){
+  const relative=path.relative(tree,source.fileName),options={fileName:source.fileName,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,verbatimModuleSyntax:true,removeComments}};
+  const oldJS=ts.transpileModule(source.text,options).outputText,newJS=ts.transpileModule(text,options).outputText;
+  assert.equal(newJS,slice(oldJS,javascriptEdits(ts,oldJS,relative,inventory)),'only six folds and checker import cleanup: '+relative);
+ }
+
  for(const source of inputs)assert.equal(fs.readFileSync(source.fileName,'utf8'),source.text,'source changed while planning');
- if(!check&&changed!==file.text)fs.writeFileSync(file.fileName,changed);
- if(!check&&runtimeChanged!==runtimeSource.text)fs.writeFileSync(runtimeSource.fileName,runtimeChanged);
- return {files:Number(changed!==file.text)+Number(runtimeChanged!==runtimeSource.text),declarations:edits.length,rewrites:runtimeEdits.length,literals:observed.length,ownedSlots:inventory.slots.map(s=>s.name),externalSlots:inventory.externalSlots.map(s=>s.name),javascriptIdentical:{'src/compiler/types.ts':true,'src/compiler/checker.ts':false},javascriptChanging:true};
+ let files=0;
+ if(!check&&changed!==file.text){fs.writeFileSync(file.fileName,changed);files++;}
+ for(const [source,text] of changedRuntime)if(!check&&text!==source.text){fs.writeFileSync(source.fileName,text);files++;}
+ const rewrites=sites.filter(site=>site.node.getText(site.source)===site.member.initializer.before).length;
+ const importsRemoved=[...runtimeEdits.values()].flat().filter(edit=>edit.importRemoval).length;
+ return {files,declarations:edits.length,rewrites,importsRemoved,literals:observed.length,ownedSlots:inventory.slots.map(s=>s.name),externalSlots:inventory.externalSlots.map(s=>s.name),javascriptIdentical:{'src/compiler/types.ts':true,'src/compiler/checker.ts':false,'src/compiler/program.ts':false},javascriptChanging:true};
 }
 module.exports={adapt};
 if(require.main===module){const check=process.argv[2]==='--check';assert.equal(process.argv.length,check?4:3,'usage: adapt.cjs [--check] TREE');console.log(JSON.stringify(adapt(path.resolve(process.argv[check?3:2]),check),null,2));}

@@ -173,7 +173,6 @@
       "file": "src/compiler/program.ts",
       "owner": "createProgram",
       "ownerBeforeSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
-      "literalSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
       "members": [
         {
           "name": "getRootFileNames",
@@ -730,18 +729,24 @@
         },
         {
           "name": "getGlobalTypingsCacheLocation",
-          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "initializer": {
+            "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+            "after": "host.getGlobalTypingsCacheLocation?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": true,
-          "destinationOwner": "ModuleSpecifierResolutionHost"
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "valueType": "(() => string | undefined) | undefined"
         }
-      ]
+      ],
+      "literalBeforeSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+      "ownerAfterSha256": "904e66026ef3720eb2ba4f0f6915e20043289c25d4500798ff5ec03a1762e76d",
+      "literalAfterSha256": "47d233b0f6b9605ec52b6a93def264b233c3b4027e0c1a95fe26c4e43fd64d0d"
     },
     {
       "file": "src/compiler/program.ts",
       "owner": "getEmitHost",
       "ownerBeforeSha256": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
-      "literalSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
       "members": [
         {
           "name": "getCanonicalFileName",
@@ -878,10 +883,14 @@
         },
         {
           "name": "realpath",
-          "initializer": "maybeBind(host, host.realpath)",
+          "initializer": {
+            "before": "maybeBind(host, host.realpath)",
+            "after": "host.realpath?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": true,
-          "destinationOwner": "ModuleSpecifierResolutionHost"
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "valueType": "((path: string) => string) | undefined"
         },
         {
           "name": "useCaseSensitiveFileNames",
@@ -920,10 +929,14 @@
         },
         {
           "name": "createHash",
-          "initializer": "maybeBind(host, host.createHash)",
+          "initializer": {
+            "before": "maybeBind(host, host.createHash)",
+            "after": "host.createHash?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": false,
-          "destinationOwner": "EmitHost"
+          "destinationOwner": "EmitHost",
+          "valueType": "((data: string) => string) | undefined"
         },
         {
           "name": "getModuleResolutionCache",
@@ -934,10 +947,14 @@
         },
         {
           "name": "trace",
-          "initializer": "maybeBind(host, host.trace)",
+          "initializer": {
+            "before": "maybeBind(host, host.trace)",
+            "after": "host.trace?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": true,
-          "destinationOwner": "ModuleSpecifierResolutionHost"
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "valueType": "((s: string) => void) | undefined"
         },
         {
           "name": "getGlobalTypingsCacheLocation",
@@ -946,7 +963,10 @@
           "hostMember": true,
           "destinationOwner": "ModuleSpecifierResolutionHost"
         }
-      ]
+      ],
+      "literalBeforeSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+      "ownerAfterSha256": "ceb37bbd2d3ed71bb13937e7c63431c93d2bb8f6f82da763dd02d19f06d5bce1",
+      "literalAfterSha256": "d9e618b38d50793233d42f175e40cfffe0f997959e6016ae7161b098367aa5fb"
     },
     {
       "file": "src/services/utilities.ts",
@@ -1085,5 +1105,18 @@
         }
       ]
     }
-  ]
+  ],
+  "importRemoval": {
+    "file": "src/compiler/checker.ts",
+    "module": "./_namespaces/ts.js",
+    "name": "maybeBind",
+    "before": "    maybeBind,\r\n",
+    "after": "\r\n",
+    "beforeSha256": "2c2257ae4f72f3ad31693755f02c0d9a6db5f71e98a36bb204465d4b562c3f04",
+    "previous": "MatchingKeys",
+    "next": "MemberOverrideStatus",
+    "beforeGap": ",\r\n    maybeBind,\r\n    ",
+    "afterGap": ",\r\n\r\n    ",
+    "gapBeforeSha256": "ac49dc890a9b3a440f265eb854222b922741c7b76aafa391776215f619174bef"
+  }
 }

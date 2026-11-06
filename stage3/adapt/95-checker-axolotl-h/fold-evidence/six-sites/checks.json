@@ -1,0 +1,51 @@
+{
+  "scope": {
+    "rewrites": 6,
+    "checkerImportRemoved": true,
+    "checkerNewlinePreserved": true,
+    "programImportUntouched": true
+  },
+  "fullApply": {
+    "beforeExit": 0,
+    "afterExit": 0
+  },
+  "pairedReplay": {
+    "status": "pass",
+    "adapters": 81,
+    "onlyDifference": "95-checker-axolotl-h",
+    "refusalOwnerBefore": "createProgram",
+    "refusalOwnerAfter": "createProgram",
+    "expectedOwnerBeforeSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+    "observedNormalizedOwnerSha256": "729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854",
+    "adapter78StdoutByteIdentical": true,
+    "rawArchive": "replay.tar.gz",
+    "sha256List": "replay.sha256",
+    "earlierCoordinateOnlyAttemptRetained": true
+  },
+  "types": {
+    "roots": 79,
+    "exit": 0,
+    "diagnostics": 0
+  },
+  "javascript": {
+    "status": "pass",
+    "files": 9,
+    "existingBindingRenamesPerChangedBundle": 3,
+    "introducedBindTemporariesPerChangedBundle": 6,
+    "onlySixModeledLowerings": true,
+    "publicDeclarationsIdentical": true
+  },
+  "mutants": {
+    "status": "pass",
+    "all14ProgramPartialSubsetsRefuse": true,
+    "checkerHalvesAndImportStatesRefuse": true,
+    "foreignCalleeSymbolRefuses": true,
+    "renameMutantsRefuse": true,
+    "noWritesOnRefusal": true
+  },
+  "oracle": {
+    "status": "pending",
+    "pieceLimitSeconds": 1440
+  },
+  "complete": false
+}
