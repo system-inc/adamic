@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "originalBeforePinsUnchanged": true,
+  "allMemberClassificationFieldsUnchanged": true,
+  "declarationsAndExternalSlotsUnchanged": true,
+  "owners": [
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "beforeOwnerSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+      "beforeLiteralSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+      "ownedRewrites": 2
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "owner": "createProgram",
+      "beforeOwnerSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+      "beforeLiteralSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f",
+      "ownedRewrites": 1
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "owner": "getEmitHost",
+      "beforeOwnerSha256": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+      "beforeLiteralSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011",
+      "ownedRewrites": 3
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "owner": "createModuleSpecifierResolutionHost",
+      "beforeOwnerSha256": "c20af1d143fe1b2e2580b3a8946686ae865c8815e8ce9e2df74558d67c61e738",
+      "beforeLiteralSha256": "f70c25bafecbb93f0313c628727623d4646a18c6d90fc8b103bde7bf4c98a9ee",
+      "ownedRewrites": 0
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "owner": "getModuleSpecifierResolverHost",
+      "beforeOwnerSha256": "0a0c40e0f2c8ab8b6f55d3b49ff7bef3612118bd6fee5fa994274f1f8c3e1587",
+      "beforeLiteralSha256": "c6b41e2350e47927775701c51425a9bfa8c59370da2f7256321afc533deb3a0e",
+      "ownedRewrites": 0
+    }
+  ]
+}

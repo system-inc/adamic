@@ -1,0 +1,893 @@
+{
+  "piece": 4,
+  "start": 120,
+  "end": 160,
+  "checkout_commit": "a35f12a5410ab79d759daed08daf8f1cac0c2183",
+  "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+  "seconds": 529.9108926869999,
+  "under25Minutes": true,
+  "status": "pass",
+  "manifest_units": 398,
+  "units": [
+    {
+      "index": 120,
+      "name": "stage3-lane-file-110",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-110",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.086486313000023,
+      "status": "pass",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "dedc8be6ab7061c5e5c9f99d36aded989b6ab742ff62ba7b7f6dcd64d6d5a571",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.022647079999842
+    },
+    {
+      "index": 121,
+      "name": "stage3-lane-file-111",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-111",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.563868268000078,
+      "status": "pass",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "4bd6e2df0e38627b6b9eef1f20deed0286bbea7c8c9f3cc65f4e58f4005a1d21",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.475301960999786
+    },
+    {
+      "index": 122,
+      "name": "stage3-lane-file-112",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-112",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.62338722200002,
+      "status": "pass",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "01a81cadcefb130a46afc11aa0d02b5703a1567baa04b238a2e11b8a217e1747",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.545810286000233
+    },
+    {
+      "index": 123,
+      "name": "stage3-lane-file-113",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-113",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.381760234000012,
+      "status": "pass",
+      "counts": {
+        "pass": 316,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e525e8c7ece7bb0ab7a6eeb27cc8f46574ff2f55688892af7f0138cbabc71c4b",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.290421827000046
+    },
+    {
+      "index": 124,
+      "name": "stage3-lane-file-114",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-114",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.924611455000104,
+      "status": "pass",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "8a29eb32dc44d4d8a3d8ddc0f50a2e5d9af24a8cd2df8d603331c755dbbfe594",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.838732542999878
+    },
+    {
+      "index": 125,
+      "name": "stage3-lane-file-115",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-115",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.4355382130002,
+      "status": "pass",
+      "counts": {
+        "pass": 326,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ce159423b457a4dca6a7553bcab77d4fb0d30df3a369680f62d3bd5319afd913",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.367488350000258
+    },
+    {
+      "index": 126,
+      "name": "stage3-lane-file-116",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-116",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.825502302000132,
+      "status": "pass",
+      "counts": {
+        "pass": 305,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "c476a0cc185364bc1111da91846f4cca3b6e8a09b9accc385ea0b8cc0260b483",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.736083143000087
+    },
+    {
+      "index": 127,
+      "name": "stage3-lane-file-117",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-117",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.87219957499974,
+      "status": "pass",
+      "counts": {
+        "pass": 458,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "ebbe6973fba994a5a0504dbbe4f21c0082d660d379c1db75c7fc5315cde77037",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.792935370000123
+    },
+    {
+      "index": 128,
+      "name": "stage3-lane-file-118",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-118",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.219144945000153,
+      "status": "pass",
+      "counts": {
+        "pass": 314,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "75e7430c69fc733f1841763a78a49ff69b70c8a4cff7ab4cf69d34714596c6d9",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.153733884000303
+    },
+    {
+      "index": 129,
+      "name": "stage3-lane-file-119",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-119",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.32452389700029,
+      "status": "pass",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "6b9c075cb18e488f7e7a157f9873e93c045bf09efdde78b7aa3be831d922d9fd",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.246463047999896
+    },
+    {
+      "index": 130,
+      "name": "stage3-lane-file-120",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-120",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.584209553999699,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a5c817ac1e6a585a0366328b603e772ea0d848e20afd93b4077107b28dbc2904",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.5090111479999
+    },
+    {
+      "index": 131,
+      "name": "stage3-lane-file-121",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-121",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.319089034999706,
+      "status": "pass",
+      "counts": {
+        "pass": 372,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3d475612f9ed547c22301f75381eb4f9a0d760792fb55bf3b63e69de61e06bd1",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.269709356000021
+    },
+    {
+      "index": 132,
+      "name": "stage3-lane-file-122",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-122",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.774320167000042,
+      "status": "pass",
+      "counts": {
+        "pass": 310,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "071211e4b2180d6e57409002cf6ccda65b35dc1916cfacc9250f49fb747010f6",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.689152785999795
+    },
+    {
+      "index": 133,
+      "name": "stage3-lane-file-123",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-123",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.931481479000013,
+      "status": "pass",
+      "counts": {
+        "pass": 437,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a885e3c0550a8bd761f2bdac94e2daa4009e921ecbd8bba02c4e952ce527af09",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.870392091000213
+    },
+    {
+      "index": 134,
+      "name": "stage3-lane-file-124",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-124",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.0549533960002,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a004a83be9a827d2a99919988eba2e9f671f70b7bd2291efc0b2f385d92ae69a",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.993965284999831
+    },
+    {
+      "index": 135,
+      "name": "stage3-lane-file-125",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-125",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.060015621000275,
+      "status": "pass",
+      "counts": {
+        "pass": 315,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "6d8c3b1a0d4e110f4dae57263e0a3aae4c3516e76cb39544ef5d859d1d9f5818",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.979013337000197
+    },
+    {
+      "index": 136,
+      "name": "stage3-lane-file-126",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-126",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.441307538999808,
+      "status": "pass",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3bea378ac0275a0cb5a54a0e4ed9a20a768780f976433cae6b08a943104dac3b",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.35882407500003
+    },
+    {
+      "index": 137,
+      "name": "stage3-lane-file-127",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-127",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.33212781400016,
+      "status": "pass",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "dfdb00ac2ad61ce09c5b1e158b581700849bddd1d6f8f5b42856d58cbd7cc036",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.275912211000104
+    },
+    {
+      "index": 138,
+      "name": "stage3-lane-file-128",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-128",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.732218770000145,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "55fb07108fa83df10f056de1ba25cd7147bb686d32d566530fc085802b2a6bfc",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.636352875999819
+    },
+    {
+      "index": 139,
+      "name": "stage3-lane-file-129",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-129",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.976994520000062,
+      "status": "pass",
+      "counts": {
+        "pass": 309,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "4e61b6102aa1d6e581834e82441d823d291a4040b7e155f18e7d1393f0e4ecd4",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.868346382999789
+    },
+    {
+      "index": 140,
+      "name": "stage3-lane-file-130",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-130",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.292982179999854,
+      "status": "pass",
+      "counts": {
+        "pass": 350,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "87a616ebbeffc2343c82a013dfcf0ff97dfc5273e4577376e75785ebd563aa2b",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.21308284099996
+    },
+    {
+      "index": 141,
+      "name": "stage3-lane-file-131",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-131",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 14.292266196000128,
+      "status": "pass",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "21900952b9d786d5696733a4e458b9b45caeef6be08adbd801349980ab4901cf",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 14.20844568199982
+    },
+    {
+      "index": 142,
+      "name": "stage3-lane-file-132",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-132",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.40690754399975,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "e0cbef0265233e69d60b0da0619211f5837e8f9fdbe77336ed2864b655d1259a",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.323838927999986
+    },
+    {
+      "index": 143,
+      "name": "stage3-lane-file-133",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-133",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.585330010999769,
+      "status": "pass",
+      "counts": {
+        "pass": 323,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "db901946f9ea8b172b52c5cdcd3dee53eae4f9657f5184f8c9e4d86240904aed",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.5022128720002
+    },
+    {
+      "index": 144,
+      "name": "stage3-lane-file-134",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-134",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.731899727999917,
+      "status": "pass",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "bac6b68af6e03d3b2e0d74536eef6ffc0abd3f9acc4cded46e43ca6894bb6fe3",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.649503002000074
+    },
+    {
+      "index": 145,
+      "name": "stage3-lane-file-135",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-135",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.06564360199991,
+      "status": "pass",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "fef637eab63ebaf4edb23117f5f94534c6ba1dcf433aa0b5d64e2662147dd6f1",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.970459753999876
+    },
+    {
+      "index": 146,
+      "name": "stage3-lane-file-136",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-136",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.462700290000157,
+      "status": "pass",
+      "counts": {
+        "pass": 282,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "bf011807fdc3dee850cf98facc2189bb3b604a790f3e103ef4efd5cf190ba135",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.369785041000341
+    },
+    {
+      "index": 147,
+      "name": "stage3-lane-file-137",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-137",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.430115656999988,
+      "status": "pass",
+      "counts": {
+        "pass": 292,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "b8100483fce0b6a2fdadb3a93c495634c59cf93ff4da29fe839a9a699967db98",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.330891976999737
+    },
+    {
+      "index": 148,
+      "name": "stage3-lane-file-138",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-138",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.572700120000263,
+      "status": "pass",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3bf69456a0537f42630d2b189260ad0e4a051b57203a0d05e758ad905e49c50e",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.514584982000088
+    },
+    {
+      "index": 149,
+      "name": "stage3-lane-file-139",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-139",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.338469598999836,
+      "status": "pass",
+      "counts": {
+        "pass": 276,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "f0ffcdf51ebb9b6c5018eb167a5c162ca0d88dc34672c1718189f74e66904497",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.262689665999915
+    },
+    {
+      "index": 150,
+      "name": "stage3-lane-file-140",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-140",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.225712003999888,
+      "status": "pass",
+      "counts": {
+        "pass": 328,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "23620c41b9aea99e733866598da49d193d8797d7e7dae78c811abd95160fb51b",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.146879615999751
+    },
+    {
+      "index": 151,
+      "name": "stage3-lane-file-141",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-141",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.071356766000008,
+      "status": "pass",
+      "counts": {
+        "pass": 329,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "3e1035b1454b01fe3ae3df40ee858be4d4db96015eb79faa850cba2a48ab8736",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.968907219999892
+    },
+    {
+      "index": 152,
+      "name": "stage3-lane-file-142",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-142",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.530779236999933,
+      "status": "pass",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "c9281f412e1a93214ea3e77b7e28de774c3ccd53b0fc47cedb7c98a65683363d",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.433934335999766
+    },
+    {
+      "index": 153,
+      "name": "stage3-lane-file-143",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-143",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.967006131999824,
+      "status": "pass",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "c536169ed07f3db9e6a1a5ce91a9a49281063c0b9b7b6e6be1fb39b94e0aa119",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.890810031000001
+    },
+    {
+      "index": 154,
+      "name": "stage3-lane-file-144",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-144",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.110310648999985,
+      "status": "pass",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "7fb7d936892fd9eabe16b4674780ae59ea36b309a645972bc11b48697d944d46",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.054457577999983
+    },
+    {
+      "index": 155,
+      "name": "stage3-lane-file-145",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-145",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.860273567999684,
+      "status": "pass",
+      "counts": {
+        "pass": 453,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "2d892bd3ef1b7eff4407c32ee186e616d44e5342ce4364c7ca8a44b9396c5b29",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.76243262600019
+    },
+    {
+      "index": 156,
+      "name": "stage3-lane-file-146",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-146",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.269212952999624,
+      "status": "pass",
+      "counts": {
+        "pass": 317,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "9e63debffafe0e4e79202b3513d609fddc6dd3d0e29996160262cf974a5fb989",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.197038234999582
+    },
+    {
+      "index": 157,
+      "name": "stage3-lane-file-147",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-147",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.873484667999946,
+      "status": "pass",
+      "counts": {
+        "pass": 371,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "4f01dbf24e55a3ce0cd96c3a275dbf42d53804b9554422ebb99ee7868515321a",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.793309411000337
+    },
+    {
+      "index": 158,
+      "name": "stage3-lane-file-148",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-148",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 12.808302675999585,
+      "status": "pass",
+      "counts": {
+        "pass": 365,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "99e312b2f3af14289dc8fde67725cb18d7c73d3835867ef1140f534e10c1796a",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 12.754443964000075
+    },
+    {
+      "index": 159,
+      "name": "stage3-lane-file-149",
+      "command": [
+        "python3",
+        "stage3/lane/shard.py",
+        "stage3-lane-file-149",
+        "$STAGE3_RESULTS"
+      ],
+      "exit": 0,
+      "seconds": 13.218520009999793,
+      "status": "pass",
+      "counts": {
+        "pass": 309,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "inputs_hash": "a187d6db6e233fa84c135e3d5848ab55a104c093a22e0a55d503a9d070ffdc79",
+      "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+      "unit_seconds": 13.163351500999852
+    }
+  ]
+}

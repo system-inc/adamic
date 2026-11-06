@@ -1,0 +1,270 @@
+[
+  {
+    "file": "_tsc.js",
+    "scope": "binder local function",
+    "before": "maybeBind2",
+    "after": "maybeBind3",
+    "normalization": {
+      "from": "maybeBind3",
+      "to": "maybeBind2"
+    },
+    "beforeCount": 3,
+    "afterCount": 3,
+    "everyOccurrenceRenamed": true,
+    "dotNameReadsBefore": 0,
+    "dotNameReadsAfter": 0,
+    "beforeOccurrences": [
+      {
+        "start": 2209745,
+        "end": 2209755,
+        "line": 43665,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind2(left)"
+      },
+      {
+        "start": 2210142,
+        "end": 2210152,
+        "line": 43679,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind2(right)"
+      },
+      {
+        "start": 2211283,
+        "end": 2211293,
+        "line": 43710,
+        "column": 14,
+        "role": "declaration",
+        "context": "function maybeBind2(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+      }
+    ],
+    "afterOccurrences": [
+      {
+        "start": 2209745,
+        "end": 2209755,
+        "line": 43665,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind3(left)"
+      },
+      {
+        "start": 2210142,
+        "end": 2210152,
+        "line": 43679,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind3(right)"
+      },
+      {
+        "start": 2211283,
+        "end": 2211293,
+        "line": 43710,
+        "column": 14,
+        "role": "declaration",
+        "context": "function maybeBind3(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+      }
+    ]
+  },
+  {
+    "file": "_tsc.js",
+    "scope": "createBasicNodeBuilderModuleSpecifierResolutionHost.getPackageJsonInfoCache arrow",
+    "before": "_a",
+    "after": "_a2",
+    "normalization": {
+      "from": "_a2",
+      "to": "_a"
+    },
+    "beforeCount": 3,
+    "afterCount": 3,
+    "everyOccurrenceRenamed": true,
+    "dotNameReadsBefore": 0,
+    "dotNameReadsAfter": 0,
+    "beforeOccurrences": [
+      {
+        "start": 4459853,
+        "end": 4459855,
+        "line": 91046,
+        "column": 11,
+        "role": "declaration",
+        "context": "_a"
+      },
+      {
+        "start": 4459871,
+        "end": 4459873,
+        "line": 91047,
+        "column": 15,
+        "role": "assignment",
+        "context": "_a = host.getPackageJsonInfoCache"
+      },
+      {
+        "start": 4459925,
+        "end": 4459927,
+        "line": 91047,
+        "column": 69,
+        "role": "call receiver",
+        "context": "_a.call"
+      }
+    ],
+    "afterOccurrences": [
+      {
+        "start": 4459890,
+        "end": 4459893,
+        "line": 91047,
+        "column": 11,
+        "role": "declaration",
+        "context": "_a2"
+      },
+      {
+        "start": 4459909,
+        "end": 4459912,
+        "line": 91048,
+        "column": 15,
+        "role": "assignment",
+        "context": "_a2 = host.getPackageJsonInfoCache"
+      },
+      {
+        "start": 4459964,
+        "end": 4459967,
+        "line": 91048,
+        "column": 70,
+        "role": "call receiver",
+        "context": "_a2.call"
+      }
+    ]
+  },
+  {
+    "file": "typescript.js",
+    "scope": "binder local function",
+    "before": "maybeBind2",
+    "after": "maybeBind3",
+    "normalization": {
+      "from": "maybeBind3",
+      "to": "maybeBind2"
+    },
+    "beforeCount": 3,
+    "afterCount": 3,
+    "everyOccurrenceRenamed": true,
+    "dotNameReadsBefore": 0,
+    "dotNameReadsAfter": 0,
+    "beforeOccurrences": [
+      {
+        "start": 2441388,
+        "end": 2441398,
+        "line": 48192,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind2(left)"
+      },
+      {
+        "start": 2441785,
+        "end": 2441795,
+        "line": 48206,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind2(right)"
+      },
+      {
+        "start": 2442927,
+        "end": 2442937,
+        "line": 48237,
+        "column": 14,
+        "role": "declaration",
+        "context": "function maybeBind2(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+      }
+    ],
+    "afterOccurrences": [
+      {
+        "start": 2441388,
+        "end": 2441398,
+        "line": 48192,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind3(left)"
+      },
+      {
+        "start": 2441785,
+        "end": 2441795,
+        "line": 48206,
+        "column": 28,
+        "role": "direct call",
+        "context": "maybeBind3(right)"
+      },
+      {
+        "start": 2442927,
+        "end": 2442937,
+        "line": 48237,
+        "column": 14,
+        "role": "declaration",
+        "context": "function maybeBind3(node) {\n      if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {\n        return node;\n      }\n      bind(node);\n    }"
+      }
+    ]
+  },
+  {
+    "file": "typescript.js",
+    "scope": "createBasicNodeBuilderModuleSpecifierResolutionHost.getPackageJsonInfoCache arrow",
+    "before": "_a",
+    "after": "_a2",
+    "normalization": {
+      "from": "_a2",
+      "to": "_a"
+    },
+    "beforeCount": 3,
+    "afterCount": 3,
+    "everyOccurrenceRenamed": true,
+    "dotNameReadsBefore": 0,
+    "dotNameReadsAfter": 0,
+    "beforeOccurrences": [
+      {
+        "start": 4697931,
+        "end": 4697933,
+        "line": 95673,
+        "column": 11,
+        "role": "declaration",
+        "context": "_a"
+      },
+      {
+        "start": 4697949,
+        "end": 4697951,
+        "line": 95674,
+        "column": 15,
+        "role": "assignment",
+        "context": "_a = host.getPackageJsonInfoCache"
+      },
+      {
+        "start": 4698003,
+        "end": 4698005,
+        "line": 95674,
+        "column": 69,
+        "role": "call receiver",
+        "context": "_a.call"
+      }
+    ],
+    "afterOccurrences": [
+      {
+        "start": 4697968,
+        "end": 4697971,
+        "line": 95674,
+        "column": 11,
+        "role": "declaration",
+        "context": "_a2"
+      },
+      {
+        "start": 4697987,
+        "end": 4697990,
+        "line": 95675,
+        "column": 15,
+        "role": "assignment",
+        "context": "_a2 = host.getPackageJsonInfoCache"
+      },
+      {
+        "start": 4698042,
+        "end": 4698045,
+        "line": 95675,
+        "column": 70,
+        "role": "call receiver",
+        "context": "_a2.call"
+      }
+    ]
+  }
+]
