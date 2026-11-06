@@ -168,7 +168,7 @@ class CompilerSelectionTests(unittest.TestCase):
                          {'main': 'main', 'area': 'main'})
         self.assertEqual(report['trees']['main']['adapted_tree'], report['trees']['area']['adapted_tree'])
         for relative in ('census.jsonl.gz', 'latent.jsonl.gz', 'latent-times.jsonl.gz',
-                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz'):
+                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz', 'tsc/latent-times.jsonl.gz'):
             self.assertEqual(gzip.decompress((run / 'main' / relative).read_bytes()),
                              gzip.decompress((run / 'area' / relative).read_bytes()))
         for label in ('main', 'area'):
