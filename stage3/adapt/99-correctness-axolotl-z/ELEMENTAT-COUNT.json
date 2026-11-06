@@ -130,7 +130,27 @@
     "stage3-lane-file-106",
     "stage3-lane-file-107",
     "stage3-lane-file-108",
-    "stage3-lane-file-109"
+    "stage3-lane-file-109",
+    "stage3-lane-file-110",
+    "stage3-lane-file-111",
+    "stage3-lane-file-112",
+    "stage3-lane-file-113",
+    "stage3-lane-file-114",
+    "stage3-lane-file-115",
+    "stage3-lane-file-116",
+    "stage3-lane-file-117",
+    "stage3-lane-file-118",
+    "stage3-lane-file-119",
+    "stage3-lane-file-120",
+    "stage3-lane-file-121",
+    "stage3-lane-file-122",
+    "stage3-lane-file-123",
+    "stage3-lane-file-124",
+    "stage3-lane-file-125",
+    "stage3-lane-file-126",
+    "stage3-lane-file-127",
+    "stage3-lane-file-128",
+    "stage3-lane-file-129"
   ],
   "pieces": [
     {
@@ -397,11 +417,56 @@
       "recorderVersion": 2,
       "unitDeadlineSeconds": 90,
       "attemptSuffix": ""
+    },
+    {
+      "piece": 7,
+      "seconds": 65.21399934400006,
+      "units": [
+        "stage3-lane-file-110",
+        "stage3-lane-file-111",
+        "stage3-lane-file-112",
+        "stage3-lane-file-113",
+        "stage3-lane-file-114",
+        "stage3-lane-file-115",
+        "stage3-lane-file-116",
+        "stage3-lane-file-117",
+        "stage3-lane-file-118",
+        "stage3-lane-file-119",
+        "stage3-lane-file-120",
+        "stage3-lane-file-121",
+        "stage3-lane-file-122",
+        "stage3-lane-file-123",
+        "stage3-lane-file-124",
+        "stage3-lane-file-125",
+        "stage3-lane-file-126",
+        "stage3-lane-file-127",
+        "stage3-lane-file-128",
+        "stage3-lane-file-129"
+      ],
+      "calls": 44,
+      "counts": {
+        "in-range non-negative integer": 0,
+        "in-range negative integer": 44,
+        "out-of-range integer": 0,
+        "non-integer": 0,
+        "array undefined": 0
+      },
+      "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+      "callers": {
+        "in-range negative integer": {
+          "src/compiler/transformers/es2015.ts:4452": 22,
+          "src/compiler/transformers/es2015.ts:4471": 22
+        }
+      },
+      "failed": [],
+      "recorderVersion": 2,
+      "unitDeadlineSeconds": 90,
+      "attemptSuffix": ""
     }
   ],
   "counts": {
     "in-range non-negative integer": 414,
-    "in-range negative integer": 206,
+    "in-range negative integer": 250,
     "out-of-range integer": 217,
     "non-integer": 0,
     "array undefined": 167
@@ -409,8 +474,8 @@
   "nonIntegerOffsetsIncludingUndefinedArrays": 0,
   "callers": {
     "in-range negative integer": {
-      "src/compiler/transformers/es2015.ts:4452": 103,
-      "src/compiler/transformers/es2015.ts:4471": 103
+      "src/compiler/transformers/es2015.ts:4452": 125,
+      "src/compiler/transformers/es2015.ts:4471": 125
     },
     "out-of-range integer": {
       "src/services/codefixes/convertToAsyncFunction.ts:389": 211,
@@ -425,7 +490,7 @@
     }
   },
   "oracleCounts": {
-    "pass": 23521,
+    "pass": 30215,
     "fail": 1,
     "skip": 0
   },
