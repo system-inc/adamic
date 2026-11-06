@@ -1,0 +1,48 @@
+// P3 (Memory's pin on #qk8rztp S2c-2b): a generator whose body throws on a later step, stepped by
+// hand through an IterableIterator<T> parameter. The throw leaves next() and is caught outside the
+// loop, in walked's own try and in total's caller's. Natively the step builds no result, and the
+// thrown test takes the throw before anything reads one. The body has finished, so next() after
+// the throw answers done, as Node's does.
+function* checked(values: readonly number[]): Generator<string, undefined, undefined> {
+    for (let index = 0; index < values.length; index++) {
+        const value = values[index] ?? 0;
+        if (value < 0) {
+            throw new Error(`negative ${String(value)} at ${String(index)}`);
+        }
+        yield `ok ${String(value * 2)}`;
+    }
+}
+function walked(steps: IterableIterator<string>): string {
+    let seen = '';
+    try {
+        for (let status = steps.next(); !status.done; status = steps.next()) {
+            seen += `${status.value} `;
+        }
+    }
+    catch(error) {
+        if(error instanceof Error) {
+            seen += `caught ${error.message} `;
+        }
+    }
+    const again = steps.next();
+    return seen + (again.done ? 'done' : 'more');
+}
+function total(steps: IterableIterator<string>): number {
+    let length = 0;
+    for (let status = steps.next(); !status.done; status = steps.next()) {
+        length += status.value.length;
+    }
+    return length;
+}
+console.log(walked(checked([3, -4, 5])));
+console.log(walked(checked([1, 2])));
+console.log(walked(checked([-1])));
+try {
+    console.log(String(total(checked([2, 7, -8, 9]))));
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`outer ${error.message}`);
+    }
+}
+console.log(String(total(checked([6]))));
