@@ -5,6 +5,7 @@ fails, any proof check fails, or a census process remains active.
 """
 from pathlib import Path
 import json, os, subprocess, time
+from publication_bridge import publish_commit
 repo=Path('/workspace/adamic')
 root=Path('/workspace/scratch/20pb346-2')
 folder=Path(__file__).resolve().parent
@@ -64,8 +65,8 @@ report.write_text(text)
 subprocess.run(['git','diff','--check'],cwd=repo,check=True)
 subprocess.run(['git','add','stage3/meter/evidence/unit-visibility-20pb346'],cwd=repo,check=True)
 subprocess.run(['git','commit','-m','meter: verify complete bounded compiler comparison'],cwd=repo,check=True)
-subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/meter-stream-records-2'],cwd=repo,check=True)
+publish_commit(repo,root/'final-connector-publication.log')
 sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()
-remote=subprocess.check_output(['git','ls-remote','--heads','origin','typescript/meter-stream-records-2'],cwd=repo,text=True).split()[0]
+remote=subprocess.check_output(['git','-c','credential.helper=','ls-remote','--heads','origin','typescript/meter-stream-records-2'],cwd=repo,text=True).split()[0]
 assert sha==remote
 (root/'final-publication.json').write_text(json.dumps(dict(sha=sha,branch='typescript/meter-stream-records-2',pairs=summary['identical_pairs'],files=79,units=10714,active_census_processes=active),indent=2)+'\n')

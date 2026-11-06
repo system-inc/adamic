@@ -54,3 +54,14 @@ verifier checks both plan hashes, the 41 original pairs, the 96 combined pairs,
 and both file groups: 139 pairs covering all 79 files and 10,714 candidates.
 The unpaired original checker-032 baseline remains saved; the new combined
 selection remeasures both sides with matching witness scope.
+
+A later CLI token rejection stopped publication again after 110 matching unit
+pairs. The connected GitHub app retained write access. Remaining publication
+uses `publication_bridge.py`: local commits are checkpointed first; the agent
+uploads their exact blobs/tree through the connector, creates a descendant
+commit, and updates only the requested branch with `force=false` and the
+expected parent SHA. The returned tree must equal the local tree before an
+anonymous fetch and soft reconciliation. Published history is never rewritten.
+The connector supplies commit authorship metadata, so its new commit SHA can
+differ from the unpublished local checkpoint while the tree is identical.
+The second interrupted after run is preserved separately and remeasured.

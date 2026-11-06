@@ -6,6 +6,7 @@ Run from the provisioned repository. No whole latent pass is launched.
 from pathlib import Path
 import concurrent.futures as futures
 import gzip, hashlib, json, os, signal, subprocess, sys, threading, time
+from publication_bridge import publish_commit
 repo=Path('/workspace/adamic')
 root=Path('/workspace/scratch/20pb346-2')
 evidence=Path(__file__).resolve().parent
@@ -39,12 +40,7 @@ def publish(folder,message,logfile):
   changed=subprocess.run(['git','diff','--cached','--quiet'],cwd=repo).returncode
   if changed:
    with logfile.open('a') as log:subprocess.run(['git','commit','-m',message],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
-  for attempt in range(3):
-   with logfile.open('a') as log:
-    push=subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/meter-stream-records-2'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
-   if push.returncode==0:break
-   if attempt==2:raise RuntimeError('plain push failed; result remains committed')
-   time.sleep(5)
+  if changed:publish_commit(repo,logfile,stopping)
 
 def stop(signum,frame):
  stopping.set()
