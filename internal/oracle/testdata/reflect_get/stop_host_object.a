@@ -1,6 +1,7 @@
-// An Object.prototype name stops on a runtime-made object, on both backends: a Stats' constructor is
-// Stats on Node, and natively a host object's prototype isn't known, so Object's closures would stand
-// in for another's. Node prints function.
+// A Stats' constructor is Stats on Node, not Object, so it stopped on both backends while a host
+// object's prototype wasn't known natively and Object's closures would have stood in for another's.
+// It now answers on both backends as Node's does (#zhrjf2t), natively Stats' own immortal closure
+// (stats_reads.a). Node prints function.
 import * as fs from 'node:fs';
 import { propertyOf } from './hostErrors.ts';
 

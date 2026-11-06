@@ -28,7 +28,7 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"adamicDynamicKeyedPrototypeNames", ir.DynamicKeyedPrototypeNames}, {"adamicDynamicKeyedArrayPrototypeNames", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"adamicDynamicKeyedErrorNames", ir.DynamicKeyedErrorNames}} {
+	}{{"adamicDynamicKeyedPrototypeNames", ir.DynamicKeyedPrototypeNames}, {"adamicDynamicKeyedArrayPrototypeNames", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"adamicDynamicKeyedErrorNames", ir.DynamicKeyedErrorNames}, {"adamicDynamicKeyedStatsFieldNames", ir.DynamicKeyedStatsFieldNames}} {
 		quoted := []string{}
 		for _, name := range list.names {
 			quoted = append(quoted, quote(name))
@@ -38,6 +38,9 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("const adamicDynamicStop = (stop, key) => panic(`${adamicDynamicKeyedStops[stop]} (reading '${key}')`);\n")
 	// %RegExpStringIteratorPrototype%, held once: a matchAll iterator on this backend is Node's own.
 	builder.WriteString("const adamicRegExpStringIteratorPrototype = Object.getPrototypeOf(''.matchAll(/(?:)/g));\n")
+	// Stats.prototype, held once, for an fs.Stats is Node's own on this backend too. Reading fs.Stats'
+	// prototype stats nothing and calls nothing, so the deprecated constructor never warns.
+	builder.WriteString("const adamicStatsPrototype = adamicNodeFSFile.Stats.prototype;\n")
 	classes := len(program.Classes) > 0
 	if classes {
 		tables := []string{}
@@ -97,6 +100,9 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	// host test, as native's keyed_regexp_string_iterator does: native knows it by its shape
 	// (adamic_regex_iterator_is), this backend by its prototype.
 	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicRegExpStringIteratorPrototype) return value[key];\n")
+	// So does a Stats (#zhrjf2t), as native's keyed_stats does, but for a field native doesn't hold,
+	// which stops here as it does there, though Node's own Stats holds it.
+	builder.WriteString("\tif (Object.getPrototypeOf(value) === adamicStatsPrototype) return adamicDynamicKeyedStatsFieldNames.has(key) ? adamicDynamicStop('RuntimeValue', key) : value[key];\n")
 	// host is the one predicate for a value whose prototype isn't Object's, a program class's instance
 	// aside (#ey7aysy, Adamic's ruling on #0sps03r), native's host_object (union.c) on this backend's
 	// objects: a Stats, a Dirent, an AdamicIterator, a match's groups object, process.memoryUsage()'s

@@ -60,7 +60,7 @@ import (
 // function that reads a shape's names must call the host guard or be in hostShapeReaders with why it
 // needn't. Mutants:
 // TestHostShapesClosureMutants, run every time; and, by hand, stat_shape's sentinel dropped
-// (node_fs_file.c), so the C disagrees with its row here and stop_host_stats_method.a answers
+// (node_fs_file.c), so the C disagrees with its row here and stop_in_host_method.a answers
 // natively, a row removed, so this test names its shape, and tsgo_query.a changed to lower, or to
 // meet another refusal first, so this test says so.
 
@@ -161,9 +161,15 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "node_fs_directory.c", name: "dirent_shape", verdict: hostShapeHost, stop: "stop_host_dirent.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "error_shape", verdict: hostShapeHost, errorShape: true, stop: "stop_host_fs_error_prototype.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", name: "coded_error_shape", verdict: hostShapeHost, errorShape: true},
-	{file: hostShapeRuntime + "node_fs_file.c", name: "date_shape", verdict: hostShapeUnreachable, refusal: "date.a", refused: opaqueRefusal},
+	// A Stats' mtime and atime reach a program as unknown through a run-time key read of the Stats
+	// (union.c's keyed_stats, stats_reads.a), so a Date's own run-time key read is the pin.
+	{file: hostShapeRuntime + "node_fs_file.c", name: "date_shape", verdict: hostShapeHost, stop: "stop_host_stats_date.a"},
 	{file: hostShapeRuntime + "node_fs_file.c", scope: "realpath_system_error", name: "shape", verdict: hostShapeHost, errorShape: true},
-	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_host_stats_method.a"},
+	// A Stats answers a run-time key read as Node's does where native holds the answer (union.c's
+	// keyed_stats, stats_reads.a), known by its shape before the host test, but its in test,
+	// hasOwnProperty, Object.keys and String() still stop on it as a host's, so an in test of its isFile
+	// is the pin.
+	{file: hostShapeRuntime + "node_fs_file.c", name: "stat_shape", verdict: hostShapeHost, stop: "stop_in_host_method.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "host_directory_error", name: "shape", verdict: hostShapeHost, errorShape: true},
 	{file: hostShapeRuntime + "node_process.c", scope: "adamic_node_memory_usage", name: "shape", verdict: hostShapeHost, stop: "stop_host_memory_field.a"},
 	{file: hostShapeRuntime + "node_process.c", scope: "entry", name: "shape", verdict: hostShapeHost, stop: "stop_host_performance_mark.a"},
@@ -329,7 +335,7 @@ var hostShapeReaders = []struct {
 	{"regexp_compile_runtime.c", "adamic_regex_compile_new", "copies the run-time compiler's own groups shape", "", ""},
 	{"union.c", "has_property", "reached past host_stop at adamic_has_property, or for an array's own properties", "", ""},
 	{"union.c", "dynamic_property", "reached past host_stop at adamic_dynamic_property, or for an array's own properties", "", ""},
-	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, or by keyed_array and keyed_tuple for an array's or a tuple's own properties", "", ""},
+	{"union.c", "keyed_slot", "called by adamic_dynamic_property_keyed after its host_object test, by keyed_array and keyed_tuple for an array's or a tuple's own properties, or by keyed_stats for the four fields a Stats' shape holds that Node's Stats has", "", ""},
 }
 
 // hostShapeDoors are the closed doors with no runtime reader of their own: lowering refuses the
