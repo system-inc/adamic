@@ -3,8 +3,9 @@
 // it may run, and reuse doesn't lend or move tree across it. A spread copies own properties only, and
 // a class's getter is its prototype's, so Node runs none: it prints 1 tree1 sized3, then tree1. The
 // rule over-approximates here, the safe direction. describe reads the copy by its named fields,
-// never by Object.keys.
-type Tree = { value: number; label: string };
+// never by Object.keys. Tree's fields are readonly, as a getter without a setter is, so a Sized is
+// assignable to Tree without lowering's refusal of a readonly field seen as writable.
+type Tree = { readonly value: number; readonly label: string };
 let tree: Tree = { value: 1, label: `tree${String(1)}` };
 class Sized {
     label = `sized${String(3)}`;
