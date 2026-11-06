@@ -118,8 +118,8 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) {
 			for _, property := range l.checker.GetPropertiesOfType(target) {
 				hold(l.checker.GetTypeOfSymbol(property), false)
 			}
-		case l.checker.IsArrayType(target):
-			element := l.checker.GetElementTypeOfArrayType(target)
+		case l.isArrayType(target):
+			element := l.elementTypeOfArray(target)
 			if element == nil {
 				key.every = true
 				return
@@ -688,7 +688,7 @@ func (l *lowering) viewMakesArrayWritable(target *checker.Type, seen map[*checke
 		return false
 	}
 	seen[target] = true
-	if l.checker.IsArrayType(target) {
+	if l.isArrayType(target) {
 		if !l.isLibraryType(target, "ReadonlyArray") {
 			return true
 		}
@@ -746,10 +746,10 @@ func (l *lowering) noteViewArrayStorage(node *ast.Node, value ir.Expression) err
 		return nil
 	}
 	target := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
-	if !l.checker.IsArrayType(target) {
+	if !l.isArrayType(target) {
 		return nil
 	}
-	element := l.concrete(l.checker.GetElementTypeOfArrayType(target))
+	element := l.concrete(l.elementTypeOfArray(target))
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		if err := l.unknownArrayMutation(node); err != nil {
 			return err
