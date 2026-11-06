@@ -21,6 +21,24 @@ checkpoint for the read, native prints both names before either microtask.
 | The per-event job drain dropped, one checkpoint for the whole read | two_events.a | TestFSWatchTwoEventsMatchesNode | stdout against Node: a, b, micro, micro |
 | on's run-time event name check dropped | view_other_event.a | TestFSWatchViewOtherEventStopsByName | the run doesn't stop by name |
 
+The pending close (#7s8hgd5, Runtime's ruling on #j71fn59) is loop state, so its mutants edit
+the loop's own files rather than node_fs_watch_impl.h. close_pending.a is Workers' program in
+Adamic's form: its directory goes with fs.rmSync before the loop rather than in
+process.on('exit'), which doesn't lower, and the output is Node's either way, since the file's
+watch hears nothing of its directory. unwatch_file_pending.a pins watchFile's site, the poller's
+retirement in node_watch_file_impl.h, since that poller lives on the timer provider. The no-hang
+pin is close_twice.a, a lone persistent watcher closed with nothing else armed. One turn only is
+the readiness source's pin, TestSourcePendingCloseKeepsOneTurn
+(internal/native/testdata/sources/readiness.mutant.md): a listener's own write is read in the
+same dispatch, as libuv reads until `EAGAIN`, so no program here keeps a file changing across
+that turn deterministically.
+
+| Mutation | Fixture | Named pin | Caught by |
+| --- | --- | --- | --- |
+| sources_impl.h: the pending close counted as done at once | close_pending.a | TestFSWatchClosePendingMatchesNode | stdout against Node: the three event lines vanish |
+| async_host_impl.h: the pending close's wait takes the default timeout | close_twice.a | TestFSWatchCloseTwiceMatchesNode | its own 5 s deadline |
+| node_watch_file_impl.h: the poller's retirement pends no close | unwatch_file_pending.a | TestFSWatchUnwatchFilePendingMatchesNode | stdout against Node: the three event lines vanish |
+
 TestFSWatchMutant* build each against a private copy of the runtime and require the catch named.
 The source's data is the watcher's identity, never the record, so the third mutant spins on a stale
 source rather than reading freed memory.

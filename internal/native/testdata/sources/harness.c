@@ -81,6 +81,22 @@ static void dispatch(void *data, unsigned ready) {
         puts(descriptors == first ? "first" : "second");
         if (descriptors == first) job();
         assert(adamic_source_close(descriptors == first ? first_source : second_source));
+    } else if (strcmp(mode, "pending-close") == 0 || strcmp(mode, "ref-flip") == 0) {
+        /* The unreferenced sibling's byte, read in the one turn the close keeps. A
+         * refness flip keeps no turn, so ref-flip never reaches it. */
+        puts("sibling");
+    } else if (strcmp(mode, "ref-stale") == 0) {
+        /* A ref after close finds nothing, and the close's one turn ends the loop. */
+        puts("closed");
+        assert(adamic_source_close(first_source));
+        assert(!adamic_source_ref(first_source));
+    } else if (strcmp(mode, "pending-close-once") == 0) {
+        /* Readable again at once, through a third dispatch, as a watched file that
+         * keeps changing: a second turn, or a loop kept until no source is ready,
+         * dispatches it again. */
+        printf("sibling %u\n", dispatches);
+        unsigned char byte = 1;
+        if (dispatches < 3) assert(write(second[1], &byte, 1) == 1);
     } else abort();
 }
 static adamic_value tick(adamic_closure *self, adamic_value *args) {
@@ -145,6 +161,35 @@ int main(int argc, char **argv) {
         assert(close(first[1]) == 0);
         first[1] = -1;
         first_source = adamic_source_register(first[0], dispatch, first, true);
+    } else if (strcmp(mode, "pending-close") == 0 || strcmp(mode, "pending-close-once") == 0) {
+        /* The only referenced source closes before the loop: its pending close is
+         * all that keeps the loop, and the unreferenced sibling has a byte. */
+        open_pipe(first, false, false);
+        open_pipe(second, false, true);
+        first_source = adamic_source_register(first[0], dispatch, first, true);
+        second_source = adamic_source_register(second[0], dispatch, second, false);
+        assert(adamic_source_close(first_source));
+    } else if (strcmp(mode, "ref-flip") == 0) {
+        /* Flipped both ways, unref then ref then unref, and never closed: nothing is
+         * referenced, so the loop ends before any wait, as Node's does with only
+         * unreferenced handles, and the sibling's byte is never read. */
+        open_pipe(first, false, false);
+        open_pipe(second, false, true);
+        first_source = adamic_source_register(first[0], dispatch, first, true);
+        second_source = adamic_source_register(second[0], dispatch, second, false);
+        assert(adamic_source_unref(first_source));
+        assert(adamic_source_ref(first_source));
+        assert(adamic_source_unref(first_source));
+    } else if (strcmp(mode, "ref-stale") == 0) {
+        open_pipe(first, false, true);
+        first_source = adamic_source_register(first[0], dispatch, first, true);
+    } else if (strcmp(mode, "pending-close-unref-timer") == 0) {
+        /* A pending close beside an unreferenced 10 s timer: the turn's wait must
+         * not block on the timer, past the pin's 3 s deadline. */
+        open_pipe(first, false, false);
+        first_source = adamic_source_register(first[0], dispatch, first, true);
+        assert(adamic_source_close(first_source));
+        assert(adamic_timer_unref(start(10000, false)));
     } else abort();
     adamic_async_run();
     /* Turns run far faster than the 1 ms interval, and each dispatches the
@@ -153,6 +198,8 @@ int main(int argc, char **argv) {
     /* Closed by a dispatch or by teardown, every handle is stale now. */
     assert(!adamic_source_close(first_source));
     assert(!adamic_source_close(second_source));
+    assert(!adamic_source_ref(first_source));
+    assert(!adamic_source_ref(second_source));
     for (unsigned index = 0; index < 2; index++) {
         if (first[index] != -1) assert(close(first[index]) == 0);
         if (second[index] != -1) assert(close(second[index]) == 0);

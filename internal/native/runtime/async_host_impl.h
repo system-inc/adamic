@@ -82,12 +82,15 @@ static void host_default_wake(void) {
     do { result = write(host_pipe[1], &byte, 1); } while (result == -1 && errno == EINTR);
     if (result == -1 && errno != EAGAIN && errno != EWOULDBLOCK) abort();
 }
+/* A turn a pending close keeps never blocks, whatever else is armed: libuv's
+ * backend timeout is zero while a handle closes. */
+static int host_wait_ms(void) { return source_closes_waiting() ? 0 : timer_wait_ms(); }
 static void host_default_wait(void) {
     /* The queue is the predicate. A byte published before poll stays readable.
      * A source of either kind is something to wait on, as an unref timer is. */
     size_t source_total = source_count();
     host_lock();
-    int timeout = timer_wait_ms();
+    int timeout = host_wait_ms();
     bool ready = host_completions != NULL || (host_requests == NULL && timeout < 0 && source_total == 0);
     host_unlock();
     /* Polls no source this turn, a known one-turn delay: see the note atop sources_impl.h. */
@@ -102,7 +105,7 @@ static void host_default_wait(void) {
     int result;
     do {
         result = poll(descriptors, (nfds_t)(2 + source_total), timeout);
-        if (result == -1 && errno == EINTR) timeout = timer_wait_ms();
+        if (result == -1 && errno == EINTR) timeout = host_wait_ms();
     } while (result == -1 && errno == EINTR);
     /* An error on either pipe is the runtime's own failure. One on a source is
      * its owner's to handle, so it reaches the dispatch as an error bit. */
