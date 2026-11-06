@@ -1,0 +1,437 @@
+{
+  "piece": 9,
+  "metrics": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/adapt/32-indexed-reads-program/run_oracle_piece.py",
+      "/workspace/scratch/32r-fold",
+      "/workspace/scratch/32r-oracle-cache/f4ab6e3781735849373980c5e56144882874214b09237d1cc5b44afa929e9099",
+      "/workspace/scratch/32r-oracle-results/shards",
+      "9"
+    ],
+    "exit": 0,
+    "seconds": 68.92074632500044,
+    "limit_seconds": 1440
+  },
+  "seconds": 68.82529090699973,
+  "units": [
+    {
+      "name": "stage3-lane-project-reference-cases-03",
+      "exit": 0,
+      "seconds": 2.7248322809991805,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-02",
+      "exit": 0,
+      "seconds": 2.7283848780007247,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-04",
+      "exit": 0,
+      "seconds": 2.6616123089988832,
+      "status": "pass",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-05",
+      "exit": 0,
+      "seconds": 2.7655399969989958,
+      "status": "pass",
+      "counts": {
+        "pass": 15,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-06",
+      "exit": 0,
+      "seconds": 2.6459168720011803,
+      "status": "pass",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-07",
+      "exit": 0,
+      "seconds": 2.715316306999739,
+      "status": "pass",
+      "counts": {
+        "pass": 14,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-09",
+      "exit": 0,
+      "seconds": 2.556467738999345,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-08",
+      "exit": 0,
+      "seconds": 2.753145390001009,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-10",
+      "exit": 0,
+      "seconds": 2.6263385570000537,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-11",
+      "exit": 0,
+      "seconds": 2.634704583000712,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-12",
+      "exit": 0,
+      "seconds": 2.6125410009990446,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-13",
+      "exit": 0,
+      "seconds": 2.6532901609989494,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-14",
+      "exit": 0,
+      "seconds": 2.6069622820014047,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-15",
+      "exit": 0,
+      "seconds": 2.7118842320014664,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-16",
+      "exit": 0,
+      "seconds": 2.5431592050008476,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-17",
+      "exit": 0,
+      "seconds": 2.6026707229993917,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-18",
+      "exit": 0,
+      "seconds": 2.7239854609997565,
+      "status": "pass",
+      "counts": {
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-19",
+      "exit": 0,
+      "seconds": 2.5699759740000445,
+      "status": "pass",
+      "counts": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-21",
+      "exit": 0,
+      "seconds": 2.5690168060009455,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-20",
+      "exit": 0,
+      "seconds": 2.7695629770005326,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-22",
+      "exit": 0,
+      "seconds": 2.625148512999658,
+      "status": "pass",
+      "counts": {
+        "pass": 12,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-23",
+      "exit": 0,
+      "seconds": 2.6603070750006736,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-01",
+      "exit": 0,
+      "seconds": 2.2873391459997947,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-02",
+      "exit": 0,
+      "seconds": 2.1029831769992597,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-00",
+      "exit": 0,
+      "seconds": 6.694897846999083,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-03",
+      "exit": 0,
+      "seconds": 2.1908634709998296,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-04",
+      "exit": 0,
+      "seconds": 6.634753403001014,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-05",
+      "exit": 0,
+      "seconds": 6.984572122000827,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-06",
+      "exit": 0,
+      "seconds": 4.66497993899975,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-07",
+      "exit": 0,
+      "seconds": 4.659300249999433,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-08",
+      "exit": 0,
+      "seconds": 6.601541007001288,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-09",
+      "exit": 0,
+      "seconds": 6.560921242999029,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-10",
+      "exit": 0,
+      "seconds": 6.574254408000343,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-11",
+      "exit": 0,
+      "seconds": 6.623294655000791,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-13",
+      "exit": 0,
+      "seconds": 2.311743463998937,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-14",
+      "exit": 0,
+      "seconds": 2.3020263479993446,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-12",
+      "exit": 0,
+      "seconds": 6.669867762999274,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-symlink-case-15",
+      "exit": 0,
+      "seconds": 2.3614291779995256,
+      "status": "pass",
+      "counts": {
+        "pass": 1,
+        "fail": 0,
+        "skip": 0
+      }
+    }
+  ]
+}
