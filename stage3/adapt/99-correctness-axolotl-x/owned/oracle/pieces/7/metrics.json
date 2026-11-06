@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-x/run_oracle_piece.py",
+    "/workspace/bind-owned-oracle-repo",
+    "/workspace/scratch/bind-owned-oracle-cache/ca792fcb10d3bad842460badb81e352528f082aabbef532f34999026e61b30a2",
+    "/workspace/scratch/bind-owned-oracle-shards",
+    "7"
+  ],
+  "exit": 0,
+  "seconds": 94.36453994899966,
+  "limit_seconds": 1440
+}

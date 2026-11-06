@@ -1,0 +1,25 @@
+{
+  "side": "after",
+  "index": 2,
+  "reference": "src/compiler/watchPublic.ts:123:1",
+  "name": "createIncrementalCompilerHost",
+  "actual": "src/compiler/watchPublic.ts:122:1",
+  "unit_status": "attempted",
+  "checker_rejected": false,
+  "stop": {
+    "kind": "NotYet",
+    "where": "src/compiler/watchPublic.ts:124:23",
+    "reason": "a call through ?. (an optional call)"
+  },
+  "metrics": {
+    "command": [
+      "/workspace/scratch/bind-bin/latent",
+      "/workspace/bind-after/src/compiler",
+      "/workspace/scratch/bind-latent-after-2-records.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 35.69395453900006,
+    "limit_seconds": 1440
+  },
+  "binary_sha256": "9ae67e81563d9efb7a8870278d56f0169c0f1ade3060cf77ba311d5ea2d86625"
+}
