@@ -26,7 +26,14 @@ func (e *emitter) viewElement(read ir.ViewElement) string {
 	snapshot := e.temporary()
 	e.line("adamic_view_union_value %s = %s;", snapshot, e.checkedElement(check, array, index, read.Relative, element))
 	value := unslotted(element, snapshot+".payload."+member(element))
+	// A maybe is only a number's or a boolean's (ir.Maybe keeps a reference type as it is, NULL for
+	// undefined), and its contract's Of is that scalar or its maybe, so the runtime retains and boxes
+	// nothing and a snapshot owns nothing. A maybe of a reference never reaches here
+	// (optional-element.ts), and if one did, its retained count would leak, so it stops the build.
 	if read.Of.IsMaybe() {
+		if element.IsReference() {
+			panic("native: a checked element read at " + read.Where + " is a maybe, but its contract holds a reference")
+		}
 		if !element.IsMaybe() {
 			value = maybe(read.Of, value)
 		}
