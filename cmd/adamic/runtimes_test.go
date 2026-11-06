@@ -46,11 +46,14 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 	// A source directory affects only the program, never the runtime identity.
 	options.DebugDirectory = ""
 	// Release does not change these archives, so find their existing products.
-	if options.Count || options.Sanitize || options.ThreadSanitize || options.Target != "" {
+	if options.Count || options.Sanitize || options.ThreadSanitize || options.Target == "wasm32-wasi" {
 		options.Release = false
 	}
+	// A request's options name its triple, and a row's native options leave it empty for the build's own, so each row is
+	// compared resolved.
 	declared := slices.ContainsFunc(commandRuntimes, func(product commandRuntimeSpec) bool {
-		return product.options == options && slices.Equal(product.features, request.Features)
+		resolved, err := native.ResolveTarget(product.options)
+		return err == nil && resolved == options && slices.Equal(product.features, request.Features)
 	})
 	if !declared {
 		return "", fmt.Errorf("cmd/adamic: no runtime product declared for features %v with options %+v (commandRuntimes)", request.Features, request.Options)
@@ -71,7 +74,7 @@ func commandRuntimeProduct(t *testing.T, name string) {
 		if product.name != name {
 			continue
 		}
-		if product.options.Target != "" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		if product.options.Target == "wasm32-wasi" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
 		if product.owner == "" {
