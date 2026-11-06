@@ -1,0 +1,78 @@
+{
+  "before": [
+    {
+      "reference": "src/compiler/checker.ts:54277:1",
+      "file": "src/compiler/checker.ts",
+      "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "actual": "src/compiler/checker.ts:54277:1"
+    },
+    {
+      "reference": "src/compiler/watch.ts:673:1",
+      "file": "src/compiler/watch.ts",
+      "name": "createWatchHost",
+      "actual": "src/compiler/watch.ts:673:1"
+    },
+    {
+      "reference": "src/compiler/watchPublic.ts:123:1",
+      "file": "src/compiler/watchPublic.ts",
+      "name": "createIncrementalCompilerHost",
+      "actual": "src/compiler/watchPublic.ts:123:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:812:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "performBuild",
+      "actual": "src/compiler/executeCommandLine.ts:812:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:1011:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "createWatchOfConfigFile",
+      "actual": "src/compiler/executeCommandLine.ts:1011:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:1034:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "actual": "src/compiler/executeCommandLine.ts:1034:1"
+    }
+  ],
+  "after": [
+    {
+      "reference": "src/compiler/checker.ts:54277:1",
+      "file": "src/compiler/checker.ts",
+      "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "actual": "src/compiler/checker.ts:54277:1"
+    },
+    {
+      "reference": "src/compiler/watch.ts:673:1",
+      "file": "src/compiler/watch.ts",
+      "name": "createWatchHost",
+      "actual": "src/compiler/watch.ts:673:1"
+    },
+    {
+      "reference": "src/compiler/watchPublic.ts:123:1",
+      "file": "src/compiler/watchPublic.ts",
+      "name": "createIncrementalCompilerHost",
+      "actual": "src/compiler/watchPublic.ts:122:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:812:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "performBuild",
+      "actual": "src/compiler/executeCommandLine.ts:812:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:1011:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "createWatchOfConfigFile",
+      "actual": "src/compiler/executeCommandLine.ts:1011:1"
+    },
+    {
+      "reference": "src/compiler/executeCommandLine.ts:1034:1",
+      "file": "src/compiler/executeCommandLine.ts",
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "actual": "src/compiler/executeCommandLine.ts:1034:1"
+    }
+  ]
+}
