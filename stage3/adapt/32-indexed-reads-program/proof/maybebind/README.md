@@ -1,4 +1,7 @@
-# kpp0f8s: twelve watch-owner rewrites, stopped at 99x composition
+# Historical kpp0f8s stop at 997331ef1
+
+The [continuation on main 12fec995](continuation/README.md) supersedes this
+historical stopping report. Amended 99x at 5fa773b7 resolves the blocker.
 
 Base origin/main is 322f80565edaa978d928ca559803c578ed67c105. The upstream pin
 is 050880ce59e30b356b686bd3144efe24f875ebc8. This is a partial result, not a

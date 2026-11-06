@@ -1,15 +1,17 @@
 {
-  "status": "stopped",
-  "reason": "Unchanged 99x requires all eighteen handed-off maybeBind calls, including these twelve, to remain. It refuses the after tree before writing. Updating 99x is outside the directory allowed by this task.",
+  "status": "oracle-in-progress",
+  "reason": "Fresh applies and replay on main 12fec995 pass; amended 99x composition and CW051 pass; oracle pieces are running.",
   "checks": {
     "1": {
       "status": "pass",
       "before_exit": 0,
       "after_exit": 0,
-      "before_tree": "/workspace/32-before-final",
-      "after_tree": "/workspace/32-after-final",
+      "before_tree": "/workspace/scratch/32r-before",
+      "after_tree": "/workspace/scratch/32r-after",
       "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product TREE",
-      "invalid_attempts": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies."
+      "invalid_attempts": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies.",
+      "base": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+      "continuation": "continuation/provenance.json"
     },
     "2": {
       "status": "pass",
@@ -17,13 +19,15 @@
       "differences": 0,
       "adapter32_before": "handoff producer runtime drift: appendSourceMap",
       "adapter32_after": "handoff producer runtime drift: appendSourceMap",
-      "continued_after_refusals": true
+      "continued_after_refusals": true,
+      "continuation": "continuation/replay-records.json"
     },
     "3": {
       "status": "pass",
       "roots": 79,
       "exit": 0,
-      "diagnostics": 0
+      "diagnostics": 0,
+      "continuation": "continuation/provenance.json"
     },
     "4": {
       "status": "pass",
@@ -34,7 +38,8 @@
         "typescript.js": 12
       },
       "renames": [],
-      "publicDeclarationsByteIdentical": true
+      "publicDeclarationsByteIdentical": true,
+      "reuse": "The fresh complete before and after compiler source trees are each byte-identical to the prior proof inputs; all five transformation inputs are unchanged."
     },
     "5": {
       "status": "pass",
@@ -44,23 +49,23 @@
       "reportedIn": [
         "_tsc.js",
         "typescript.js"
-      ]
+      ],
+      "reuse": "The fresh complete before and after compiler source trees are each byte-identical to the prior proof inputs; all five transformation inputs are unchanged."
     },
     "6": {
-      "status": "not-run",
-      "reason": "Stopped under the user stopping rule after proving the 99x composition blocker. Oracle preparation was terminated; no whole lane or shard result is claimed.",
-      "shardsRun": 0
+      "status": "in-progress",
+      "details": "continuation/README.md"
     },
     "7": {
-      "status": "blocked",
-      "measured": [
-        "main",
-        "main-plus-32",
-        "main-plus-99x"
-      ],
-      "blocked": "main-plus-32-plus-99x",
-      "refusal": "handed-off maybeBind site inventory drift",
-      "details": "latent-summary.json"
+      "status": "pass",
+      "main": "12fec995",
+      "adapter99x": "5fa773b7",
+      "configurations": 4,
+      "units": 3,
+      "combinedStop": "watch.ts:855:19",
+      "reason": "a call through ?. (an optional call)",
+      "details": "continuation/cw051.json"
     }
-  }
+  },
+  "previousStop": "At 997331ef1, unamended 99x refused the completed fold. That historical stop is superseded by amended 99x 5fa773b7."
 }

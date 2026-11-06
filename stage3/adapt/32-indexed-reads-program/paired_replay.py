@@ -42,10 +42,10 @@ def run(label,tree,directory):
         edits.append(dict(file=file,changes=changes,added=sum(s.startswith('+') and not s.startswith('+++') for s in diff),removed=sum(s.startswith('-') and not s.startswith('---') for s in diff)))
         with (logs/(directory.name+'.patch')).open('a') as p:p.write(''.join(diff))
     text=(logs/(directory.name+'.log')).read_text()
-    return dict(adapter=directory.name,exit=r.returncode,files_written=files,edits=edits,refusal=text.strip().replace(str(tree),'<tree>').replace(str(repo),'<repo>').replace('/workspace/32-main','<repo>') if r.returncode else None)
+    return dict(adapter=directory.name,exit=r.returncode,files_written=files,edits=edits,refusal=text.strip().replace(str(tree),'<tree>').replace(str(repo),'<repo>').replace(str(baseline_repo),'<repo>') if r.returncode else None)
 records={'before':[],'after':[]};differences=[]
 directories=sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir())
-baseline_repo=Path('/workspace/32-main')
+baseline_repo=Path(os.environ.get('BIND_BASELINE_REPO','/workspace/32-main')).resolve()
 for directory in directories:
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures=[pool.submit(run,label,tree,(baseline_repo/'stage3/adapt'/directory.name) if label=='before' else directory) for label,tree in [('before',baseline),('after',accepted)]]

@@ -19,7 +19,7 @@ for label,tree in [('main',before),('main-plus-32',after),('main-plus-99x',extra
     selected=dict(schema=1,files=[dict(file='src/compiler/executeCommandLine.ts',all_units=False,units=[u['where'] for u in units])])
     selection=destination/'selection.json';selection.write_text(json.dumps(selected,indent=2)+'\n')
     env=dict(os.environ,LATENT_FULL='0',LATENT_ASSERT_NO_OUTPUT='1',ANY_MEMBERS_CENSUS_PIECE=str(selection),ANY_MEMBERS_CENSUS_ROOT=str(tree),LATENT_TIMES=str(destination/'times.jsonl'))
-    command=['/workspace/scratch/32-latent-build/latent',str(tree/'src/compiler'),str(destination/'records.jsonl')]
+    command=[os.environ.get('LATENT_BINARY','/workspace/scratch/32-latent-build/latent'),str(tree/'src/compiler'),str(destination/'records.jsonl')]
     with (destination/'process.log').open('w') as log:r=subprocess.run(command,cwd=repo,env=env,stdout=log,stderr=subprocess.STDOUT)
     assert r.returncode==0,label
     records=[json.loads(s) for s in (destination/'records.jsonl').read_text().splitlines()]
