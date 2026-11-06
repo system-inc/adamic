@@ -1,0 +1,62 @@
+{
+  "units": 398,
+  "completedUnits": [
+    "stage3-lane-async-function-cases-00",
+    "stage3-lane-async-function-cases-01",
+    "stage3-lane-async-function-cases-02",
+    "stage3-lane-build-no-emit-cases-00",
+    "stage3-lane-build-no-emit-cases-01",
+    "stage3-lane-build-no-emit-cases-02",
+    "stage3-lane-byte-comparisons",
+    "stage3-lane-compiler-no-emit-cases-00",
+    "stage3-lane-compiler-no-emit-cases-01",
+    "stage3-lane-compiler-no-emit-cases-02",
+    "stage3-lane-file-000",
+    "stage3-lane-file-001",
+    "stage3-lane-file-002",
+    "stage3-lane-file-003",
+    "stage3-lane-file-004",
+    "stage3-lane-file-005",
+    "stage3-lane-file-006",
+    "stage3-lane-file-007",
+    "stage3-lane-file-008",
+    "stage3-lane-file-009"
+  ],
+  "counts": {
+    "pass": 534,
+    "fail": 1,
+    "skip": 0
+  },
+  "pieces": [
+    {
+      "piece": 1,
+      "units": [
+        "stage3-lane-async-function-cases-00",
+        "stage3-lane-async-function-cases-01",
+        "stage3-lane-async-function-cases-02",
+        "stage3-lane-build-no-emit-cases-00",
+        "stage3-lane-build-no-emit-cases-01",
+        "stage3-lane-build-no-emit-cases-02",
+        "stage3-lane-byte-comparisons",
+        "stage3-lane-compiler-no-emit-cases-00",
+        "stage3-lane-compiler-no-emit-cases-01",
+        "stage3-lane-compiler-no-emit-cases-02",
+        "stage3-lane-file-000",
+        "stage3-lane-file-001",
+        "stage3-lane-file-002",
+        "stage3-lane-file-003",
+        "stage3-lane-file-004",
+        "stage3-lane-file-005",
+        "stage3-lane-file-006",
+        "stage3-lane-file-007",
+        "stage3-lane-file-008",
+        "stage3-lane-file-009"
+      ],
+      "seconds": 119.55728366300082,
+      "workers": 2,
+      "deadlineSeconds": 90,
+      "failed": []
+    }
+  ],
+  "complete": false
+}
