@@ -5,12 +5,13 @@ Run from the provisioned repository. No whole latent pass is launched.
 """
 from pathlib import Path
 import concurrent.futures as futures
-import gzip, hashlib, json, os, signal, subprocess, threading, time
+import gzip, hashlib, json, os, signal, subprocess, sys, threading, time
 repo=Path('/workspace/adamic')
 root=Path('/workspace/scratch/20pb346-2')
 evidence=Path(__file__).resolve().parent
 source=root/'adapted/src/compiler'
-plan_bytes=(evidence/'unit-plan.json').read_bytes()
+plan_path=Path(sys.argv[1]) if len(sys.argv)>1 else evidence/'unit-plan.json'
+plan_bytes=plan_path.read_bytes()
 plan=json.loads(plan_bytes)
 plan_hash=hashlib.sha256(plan_bytes).hexdigest()
 lock=threading.Lock()
@@ -30,7 +31,7 @@ def status():
  with active_lock:
   running={label:dict(pid=p.pid,seconds=round(time.monotonic()-start,1)) for label,(p,start) in active.items()}
  complete=list(results.glob('*/identity.json'))
- atomic_json(root/'unit-supervisor-status.json',dict(completed_pairs=len(complete),planned_pairs=len(plan['pieces']),active=running,updated=time.time()))
+ atomic_json(root/'unit-supervisor-status.json',dict(completed_pairs=len(complete),planned_pairs=len(plan['pieces'])+len(plan.get('completed_original_pieces',[])),active=running,updated=time.time()))
 
 def publish(folder,message,logfile):
  with lock:
@@ -144,6 +145,6 @@ try:
      raise
     piece=next(todo,None)
     if piece:pending[pool.submit(run,piece)]=piece['name']
- atomic_json(root/'unit-supervisor.done',dict(completed=True,pairs=len(plan['pieces'])))
+ atomic_json(root/'unit-supervisor.done',dict(completed=True,pairs=len(plan['pieces'])+len(plan.get('completed_original_pieces',[]))))
 finally:
  status()
