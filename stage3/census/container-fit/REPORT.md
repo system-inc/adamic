@@ -13,3 +13,7 @@ The prior stopped report is preserved in STOPPED-REPORT.md. The completed ordina
 ## Public-file budget revision
 
 The initial base utilitiesPublic whole-file p00 reached its 25 minute ceiling at 1,500.120056 seconds. It was intentionally stopped with SIGQUIT and committed/pushed at 258190b0c; this is not a measured compiler panic. Its header-only findings and partial timers are excluded from comparisons. evidence/public-budget-stop.json records replacement public chunks sized from observed timers. Each replacement public chunk will receive the head/log byte check. The requested single whole-file check could not finish inside the piece budget.
+
+## Completed q00 checkpoint
+
+Base, logging head and unlogged head q00 each completed 80 declarations and 74 timed attempts. Main pair reports five changed first stops, all moving from the Map/Set fit stop to checked predicate membership over an open tag domain. There are zero q00 regressions and zero cap rows. The 223,349-byte head/log record streams are byte-identical; evidence/byte-checks/q00.json records the SHA-256. These are partial findings, not a whole-census result.

@@ -1,0 +1,1256 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/factory/emitHelpers.ts": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+    "src/compiler/core.ts": "3dde48b17a7ea7c9475f28b0dfa1b8c3a407f6b4966c4f6f6c4e6769e4920f3e"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "JSON.parse: its result's type can't be proven from the text": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 13,
+        "after": 8,
+        "lowered": 5,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning T | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 0,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NamedDeclaration & { name: DeclarationName; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23878
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24371
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24642
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36345
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41239
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23861
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24351
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24625
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36332
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41226
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23861
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24351
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24625
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36332
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41226
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23769
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 23849,
+          "body_end": 23976,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isEmptyBindingPattern"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24249
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 24339,
+          "body_end": 24457,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isEmptyBindingElement"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24461
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 24578,
+          "body_end": 24728,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "walkUpBindingElementsAndPatterns"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36174
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 36263,
+          "body_end": 36373,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getDeclarationIdentifier"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41073
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 41187,
+          "body_end": 42045,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getJSDocParameterTagsWorker"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 35,
+        "NotYet": 23
+      },
+      "after": {
+        "Refused": 35,
+        "NotYet": 23
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "JSON.parse: its result's type can't be proven from the text": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 13,
+        "after": 8,
+        "lowered": 5,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target NamedDeclaration that narrows ArrowFunction, which isn't its supertype": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning T | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 0,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NamedDeclaration & { name: DeclarationName; }": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of findAncestor result T | undefined cannot be served by implementation result Node | undefined (return at /workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:792:13 isn't the value its predicate checked)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23878
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24371
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24642
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36345
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41239
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23861
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24351
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24625
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36332
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41226
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "new_sites": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23861
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24351
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24625
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36332
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41226
+        ],
+        "finding": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          23769
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 23849,
+          "body_end": 23976,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isEmptyBindingPattern"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:619:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:620:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24249
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 24339,
+          "body_end": 24457,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isEmptyBindingElement"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:629:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:630:9: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          24461
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 24578,
+          "body_end": 24728,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "walkUpBindingElementsAndPatterns"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:29: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:636:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:638:12: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          36174
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 36263,
+          "body_end": 36373,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getDeclarationIdentifier"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:33: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:925:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:927:20: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilitiesPublic.ts",
+          "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+          41073
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 41187,
+          "body_end": 42045,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getJSDocParameterTagsWorker"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:26: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1036:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13",
+          "reason": "checked predicate membership over an open tag domain",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilitiesPublic.ts:1038:13: stage 0 can't lower checked predicate membership over an open tag domain yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 34,
+        "NotYet": 23
+      },
+      "after": {
+        "Refused": 34,
+        "NotYet": 23
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
