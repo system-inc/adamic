@@ -403,27 +403,38 @@ console.log(String(names.length));
 	}
 }
 
-// An unrelated read isn't an unreachable one: an any hop hands a viewed Node allocation to an Other[]
-// that relates to Node neither way, so the key gives it no check, and it must stop where its array can
-// reach a viewed allocation rather than read Other's layout raw (Lower's must on #6wfvfhm). Mutant: the
-// unrelated put-back moved above demanded, as it was; this lowers.
+// An unrelated read isn't an unreachable one (Lower's must on #6wfvfhm): a road that hands a viewed
+// Node[] to an Other[] that relates to Node neither way leaves the key no check to build. So
+// checkViewArrays reads an unrelated read raw only where its array can't reach a viewed allocation, and
+// stops it where it can. Today every such road already stops before the read, at the hop itself, so
+// these rows pin those stops: the head that lifts one meets this rule and its read stops. The rule's
+// mutant (the put-back above demanded) has no live road to turn red until then
+// (view_elements.mutants.md).
 func TestViewElementUnrelatedButReachableStops(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSourceAs(t, `interface Node { readonly kind: number; }
+	const prelude = `interface Node { readonly kind: number; }
 interface Other { readonly name: string; }
 interface Base { readonly tag: 1; }
 interface SyntaxList extends Base { readonly _children: readonly Node[]; }
 const raw = {tag: 1 as const, _children: [{kind: 1}]};
 const base: Base = raw;
 const view = base as SyntaxList;
-const a: any = view._children;
-const others: readonly Other[] = a;
-console.log(String(others[0]?.name.length));
-`, ".ts")
-	// Only this rule's stop counts: a load error, or an earlier refusal of the cast or the any hop,
-	// would hide whether the unrelated read itself stops.
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "checked view's array read through") {
-		t.Fatalf("got %v, want the Other[] read reached from a viewed Node[] through any stopped as a checked view's array read", err)
+`
+	for _, row := range []struct{ name, source, want string }{
+		{"through any", prelude + "const a: any = view._children;\nconst others: readonly Other[] = a;\nconsole.log(String(others[0]?.name.length));\n", "a value of type any"},
+		{"through as unknown as", prelude + "const others = view._children as unknown as readonly Other[];\nconsole.log(String(others[0]?.name.length));\n", ""},
+		{"through object", prelude + "const wide: object = view._children;\nconst others = wide as readonly Other[];\nconsole.log(String(others[0]?.name.length));\n", ""},
+	} {
+		_, err := lowerSourceAs(t, row.source, ".ts")
+		var notYet *NotYet
+		var refused *Refused
+		if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+			t.Errorf("%s: got %v, want a lowering stop before an Other[] reads a viewed Node raw", row.name, err)
+			continue
+		}
+		t.Logf("%s: %v", row.name, err)
+		if row.want != "" && !strings.Contains(err.Error(), row.want) {
+			t.Errorf("%s: got %v, want a stop containing %q", row.name, err, row.want)
+		}
 	}
 }
