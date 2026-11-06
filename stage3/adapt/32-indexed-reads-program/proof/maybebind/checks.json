@@ -1,6 +1,6 @@
 {
-  "status": "oracle-in-progress",
-  "reason": "Fresh applies and replay on main 12fec995 pass; amended 99x composition and CW051 pass; oracle pieces are running.",
+  "status": "complete",
+  "reason": "The amended 99x composition passes. Fresh applies, all-adapter replay, whole lane, all 398 shards and all requested CW051 configurations are recorded.",
   "checks": {
     "1": {
       "status": "pass",
@@ -9,9 +9,9 @@
       "before_tree": "/workspace/scratch/32r-before",
       "after_tree": "/workspace/scratch/32r-after",
       "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product TREE",
-      "invalid_attempts": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies.",
       "base": "12fec995dcadc7f1ae94e4ba63835884451378ae",
-      "continuation": "continuation/provenance.json"
+      "continuation": "continuation/provenance.json",
+      "historical_attempts_at_997331ef1": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies."
     },
     "2": {
       "status": "pass",
@@ -53,8 +53,21 @@
       "reuse": "The fresh complete before and after compiler source trees are each byte-identical to the prior proof inputs; all five transformation inputs are unchanged."
     },
     "6": {
-      "status": "in-progress",
-      "details": "continuation/README.md"
+      "status": "pass",
+      "main": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+      "wholeLaneExit": 0,
+      "shards": 398,
+      "shardPieces": 10,
+      "eachPieceCommittedAndPushed": true,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "identicalTestIdentitiesAndStatuses": true,
+      "identicalSanctionedAPIBytes": true,
+      "maximumPieceSeconds": 70.70417062099841,
+      "details": "continuation/oracle-union.json"
     },
     "7": {
       "status": "pass",

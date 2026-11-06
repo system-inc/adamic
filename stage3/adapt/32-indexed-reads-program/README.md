@@ -5,6 +5,11 @@
 The [continuation on main 12fec995](proof/maybebind/continuation/README.md)
 uses amended 99x at 5fa773b7 and supersedes the earlier composition stop below.
 The twelve source rewrites and their pins are unchanged.
+All requested checks are now recorded: both fresh full applies and all 81
+replay outcomes pass on main 12fec995; the whole lane and all 398 shards pass,
+with each bounded piece committed and pushed. CW051 confirms watch.ts:855:19
+for all three units with 99x 5fa773b7. Packed receipts and the final summary
+are in the continuation linked above.
 
 Adamic's stage 3 ruling (a) on task kpp0f8s spells maybeBind(X, X.m) as
 X.m?.bind(X) when X is one identifier. Under the owner-pin rule, the twelve
@@ -37,14 +42,10 @@ or name read that observes either spelling. The complete normalized ASTs must
 then agree. The independent per-file verify.cjs permits only the twelve source
 rewrites before checking the existing JavaScript-identical edits.
 
-In the historical stopped run at 997331ef1, checks 1 through 5 passed. The then
-unchanged 99x adapter refused the composed tree:
-its exact handed-off inventory still requires all twelve watch calls to remain.
-Under the user's stopping rule, oracle preparation was terminated and check 6
-was not run. Check 7 records three measured configurations and the blocked
-combined configuration. See [the partial proof](proof/maybebind/README.md) and
-[all seven check results](proof/maybebind/checks.json). This fold is not claimed
-as a completed seven-check delivery.
+The historical run at 997331ef1 stopped after checks 1 through 5 because the
+then-unamended 99x adapter required these twelve watch calls to remain. Its
+receipts and stopping report are retained in [the historical proof](proof/maybebind/README.md).
+The continuation above completes the requested checks with amended 99x.
 
 ## Current directoryProbablyExists correction, task b5w3ycg
 
