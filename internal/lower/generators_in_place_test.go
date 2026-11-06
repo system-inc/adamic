@@ -122,12 +122,22 @@ console.log(host('s'));
 			if !isCall || call.Returns != ir.Generator {
 				return true
 			}
+			// Its target is read through ClosureTargets, as every reader of a call's targets must
+			// (internal/ir's call_targets_guard_test.go); its carrier is the one MakeClosure among its
+			// operands, since a generator written in place and called takes no arguments here.
 			targets := program.ClosureTargets(call)
-			carrier, isMade := call.Closure.(ir.MakeClosure)
-			if targets.Unknown || len(targets.Functions) != 1 || !isMade || carrier.Function != targets.Functions[0] {
-				t.Errorf("%s: a Generator call to %v through %#v, want one direct to a function through a MakeClosure of it", owner.Name, targets, call.Closure)
+			carriers := []ir.MakeClosure{}
+			walk(call, func(node any) bool {
+				if carrier, isMade := node.(ir.MakeClosure); isMade {
+					carriers = append(carriers, carrier)
+				}
+				return true
+			})
+			if targets.Unknown || len(targets.Functions) != 1 || len(carriers) != 1 || carriers[0].Function != targets.Functions[0] {
+				t.Errorf("%s: a Generator call to %v through carriers %v, want one direct to a function through a MakeClosure of it", owner.Name, targets, carriers)
 				return true
 			}
+			carrier := carriers[0]
 			if owner.Name != "host" {
 				t.Errorf("a generator written in place is made in %s, want host", owner.Name)
 			}
