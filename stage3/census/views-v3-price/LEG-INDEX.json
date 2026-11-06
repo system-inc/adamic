@@ -11,5 +11,18 @@
     "output_sha256": "7cb0a34fe631d84d6ebb3acacf7e8b6f71723981d4faeb3642837a3ccac85ef1",
     "archive_sha256": "77ef15fbaeb2547f3dd4d0dd1536ccf1cd34fd793a4f1f2392bd91e418753b59",
     "archive": "legs/src_compiler_semver-main-meter.tar.gz"
+  },
+  "src_compiler_semver-main-count": {
+    "stem": "src_compiler_semver",
+    "label": "main",
+    "variant": "count",
+    "elapsed_seconds_upper_bound": 57.86792605100027,
+    "exit_verification": "child exit status 0",
+    "files": [
+      "src/compiler/semver.ts"
+    ],
+    "output_sha256": "171c335c74aaf279950c5f95a50867e5d238848a317a3907c951c5e0491d3aa8",
+    "archive_sha256": "c411d443f1bd69ed0d9a925b2c15ecbd045a52bb365a2dc137e33e2cefb5118e",
+    "archive": "legs/src_compiler_semver-main-count.tar.gz"
   }
 }
