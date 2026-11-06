@@ -13,8 +13,25 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a function without a body")
 	}
 	if generatorDeclaration(node) {
+		// A generator written in place lowers only through inPlaceGenerator, which its consumers ask,
+		// so one reached here is used some other way (#qk8rztp S3b).
+		switch {
+		case generatorInPlace(node):
+			return nil, l.inPlaceNotYet(node)
+		case node.Name() != nil && calledInPlace(node) != nil:
+			// Its name binds it inside its body, where a call through it would make a second frame
+			// through a carrier no rule covers yet (Lower, on #qk8rztp S3b).
+			return nil, l.notYet(node, "a generator expression with a name of its own (#qk8rztp)")
+		}
 		return nil, l.generatorNotYet(node, generatorForm(node))
 	}
+	return l.closureExpression(node)
+}
+
+// closureExpression lowers a function expression, or a switch declaration, as the closure it is:
+// its body as a function of its own, with the cells it captures, and the MakeClosure that makes it.
+// A generator written in place is lowered here too, once, by lowerInPlaceGenerator.
+func (l *lowering) closureExpression(node *ast.Node) (ir.Expression, error) {
 	if len(node.TypeParameters()) != 0 {
 		return nil, l.notYet(node, "a generic function expression")
 	}
