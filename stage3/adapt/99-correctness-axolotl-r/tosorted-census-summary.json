@@ -1,0 +1,292 @@
+{
+  "roots": 79,
+  "groups": [
+    20,
+    20,
+    20,
+    19
+  ],
+  "movedFrom1049To1076": 73,
+  "beforeCompiler": "37f8314b98577c8856a382f8641e7d8a2ca091e7",
+  "afterCompiler": "73cdea837469a7a9e27ff692e747421646a068dd",
+  "tables": {
+    "before": [
+      {
+        "count": 73,
+        "kind": "Refused",
+        "where": "core.ts:1049:34",
+        "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts",
+          "_namespaces/ts.performance.ts",
+          "_namespaces/ts.ts",
+          "binder.ts",
+          "builder.ts",
+          "builderPublic.ts",
+          "builderState.ts",
+          "builderStatePublic.ts",
+          "checker.ts",
+          "commandLineParser.ts",
+          "emitter.ts",
+          "executeCommandLine.ts",
+          "expressionToTypeNode.ts",
+          "factory/baseNodeFactory.ts",
+          "factory/emitHelpers.ts",
+          "factory/emitNode.ts",
+          "factory/nodeChildren.ts",
+          "factory/nodeConverters.ts",
+          "factory/nodeFactory.ts",
+          "factory/nodeTests.ts",
+          "factory/parenthesizerRules.ts",
+          "factory/utilities.ts",
+          "factory/utilitiesPublic.ts",
+          "moduleNameResolver.ts",
+          "moduleSpecifiers.ts",
+          "parser.ts",
+          "path.ts",
+          "performance.ts",
+          "performanceCore.ts",
+          "program.ts",
+          "programDiagnostics.ts",
+          "resolutionCache.ts",
+          "scanner.ts",
+          "semver.ts",
+          "sourcemap.ts",
+          "symbolWalker.ts",
+          "sys.ts",
+          "tracing.ts",
+          "transformer.ts",
+          "transformers/classFields.ts",
+          "transformers/classThis.ts",
+          "transformers/declarations/diagnostics.ts",
+          "transformers/declarations.ts",
+          "transformers/destructuring.ts",
+          "transformers/es2015.ts",
+          "transformers/es2016.ts",
+          "transformers/es2017.ts",
+          "transformers/es2018.ts",
+          "transformers/es2019.ts",
+          "transformers/es2020.ts",
+          "transformers/es2021.ts",
+          "transformers/esDecorators.ts",
+          "transformers/esnext.ts",
+          "transformers/generators.ts",
+          "transformers/jsx.ts",
+          "transformers/legacyDecorators.ts",
+          "transformers/module/esnextAnd2015.ts",
+          "transformers/module/impliedNodeFormatDependent.ts",
+          "transformers/module/module.ts",
+          "transformers/module/system.ts",
+          "transformers/namedEvaluation.ts",
+          "transformers/taggedTemplate.ts",
+          "transformers/ts.ts",
+          "transformers/typeSerializer.ts",
+          "transformers/utilities.ts",
+          "tsbuild.ts",
+          "tsbuildPublic.ts",
+          "utilities.ts",
+          "utilitiesPublic.ts",
+          "visitorPublic.ts",
+          "watch.ts",
+          "watchPublic.ts",
+          "watchUtilities.ts"
+        ]
+      },
+      {
+        "count": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-",
+        "roots": [
+          "corePublic.ts",
+          "hostErrors.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "roots": [
+          "diagnosticInformationMap.generated.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+        "roots": [
+          "core.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "roots": [
+          "types.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+        "roots": [
+          "debug.ts"
+        ]
+      }
+    ],
+    "after": [
+      {
+        "count": 73,
+        "kind": "Refused",
+        "where": "core.ts:1076:100",
+        "reason": "a cast the runtime can't check",
+        "roots": [
+          "_namespaces/ts.moduleSpecifiers.ts",
+          "_namespaces/ts.performance.ts",
+          "_namespaces/ts.ts",
+          "binder.ts",
+          "builder.ts",
+          "builderPublic.ts",
+          "builderState.ts",
+          "builderStatePublic.ts",
+          "checker.ts",
+          "commandLineParser.ts",
+          "emitter.ts",
+          "executeCommandLine.ts",
+          "expressionToTypeNode.ts",
+          "factory/baseNodeFactory.ts",
+          "factory/emitHelpers.ts",
+          "factory/emitNode.ts",
+          "factory/nodeChildren.ts",
+          "factory/nodeConverters.ts",
+          "factory/nodeFactory.ts",
+          "factory/nodeTests.ts",
+          "factory/parenthesizerRules.ts",
+          "factory/utilities.ts",
+          "factory/utilitiesPublic.ts",
+          "moduleNameResolver.ts",
+          "moduleSpecifiers.ts",
+          "parser.ts",
+          "path.ts",
+          "performance.ts",
+          "performanceCore.ts",
+          "program.ts",
+          "programDiagnostics.ts",
+          "resolutionCache.ts",
+          "scanner.ts",
+          "semver.ts",
+          "sourcemap.ts",
+          "symbolWalker.ts",
+          "sys.ts",
+          "tracing.ts",
+          "transformer.ts",
+          "transformers/classFields.ts",
+          "transformers/classThis.ts",
+          "transformers/declarations/diagnostics.ts",
+          "transformers/declarations.ts",
+          "transformers/destructuring.ts",
+          "transformers/es2015.ts",
+          "transformers/es2016.ts",
+          "transformers/es2017.ts",
+          "transformers/es2018.ts",
+          "transformers/es2019.ts",
+          "transformers/es2020.ts",
+          "transformers/es2021.ts",
+          "transformers/esDecorators.ts",
+          "transformers/esnext.ts",
+          "transformers/generators.ts",
+          "transformers/jsx.ts",
+          "transformers/legacyDecorators.ts",
+          "transformers/module/esnextAnd2015.ts",
+          "transformers/module/impliedNodeFormatDependent.ts",
+          "transformers/module/module.ts",
+          "transformers/module/system.ts",
+          "transformers/namedEvaluation.ts",
+          "transformers/taggedTemplate.ts",
+          "transformers/ts.ts",
+          "transformers/typeSerializer.ts",
+          "transformers/utilities.ts",
+          "tsbuild.ts",
+          "tsbuildPublic.ts",
+          "utilities.ts",
+          "utilitiesPublic.ts",
+          "visitorPublic.ts",
+          "watch.ts",
+          "watchPublic.ts",
+          "watchUtilities.ts"
+        ]
+      },
+      {
+        "count": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-",
+        "roots": [
+          "corePublic.ts",
+          "hostErrors.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "roots": [
+          "diagnosticInformationMap.generated.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+        "roots": [
+          "core.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+        "roots": [
+          "types.ts"
+        ]
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+        "roots": [
+          "debug.ts"
+        ]
+      }
+    ]
+  },
+  "otherChanges": [],
+  "standardToolBinderCrosscheck": true,
+  "checkpoints": [
+    {
+      "sha": "c06822d3f0e0f59b20cdcce7f9bacbc0fc7c0a69",
+      "subject": "99r: checkpoint toSorted compiler census group 1"
+    },
+    {
+      "sha": "aaeac9b341a3dae1ff1650b70fa42582c24dfcb8",
+      "subject": "99r: checkpoint toSorted compiler census group 2"
+    },
+    {
+      "sha": "3a7e396c1aae821e76c3611bc1ef92735492f699",
+      "subject": "99r: checkpoint toSorted compiler census group 3"
+    },
+    {
+      "sha": "eaef022ee9d2f7efec961623a0a22fbc32cf6584",
+      "subject": "99r: checkpoint toSorted compiler census group 4"
+    }
+  ]
+}

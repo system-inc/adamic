@@ -32,8 +32,8 @@
     "ownerBeforeSha256": "935f1008af6a5f21ee2ba715919df6bd3a558c2c84e51b7de39eebd7a701ac05",
     "afterDeclarations": 1,
     "siteEdits": 1,
-    "after": "export function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\n    return (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;\n}",
-    "ownerAfterSha256": "23d781206a9b66c9e107e514eb9712d719356d7854d3d1674e5777630077b3eb"
+    "after": "export function toSorted<T>(array: readonly T[], comparer?: Comparer<T>): SortedReadonlyArray<T> {\n    return (array.length === 0 ? emptyArray as readonly T[] : array.slice().sort(comparer)) as unknown as SortedReadonlyArray<T>;\n}",
+    "ownerAfterSha256": "cca77df82dccebd40b75fa4e59bb4070c43c062ed95ec2e40b0b8cee51fbbbb3"
   },
   {
     "file": "core.ts",

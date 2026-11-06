@@ -29,8 +29,13 @@ for(const pin of adapter.owners){
   if(a.length===b.length){const i=a.findIndex((s,i)=>s!==b[i]);a[i]=b[i];refuse(pin.owner+': partial owner',{...originals,[pin.file]:originals[pin.file].replace(before,spell(a.join('\n')))});}
  }
 }
+const sortedPin=adapter.owners.find(p=>p.owner==='toSorted');
+const sortedEol=after['core.ts'].includes('\r\n')?'\r\n':'\n',sortedText=sortedPin.after.replace(/\n/g,sortedEol);
+refuse('toSorted: adapted mint with mutable arm',{...after,'core.ts':after['core.ts'].replace(sortedText,sortedText.replace('emptyArray as readonly T[]','emptyArray'))});
 refuse('parse error',{...originals,'core.ts':originals['core.ts']+'\nfunction {'});
 refuse('mixed files',{...originals,'core.ts':after['core.ts']});
 const foreign={...originals,'core.ts':originals['core.ts'].replace('function selectIndex(_: unknown, i: number)','function selectIndex(_foreign: unknown, i: number)')};assert.notEqual(foreign['core.ts'],originals['core.ts']);seed(foreign);assert.equal(adapter.adapt(dir).files,2);assert(snapshot()['core.ts'].includes('selectIndex(_foreign: unknown'));
 for(const eol of ['\n','\r\n']) {seed(Object.fromEntries(Object.entries(originals).map(([f,t])=>[f,t.replace(/\r\n/g,'\n').replace(/\n/g,eol)])));assert.equal(adapter.adapt(dir).files,2);for(const t of Object.values(snapshot()))assert(eol==='\n'?!t.includes('\r'):!t.replace(/\r\n/g,'').includes('\n'));}
-console.log(JSON.stringify({firstRunFiles:2,replay:{files:0,edits:0,writes:0,bytesAndMtimePreserved:true},refusals,foreignEditPreserved:true,lineEndingsPreserved:true},null,2));
+fs.writeFileSync=originalWrite;
+const relation=require('./relation-contract.cjs').checkUpcast(after['core.ts'],process.argv[3]||process.env.ADAMIC_CONTRACT_COMPILER,process.env.ADAMIC_RELATION_EVIDENCE);
+console.log(JSON.stringify({relation,firstRunFiles:2,replay:{files:0,edits:0,writes:0,bytesAndMtimePreserved:true},refusals,foreignEditPreserved:true,lineEndingsPreserved:true},null,2));
