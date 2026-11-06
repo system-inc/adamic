@@ -1,0 +1,4 @@
+// A string-indexed cast has no one K: tsc refuses it (TS2352), as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<string, Readonly<Record<string, string | number>>>>).SyntaxKind;
+console.log(`${view === undefined}`);

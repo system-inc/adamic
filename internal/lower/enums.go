@@ -217,8 +217,14 @@ func (l *lowering) enumLocal(node *ast.Node) (int, error) {
 	return local, nil
 }
 
+// enumObjectBuilt reports whether an enum declaration has a runtime object: every ordinary enum has
+// one, and no const enum does (rulings.md:218).
+func (l *lowering) enumObjectBuilt(declaration *ast.Node) bool {
+	return !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst)
+}
+
 func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
-	if ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+	if !l.enumObjectBuilt(node) {
 		return nil, nil
 	}
 	fields, err := l.enumFields(node)

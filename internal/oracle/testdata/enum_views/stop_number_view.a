@@ -1,0 +1,7 @@
+// Runtime's mutant, the view typed number over a numeric enum's table, which holds its names under its
+// reverse keys: tsc refuses the cast (TS2352), so it can't compile wrong.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, number>>>>).SyntaxKind;
+for (const name in view) {
+	console.log(`${name} ${typeof view[name]}`);
+}

@@ -1,0 +1,5 @@
+// A view whose value type doesn't hold the table's names (number | "Unknown" over SyntaxKind's reverse
+// keys) is a downcast, refused at the cast as on main.
+import * as ts from './barrel.a';
+const view = (ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, number | "Unknown">>>>).SyntaxKind;
+console.log(Object.keys(view).join(","));

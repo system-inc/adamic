@@ -1,0 +1,8 @@
+// Exports the namespace cast must not read as an enum: a function, a class and a plain object.
+export function helper(): number {
+	return 1;
+}
+export class Box {
+	readonly size: number = 2;
+}
+export const table = { a: 1 };
