@@ -63,7 +63,7 @@ function inspect(file,text,side) {
     const transformed=ts.transform(source,[context=>{
         function visit(n) {
             // Only _tsc loses the now-unreferenced core helper. Its source body is unchanged.
-            if(path.basename(file)==='_tsc.js'&&coreHelpers.has(n))return undefined;
+            // All handed-off original calls remain, so both bundles retain the core helper.
             if(ts.isParenthesizedExpression(n)&&canonical.has(unwrap(n)))return visit(unwrap(n));
             const bound=canonical.get(n);
             if(bound) {
@@ -79,7 +79,7 @@ function inspect(file,text,side) {
             if(ts.isIdentifier(n)) {
                 const s=symbol(n),name=tempNames.get(s);
                 if(name)return ts.factory.createIdentifier(name);
-                if(binders.has(s))return ts.factory.createIdentifier('__99x_binder_maybeBind');
+                // The retained core helper keeps binder's emitted name unchanged.
             }
             return ts.visitEachChild(n,visit,context);
         }

@@ -1,0 +1,238 @@
+{
+  "adapters": 81,
+  "loaded": 141,
+  "matches": [
+    {
+      "adapter": "32-indexed-reads-program",
+      "input": "/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-host-guards.json",
+      "file": "watch.ts",
+      "owners": [
+        "createCompilerHostFromProgramHost"
+      ],
+      "hashes": {
+        "runtimeSha256": "0d2e83f5548065fa12ec131612f5eff4c876724cf78fd8bb2bf464fdfe28e6b2"
+      },
+      "keys": [
+        "file",
+        "function",
+        "runtimeSha256"
+      ]
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "input": "/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-host-guards.json",
+      "file": "watch.ts",
+      "owners": [
+        "createProgramHost"
+      ],
+      "hashes": {
+        "runtimeSha256": "fe843059012c053fb1884466b53886ecf19eaf76f567188bea79a04f3beef072"
+      },
+      "keys": [
+        "file",
+        "function",
+        "runtimeSha256"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-h",
+      "input": "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/sites.json",
+      "file": "src/compiler/checker.ts",
+      "owners": [
+        "createBasicNodeBuilderModuleSpecifierResolutionHost"
+      ],
+      "hashes": {
+        "ownerBeforeSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
+        "literalSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7"
+      },
+      "keys": [
+        "file",
+        "owner",
+        "ownerBeforeSha256",
+        "literalSha256",
+        "members"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-h",
+      "input": "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/sites.json",
+      "file": "src/compiler/program.ts",
+      "owners": [
+        "createProgram"
+      ],
+      "hashes": {
+        "ownerBeforeSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152",
+        "literalSha256": "0abf62afe4c9c99de5dd8c5483f94367343f526bbff0456fb2509d6b9584734f"
+      },
+      "keys": [
+        "file",
+        "owner",
+        "ownerBeforeSha256",
+        "literalSha256",
+        "members"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-h",
+      "input": "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/sites.json",
+      "file": "src/compiler/program.ts",
+      "owners": [
+        "getEmitHost"
+      ],
+      "hashes": {
+        "ownerBeforeSha256": "cdf72d661d43306e9bf07a30681c65ef26ef550ca372d7e2a5b3960123249e60",
+        "literalSha256": "028ffb4ab62ff8fb5549816d55f3a68475fd8bc8d732a734b804ab94da3b8011"
+      },
+      "keys": [
+        "file",
+        "owner",
+        "ownerBeforeSha256",
+        "literalSha256",
+        "members"
+      ]
+    }
+  ],
+  "inputs": [
+    "/workspace/adamic/stage3/adapt/00-setup/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/10-type-imports/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/20-optional-declarations/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/20-optional-declarations/resolve-internal.cjs",
+    "/workspace/adamic/stage3/adapt/30-indexed-reads/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/30-indexed-reads/sites.json",
+    "/workspace/adamic/stage3/adapt/30-indexed-reads/whole-files.cjs",
+    "/workspace/adamic/stage3/adapt/30-indexed-reads/whole-sites.json",
+    "/workspace/adamic/stage3/adapt/31-indexed-reads-checker/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/31-indexed-reads-checker/sites.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/sites.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/directory-exists.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/watch-protocol.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/watch-protocol.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/nonempty-endings.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/nonempty-endings.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/closure.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/closure-sites.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-host-sites.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/handoffs.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/handoff-sites.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/handoff-guards.json",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-host-guards.cjs",
+    "/workspace/adamic/stage3/adapt/32-indexed-reads-program/public-host-guards.json",
+    "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/sites.json",
+    "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/required-values.json",
+    "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/files.json",
+    "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/type-edits.json",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/class-rules.json",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/diagnostic-declarations.json",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/timer-slot.cjs",
+    "/workspace/adamic/stage3/adapt/47-host-errors/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/40-explicit-any/error-host.cjs",
+    "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/rules.json",
+    "/workspace/adamic/stage3/adapt/42-scanner-any/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/43-any-returns/rules.json",
+    "/workspace/adamic/stage3/adapt/44-config-generics/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/44-config-generics/rules.json",
+    "/workspace/adamic/stage3/adapt/44-config-generics/predicate.json",
+    "/workspace/adamic/stage3/adapt/45-regex-captures/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/45-regex-captures/proof.cjs",
+    "/workspace/adamic/stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/48-memoize/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/49-honest-optionals/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/49-honest-optionals/plan.cjs",
+    "/workspace/adamic/stage3/adapt/49-honest-optionals/lifecycle.cjs",
+    "/workspace/adamic/stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/51-temporary-scanner-fallthrough/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/52-json-values/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/52-json-values/rules.json",
+    "/workspace/adamic/stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/61-temporary-factory-type-expression/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/62-temporary-tracing-write/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/63-temporary-tracing-legend/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/64-temporary-parser-range-read/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/70-readonly-views/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/70-readonly-views/parameter-audit.cjs",
+    "/workspace/adamic/stage3/adapt/70-readonly-views/local-alias.cjs",
+    "/workspace/adamic/stage3/adapt/71-writable-views/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/71-writable-views/parameters.json",
+    "/workspace/adamic/stage3/adapt/71-writable-views/type-plans.cjs",
+    "/workspace/adamic/stage3/adapt/71-writable-views/diagnostics.json",
+    "/workspace/adamic/stage3/adapt/71-writable-views/tuples.json",
+    "/workspace/adamic/stage3/adapt/71-writable-views/empty-arrays.json",
+    "/workspace/adamic/stage3/adapt/75-optional-widening/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/76-truthful-casts/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/78-variance-marker/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/79-exit-code/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/90-void-widening/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/90-void-widening/targets.json",
+    "/workspace/adamic/stage3/adapt/91-patcher-discard/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/targets.json",
+    "/workspace/adamic/stage3/adapt/92-tty-host-results/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/92-tty-host-results/proofs/targets.json",
+    "/workspace/adamic/stage3/adapt/93-builtin-imports/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/93-builtin-imports/proofs/targets.json",
+    "/workspace/adamic/stage3/adapt/94-axolotl-property-read/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-a/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-b/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-b/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-c/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-e/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-e/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-f/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-g/sites.json",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/sites.json",
+    "/workspace/adamic/stage3/adapt/96-emit-axolotl-a/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/96-emit-axolotl-b/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/96-emit-axolotl-c/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/97-cli-axolotl-a/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/97-cli-axolotl-b/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/97-cli-axolotl-c/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/97-cli-axolotl-d/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/97-cli-axolotl-e/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/98-axolotl-a/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/98-axolotl-a/sites.json",
+    "/workspace/adamic/stage3/adapt/98-axolotl-b/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/98-axolotl-b/sites.json",
+    "/workspace/adamic/stage3/adapt/98-axolotl-c/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/98-axolotl-d/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/98-axolotl-e/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-cli-perf-hooks-import/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-a/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-b/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-c/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-d/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-f/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-g/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-h/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-i/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-k/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-k/owners.json",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-l/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-m/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-n/pins.json",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-q/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-r/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-r/owners.json",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-s/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-t/pins.json",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/adapt.cjs",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/pins.json",
+    "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/imports.json"
+  ]
+}

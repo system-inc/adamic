@@ -1,127 +1,120 @@
-# 99x: bind host methods at the read
+# 99x: explicit host method binding with earlier-owner handoffs
 
-Task kpp0f8s. javascriptChanging true.
-Base main: 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
-Pinned upstream: TypeScript 6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
+Task kpp0f8s. javascriptChanging true. Pinned TypeScript 6.0.3 source:
+050880ce59e30b356b686bd3144efe24f875ebc8. Base main remains 3e395f9e5.
 
-Adamic's November 6, 2026 ruling authorizes stage 3 to replace
-`maybeBind(X, X.m)` with `X.m?.bind(X)` where X is one identifier.
-Apple's apple/bind-1 head supplies the separate bound-method lowering work.
-This branch changes no compiler implementation or policy.
+Adamic's November 6 ruling permits maybeBind(X, X.m) to become X.m?.bind(X)
+when X is one identifier. The supplied equivalence argument is that both
+forms read X, then X.m, then X again with nothing between. A function returns
+bound to X; undefined returns undefined; anything else truthy throws TypeError
+at .bind in both. The core.ts helper body remains unchanged.
 
-The equivalence argument supplied in the ruling is that both forms read X,
-then X.m, then X again with nothing between. If the slot holds a function,
-both return it bound to X; undefined returns undefined; anything else truthy
-throws TypeError at .bind in both. The core.ts maybeBind body is unchanged.
+## Owner handoffs and current count
 
-## Adapter
+The user requires earlier owner pins to own later edits to that owner.
+The runtime-input audit finds five overlapping owner pins:
+
+| Earlier adapter | Owner | Sites left |
+| --- | --- | ---: |
+| 95-checker-axolotl-h | checker.ts createBasicNodeBuilderModuleSpecifierResolutionHost | 2 |
+| 95-checker-axolotl-h | program.ts createProgram, including its nested getEmitHost | 4 |
+| 32-indexed-reads-program | watch.ts createCompilerHostFromProgramHost | 8 |
+| 32-indexed-reads-program | watch.ts createProgramHost | 4 |
+
+95h separately pins getEmitHost as well as its createProgram ancestor.
+32's public-host-guards.cjs hashes each complete emitted function body.
+The audit follows earlier adapters' local CJS/JSON runtime inputs, checks
+literal JSON references too, and distinguishes full-owner pins from local
+expression or ancestry guards. owner-pin-audit.json, owner-pin-audit-extra.json
+and ownership.json retain the evidence. No earlier adaptation directory changes.
+
+Current expectation: **28 rewritten, 18 left**. Six left sites belong to 95h;
+twelve belong to 32. The requested two checker sites carry the exact reason
+"owner pinned by 95-checker-axolotl-h; folded there" below. "Folded there"
+records the ownership handoff, not an edit by this branch to another adapter.
+There are zero unsupported-shape refusals and no type-driven fallback yet.
+
+## Adapter contract
 
 Run `NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-x/adapt.cjs TREE`.
-The API must be stock TypeScript 6.0.3. The scanner resolves the callee's symbol
-to core.ts's exported declaration, requires exactly two arguments, requires
-an Identifier receiver and a non-optional property access, and compares the
-receiver identifiers' symbols. binder.ts's two calls to its own one-argument
-helper are excluded by symbol identity and remain unchanged.
+The parser must be stock TypeScript 6.0.3. Callee symbols must resolve to the
+core export; both receiver identifiers must name the same symbol; the method
+argument must be a non-optional property access. binder.ts's two calls to its
+separate one-argument helper remain excluded by symbol identity.
 
-owners.json pins exact before/after text and SHA-256 for all 15 innermost named
-owners. Nested getEmitHost and its createProgram parent are both pinned.
-No whole-file hash gates adaptation. Missing, duplicate, moved, changed or
-half-adapted owners and mixed file/tree/import states fail before any write.
-Every source file is reread before writes. CRLF is preserved. An adapted replay
-returns zero files and preserves bytes and mtimes. generate.cjs is an explicit
-pin-generation tool, never called by apply.
+owners.json pins the exact before/after text and SHA-256 of ten edited owners,
+never whole-file hashes. Changed, missing, duplicate, moved and half-adapted
+owners and mixed tree/import states fail before any write. Every source file
+is reread before writing. CRLF is preserved; replay writes zero files and
+preserves bytes and mtimes. Handed-off calls are preserved and checked against
+their separate inventory. No cast is added.
 
-The frozen inventory has 46 rewrites, zero refused core calls and zero sites
-left as written. No cast is added. All six maybeBind import specifiers become
-unused and are removed: builder.ts, checker.ts, program.ts, tsbuildPublic.ts,
-watch.ts and watchPublic.ts. binder.ts's local helper is not a refused core call.
+Five source files change. The maybeBind imports are removed only in builder.ts,
+tsbuildPublic.ts and watchPublic.ts. program.ts and watch.ts retain imports for
+their handed-off calls; checker.ts is untouched. Python's actual sort places
+99x after 99u and before 99-wasm-crypto-import. No other directory is reordered.
 
-Python's actual directory sort places 99x after 99u and before
-99-wasm-crypto-import. The fixed requested directory name cannot sort after
-99-wasm-crypto-import; no other adaptation directory has been changed.
+## All 46 original sites
 
-## Site inventory
+Coordinates are from the pinned pristine source. The earlier-owner rule also
+covers calls nested within a pinned ancestor function.
 
-Coordinates below are from the pinned pristine source. inventory.json also
-records the fully adapted main coordinates used to generate the owner pins.
+| File:line:column | Owner | Original call | 99x action |
+| --- | --- | --- | --- |
+| builder.ts:1727:30 | createBuilderProgram.emitBuildInfo | `maybeBind(host, host.writeFile)` | rewrite |
+| builder.ts:1815:34 | createBuilderProgram.emitNextAffectedFileOrDtsErrors | `maybeBind(host, host.writeFile)` | rewrite |
+| builder.ts:1914:78 | createBuilderProgram.getWriteFileCallback | `maybeBind(host, host.writeFile)` | rewrite |
+| checker.ts:54264:26 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getSymlinkCache)` | owner pinned by 95-checker-axolotl-h; folded there |
+| checker.ts:54275:40 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getGlobalTypingsCacheLocation)` | owner pinned by 95-checker-axolotl-h; folded there |
+| program.ts:494:21 | createCompilerHostWorker | `maybeBind(system, system.createHash)` | rewrite |
+| program.ts:1956:40 | createProgram | `maybeBind(host, host.getGlobalTypingsCacheLocation)` | owner pinned by 95-checker-axolotl-h; folded there |
+| program.ts:2626:23 | createProgram.getEmitHost | `maybeBind(host, host.realpath)` | owner pinned by 95-checker-axolotl-h; folded there |
+| program.ts:2632:25 | createProgram.getEmitHost | `maybeBind(host, host.createHash)` | owner pinned by 95-checker-axolotl-h; folded there |
+| program.ts:2634:20 | createProgram.getEmitHost | `maybeBind(host, host.trace)` | owner pinned by 95-checker-axolotl-h; folded there |
+| program.ts:5114:26 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` | rewrite |
+| program.ts:5115:25 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` | rewrite |
+| program.ts:5116:19 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.realpath)` | rewrite |
+| tsbuildPublic.ts:302:16 | createSolutionBuilderHostBase | `maybeBind(system, system.now)` | rewrite |
+| tsbuildPublic.ts:438:46 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNameLiterals)` | rewrite |
+| tsbuildPublic.ts:439:60 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` | rewrite |
+| tsbuildPublic.ts:440:35 | createSolutionBuilderState | `maybeBind(host, host.resolveLibrary)` | rewrite |
+| tsbuildPublic.ts:441:39 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNames)` | rewrite |
+| tsbuildPublic.ts:442:51 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectives)` | rewrite |
+| tsbuildPublic.ts:443:45 | createSolutionBuilderState | `maybeBind(host, host.getModuleResolutionCache)` | rewrite |
+| tsbuildPublic.ts:500:16 | createSolutionBuilderState | `maybeBind(host, host.trace)` | rewrite |
+| watch.ts:677:20 | createWatchHost | `maybeBind(system, system.watchFile)` | rewrite |
+| watch.ts:678:25 | createWatchHost | `maybeBind(system, system.watchDirectory)` | rewrite |
+| watch.ts:679:21 | createWatchHost | `maybeBind(system, system.setTimeout)` | rewrite |
+| watch.ts:680:23 | createWatchHost | `maybeBind(system, system.clearTimeout)` | rewrite |
+| watch.ts:761:32 | createCompilerHostFromProgramHost | `maybeBind(host, host.getDefaultLibLocation)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:774:16 | createCompilerHostFromProgramHost | `maybeBind(host, host.trace)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:775:26 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:776:25 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:777:19 | createCompilerHostFromProgramHost | `maybeBind(host, host.realpath)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:778:33 | createCompilerHostFromProgramHost | `maybeBind(host, host.getEnvironmentVariable)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:779:21 | createCompilerHostFromProgramHost | `maybeBind(host, host.createHash)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:780:24 | createCompilerHostFromProgramHost | `maybeBind(host, host.readDirectory)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:856:19 | createProgramHost | `maybeBind(system, system.realpath)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:857:33 | createProgramHost | `maybeBind(system, system.getEnvironmentVariable)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:861:21 | createProgramHost | `maybeBind(system, system.createHash)` | owner pinned by 32-indexed-reads-program; folded there |
+| watch.ts:864:14 | createProgramHost | `maybeBind(system, system.now)` | owner pinned by 32-indexed-reads-program; folded there |
+| watchPublic.ts:125:23 | createIncrementalCompilerHost | `maybeBind(system, system.createHash)` | rewrite |
+| watchPublic.ts:506:56 | createWatchProgram | `maybeBind(host, host.useSourceOfProjectReferenceRedirect)` | rewrite |
+| watchPublic.ts:529:46 | createWatchProgram | `maybeBind(host, host.resolveModuleNameLiterals)` | rewrite |
+| watchPublic.ts:530:39 | createWatchProgram | `maybeBind(host, host.resolveModuleNames)` | rewrite |
+| watchPublic.ts:534:60 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` | rewrite |
+| watchPublic.ts:535:51 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectives)` | rewrite |
+| watchPublic.ts:543:9 | createWatchProgram | `maybeBind(host, host.getModuleResolutionCache)` | rewrite |
+| watchPublic.ts:549:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedResolutions)` | rewrite |
+| watchPublic.ts:552:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedLibResolutions)` | rewrite |
 
-| File:line:column | Owner | Original call |
-| --- | --- | --- |
-| builder.ts:1727:30 | createBuilderProgram.emitBuildInfo | `maybeBind(host, host.writeFile)` |
-| builder.ts:1815:34 | createBuilderProgram.emitNextAffectedFileOrDtsErrors | `maybeBind(host, host.writeFile)` |
-| builder.ts:1914:78 | createBuilderProgram.getWriteFileCallback | `maybeBind(host, host.writeFile)` |
-| checker.ts:54264:26 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getSymlinkCache)` |
-| checker.ts:54275:40 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getGlobalTypingsCacheLocation)` |
-| program.ts:494:21 | createCompilerHostWorker | `maybeBind(system, system.createHash)` |
-| program.ts:1956:40 | createProgram | `maybeBind(host, host.getGlobalTypingsCacheLocation)` |
-| program.ts:2626:23 | createProgram.getEmitHost | `maybeBind(host, host.realpath)` |
-| program.ts:2632:25 | createProgram.getEmitHost | `maybeBind(host, host.createHash)` |
-| program.ts:2634:20 | createProgram.getEmitHost | `maybeBind(host, host.trace)` |
-| program.ts:5114:26 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` |
-| program.ts:5115:25 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` |
-| program.ts:5116:19 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.realpath)` |
-| tsbuildPublic.ts:302:16 | createSolutionBuilderHostBase | `maybeBind(system, system.now)` |
-| tsbuildPublic.ts:438:46 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNameLiterals)` |
-| tsbuildPublic.ts:439:60 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` |
-| tsbuildPublic.ts:440:35 | createSolutionBuilderState | `maybeBind(host, host.resolveLibrary)` |
-| tsbuildPublic.ts:441:39 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNames)` |
-| tsbuildPublic.ts:442:51 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectives)` |
-| tsbuildPublic.ts:443:45 | createSolutionBuilderState | `maybeBind(host, host.getModuleResolutionCache)` |
-| tsbuildPublic.ts:500:16 | createSolutionBuilderState | `maybeBind(host, host.trace)` |
-| watch.ts:677:20 | createWatchHost | `maybeBind(system, system.watchFile)` |
-| watch.ts:678:25 | createWatchHost | `maybeBind(system, system.watchDirectory)` |
-| watch.ts:679:21 | createWatchHost | `maybeBind(system, system.setTimeout)` |
-| watch.ts:680:23 | createWatchHost | `maybeBind(system, system.clearTimeout)` |
-| watch.ts:761:32 | createCompilerHostFromProgramHost | `maybeBind(host, host.getDefaultLibLocation)` |
-| watch.ts:774:16 | createCompilerHostFromProgramHost | `maybeBind(host, host.trace)` |
-| watch.ts:775:26 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` |
-| watch.ts:776:25 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` |
-| watch.ts:777:19 | createCompilerHostFromProgramHost | `maybeBind(host, host.realpath)` |
-| watch.ts:778:33 | createCompilerHostFromProgramHost | `maybeBind(host, host.getEnvironmentVariable)` |
-| watch.ts:779:21 | createCompilerHostFromProgramHost | `maybeBind(host, host.createHash)` |
-| watch.ts:780:24 | createCompilerHostFromProgramHost | `maybeBind(host, host.readDirectory)` |
-| watch.ts:856:19 | createProgramHost | `maybeBind(system, system.realpath)` |
-| watch.ts:857:33 | createProgramHost | `maybeBind(system, system.getEnvironmentVariable)` |
-| watch.ts:861:21 | createProgramHost | `maybeBind(system, system.createHash)` |
-| watch.ts:864:14 | createProgramHost | `maybeBind(system, system.now)` |
-| watchPublic.ts:125:23 | createIncrementalCompilerHost | `maybeBind(system, system.createHash)` |
-| watchPublic.ts:506:56 | createWatchProgram | `maybeBind(host, host.useSourceOfProjectReferenceRedirect)` |
-| watchPublic.ts:529:46 | createWatchProgram | `maybeBind(host, host.resolveModuleNameLiterals)` |
-| watchPublic.ts:530:39 | createWatchProgram | `maybeBind(host, host.resolveModuleNames)` |
-| watchPublic.ts:534:60 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` |
-| watchPublic.ts:535:51 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectives)` |
-| watchPublic.ts:543:9 | createWatchProgram | `maybeBind(host, host.getModuleResolutionCache)` |
-| watchPublic.ts:549:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedResolutions)` |
-| watchPublic.ts:552:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedLibResolutions)` |
+## Current verification
 
-## Evidence
-
-The earlier missing-source stop is retained in check1-before.log and
-prerequisites.log as historical evidence. The user supplied the reference
-location and setup authorization on continuation. 99w's adapt.cjs, README.md
-and PROOF.md were read from 06dad75d; 99k's main adapter and documentation were
-also read. Setup completed successfully, the pinned source was cloned, and
-the full baseline apply passed. New logs supersede the historical stop.
-PROOF.md records the current checks. Tests write logs outside this hashed
-directory while running; completed evidence is copied here before publication.
-
-## Current verification and stopping point
-
-The final replay rule compares outcomes only. Matching refusals, including
-40's builder.ts brand refusal, are baseline records. The first 44 adapter
-pairs match. Pair 45, 95-checker-axolotl-h, differs: main reaches a createProgram
-writer-pin refusal, while after refuses earlier on
-createBasicNodeBuilderModuleSpecifierResolutionHost in checker.ts. That writer
-is one of 99x's owners. Its 95h pin matches main and fails after the two checker
-rewrites. Complete paired records, exact refusal text and their nonempty diff
-are retained under paired-replay/. No other adaptation was modified.
-
-Both full applies, owner contracts and zero-write direct replay pass. The
-79-root type check has zero diagnostics. All nine JavaScript products pass
-the emitted comparison, and the restored-site control detects exactly one
-missed site. The ordinary 79-root census has zero changed first stops, and
-all six CW051 units have before/after measurements. The whole upstream lane
-passes with 106,366 passing, one sanctioned API failure and zero pending.
-The first 40 of 398 standard shards pass; the remaining 358 were not run
-because of the first actual paired-replay difference. See PROOF.md for the
-full measured table and exact stopping point. This branch is not ready to land.
+This ownership revision supersedes the earlier 46-site run. Its new full after
+apply and all-adapter paired replay are in progress. The replay records every
+outcome before deciding whether any differ; shared refusals are baselines.
+It compares all 80 baseline adapters, with 99x's after replay recorded separately.
+If clean, types, emitted JavaScript, the one-site negative control, the complete
+lane and all 398 shards, and CW051 measurements will be rerun for this scope.
+Prior 46-site results are historical and do not certify the new scope.
+See PROOF.md and the new owned/ evidence as it is completed.

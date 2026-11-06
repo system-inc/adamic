@@ -26,7 +26,7 @@ try {
     fs.cpSync(path.join(tree,'src'),path.join(scratch,'src'),{recursive:true});
     const changed = path.join(scratch,'src/compiler',pin.file);
     fs.writeFileSync(changed,fs.readFileSync(changed,'utf8')+'\n// unrelated contract edit\n');
-    const applied=adapt(scratch); assert.equal(applied.rewrites,46);
+    const applied=adapt(scratch); assert.equal(applied.rewrites,inventory.sites.length);
     const before=files.map(file=>{const name=path.join(scratch,'src/compiler',file);return [name,fs.readFileSync(name),fs.statSync(name).mtimeNs];});
     // BigInt stats retain nanosecond precision.
     const stamps=before.map(([name])=>fs.statSync(name,{bigint:true}).mtimeNs);
@@ -36,7 +36,7 @@ try {
     const adapted=fs.readFileSync(changed,'utf8'); assert(normalize(adapted).endsWith('// unrelated contract edit\n'));
     // Restore, then exercise the same adapter against CRLF input.
     for(const [file,text] of original)fs.writeFileSync(path.join(scratch,'src/compiler',file),text.replace(/\n/g,'\r\n'));
-    assert.equal(adapt(scratch).rewrites,46);
+    assert.equal(adapt(scratch).rewrites,inventory.sites.length);
     for(const file of files) {const text=fs.readFileSync(path.join(scratch,'src/compiler',file),'utf8');assert(!/(?<!\r)\n/.test(text));}
     rows.push({name:'CRLF preservation',result:'pass'});
 } finally {fs.rmSync(scratch,{recursive:true,force:true});}

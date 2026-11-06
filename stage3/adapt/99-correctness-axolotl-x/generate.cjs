@@ -3,10 +3,16 @@
 const e = require('./engine.cjs');
 const {fs, path, assert} = e;
 const tree = path.resolve(process.argv[2]);
+const ownership = require('./ownership.json');
+const handoff = site => ownership.filter(row => row.file===site.file && (site.owner===row.owner || site.owner.startsWith(row.owner+'.'))).sort((a,b)=>b.owner.length-a.owner.length)[0];
 const normalized = new Map(e.sources(tree).map(name => [name, e.normalize(fs.readFileSync(name,'utf8'))]));
 const inventory = e.scan(tree,e.program(tree,normalized));
 assert.equal(inventory.sites.length, 46);
 assert.equal(inventory.refused.length, 0);
+inventory.left = inventory.sites.filter(handoff).map(site=>({...site, ...{pinnedOwner:handoff(site).owner, adapter:handoff(site).adapter, reason:'owner pinned by '+handoff(site).adapter+'; folded there'}}));
+inventory.sites = inventory.sites.filter(site=>!handoff(site));
+assert.equal(inventory.left.length,18);
+assert.equal(inventory.sites.length,28);
 if (process.argv[3]) {
     const pristine = path.resolve(process.argv[3]);
     const probe = e.scan(pristine);
@@ -29,4 +35,4 @@ for (const file of files) {
 }
 fs.writeFileSync(path.join(__dirname,'owners.json'), JSON.stringify(owners,null,2)+'\n');
 fs.writeFileSync(path.join(__dirname,'inventory.json'), JSON.stringify({...inventory,imports},null,2)+'\n');
-console.log(JSON.stringify({owners:owners.length, sites:inventory.sites.length, refused:inventory.refused.length, imports:imports.map(x=>x.file)},null,2));
+console.log(JSON.stringify({owners:owners.length, sites:inventory.sites.length, refused:inventory.refused.length, left:inventory.left.length, imports:imports.map(x=>x.file)},null,2));

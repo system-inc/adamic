@@ -1,3 +1,25 @@
+# Current ownership revision: 28 rewrites, 18 earlier-owner handoffs
+
+The user requires 99x to preserve any site inside an earlier-pinned owner.
+The runtime-input audit identifies six sites owned by 95h (two checker sites
+and four under createProgram/getEmitHost) and twelve under 32's complete
+watch-host runtime pins. The revised inventory has 28 rewrites, 18 left,
+ten edited owners and three removed imports. No earlier adapter is edited.
+
+The new 28-site full after apply is running. The revised paired replay will
+run every one of the 80 baseline adapters, retain all differences, and decide
+only after the complete run. Its passive filesystem journal is validated on
+sync, async, unchanged-byte and child-process writes; whole-tree initial and
+final byte/mtime manifests verify that no final change escapes the journal.
+The adapter execution write audit finds writeFileSync and setup's promise
+writeFile; the textual writeSync match in 62 is a quoted TypeScript expression,
+not an adapter-side write. owned/journal/ retains the controls and write audit.
+This replaces repeated whole-tree snapshots without changing adapter behavior.
+
+The owner/refusal/CRLF/direct-replay contracts pass for 28 rewrites and 18 left.
+New run receipts are placed under owned/. All prior 46-site results below are
+historical until individually rerun for this ownership revision.
+
 # 99x proof: stopped at the first unequal replay outcome
 
 The final check 1 condition compares replay outcomes only: files written,
