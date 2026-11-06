@@ -14,6 +14,13 @@ A `function*` lowers when it is:
 - declared at a module's top level, by name, and not `async`; a generic one lowers once per
   instantiation, where it's called, as every generic function does, so two instantiations are two
   functions with frames of their own, and each instance's `T` is judged as below;
+- or declared by name directly in the body of a function that is neither async nor a generator, with
+  no type parameter of its own or in scope (#qk8rztp S3a). It is a nested function: bound with its
+  siblings and hoisted, so a call written above it works, and its call makes its frame through the
+  closure of the function that declared it, its carrier: a sibling's own, one made for the call in an
+  arrow that forwards to it, or the parent's binding of it. Its body reads the parent's locals through
+  the carrier's cells, live at each step, with the parent's dead-zone readiness, and may call its
+  siblings, which may write them; a write inside it to a local it captured stops as not yet built;
 - given only plain, required parameters: no default, no `?`, no rest, no pattern, no `this`;
 - declared, or inferred, to return `Generator<T, ...>`, `IterableIterator<T>`, `SetIterator<T>` or
   `MapIterator<T>`, where `T` is held in one present slot: a number, a boolean, a string, an object,
@@ -30,6 +37,12 @@ Its call is consumed by one of:
 - `new Map` of the call, its only argument, when what it yields is a `[key, value]` tuple of two
   required elements held as the Map's keys and values, each pair set in order;
 - the call as a statement, which makes the generator and drops it, running none of the body.
+
+A nested generator's call is consumed only by a `for...of` over it, the call as a statement, and the
+one-read `Iterable<T>` parameter below. Its spread, `Array.from`, `new Set` and `new Map` stop as not
+yet built: their helper would make the frame, so it would be handed the carrier, and as an ordinary
+function its parameters don't count as escaping in the environment proof, which could put the
+parent's cells in its C frame while the generator held a closure into them (Memory, #s6tt5xt).
 
 Each consumer decides by the call's origin, never by the iterator type it is declared to return, so
 a generator declared `SetIterator<T>` is stepped as a generator and never read as a Set's iterator.
@@ -93,7 +106,14 @@ parameter stays not yet built, since its step hands back its value, not a result
 
 - **The frame.** The call makes an `adamic_generator` (runtime/generator.h): a code record naming
   the resume function, a state, a status and one cell per local and parameter. It runs none of the
-  body; the first step does.
+  body; the first step does. A nested generator's frame also owns `self`, the carrier its call was
+  made through, retained by its entry, so whatever made the carrier may let go of it before the first
+  step; finish releases it and leaves it `NULL`, so a done generator stops pinning its parent's
+  cells, and the drop walk drops it at every state. A top-level generator's `self` stays `NULL`.
+  Its entry is a closure's (`adamic_code`), and its resume reads the parent's cells through
+  `self->cells`, as any closure's body does. The make-frame call is a `CallClosure` direct to a
+  function that suspends, which the environment proof counts as keeping its carrier, so the parent's
+  cells go on the heap.
 - **The body.** flow.NormalizeAsync puts every local in a frame cell and every value a yield hands
   over in a snapshot, as it does an async function's; the body is cut into regions at each yield,
   as an async body is at each await, and the resume function switches on the state to the region it
@@ -129,7 +149,13 @@ machine over a counted heap frame"), with how each is kept.
    closure captures a frame cell, so no cycle through a frame can be made. The cycle finder's
    MapIterator and SetIterator arm reads a type, which can't tell a collection's iterator from a
    generator declared as one; no slot it walks holds a generator's call
-   (TestNoSlotTheIteratorArmWalksHoldsAGenerator).
+   (TestNoSlotTheIteratorArmWalksHoldsAGenerator). A nested generator's frame points out, through
+   `self`, at its parent's cells; that edge closes no cycle while nothing those cells reach can hold
+   a generator, which TestNoCapturedOrEnvironmentLocalCanHoldAGenerator reads off every generator
+   and view fixture: no captured or environment local is a Generator, and no parameter one is handed
+   into is captured. Owed at S2c-4, when generators become values, beside q5 on #qk8rztp (reachLinks
+   linking a generator type to its frame's cells): reachLinks must also link a generator to its
+   carrier's cells, the edge `self` makes, before that guard can be relaxed.
 
 A cell that holds a reference owns its value or holds `NULL`, never a stale pointer, so finishing the
 frame and dropping it are each one walk over the counted cells, whatever the state. A dropped
@@ -160,9 +186,11 @@ async generator, rule 2400, among them).
   the Map's, stops in the words `new Map` gives any other such source, and so does `new Map` or
   `new Set` of a generator that isn't a direct call. Destructuring a plain `function*` is refused before that,
   by adamic/no-void-read, which reads its `void` last value as a void position.
-- **A generator expression, a method, a nested declaration.** A nested generator captures its
-  parent's frame, which needs a canonical environment a generator's cells can be; a method needs
-  `this`.
+- **A generator expression, a method, and the nested declarations S3a doesn't take**: one that is
+  generic or has a type parameter in scope, one declared in a block or in an async function or a
+  generator, one used as a value, and one whose body writes a local it captured (S3a's next head),
+  each in its own words. A generator expression's carrier is an anonymous closure of its own layout
+  (S3b); a method needs `this`.
 - **A generic generator's instance whose `T` isn't one present slot**, a union or `unknown` among
   them, and a for-of in the body over an `Iterable<T>` parameter handed anything but a collection's
   iterator (the view above). tsc's own `mapIterator` handed an array stops, since an array is no
@@ -172,8 +200,10 @@ async generator, rule 2400, among them).
   at a yield, and `return()` running a `finally`, need resume modes the frame doesn't have yet.
 - **`return value`**, a yield used as a value, `next(x)`, `return(v)` and `throw(e)`. Each is a part
   of the protocol whose values `T`, `TReturn` and `TNext` keep apart, and none is modeled yet.
-- **A closure in the body capturing a local or a parameter.** Its environment would be the
-  generator's cells, which a canonical closure can't own (closure.c's canonical_owner stops one).
+- **A closure in the body capturing a local or a parameter**, and a nested declaration in the body.
+  Its environment would be the generator's cells, which a canonical closure can't own (closure.c's
+  canonical_owner stops one). This is the canonical environment a generator's cells would have to
+  be; a nested generator's parent needs none, since its cells are already an environment's.
 - **`arguments` in the body**, a consumer inside an async function or a generator, and a for-of
   over a generator's call in a module that awaits at its top level.
 - **A Program region in a program with a generator.** A frame can't be a region member, and which

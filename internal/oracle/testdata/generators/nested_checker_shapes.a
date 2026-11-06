@@ -1,0 +1,80 @@
+// tsc's checker.ts generators, nested as createTypeChecker nests them (#qk8rztp S3a): each is
+// declared in its host's body, calls a sibling that writes the host's cache and counter, as
+// getStringLiteralType does (checker.ts:20305), reads the host's parameter, and yields object
+// literals to a sibling's for-of. generateAttributes has generateJsxAttributes' early return and
+// continue (:21677), generateLimitedTuple has generateLimitedTupleElements' snapshot of a length
+// and its continue (:21822), and generateObjectLiteral has generateObjectLiteralElements' yields in
+// a switch's cases, two labels sharing one body, each ended by a break (:21859).
+interface Elaboration {
+    readonly errorNode: string;
+    readonly nameType: string;
+}
+function createChecker(seed: string): number {
+    const literalTypes = new Map<string, string>();
+    let created = 0;
+    function getStringLiteralType(value: string): string {
+        const cached = literalTypes.get(value);
+        if (cached !== undefined) {
+            return cached;
+        }
+        created++;
+        const made = `"${value}"#${String(created)}`;
+        literalTypes.set(value, made);
+        return made;
+    }
+    function* generateAttributes(names: readonly string[]): Generator<Elaboration, void, undefined> {
+        if (names.length === 0) return;
+        for (const name of names) {
+            if (name.startsWith('-')) continue;
+            yield { errorNode: `${seed}.${name}`, nameType: getStringLiteralType(name) };
+        }
+    }
+    function* generateLimitedTuple(elements: readonly string[], limit: number): Generator<Elaboration, void, undefined> {
+        const length = elements.length;
+        if (length === 0) return;
+        for (let index = 0; index < length; index++) {
+            if (index >= limit) continue;
+            const element = elements[index] ?? '';
+            yield { errorNode: `${seed}[${String(index)}]=${element}`, nameType: getStringLiteralType(String(index)) };
+        }
+    }
+    function* generateObjectLiteral(kinds: readonly number[]): Generator<Elaboration, void, undefined> {
+        for (const kind of kinds) {
+            switch (kind) {
+                case 1:
+                case 2:
+                    yield { errorNode: `${seed} method ${String(kind)}`, nameType: getStringLiteralType(`m${String(kind)}`) };
+                    break;
+                case 3:
+                    yield { errorNode: `${seed} property ${String(kind)}`, nameType: getStringLiteralType(`p${String(kind)}`) };
+                    break;
+                default:
+                    console.log(`${seed} skips ${String(kind)}`);
+            }
+        }
+    }
+    function elaborate(label: string): number {
+        let reported = 0;
+        for (const element of generateAttributes(['a', '-b', 'c', 'a'])) {
+            reported++;
+            console.log(`${label} ${element.errorNode} ${element.nameType}`);
+        }
+        for (const element of generateAttributes([])) {
+            console.log(`${label} never ${element.errorNode}`);
+        }
+        for (const element of generateLimitedTuple(['x', 'y', 'z'], 2)) {
+            reported++;
+            console.log(`${label} ${element.errorNode} ${element.nameType}`);
+        }
+        for (const element of generateObjectLiteral([1, 4, 2, 3])) {
+            reported++;
+            console.log(`${label} ${element.errorNode} ${element.nameType}`);
+        }
+        return reported;
+    }
+    const first = elaborate('first');
+    const second = elaborate('second');
+    console.log(`${seed} created ${String(created)}`);
+    return first + second;
+}
+console.log(String(createChecker(`checker${String(1)}`)));

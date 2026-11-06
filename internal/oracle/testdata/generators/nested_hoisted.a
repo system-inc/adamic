@@ -1,0 +1,19 @@
+// A nested generator is hoisted with its siblings, as a nested function is (Lower's term 1 on
+// #qk8rztp S3a): its call written above its declaration in the parent's body steps it, and a call
+// made and dropped as a statement runs none of its body and lets go of the argument it kept.
+function host(count: number): string {
+    let joined = '';
+    for (const value of countdown(`from ${String(count)}`, count)) {
+        joined += `${value};`;
+    }
+    countdown(`dropped ${String(count)}`, count);
+    function* countdown(label: string, from: number): Generator<string, void, undefined> {
+        console.log(`${label} starts`);
+        for (let index = from; index > 0; index--) {
+            yield `${label} ${String(index)}`;
+        }
+    }
+    return joined;
+}
+console.log(host(3));
+console.log(host(1));
