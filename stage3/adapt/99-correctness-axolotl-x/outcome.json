@@ -19,44 +19,105 @@
     "3": "pass: seven byte-identical files; two bundles each have exactly 46 normalized binding rewrites",
     "4": "not run: stopped at check 1",
     "5": "pass: restored-site build exits 0; comparison exits 1 and identifies exactly one unique missed site",
-    "6": "not run: stopped at check 1"
+    "6": "not run: stopped at check 1",
+    "6_latent": "pass: all six units before and after, 12 bounded pieces"
   },
   "CW051": [
     {
-      "unit": "src/compiler/checker.ts:54277:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/checker.ts:54277:1",
+      "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54279:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54278:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      },
+      "before_seconds": 306.2567265099997,
+      "after_seconds": 393.4464036500003
     },
     {
-      "unit": "src/compiler/watch.ts:673:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/watch.ts:673:1",
+      "name": "createWatchHost",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:676:20",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "before_seconds": 30.31467190100011,
+      "after_seconds": 38.999557105999884
     },
     {
-      "unit": "src/compiler/watchPublic.ts:123:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/watchPublic.ts:123:1",
+      "name": "createIncrementalCompilerHost",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watchPublic.ts:124:23",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "before_seconds": 50.308863314000064,
+      "after_seconds": 35.69395453900006
     },
     {
-      "unit": "src/compiler/executeCommandLine.ts:812:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/executeCommandLine.ts:812:1",
+      "name": "performBuild",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "before_seconds": 37.64360363100013,
+      "after_seconds": 27.863907746000223
     },
     {
-      "unit": "src/compiler/executeCommandLine.ts:1011:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/executeCommandLine.ts:1011:1",
+      "name": "createWatchOfConfigFile",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "before_seconds": 30.60584311799994,
+      "after_seconds": 40.45128683999974
     },
     {
-      "unit": "src/compiler/executeCommandLine.ts:1034:1",
-      "before": null,
-      "after": null,
-      "status": "not measured: stopped at check 1"
+      "reference": "src/compiler/executeCommandLine.ts:1034:1",
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "before_seconds": 37.827965038,
+      "after_seconds": 26.57674100299937
     }
   ],
   "paired_replay": {

@@ -1235,3 +1235,50 @@ The normalized comparison diff has one restored expression in each bundle.
 This verifies that check 3 detects a missed adaptation site. Full restoration,
 build and comparison logs, the exact report and the two negative diffs are
 retained with the restored-site fixtures.
+
+## Check 6 latent component: all six CW051 units, both trees
+
+All 12 bounded pieces exit 0. The largest piece takes 393.4 seconds, below
+25 minutes. The scheduling selector is copied from the requested container-fit
+reference at 654092b95416580c3e5be1f968fb8b14755b4481. The overlay uses unmodified
+main's latent measurement harness. Its only extra hooks select scheduled files
+and top-level units; registration and dependency bodies remain unchanged.
+All runs report checker_rejected false. Each retained piece contains exactly
+one requested attempted unit and at most one first-error lowering finding.
+File-wide refusal_scan findings are retained but are not unit lowering stops.
+
+The current main baseline differs from the historical core-walls snapshot:
+core's helper is now at line 1533, and the checker-host unit stops first on a
+method-presence boundary. The measured table below reports current main.
+The after locations include the removed import's one-line shift.
+
+| Unit | Before first lowering stop | After first lowering stop |
+| --- | --- | --- |
+| createBasicNodeBuilderModuleSpecifierResolutionHost | NotYet: src/compiler/checker.ts:54279:37 | NotYet: src/compiler/checker.ts:54278:37 |
+| createWatchHost | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:676:20 |
+| createIncrementalCompilerHost | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watchPublic.ts:124:23 |
+| performBuild | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
+| createWatchOfConfigFile | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
+| createWatchOfFilesAndCompilerOptions | NotYet: src/compiler/core.ts:1533:12 | NotYet: src/compiler/watch.ts:855:19 |
+
+The checker-host stop on both trees is a presence test of a method whose
+presence the receiver's construction does not prove. The other five units
+stop on a call through ?. before and after: before in core's helper, after
+at the direct optional-binding expression. This measures moved stops and
+does not claim native lowering completes. latent/comparison.json retains all
+exact reasons, reference identifiers and timings. All per-piece records,
+unit plans, logs and timers are retained under latent/before and latent/after.
+
+## Oracle preparation piece
+
+The standard prepare_shards.py producer completed in 804.7 seconds under a
+1440-second outer limit. Apply, locked install, ordinary build and harness
+phases all exit 0. Its source tree is byte-identical across all 746 src files
+to the checked after tree. The frozen worktree at 21ad49c10 has the exact same
+adapt.cjs, engine.cjs, owners.json and inventory.json bytes. Freezing its inputs
+keeps later evidence commits from invalidating the prepared artifact hash.
+The whole lane and shards run its unchanged main lane/oracle code.
+
+The public and internal declaration outputs are byte-identical to baseline;
+their hashes are retained in javascript/declarations.json. Oracle producer
+logs, phase exits and source-identity evidence are under oracle/.
