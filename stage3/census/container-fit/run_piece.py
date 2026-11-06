@@ -1,7 +1,7 @@
 """One foreground measurement and immediate ordinary publication. Never loops over pieces."""
 import argparse,datetime,gzip,hashlib,json,os,pathlib,signal,subprocess,time
 O=pathlib.Path(__file__).resolve().parent; R=O.parents[2]; T=pathlib.Path('/workspace/container-fit-adapted'); B=pathlib.Path('/workspace/container-fit-build-v2')
-p=argparse.ArgumentParser();p.add_argument('mode',choices=['latent','per-file']);p.add_argument('label',choices=['base','log','head']);p.add_argument('piece');p.add_argument('files',nargs='*');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('mode',choices=['latent','per-file']);p.add_argument('label',choices=['base','log','head']);p.add_argument('piece');p.add_argument('files',nargs='*');p.add_argument('--seconds',type=int,default=1500);p.add_argument('--push-seconds',type=int,default=120);a=p.parse_args();assert 60<=a.seconds<=1740 and 1<=a.push_seconds<=120
 D=O/'evidence'/a.mode/a.label/a.piece;D.mkdir(parents=True,exist_ok=False)
 def dump(n,v):(D/n).write_text(json.dumps(v,indent=2)+'\n')
 sel=json.loads(pathlib.Path(a.files[0][1:]).read_text()) if a.files and a.files[0].startswith('@') else dict(schema=1,files=[dict(file='src/compiler/'+f,all_units=True,units=[]) for f in a.files]);dump('selection.json',sel)
@@ -14,7 +14,7 @@ if a.label=='log':env['ADAMIC_FIT_PAIRS_LOG']=str(D/'pairs.log')
 cmd=[str(B/a.label/('latent' if a.mode=='latent' else 'census')),str(T/'src/compiler'),str(D/'records.jsonl')]
 binary_sha=hashlib.sha256(pathlib.Path(cmd[0]).read_bytes()).hexdigest()
 assert binary_sha==json.loads((O/'evidence/latent-build'/(a.label+'.json')).read_text())['selector_sha256']
-start=time.monotonic();dump('started.json',dict(hostname=os.uname().nodename,binary_sha256=binary_sha,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=cmd,environment={k:env[k] for k in env if k.startswith(('LATENT_','ANY_MEMBERS_','ADAMIC_FIT_'))}))
+start=time.monotonic();dump('started.json',dict(timeout_seconds=a.seconds,hostname=os.uname().nodename,binary_sha256=binary_sha,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=cmd,environment={k:env[k] for k in env if k.startswith(('LATENT_','ANY_MEMBERS_','ADAMIC_FIT_'))}))
 with (D/'process.log').open('w') as log:
  child=subprocess.Popen(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
  try:
@@ -24,14 +24,14 @@ with (D/'process.log').open('w') as log:
     elapsed=time.monotonic()-start
     f=D/('times.jsonl' if a.mode=='latent' else 'records.jsonl')
     print(a.mode,a.label,a.piece,round(elapsed,1),'seconds',f.stat().st_size if f.exists() else 0,'progress bytes',flush=True)
-    if elapsed>=1500:
+    if elapsed>=a.seconds:
      os.killpg(child.pid,signal.SIGQUIT)
      try:code=child.wait(timeout=10)
      except subprocess.TimeoutExpired:os.killpg(child.pid,signal.SIGKILL);code=child.wait()
      break
  finally:
   if child.poll() is None:os.killpg(child.pid,signal.SIGKILL);child.wait()
-metrics=dict(returncode=code,wall_seconds=time.monotonic()-start,utc_end=datetime.datetime.now(datetime.timezone.utc).isoformat(),timed_out=time.monotonic()-start>=1500)
+metrics=dict(returncode=code,wall_seconds=time.monotonic()-start,utc_end=datetime.datetime.now(datetime.timezone.utc).isoformat(),timed_out=time.monotonic()-start>=a.seconds)
 validation_error=None
 try:
  if code==0:
@@ -62,7 +62,7 @@ paths=subprocess.check_output(['git','diff','--cached','--name-only'],cwd=R,text
 subprocess.run(['git','diff','--cached','--check'],cwd=R,check=True)
 subprocess.run(['git','commit','-m',f'stage3/census: container fit {a.mode} {a.label} {a.piece}'],cwd=R,check=True)
 with (O/'evidence/publication.log').open('a') as f:
- result=subprocess.run(['timeout','--kill-after=10s','120','git','push','origin','HEAD:refs/heads/typescript/container-fit-census'],cwd=R,stdout=f,stderr=subprocess.STDOUT)
+ result=subprocess.run(['timeout','--kill-after=10s',str(a.push_seconds),'git','push','origin','HEAD:refs/heads/typescript/container-fit-census'],cwd=R,stdout=f,stderr=subprocess.STDOUT)
 print(json.dumps(metrics),flush=True)
 if result.returncode:raise SystemExit('ordinary push failed, stop before next piece')
 if code:raise SystemExit('measurement failed, evidence committed and pushed')
