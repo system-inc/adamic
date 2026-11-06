@@ -1,6 +1,6 @@
 --- accepted/src/compiler/core.ts
 +++ mutant/src/compiler/core.ts
-@@ -7,7 +7,7 @@
+@@ -963,8 +963,8 @@
  export function combine<T extends {}>(xs: T | T[] | undefined, ys: T | T[] | undefined) {
      if (xs === undefined) return ys;
      if (ys === undefined) return xs;
@@ -10,3 +10,4 @@
 +    if (isArray(ys)) return append(ys, xs);
      return [xs, ys];
  }
+ 
