@@ -190,7 +190,14 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 		//     (TestProgramRegionGeneratorCapturedLocalStops, TestProgramRegionGeneratorNestedFunctionStops).
 		//  2. A generator's call is an ir.Call, which programAllocation never stamps, and
 		//     internal/native/generator.go adopts nothing, so no frame is adopted
-		//     (internal/oracle's TestProgramRegionGeneratorsNotAdopted).
+		//     (internal/oracle's TestProgramRegionGeneratorsNotAdopted). A nested generator's call, or
+		//     one written in place, is an ir.CallClosure through its carrier; a written-in-place one's
+		//     carrier is the MakeClosure nestedGeneratorCall makes, never through programAllocation,
+		//     and its function's type, a generator function's, which no slot holds, joins no
+		//     ProgramTypes, so that carrier stays counted too (Memory on #qk8rztp S3b,
+		//     TestProgramRegionGeneratorInPlaceNotAdopted). Its function would still join through a
+		//     cell it captures, were that cell a member, which only a cycle through the cell makes it
+		//     (selectProgramMembership's environment rule); no pin reaches one yet.
 		//  3. No generator value reaches a slot: expression.go stops every value use but an Iterable<T>
 		//     argument, and checkGeneratorRoads holds the lowered program to that
 		//     (TestProgramRegionGeneratorStoredInFieldStops, TestProgramRegionGeneratorPushedIntoArrayStops,
@@ -288,6 +295,10 @@ type lowering struct {
 	// generatorArguments are the generators' calls handed into an Iterable<T> parameter, by
 	// IterableOf's Site (iterableOfGenerator), which checkIterableViews proves.
 	generatorArguments []generatorArgument
+	// inPlaceGenerators is the function each generator written in place lowered to, by its expression
+	// and the function it's written in (inPlaceGenerator). It is this lowering's, never global: the
+	// latent census and a relower each build a fresh lowering.
+	inPlaceGenerators map[inPlaceGeneratorKey]int
 
 	programPlan          *programMembership
 	programDiscovery     bool
