@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -78,15 +79,23 @@ func TestViewArrays(t *testing.T) {
 					if name == "per-read" {
 						prefix = "first\n"
 					}
-					found := "; found number"
+					found := ", found number\n"
 					if name == "tagged-null-lie" {
-						found = "; found null"
+						found = ", found null\n"
 					}
 					if strings.Contains(name, "result-lie") || name == "generic-object-lie" {
-						found = "; found object"
+						found = ", found object\n"
 					}
-					if got.exitCode != 70 || string(got.stdout) != prefix || !strings.HasPrefix(string(got.stderr), "adamic: panic: element read failed: ") || !strings.Contains(string(got.stderr), found) {
+					if got.exitCode != 70 || string(got.stdout) != prefix || !strings.HasPrefix(string(got.stderr), "adamic: panic: element read failed: ") || !strings.HasSuffix(string(got.stderr), found) {
 						t.Fatalf("%s: wanted first-read failure before handing out the lie; got %#v", backend, got)
+					}
+					// Every checked stop's shape (Diagnostics, #6wfvfhm): the read in the program's own
+					// words, never a path, then is not a T; expected T, found K, and both backends alike.
+					if !elementStop.MatchString(string(got.stderr)) || strings.Contains(string(got.stderr), "/") || string(got.stderr) != string(backends["native"].stderr) {
+						t.Fatalf("%s: the element stop isn't in the checked-stop shape, or differs from native's: %q against %q", backend, got.stderr, backends["native"].stderr)
+					}
+					if want, pinned := elementStopWords[name]; pinned && string(got.stderr) != want {
+						t.Fatalf("%s: got %q, want %q", backend, got.stderr, want)
 					}
 					expected := ""
 					if name == "generic" || name == "generic-object-lie" {
@@ -131,4 +140,17 @@ func TestViewArrayConsole(t *testing.T) {
 	if !errors.As(err, &rejected) || !strings.Contains(err.Error(), "TS2345") {
 		t.Fatalf("want prelude's string-only console check, got %v", err)
 	}
+}
+
+// elementStop is a checked element read's stop, in the shape of every checked stop: what was read,
+// is not a T; expected T, found K.
+var elementStop = regexp.MustCompile(`^adamic: panic: element read failed: [^\n]+ is not a ([^;\n]+); expected ([^,\n]+), found ([^\n]+)\n$`)
+
+// elementStopWords pins each road's exact words: the read's own text for an index or at read, and the
+// receiver and road for a handout. Mutant: the expected clause dropped from the stop; every row goes red.
+var elementStopWords = map[string]string{
+	"index-lie":  "adamic: panic: element read failed: view._children[0] is not a Node; expected Node, found number\n",
+	"at-lie":     "adamic: panic: element read failed: view._children.at(-1) is not a Node; expected Node, found number\n",
+	"map-lie":    "adamic: panic: element read failed: view._children's element, in map is not a Node; expected Node, found number\n",
+	"for-of-lie": "adamic: panic: element read failed: view._children's element, in for...of is not a Node; expected Node, found number\n",
 }
