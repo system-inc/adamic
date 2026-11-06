@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "label": "main",
+  "folds": "",
+  "full_apply": {
+    "command": [
+      "bash",
+      "/workspace/bind2-main322/stage3/apply.sh",
+      "--build-product",
+      "/workspace/bind2-main-tree"
+    ],
+    "exit": 0,
+    "seconds": 379.28941868200127,
+    "limit_seconds": 1440
+  },
+  "types": {
+    "exit": 0,
+    "roots": 79,
+    "diagnostics": 0,
+    "seconds": 4.569706182001028
+  },
+  "build_exit": 0
+}
