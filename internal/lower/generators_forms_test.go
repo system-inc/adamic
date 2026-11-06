@@ -25,6 +25,8 @@ import (
 //
 // A plain nested declaration lowers since S3a, and its rows are TestNestedGeneratorsLower's and
 // TestNestedGeneratorRoadsAreNotYet's (generators_nested_test.go); a generic one still stops here.
+// A generator written in place and called lowers since S3b in a plain function, and in a generic one
+// stops in its own words, both in generators_in_place_test.go.
 func TestGeneratorFormsStopAtLowering(t *testing.T) {
 	t.Parallel()
 	const generator = "Generator<number, void, unknown>"
@@ -34,7 +36,6 @@ func TestGeneratorFormsStopAtLowering(t *testing.T) {
 		{"nested generic declaration", "", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\nfor (const value of inner(1)) console.log(String(value));", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\ninner(1);", "declared generic inside a function", "yield seed;"},
 		{"block declaration", "", "if (String(1).length > 0) { function* inner(): " + generator + " { BODY } for (const value of inner()) console.log(String(value)); }", "if (String(1).length > 0) { function* inner(): " + generator + " { BODY } inner(); }", "declared inside a function or a block", "yield 1;"},
 		{"function expression", "", "const make = function* (): " + generator + " { BODY };\nfor (const value of make()) console.log(String(value));", "const make = function* (): " + generator + " { BODY };\nmake();", "written as an expression", "yield 1;"},
-		{"IIFE", "", "for (const value of (function* (): " + generator + " { BODY })()) console.log(String(value));", "(function* (): " + generator + " { BODY })();", "written as an expression", "yield 1;"},
 		{"object literal method", "", "const box = { *entries(): " + generator + " { BODY } };\nfor (const value of box.entries()) console.log(String(value));", "const box = { *entries(): " + generator + " { BODY } };\nbox.entries();", "written as an object literal's method", "yield 1;"},
 		{"class method", "class Box { *each(): " + generator + " { BODY } }\n", "for (const value of new Box().each()) console.log(String(value));", "new Box().each();", "written as a method", "yield 1;"},
 		{"static method", "class Box { static *each(): " + generator + " { BODY } }\n", "for (const value of Box.each()) console.log(String(value));", "Box.each();", "written as a static method", "yield 1;"},
