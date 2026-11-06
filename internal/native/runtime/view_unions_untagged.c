@@ -256,8 +256,12 @@ adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract 
     if (slot == NULL) { return result; }
     bool references = wanted == adamic_rep_string || wanted == adamic_rep_object || wanted == adamic_rep_array || wanted == adamic_rep_map || wanted == adamic_rep_union || wanted == adamic_rep_closure;
     const char *found = "unsupported representation";
-    if (id != 0 && array->references != references) {
-        found = array->references ? "reference storage" : array->element == adamic_rep_boolean ? "boolean" : "number";
+    // Reference storage under a scalar contract would read a pointer as a number, so it stops here.
+    // Scalar storage under a reference contract is read honestly by its own element byte below, boxed,
+    // and judged by the contract (Runtime and Memory, #6wfvfhm): 7 in a number[] is a number to a
+    // readonly (Node | number)[] view, and a Node to none.
+    if (id != 0 && array->references && !references) {
+        found = "reference storage";
         goto failure;
     }
     if (array->references) {
