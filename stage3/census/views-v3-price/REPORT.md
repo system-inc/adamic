@@ -1,20 +1,20 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 92 of 10721 full-mode units paired across 5 observed files.
+**Exact latent closure totals: incomplete.** 161 of 10721 full-mode units paired across 6 observed files.
 
 **Source upper bound (seven forms): 2,518; readonly subset: 1,216.** Broader named roads: 2,861 / 1,302. Neither is the admission rule.
 
 | Latent measure (observed pieces only) | Main | Head |
 |---|---:|---:|
-| view_elements | 0 | 40 |
-| view_element_checks | 0 | 17 |
-| units | 92 | 92 |
-| attempted | 92 | 92 |
+| view_elements | 0 | 48 |
+| view_element_checks | 0 | 28 |
+| units | 161 | 161 |
+| attempted | 160 | 160 |
 | panicked_units | 0 | 0 |
-| ir_observed | 92 | 92 |
-| finding_free_attempted | 53 | 53 |
-| finding_free_view_elements | 0 | 9 |
-| finding_free_view_element_checks | 0 | 6 |
+| ir_observed | 160 | 160 |
+| finding_free_attempted | 94 | 94 |
+| finding_free_view_elements | 0 | 15 |
+| finding_free_view_element_checks | 0 | 12 |
 
 Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.
 Head `9626d0113f08269e519ba216ff7f95ff84af16db`; main `2c3f322975b2dee68889e82eab0bbca324d417a9`.
@@ -40,6 +40,7 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 | src/tsc/_namespaces/ts.ts | 1 / 1 | 0 | 0 | 0 | 0 | 1 / 1 / 0 | 1 / 1 / 0 |
 | src/tsc/tsc.ts | 6 / 6 | 0 | 0 | 0 | 0 | 6 / 5 / 0 | 6 / 5 / 0 |
 | src/compiler/builder.ts | 55 / 127 | 0 | 0 | 28 | 14 | 55 / 25 / 0 | 55 / 25 / 0 |
+| src/compiler/executeCommandLine.ts | 69 / 69 | 0 | 0 | 8 | 11 | 68 / 41 / 0 | 68 / 41 / 0 |
 
 ## Top ten observed latent files
 
@@ -50,9 +51,11 @@ main:
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
 - src/tsc/tsc.ts: 0 elements, 0 checks
 - src/compiler/builder.ts: 0 elements, 0 checks
+- src/compiler/executeCommandLine.ts: 0 elements, 0 checks
 head:
 
 - src/compiler/builder.ts: 28 elements, 14 checks
+- src/compiler/executeCommandLine.ts: 8 elements, 11 checks
 - src/compiler/semver.ts: 12 elements, 3 checks
 - src/compiler/_namespaces/ts.moduleSpecifiers.ts: 0 elements, 0 checks
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
