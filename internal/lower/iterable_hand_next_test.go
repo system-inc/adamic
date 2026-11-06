@@ -266,7 +266,9 @@ func TestHandNextReceiverIsTheParametersOwnRead(t *testing.T) {
 
 // A hand-driven next()'s result holds a generator's yield only as a number, a boolean or a reference
 // (Adamic's and Language's ruling 4 on #qk8rztp S2c-2b), an allowlist held here over every
-// representation the IR names. Mutant: MaybeBoolean admitted, and its row goes red.
+// representation the IR names. It is the second line, which no program reaches: generatorSignature
+// stops a maybe yield at the declaration first, pinned by TestHandDrivenNextOverAGeneratorStops'
+// two maybe-yield rows. Mutant: MaybeBoolean admitted, and only this test's row goes red.
 func TestHandNextHoldsOnlyNumbersBooleansAndReferences(t *testing.T) {
 	t.Parallel()
 	for name, of := range ir.TypeTags() {
