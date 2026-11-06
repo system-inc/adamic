@@ -283,21 +283,9 @@ func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instructio
 		return false
 	}
 	reached := false
+	seen := map[int]bool{}
 	walk(evaluated(instruction), func(expression ir.Expression) {
-		switch expression := expression.(type) {
-		case ir.Call:
-			for _, target := range program.CallTargets(expression) {
-				if touches(program, target, read.Local, map[int]bool{}) {
-					reached = true
-				}
-			}
-		case ir.RegExpCall:
-			if expression.Replacement != nil {
-				reached = true
-			}
-		case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort:
-			// A Map's or Set's forEach is void, so it's never in the value an assignment evaluates;
-			// in a function this calls, touches finds it.
+		if reachesGlobal(program, expression, read.Local, seen) {
 			reached = true
 		}
 	})
@@ -322,22 +310,10 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 				found = true
 			}
 			walkStatement(each, func(expression ir.Expression) {
-				switch expression := expression.(type) {
-				case ir.Read:
-					if expression.Local == global {
-						found = true
-					}
-				case ir.Call:
-					for _, target := range program.CallTargets(expression) {
-						if touches(program, target, global, seen) {
-							found = true
-						}
-					}
-				case ir.RegExpCall:
-					if expression.Replacement != nil {
-						found = true
-					}
-				case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
+				if read, isRead := expression.(ir.Read); isRead && read.Local == global {
+					found = true
+				}
+				if reachesGlobal(program, expression, global, seen) {
 					found = true
 				}
 			}, statement)
@@ -345,6 +321,37 @@ func touches(program *ir.Program, function int, global int, seen map[int]bool) b
 	}
 	statement(program.Functions[function].Body)
 	return found
+}
+
+// reachesGlobal reports whether an expression's own operation, its operands aside, may run code that
+// reads or writes a global, or code this can't see into: a function it calls that touches it, a
+// generator's body it steps, or a function value, a callback or a getter it calls. An operation with
+// no case here must be ir.Inert, or it counts as reaching the global, so one added later fails closed
+// (Compiler's and Adamic's ruling on #qk8rztp S2c-2b). A Map's or Set's forEach is void, so it's
+// never in the value an assignment evaluates, but in a function this calls it is.
+func reachesGlobal(program *ir.Program, expression ir.Expression, global int, seen map[int]bool) bool {
+	switch expression := expression.(type) {
+	case ir.Call:
+		found := false
+		for _, target := range program.CallTargets(expression) {
+			if touches(program, target, global, seen) {
+				found = true
+			}
+		}
+		return found
+	case ir.GeneratorNext:
+		// A step runs the body of the generator its frame was made by.
+		return touches(program, expression.Function, global, seen)
+	case ir.RegExpCall:
+		return expression.Replacement != nil
+	case ir.CallClosure, ir.MakeClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
+		return true
+	case ir.JSONEncode, ir.FileStatus, ir.NodeFSFile, ir.NodeHostCall, ir.ProcessCall, ir.ProgramArguments, ir.ReadDirectory, ir.ReadTextFile, ir.WriteTextFile:
+		// An encoding reads its value's fields, since lowering refuses one that bears a getter, and a
+		// host operation runs nothing of the program's: neither can name a global.
+		return false
+	}
+	return !ir.Inert(expression)
 }
 
 // variableRead is the variable an expression reads: a read, or a read checked for undefined
