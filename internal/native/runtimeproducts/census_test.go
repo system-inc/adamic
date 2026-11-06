@@ -1192,10 +1192,10 @@ func TestALeanArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
 		features []string
 		want     string
 	}{
-		"a feature set Sets doesn't hold":    {ProgramArchive, ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options ProgramVariants don't hold": {ProgramArchive, native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
+		"a feature set Sets doesn't hold":                {ProgramArchive, ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
+		"options ProgramVariants don't hold":             {ProgramArchive, native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
 		"a feature set Sets doesn't hold for cmd/adamic": {CommandArchive, CommandVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Command runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options CommandVariants don't hold": {CommandArchive, native.Options{Debug: true}, nil, "undeclared Command runtime options: "},
+		"options CommandVariants don't hold":             {CommandArchive, native.Options{Debug: true}, nil, "undeclared Command runtime options: "},
 	} {
 		recorder := &stoppingTB{TB: t}
 		func() {
