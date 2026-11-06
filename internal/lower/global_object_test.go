@@ -1,8 +1,13 @@
 package lower
 
 import (
+	"context"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The global object as a value is one not-yet, whatever name reaches it (global_object.go, #00qn5az head
@@ -77,6 +82,75 @@ func TestGlobalObjectAsAReceiverIsAdmitted(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerModules(t, map[string]string{"main.ts": probe.source})
+			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
+				t.Errorf("got %v, want %s", err, probe.want)
+			}
+		})
+	}
+}
+
+// loadedOrLowered loads modules from main.ts as lowerModules does, and returns the checker's error where
+// the program doesn't check, else lowering's.
+func loadedOrLowered(t *testing.T, modules map[string]string) error {
+	t.Helper()
+	directory := t.TempDir()
+	for name, source := range modules {
+		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		return err
+	}
+	_, err = Lower(context.Background(), program)
+	return err
+}
+
+// A host binding's name read through an admitted receiver of the global object never lowers to a
+// native read where Node would say "function". onProfilerEvent can't be read so in a program the checker
+// passes: its declare let is the module's (load.go's ModuleDetection), never a property of typeof
+// globalThis, so the property read is TS7017 and an element read by a key that is or may be it TS7053.
+// globalThis.process is Node's own process, which @types/node puts on typeof globalThis, not the process
+// row (whose declaration is core.ts's declare const, matched by symbol); its reads stop today on rules
+// unrelated to the row, a method's presence test and a namespace object as a value, pinned at their text
+// so lifting either is seen here. A checker error's first line is pinned; TS7053 adds a second.
+func TestGlobalObjectReceiverReadsOfAHostBinding(t *testing.T) {
+	t.Parallel()
+	const performance = profilerDeclaration + "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n"
+	for _, probe := range []struct{ name, main, want string }{
+		{"globalThis.onProfilerEvent", "import { run } from './performance.ts';\nrun('one');\nconsole.log(typeof globalThis.onProfilerEvent);\n", "main.ts:3:31: error TS7017: Element implicitly has an 'any' type because type 'typeof globalThis' has no index signature."},
+		{"globalThis['onProfilerEvent']", "import { run } from './performance.ts';\nrun('one');\nconsole.log(typeof globalThis['onProfilerEvent']);\n", "main.ts:3:20: error TS7053: Element implicitly has an 'any' type because expression of type '\"onProfilerEvent\"' can't be used to index type 'typeof globalThis'."},
+		{"globalThis[k], k onProfilerEvent or gc", "import process from 'node:process';\nimport { run } from './performance.ts';\nrun('one');\nconst k: 'onProfilerEvent' | 'gc' = process.argv.length > 9 ? 'onProfilerEvent' : 'gc';\nconsole.log(typeof globalThis[k]);\n", "main.ts:5:20: error TS7053: Element implicitly has an 'any' type because expression of type '\"gc\" | \"onProfilerEvent\"' can't be used to index type 'typeof globalThis'."},
+		{"globalThis.process.nextTick", "import process from 'node:process';\nconsole.log(typeof process.argv);\nconsole.log(typeof globalThis.process.nextTick);\n", "main.ts:3:20: stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet"},
+		{"globalThis['process']", "import process from 'node:process';\nconsole.log(typeof process.argv);\nconsole.log(typeof globalThis['process']);\n", "main.ts:3:31: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"},
+		{"globalThis.process held", "import process from 'node:process';\nconsole.log(typeof process.argv);\nconst held = globalThis.process;\nconsole.log(typeof held);\n", "main.ts:3:14: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			err := loadedOrLowered(t, map[string]string{"main.ts": probe.main, "performance.ts": performance})
+			if err == nil || !strings.Contains(err.Error(), probe.want) {
+				t.Errorf("got %v, want %s", err, probe.want)
+			}
+		})
+	}
+}
+
+// Top-level this is no road to the global object: every Adamic file is a module (load.go's
+// ModuleDetection, even one with no import or export), so the checker types it undefined, as the second
+// row's TS2322 shows, and lowering stops it as this outside a method. ThisKeyword still isn't among the
+// kinds the global object's rule skips: a this parameter may be typeof globalThis, and install's is, so
+// Reflect.set(this, ...) stops there as the global object as a value.
+func TestGlobalObjectTopLevelThis(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, main, want string }{
+		{"top-level this", "const g = this;\nconsole.log(typeof g);\n", "main.ts:1:11: stage 0 can't lower this outside a method yet"},
+		{"top-level this as the global object", "const g: typeof globalThis = this;\nconsole.log(typeof g);\n", "main.ts:1:7: error TS2322: Type 'undefined' is not assignable to type 'typeof globalThis'."},
+		{"a this parameter of the global object's type", "const fire = (eventName: string): void => {\n\tconsole.log(eventName);\n};\nfunction install(this: typeof globalThis): void {\n\tReflect.set(this, 'onProfilerEvent', fire);\n}\ninstall.call(globalThis);\n", "main.ts:5:14: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			err := loadedOrLowered(t, map[string]string{"main.ts": probe.main})
 			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
 				t.Errorf("got %v, want %s", err, probe.want)
 			}
