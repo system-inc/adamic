@@ -4,6 +4,332 @@
   "seven_form_readonly_subset": 1216,
   "label": "source upper bound on what the head can check; not admission",
   "readonly_label": "narrower subset containing a readonly array or readonly tuple receiver arm; not admission",
+  "seven_form_files": {
+    "src/compiler/checker.ts": {
+      "upper_bound": 1106,
+      "readonly_subset": 530
+    },
+    "src/compiler/utilities.ts": {
+      "upper_bound": 137,
+      "readonly_subset": 68
+    },
+    "src/compiler/core.ts": {
+      "upper_bound": 119,
+      "readonly_subset": 82
+    },
+    "src/compiler/program.ts": {
+      "upper_bound": 107,
+      "readonly_subset": 61
+    },
+    "src/compiler/builder.ts": {
+      "upper_bound": 62,
+      "readonly_subset": 27
+    },
+    "src/compiler/commandLineParser.ts": {
+      "upper_bound": 62,
+      "readonly_subset": 28
+    },
+    "src/compiler/transformers/es2015.ts": {
+      "upper_bound": 57,
+      "readonly_subset": 40
+    },
+    "src/compiler/transformers/generators.ts": {
+      "upper_bound": 56,
+      "readonly_subset": 15
+    },
+    "src/compiler/debug.ts": {
+      "upper_bound": 49,
+      "readonly_subset": 6
+    },
+    "src/compiler/parser.ts": {
+      "upper_bound": 49,
+      "readonly_subset": 20
+    },
+    "src/compiler/emitter.ts": {
+      "upper_bound": 43,
+      "readonly_subset": 22
+    },
+    "src/compiler/executeCommandLine.ts": {
+      "upper_bound": 43,
+      "readonly_subset": 6
+    },
+    "src/compiler/transformers/module/module.ts": {
+      "upper_bound": 39,
+      "readonly_subset": 14
+    },
+    "src/compiler/moduleNameResolver.ts": {
+      "upper_bound": 37,
+      "readonly_subset": 8
+    },
+    "src/compiler/factory/utilities.ts": {
+      "upper_bound": 32,
+      "readonly_subset": 7
+    },
+    "src/compiler/tsbuildPublic.ts": {
+      "upper_bound": 32,
+      "readonly_subset": 19
+    },
+    "src/compiler/factory/nodeFactory.ts": {
+      "upper_bound": 28,
+      "readonly_subset": 15
+    },
+    "src/compiler/transformers/module/system.ts": {
+      "upper_bound": 28,
+      "readonly_subset": 8
+    },
+    "src/compiler/binder.ts": {
+      "upper_bound": 27,
+      "readonly_subset": 16
+    },
+    "src/compiler/watch.ts": {
+      "upper_bound": 24,
+      "readonly_subset": 10
+    },
+    "src/compiler/path.ts": {
+      "upper_bound": 23,
+      "readonly_subset": 8
+    },
+    "src/compiler/moduleSpecifiers.ts": {
+      "upper_bound": 20,
+      "readonly_subset": 9
+    },
+    "src/compiler/programDiagnostics.ts": {
+      "upper_bound": 20,
+      "readonly_subset": 5
+    },
+    "src/compiler/sourcemap.ts": {
+      "upper_bound": 20,
+      "readonly_subset": 7
+    },
+    "src/compiler/transformer.ts": {
+      "upper_bound": 20,
+      "readonly_subset": 4
+    },
+    "src/compiler/utilitiesPublic.ts": {
+      "upper_bound": 19,
+      "readonly_subset": 15
+    },
+    "src/compiler/transformers/classFields.ts": {
+      "upper_bound": 18,
+      "readonly_subset": 14
+    },
+    "src/compiler/scanner.ts": {
+      "upper_bound": 15,
+      "readonly_subset": 9
+    },
+    "src/compiler/sys.ts": {
+      "upper_bound": 15,
+      "readonly_subset": 4
+    },
+    "src/compiler/expressionToTypeNode.ts": {
+      "upper_bound": 14,
+      "readonly_subset": 14
+    },
+    "src/compiler/transformers/es2018.ts": {
+      "upper_bound": 13,
+      "readonly_subset": 9
+    },
+    "src/compiler/transformers/module/esnextAnd2015.ts": {
+      "upper_bound": 13,
+      "readonly_subset": 9
+    },
+    "src/compiler/resolutionCache.ts": {
+      "upper_bound": 12,
+      "readonly_subset": 7
+    },
+    "src/compiler/semver.ts": {
+      "upper_bound": 12,
+      "readonly_subset": 4
+    },
+    "src/compiler/transformers/esnext.ts": {
+      "upper_bound": 12,
+      "readonly_subset": 11
+    },
+    "src/compiler/builderState.ts": {
+      "upper_bound": 11,
+      "readonly_subset": 7
+    },
+    "src/compiler/transformers/es2017.ts": {
+      "upper_bound": 11,
+      "readonly_subset": 10
+    },
+    "src/compiler/transformers/jsx.ts": {
+      "upper_bound": 11,
+      "readonly_subset": 9
+    },
+    "src/compiler/tracing.ts": {
+      "upper_bound": 10,
+      "readonly_subset": 3
+    },
+    "src/compiler/transformers/declarations.ts": {
+      "upper_bound": 10,
+      "readonly_subset": 4
+    },
+    "src/compiler/transformers/utilities.ts": {
+      "upper_bound": 9,
+      "readonly_subset": 8
+    },
+    "src/compiler/transformers/esDecorators.ts": {
+      "upper_bound": 8,
+      "readonly_subset": 4
+    },
+    "src/compiler/symbolWalker.ts": {
+      "upper_bound": 7,
+      "readonly_subset": 4
+    },
+    "src/compiler/transformers/legacyDecorators.ts": {
+      "upper_bound": 7,
+      "readonly_subset": 5
+    },
+    "src/compiler/transformers/namedEvaluation.ts": {
+      "upper_bound": 7,
+      "readonly_subset": 5
+    },
+    "src/compiler/watchUtilities.ts": {
+      "upper_bound": 7,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/destructuring.ts": {
+      "upper_bound": 6,
+      "readonly_subset": 4
+    },
+    "src/compiler/visitorPublic.ts": {
+      "upper_bound": 6,
+      "readonly_subset": 6
+    },
+    "src/compiler/factory/emitHelpers.ts": {
+      "upper_bound": 5,
+      "readonly_subset": 4
+    },
+    "src/compiler/factory/emitNode.ts": {
+      "upper_bound": 4,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/ts.ts": {
+      "upper_bound": 4,
+      "readonly_subset": 4
+    },
+    "src/compiler/transformers/classThis.ts": {
+      "upper_bound": 3,
+      "readonly_subset": 3
+    },
+    "src/compiler/watchPublic.ts": {
+      "upper_bound": 3,
+      "readonly_subset": 1
+    },
+    "src/compiler/transformers/es2020.ts": {
+      "upper_bound": 2,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/typeSerializer.ts": {
+      "upper_bound": 2,
+      "readonly_subset": 2
+    },
+    "src/compiler/transformers/declarations/diagnostics.ts": {
+      "upper_bound": 1,
+      "readonly_subset": 1
+    },
+    "src/compiler/transformers/taggedTemplate.ts": {
+      "upper_bound": 1,
+      "readonly_subset": 1
+    },
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/_namespaces/ts.performance.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/_namespaces/ts.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/builderPublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/builderStatePublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/corePublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/diagnosticInformationMap.generated.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/baseNodeFactory.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/nodeChildren.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/nodeConverters.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/nodeTests.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/parenthesizerRules.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/factory/utilitiesPublic.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/hostErrors.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/performance.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/performanceCore.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2016.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2019.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/es2021.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/tsbuild.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/compiler/types.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/tsc/_namespaces/ts.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    },
+    "src/tsc/tsc.ts": {
+      "upper_bound": 0,
+      "readonly_subset": 0
+    }
+  },
   "upper_bound": 2861,
   "readonly_subset": 1302,
   "forms": {

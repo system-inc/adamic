@@ -79,16 +79,16 @@ for(const source of sources) {
  visit(source);
 }
 fs.writeFileSync(out+'.jsonl.gz',zlib.gzipSync(rows.map(r=>JSON.stringify(r)).join('\n')+(rows.length?'\n':''),{mtime:0}));
-function group(key) {
+function group(key, items=rows) {
  const m={};
  if(key==='file') for(const source of sources) m[path.relative(tree,source.fileName)]={upper_bound:0,readonly_subset:0};
  if(key==='form') for(const k of ['index','at','for-of','spread','slice','map','forEach']) m[k]={upper_bound:0,readonly_subset:0};
- for(const r of rows) {const k=r[key];m[k]||={upper_bound:0,readonly_subset:0};m[k].upper_bound++;m[k].readonly_subset+=+r.readonly;}
+ for(const r of items) {const k=r[key];m[k]||={upper_bound:0,readonly_subset:0};m[k].upper_bound++;m[k].readonly_subset+=+r.readonly;}
  return Object.fromEntries(Object.entries(m).sort((a,b)=>b[1].upper_bound-a[1].upper_bound||a[0].localeCompare(b[0])));
 }
 const seven=new Set(['index','at','for-of','spread','slice','map','forEach']);
 const summary={typescript:ts.version,seven_form_upper_bound:rows.filter(r=>seven.has(r.form)).length,seven_form_readonly_subset:rows.filter(r=>seven.has(r.form)&&r.readonly).length,label:'source upper bound on what the head can check; not admission',
  readonly_label:'narrower subset containing a readonly array or readonly tuple receiver arm; not admission',
- upper_bound:rows.length,readonly_subset:rows.filter(r=>r.readonly).length,forms:group('form'),files:group('file')};
+ seven_form_files:group('file',rows.filter(r=>seven.has(r.form))),upper_bound:rows.length,readonly_subset:rows.filter(r=>r.readonly).length,forms:group('form'),files:group('file')};
 fs.writeFileSync(out+'.json',JSON.stringify(summary,null,2)+'\n');
 console.log(JSON.stringify(summary));
