@@ -125,12 +125,17 @@ func (l *lowering) leadingAwait(value ir.Expression) (ir.Await, bool) {
 // call to a function declaration, local or imported, which is initialized when its scope is entered,
 // can't be assigned, and has no getter. An arrow or other function value (a const or let read in its
 // dead zone among them), a method, an accessor and a dispatched call all count as running first
-// (Adamic's ruling on #c3bk0fp, 11:36Z).
+// (Adamic's ruling on #c3bk0fp, 11:36Z). A call that isn't dispatched has one target, which
+// CallTargets names.
 func (l *lowering) inertCallee(call ir.Call) bool {
 	if call.Virtual != 0 || call.Accessor != "" || call.Setter || call.ArgumentCount != nil {
 		return false
 	}
-	target := l.result.Functions[call.Function]
+	targets := l.result.CallTargets(call)
+	if len(targets) != 1 {
+		return false
+	}
+	target := l.result.Functions[targets[0]]
 	return !target.Closure && !target.Receiver && target.MethodName == ""
 }
 
