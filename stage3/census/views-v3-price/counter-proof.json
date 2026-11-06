@@ -1,0 +1,290 @@
+[
+  {
+    "label": "head",
+    "fixture": "per-read",
+    "variant": "count",
+    "counts": [
+      2,
+      0
+    ],
+    "expected": [
+      2,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "head",
+    "fixture": "per-read",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      2,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": true,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "head",
+    "fixture": "per-read",
+    "variant": "ViewElementCheck",
+    "counts": [
+      2,
+      0
+    ],
+    "expected": [
+      2,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "head",
+    "fixture": "map-good",
+    "variant": "count",
+    "counts": [
+      1,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "head",
+    "fixture": "map-good",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": true,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "head",
+    "fixture": "map-good",
+    "variant": "ViewElementCheck",
+    "counts": [
+      1,
+      0
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": true,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "head",
+    "fixture": "for-of-good",
+    "variant": "count",
+    "counts": [
+      1,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  },
+  {
+    "label": "head",
+    "fixture": "for-of-good",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      1
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": true,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  },
+  {
+    "label": "head",
+    "fixture": "for-of-good",
+    "variant": "ViewElementCheck",
+    "counts": [
+      1,
+      0
+    ],
+    "expected": [
+      1,
+      1
+    ],
+    "byte_identical": true,
+    "mutant_killed": true,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  },
+  {
+    "label": "main",
+    "fixture": "per-read",
+    "variant": "count",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "main",
+    "fixture": "per-read",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "main",
+    "fixture": "per-read",
+    "variant": "ViewElementCheck",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "e53a5f0b7a27a8cdbce76c1af0784b9392de0e307585a6a6fece5ca4f2ada6bf"
+  },
+  {
+    "label": "main",
+    "fixture": "map-good",
+    "variant": "count",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "main",
+    "fixture": "map-good",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "main",
+    "fixture": "map-good",
+    "variant": "ViewElementCheck",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "84afc3952d01a2ca994ee9f30af4526bf2e5aa7fb4a9746953caf77f5db67d33"
+  },
+  {
+    "label": "main",
+    "fixture": "for-of-good",
+    "variant": "count",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  },
+  {
+    "label": "main",
+    "fixture": "for-of-good",
+    "variant": "ViewElement",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  },
+  {
+    "label": "main",
+    "fixture": "for-of-good",
+    "variant": "ViewElementCheck",
+    "counts": [
+      0,
+      0
+    ],
+    "expected": [
+      0,
+      0
+    ],
+    "byte_identical": true,
+    "mutant_killed": null,
+    "baseline_sha256": "cf292af19cb7c09666b5ed2db43db07992fce29fad584f6c5b3cb1fb4df3fd0e"
+  }
+]

@@ -80,3 +80,35 @@ To resume: finish the source admission port and prove it against the head,
 prepare a fresh completed main apply, and run the source census. Then implement
 and validate the reflection overlay, including byte-identity against the meter,
 before committing and pushing each paired latent piece under 25 minutes.
+
+## Revised scope and counter proof
+
+The follow-up replaces the admission ceiling with a broad source upper bound.
+The source counter now includes mutable and readonly arrays, tuples, and union
+or intersection arms containing one. Readonly includes a readonly array or tuple
+arm; mixed unions can therefore occur in both columns. This is a narrower
+subset of the bound, not the head's admission rule. Array-derived interfaces
+are followed through their base types. The fixture now expects 8 reads, 7 in
+the readonly subset; skipping index reads produces 6 and fails the assertion.
+
+The exact latent counter is implemented as a runtime extension of the unmodified
+meter overlay. It walks returned unit statements and every lowered function body
+in that unit's result. It matches IR package and type names through reflection,
+so main compiles without either optional type. Non-nil IR pointers are visited
+once by identity, including ElementCheck pointers. No compiler or meter file is
+edited. Counts describe this latent IR, including retained partial bodies;
+final whole-program validation and pruning are outside the latent meter.
+
+The known-count head fixtures pass: per-read has (2 ViewElement, 0 checks),
+map-good has (1, 1), and for-of-good has (1, 1). Main has (0, 0) for each.
+Both skip-kind mutants fail fixtures with the skipped kind. Removing exactly
+the three added unit fields yields byte-identical meter output on both trees
+for every fixture and mutant. See counter-proof.json and counter-proof.tar.gz.
+
+Full tsc closure pieces are not yet complete. Each scheduled file is measured
+in the complete entry-root context, using the meter's LATENT_ONLY_FILE selector.
+The four runs in one paired piece have a combined 23-minute deadline. Deferred
+instantiation witnesses have the selected-file scope and are not represented
+as whole-run witnesses. Counts are reported with attempted, IR-observed and
+finding-free attempted unit counts so partial lowering is visible. Each
+completed piece is paired with stage3/census/pair, committed and plainly pushed.

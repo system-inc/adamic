@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prove read-form enumeration; this does not certify admission equivalence."""
+"""Prove read-form enumeration; the bound deliberately does not reproduce admission."""
 import json, os, pathlib, subprocess, tempfile
 counter = pathlib.Path(__file__).with_name('count.cjs').resolve()
 source = '''interface Node { readonly kind: number; }
@@ -15,10 +15,10 @@ const e=a.map(x=>x);
 a.forEach(x=>console.log(x));
 const f=mutable[0];
 '''
-expected = dict(at=1, **{'for-of':1}, forEach=1, index=1, map=1, slice=1, spread=1)
+expected = {k:dict(upper_bound=2 if k=='index' else 1,readonly_subset=1) for k in ['at','for-of','forEach','index','map','slice','spread']}
 def verify(data):
-    assert data['candidates'] == 7, data
-    assert data['unresolved'] == 0, data
+    assert data['upper_bound'] == 8, data
+    assert data['readonly_subset'] == 7, data
     assert data['forms'] == expected, data
 with tempfile.TemporaryDirectory(prefix='v3-price-fixture-') as scratch:
     scratch = pathlib.Path(scratch)
