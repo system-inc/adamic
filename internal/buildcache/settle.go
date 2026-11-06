@@ -810,12 +810,18 @@ func newTraceState(facts *traceFacts) *traceState {
 
 var (
 	atCalls = set("openat", "openat2", "newfstatat", "fstatat64", "statx", "faccessat", "faccessat2", "readlinkat", "execveat", "mkdirat",
-		"unlinkat", "renameat", "renameat2", "utimensat", "fchmodat", "fchownat", "mknodat", "linkat", "name_to_handle_at", "inotify_add_watch")
-	plainCalls = set("open", "creat", "stat", "lstat", "stat64", "lstat64", "access", "readlink", "execve", "chdir", "mkdir", "rmdir", "unlink",
+		"unlinkat", "renameat", "renameat2", "utimensat", "fchmodat", "fchownat", "mknodat", "linkat", "name_to_handle_at")
+	// descriptorPathCalls name a path after a descriptor that isn't a directory: inotify_add_watch's first argument is
+	// the inotify instance, anon_inode:inotify, and the kernel resolves its path as open's, against the calling thread's
+	// working directory, or as written when it's absolute. So the descriptor is passed over, never a base: joined onto
+	// it, a relative watch was a path no file has, and the product was refused as reading an absolute entry that isn't
+	// one (chg_cy4m61a0's internal/oracle, Nov 6, Node's ruling on #1vg4vek). A watch is a stat of its path.
+	descriptorPathCalls = set("inotify_add_watch")
+	plainCalls          = set("open", "creat", "stat", "lstat", "stat64", "lstat64", "access", "readlink", "execve", "chdir", "mkdir", "rmdir", "unlink",
 		"rename", "truncate", "chmod", "chown", "lchown", "utime", "utimes", "link", "statfs", "getxattr", "lgetxattr", "listxattr", "llistxattr",
 		"chroot", "mknod", "acct", "swapon")
 	statCalls = set("newfstatat", "fstatat64", "statx", "stat", "lstat", "stat64", "lstat64", "faccessat", "faccessat2", "access", "readlink",
-		"readlinkat", "statfs", "getxattr", "lgetxattr", "listxattr", "llistxattr")
+		"readlinkat", "statfs", "getxattr", "lgetxattr", "listxattr", "llistxattr", "inotify_add_watch")
 	writeCalls = set("mkdir", "mkdirat", "rmdir", "unlink", "unlinkat", "rename", "renameat", "renameat2", "truncate", "chmod", "fchmodat",
 		"chown", "lchown", "fchownat", "utime", "utimes", "utimensat", "link", "linkat", "symlink", "symlinkat", "mknod", "mknodat")
 	forkCalls = set("clone", "clone3", "fork", "vfork")
@@ -1352,6 +1358,12 @@ func target(call, arguments, directory string) (string, string, []string) {
 		}
 		if decoded != "" {
 			base = unescape(decoded)
+		}
+		arguments = arguments[length:]
+	} else if descriptorPathCalls[call] {
+		_, length, ok := directoryArgument(arguments)
+		if !ok {
+			return "", arguments, nil
 		}
 		arguments = arguments[length:]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {

@@ -939,6 +939,46 @@ func TestEachProcessReadsFromItsOwnWorkingDirectory(t *testing.T) {
 	}
 }
 
+// An inotify watch is a stat of the path it names, resolved against the thread's working directory as open's is, never
+// against its first argument, the inotify instance (Node's ruling on #1vg4vek): adamic's fswatch watches a relative
+// path, and joined onto anon_inode:inotify it was an absolute entry that isn't one, which refused chg_cy4m61a0's
+// product test and its tree. A relative watch from a child that changed its directory, an absolute one, and one that
+// failed each record as the stat they are, and nothing names the descriptor. Mutant: inotify_add_watch back in
+// atCalls (red: the relative watch joined onto the descriptor, the product refused).
+// Not parallel: newRig.
+func TestAnInotifyWatchIsAStatOfItsPathFromTheWorkingDirectory(t *testing.T) {
+	r := newRig(t)
+	Product(t, port, building("built"))
+	build := r.built(t)["port"]
+	child := r.pid + 1
+	r.window(build.Build, func() {
+		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
+		r.add(child, `chdir(%q) = 0`, r.path("include"))
+		r.add(child, `inotify_init1(IN_CLOEXEC) = 5<anon_inode:inotify>`)
+		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, "x.h", IN_MODIFY|IN_CREATE) = 1`)
+		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, %q, IN_CREATE) = 2`, r.path("source/a.c"))
+		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, "missing.h", IN_CREATE) = -1 ENOENT (No such file or directory)`)
+		r.add(child, "+++ exited with 0 +++")
+	})
+	if settlement := r.settle(t); len(settlement.Settled) != 1 {
+		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	}
+	got := r.entries(t, build.NameKey)
+	for _, want := range []string{"exists include/x.h", "exists source/a.c"} {
+		if !slices.Contains(got, want) {
+			t.Errorf("the read set %q lacks %q", got, want)
+		}
+	}
+	if !slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, "include/missing.h") }) {
+		t.Errorf("the read set %q lacks the failed watch of include/missing.h", got)
+	}
+	for _, entry := range got {
+		if strings.Contains(entry, "anon_inode") || strings.Contains(entry, "inotify") {
+			t.Errorf("the read set names the inotify descriptor: %q", entry)
+		}
+	}
+}
+
 // A build whose reads depend on what it read (a selector naming which file to read) is keyed by the selector: a
 // change to it misses, the rebuild records its own reads first, and the earlier set still finds the earlier product
 // when the tree goes back.
