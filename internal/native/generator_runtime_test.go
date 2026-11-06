@@ -249,6 +249,15 @@ func TestGeneratorRuntimeNextDone(t *testing.T) {
 	generatorRuntimeGuard(t, "next_done", "1 10\n0\n0\nvalue,done\n", "bool present = !adamic_generator_done(generator);", "bool present = true;", "Assertion")
 }
 
+// P4's boolean row: a boolean generator stepped past done reads its value undefined, under the
+// MaybeBoolean byte the builder writes (Memory's ruling on #ak92fcp), and present it reads true under
+// Boolean. M6, run by h3-proof.sh on map_set.c, outside this guard's one file: the builder's boolean
+// arm skipped, so the slot keeps the absent maybe-number word, main's bytes, whose low byte reads true.
+func TestGeneratorRuntimeNextDoneBoolean(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_done_boolean", "true 2\nundefined 9\nundefined 9\n", "", "", "")
+}
+
 // A collection's iterator steps through the same entry by its own next, and its results are its own.
 func TestGeneratorRuntimeNextCollection(t *testing.T) {
 	t.Parallel()
