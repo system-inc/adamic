@@ -1,0 +1,1642 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/utilities.ts": "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+    "src/compiler/factory/nodeFactory.ts": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/debug.ts": "5f7d504116c5d90271f258ec469626f66a03f0419bebe7a7e5261e5822a5f0c9",
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/core.ts": "3dde48b17a7ea7c9475f28b0dfa1b8c3a407f6b4966c4f6f6c4e6769e4920f3e"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a (current: Node) => boolean seen as a (element: Node) => \"quit\" | boolean (one keeps something weakly that the other keeps strongly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a (n: Node) => boolean seen as a (element: Node) => \"quit\" | boolean (one keeps something weakly that the other keeps strongly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 7,
+        "after": 0,
+        "lowered": 7,
+        "moved_by_reason": {}
+      },
+      "a call spreading elements that cannot be packed": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 111,
+        "after": 111,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking SourceFile seen as one taking [file: SourceFile, options: CompilerOptions] (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking [fileName: string] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking string seen as one taking [fileName: string] (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any (getTokenConstructor()) related to new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind> at the initializer site": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (base64decode would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (base64encode would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (useCaseSensitiveFileNames would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read of a void value, as a returned value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread argument T's type argument can be inferred from, judged against its constraint unknown[]": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Extension[] seen as string[], which can write string where Extension is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>> seen as ScriptTargetFeatures, which can write string where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, never[]> seen as Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>, which can write string[] where never[] is read": {
+        "before": 10,
+        "after": 10,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, string[] | never[]> seen as Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>, which can write string where never is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | TextRange seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<T> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type RequireOrImportCall[] | undefined seen as {}[] | undefined, which can write {} where RequireOrImportCall is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T[] seen as Statement[], which can write Statement where T is read": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as Declaration[], which can write Declaration where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as StringLiteralLike[], which can write StringLiteralLike where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as string[] | never[], which can write string where never is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] | SortedArray<DiagnosticWithLocation> seen as Diagnostic[], which can write Diagnostic where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[][] seen as string[][], which can write string where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly string[] | undefined seen as RegExp[] | undefined, which can write RegExp where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Declaration can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { (fileName: string): DiagnosticWithLocation[]; (): Diagnostic[]; } seen as { (): Diagnostic[]; (fileName: string): DiagnosticWithLocation[]; }, which can write Diagnostic where DiagnosticWithLocation is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a { allowImportingTsExtensions: { dependencies: \"rewriteRelativeImportExtensions\"[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"allowImportingTsExtensions\" | \"rewriteRelativeImportExtensions\">) => boolean; }; ... 24 more ...; useUnknownInCatchVariables: ...; } seen as Record<string, { dependencies: readonly string[]; computeValue: (options: CompilerOptions) => CompilerOptionsValue; }> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an arbitrary number or a value from another enum assigned to Extension.Mjs; its members are a closed union": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an enum inside a function or block; declare it at module scope": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 45,
+        "after": 45,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } to ImportEqualsDeclaration: optional field moduleReference.id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from LiteralLikeNode to TemplateLiteralLikeNode: optional field rawText has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.NamespaceExport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.NamespaceImport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.StringLiteral": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 333 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 345 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ParameterPropertyDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Expression absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in LiteralExpression & StringLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          79832
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          89881
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94203
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94525
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94842
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          95204
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          97294
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          79697
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 79795,
+          "body_end": 79883,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "declarationNameToString"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          88469
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 88550,
+          "body_end": 93007,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getErrorSpanForNode"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/binder.ts:1034:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/workspace/container-fit-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94073
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94166,
+          "body_end": 94262,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarAwaitUsing"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94400
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94488,
+          "body_end": 94579,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarUsing"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94717
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94805,
+          "body_end": 94896,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarConst"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          95060
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 95152,
+          "body_end": 95384,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarConstLike"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          97213
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 97266,
+          "body_end": 97338,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isHoistedVariable"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/binder.ts:1109:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/workspace/container-fit-adapted/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 249,
+        "NotYet": 27
+      },
+      "after": {
+        "Refused": 249,
+        "NotYet": 20
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a (current: Node) => boolean seen as a (element: Node) => \"quit\" | boolean (one keeps something weakly that the other keeps strongly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a (n: Node) => boolean seen as a (element: Node) => \"quit\" | boolean (one keeps something weakly that the other keeps strongly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set interface implemented by a value that isn't a Map or Set": {
+        "before": 7,
+        "after": 0,
+        "lowered": 7,
+        "moved_by_reason": {}
+      },
+      "a call spreading elements that cannot be packed": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 111,
+        "after": 111,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking SourceFile seen as one taking [file: SourceFile, options: CompilerOptions] (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking [fileName: string] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking string seen as one taking [fileName: string] (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any (getTokenConstructor()) related to new <TKind extends SyntaxKind>(kind: TKind, pos: number, end: number) => Token<TKind> at the initializer site": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (base64decode would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (base64encode would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (useCaseSensitiveFileNames would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read of a void value, as a returned value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a spread argument T's type argument can be inferred from, judged against its constraint unknown[]": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Extension[] seen as string[], which can write string where Extension is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>> seen as ScriptTargetFeatures, which can write string where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, never[]> seen as Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>, which can write string[] where never[] is read": {
+        "before": 10,
+        "after": 10,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, string[] | never[]> seen as Map<string, string[]> | Map<string, never[]> | Map<string, string[] | never[]>, which can write string where never is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | TextRange seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<T> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type RequireOrImportCall[] | undefined seen as {}[] | undefined, which can write {} where RequireOrImportCall is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T[] seen as Statement[], which can write Statement where T is read": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as Declaration[], which can write Declaration where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as StringLiteralLike[], which can write StringLiteralLike where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as string[] | never[], which can write string where never is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] | SortedArray<DiagnosticWithLocation> seen as Diagnostic[], which can write Diagnostic where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[][] seen as string[][], which can write string where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly string[] | undefined seen as RegExp[] | undefined, which can write RegExp where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Declaration can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { (fileName: string): DiagnosticWithLocation[]; (): Diagnostic[]; } seen as { (): Diagnostic[]; (fileName: string): DiagnosticWithLocation[]; }, which can write Diagnostic where DiagnosticWithLocation is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a { allowImportingTsExtensions: { dependencies: \"rewriteRelativeImportExtensions\"[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"allowImportingTsExtensions\" | \"rewriteRelativeImportExtensions\">) => boolean; }; ... 24 more ...; useUnknownInCatchVariables: ...; } seen as Record<string, { dependencies: readonly string[]; computeValue: (options: CompilerOptions) => CompilerOptionsValue; }> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an arbitrary number or a value from another enum assigned to Extension.Mjs; its members are a closed union": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an enum inside a function or block; declare it at module scope": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 36,
+        "after": 36,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; } to ImportEqualsDeclaration: optional field moduleReference.id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from LiteralLikeNode to TemplateLiteralLikeNode: optional field rawText has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.NamespaceExport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.NamespaceImport": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.StringLiteral": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 333 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 339 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Unknown | SyntaxKind.EndOfFileToken | SyntaxKind.SingleLineCommentTrivia | SyntaxKind.MultiLineCommentTrivia | SyntaxKind.NewLineTrivia | SyntaxKind.WhitespaceTrivia | SyntaxKind.ShebangTrivia | ... 345 more ... | SyntaxKind.Count": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate membership over an open tag domain": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target ParameterPropertyDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Expression absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in LiteralExpression & StringLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property modifiers in GetAccessorDeclaration absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property modifiers in SetAccessorDeclaration absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property templateFlags in NoSubstitutionTemplateLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          79832
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          89881
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94203
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94525
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94842
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          95204
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          97294
+        ],
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": []
+      }
+    ],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          79697
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 79795,
+          "body_end": 79883,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "declarationNameToString"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2346:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2347:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          88469
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 88550,
+          "body_end": 93007,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "getErrorSpanForNode"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2567:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2537:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/binder.ts:1034:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/workspace/container-fit-adapted/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94073
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94166,
+          "body_end": 94262,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarAwaitUsing"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2658:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2659:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94400
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94488,
+          "body_end": 94579,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarUsing"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2666:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2667:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          94717
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 94805,
+          "body_end": 94896,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarConst"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2674:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2675:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          95060
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 95152,
+          "body_end": 95384,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isVarConstLike"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2682:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2683:49: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": null
+      },
+      {
+        "identity": [
+          "src/compiler/utilities.ts",
+          "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+          97213
+        ],
+        "unit": {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 97266,
+          "body_end": 97338,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "isHoistedVariable"
+        },
+        "base": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25",
+          "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+          "text": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2743:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+        },
+        "head": {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/container-fit-adapted/src/compiler/utilities.ts:2742:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/container-fit-adapted/src/compiler/binder.ts:1109:17",
+          "reason": "writing a checked object field without its source-slot type certificate",
+          "text": "/workspace/container-fit-adapted/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field without its source-slot type certificate yet"
+        }
+      }
+    ],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 240,
+        "NotYet": 27
+      },
+      "after": {
+        "Refused": 240,
+        "NotYet": 20
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
