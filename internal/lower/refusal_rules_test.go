@@ -48,6 +48,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"2600 argumentsObjectRefusal",
 		"2700 nodeBufferAccessRefusal",
 		"2800 shorthandLibraryMethodGap",
+		"2890 boundObservation",
 		"2900 methodValueRefusal",
 		"3000 classOverrideRefusal",
 		"3100 stringWideningRefusal",

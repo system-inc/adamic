@@ -103,6 +103,7 @@ var writesNothing = []struct {
 	{ir.Length{}, "reads an array's length"},
 	{ir.LibraryGlobal{}, "a built-in's identity"},
 	{ir.Logical{}, "one of its operands"},
+	{ir.BoundClosure{}, "a fresh closure over existing captured cells; calling it is CallClosure"},
 	{ir.MakeClosure{}, "a new function value; a call of it is CallClosure"},
 	{ir.MakeError{}, "a new Error"},
 	{ir.MapEntries{}, "a new array of a map's entries"},

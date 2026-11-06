@@ -80,6 +80,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicDirect = (fn, values, count = values.length - (fn.adamicReceiver ? 1 : 0)) => fn(...(fn.adamicCount ? [count] : []), ...values);\n")
 	}
 	builder.WriteString(recordRuntime)
+	builder.WriteString("const adamicBoundCall = (self, values) => { const fn = self.cells[0].value; return adamicCall(fn, fn.receiver ? [self.cells[1].value, ...values] : values); };\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// A static constructor's live parent prototype carries inherited fields. Keep its
 	// named method map separately, keyed by the actual constructor function.
@@ -1379,6 +1380,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "self"
 	case ir.LibraryGlobal:
 		return expression.Name
+	case ir.BoundClosure:
+		return e.value(ir.MakeClosure{Function: expression.Function})
 	case ir.MakeClosure:
 		if e.program.Functions[expression.Function].Source.Role == "host_realpath" {
 			return "Object.assign(adamicNodeFSFile.realpathSync.native, {code: (self, values) => adamicNodeFSFile.realpathSync.native(...values)})"
@@ -1395,6 +1398,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t, %d)", functionName(e.program, expression.Function), strings.Join(cells, ", "), target.Receiver, target.SourceLength)
 	case ir.CallClosure:
+		if expression.Bound {
+			return "adamicBoundCall(self, [" + e.callValues(expression.Arguments, expression.Spread) + "])"
+		}
 		if expression.Direct > 0 {
 			return fmt.Sprintf("%s(%s, [%s])", functionName(e.program, expression.Direct-1), e.value(expression.Closure), e.values(expression.Arguments))
 		}

@@ -65,6 +65,8 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 			flaggedDiscard = flaggedDiscard || call.Method == "forEach" && call.Returns == 0 && program.ClosureDiscard(call) == ir.DiscardFlagged
 		case ir.MapForEach:
 			flaggedDiscard = flaggedDiscard || call.Returns == 0 && program.ClosureDiscard(call) == ir.DiscardFlagged
+		case ir.BoundClosure:
+			referenceClosure = referenceClosure || program.Functions[call.Function].Returns.IsReference()
 		case ir.MakeClosure:
 			referenceClosure = referenceClosure || program.Functions[call.Function].Returns.IsReference()
 		case ir.CollectionIterator:
