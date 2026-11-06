@@ -1,6 +1,6 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 1 completed paired file pieces of 81.
+**Exact latent closure totals: incomplete.** 2 completed paired file pieces of 81.
 
 **Source upper bound: 2,861; readonly subset: 1,302.** Neither is the admission rule.
 
@@ -8,10 +8,10 @@
 |---|---:|---:|
 | view_elements | 0 | 0 |
 | view_element_checks | 0 | 0 |
-| units | 1 | 1 |
-| attempted | 1 | 1 |
-| ir_observed | 1 | 1 |
-| finding_free_attempted | 1 | 1 |
+| units | 7 | 7 |
+| attempted | 7 | 7 |
+| ir_observed | 7 | 7 |
+| finding_free_attempted | 6 | 6 |
 | finding_free_view_elements | 0 | 0 |
 | finding_free_view_element_checks | 0 | 0 |
 
@@ -35,15 +35,18 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 | File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |
 |---|---:|---:|---:|---:|---:|---:|
 | src/tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | 1 |
+| src/tsc/tsc.ts | 0 | 0 | 0 | 0 | 5 | 5 |
 
 ## Top ten observed latent files
 
 main:
 
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
+- src/tsc/tsc.ts: 0 elements, 0 checks
 head:
 
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
+- src/tsc/tsc.ts: 0 elements, 0 checks
 
 ## Broad source upper bound
 

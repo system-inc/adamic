@@ -1,0 +1,33 @@
+{
+  "file": "src/tsc/tsc.ts",
+  "mode": "full per-file selection in complete tsc closure",
+  "sides": {
+    "main": {
+      "view_elements": 0,
+      "view_element_checks": 0,
+      "units": 6,
+      "attempted": 6,
+      "ir_observed": 6,
+      "finding_free_attempted": 5,
+      "finding_free_view_elements": 0,
+      "finding_free_view_element_checks": 0,
+      "meter_byte_identical": true,
+      "baseline_sha256": "6b3c68c620b9311ffdeb48b5c07d6b2ffe8ec2874e8f3797eca308340dd59432",
+      "source_sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332"
+    },
+    "head": {
+      "view_elements": 0,
+      "view_element_checks": 0,
+      "units": 6,
+      "attempted": 6,
+      "ir_observed": 6,
+      "finding_free_attempted": 5,
+      "finding_free_view_elements": 0,
+      "finding_free_view_element_checks": 0,
+      "meter_byte_identical": true,
+      "baseline_sha256": "d3f3f446905f120e0fa987d708be6c4864bdc6bcf69553a0ecbd936bbcdd1042",
+      "source_sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332"
+    }
+  },
+  "elapsed_seconds": 130.85963102799997
+}
