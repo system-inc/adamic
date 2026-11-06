@@ -4,7 +4,7 @@
 # Every cloud environment runs it (Codex's setup and maintenance scripts, Claude's, a plain VM), it's
 # safe to run again, and it prints how long each step took, so time-to-green is a number we watch.
 #
-#   bash cloud/setup.sh [--warm-tests]   then: source the env.sh path printed below
+#   bash cloud/setup.sh [--warm-tests] [--wasi-sdk] [--wasmtime] [--workerd]   then: source the env.sh path printed below
 #
 # Go checks its own content-addressed action cache before a warming stamp can skip linking.
 # Test binaries are optional because most workers need one package.
