@@ -1,0 +1,20 @@
+// A generator written in place in a function with a nested function of its own reads the function's
+// parameters, environment cells, through its carrier (#qk8rztp S3b). The carrier is made for a call
+// to a function that suspends, which the environment proof counts as keeping its carrier (region.go's
+// environmentCalleeEscapes), so the cells go on the heap, never the parent's C frame. Run twice, under
+// the sanitizers and the leak check, with built strings and then literals.
+function host(first: string, second: string): string {
+    function joined(): string {
+        return `${first}+${second}`;
+    }
+    let out = joined();
+    for (const value of (function* (): Generator<string, void, undefined> {
+        yield `${first}<1`;
+        yield `${second}<2`;
+    })()) {
+        out += ` ${value}`;
+    }
+    return out;
+}
+console.log(host(`a${String(1)}`, `b${String(2)}`));
+console.log(host('c', 'd'));

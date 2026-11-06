@@ -1,0 +1,24 @@
+// A generator written in place in a loop's body is one function, lowered once with the body (#qk8rztp
+// S3b, Compiler's cache), and called on every pass: each call makes a fresh frame through a fresh
+// carrier, whose cells are that pass's own, so the loop's let and the pass's const it reads are the
+// ones of the pass that made it, as on Node. The call dropped as a statement on each pass runs none of
+// its body and lets go of its carrier with its frame.
+function rounds(label: string, count: number): string {
+    let joined = '';
+    for (let round = 0; round < count; round++) {
+        const stem = `${label}${String(round)}`;
+        for (const value of (function* (): Generator<string, void, undefined> {
+            yield `${stem}a`;
+            yield `${stem}b${String(round)}`;
+        })()) {
+            joined += `[${value}]`;
+            console.log(value);
+        }
+        (function* (): Generator<string, void, undefined> {
+            console.log(`never ${stem}`);
+            yield stem;
+        })();
+    }
+    return joined;
+}
+console.log(rounds(`r${String(7)}`, 3));
