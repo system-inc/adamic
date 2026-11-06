@@ -402,7 +402,12 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		if ambientDeclaration(node) {
 			return nil
 		}
-		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
+		// A const enum makes no runtime object anywhere: enumDeclaration lowers it to nothing, every
+		// member read folds to the checker's constant by the member's symbol (enumConstant), and tsc
+		// refuses any other value use of it (TS2475). So one inside a function or block, as debug.ts's
+		// formatControlFlowGraph declares BoxCharacter and Connection, lowers as one at module scope
+		// does (#xpjcdpf). A runtime enum there would need its object made each time its block runs.
+		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock && !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())
