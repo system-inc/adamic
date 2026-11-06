@@ -10,7 +10,7 @@ import (
 func (e *emitter) checkedElement(check *ir.ViewElementCheck, array, index string, relative bool, element ir.Type) string {
 	e.declarations = append(e.declarations, "#include \"view_unions_untagged.h\"")
 	contracts, count := e.viewUntaggedContracts()
-	return fmt.Sprintf("adamic_view_element(%s, %d, %d, %s, %s, %t, %d, %s, %s)", contracts, count, check.Contract, array, index, relative, element, cString(check.Where), cString(check.ViewType))
+	return fmt.Sprintf("adamic_view_element(%s, %d, %d, %s, %s, %t, %d, %s, %s)", contracts, count, check.Contract, array, index, relative, element, cString(check.View), cString(check.ViewType))
 }
 
 // A checked read is a pure consumer, as ArrayIndex is (borrow.go's pureKind): adamic_view_element calls no program
@@ -22,7 +22,7 @@ func (e *emitter) viewElement(read ir.ViewElement) string {
 	if read.Contract != 0 {
 		element = e.program.ViewContracts[read.Contract-1].Of
 	}
-	check := &ir.ViewElementCheck{Contract: read.Contract, Where: read.Where, ViewType: read.ViewType}
+	check := &ir.ViewElementCheck{Contract: read.Contract, Where: read.Where, View: read.View, ViewType: read.ViewType}
 	snapshot := e.temporary()
 	e.line("adamic_view_union_value %s = %s;", snapshot, e.checkedElement(check, array, index, read.Relative, element))
 	value := unslotted(element, snapshot+".payload."+member(element))

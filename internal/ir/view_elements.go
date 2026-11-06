@@ -8,8 +8,11 @@ type ViewElement struct {
 	Relative     bool
 	Contract     ViewContractID
 	Where        string
-	ViewType     string
-	Of           Type
+	// View is the read in the program's own words, for its stop: the read's source text, or for a
+	// handout its receiver and road ("view._children's element, in map"). Where is its location.
+	View     string
+	ViewType string
+	Of       Type
 	// Element is the array's own element representation, the read's ArrayIndex's. A read put back
 	// raw takes it, never Of: Of is the read's type, and a maybe element's read is a maybe too.
 	Element Type
@@ -24,8 +27,8 @@ func (read ViewElement) Type() Type { return read.Of }
 // ViewElementCheck describes the checked load at an implicit loop or callback
 // handout. It carries no array identity or cached certificate.
 type ViewElementCheck struct {
-	Contract        ViewContractID
-	Where, ViewType string
+	Contract              ViewContractID
+	Where, View, ViewType string
 	// Unrelated is ViewElement's: the handout reads raw, and its check is dropped.
 	Unrelated bool
 }

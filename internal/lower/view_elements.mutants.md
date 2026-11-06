@@ -23,3 +23,4 @@ V3 keeps main's unknown[] refusals, so these internal/oracle/testdata/views_v3 f
 - guard-ref-push.ts: pins unknownArrayMutation's reference push into an unknown[], whose literal main refuses as narrower first.
 - guard-index-write.ts: pins unknownArrayMutation's index write into an unknown[], whose literal main refuses as narrower first.
 - per-read.ts, its first half: it was a lie pushed through the unknown[] alias between two checked reads, ArrayPush's UnknownElements. A push through a typed alias of a viewed array stops as a read through push, so per-read.ts now holds the lie from the start, at the second read only.
+| The element stop without its expected clause | runtime/view_unions_untagged.c and javascript/view_arrays.go: `; expected <T>` dropped from the stop | internal/oracle TestViewArrays, every lie fixture's elementStop shape and the four pinned rows (index, at, map, for...of) |

@@ -289,10 +289,10 @@ adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract 
     }
     return result;
 failure:;
-    size_t capacity = strlen(where) + strlen(view_type) + strlen(found) + 64;
+    size_t capacity = strlen(where) + 2 * strlen(view_type) + strlen(found) + 64;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "element read failed: %s is not a %s; found %s", where, view_type, found);
+    int length = snprintf(message, capacity, "element read failed: %s is not a %s; expected %s, found %s", where, view_type, view_type, found);
     adamic_panic(message, (size_t)length);
     return result;
 }
