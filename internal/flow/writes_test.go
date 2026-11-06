@@ -26,7 +26,7 @@ var writeExamples = []ir.Expression{
 	ir.NodeBufferCall{Function: "buffer_set"}, ir.NodeFSFile{Operation: "read_sync"}, ir.ObjectCall{Method: "assign"},
 	ir.RegExpCall{Method: "test"},
 	ir.NodeFSFile{Operation: "host_env_set"}, ir.NodeFSFile{Operation: "host_env_delete"},
-	ir.GeneratorNext{},
+	ir.GeneratorNext{}, ir.IteratorNext{},
 }
 
 // callBackExamples are what callsBack reports, each as a value it reports.
@@ -37,8 +37,8 @@ var callBackExamples = []ir.Expression{
 	ir.JSONEncode{}, // Fail closed: lowering refuses getter-bearing operands before JSON encoding.
 	// A run-time key read calls whichever class getter its key names.
 	ir.DynamicKeyedProperty{},
-	// A generator's step runs its body.
-	ir.GeneratorNext{},
+	// A generator's step runs its body, by GeneratorNext or by a hand-driven next().
+	ir.GeneratorNext{}, ir.IteratorNext{},
 }
 
 // valueCases write into what they're handed, or call, through a case of value's own, which makes

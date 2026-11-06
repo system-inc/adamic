@@ -886,6 +886,16 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(yield " + e.value(expression.Value) + ")"
 	case ir.GeneratorNext:
 		return "adamicGeneratorNext(" + e.value(expression.Generator) + ")"
+	case ir.IteratorNext:
+		// Node's own generator gives its own { value, done }, a fresh one each call. A collection's
+		// iterator's next is an AdamicClosure, never a function, so where one feeds the parameter
+		// too, the step tests the kind first and calls it the way CallClosure calls a method's callee;
+		// anything else is the loud default native's adamic_iterator_next has, in its words.
+		if !expression.Collection {
+			return "(" + e.value(expression.Iterator) + ").next()"
+		}
+		message := "compiler bug: the hand-driven next() at " + expression.Site + " steps a value that is neither a generator nor a collection's iterator"
+		return "((iterator) => adamicIsGenerator(iterator) ? iterator.next() : iterator instanceof AdamicCollectionIterator ? adamicCall(adamicCallee(iterator, " + quote("next") + "), []) : panic(" + quote(message) + "))(" + e.value(expression.Iterator) + ")"
 	case ir.GeneratorDone:
 		return "adamicGeneratorDone(" + e.value(expression.Generator) + ")"
 	case ir.IterableOf:
