@@ -440,6 +440,8 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
+	{"stop_function_length.a", "map function\n", "Function", "length", "map function\nnumber\n"},
+	{"stop_function_length_iterator.a", "next function\n", "Function", "length", "next function\nnumber\n"},
 }
 
 // reflectGetStop is the run a stop fixture makes on each backend: what it printed, and the stop's
@@ -483,7 +485,9 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
 // (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
 // adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
-// native's slots.
+// native's slots. The stop_function_length rows read a function the read handed out by a key in turn:
+// natively a closure, on the JavaScript backend Node's own function. Their mutant is the helper's
+// typeof function test dropped, so that backend stops in the runtime value's words.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

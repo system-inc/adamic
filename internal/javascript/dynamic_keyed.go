@@ -82,6 +82,12 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		// A class's static side is a function on this backend, a class object natively.
 		builder.WriteString("\tif (id !== undefined && adamicClasses[id - 1].static) return adamicDynamicStop('StaticClass', key);\n")
 	}
+	// A program's function is an AdamicClosure, which stopped above, so a function here is Node's own,
+	// one this helper handed out (an array's map, a matchAll iterator's next, Object.prototype's
+	// toString), where native hands out an immortal closure: it stops in the Function form, as the
+	// closure does natively, never as a runtime value. A program class's static side is a function on
+	// this backend too, so its own stop comes first.
+	builder.WriteString("\tif (typeof value === 'function') return adamicDynamicStop('Function', key);\n")
 	builder.WriteString("\tif (typeof value !== 'object' || value instanceof Promise) return adamicDynamicStop('RuntimeValue', key);\n")
 	builder.WriteString("\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n")
 	builder.WriteString("\tif (key === '__proto__') return adamicDynamicStop('Proto', key);\n")
