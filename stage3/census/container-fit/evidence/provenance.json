@@ -1,0 +1,23 @@
+{
+  "box": {
+    "hostname": "6feab438e03f",
+    "cpu_max": "400000 100000",
+    "memory_max": "17179869184"
+  },
+  "pins": {
+    "base": {
+      "compiler": "d4c6b07aca1a7c55785226563c2ad79d552c1adf",
+      "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+      "census_sha256": "6af7b3e90a1696e8fea78e9c0aa073cc204d2bb4be1973c310bc56563cf9db81"
+    },
+    "log": {
+      "compiler": "f913c480175d88b31adbefa5825d1283ac2da2f2",
+      "cohere": "06af2e399c6c1fb93fd570b774027942747400b4"
+    },
+    "head": {
+      "compiler": "1197ee885cb653795cda90480705e192c14144d7",
+      "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+      "census_sha256": "3a19ad43fea4aa11e6a5a4775e24f9ada783ff28bc2f6e411c196976960c64a5"
+    }
+  }
+}
