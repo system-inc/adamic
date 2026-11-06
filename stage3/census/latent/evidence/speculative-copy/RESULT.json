@@ -1,0 +1,118 @@
+{
+  "acceptance_met": false,
+  "code_commit": "8161186244a10d8666efa5938d284f19029c37f6",
+  "base": "89c1c7958a9cc358b95fa641a97cca31dd3b718d",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "input": "pinned unadapted TypeScript src/tsc/tsc.ts, passed as the single census root",
+  "complete_project_closure_audit": false,
+  "tsc": {
+    "metrics": {
+      "command": [
+        "/workspace/scratch/9k-census",
+        "/workspace/typescript-source/src/tsc/tsc.ts",
+        "/workspace/scratch/9k-tsc.jsonl"
+      ],
+      "wall_seconds": 36.177407841000104,
+      "peak_rss_kib": 873144,
+      "exit": 0,
+      "user_cpu_seconds": 34.708555,
+      "system_cpu_seconds": 2.497164,
+      "phase_first_wall_seconds": {},
+      "time_limit_seconds": 1200.0,
+      "rss_limit_mib": 8192,
+      "address_space_limit_mib": 16384,
+      "rss_limit_killed": false
+    },
+    "unit_counts": {
+      "total": 6,
+      "functions": 0,
+      "skipped_checker_body": 0,
+      "attempted_functions": 0,
+      "attempted_statements": 6,
+      "panicked_units": 0
+    },
+    "completed_file_records": 1,
+    "state_copy_panic_findings": 3,
+    "state_copy_panics": [
+      {
+        "site_where": "/workspace/typescript-source/src/tsc/tsc.ts:6:24",
+        "site_kind": "KindObjectLiteralExpression",
+        "site_start": 177,
+        "site_end": 266,
+        "root_kind": "expression panic: latent state copy: unsupported function field Boundary",
+        "depth": 2,
+        "boundary_where": "/workspace/typescript-source/src/tsc/tsc.ts:6:24",
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/typescript-source/src/tsc/tsc.ts:6:1",
+        "phase": "lowering",
+        "kind": "error",
+        "where": "",
+        "reason": "expression panic: latent state copy: unsupported function field Boundary",
+        "text": "expression panic: latent state copy: unsupported function field Boundary",
+        "start": 177,
+        "end": 266
+      },
+      {
+        "site_where": "/workspace/typescript-source/src/tsc/tsc.ts:7:5",
+        "site_kind": "KindMethodDeclaration",
+        "site_start": 179,
+        "site_end": 262,
+        "root_kind": "body panic: latent state copy: unsupported function field Boundary",
+        "depth": 3,
+        "boundary_where": "/workspace/typescript-source/src/tsc/tsc.ts:7:5",
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/typescript-source/src/tsc/tsc.ts:6:1",
+        "phase": "lowering",
+        "kind": "error",
+        "where": "",
+        "reason": "body panic: latent state copy: unsupported function field Boundary",
+        "text": "body panic: latent state copy: unsupported function field Boundary",
+        "start": 179,
+        "end": 262
+      },
+      {
+        "site_where": "/workspace/typescript-source/src/tsc/tsc.ts:8:9",
+        "site_kind": "KindExpressionStatement",
+        "site_start": 201,
+        "site_end": 255,
+        "root_kind": "statement panic: latent state copy: unsupported function field Boundary",
+        "depth": 4,
+        "boundary_where": "/workspace/typescript-source/src/tsc/tsc.ts:8:9",
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/typescript-source/src/tsc/tsc.ts:6:1",
+        "phase": "lowering",
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: latent state copy: unsupported function field Boundary",
+        "text": "statement panic: latent state copy: unsupported function field Boundary",
+        "start": 201,
+        "end": 255
+      }
+    ]
+  },
+  "synthetic_speculative": {
+    "exit": 2,
+    "completed_units": 0,
+    "completed_file_records": 0,
+    "unhandled_state_copy_panics": 1,
+    "reason": "latent state copy: unsupported function field Boundary"
+  },
+  "audit_deferred": {
+    "fixed_exit": 1,
+    "main_exit": 1,
+    "stopped_mode": "legacy",
+    "assertion": "named['called']['instantiated']",
+    "finding": "lower: source module has no import-declaration route"
+  },
+  "first_error": {
+    "byte_identical": true,
+    "sha256": "a1711c95746b1ef78cc9403fb8021e295fc97e16887b77e9902a9f46f3f966f2",
+    "bytes": 1919
+  },
+  "adaptation": {
+    "completed": false,
+    "stopped_at": "70-readonly-views",
+    "reason": "stopped after independent speculative Function.Boundary guard was confirmed"
+  },
+  "all_task_processes_stopped": true
+}
