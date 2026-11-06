@@ -1,0 +1,4 @@
+function write(array: string[][] | (string | readonly string[] | undefined)[]): void {
+    array[0] = ["x"];
+}
+write([["a"]]);

@@ -403,6 +403,35 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	return valueType, nil
 }
 
+// readElementType admits unions only at element reads. Other elementType callers include
+// writes and mutating methods, which must still require one array type.
+func (l *lowering) readElementType(node *ast.Node) (ir.Type, error) {
+	array := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
+	if array.Flags()&checker.TypeFlagsUnion == 0 {
+		return l.elementType(node)
+	}
+	elements := make([]*checker.Type, 0, len(array.Types()))
+	for _, arm := range array.Types() {
+		if !l.checker.IsArrayType(arm) {
+			return 0, l.notYet(node, "an array union read with non-array arm "+l.checker.TypeToString(arm))
+		}
+		elements = append(elements, l.checker.GetElementTypeOfArrayType(arm))
+	}
+	result, known := l.kept(l.checker.GetUnionType(elements))
+	if !known || !boxedSlot(result) {
+		return 0, l.notYet(node, "an array union read with unsupported result element representation")
+	}
+	for _, element := range elements {
+		held, known := l.kept(element)
+		// Fitting a reference to Union only casts its pointer. Scalars need boxes,
+		// and Weak holds a handle rather than the target that Union would observe.
+		if element.Flags()&checker.TypeFlagsUnknown != 0 || !known || !boxedSlot(held) || !(held == result || result == ir.Union && held.IsReference() && held != ir.Weak) {
+			return 0, l.notYet(node, "an array union read whose arm element "+l.checker.TypeToString(element)+" has a different slot representation from the union element")
+		}
+	}
+	return result, nil
+}
+
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if l.methodPresenceTest(node) {
@@ -2111,7 +2140,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return ir.StringIndex{Value: object, Index: position}, nil
 	}
 	if object.Type() == ir.Array {
-		element, err := l.elementType(access.Expression)
+		element, err := l.readElementType(access.Expression)
 		if err != nil {
 			return nil, err
 		}

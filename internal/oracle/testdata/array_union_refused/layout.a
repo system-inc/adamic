@@ -1,0 +1,4 @@
+function read(array: number[] | readonly (string | undefined)[]): void {
+    console.log(String(array[0]));
+}
+read([1]);
