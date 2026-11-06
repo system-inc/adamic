@@ -5,7 +5,7 @@ before,after,out=map(Path,sys.argv[1:]);repo=Path(__file__).resolve().parents[5]
 old=json.loads(subprocess.check_output(['git','show','63e14a0b2b61cf251ad74292e42d5fd09af804b3:stage3/adapt/40-explicit-any/class-rules.json'],cwd=repo))
 new=json.loads((repo/'stage3/adapt/40-explicit-any/class-rules.json').read_text())
 changes=[(a,b) for key in old for a,b in zip(old[key],new[key]) if a!=b]
-assert len(changes)==21
+assert len(changes)==22
 sha=lambda b:hashlib.sha256(b).hexdigest()
 files=lambda root:sorted(str(p.relative_to(root)) for p in root.rglob('*') if p.is_file())
 names=files(before/'src');assert names==files(after/'src');changed=[]
@@ -14,7 +14,7 @@ for name in names:
  expected=a
  for left,right in changes:
   if left['file']!='src/'+name:continue
-  prefix='enumObject: ' if left['parentKind']=='Parameter' else 'ts as '
+  prefix='enumObject: ' if left['parentKind']=='Parameter' else 'new Map<' if left['id']==70 else 'ts as '
   token=(prefix+left['replacement']).encode();replacement=(prefix+right['replacement']).encode()
   assert token in expected,(name,left['id'])
   expected=expected.replace(token,replacement,1)
