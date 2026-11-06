@@ -551,6 +551,9 @@ func (a *analysis) origins(value ir.Expression) roots {
 		// A step is one of the values the generator's call stands for: its yields, substituted at
 		// the call that made it.
 		add(result, a.origins(node.Generator))
+	case ir.IteratorNext:
+		// A hand-driven next's result holds what the step yields, as GeneratorNext's value is.
+		add(result, a.origins(node.Iterator))
 	case ir.Property:
 		add(result, a.elements(node.Object))
 	case ir.ArrayIndex:

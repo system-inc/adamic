@@ -85,6 +85,7 @@ var localFields = map[string]localField{
 	"Call.Virtual":                    {why: "a method slot plus one"},
 	"CallClosure.Direct":              {why: "a function's index plus one"},
 	"GeneratorNext.Function":          {why: "a function's index"},
+	"IteratorNext.Function":           {why: "a function's index"},
 	"MakeClosure.Function":            {why: "a function's index"},
 	"Method.Function":                 {why: "a function's index"},
 	"InstanceOf.Class":                {why: "a class's index"},
