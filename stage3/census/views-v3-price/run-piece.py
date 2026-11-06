@@ -9,23 +9,38 @@ stem=names[0].replace('/','_').removesuffix('.ts').replace('.','_') if len(names
 piece=report/'pieces'/stem
 if piece.with_suffix('.tar.gz').exists():raise SystemExit('already recorded')
 scratch=pathlib.Path('/workspace/scratch/v3-pieces')/stem;scratch.mkdir(parents=True,exist_ok=True)
-start=time.monotonic();deadline=start+23*60
+start=time.monotonic()
 records={n:{'file':n,'mode':'full selected-file group in complete tsc closure','sides':{}} for n in names}
 for label in ('main','head'):
  tree=pathlib.Path(f'/workspace/v3-{label}-adapted-complete')
  env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE='\n'.join(str(tree/n) for n in names))
  env.pop('V3_MUTANT_SKIP_NODE',None)
  for variant in ('meter','count'):
+  key=f'{stem}-{label}-{variant}'
+  index=json.loads((report/'LEG-INDEX.json').read_text()) if (report/'LEG-INDEX.json').exists() else {}
+  if key in index:
+   metadata=index[key];archive=report/metadata['archive']
+   assert hashlib.sha256(archive.read_bytes()).hexdigest()==metadata['archive_sha256']
+   with tarfile.open(archive) as saved:
+    for suffix in ('jsonl','log'):
+     filename=f'{label}-{variant}.'+suffix
+     (scratch/filename).write_bytes(saved.extractfile(filename).read())
+   with tarfile.open(archive) as saved:
+    (scratch/f'{label}-{variant}-leg.json').write_bytes(saved.extractfile('leg.json').read())
+   print('Reused '+key,flush=True)
+   continue
+  leg_start=time.monotonic()
   output=scratch/f'{label}-{variant}.jsonl';log=scratch/f'{label}-{variant}.log'
   with log.open('w') as stream:
    process=subprocess.Popen([f'/workspace/scratch/v3-{label}-{variant}-bin',str(tree/'src/tsc/tsc.ts'),str(output)],env=env,stdout=stream,stderr=stream,start_new_session=True)
-   try:code=process.wait(timeout=max(1,deadline-time.monotonic()))
+   try:code=process.wait(timeout=23*60)
    except BaseException:
     os.killpg(process.pid,signal.SIGTERM)
     try:process.wait(timeout=5)
     except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
     raise
    assert code==0,(label,variant,code)
+  subprocess.run(['python3',str(report/'leg-checkpoint.py'),stem,label,variant,str(time.monotonic()-leg_start),'child exit status 0'],check=True,timeout=120)
  raw=(scratch/f'{label}-count.jsonl').read_bytes();baseline=(scratch/f'{label}-meter.jsonl').read_bytes()
  stripped=re.sub(rb'"(?:ir_measured|view_elements|view_element_checks)":(?:true|false|[0-9]+),',b'',raw)
  assert stripped==baseline,(label,'meter byte identity')
@@ -44,8 +59,8 @@ for label in ('main','head'):
 for record in records.values():assert record['sides']['head']['source_sha256']==record['sides']['main']['source_sha256'],'different adapted bytes'
 with (scratch/'pair.log').open('w') as stream:
  subprocess.run(['python3',str(report.parent/'pair/pair.py'),str(scratch/'main-pair.jsonl'),str(scratch/'head-pair.jsonl'),'/workspace/v3-main-adapted-complete',
- '--typescript',str(report.parents[1]/'api/node_modules/typescript'),'--json',str(scratch/'pair.json'),'--report',str(scratch/'pair.md')],stdout=stream,stderr=stream,check=True,timeout=max(1,deadline-time.monotonic()))
-summary={'files':names,'records':list(records.values()),'elapsed_seconds':time.monotonic()-start}
+ '--typescript',str(report.parents[1]/'api/node_modules/typescript'),'--json',str(scratch/'pair.json'),'--report',str(scratch/'pair.md')],stdout=stream,stderr=stream,check=True,timeout=120)
+summary={'legs':[json.loads(x.read_text()) for x in sorted(scratch.glob('*-leg.json'))],'files':names,'records':list(records.values()),'elapsed_seconds':time.monotonic()-start}
 (scratch/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 files={p.name:p.read_bytes() for p in scratch.iterdir() if p.is_file()}
 files['SHA256SUMS']=''.join(f'{hashlib.sha256(data).hexdigest()}  {n}\n' for n,data in sorted(files.items())).encode()
@@ -54,9 +69,17 @@ with tarfile.open(piece.with_suffix('.tar.gz'),'w:gz') as archive:
  for n,data in sorted(files.items()):
   info=tarfile.TarInfo(n);info.size=len(data);info.mtime=0;archive.addfile(info,io.BytesIO(data))
 piece.with_suffix('.json').write_text(json.dumps(summary,indent=2)+'\n')
+index_path=report/'LEG-INDEX.json'
+index=json.loads(index_path.read_text()) if index_path.exists() else {}
+for label in ('main','head'):
+ for variant in ('meter','count'):
+  key=f'{stem}-{label}-{variant}'
+  if key in index:
+   (report/index.pop(key)['archive']).unlink()
+index_path.write_text(json.dumps(index,indent=2)+'\n')
 subprocess.run(['python3',str(report/'update-report.py')],check=True)
 with (scratch/'publication.log').open('w') as log:
- subprocess.run(['git','add',str(piece.with_suffix('.json')),str(piece.with_suffix('.tar.gz')),str(report/'REPORT.md'),str(report/'SHA256SUMS')],check=True,stdout=log,stderr=log)
+ subprocess.run(['git','add',str(piece.with_suffix('.json')),str(piece.with_suffix('.tar.gz')),str(report/'REPORT.md'),str(report/'SHA256SUMS'),str(report/'legs'),str(report/'LEG-INDEX.json')],check=True,stdout=log,stderr=log)
  subprocess.run(['git','commit','-m','census: views-v3 price piece '+stem],check=True,stdout=log,stderr=log)
  subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/views-v3-price'],check=True,stdout=log,stderr=log)
 print(json.dumps(summary),flush=True)
