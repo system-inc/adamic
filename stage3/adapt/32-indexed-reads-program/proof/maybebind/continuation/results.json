@@ -1,0 +1,110 @@
+{
+  "status": "complete",
+  "main": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+  "fold": "997331ef1ec86480f47f3710fd43e1150407dafc",
+  "adapter99x": "5fa773b799e417c568ae62a4003a801333b87714",
+  "fullApplies": "both exit 0 with --build-product",
+  "pairedReplay": "all 81 outcomes identical, empty diff",
+  "types": "all 79 roots, zero diagnostics",
+  "wholeLane": "pass",
+  "shards": 398,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "identicalTestIdentitiesAndStatuses": true,
+  "identicalSanctionedAPIBytes": true,
+  "maximumPieceSeconds": 70.70417062099841,
+  "maximumShardSeconds": 6.984572122000827,
+  "cw051Stop": "watch.ts:855:19",
+  "pieces": [
+    {
+      "piece": 0,
+      "shards": 40,
+      "seconds": 70.70417062099841,
+      "commit": "6137553f87f72bac5b8cff83f010cab65236f552"
+    },
+    {
+      "piece": 1,
+      "shards": 40,
+      "seconds": 69.02356413300004,
+      "commit": "b5e1c7d796269cb0921fb9d7b7f2848f3e7b920d"
+    },
+    {
+      "piece": 2,
+      "shards": 40,
+      "seconds": 68.41095042899906,
+      "commit": "4d7adcebbd5d31273608b242b1a2c63bb7a46a90"
+    },
+    {
+      "piece": 3,
+      "shards": 40,
+      "seconds": 70.23470968200127,
+      "commit": "60f2f28aff4afd1f5bd6f533fba092cbba8d964f"
+    },
+    {
+      "piece": 4,
+      "shards": 40,
+      "seconds": 69.73530994900102,
+      "commit": "2c0897b2447c90b0b4b89d41ea996ea13a373c82"
+    },
+    {
+      "piece": 5,
+      "shards": 40,
+      "seconds": 70.29184255200016,
+      "commit": "fef1334bdda337d3ffcfea78e0e68ccdd0199cb6"
+    },
+    {
+      "piece": 6,
+      "shards": 40,
+      "seconds": 68.79711163600041,
+      "commit": "5953caaf6945c957b5406e8b73496cdb2892a1c5"
+    },
+    {
+      "piece": 7,
+      "shards": 40,
+      "seconds": 67.27041766100047,
+      "commit": "14787cb8cdf03c48ac3c430e7eaeeeb78c9d283c"
+    },
+    {
+      "piece": 8,
+      "shards": 40,
+      "seconds": 67.71548896900094,
+      "commit": "11a34baf652433c0378be40a98f1eb34087c0757"
+    },
+    {
+      "piece": 9,
+      "shards": 38,
+      "seconds": 68.92074632500044,
+      "commit": "05ed296aed45336c87d0b5a5f9d5cccfcc341892"
+    }
+  ],
+  "archives": [
+    {
+      "archive": "latent.tar.gz",
+      "members": 17,
+      "sha256": "978f68fe45f20d31c2ae5f8f59ae54cd8e3da4679a9f9deaade0ace68eccb8c6"
+    },
+    {
+      "archive": "precheck-logs.tar.gz",
+      "members": 29,
+      "sha256": "d7f268658ddb1cfb241f5d95920fbc775f1bd7d366c2028d6948d9ddb643e235"
+    },
+    {
+      "archive": "replay.tar.gz",
+      "members": 333,
+      "sha256": "f5975f4560a1398c7aaf08d8d3e9f859a186c70bc7d7effb91d1a78ea317b163"
+    },
+    {
+      "archive": "shards.tar.gz",
+      "members": 4591,
+      "sha256": "54d7d0e0cb5f0b915b194f9627f49831b9912a8aefa9d2d149993728f6573918"
+    },
+    {
+      "archive": "whole.tar.gz",
+      "members": 15,
+      "sha256": "60d420a8ef63ea4114649346f89fda975396a4c424fb9850c2dfa81dbe944b44"
+    }
+  ]
+}

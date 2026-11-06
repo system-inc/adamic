@@ -1,0 +1,459 @@
+{
+  "piece": 8,
+  "metrics": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/adapt/32-indexed-reads-program/run_oracle_piece.py",
+      "/workspace/scratch/32r-fold",
+      "/workspace/scratch/32r-oracle-cache/f4ab6e3781735849373980c5e56144882874214b09237d1cc5b44afa929e9099",
+      "/workspace/scratch/32r-oracle-results/shards",
+      "8"
+    ],
+    "exit": 0,
+    "seconds": 67.71548896900094,
+    "limit_seconds": 1440
+  },
+  "seconds": 67.61666327300009,
+  "units": [
+    {
+      "name": "stage3-lane-file-310",
+      "exit": 0,
+      "seconds": 3.0849118730002374,
+      "status": "pass",
+      "counts": {
+        "pass": 299,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-311",
+      "exit": 0,
+      "seconds": 3.188021526999364,
+      "status": "pass",
+      "counts": {
+        "pass": 281,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-312",
+      "exit": 0,
+      "seconds": 3.3301019110003836,
+      "status": "pass",
+      "counts": {
+        "pass": 325,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-313",
+      "exit": 0,
+      "seconds": 3.549948141000641,
+      "status": "pass",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-314",
+      "exit": 0,
+      "seconds": 3.410829279999234,
+      "status": "pass",
+      "counts": {
+        "pass": 424,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-315",
+      "exit": 0,
+      "seconds": 3.2754281899997295,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-317",
+      "exit": 0,
+      "seconds": 3.179955145000349,
+      "status": "pass",
+      "counts": {
+        "pass": 397,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-316",
+      "exit": 0,
+      "seconds": 3.3759840719994827,
+      "status": "pass",
+      "counts": {
+        "pass": 342,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-318",
+      "exit": 0,
+      "seconds": 3.4269026439997106,
+      "status": "pass",
+      "counts": {
+        "pass": 368,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-319",
+      "exit": 0,
+      "seconds": 3.691969085000892,
+      "status": "pass",
+      "counts": {
+        "pass": 367,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-320",
+      "exit": 0,
+      "seconds": 3.35817827199935,
+      "status": "pass",
+      "counts": {
+        "pass": 341,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-321",
+      "exit": 0,
+      "seconds": 3.284885425000539,
+      "status": "pass",
+      "counts": {
+        "pass": 332,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-322",
+      "exit": 0,
+      "seconds": 3.3450048160011647,
+      "status": "pass",
+      "counts": {
+        "pass": 340,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-323",
+      "exit": 0,
+      "seconds": 3.394990692000647,
+      "status": "pass",
+      "counts": {
+        "pass": 365,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-324",
+      "exit": 0,
+      "seconds": 3.465400035998755,
+      "status": "pass",
+      "counts": {
+        "pass": 335,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-325",
+      "exit": 0,
+      "seconds": 3.332073487999878,
+      "status": "pass",
+      "counts": {
+        "pass": 376,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-326",
+      "exit": 0,
+      "seconds": 3.2294167989985,
+      "status": "pass",
+      "counts": {
+        "pass": 383,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-327",
+      "exit": 0,
+      "seconds": 3.4723497989998577,
+      "status": "pass",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-328",
+      "exit": 0,
+      "seconds": 3.320995733998643,
+      "status": "pass",
+      "counts": {
+        "pass": 334,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-329",
+      "exit": 0,
+      "seconds": 3.1539745360005327,
+      "status": "pass",
+      "counts": {
+        "pass": 301,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-330",
+      "exit": 0,
+      "seconds": 3.217238574001385,
+      "status": "pass",
+      "counts": {
+        "pass": 347,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-331",
+      "exit": 0,
+      "seconds": 3.642790273001083,
+      "status": "pass",
+      "counts": {
+        "pass": 415,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-332",
+      "exit": 0,
+      "seconds": 3.1427066230007767,
+      "status": "pass",
+      "counts": {
+        "pass": 341,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-333",
+      "exit": 0,
+      "seconds": 3.18502330299998,
+      "status": "pass",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-334",
+      "exit": 0,
+      "seconds": 3.3119408239999757,
+      "status": "pass",
+      "counts": {
+        "pass": 342,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-335",
+      "exit": 0,
+      "seconds": 3.1241173559992603,
+      "status": "pass",
+      "counts": {
+        "pass": 333,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-336",
+      "exit": 0,
+      "seconds": 3.4879205729994283,
+      "status": "pass",
+      "counts": {
+        "pass": 318,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-337",
+      "exit": 0,
+      "seconds": 3.3305216640001163,
+      "status": "pass",
+      "counts": {
+        "pass": 354,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-338",
+      "exit": 0,
+      "seconds": 3.171443735000139,
+      "status": "pass",
+      "counts": {
+        "pass": 475,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-339",
+      "exit": 0,
+      "seconds": 3.100222926999777,
+      "status": "pass",
+      "counts": {
+        "pass": 357,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-340",
+      "exit": 0,
+      "seconds": 3.4207439239999076,
+      "status": "pass",
+      "counts": {
+        "pass": 333,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-341",
+      "exit": 0,
+      "seconds": 3.2859378949997335,
+      "status": "pass",
+      "counts": {
+        "pass": 337,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-342",
+      "exit": 0,
+      "seconds": 3.3822340719998465,
+      "status": "pass",
+      "counts": {
+        "pass": 348,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-343",
+      "exit": 0,
+      "seconds": 3.6818774809999013,
+      "status": "pass",
+      "counts": {
+        "pass": 359,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-344",
+      "exit": 0,
+      "seconds": 3.238511010998991,
+      "status": "pass",
+      "counts": {
+        "pass": 377,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-345",
+      "exit": 0,
+      "seconds": 3.2230467540011887,
+      "status": "pass",
+      "counts": {
+        "pass": 325,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-346",
+      "exit": 0,
+      "seconds": 3.3463574489996972,
+      "status": "pass",
+      "counts": {
+        "pass": 353,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-file-347",
+      "exit": 0,
+      "seconds": 3.837841174999994,
+      "status": "pass",
+      "counts": {
+        "pass": 352,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-00",
+      "exit": 0,
+      "seconds": 2.7632874519986217,
+      "status": "pass",
+      "counts": {
+        "pass": 11,
+        "fail": 0,
+        "skip": 0
+      }
+    },
+    {
+      "name": "stage3-lane-project-reference-cases-01",
+      "exit": 0,
+      "seconds": 2.5982664240000304,
+      "status": "pass",
+      "counts": {
+        "pass": 13,
+        "fail": 0,
+        "skip": 0
+      }
+    }
+  ]
+}

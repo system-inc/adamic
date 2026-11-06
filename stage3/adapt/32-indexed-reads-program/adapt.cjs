@@ -94,11 +94,12 @@ function main() {
     if (ts.version !== "6.0.3") throw new Error(`want TypeScript 6.0.3, got ${ts.version}`);
     require("./handoffs.cjs").validate(ts, tree);
     require("./public-host-guards.cjs").validate(ts, tree);
+    const binding = require("./maybebind.cjs").plan(ts, tree, check);
     // Validate all selected files before writing any; retain original bytes and reads.
     const plans = files.map(file => {
         const name = path.join(tree, "src/compiler", file);
         const before = fs.readFileSync(name, "utf8");
-        return { file, name, before, ...plan(ts, file, before, check) };
+        return { file, name, before, ...plan(ts, file, file === "watch.ts" ? binding.text : before, check), rewrites: file === "watch.ts" ? binding.rewrites : 0 };
     });
     for (const item of plans) {
         if (fs.readFileSync(item.name, "utf8") !== item.before) throw new Error(`source changed: ${item.name}`);
@@ -106,7 +107,7 @@ function main() {
     for (const item of plans) {
         if (!check && item.text !== item.before) fs.writeFileSync(item.name, item.text);
     }
-    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined, contracts }) => ({ file, assertions, zeros, declined, contracts })), null, 2));
+    console.log(JSON.stringify(plans.map(({ file, assertions, zeros, declined, contracts, rewrites }) => ({ file, assertions, zeros, declined, contracts, rewrites })), null, 2));
 }
 module.exports = { plan, files };
 if (require.main === module) {
