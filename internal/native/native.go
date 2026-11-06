@@ -12,7 +12,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	goruntime "runtime"
 	"slices"
 	"strings"
 	"time"
@@ -73,7 +72,8 @@ type Options struct {
 	// ProgramRegion enables the one-shot CLI Program region.
 	ProgramRegion bool
 
-	// Target is empty for native, or wasm32-wasi for a WASI module.
+	// Target is the triple clang compiles for: a native one of Triple's table, or wasm32-wasi for a WASI module. Empty
+	// is the build's own native triple (ResolveTarget), which every flag and key names in its place.
 	Target string
 
 	// Request selects a WASI reactor containing the emitted request ABI.
@@ -117,8 +117,16 @@ type Options struct {
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
-// with the same ones, so what it finds is what Build would.
+// with the same ones, so what it finds is what Build would. They always name the target, a native build's triple
+// resolved from the build's platform when Target is empty, so every key that holds them holds the target too.
 func Flags(options Options) []string {
+	options, err := ResolveTarget(options)
+	if err != nil {
+		// Every build validates its options before clang runs (ValidateOptions), refusing a platform the table holds no
+		// row for by its name, so this is only a caller asking for a key's flags on such a platform: there is no native
+		// build there to name.
+		panic(err)
+	}
 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
 	// no-self-assign), not a reason the C can't compile.
@@ -144,7 +152,7 @@ func Flags(options Options) []string {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
 	}
 	if options.Target != "wasm32-wasi" {
-		flags = append(flags, "-pthread")
+		flags = append(flags, "--target="+options.Target, "-pthread")
 	}
 	if options.ProgramRegion {
 		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
@@ -181,7 +189,7 @@ func Flags(options Options) []string {
 }
 
 func shippedRelease(options Options) bool {
-	return options.Release && !options.Sanitize && !options.ThreadSanitize && !options.Count && options.Target == ""
+	return options.Release && !options.Sanitize && !options.ThreadSanitize && !options.Count && options.Target != "wasm32-wasi"
 }
 
 // LinkFlags carries every semantic compilation flag through ThinLTO code generation.
@@ -190,7 +198,7 @@ func LinkFlags(options Options) []string {
 }
 
 func linkFlags(flags []string, options Options) []string {
-	if shippedRelease(options) && goruntime.GOOS != "darwin" {
+	if shippedRelease(options) && !darwinBuild() {
 		return append(flags, "-fuse-ld=lld")
 	}
 	return flags
@@ -220,7 +228,7 @@ func compileOnlyFlags(flags []string) []string {
 // archive's go.o carries Go's DWARF, so checker.a(go.o) would read as the build directory's path, random per build.
 // -oso_prefix takes the working directory back off. An ELF linker copies the DWARF in and records no input's path.
 func objectPrefixFlags() []string {
-	if goruntime.GOOS == "darwin" {
+	if darwinBuild() {
 		return []string{"-Wl,-oso_prefix,."}
 	}
 	return nil
@@ -233,7 +241,7 @@ func Build(source string, output string, options Options) error {
 	if err := validateBuild(source, options); err != nil {
 		return err
 	}
-	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
+	if options.Target != "wasm32-wasi" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
 	return buildOne(source, output, options, Flags(options))
@@ -316,7 +324,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// of its own whose object a cache can hold (#2r9xhqs). The compile is the one call's compile, and the link is given
 	// the same flags, so every semantic one still reaches ThinLTO's code generation (linkFlags): the binary is the one
 	// call's bytes, release, Debug and sanitized (TestACompiledThenLinkedProgramIsTheOneCallProgram).
-	if options.Target != "wasm32-wasi" && (goruntime.GOOS == "darwin" || !oneCall) {
+	if options.Target != "wasm32-wasi" && (darwinBuild() || !oneCall) {
 		// The compile takes every flag but a link's alone, which clang under -Werror refuses as an input unused by a
 		// compile (stdout columns' -Wl,--wrap= probes, TestProduct_StdoutColumnsProbes); the link below keeps them all.
 		compiled := compileOnlyFlags(compileFlags)
