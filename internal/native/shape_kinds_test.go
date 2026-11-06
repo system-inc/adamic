@@ -391,9 +391,9 @@ int main(int argc,char **argv) {
  assert(state->shape->kinds[0]==adamic_field_reference && state->shape->kinds[1]==adamic_field_number);
  for(int i=0;i<4;i++) {
   adamic_object *result=adamic_closure_call(next,NULL,0).reference;
-  assert(result->shape->kinds[0]==adamic_field_boolean && result->shape->kinds[1]==adamic_field_reference);
-  if(result->slots[0].boolean) puts("done");
-  else adamic_write_line(adamic_stdout,result->slots[1].reference);
+  assert(result->shape->kinds[0]==adamic_field_reference && result->shape->kinds[1]==adamic_field_boolean);
+  if(result->slots[1].boolean) puts("done");
+  else adamic_write_line(adamic_stdout,result->slots[0].reference);
   adamic_release(result);
  }
  adamic_release(iterator);

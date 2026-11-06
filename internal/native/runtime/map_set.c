@@ -53,10 +53,12 @@ static const char *const state_names[] = {"iterator", "part", "key", "value", "s
 static const bool state_references[] = {true, false, false, false, false};
 static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean};
 static const adamic_shape state_shape = {5, state_names, state_references, &adamic_host_methods, state_kinds};
-static const char *const result_names[] = {"done", "value"};
-static const bool result_reference[] = {false, true};
+// An iterator's result holds value, then done, the order Node's { value, done } has, so its keys
+// enumerate as Node's do (#7nw4kgj).
+static const char *const result_names[] = {"value", "done"};
+static const bool result_reference[] = {true, false};
 static const bool result_scalar[] = {false, false};
-static const adamic_field_kind result_kinds[][2] = {{adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}};
+static const adamic_field_kind result_kinds[][2] = {{adamic_field_number, adamic_field_boolean}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_reference, adamic_field_boolean}};
 static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0]}, {2, result_names, result_scalar, NULL, result_kinds[1]}, {2, result_names, result_reference, NULL, result_kinds[2]}};
 // An iterator's result is a plain object on Node, as the iterator itself isn't, so no result shape is
 // marked host (adamic.h), where the iterator's and its state's are, and Object.prototype's names
@@ -96,12 +98,12 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	adamic_register_shape_types(&result_metadata[result_kind]);
 	adamic_value key, value;
 	bool present = adamic_map_iterator_next(iterator, &key, &value);
-	result->slots[0].boolean = !present;
-	adamic_object_field_types(result)[0] = 2;
-	adamic_object_field_types(result)[1] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
+	result->slots[1].boolean = !present;
+	adamic_object_field_types(result)[1] = 2;
+	adamic_object_field_types(result)[0] = reference ? (part == 3 ? 4 : (unsigned char)(part == 1 || set ? key_type : value_type)) : (unsigned char)(!present || (part == 1 || set ? key_type : value_type) != 2 ? 7 : 2);
 	if (!present) {
 		if (!reference) {
-			result->slots[1].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
+			result->slots[0].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
 		}
 		return (adamic_value){.reference = result};
 	}
@@ -116,7 +118,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		adamic_object_field_types(pair)[1] = (unsigned char)value_type;
 		if (collection_reference(key_type)) { adamic_retain(key.reference); }
 		if (collection_reference(value_type)) { adamic_retain(value.reference); }
-		result->slots[1].reference = pair;
+		result->slots[0].reference = pair;
 	} else {
 		int type = part == 1 || set ? key_type : value_type;
 		adamic_value element = part == 1 || set ? key : value;
@@ -125,7 +127,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 			// IteratorResult<number, undefined>.value reads the same packed word until narrowed.
 			element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number});
 		}
-		result->slots[1] = element;
+		result->slots[0] = element;
 	}
 	return (adamic_value){.reference = result};
 }
@@ -180,10 +182,10 @@ static adamic_value string_next(adamic_closure *self, adamic_value *arguments) {
 	size_t offset = (size_t)state->slots[1].number;
 	adamic_object *result = adamic_object_new(&result_shapes[adamic_field_reference]);
 	adamic_register_shape_types(&result_metadata[adamic_field_reference]);
-	result->slots[0].boolean = offset >= string->length;
+	result->slots[1].boolean = offset >= string->length;
 	if (offset < string->length) {
 		size_t size = adamic_string_next(string, offset);
-		result->slots[1].reference = adamic_string_slice_bytes(string, offset, size);
+		result->slots[0].reference = adamic_string_slice_bytes(string, offset, size);
 		state->slots[1].number = (double)(offset + size);
 	}
 	return (adamic_value){.reference = result};
