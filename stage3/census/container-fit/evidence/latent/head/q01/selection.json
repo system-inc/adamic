@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "id": "q01",
+  "files": [
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "all_units": false,
+      "units": [
+        "src/compiler/utilitiesPublic.ts:1136:1",
+        "src/compiler/utilitiesPublic.ts:1141:1",
+        "src/compiler/utilitiesPublic.ts:1146:1",
+        "src/compiler/utilitiesPublic.ts:1151:1",
+        "src/compiler/utilitiesPublic.ts:1156:1",
+        "src/compiler/utilitiesPublic.ts:1161:1",
+        "src/compiler/utilitiesPublic.ts:1165:1",
+        "src/compiler/utilitiesPublic.ts:1170:1",
+        "src/compiler/utilitiesPublic.ts:1175:1",
+        "src/compiler/utilitiesPublic.ts:1180:1",
+        "src/compiler/utilitiesPublic.ts:1185:1",
+        "src/compiler/utilitiesPublic.ts:1190:1"
+      ]
+    }
+  ],
+  "expected_units": [
+    "src/compiler/utilitiesPublic.ts:1136:1",
+    "src/compiler/utilitiesPublic.ts:1141:1",
+    "src/compiler/utilitiesPublic.ts:1146:1",
+    "src/compiler/utilitiesPublic.ts:1151:1",
+    "src/compiler/utilitiesPublic.ts:1156:1",
+    "src/compiler/utilitiesPublic.ts:1161:1",
+    "src/compiler/utilitiesPublic.ts:1165:1",
+    "src/compiler/utilitiesPublic.ts:1170:1",
+    "src/compiler/utilitiesPublic.ts:1175:1",
+    "src/compiler/utilitiesPublic.ts:1180:1",
+    "src/compiler/utilitiesPublic.ts:1185:1",
+    "src/compiler/utilitiesPublic.ts:1190:1"
+  ],
+  "estimated_unit_seconds": 285.45772633699994
+}
