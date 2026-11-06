@@ -115,11 +115,33 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 	}
 	directories := 0
 	for _, entry := range entries {
-		if entry.IsDir() && entry.Name() != "typeof" {
+		if entry.IsDir() && entry.Name() != "typeof" && entry.Name() != "global_object" {
 			directories++
 		}
 	}
 	if directories != programs {
 		t.Fatalf("%d programs in %s, want %d: a program added or removed needs this list changed with it", directories, directory, programs)
+	}
+}
+
+// Language's p11 (#00qn5az): Reflect.set(globalThis, "onProfilerEvent", f) installs the global on Node,
+// so typeof turns "function" there and the guarded call prints, where native, having folded typeof to
+// "undefined", would print nothing: the divergence the host-binding fold has to rule out. Adamic stops
+// it as the global object as a value (lower/global_object.go), and Node is held to printing, so the pin
+// shows what the stop prevents.
+func TestHostBindingGlobalObjectRoadIsNotYet(t *testing.T) {
+	t.Parallel()
+	relative := "internal/oracle/testdata/host_bindings/global_object/reflect_set/main.ts"
+	path, err := filepath.Abs(filepath.Join(repository, relative))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != "set mark\n" {
+		t.Fatalf("Node: exit %d, stdout %q, stderr %q, want Reflect.set to install onProfilerEvent and the guarded call to print", node.exitCode, node.stdout, node.stderr)
+	}
+	_, err = lowered(t, path)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.ts:6:13: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet") {
+		t.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", err)
 	}
 }
