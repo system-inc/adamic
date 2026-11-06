@@ -142,6 +142,82 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 	}
 }
 
+// targetedSites are compilerSites' sites that compile a program at runner time, a scratch directory's or test262's: each
+// names its target (#5xsd2ha), the build's triple through native.Flags, SourceFlags or LinkFlags, which resolve it, or
+// native.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
+var targetedSites = []string{
+	"internal/oracle/release_stack_test.go:reservationProbe",
+	"cmd/adamic-test262/run.go:attempt",
+	"cmd/adamic-test262/run_test.go:TestProgramCPUDeadline",
+	"internal/fuzz/run.go:tryFile",
+	"internal/oracle/wasi_test.go:TestWASIRunnerCatchesMutants",
+	"stage1/cohere/css/profile_test.go:TestCSSProfileArtifacts",
+	"stage1/cohere/lint/profile_test.go:buildProfile",
+	"stage1/cohere/markdownblocks/support_test.go:nativeMutant",
+	"stage1/typescript/scanner/profile_test.go:TestProfileArtifacts",
+}
+
+// targetNamers are the calls that give a compile the build's triple: the flags native resolves it in, and the
+// resolution itself.
+var targetNamers = []string{"native.Flags", "native.SourceFlags", "native.LinkFlags", "native.ResolveTarget"}
+
+// Every site that compiles a program at runner time names its target (#5xsd2ha): its function calls one of
+// targetNamers or spells a --target= of its own. A compilerSites entry whose reason says it compiles into a t.TempDir()
+// or a scratch directory is one of targetedSites, so a new site of that kind can't skip its triple. The census reads
+// the function's body, not the one call clang runs with: it holds that the triple is there to pass, and the site's own
+// test that the build it makes runs. Mutants: reservationProbe's --target dropped; a scratch site left out of
+// targetedSites.
+func TestEveryRunnerTimeCompileNamesItsTarget(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs(filepath.Join("..", ".."))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for site, reason := range compilerSites {
+		if (strings.Contains(reason, "t.TempDir()") || strings.Contains(reason, "scratch directory")) && !slices.Contains(targetedSites, site) {
+			t.Errorf("%s compiles at runner time (%q) and isn't one of targetedSites, so nothing holds it to its triple", site, reason)
+		}
+	}
+	for _, site := range targetedSites {
+		if _, listed := compilerSites[site]; !listed {
+			t.Errorf("targetedSites lists %s, which compilerSites doesn't", site)
+			continue
+		}
+		relative, name, _ := strings.Cut(site, ":")
+		parsed, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, filepath.FromSlash(relative)), nil, parser.SkipObjectResolution)
+		if err != nil {
+			t.Fatal(err)
+		}
+		named, found := false, false
+		for _, declaration := range parsed.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || function.Body == nil || function.Name.Name != name {
+				continue
+			}
+			found = true
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				switch node := node.(type) {
+				case *ast.SelectorExpr:
+					if pkg, ok := node.X.(*ast.Ident); ok && slices.Contains(targetNamers, pkg.Name+"."+node.Sel.Name) {
+						named = true
+					}
+				case *ast.BasicLit:
+					if value, err := strconv.Unquote(node.Value); err == nil && node.Kind == token.STRING && strings.HasPrefix(value, "--target=") {
+						named = true
+					}
+				}
+				return !named
+			})
+		}
+		switch {
+		case !found:
+			t.Errorf("%s: no function %s", relative, name)
+		case !named:
+			t.Errorf("%s compiles at runner time and names no target: give clang the build's triple through native.Flags or SourceFlags, or a --target from native.ResolveTarget", site)
+		}
+	}
+}
+
 // versionQuery is buildcache.Tool(name, "--version"), (name, "-v") or (name, "-print-..."): a tool's report for a
 // key, never a compile.
 func versionQuery(call *ast.CallExpr) bool {
