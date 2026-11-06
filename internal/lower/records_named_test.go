@@ -137,14 +137,16 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 func TestNamedRecordRefusals(t *testing.T) {
 	t.Parallel()
 	// Each probe stays not yet in .ts. In .a, the write and the view a declared property's type could
-	// lie through are refused instead (refusedInA, TestNamedRecordLiesAreRefusedInA).
+	// lie through are refused instead (refusedInA, TestNamedRecordLiesAreRefusedInA). The view drops a
+	// property held as a union, whose read comes back unchecked: one whose read is checked lowers in .ts
+	// (#6c4swvt G3a, internal/oracle/testdata/records_options_base).
 	for _, probe := range []struct {
 		source, reason string
 		refusedInA     bool
 	}{
 		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an array without an element-checked view", false},
 		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named", true},
-		{`interface R {named?:number;[key:string]:number|string|undefined} const r:R={}; const view:Record<string,number|string|undefined>=r;`, "seen as", true},
+		{`interface R {named?:number|string;[key:string]:number|string|boolean|undefined} const r:R={}; const view:Record<string,number|string|boolean|undefined>=r;`, "seen as", true},
 		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as", false},
 		{`interface R {named:number;[key:string]:number} const fixed={named:1}; const r:R=fixed;`, "seen as", false},
 		{`interface R {named?:number;readonly [key:string]:number|undefined} const r:R={};`, "signature", false},
