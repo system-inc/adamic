@@ -1,0 +1,29 @@
+// A global moved into an assignment's evaluation across an await (Memory's ruling on #qk8rztp
+// S2c-2b, question 1). grow reads g before its await and writes g after it, and swap writes g while
+// grow is suspended. Node prints a1x2: grow's read of a1 comes before the await, and its write comes
+// last. Natively the reuse proof's move takes g's value into the concatenation with no retain only
+// when nothing the assignment evaluates can reach g, and an await runs every other ready task before
+// the expression resumes, so it reaches g: grow holds a1 counted, and swap's write can't free it
+// under the suspended concatenation. Main took an await for reaching nothing, and the resumed
+// concatenation read a1 freed. Two promises made, then each awaited, rather than Promise.all, which
+// no fixture lowers yet.
+let g = `a${String(1)}`;
+async function later(): Promise<string> {
+    await null;
+    return `x${String(2)}`;
+}
+async function grow(): Promise<void> {
+    g = g + await later();
+}
+async function swap(): Promise<void> {
+    await null;
+    g = `b${String(3)}`;
+}
+async function run(): Promise<void> {
+    const one = grow();
+    const two = swap();
+    await one;
+    await two;
+    console.log(g);
+}
+await run();
