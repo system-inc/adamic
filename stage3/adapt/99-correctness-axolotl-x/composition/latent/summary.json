@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "pieces": 12,
+  "comparison": [
+    {
+      "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "reference": "src/compiler/checker.ts:54277:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54279:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54279:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      }
+    },
+    {
+      "name": "createWatchHost",
+      "reference": "src/compiler/watch.ts:673:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:676:20",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createIncrementalCompilerHost",
+      "reference": "src/compiler/watchPublic.ts:123:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watchPublic.ts:124:23",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "performBuild",
+      "reference": "src/compiler/executeCommandLine.ts:812:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createWatchOfConfigFile",
+      "reference": "src/compiler/executeCommandLine.ts:1011:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "reference": "src/compiler/executeCommandLine.ts:1034:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    }
+  ]
+}
