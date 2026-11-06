@@ -2,7 +2,9 @@ package lower
 
 import (
 	"fmt"
+	"maps"
 	"reflect"
+	"slices"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -199,21 +201,29 @@ func (l *lowering) checkGeneratorBody(index int, declaration *ast.Node) error {
 	return nil
 }
 
-// nestedGeneratorWrites stops a nested generator whose body, or a closure made in it, writes a local
-// its carrier holds a cell of, one some enclosing function declared (Lower's term 3 on #qk8rztp S3a).
-// The writes are counted on the IR by every field localFields says writes a local, as the one-read
-// rule counts them, so a compound, logical or ++ assignment, a destructuring target and a for-of
-// head over the local each count. A write by the parent, or by a sibling the body calls, is no write
-// inside the generator: the body's next step reads it live, through the carrier's cell.
+// nestedGeneratorWrites stops a nested generator whose body, or any function declared in it, writes
+// a local its carrier holds a cell of, one some enclosing function declared (Lower's term 3 on
+// #qk8rztp S3a). The writes are counted on the IR by every field localFields says writes a local, as
+// the one-read rule counts them, so a compound, logical or ++ assignment, a destructuring target and
+// a for-of head over the local each count. A write by the parent, or by a sibling the body calls, is
+// no write inside the generator: the body's next step reads it live, through the carrier's cell.
 func (l *lowering) nestedGeneratorWrites(index int, declaration *ast.Node) error {
-	bodies := []int{index}
+	// Inside is every function whose declaration lies within the generator's, by the source's own
+	// nesting (Compiler's rule on #qk8rztp S3a), so no form of function written in the body is a road
+	// the count forgets: an arrow, a function expression, a nested declaration, an object literal's
+	// method or accessor. A sibling declared beside the generator in its parent lies outside.
 	inside := map[int]bool{index: true}
+	for function, node := range l.functionNodes {
+		if declaredWithin(node, declaration) {
+			inside[function] = true
+		}
+	}
+	bodies := slices.Sorted(maps.Keys(inside))
 	for position := 0; position < len(bodies); position++ {
 		walk(l.result.Functions[bodies[position]].Body, func(node any) bool {
-			// An arrow or a function expression is made where it's written, so one made here is
-			// inside; a named nested function made here as a value or a carrier is a sibling's, and
-			// what it writes it writes itself.
-			if made, isMade := node.(ir.MakeClosure); isMade && !inside[made.Function] && l.result.Functions[made.Function].NestedParent == 0 {
+			// A helper lowering makes with no declaration of its own, as a prefix update's, is
+			// inside when a function inside makes it.
+			if made, isMade := node.(ir.MakeClosure); isMade && !inside[made.Function] && l.functionNodes[made.Function] == nil {
 				inside[made.Function] = true
 				bodies = append(bodies, made.Function)
 			}
@@ -243,6 +253,16 @@ func (l *lowering) nestedGeneratorWrites(index int, declaration *ast.Node) error
 		}
 	}
 	return nil
+}
+
+// declaredWithin reports whether node is declaration or lies inside it, by the AST's parents.
+func declaredWithin(node, declaration *ast.Node) bool {
+	for at := node; at != nil; at = at.Parent {
+		if at == declaration {
+			return true
+		}
+	}
+	return false
 }
 
 // yieldStatement lowers yield value; as a statement of a lowered generator's body.

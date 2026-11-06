@@ -225,6 +225,10 @@ type lowering struct {
 	// getterDeclarations is each class getter's declaration, by its function (registerAccessor), which
 	// checkDynamicKeyedGetters reads.
 	getterDeclarations map[int]*ast.Node
+	// functionNodes is the declaration each function's body was lowered from (lowerBody), by the
+	// function's index, so a judgment about what lies inside a declaration reads the source's own
+	// nesting (nestedGeneratorWrites). A helper lowering makes with no declaration isn't here.
+	functionNodes map[int]*ast.Node
 	// slots are what a value is judged against where the checker's contextual type isn't the whole
 	// answer (slotType, impliedTarget).
 	slots slotTargets
