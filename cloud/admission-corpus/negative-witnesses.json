@@ -548,6 +548,42 @@
       "type_correct_sha256": "69bc790791d9ac7a66e4646d8c56c60fcc9ebf1fa9e740f3208843c455d9cd3f",
       "exit": 70,
       "stderr": "adamic: panic: element read failed: wide.xs[0] is not a object; expected object, found number\n"
+    },
+    "1a13db66bd9ae2eceb127bafb78d32e215c3c334794093bc30c5b85e46a6812d": {
+      "form": "checked_boundary",
+      "ruling_task": "#6wfvfhm",
+      "ruling": "Adamic, Nov 6; storage, Runtime and Memory, Nov 6",
+      "declaration": "internal/oracle/testdata/views_v3/storage-reference-lie.ts:3",
+      "declared_type": "number",
+      "repair_from": "_children:[{kind:1}]",
+      "repair_to": "_children:[1]",
+      "type_correct_sha256": "6c33f37834ab3a950a4de4beaf4fdc78666bdd9078f89453411fe2109534e422",
+      "exit": 70,
+      "stderr": "adamic: panic: element read failed: view._children[0] is not a number; expected number, found reference storage\n"
+    },
+    "5d71985f82b3b96698f81f9824725d163369fe15af977a96baba49881613986c": {
+      "form": "checked_boundary",
+      "ruling_task": "#6wfvfhm",
+      "ruling": "Adamic, Nov 6; storage, Runtime and Memory, Nov 6",
+      "declaration": "internal/oracle/testdata/views_v3/storage-boolean-lie.ts:3",
+      "declared_type": "number | Node",
+      "repair_from": "_children:[true]",
+      "repair_to": "_children:[7]",
+      "type_correct_sha256": "3ba13aa5b0b25bc2447560e26319e8f47d5442b133bcc5f0e0924d1aba40f5e9",
+      "exit": 70,
+      "stderr": "adamic: panic: element read failed: view._children[0] is not a number | Node; expected number | Node, found boolean\n"
+    },
+    "068a97d0ce861efcf759c6bb26921cdd3b3deaee408d9acb1a5d4e334b2ffc83": {
+      "form": "checked_boundary",
+      "ruling_task": "#6wfvfhm",
+      "ruling": "Adamic, Nov 6; storage, Runtime and Memory, Nov 6",
+      "declaration": "internal/oracle/testdata/views_v3/storage-maybe-lie.ts:3",
+      "declared_type": "number | Node",
+      "repair_from": "_children:[1, undefined]",
+      "repair_to": "_children:[1, 2]",
+      "type_correct_sha256": "6eb05b4ea716cef42552fb1cf8917bba9dc2b392671ce275daf0484bdc2a4f24",
+      "exit": 70,
+      "stderr": "adamic: panic: element read failed: view._children[1] is not a number | Node; expected number | Node, found undefined\n"
     }
   }
 }
