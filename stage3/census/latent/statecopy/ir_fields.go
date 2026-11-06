@@ -496,6 +496,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"ObjectLiteral.SpreadReadiness":      {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.Class":                {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.Spread":               {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"ObjectLiteral.SpreadGetters":        {"[]int", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"ObjectLiteral.Fields":               {"[]Field", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"ObjectLiteral.NoReuse":              {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ObjectLiteral.SpreadMaybeUndefined": {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},

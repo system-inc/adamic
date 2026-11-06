@@ -42,3 +42,18 @@ func TestCheckPureInspectsAGeneratorStepsBody(t *testing.T) {
 		t.Fatalf("want the stepped body's console write refused, got %v", err)
 	}
 }
+
+// A spread runs the getters lowering recorded for it (ir.ObjectLiteral's SpreadGetters), so each must
+// be pure (Memory's and Compiler's ruling on #qk8rztp S2c-2b). Mutant: the ObjectLiteral arm's
+// inspect made `if err := error(nil); getter < 0 && err != nil {`, and the getter's console write
+// passes.
+func TestCheckPureInspectsASpreadsGetters(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{Functions: []ir.Function{
+		{Name: "compute", Body: []ir.Statement{ir.Evaluate{Value: ir.ObjectLiteral{Spread: ir.Read{Local: 0, Of: ir.Object}, SpreadGetters: []int{1}}}}},
+		{Name: "get value", Body: []ir.Statement{ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}}}},
+	}, Locals: []ir.Local{{Name: "extra", Type: ir.Object, Function: 0}}}
+	if err := CheckPure(program, 0); err == nil || !strings.Contains(err.Error(), "calls console") {
+		t.Fatalf("want the spread's getter's console write refused, got %v", err)
+	}
+}
