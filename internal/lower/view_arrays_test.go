@@ -251,7 +251,11 @@ let total = 0;
 for (const token of tokens) total += token;
 const kinds = nodes.map((node: Node) => node.kind);
 const first = nodes[0];
-console.log(String(tokens[1]), String(kinds.length), String(total), String(first?.kind), String(holder.count));
+console.log(String(tokens[1]));
+console.log(String(kinds.length));
+console.log(String(total));
+console.log(String(first?.kind));
+console.log(String(holder.count));
 `))
 	if err != nil {
 		t.Fatal(err)
@@ -284,7 +288,9 @@ const tokens: number[] = [3, 4];
 let total = 0;
 for (const token of tokens) total += token;
 const child = view._children[0];
-console.log(String(tokens[1]), String(total), String(child?.kind));
+console.log(String(tokens[1]));
+console.log(String(total));
+console.log(String(child?.kind));
 `))
 	if err != nil {
 		t.Fatal(err)
@@ -367,7 +373,8 @@ const raw = {tag:1 as const, _children:[{kind:1}]};
 const base: Base = raw;
 const view = base as SyntaxList;
 const names: readonly string[] = ['a'];
-console.log(String(view._children[0]?.kind), String(names.length));
+console.log(String(view._children[0]?.kind));
+console.log(String(names.length));
 `))
 	if err != nil {
 		t.Fatal(err)
