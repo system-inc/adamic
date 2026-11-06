@@ -44,8 +44,16 @@
     "noWritesOnRefusal": true
   },
   "oracle": {
-    "status": "pending",
-    "pieceLimitSeconds": 1440
+    "status": "pass",
+    "wholeLaneExit": 0,
+    "shards": 398,
+    "executedTestIdentities": 106367,
+    "passing": 106366,
+    "sanctionedFailing": 1,
+    "pending": 0,
+    "officialMergeExit": 0,
+    "allPiecesUnder25Minutes": true,
+    "evidence": "oracle/summary.json"
   },
-  "complete": false
+  "complete": true
 }

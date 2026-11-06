@@ -1,6 +1,6 @@
 # 95h: truthful host slots and six owned maybeBind folds
 
-Task kpp0f8s. Current six-site validation is in progress; its ledger is
+Task kpp0f8s. All six-site checks pass; the final ledger is
 [fold-evidence/six-sites/checks.json](fold-evidence/six-sites/checks.json).
 The completed two-site evidence remains historical, at commit
 [c2714b29c](https://github.com/system-inc/adamic/tree/c2714b29c5937f553d79e98e9fae80aab8ed995a/stage3/adapt/95-checker-axolotl-h).
@@ -170,3 +170,67 @@ STAGE3_ARTIFACT=ARTIFACT python3 -B FROZEN/stage3/lane/merge_shards.py RESULTS -
 Historical declaration census, the earlier two-site stop, its accepted rename
 proof and its completed oracle remain in fold-evidence and in the linked
 historical README. They are not claimed as six-site validation.
+
+## Completed six-site validation
+
+| Check | Result |
+| --- | --- |
+| Full --build-product applies | Main control and six-site candidate both exit 0 |
+| Paired replay | All 81 outcomes match except 95h; 95h refuses at createProgram's own original pin, never earlier; adapter 78 stdout is byte-identical |
+| All 79 compiler roots | Adamic types exits 0 with zero diagnostics |
+| JavaScript and declarations | All nine outputs differ only by six modeled lowerings after symbol-proved normalization; both public declarations are byte-identical |
+| Mutants | All 22 source mutants and all five rename-proof mutants refuse; source refusals write nothing |
+| Oracle | Whole lane, all 398 shards and unchanged official merge pass on one verified artifact |
+
+The six-site oracle has exactly 106,366 passing tests, one sanctioned Public
+APIs failure, and zero pending. The official merge accounts for all 106,367
+actual test identities with multiplicity and matches the complete raw baseline
+diff bytes to the whole run. Every oracle piece was committed and pushed
+plainly as it finished. No lane, expectation, sanction or other adaptation
+source changed. The original owner/literal before hashes and every member's
+classification fields are unchanged, as recorded in pin-preservation.json.
+
+The isolated oracle checkout froze the six-site implementation at
+61526db0b0ebee0f30abc42089e79f05a02c9575
+and used artifact
+972f66fa46df8a2e07b1905b3c832309134d1620a5f2d451dae2232978bb038c.
+Its source, nine compiler JavaScript files and both public declarations were
+compared byte for byte with the proven six-site after tree before testing.
+Later evidence commits do not change that frozen transformation.
+
+| Oracle piece | Seconds |
+| --- | ---: |
+| Preparation | 286.585 |
+| Whole lane | 284.232 |
+| Shards 1 through 40 | 529.266 |
+| Shards 41 through 80 | 524.655 |
+| Shards 81 through 120 | 530.517 |
+| Shards 121 through 160 | 533.813 |
+| Shards 161 through 200 | 527.644 |
+| Shards 201 through 240 | 529.605 |
+| Shards 241 through 280 | 527.433 |
+| Shards 281 through 320 | 526.420 |
+| Shards 321 through 360 | 521.347 |
+| Shards 361 through 398 | 508.461 |
+| Official merge | 4.974 |
+
+All pieces are below 25 minutes. No shard exceeded its unchanged 30-second
+limit. At most two shard commands ran concurrently. No task process remains
+running.
+
+The complete raw shard results are in one
+[six-sites/oracle/shards.tar.gz](fold-evidence/six-sites/oracle/shards.tar.gz),
+with [its SHA-256 list](fold-evidence/six-sites/oracle/shards.sha256).
+The complete raw replay records, including the superseded coordinate-only
+attempt, are in one [replay.tar.gz](fold-evidence/six-sites/replay.tar.gz),
+with [its SHA-256 list](fold-evidence/six-sites/replay.sha256). Source mutants
+and the whole lane each have their own compact archive and hash list. Every
+uncompressed member was hash-verified when packed.
+
+[The oracle summary](fold-evidence/six-sites/oracle/summary.json) records each
+piece commit, timing, input identity and final counts.
+[The official merge verdict](fold-evidence/six-sites/oracle/merge.json) retains
+the unchanged acceptance result.
+[The evidence index](fold-evidence/six-sites/evidence-index.json) lists all new
+archives and hashes and records the complete adaptation directory's physical
+file count, below 300. Historical two-site evidence is retained separately.

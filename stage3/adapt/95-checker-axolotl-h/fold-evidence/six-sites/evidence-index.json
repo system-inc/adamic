@@ -1,0 +1,31 @@
+{
+  "physicalFilesInAdaptationDirectory": 198,
+  "limit": 300,
+  "underLimit": true,
+  "rawArchives": [
+    {
+      "archive": "mutants.tar.gz",
+      "sha256List": "mutants.sha256",
+      "sha256": "90156ef20ce7ac061e20809ecf1ef923e731113f5997b2907c49b7ab5785968d",
+      "memberHashes": 22
+    },
+    {
+      "archive": "oracle/shards.tar.gz",
+      "sha256List": "oracle/shards.sha256",
+      "sha256": "ec483e59e6f68324f40933da331c647231c5ad1bbef7c9d20d1b3bb257195486",
+      "memberHashes": 4611
+    },
+    {
+      "archive": "oracle/whole.tar.gz",
+      "sha256List": "oracle/whole.sha256",
+      "sha256": "7265d0792448f5c3fc8e6abf36437ddd366e805d89a06d64116c0aa1915ca480",
+      "memberHashes": 13
+    },
+    {
+      "archive": "replay.tar.gz",
+      "sha256List": "replay.sha256",
+      "sha256": "04b10adc977faa7e913901026ee6caab88efa2f4366b884de6812a9071a8b940",
+      "memberHashes": 982
+    }
+  ]
+}
