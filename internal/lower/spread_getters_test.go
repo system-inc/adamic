@@ -34,11 +34,12 @@ func spreadGettersOf(program *ir.Program) [][]string {
 }
 
 // A spread runs the getters its source's class chain owns (runtime/object.c's
-// adamic_object_copy_checked), so lowering records them on the literal, read by flow off the
+// adamic_object_copy_checked), so lowering records the set it may run on the literal, read off the
 // accessor registry (Memory's and Compiler's ruling on #qk8rztp S2c-2b): an object literal's own
-// getter, a class's, and one inherited from a base, each reaching the spread through a call, never
-// judged by the parameter's plain declared type, which every one of them satisfies. A program with no
-// getter records none, so reuse and purity judge its spreads as before. Mutant
+// getter, a class's, and one inherited from a base, each a class whose instances are assignable to
+// the parameter's plain declared type, which every one of them satisfies, so no test of that type
+// could rule them out. A getter of a class no Tree can be isn't taken, and a program with no getter
+// records none, so reuse and purity judge its spreads as before. Mutant
 // (internal/oracle/testdata/iterable_views/mutants.md): spreadGetters' call in finishAccessors made
 // nil, and the three getter rows find none.
 func TestSpreadRecordsTheGettersItMayRun(t *testing.T) {
@@ -50,6 +51,7 @@ func TestSpreadRecordsTheGettersItMayRun(t *testing.T) {
 		{"an object literal's getter", spreadTree + "const source: Tree = { get value(): number { return tree.value + 10; }, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", true},
 		{"a class's getter", spreadTree + "class Sized { label = `sized${String(3)}`; get value(): number { return tree.value + 20; } }\nconsole.log(describe(tree, new Sized()));", true},
 		{"a getter inherited from a base", spreadTree + "class Base { get value(): number { return tree.value + 30; } }\nclass Derived extends Base { label = `derived${String(4)}`; }\nconsole.log(describe(tree, new Derived()));", true},
+		{"a getter of a class no Tree can be", spreadTree + "class Counter { count = 0; get next(): number { this.count++; return this.count; } }\nconst counter = new Counter();\nconsole.log(String(counter.next));\nconsole.log(describe(tree, { value: 10, label: `source${String(2)}` }));", false},
 		{"no getter anywhere", spreadTree + "const source: Tree = { value: 10, label: `source${String(2)}` };\nconsole.log(describe(tree, source));", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

@@ -88,6 +88,7 @@ var localFields = map[string]localField{
 	"IteratorNext.Function":           {why: "a function's index"},
 	"MakeClosure.Function":            {why: "a function's index"},
 	"ObjectLiteral.SpreadGetters":     {why: "functions' indexes"},
+	"ObjectLiteral.SpreadSite":        {why: "a spread's site, numbered for the type its source is seen as"},
 	"Method.Function":                 {why: "a function's index"},
 	"InstanceOf.Class":                {why: "a class's index"},
 	"ObjectLiteral.Class":             {why: "a class's index"},
