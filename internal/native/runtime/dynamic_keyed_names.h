@@ -97,6 +97,22 @@ static const char *const adamic_dynamic_keyed_array_prototype_names[] = {
 	"toString",
 };
 
+static const char *const adamic_dynamic_keyed_regexp_string_iterator_names[] = {
+	"next",
+	"constructor",
+	"reduce",
+	"toArray",
+	"forEach",
+	"some",
+	"every",
+	"find",
+	"map",
+	"filter",
+	"take",
+	"drop",
+	"flatMap",
+};
+
 static const char *const adamic_dynamic_keyed_error_names[] = {
 	"stack",
 	"cause",
@@ -149,5 +165,21 @@ static const char *const adamic_dynamic_keyed_error_names[] = {
 	function(36, 2) \
 	function(37, 0) \
 	function(38, 0)
+
+// Each of adamic_dynamic_keyed_regexp_string_iterator_names by its index, with Node's length for it.
+#define ADAMIC_DYNAMIC_KEYED_REGEXP_STRING_ITERATOR_FUNCTIONS(function) \
+	function(0, 0) \
+	function(1, 0) \
+	function(2, 1) \
+	function(3, 0) \
+	function(4, 1) \
+	function(5, 1) \
+	function(6, 1) \
+	function(7, 1) \
+	function(8, 1) \
+	function(9, 1) \
+	function(10, 1) \
+	function(11, 1) \
+	function(12, 1)
 
 #endif
