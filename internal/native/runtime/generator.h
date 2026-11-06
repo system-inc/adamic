@@ -56,6 +56,12 @@ void adamic_generator_return(adamic_generator *);
 /* An iterable view's for-of left (ir.Block's Closes): a generator it held is returned, so a later
  * pass finds it done; any other iterator is left as it is. */
 void adamic_iterator_close(void *);
+/* A hand-driven next() through a view a generator feeds (ir.IteratorNext, #qk8rztp S2c-2b): the
+ * result iterator.next() gives, an object the caller owns. A generator steps, and its step's value,
+ * yielded as element_type (a number, a boolean or a reference), is moved into a fresh result; NULL,
+ * with adamic_thrown set, when the body threw, and nothing is built. A collection's iterator runs its
+ * own next. Anything else, NULL included, panics naming site, since the proof listed every origin. */
+adamic_object *adamic_iterator_next(void *iterator, enum adamic_ir_type element_type, const char *site);
 void adamic_generator_free_children(void *, void (*)(void *));
 #endif
 #endif

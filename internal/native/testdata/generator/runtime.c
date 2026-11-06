@@ -153,6 +153,61 @@ static void returning_resume(adamic_generator *generator, adamic_value *yielded)
 }
 static const adamic_generator_code returning = {"returning", returning_resume};
 
+/* Two strings, each built at its yield and owned by nothing but the step that hands it over, so a
+ * result that holds one borrowed, or one retained twice, shows under ASan or in the counts. */
+static void naming_resume(adamic_generator *generator, adamic_value *yielded) {
+    switch (generator->state) {
+        case 0:
+            yield(generator, yielded, adamic_string_from_number(1), 1);
+            return;
+        case 1:
+            yield(generator, yielded, adamic_string_from_number(2), 2);
+            return;
+        case 2:
+            adamic_generator_finish(generator);
+            return;
+    }
+    assert(!"unknown state");
+}
+static const adamic_generator_code naming = {"naming", naming_resume};
+
+/* One number, then done. */
+static void numbering_resume(adamic_generator *generator, adamic_value *yielded) {
+    switch (generator->state) {
+        case 0:
+            yielded->number = 10;
+            generator->state = 1;
+            generator->status = adamic_generator_status_suspended;
+            return;
+        case 1:
+            adamic_generator_finish(generator);
+            return;
+    }
+    assert(!"unknown state");
+}
+static const adamic_generator_code numbering = {"numbering", numbering_resume};
+
+/* A hand-driven next()'s result as the emitter will read it, by its slots after #7nw4kgj: value in
+ * slot 0, done in slot 1. A string value is printed borrowed, never released here. */
+static bool result_done(const adamic_object *result) {
+    return result->slots[1].boolean;
+}
+static void show(const adamic_object *result) {
+    const adamic_string *text = result->slots[0].reference;
+    printf("%.*s\n", (int)text->length, text->bytes);
+}
+/* Object.keys(result).join(','), through the runtime's own Object.keys. */
+static void show_keys(const adamic_object *result) {
+    adamic_array *keys = adamic_object_keys(result);
+    for (size_t index = 0; index < keys->length; index++) {
+        const adamic_string *key = keys->elements[index].reference;
+        printf("%s%.*s", index == 0 ? "" : ",", (int)key->length, key->bytes);
+    }
+    printf("\n");
+    adamic_release(keys);
+}
+static const char hand_site[] = "harness.ts:3:9";
+
 int main(int argc, char **argv) {
     assert(argc == 2);
     const char *mode = argv[1];
@@ -257,6 +312,104 @@ int main(int argc, char **argv) {
         printf("%d %d %d\n", adamic_generator_is(NULL), adamic_generator_is(text), adamic_generator_is(generator));
         adamic_release(text);
         adamic_release(generator);
+    } else if (strcmp(mode, "next_strings") == 0) {
+        /* P1's twin: checker.ts:21636's loop over a string generator, run to done. Each result owns
+         * the value it was handed, so releasing it frees the string once. */
+        adamic_generator *generator = adamic_generator_new(0, &naming);
+        for (;;) {
+            adamic_object *status = adamic_iterator_next(generator, adamic_ir_String, hand_site);
+            if (result_done(status)) {
+                /* The last status is done, and holds no value. */
+                assert(status->slots[0].reference == NULL);
+                adamic_release(status);
+                break;
+            }
+            show(status);
+            adamic_release(status);
+        }
+        adamic_object *again = adamic_iterator_next(generator, adamic_ir_String, hand_site);
+        assert(result_done(again) && again->slots[0].reference == NULL);
+        adamic_release(again);
+        adamic_release(generator);
+    } else if (strcmp(mode, "next_drop") == 0) {
+        /* P2's twin: one step, its value read, then the result and the suspended frame let go. */
+        adamic_generator *generator = adamic_generator_new(0, &naming);
+        adamic_object *status = adamic_iterator_next(generator, adamic_ir_String, hand_site);
+        assert(!result_done(status));
+        show(status);
+        adamic_release(status);
+        adamic_release(generator);
+    } else if (strcmp(mode, "next_throw") == 0) {
+        /* P3's twin: the body throws on the second step, which builds nothing, and next() after it
+         * answers done. */
+        adamic_generator *generator = adamic_generator_new(1, &throwing);
+        generator->cells[0].references = true;
+        adamic_object *status = adamic_iterator_next(generator, adamic_ir_String, hand_site);
+        assert(adamic_thrown == NULL && !result_done(status));
+        show(status);
+        adamic_release(status);
+        assert(adamic_iterator_next(generator, adamic_ir_String, hand_site) == NULL);
+        assert(adamic_thrown != NULL && adamic_generator_done(generator));
+        assert_cleared(generator);
+        adamic_object *thrown = adamic_thrown;
+        adamic_thrown = NULL;
+        adamic_object *after = adamic_iterator_next(generator, adamic_ir_String, hand_site);
+        assert(adamic_thrown == NULL && result_done(after) && after->slots[0].reference == NULL);
+        adamic_release(after);
+        print((adamic_value){.reference = adamic_error_to_string(thrown)});
+        adamic_release(thrown);
+        adamic_release(generator);
+    } else if (strcmp(mode, "next_done") == 0) {
+        /* P4: a number generator stepped to done, then once more. Its value reads as number |
+         * undefined: present with the number while it yields, absent once done, never the done
+         * frame's zero. */
+        adamic_generator *generator = adamic_generator_new(0, &numbering);
+        adamic_object *status = adamic_iterator_next(generator, adamic_ir_Number, hand_site);
+        adamic_maybe_number value = adamic_maybe_number_unpack(status->slots[0].number);
+        assert(!result_done(status) && value.present);
+        printf("%d %g\n", value.present, value.number);
+        adamic_release(status);
+        for (int step = 0; step < 2; step++) {
+            adamic_object *finished = adamic_iterator_next(generator, adamic_ir_Number, hand_site);
+            value = adamic_maybe_number_unpack(finished->slots[0].number);
+            printf("%d\n", value.present);
+            assert(result_done(finished) && !value.present && adamic_object_field_types(finished)[0] == adamic_ir_MaybeNumber);
+            if (step == 1) {
+                show_keys(finished);
+            }
+            adamic_release(finished);
+        }
+        adamic_release(generator);
+    } else if (strcmp(mode, "next_collection") == 0) {
+        /* A Map's values() through the same entry: its own next builds each result. */
+        adamic_map *map = adamic_map_new(false, false);
+        adamic_map_set(map, (adamic_value){.number = 1}, (adamic_value){.number = 7});
+        adamic_map_set(map, (adamic_value){.number = 2}, (adamic_value){.number = 8});
+        adamic_object *iterator = adamic_collection_iterator(map, 2, adamic_ir_Number, adamic_ir_Number, false);
+        adamic_release(map);
+        for (;;) {
+            adamic_object *status = adamic_iterator_next(iterator, adamic_ir_Number, hand_site);
+            adamic_maybe_number value = adamic_maybe_number_unpack(status->slots[0].number);
+            bool done = result_done(status);
+            adamic_release(status);
+            if (done) {
+                assert(!value.present);
+                break;
+            }
+            printf("%g\n", value.number);
+        }
+        adamic_release(iterator);
+    } else if (strcmp(mode, "next_other") == 0) {
+        /* The proof listed every origin, so a string here is the compiler's bug, said with the site. */
+        (void)adamic_iterator_next(adamic_string_from_number(3), adamic_ir_String, hand_site);
+        assert(!"a string stepped");
+    } else if (strcmp(mode, "next_null") == 0) {
+        (void)adamic_iterator_next(NULL, adamic_ir_String, hand_site);
+        assert(!"NULL stepped");
+    } else if (strcmp(mode, "next_kind") == 0) {
+        /* A maybe-boolean yield is off the allowlist: no step runs. */
+        (void)adamic_iterator_next(adamic_generator_new(0, &naming), adamic_ir_MaybeBoolean, hand_site);
+        assert(!"a maybe-boolean yield stepped");
     } else {
         assert(!"unknown mode");
     }
