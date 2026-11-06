@@ -22,6 +22,9 @@ type castProof struct {
 	speculation    bool
 	// brandMint is a cast that adds only phantom brand members (brand_mint.go): erased, and listed.
 	brandMint *brandMint
+	// overloadDefault is an `x as unknown as T` pair every overload proves (overload_default_cast.go):
+	// erased, lowered as x.
+	overloadDefault bool
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -180,6 +183,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: l.castRepair(node)}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+		if l.overloadDefaultPair(node) {
+			return castProof{overloadDefault: true}, nil
+		}
 		return castProof{}, refused
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
