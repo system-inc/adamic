@@ -1,0 +1,7 @@
+{
+  "command": "LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 timeout -k 10s 1800s /workspace/scratch/next-stops/entry-census /workspace/next-stops-adapted/src/tsc/tsc.ts /workspace/scratch/next-stops/artifacts/tsc/latent.jsonl",
+  "exit": 124,
+  "bound_seconds": 1800,
+  "emitted_records": 1,
+  "emitted_file_records": 0
+}

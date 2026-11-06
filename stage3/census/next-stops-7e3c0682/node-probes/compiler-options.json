@@ -1,0 +1,22 @@
+{
+  "strict": true,
+  "noUncheckedIndexedAccess": true,
+  "exactOptionalPropertyTypes": true,
+  "erasableSyntaxOnly": false,
+  "verbatimModuleSyntax": true,
+  "allowImportingTsExtensions": true,
+  "noEmit": false,
+  "module": "ESNext",
+  "moduleDetection": "force",
+  "moduleResolution": "bundler",
+  "target": "ES2024",
+  "lib": [
+    "es2024"
+  ],
+  "types": [],
+  "noCheck": true,
+  "rewriteRelativeImportExtensions": true,
+  "sourceMap": true,
+  "rootDir": "/workspace/next-stops-adapted",
+  "outDir": "/tmp/adamic-gate/meter-node-857bbjek"
+}
