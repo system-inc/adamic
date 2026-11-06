@@ -20,6 +20,8 @@ import (
 	"sync"
 	"sync/atomic"
 	"syscall"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // A split unit's object is keyed by everything its compile reads, found before clang compiles it (#m62spx0): the unit
@@ -96,8 +98,8 @@ func unitClang(compiler string, flags []string, environment []string) (*unitClan
 	return facts, facts.err
 }
 
-// readUnitClang reads clang's build: its program by the sha256 of what it holds, the config files beside it, its
-// version as it prints it without the place it's installed, its resource directory's headers and sanitizer lists, the
+// readUnitClang reads clang's build: its program by the sha256 of what it holds, the config files beside it by theirs,
+// its version as it prints it without the place it's installed or where its config files sit, its resource directory's headers and sanitizer lists, the
 // command its driver hands cc1 for a probe compile under flags (the target, its CPU and features, and every default the
 // driver adds), and its search path.
 func readUnitClang(compiler string, flags []string, environment []string) ([]string, []searchDirectory, error) {
@@ -133,12 +135,16 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 		configs = append(configs, more...)
 	}
+	// Each by what it holds and the files it names, never where it sits (Node's rule on #t3rw158): the same clang and
+	// configs kept at another place key the same, and an edit of either moves the key.
 	for _, config := range configs {
-		digest, err := fileDigest(config)
+		lines, err := toolchain.ConfigurationFile(config)
 		if err != nil {
 			return nil, nil, fmt.Errorf("%w: reading clang's config %s: %v", errUncachedUnit, config, err)
 		}
-		parts = append(parts, "config "+config+" "+digest)
+		for _, line := range lines {
+			parts = append(parts, "config "+line)
+		}
 	}
 	// Every run is from inside the probe's directory, so the compilation directory the driver hands cc1 is the probe's,
 	// written <probe> below, and not wherever this process runs.
@@ -161,7 +167,7 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		return nil, nil, err
 	}
 	var versionLines []string
-	for _, line := range strings.Split(string(version), "\n") {
+	for _, line := range strings.Split(toolchain.ConfigurationsByContent(string(version)), "\n") {
 		if !strings.HasPrefix(line, "InstalledDir:") && line != "" {
 			versionLines = append(versionLines, line)
 		}
