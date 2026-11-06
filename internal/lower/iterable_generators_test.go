@@ -122,10 +122,10 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 			}
 		})
 	}
-	// A hand-driven next through the parameter, before the loop or inside its body, is refused before
-	// the proof: a library iterator's next read off an object is the unbound-method rule's (an
-	// inherited library member isn't an own field). That stop fails closed; were it ever lifted, the
-	// second read is counted, and the one-read rule stops the program as not yet built.
+	// A hand-driven next through the parameter, before the loop or inside its body, lowers since
+	// S2c-2a, as a hand view, so a generator handed into that parameter stops not yet where it is
+	// passed: its step hands back its value, not a result object (S2c-2b). Before S2c-2a the next was
+	// refused by the unbound-method rule.
 	for _, probe := range []struct{ name, source string }{
 		{"next through the parameter", function("const first = items.next(); if (!first.done) { sum += first.value; } for (const value of items) { sum += value; }")},
 		{"next inside the loop", function("for (const value of items) { items.next(); sum += value; }")},
@@ -133,9 +133,9 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "(unbound-method)") {
-				t.Fatalf("got %v, want the unbound-method refusal", err)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(gap.What, "which a hand-driven next() reads") {
+				t.Fatalf("got %v, want a NotYet saying the parameter is read by a hand-driven next()", err)
 			}
 		})
 	}
