@@ -14,8 +14,9 @@
 // region tests' archives, TestProduct_ProgramRuntimes*, ProgramArchive), under oracle.test, the binary its unit and
 // stage3/fixtures' hook read them as; stage3/fixtures finds the sanitized ones its hook links
 // (TestProduct_FixtureRuntimesSanitized*, Find), after oracle's in the tree's product order, and never builds them,
-// since one name key two packages build settles twice (buildcache.BuiltElsewhere). The recipe is here, not in oracle's
-// tests, so stage3/fixtures can key what it finds (#43k99f8).
+// since one name key two packages build settles twice (buildcache.BuiltElsewhere). cmd/adamic builds the one archive
+// only it reads, its debug build's (TestProduct_CommandRuntimeDebug, CommandArchive). The recipe is here, not in
+// oracle's tests, so stage3/fixtures can key what it finds (#43k99f8).
 package runtimeproducts
 
 import (
@@ -98,6 +99,14 @@ var ProgramVariants = []Variant{
 	{"program-release", native.Options{ProgramRegion: true}, ""},
 	{"program-counted", native.Options{ProgramRegion: true, Count: true}, ""},
 	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, oracleWASI},
+}
+
+// CommandVariants are the ways cmd/adamic builds a program whose archive no other package builds, each with its own
+// archive (CommandArchive): `adamic build --debug`, released with its debug information
+// (TestProduct_CommandRuntimeDebug). They're a list apart from Variants, as ProgramVariants are, so Supply still
+// refuses them.
+var CommandVariants = []Variant{
+	{"debug", native.Options{Release: true, Debug: true}, ""},
 }
 
 // Groups is how many product tests each variant's archives are cut into.
@@ -238,20 +247,39 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 // ProgramArchive is the directory holding the archive a program region's build links, for options, one of
 // ProgramVariants, and a program turning on features, one of Sets: internal/oracle's TestProduct_ProgramRuntimes shards
 // build each ahead with it, and the builds of its tests that link one ask it the same way, so the two can't key one
-// archive apart. It's lean, built here as Build builds, so its key is runtimeproducts' import closure: built in oracle,
-// it was keyed by oracle's whole test binary, its test files with it, and every edit of an oracle test rebuilt all of
-// them. Options or a feature set it doesn't declare fail the test, naming the list to add them to, before any request is
-// made, and a variant whose setting isn't set skips it. One unit at a time, as a test waits on it.
+// archive apart. It's lean (leanArchive): built in oracle, it was keyed by oracle's whole test binary, its test files
+// with it, and every edit of an oracle test rebuilt all of them. One unit at a time, as a test waits on it.
 func ProgramArchive(t testing.TB, options native.Options, features []string) string {
 	t.Helper()
+	return leanArchive(t, "Program", ProgramVariants, "ProgramVariants", options, features, 1)
+}
+
+// CommandArchive is the directory holding the archive cmd/adamic's TestProduct_CommandRuntime tests build ahead for
+// options, one of CommandVariants, and a program turning on features, one of Sets; cmd/adamic's supplier finds it by
+// the same Inputs and never builds it. It's lean (leanArchive): built in cmd/adamic, it was keyed by cmd/adamic's whole
+// test binary, the compiler with it, and nearly every compiler change rebuilt it. Four units at once, as Build
+// compiles.
+func CommandArchive(t testing.TB, options native.Options, features []string) string {
+	t.Helper()
+	return leanArchive(t, "Command", CommandVariants, "CommandVariants", options, features, 4)
+}
+
+// leanArchive builds or finds the archive for options, one of variants, the list its caller declares them in, named
+// list, and a program turning on features, one of Sets, compiling workers units at once. It's built here as Build
+// builds, so its key is runtimeproducts' import closure (buildcache's leanCalled reads the package calling
+// LeanProduct), never the test binary of the package asking for it. Options or a feature set it doesn't declare fail
+// the test, by kind, naming the list to add them to, before any request is made, and a variant whose setting isn't set
+// skips it.
+func leanArchive(t testing.TB, kind string, variants []Variant, list string, options native.Options, features []string, workers int) string {
+	t.Helper()
 	if !slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) }) {
-		t.Fatalf("runtimeproducts: undeclared Program runtime feature set: %v: add the set to Sets", features)
+		t.Fatalf("runtimeproducts: undeclared %s runtime feature set: %v: add the set to Sets", kind, features)
 	}
-	index := slices.IndexFunc(ProgramVariants, func(variant Variant) bool { return variant.Options == options })
+	index := slices.IndexFunc(variants, func(variant Variant) bool { return variant.Options == options })
 	if index < 0 {
-		t.Fatalf("runtimeproducts: undeclared Program runtime options: %+v: add them to ProgramVariants", options)
+		t.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
 	}
-	skipUnlessSet(t, ProgramVariants[index])
+	skipUnlessSet(t, variants[index])
 	request, err := native.RuntimeRequestFor(options, features...)
 	if err != nil {
 		t.Fatal(err)
@@ -260,7 +288,7 @@ func ProgramArchive(t testing.TB, options native.Options, features []string) str
 	if err != nil {
 		t.Fatal(err)
 	}
-	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })
+	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, workers, jobserver) })
 }
 
 // variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have

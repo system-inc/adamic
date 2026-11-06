@@ -853,10 +853,11 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 
 // buildPath are the entries of an archive's path to its build, by package, each held by a census of its package's own
 // (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), and what each may reach of the next: runtimeproducts' product
-// tests and supplier, a program region's archive (ProgramArchive), native's request and the build its window runs, and
-// the jobserver handed to it. Every exported function of runtimeproducts is one of its entries.
+// tests and supplier, a program region's archive (ProgramArchive) and cmd/adamic's (CommandArchive), native's request
+// and the build its window runs, and the jobserver handed to it. Every exported function of runtimeproducts is one of
+// its entries.
 var buildPath = map[string][]string{
-	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "ProgramArchive", "Inputs", "Declared"},
+	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "ProgramArchive", "CommandArchive", "Inputs", "Declared"},
 	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
 	modulePath + "/internal/ccjobserver":            {"Process"},
 }
@@ -882,10 +883,12 @@ func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
 // the import closure (buildcache's leanRecipeOf), so declared is each package whole. A program region's archive
 // (ProgramArchive) is one of its entries, so its path is held as the rest are: ADAMIC_PROGRAM_REGION is read on it only
 // as the refusal requestEnvironment names, and its options reach the archive as a flag (TestAProgramRegionKeysItsArchiveApart).
+// cmd/adamic's archive (CommandArchive) is another, its options its key's flags as every variant's are.
 // Every exported function of runtimeproducts is an entry, since each is a way into an archive's build from another
 // package. It's the other test buildcache's leanCallers names as this package's census, beside
 // TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each fail it: an os.Getenv planted in Build; Build reading
-// another package's variable; native's entries left without UseJobserver; ProgramArchive left out of buildPath.
+// another package's variable; native's entries left without UseJobserver; ProgramArchive or CommandArchive left out of
+// buildPath.
 func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
@@ -1113,6 +1116,7 @@ var productsState = map[string]string{
 	"Sets":            "decides which archives are asked for and built ahead; each request's features are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 	"Variants":        "decides which options archives are asked for with; each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 	"ProgramVariants": "decides which options a program region's archives are asked for with (ProgramArchive); each request's options are its key's flags, a program region's -DADAMIC_PROGRAM_REGION among them (TestAProgramRegionKeysItsArchiveApart), so a write elsewhere asks for another archive, never other bytes under one key",
+	"CommandVariants": "decides which options cmd/adamic's archives are asked for with (CommandArchive); each request's options are its key's flags (TestRuntimeProductKeyHoldsEveryFeatureAndOption), so a write elsewhere asks for another archive, never other bytes under one key",
 }
 
 // A program region's archive is keyed apart from the plain one by what the region changes in it, its flag (Node's
@@ -1175,31 +1179,35 @@ func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
 	}
 }
 
-// ProgramArchive fails the test that asks it for an archive it doesn't declare, by the guard's own words, before any
-// request is made: a feature set Sets doesn't hold, or options ProgramVariants doesn't. ProgramVariants are a list apart
-// from Variants: each is refused by Declared, so Supply, which a native build mid-test asks, never builds a program
-// region's archive. Mutants that each fail it: either guard dropped; a program region's options added to Variants.
-func TestProgramArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
+// ProgramArchive and CommandArchive each fail the test that asks for an archive they don't declare, by the guard's own
+// words, before any request is made: a feature set Sets doesn't hold, or options their list, ProgramVariants or
+// CommandVariants, doesn't. Both lists are apart from Variants: each is refused by Declared, so Supply, which a native
+// build mid-test asks, never builds a program region's archive or cmd/adamic's. Mutants that each fail it: either guard
+// dropped; a program region's options, or cmd/adamic's debug options, added to Variants.
+func TestALeanArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
 	t.Parallel()
 	for name, ask := range map[string]struct {
+		archive  func(t testing.TB, options native.Options, features []string) string
 		options  native.Options
 		features []string
 		want     string
 	}{
-		"a feature set Sets doesn't hold":    {ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options ProgramVariants don't hold": {native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
+		"a feature set Sets doesn't hold":    {ProgramArchive, ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
+		"options ProgramVariants don't hold": {ProgramArchive, native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
+		"a feature set Sets doesn't hold for cmd/adamic": {CommandArchive, CommandVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Command runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
+		"options CommandVariants don't hold": {CommandArchive, native.Options{Debug: true}, nil, "undeclared Command runtime options: "},
 	} {
 		recorder := &stoppingTB{TB: t}
 		func() {
 			defer recorder.recover()
-			directory := ProgramArchive(recorder, ask.options, ask.features)
-			t.Errorf("%s: ProgramArchive built %s", name, directory)
+			directory := ask.archive(recorder, ask.options, ask.features)
+			t.Errorf("%s: the archive was built: %s", name, directory)
 		}()
 		if !strings.Contains(recorder.failed, ask.want) {
-			t.Errorf("%s: ProgramArchive failed with %q, want %q", name, recorder.failed, ask.want)
+			t.Errorf("%s: the archive failed with %q, want %q", name, recorder.failed, ask.want)
 		}
 	}
-	for _, variant := range ProgramVariants {
+	for _, variant := range slices.Concat(ProgramVariants, CommandVariants) {
 		if Declared(native.RuntimeRequest{Options: variant.Options}) == nil {
 			t.Errorf("Declared takes %s's options %+v, so Supply would build its archive mid-test", variant.Name, variant.Options)
 		}
@@ -1252,7 +1260,7 @@ func (recorder *stoppingTB) recover() {
 // built with buildcache.Product again.
 func TestOracleMakesNoArchiveOfItsOwn(t *testing.T) {
 	t.Parallel()
-	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "internal", "oracle"))
+	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "internal", "oracle"), "ProgramArchive")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1269,15 +1277,48 @@ func TestOracleMakesNoArchiveOfItsOwn(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(fixture, "program_region_products_test.go"), []byte(old), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if found, _, err := archivesMadeIn(fixture); err != nil || len(found) != 1 {
+	if found, _, err := archivesMadeIn(fixture, "ProgramArchive"); err != nil || len(found) != 1 {
 		t.Errorf("the scan of oracle's old program region build found %q (%v), want its one request.Build", found, err)
+	}
+}
+
+// cmd/adamic makes no runtime archive of its own, as internal/oracle makes none (TestOracleMakesNoArchiveOfItsOwn): the
+// one only it reads, its debug build's, is asked of CommandArchive and built here, lean, and each it shares is found by
+// buildcache.BuiltElsewhere, built by its owner. Its debug archive was built there with buildcache.Product, keyed by
+// cmd/adamic's whole test binary, the compiler with it, so nearly every compiler change rebuilt it. The scan itself is
+// held on a file of its own holding that old build. Mutant: cmd/adamic's debug archive built with buildcache.Product
+// again.
+func TestCommandMakesNoArchiveOfItsOwn(t *testing.T) {
+	t.Parallel()
+	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "cmd", "adamic"), "CommandArchive")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(findings) > 0 {
+		t.Errorf("cmd/adamic builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s", strings.Join(findings, "\n"))
+	}
+	if asked == 0 {
+		t.Error("no file of cmd/adamic asks CommandArchive for its debug build's archive, so the scan read nothing it should")
+	}
+	fixture := t.TempDir()
+	old := "package main\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
+		"func commandRuntimeProduct(t *testing.T, options native.Options, owner string) {\n\trequest, err := native.RuntimeRequestFor(options)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
+		"\tbuild := func(directory string) error { return request.Build(directory, 4, jobserver) }\n\tif owner != \"\" {\n\t\tbuildcache.BuiltElsewhere(t, \"the archive\", runtimeproducts.Inputs(request), owner, build)\n\t} else {\n\t\tbuildcache.Product(t, runtimeproducts.Inputs(request), build)\n\t}\n}\n"
+	if err := os.WriteFile(filepath.Join(fixture, "runtimes_test.go"), []byte(old), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if found, _, err := archivesMadeIn(fixture, "CommandArchive"); err != nil || len(found) != 1 {
+		t.Errorf("the scan of cmd/adamic's old debug archive build found %q (%v), want its one request.Build", found, err)
 	}
 }
 
 // archivesMadeIn is each place a Go file of directory, test files with them, builds a runtime archive: Build named on a
 // request a function there holds, a value of native.RuntimeRequestFor or a parameter or variable of
-// native.RuntimeRequest's type, and how many calls there ask runtimeproducts.ProgramArchive for one.
-func archivesMadeIn(directory string) (findings []string, asked int, err error) {
+// native.RuntimeRequest's type, and how many calls there ask runtimeproducts' function named asking (ProgramArchive or
+// CommandArchive) for one. A Build in a function literal handed straight to buildcache.BuiltElsewhere finds an archive
+// and makes none: under the trace that build never runs, and the archive is its owner's, as runtimeproducts' Find finds
+// it.
+func archivesMadeIn(directory, asking string) (findings []string, asked int, err error) {
 	entries, err := os.ReadDir(directory)
 	if err != nil {
 		return nil, 0, err
@@ -1291,7 +1332,7 @@ func archivesMadeIn(directory string) (findings []string, asked int, err error) 
 		if err != nil {
 			return nil, 0, err
 		}
-		nativeName, productsName := "", ""
+		nativeName, productsName, buildcacheName := "", "", ""
 		for _, imported := range file.Imports {
 			path, _ := strconv.Unquote(imported.Path.Value)
 			name := ""
@@ -1303,6 +1344,8 @@ func archivesMadeIn(directory string) (findings []string, asked int, err error) 
 				nativeName = cmp.Or(name, "native")
 			case modulePath + "/internal/native/runtimeproducts":
 				productsName = cmp.Or(name, "runtimeproducts")
+			case modulePath + "/internal/buildcache":
+				buildcacheName = cmp.Or(name, "buildcache")
 			}
 		}
 		qualified := func(expression ast.Expr, pkg, name string) bool {
@@ -1354,16 +1397,26 @@ func archivesMadeIn(directory string) (findings []string, asked int, err error) 
 				}
 				return true
 			})
+			finds := map[*ast.FuncLit]bool{}
 			ast.Inspect(function.Body, func(node ast.Node) bool {
 				switch node := node.(type) {
+				case *ast.FuncLit:
+					return !finds[node]
 				case *ast.SelectorExpr:
 					if name, ok := node.X.(*ast.Ident); ok && requests[name.Name] && node.Sel.Name == "Build" {
 						position := fileSet.Position(node.Pos())
 						findings = append(findings, fmt.Sprintf("%s:%d: %s.Build in %s", filepath.Base(position.Filename), position.Line, name.Name, function.Name.Name))
 					}
 				case *ast.CallExpr:
-					if qualified(node.Fun, productsName, "ProgramArchive") {
+					if qualified(node.Fun, productsName, asking) {
 						asked++
+					}
+					if qualified(node.Fun, buildcacheName, "BuiltElsewhere") {
+						for _, argument := range node.Args {
+							if literal, ok := argument.(*ast.FuncLit); ok {
+								finds[literal] = true
+							}
+						}
 					}
 				}
 				return true

@@ -15,7 +15,10 @@ import (
 
 // A shared archive has one builder package. The owner names the product test
 // cmd/adamic waits for in cloud/fast-gate/product-order.json before finding it.
-// An empty owner means only cmd/adamic needs this key and builds it here.
+// An empty owner means only cmd/adamic needs this key and builds it ahead, lean,
+// through runtimeproducts.CommandArchive, so its key is runtimeproducts' import
+// closure and never this package's test binary; its options are declared there,
+// in runtimeproducts.CommandVariants.
 type commandRuntimeSpec struct {
 	name     string
 	options  native.Options
@@ -71,6 +74,10 @@ func commandRuntimeProduct(t *testing.T, name string) {
 		if product.options.Target != "" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
+		if product.owner == "" {
+			runtimeproducts.CommandArchive(t, product.options, product.features)
+			return
+		}
 		request, err := native.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
 			t.Fatal(err)
@@ -79,12 +86,7 @@ func commandRuntimeProduct(t *testing.T, name string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		build := func(directory string) error { return request.Build(directory, 4, jobserver) }
-		if product.owner != "" {
-			buildcache.BuiltElsewhere(t, "the "+product.name+" command runtime archive", commandRuntimeInputs(request), product.owner, build)
-		} else {
-			buildcache.Product(t, commandRuntimeInputs(request), build)
-		}
+		buildcache.BuiltElsewhere(t, "the "+product.name+" command runtime archive", commandRuntimeInputs(request), product.owner, func(directory string) error { return request.Build(directory, 4, jobserver) })
 		return
 	}
 	t.Fatalf("no command runtime product %s", name)
