@@ -60,3 +60,18 @@ catch { console.log("method caught"); }
 class StaticHost { static m(): string { return "static"; } }
 function bindStatic(h: typeof StaticHost): () => string { return h.m.bind(h); }
 console.log(bindStatic(StaticHost)());
+
+interface NullHost { m: ((value: string) => string) | null | undefined }
+let nullEffects = 0;
+function nullFixed(): string { nullEffects++; return "kept"; }
+function maybeNull(h: NullHost): (() => string) | undefined { return h.m?.bind(h, nullFixed()); }
+const nullable: NullHost = { m: null };
+console.log(String(maybeNull(nullable) === undefined));
+console.log(String(nullEffects));
+nullable.m = (value: string): string => "nullable:" + value;
+const savedNull = maybeNull(nullable);
+nullable.m = (value: string): string => "replacement:" + value;
+if (savedNull !== undefined) console.log(savedNull());
+nullable.m = undefined;
+console.log(String(maybeNull(nullable) === undefined));
+console.log(String(nullEffects));

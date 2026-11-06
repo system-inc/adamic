@@ -933,6 +933,10 @@ func (e *emitter) boundMethod(expression ir.BoundMethod) string {
 		e.line("adamic_method_entry %s = NULL;", method)
 	}
 	target := e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", object, cString(expression.Name), e.cache(), method))
+	if expression.Optional {
+		// A nullable union distinguishes null from undefined with the shared sentinel.
+		e.line("if ((adamic_heap *)%s == &adamic_null) { adamic_release(%s); %s = NULL; }", target, target, target)
+	}
 	makeValue := func() string {
 		arguments := []string{target, object}
 		for _, fixed := range expression.Fixed {
