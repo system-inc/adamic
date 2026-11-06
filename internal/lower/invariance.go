@@ -713,27 +713,15 @@ func (l *lowering) literalSetterRefusal(member *ast.Node) error {
 // `next() { return { value: 1, done: false }; }` seen as returning `{ value: number; done: boolean }` is
 // a new object every call, which nothing else holds. widened relates a function to one non-generic
 // signature only, so a slot with type parameters (PromiseLike's then<TResult1, TResult2>) or overloads is
-// not yet, never refused by a relation that doesn't hold. An async or generator method's return
-// statements don't give what it returns, a promise or an iterator does, so it's judged whole by widened.
-// A slot with no call signature calls nothing through it, and judges nothing here (#wjqtypf).
+// not yet, never refused by a relation that doesn't hold, for any method. An async or generator method's
+// return statements don't give what it returns, a promise or an iterator does, so it's judged whole by
+// widened. A slot with no call signature calls nothing through it, and judges nothing here (#wjqtypf).
 func (l *lowering) literalMethodRefusal(method *ast.Node, slots []*checker.Type) error {
 	own := l.checker.GetTypeAtLocation(method)
-	if generatorDeclaration(method) || ast.HasSyntacticModifier(method, ast.ModifierFlagsAsync) {
-		for _, slot := range slots {
-			if found := l.widened(own, slot, map[[2]*checker.Type]bool{}); found != nil {
-				return l.wideningRefusal(method, own, slot, found)
-			}
-		}
-		return nil
-	}
+	whole := generatorDeclaration(method) || ast.HasSyntacticModifier(method, ast.ModifierFlagsAsync)
 	signature := l.checker.GetSignatureFromDeclaration(method)
 	for _, slot := range slots {
-		members := l.definedMembers(slot)
-		for _, member := range members {
-			if len(members) > 1 && !l.checker.IsTypeAssignableTo(own, member) {
-				// Seen as a union, the method is seen as each member it can be, as widened sees one.
-				continue
-			}
+		for _, member := range l.methodSlotMembers(own, slot) {
 			slotSignatures := l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)
 			if len(slotSignatures) == 0 {
 				continue
@@ -743,6 +731,12 @@ func (l *lowering) literalMethodRefusal(method *ast.Node, slots []*checker.Type)
 			}
 			if len(slotSignatures[0].TypeParameters()) > 0 {
 				return l.notYet(method, "a method in an object literal seen as a generic method, which stage 0 doesn't judge yet")
+			}
+			if whole {
+				if found := l.widened(own, member, map[[2]*checker.Type]bool{}); found != nil {
+					return l.wideningRefusal(method, own, member, found)
+				}
+				continue
 			}
 			if l.censusDiscardedMarkerPredicate(signature, slotSignatures[0]) {
 				continue
@@ -768,6 +762,31 @@ func (l *lowering) literalMethodRefusal(method *ast.Node, slots []*checker.Type)
 		}
 	}
 	return nil
+}
+
+// methodSlotMembers is each member of a method's slot it's judged against: the slot itself when it isn't a
+// union of several, and otherwise every member the method's type is assignable to, as widened sees a value
+// seen as a union. That filter only narrows which members are judged, so when none passes, every member
+// with a call signature is judged, and the list is never empty while one has one (literalSlotMembers'
+// fix, #20nf0sm, Lower's must on b3e90772).
+func (l *lowering) methodSlotMembers(own *checker.Type, slot *checker.Type) []*checker.Type {
+	members := l.definedMembers(slot)
+	if len(members) <= 1 {
+		return members
+	}
+	var assignable, callable []*checker.Type
+	for _, member := range members {
+		if len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) > 0 {
+			callable = append(callable, member)
+		}
+		if l.checker.IsTypeAssignableTo(own, member) {
+			assignable = append(assignable, member)
+		}
+	}
+	if len(assignable) == 0 {
+		return callable
+	}
+	return assignable
 }
 
 // returnedExpressions is each value a function's own return statements give back, and none of a function

@@ -12,8 +12,9 @@ import (
 // `{ get p(): R { return r; } }` returned as `{ p: W }` let `make().p.t = 1` write r.t, which R says is
 // readonly, and Node and native both printed 1. p01 to p05 are Language's getter probes (a plain return
 // slot, `{ p: W } | undefined`, a const, an inferred return, an argument), and p06 a method `{ get(): R }`
-// returned as `{ get(): W }`; each is refused, as { p: r } is. t01 to t06 are their honest twins, W's own
-// field returned. A getter and a method are judged at each return statement's value, not their declared
+// returned as `{ get(): W }`; each is refused, as { p: r } is, and so is m01, the method into a union it
+// fits no one member of but tsc accepts by splitting its discriminant (#20nf0sm's shape). t01 to t06 are
+// their honest twins, W's own field returned. A getter and a method are judged at each return statement's value, not their declared
 // result, so a literal made right there stays fresh (Lower's ruling on 55507f73): f01, a getter declared
 // `{ readonly t: number }` returning `{ t: 1 }` into `{ p: W }`, lowers, since every read is a new object
 // no other name holds, and a write through W changes nothing a later read sees. A getter judges what the
@@ -82,7 +83,7 @@ func TestLiteralMemberSlots(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 42 {
-		t.Fatalf("found %d programs, want 42", programs)
+	if programs != 44 {
+		t.Fatalf("found %d programs, want 44", programs)
 	}
 }
