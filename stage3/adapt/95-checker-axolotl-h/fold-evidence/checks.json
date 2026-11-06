@@ -25,13 +25,15 @@
       "typescript.js"
     ],
     "ownerMatchesExpectedLowering": true,
-    "outsideOwnerIdentical": false,
-    "exit": 1,
+    "exit": 0,
     "stopReason": null,
     "normalizedExit": 0,
     "normalizedOutsideOwnerIdentical": true,
     "normalizationProof": "normalized-comparison.json",
-    "renameMap": "rename-map.json"
+    "renameMap": "rename-map.json",
+    "rawExit": 1,
+    "status": "pass after proved binding normalization",
+    "rawOutsideOwnerIdentical": false
   },
   "publicDeclarations": {
     "files": 2,
@@ -45,8 +47,16 @@
     "allRefuseWithoutWrites": true
   },
   "oracle": {
-    "status": "pending",
-    "piecesMaximumSeconds": 1440
+    "status": "pass",
+    "units": 398,
+    "tests": 106367,
+    "passing": 106366,
+    "sanctionedFailing": 1,
+    "pending": 0,
+    "wholeLaneExit": 0,
+    "officialMergeExit": 0,
+    "piecesUnder25Minutes": true,
+    "evidence": "oracle/summary.json"
   },
-  "complete": false
+  "complete": true
 }

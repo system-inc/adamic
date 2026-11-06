@@ -2,6 +2,10 @@
 
 lane: run as part of a Correctness wave
 
+Current fold result: checks 1 through 6 pass, with the user-authorized and
+proved binding normalization. The whole lane and all 398 shards pass; see
+[Completed fold validation](#completed-fold-validation).
+
 Base: 95a `ef4d26a4a38b7890317e1ba71f8ad928fd8588f6`.
 Only this adaptation directory belongs to H. 95c stays at `7b1e14c56`.
 The earlier blocked two-slot attempt is historical evidence at
@@ -201,8 +205,8 @@ the original slot widening; they do not classify this fold.
 
 ## Historical fold validation and stop point
 
-This is a stopped implementation, not a claim that the task's done condition
-was met. Base is origin/main `7e3c0682da96cbe01f7ae9b9820f1bd8f1993671`.
+The initial stop at ad79f64ac was not a claim that the task's done condition
+was met. The completed continuation below supersedes that stop. Base is origin/main `7e3c0682da96cbe01f7ae9b9820f1bd8f1993671`.
 Only this adaptation directory changes. The TypeScript input is exactly
 `050880ce59e30b356b686bd3144efe24f875ebc8` (6.0.3).
 
@@ -296,4 +300,71 @@ missed occurrences. rename-mutant.cjs proves refusal for a string literal, a
 property name, a .name read and an unrenamed call. compare.cjs accepts an optional
 third argument naming a new directory in which to retain the normalized bundles.
 The raw stop evidence above remains available; the normalized result supersedes
-its check 4 failure. The oracle is the next check.
+its check 4 failure. The completed oracle evidence is below.
+
+## Completed fold validation
+
+Checks 1 through 6 are complete. Check 4 uses only the proved, scope-specific
+renames above. After that normalization, all nine emitted JavaScript files
+differ only by the two rewrites and their ordinary target lowering. Both public
+declarations remain byte-identical. All earlier source, type, ownership, replay
+and mutant checks remain applicable: the fresh oracle artifact was compared
+byte for byte with the proven after tree, across all 746 source files, all nine
+compiler JavaScript files and both public declarations.
+
+The official stage3/lane/run.sh, all 398 unchanged manifest shard commands,
+and the official merge_shards.py pass on the same verified artifact. Counts
+are exactly Linux main's 106,366 passing, one sanctioned Public APIs failure,
+and zero pending. Merge verifies all 106,367 actual test identities with
+multiplicity, aggregate counts, the exact failure title and API baseline path,
+and the complete raw baseline diff bytes against the whole run.
+
+Oracle inputs were frozen at commit a35f12a5410ab79d759daed08daf8f1cac0c2183
+in an isolated checkout. This keeps the broad artifact key stable while the
+shipping branch records and pushes each finished evidence piece. The artifact
+key is 2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35.
+No lane, shard, expectation, sanction, or other adaptation code was changed.
+
+Preparation took 284.032 seconds and the whole lane took 277.498 seconds.
+Each of the ten shard pieces was committed and pushed plainly as it finished.
+Their walls are recorded below. At most two shard commands ran concurrently.
+Every piece used a 1,440-second outer timeout, and every shard passed the
+unchanged 30-second limit. The official merge also completed with exit 0 under
+a 1,440-second outer timeout. No test process remains running.
+
+| Piece | Shards, one-based | Seconds |
+| --- | --- | ---: |
+| 1 | 1 through 40 | 530.833 |
+| 2 | 41 through 80 | 524.639 |
+| 3 | 81 through 120 | 527.248 |
+| 4 | 121 through 160 | 529.911 |
+| 5 | 161 through 200 | 530.377 |
+| 6 | 201 through 240 | 530.987 |
+| 7 | 241 through 280 | 524.010 |
+| 8 | 281 through 320 | 524.215 |
+| 9 | 321 through 360 | 518.611 |
+| 10 | 361 through 398 | 506.334 |
+
+[fold-evidence/oracle/summary.json](fold-evidence/oracle/summary.json) records
+piece commits, archive hashes, walls, the frozen input identity and final
+counts. [fold-evidence/oracle/merge.json](fold-evidence/oracle/merge.json) is the
+unchanged official merge verdict. Per-piece archives retain every shard's
+report, observations, raw worker output, logs and baseline diff. The whole-run
+profile and raw logs are retained alongside its original lane verdict.
+
+Reproduction uses the unmodified lane from the frozen checkout, with the
+pinned stage3/api install linked into it, Node 24.19.0 and the pinned TypeScript
+source set in ADAMIC_TYPESCRIPT_SOURCE. Each command's output goes to its own
+log. Prepare the artifact, run the whole reference, then use oracle-piece.py
+with starts 0, 40, 80, 120, 160, 200, 240, 280, 320 and 360:
+
+```sh
+python3 -B FROZEN/stage3/lane/prepare_shards.py ARTIFACT_CACHE
+bash FROZEN/stage3/lane/run.sh WHOLE --artifact ARTIFACT
+python3 -B stage3/adapt/95-checker-axolotl-h/oracle-piece.py FROZEN ARTIFACT RESULTS EVIDENCE PIECE START
+STAGE3_ARTIFACT=ARTIFACT python3 -B FROZEN/stage3/lane/merge_shards.py RESULTS --whole WHOLE --output MERGE_JSON
+```
+
+The final ledger is [fold-evidence/checks.json](fold-evidence/checks.json).
+Historical stop logs remain intact for review; the normalized comparison and
+completed oracle records above are the final results.

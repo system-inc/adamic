@@ -3,6 +3,8 @@
   "source": "050880ce59e30b356b686bd3144efe24f875ebc8",
   "node": "v24.19.0",
   "scope": "stage3/adapt/95-checker-axolotl-h/",
-  "oracle": "not run: stopped on emitted JavaScript changes outside the pinned owner",
-  "95h-adamicSha256": "af50795a8ba9b3358efbb8dce20d5d6b620b6fe7c89b8e82665cef6de0a129dd"
+  "oracle": "passed: same-artifact whole lane, all 398 shards, and official executed-union merge",
+  "95h-adamicSha256": "af50795a8ba9b3358efbb8dce20d5d6b620b6fe7c89b8e82665cef6de0a129dd",
+  "oracleFrozenCommit": "a35f12a5410ab79d759daed08daf8f1cac0c2183",
+  "oracleArtifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35"
 }
