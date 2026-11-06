@@ -22,14 +22,16 @@ import (
 // block statement's stop dropped: the top-level block row compiles. The module's stop dropped: the
 // unnamed default export crashes declareModule. functionExpression's own stop dropped is
 // equivalent: its signature then says the same words.
+//
+// A plain nested declaration lowers since S3a, and its rows are TestNestedGeneratorsLower's and
+// TestNestedGeneratorRoadsAreNotYet's (generators_nested_test.go); a generic one still stops here.
 func TestGeneratorFormsStopAtLowering(t *testing.T) {
 	t.Parallel()
 	const generator = "Generator<number, void, unknown>"
 	// Each form's use: a for-of over its call when its body yields, and its call dropped as a
 	// statement when it doesn't, which as an ordinary function would run its body and return.
 	forms := []struct{ name, declared, consumed, dropped, words, yields string }{
-		{"nested declaration", "", "function* inner(): " + generator + " { BODY }\nfor (const value of inner()) console.log(String(value));", "function* inner(): " + generator + " { BODY }\ninner();", "declared inside a function or a block", "yield 1;"},
-		{"nested generic declaration", "", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\nfor (const value of inner(1)) console.log(String(value));", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\ninner(1);", "declared inside a function or a block", "yield seed;"},
+		{"nested generic declaration", "", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\nfor (const value of inner(1)) console.log(String(value));", "function* inner<U>(seed: U): Generator<U, void, unknown> { BODY }\ninner(1);", "declared generic inside a function", "yield seed;"},
 		{"block declaration", "", "if (String(1).length > 0) { function* inner(): " + generator + " { BODY } for (const value of inner()) console.log(String(value)); }", "if (String(1).length > 0) { function* inner(): " + generator + " { BODY } inner(); }", "declared inside a function or a block", "yield 1;"},
 		{"function expression", "", "const make = function* (): " + generator + " { BODY };\nfor (const value of make()) console.log(String(value));", "const make = function* (): " + generator + " { BODY };\nmake();", "written as an expression", "yield 1;"},
 		{"IIFE", "", "for (const value of (function* (): " + generator + " { BODY })()) console.log(String(value));", "(function* (): " + generator + " { BODY })();", "written as an expression", "yield 1;"},
@@ -67,7 +69,7 @@ func TestGeneratorFormsStopAtLowering(t *testing.T) {
 	// no module declares. export default function* () has no name, and stops where the module
 	// declares its functions.
 	for _, probe := range []struct{ name, source, words string }{
-		{"a nested generic generator nothing calls", "function host(): void {\nfunction* inner<U>(seed: U): Generator<U, void, unknown> { yield seed; }\nconsole.log('control');\n}\nhost();\n", "declared inside a function or a block"},
+		{"a nested generic generator nothing calls", "function host(): void {\nfunction* inner<U>(seed: U): Generator<U, void, unknown> { yield seed; }\nconsole.log('control');\n}\nhost();\n", "declared generic inside a function"},
 		{"a top-level block's generator nothing calls", "if (String(1).length > 0) {\nfunction* inner(): " + generator + " { return; }\n}\nconsole.log('control');\n", "declared inside a function or a block"},
 		{"an unnamed default export", "export default function* (): " + generator + " { yield 1; }\nconsole.log('control');\n", "declared without a name"},
 	} {

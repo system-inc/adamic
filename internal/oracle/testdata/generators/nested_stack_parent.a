@@ -1,0 +1,20 @@
+// A parent whose environment would sit in its own C frame (#s6tt5xt) if nothing kept its cells past
+// the call: its one escape is its nested generator's call, whose frame keeps the carrier, so the
+// environment is put on the heap (region.go's environmentCalleeEscapes: a callee that suspends keeps
+// its carrier). Memory's seam on #qk8rztp S3a, pinned by TestEnvironmentPlacementNestedGenerator
+// (internal/native), whose control is the same parent with an ordinary nested function; this runs
+// the placement under the sanitizers and the leak check.
+function host(first: string, second: string): string {
+    const pair = `${first}+${second}`;
+    function* both(): Generator<string, void, undefined> {
+        yield `${pair}<1`;
+        yield `${pair}<2`;
+    }
+    let joined = '';
+    for (const value of both()) {
+        joined += value;
+    }
+    return joined;
+}
+console.log(host(`a${String(1)}`, `b${String(2)}`));
+console.log(host('c', 'd'));

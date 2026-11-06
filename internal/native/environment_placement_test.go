@@ -412,3 +412,63 @@ console.log(fill(new Other(), 3));`
 		t.Fatalf("probe lost virtual dispatch or environment: virtual=%d sites=%d", virtual, sites)
 	}
 }
+
+// A nested generator's call keeps its carrier in the frame it makes (#qk8rztp S3a), so a parent
+// whose one escape is that call has its environment counted on the heap, never in its own C frame
+// (#s6tt5xt, Memory's seam): the make-frame call is a CallClosure direct to a function that
+// suspends, which environmentCalleeEscapes counts. The control is the same parent with an ordinary
+// nested function in the generator's place, which the proof keeps in call storage, so the fixture's
+// parent is one it would otherwise have put on the stack. Mutant: environmentCalleeEscapes reads
+// Async where it reads Suspends(); the generator's parent reads stack. Only this test sees that
+// mutant: every S3a consumer steps the generator inside its parent's call, so the frame lets go of
+// its carrier before a C frame holding the cells could end, and nested_stack_parent.a runs clean
+// either way under the sanitizers. The placement is what keeps it sound once a generator can be held
+// past its parent's return (S2c-4).
+func TestEnvironmentPlacementNestedGenerator(t *testing.T) {
+	t.Parallel()
+	placements := func(path string) []environmentPlacement {
+		t.Helper()
+		loaded, err := load.Load([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+		program, err := lower.Lower(context.Background(), loaded)
+		if err != nil {
+			t.Fatal(err)
+		}
+		plan := planRegions(program)
+		var found []environmentPlacement
+		for _, function := range program.Functions {
+			if function.Name != "host" {
+				continue
+			}
+			for index := range function.Body {
+				if _, ok := function.Body[index].(ir.AllocateEnvironment); ok {
+					found = append(found, plan.environments[&function.Body[index]])
+				}
+			}
+		}
+		if len(found) != 1 {
+			t.Fatalf("%s: %d environment sites in host, want 1", path, len(found))
+		}
+		return found
+	}
+	if got := placements("../oracle/testdata/generators/nested_stack_parent.a"); got[0] != environmentHeap {
+		t.Errorf("the nested generator's parent placed %d, want counted heap", got[0])
+	}
+	control := filepath.Join(t.TempDir(), "nested-function.a")
+	const source = "function host(first: string, second: string): string {\n" +
+		"    const pair = `${first}+${second}`;\n" +
+		"    function both(): string {\n" +
+		"        return `${pair}<1${pair}<2`;\n" +
+		"    }\n" +
+		"    return both();\n" +
+		"}\n" +
+		"console.log(host(`a${String(1)}`, `b${String(2)}`));\n"
+	if err := os.WriteFile(control, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if got := placements(control); got[0] != environmentStack {
+		t.Errorf("the control, an ordinary nested function's parent, placed %d, want stack: the fixture's parent proves nothing", got[0])
+	}
+}

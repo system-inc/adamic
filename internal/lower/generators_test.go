@@ -32,7 +32,7 @@ func TestGeneratorFormsThisSliceDoesntLowerAreNotYet(t *testing.T) {
 		{"the function as a value", numbers + "const make = numbers; for (const value of make(2)) { console.log(String(value)); }", "used as a value"},
 		{"a generator expression", "const make = function* (): Generator<number, void, undefined> { yield 1; }; for (const value of make()) { console.log(String(value)); }", "a generator function"},
 		{"a generator method", "class Counter { *each(): Generator<number, void, undefined> { yield 1; } } for (const value of new Counter().each()) { console.log(String(value)); }", "a generator function"},
-		{"a nested generator", "function outer(): void { function* inner(): Generator<number, void, undefined> { yield 1; } for (const value of inner()) { console.log(String(value)); } } outer();", "a generator function"},
+		{"a nested generator stored", "function outer(): void { function* inner(): Generator<number, undefined, undefined> { yield 1; } const held = inner(); console.log(String(held.next().value)); } outer();", "used other than by a for-of"},
 		{"a generic generator's union instance", "function* each<T>(items: T[]): Generator<T, void, undefined> { for (const item of items) { yield item; } } for (const value of each<number | string>([1, 'a'])) { console.log(String(value)); }", "one present slot"},
 		{"yield*", numbers + "function* again(): Generator<number, undefined, undefined> { yield* numbers(2); } for (const value of again()) { console.log(String(value)); }", "delegating with yield*"},
 		{"a yield inside try", "function* guarded(): Generator<number, void, undefined> { try { yield 1; } catch (error) { console.log('caught'); } } for (const value of guarded()) { console.log(String(value)); }", "yielding inside try"},

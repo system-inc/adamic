@@ -1,0 +1,33 @@
+// Memory's must on #qk8rztp S3a: a nested generator's frame keeps the closure its call was made
+// through, so whatever made that carrier can let go of it before the first step. From an arrow in the
+// parent the carrier is a closure made for the call (MakeClosure), whose only reference is released
+// when the statement that made the generator ends; from a sibling it is the sibling's own
+// (ClosureSelf). Each generator is stepped after that, under the sanitizers, and a call dropped as a
+// statement lets go of its carrier with its frame. The parent reads no nested function as a value,
+// so no canonical closure keeps a carrier alive behind the frame's back.
+function host(seed: string): string {
+    const stem = `${seed}-${String(seed.length)}`;
+    function* parts(count: number): Generator<string, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield `${stem}/${String(index)}`;
+        }
+    }
+    function walk(): string {
+        let joined = '';
+        for (const part of parts(2)) {
+            joined += `<${part}>`;
+        }
+        parts(1);
+        return joined;
+    }
+    const viaArrow = (): string => {
+        let joined = '';
+        for (const part of parts(3)) {
+            joined += `(${part})`;
+        }
+        parts(1);
+        return joined;
+    };
+    return `${viaArrow()} ${walk()}`;
+}
+console.log(host(`s${String(1)}`));
