@@ -19,8 +19,7 @@ import (
 //  1. `k in x`, where k is a literal naming a brand member, or isn't a literal.
 //  2. `Object.hasOwn(x, k)`, with the same key rule; and any method call on x that isn't one of its base
 //     array's own members (by the checker's symbol, never by name) and takes a property key, a string or
-//     symbol argument: hasOwnProperty, propertyIsEnumerable, a program's own Object members and whatever
-//     Object.prototype grows next fall on the refused side by default (Language's must and Compiler's rule, #gb0fqaa).
+//     symbol argument: hasOwnProperty, propertyIsEnumerable and whatever Object.prototype grows next fall on the refused side by default (Language's must and Compiler's rule, #gb0fqaa).
 //  3. `Object.keys`, `values`, `entries`, `getOwnPropertyNames`, and `Object.assign`'s every argument.
 //  4. `JSON.stringify(x)`.
 //  5. An object spread `{ ...x }`. An array spread `[...x]` iterates elements, which observes nothing.
@@ -180,7 +179,7 @@ func (l *lowering) phantomPresenceRefused(node *ast.Node, brand *checker.Type, m
 
 // arrayOwnMember is whether a method call's member is declared by Array or ReadonlyArray itself, the base a
 // phantom array brand is held as, by the checker's symbol: every root, every declaration, in the library.
-// Object.prototype's members (hasOwnProperty, propertyIsEnumerable) and a program's own Object members aren't.
+// Object.prototype's members (hasOwnProperty, propertyIsEnumerable) aren't.
 func (l *lowering) arrayOwnMember(callee *ast.Node) bool {
 	symbol := l.memberSymbol(callee)
 	if symbol == nil {
