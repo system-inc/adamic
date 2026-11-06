@@ -7,7 +7,8 @@ import (
 
 // The global object as a value is not yet (#00qn5az head 3, Adamic's ruling): any expression whose type
 // is typeof globalThis, or may be (a union or intersection holding it, a type parameter constrained to it;
-// globalObject), whatever name reaches it (globalThis, Node's global, globalThis.globalThis, in
+// globalObject), or that reads or calls a member of it whose result may be it (globalObjectResult:
+// globalThis.valueOf()), whatever name reaches it (globalThis, Node's global, globalThis.globalThis, in
 // parentheses), is admitted only as the receiver of a property or element access, which a read, a member
 // call and a write all are, and a write there is judged by rule 50 (hostBindingGlobalThisRefusal) against
 // the host-binding table. typeof of the object is admitted only where a comparison with a literal string
@@ -137,10 +138,40 @@ func (l *lowering) globalObjectValueUse(node *ast.Node) error {
 		// ThisKeyword is deliberately not among them: a this parameter may be typeof globalThis.
 		return nil
 	}
-	if !l.globalObject(node) {
+	if !l.globalObject(node) && !l.globalObjectResult(node) {
 		return nil
 	}
 	return l.notYet(node, globalObjectValueStop)
+}
+
+// globalObjectResult reports whether node reads or calls a member of the global object whose result may
+// be the global object again, though its type no longer says so: globalThis.valueOf() is the global object
+// typed Object, and Reflect.set(globalThis.valueOf(), "onProfilerEvent", f) installs a global on Node as
+// Reflect.set(globalThis, ...) does (Language's attack on c379e7e1). No list of members that hand back
+// their receiver is kept, since the next one would fail open: a read or call through any receiver the
+// global object reaches counts whenever typeof globalThis is assignable to its result's type (Object,
+// object, {}, unknown, any, a union holding one). A void or primitive result (global.gc(), toString()) or
+// a member typed as something the global object isn't (console, process, Object) is untouched.
+func (l *lowering) globalObjectResult(node *ast.Node) bool {
+	member := node
+	if node.Kind == ast.KindCallExpression {
+		member = ast.SkipParentheses(node.AsCallExpression().Expression)
+	}
+	var receiver *ast.Node
+	switch member.Kind {
+	case ast.KindPropertyAccessExpression:
+		receiver = member.AsPropertyAccessExpression().Expression
+	case ast.KindElementAccessExpression:
+		receiver = member.AsElementAccessExpression().Expression
+	default:
+		return false
+	}
+	receiver = ast.SkipParentheses(receiver)
+	if !l.globalObject(receiver) && !l.globalObjectResult(receiver) {
+		return false
+	}
+	global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
+	return global != nil && l.checker.IsTypeAssignableTo(l.checker.GetTypeOfSymbol(global), l.checker.GetTypeAtLocation(node))
 }
 
 // inTypeQuery reports whether node names a value only for a type: `typeof globalThis` written as a type,

@@ -19,8 +19,11 @@ import (
 // Object.defineProperty returns its first argument, typed as it, and Object.assign its first argument as
 // an intersection with the second, so either on the global object stops at the call, whose own value
 // is (or holds) the global object, discarded, before its argument's visit.
-// Mutant (h), internal/oracle/testdata/host_bindings/mutants.md: an initializer admitted, so a widening to
-// object carries the global object past this stop, and the object-view rows stop elsewhere.
+// globalThis.valueOf() is the global object typed Object, so a read or call through the global object
+// whose result typeof globalThis is assignable to stops the same way (globalObjectResult), through every
+// spelling of the receiver. Mutant (h), internal/oracle/testdata/host_bindings/mutants.md: an initializer
+// admitted, so a widening to object carries the global object past this stop, and the object-view rows
+// stop elsewhere. Mutant (i): no result judged, and the valueOf rows stop elsewhere.
 func TestGlobalObjectAsAValueIsNotYet(t *testing.T) {
 	t.Parallel()
 	const stop = "stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet"
@@ -49,6 +52,14 @@ func TestGlobalObjectAsAValueIsNotYet(t *testing.T) {
 		{"a shorthand property", "", "const holder = { globalThis };\nReflect.set(holder.globalThis, \"onProfilerEvent\", fire);\n", "5:18"},
 		{"a condition", "", "if (globalThis) {\n\tconsole.log('host');\n}\n", "5:5"},
 		{"typeof read by something other than a literal comparison", "", "console.log(typeof globalThis);\n", "5:20"},
+		{"Reflect.set on globalThis.valueOf()", "", "Reflect.set(globalThis.valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
+		{"Object.assign on globalThis.valueOf()", "", "Object.assign(globalThis.valueOf(), { onProfilerEvent: fire });\n", "5:15"},
+		{"globalThis.valueOf() widened to object", "", "const host: object = globalThis.valueOf();\nReflect.set(host, \"onProfilerEvent\", fire);\n", "5:22"},
+		{"valueOf through globalThis.globalThis", "", "Reflect.set(globalThis.globalThis.valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
+		{"valueOf through an element-access callee", "", "Reflect.set(globalThis[\"valueOf\"](), \"onProfilerEvent\", fire);\n", "5:13"},
+		{"valueOf through an optional call", "", "Reflect.set(globalThis?.valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
+		{"valueOf through Node's global", node, "console.log(typeof process.argv);\nReflect.set(global.valueOf(), \"onProfilerEvent\", fire);\n", "7:13"},
+		{"valueOf of valueOf", "", "Reflect.set(globalThis.valueOf().valueOf(), \"onProfilerEvent\", fire);\n", "5:13"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -65,7 +76,9 @@ func TestGlobalObjectAsAValueIsNotYet(t *testing.T) {
 
 // The uses the ruling admits keep the stops or the lowering they had before head 3: a property read and a
 // member call through Node's global (sys.ts's global.gc), a write through it, judged by rule 50, and typeof
-// of the object compared with a literal string, which lowering still reaches as "reading globalThis".
+// of the object, or of its valueOf(), compared with a literal string, which lowering still reaches as
+// "reading globalThis". A member whose result is a string (toString) isn't a result the global object
+// could be, and keeps its stop too.
 func TestGlobalObjectAsAReceiverIsAdmitted(t *testing.T) {
 	t.Parallel()
 	t.Run("global.gc read and called", func(t *testing.T) {
@@ -77,6 +90,8 @@ func TestGlobalObjectAsAReceiverIsAdmitted(t *testing.T) {
 	for _, probe := range []struct{ name, source, want string }{
 		{"a write through global, rule 50's", "import process from 'node:process';\nglobal.process = process;\n", "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + hostBindingWriteFix},
 		{"typeof compared with a literal", "console.log(String(typeof globalThis === 'object'));\n", "main.ts:1:27: stage 0 can't lower reading globalThis yet"},
+		{"typeof globalThis.valueOf() compared with a literal", "console.log(String(typeof globalThis.valueOf() === 'object'));\n", "main.ts:1:27: stage 0 can't lower reading globalThis yet"},
+		{"globalThis.toString(), a string", "console.log(globalThis.toString());\n", "main.ts:1:13: stage 0 can't lower reading globalThis yet"},
 		{"another member of global", "import 'node:process';\nglobal.console.log('through global');\n", "main.ts:2:1: stage 0 can't lower node:globals.global other than as global.gc's receiver (fix: name the global itself, without global.) yet"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
