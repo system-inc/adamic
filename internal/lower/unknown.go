@@ -209,8 +209,8 @@ func (l *lowering) nullableReferenceArray(proven *checker.Type, seen map[*checke
 	if proven.Flags()&checker.TypeFlagsObject == 0 {
 		return false
 	}
-	if l.checker.IsArrayType(proven) {
-		element := l.checker.GetElementTypeOfArrayType(proven)
+	if l.isArrayType(proven) {
+		element := l.elementTypeOfArray(proven)
 		if l.includesNull(element) {
 			// A representation not known refuses too, so the guard doesn't lean on valueType's NotYet
 			// for an element it can't place.
