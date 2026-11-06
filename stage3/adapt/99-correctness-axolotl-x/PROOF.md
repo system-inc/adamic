@@ -1282,3 +1282,18 @@ The whole lane and shards run its unchanged main lane/oracle code.
 The public and internal declaration outputs are byte-identical to baseline;
 their hashes are retained in javascript/declarations.json. Oracle producer
 logs, phase exits and source-identity evidence are under oracle/.
+
+## Check 6 ordinary component: all 79 compiler roots
+
+Both ordinary per-file runs complete successfully. All 79 TypeScript entry
+roots are present on each side, and every normalized first-stop record is
+identical. There are zero changed first stops. Seventy-three roots stop at
+core.ts:810:89 with Refused: a cast the runtime can't check. The other six
+records are unchanged as well; their exact kinds, locations and reasons are
+in census/comparison.json and the two complete summaries.
+
+The ordinary tool also emits rows for non-source JSON files and a combined
+program row. Complete streams are retained; the 79-root comparison selects
+only single-root .ts records. Nothing is suppressed or treated as accepted.
+Census logs and all raw records are retained under census/. This completes
+both ordinary and six-unit latent components of check 6.

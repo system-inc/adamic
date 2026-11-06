@@ -19,7 +19,7 @@
     "3": "pass: seven byte-identical files; two bundles each have exactly 46 normalized binding rewrites",
     "4": "not run: stopped at check 1",
     "5": "pass: restored-site build exits 0; comparison exits 1 and identifies exactly one unique missed site",
-    "6": "not run: stopped at check 1",
+    "6": "pass: all 79 ordinary first stops unchanged; all six latent units measured before and after",
     "6_latent": "pass: all six units before and after, 12 bounded pieces"
   },
   "CW051": [
