@@ -36,7 +36,7 @@ function adapt(tree) {
     const normalized = new Map([...raw].map(([name,text]) => [name,e.normalize(text)]));
     const texts = new Map([...normalized].map(([name,text]) => [path.relative(path.join(tree,'src/compiler'),name),text]));
     const scanned = e.scan(tree,e.program(tree,normalized));
-    const adapted = inspect(texts,[...scanned.sites,...scanned.refused]);
+    const adapted = inspect(texts,scanned.coreCalls);
     const ownership = require('./ownership.json');
     const handed = site => ownership.some(row=>row.file===site.file&&(row.owner===site.owner||site.owner.startsWith(row.owner+'.')));
     const signature = site => JSON.stringify([site.file,site.owner,site.before,site.after]);
@@ -58,8 +58,8 @@ function adapt(tree) {
     for (const file of new Set(owners.map(pin => pin.file))) {
         const name = path.join(tree,'src/compiler',file);
         let after = e.edit(texts.get(file),owned.filter(site => site.file === file));
-        const removal = e.removableImport(file,after);
-        const calls = [...scanned.sites,...scanned.refused].filter(site => site.file === file).length - owned.filter(site => site.file === file).length;
+        const calls = scanned.coreCalls.filter(site => site.file === file).length - owned.filter(site => site.file === file).length;
+        const removal = e.removableImport(file,after,calls);
         assert.equal(!!removal,calls === 0, `${file}: import usage drift`);
         if (removal) after = e.edit(after,[removal]);
         texts.set(file,after);
@@ -69,7 +69,7 @@ function adapt(tree) {
     }
     const planned = new Map([...normalized].map(([name,text]) => [name,texts.get(path.relative(path.join(tree,'src/compiler'),name)) ?? text]));
     const afterScan = e.scan(tree,e.program(tree,planned));
-    assert(inspect(texts,[...afterScan.sites,...afterScan.refused]), 'invalid planned owners');
+    assert(inspect(texts,afterScan.coreCalls), 'invalid planned owners');
     for (const [name,text] of raw) assert.equal(fs.readFileSync(name,'utf8'),text, `${name}: source changed while planning`);
     for (const plan of plans) fs.writeFileSync(plan.name,plan.after);
     return {files:plans.length, rewrites:owned.length, left:left.length+refused.length, javascriptChanging:true};

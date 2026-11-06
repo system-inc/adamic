@@ -10,7 +10,7 @@ const original = new Map(files.map(file=>[file,normalize(fs.readFileSync(path.jo
 function inspectTexts(texts) {
     const replacements=new Map([...texts].map(([file,text])=>[path.join(tree,'src/compiler',file),text]));
     const scanned=e.scan(tree,e.program(tree,replacements));
-    return inspect(texts,[...scanned.sites,...scanned.refused]);
+    return inspect(texts,scanned.coreCalls);
 }
 assert.equal(inspectTexts(original),false,'contract requires baseline');
 const rows=[];

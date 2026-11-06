@@ -56,7 +56,7 @@ function scan(tree, p = program(tree)) {
         }
         return s;
     }
-    const sites = [], refused = [], foreign = [];
+    const sites = [], refused = [], foreign = [], coreCalls = [];
     for (const name of sources(tree)) {
         const source = p.getSourceFile(name);
         assert(source, `${name}: source missing from program`);
@@ -66,6 +66,11 @@ function scan(tree, p = program(tree)) {
             const scoped = namedFunction(node) || ((ts.isModuleDeclaration(node) || ts.isClassDeclaration(node)) && node.name);
             const chain = scoped ? [...ancestry, node.name.text] : ancestry;
             if (namedFunction(node) && node.body) owner = chain.join(".");
+            if (ts.isCallExpression(node)) {
+                let callee = node.expression;
+                while (ts.isParenthesizedExpression(callee) || ts.isNonNullExpression(callee) || ts.isAsExpression(callee) || ts.isTypeAssertionExpression(callee)) callee = callee.expression;
+                if (symbol(callee) === target) coreCalls.push({file,owner,start:node.getStart(source),end:node.end});
+            }
             if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'maybeBind') {
                 const where = source.getLineAndCharacterOfPosition(node.getStart(source));
                 const row = {file, owner, line: where.line + 1, column: where.character + 1, before: node.getText(source), start: node.getStart(source), end: node.end};
@@ -87,13 +92,13 @@ function scan(tree, p = program(tree)) {
         }
         visit(source, undefined, []);
     }
-    return {sites, refused, foreign};
+    return {sites, refused, foreign, coreCalls};
 }
 function edit(text, edits) {
     for (const e of [...edits].sort((a,b) => b.start - a.start)) text = text.slice(0, e.start) + e.after + text.slice(e.end);
     return text;
 }
-function removableImport(file, text) {
+function removableImport(file, text, coreCallCount) {
     const source = parse(file, text);
     const specs = [];
     function find(node) { if (ts.isImportSpecifier(node) && node.name.text === 'maybeBind') specs.push(node); ts.forEachChild(node, find); }
@@ -107,12 +112,16 @@ function removableImport(file, text) {
     const checker = ts.createProgram([file],options,host).getTypeChecker();
     const imported = checker.getSymbolAtLocation(spec.name);
     assert(imported, `${file}: maybeBind import has no symbol`);
-    let uses = 0;
+    let uses = coreCallCount ?? 0;
     function count(node) {
-        if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && checker.getSymbolAtLocation(node.expression) === imported) uses++;
+        if (ts.isCallExpression(node)) {
+            let callee=node.expression;
+            while (ts.isParenthesizedExpression(callee) || ts.isNonNullExpression(callee) || ts.isAsExpression(callee) || ts.isTypeAssertionExpression(callee)) callee=callee.expression;
+            if (checker.getSymbolAtLocation(callee) === imported) uses++;
+        }
         ts.forEachChild(node, count);
     }
-    count(source);
+    if (coreCallCount === undefined) count(source);
     if (uses) return undefined;
     const start = text.lastIndexOf('\n', spec.getStart(source)) + 1;
     const end = text.indexOf('\n', spec.end) + 1;

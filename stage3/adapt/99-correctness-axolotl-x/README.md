@@ -1,7 +1,8 @@
 # 99x: explicit host method binding with earlier-owner handoffs
 
 Task kpp0f8s. javascriptChanging true. Pinned TypeScript 6.0.3 source:
-050880ce59e30b356b686bd3144efe24f875ebc8. Base main remains 3e395f9e5.
+050880ce59e30b356b686bd3144efe24f875ebc8. This continuation starts from
+adapt-1 a6d5f494 on main 322f8056. The original delivery measured main 3e395f9e5.
 
 Adamic's November 6 ruling permits maybeBind(X, X.m) to become X.m?.bind(X)
 when X is one identifier. The supplied equivalence argument is that both
@@ -53,7 +54,8 @@ validate or edit the replacement code in a wholly absent group. No cast is added
 
 Five source files are eligible to change. Their maybeBind import specifier is
 removed exactly when no core maybeBind call remains after 99x. inspect derives
-its import requirement from symbol-resolved calls in each file, rather than
+its import requirement from all symbol-resolved core calls in each file,
+including parenthesized callees, rather than
 the historical inventory.imports list. On main the removed imports are in
 builder.ts, tsbuildPublic.ts and watchPublic.ts; a complete 32 fold also lets
 99x remove watch.ts's import. A complete program owner fold lets 99x remove
@@ -115,7 +117,7 @@ covers calls nested within a pinned ancestor function.
 | watchPublic.ts:549:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedResolutions)` | rewrite |
 | watchPublic.ts:552:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedLibResolutions)` | rewrite |
 
-## Current verification
+## Historical verification
 
 Checks 1 through 6 pass for 28 rewrites and 18 earlier-owner handoffs.
 All 80 baseline replay outcomes match. Types pass over all 79 roots, nine
@@ -124,7 +126,9 @@ negative control is detected. The unchanged whole lane and all 398 standard
 shards pass with exactly matching observations and sanctioned API bytes.
 All 79 ordinary first stops are unchanged; all six CW051 units were measured
 before and after. See PROOF.md and owned/ for complete current evidence.
-Older receipts outside owned/ describe superseded 46-site experiments.
+Original receipts outside owned/ and composition/ describe superseded
+46-site experiments. owned/ certifies the earlier 28-site delivery;
+composition/ contains the current continuation.
 
 ## Fold composition continuation
 

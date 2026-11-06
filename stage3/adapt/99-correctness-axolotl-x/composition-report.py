@@ -9,6 +9,7 @@ labels=['x','32x','95hx','both'];matrix={k:read('matrix/'+k+'.json') for k in la
 assert all(v['status']=='pass' and v['types']['diagnostics']==0 and v['javascript']['pass'] for v in matrix.values())
 assert all(v['status']=='pass' and v['units']==398 and v['identical_test_identities_and_statuses'] and v['identical_sanctioned_API_bytes'] for v in oracles.values())
 assert latent['status']=='pass'
+final_identity=read('oracle-final-source-identity.json');assert final_identity['status']=='pass' and final_identity['matrix_unchanged']
 for name in ['owners.json','inventory.json','ownership.json']:
  assert not subprocess.check_output(['git','diff','a6d5f494','--',str((p/name).relative_to(repo))],cwd=repo)
 rows='\n'.join('| '+label+' | '+str(v['source']['expectedSites'])+' | '+str(v['source']['replay']['left'])+' | 0 | Pass | '+', '.join(v['source']['importsRemoved'])+' |' for label,v in matrix.items())
@@ -109,10 +110,15 @@ change from a fold branch enters these measurements.
 
 Both x and 32x use the unchanged standard artifact preparation, whole lane,
 shard manifest, runners, timeouts, expected counts and sanctioned API lines.
-Each prepared artifact's complete 746-file source map equals the corresponding
-checked tree. Its five functional 99x inputs match this branch byte for byte.
-Frozen worktree commits and artifact keys are recorded in preparation.json.
-Evidence publication cannot change those frozen producer inputs.
+Each prepared artifact's complete 746-file source map and all nine emitted
+JavaScript products equal the final checked tree byte for byte. The final
+call counter also recognizes parenthesized callees; all four full applies,
+types and emitted comparisons were rerun after that validation change.
+composition/oracle-final-source-identity.json proves the exact source and
+product identity, so the recorded oracle runs test the final products.
+The initial matrix is retained in initial-matrix.tar.gz. Final full-apply
+snapshots' five functional inputs match this branch byte for byte; the earlier
+preparation snapshots remain identified by preparation.json and provenance.json.
 
 Each whole lane passes with 106,366 passing, one sanctioned public API failure,
 and zero pending. All 398 standard shards pass for each composition. The
@@ -148,6 +154,8 @@ builder.ts, watch.ts and program.ts, and a complete-fold success control.
 Every rejection verifies zero source writes and unchanged mtimes. The
 complete-fold control removes program/watch imports, preserves checker bytes,
 accepts an opaque foreign-owner replacement, and replays with zero writes.
+An additional complete-fold control keeps program.ts's import for a
+parenthesized core helper call and verifies a zero-write replay.
 
 The six CW051 units are measured freshly on main and main plus 32 plus 99x.
 The scheduling-only latent selector uses main's existing measurement harness;

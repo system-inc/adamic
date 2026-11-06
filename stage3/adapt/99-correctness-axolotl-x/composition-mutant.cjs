@@ -45,5 +45,13 @@ try{
  }
  const before=snapshot();assert.equal(adapt(scratch).files,0);unchanged(before);
  rows.push({name:'all handed-off groups absent; dynamic program/watch import removal; checker untouched; byte/mtime replay',pass:true,result});
+ reset();for(const site of inventory.left)replace(site);
+ const parenthesized=inventory.left.find(s=>s.file==='program.ts'&&s.owner==='createProgram');
+ const parentFile=path.join(scratch,'src/compiler/program.ts');
+ fs.writeFileSync(parentFile,fs.readFileSync(parentFile,'utf8').replace(parenthesized.after,'(maybeBind)(host, undefined)'));
+ assert.equal(adapt(scratch).rewrites,28);
+ assert(/^    maybeBind,\r?$/m.test(fs.readFileSync(parentFile,'utf8')));
+ const parentState=snapshot();assert.equal(adapt(scratch).files,0);unchanged(parentState);
+ rows.push({name:'opaque parenthesized core call retains program import and replays without writes',pass:true});
 }finally{fs.rmSync(scratch,{recursive:true,force:true});}
 fs.writeFileSync(path.join(out,'composition-mutant.json'),JSON.stringify(rows,null,2)+'\n');console.log(JSON.stringify(rows,null,2));

@@ -48,5 +48,9 @@
       "left": 0,
       "javascriptChanging": true
     }
+  },
+  {
+    "name": "opaque parenthesized core call retains program import and replays without writes",
+    "pass": true
   }
 ]
