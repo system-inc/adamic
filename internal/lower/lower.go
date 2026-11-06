@@ -463,6 +463,12 @@ type lowering struct {
 	// finishAccessors (class_accessors.go).
 	contractGetters []contractGetters
 
+	// spreadSources is the type each object literal's spread sees its source as, by the literal's
+	// SpreadSite less one, and classHolders each class's instance type by its one-based index, the
+	// two sides of the assignability spreadGetters asks (class_accessors.go).
+	spreadSources []*checker.Type
+	classHolders  map[int]*checker.Type
+
 	// toPrimitive is the program's to_string_hint helper plus one, or zero before a String of a union
 	// that may hold an object needs it (to_primitive.go).
 	toPrimitive int

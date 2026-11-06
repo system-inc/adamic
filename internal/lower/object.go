@@ -44,6 +44,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			literal.NoReuse = l.hasPrivateStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)) || l.hasAccessorStorage(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
 			literal.Spread = spread
+			l.spreadSources = append(l.spreadSources, l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression)))
+			literal.SpreadSite = len(l.spreadSources)
 			l.librarySpreads = append(l.librarySpreads, librarySpread{node: property, source: spread, view: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
 			l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: property, source: spread, copied: l.concrete(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))})
 			literal.SpreadMaybeUndefined = l.includesUndefined(l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))

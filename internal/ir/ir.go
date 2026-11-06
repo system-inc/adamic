@@ -522,11 +522,13 @@ type (
 		// SpreadGetters are the getters a spread may run: natively the copy calls the getter of every
 		// accessor its source's class chain owns (runtime/object.c's adamic_object_copy_checked), an
 		// object literal's own accessors among them, which lowering registers as a class. It is a set
-		// of functions read off the accessor registry by flow, never off the source's static type,
-		// since a getter satisfies a declared plain field (Memory's and Compiler's ruling on #qk8rztp
-		// S2c-2b): every getter of a class whose allocation can reach Spread, and every getter
-		// lowering registered when that reach is unknown. Empty when no getter can be reached.
+		// read off the accessor registry, never a test of the source's type, since a getter satisfies
+		// a declared plain field (Memory's and Compiler's ruling on #qk8rztp S2c-2b): every getter on
+		// the chain of every registered class whose instances are assignable to the type the spread
+		// sees, and all of them where that type isn't known. Empty when no getter is registered.
+		// SpreadSite is lowering's number for the type the spread sees, one-based, zero when unknown.
 		SpreadGetters []int
+		SpreadSite    int
 
 		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
 		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
