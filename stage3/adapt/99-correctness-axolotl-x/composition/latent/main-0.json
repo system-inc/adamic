@@ -1,0 +1,24 @@
+{
+  "label": "main",
+  "index": 0,
+  "reference": "src/compiler/checker.ts:54277:1",
+  "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+  "actual": "src/compiler/checker.ts:54277:1",
+  "checker_rejected": false,
+  "stop": {
+    "kind": "NotYet",
+    "where": "src/compiler/checker.ts:54279:37",
+    "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+  },
+  "metrics": {
+    "command": [
+      "/workspace/scratch/bind2/latent-build/latent",
+      "/workspace/bind2-main-tree/src/compiler",
+      "/workspace/scratch/bind2/latent-raw-main-0/records.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 192.61054153999976,
+    "limit_seconds": 1440
+  },
+  "binary_sha256": "7db83476ddb4fb4cdf931b8be5cfc4ef2214ff62d3ccdd5e935803f8f200e937"
+}
