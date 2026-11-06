@@ -154,6 +154,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	lowered.hasDescendants = l.derivedAncestors[l.symbol(declaration.Name())]
 	lowered.base = base
 	lowered.class = len(l.result.Classes) + 1
+	l.classHolder(lowered.class, classType)
 	metadata := ir.Class{Source: l.functionSource(declaration), Name: name, Constructor: lowered.constructor, Definition: l.classDefinition(declaration)}
 	if base != nil {
 		metadata.Base = base.class
