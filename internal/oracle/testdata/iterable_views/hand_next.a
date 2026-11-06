@@ -1,0 +1,82 @@
+// A hand-driven next() through an IterableIterator<T> parameter, every origin a collection's
+// iterator (#qk8rztp S2c-2a, Adamic's (a) and (b)). elaborate is checker.ts:21636's loop, verbatim
+// but for its body: the status starts at next(), the loop runs while it isn't done, and done
+// narrows it so value reads T. It is fed a Map's values() and a Set's values() at two call sites.
+// firstTwo keeps one status across a later next(), and each still reads its own value, since every
+// result is a fresh object. exhausted asks next() again after done, which answers done again.
+// firstOrMissing takes the `| undefined` form, tested first. Nothing here enumerates a result's
+// keys, whose order is #7nw4kgj's. Names and numbers are built, never only literals.
+interface Entry {
+    readonly name: string;
+    readonly order: number;
+}
+function elaborate(iterator: IterableIterator<Entry>): string {
+    let reported = '';
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        const { name, order } = status.value;
+        reported += `${name}:${String(order)} `;
+    }
+    return reported;
+}
+function firstLate(iterator: IterableIterator<Entry>): string {
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        if (status.value.order > 2) {
+            return status.value.name;
+        }
+    }
+    return 'none';
+}
+function firstTwo(numbers: IterableIterator<number>): number {
+    const first = numbers.next();
+    const second = numbers.next();
+    let total = 0;
+    if (!first.done) {
+        total += first.value;
+    }
+    if (!second.done) {
+        total += second.value * 10;
+    }
+    return total;
+}
+function exhausted(numbers: IterableIterator<number>): string {
+    let steps = 0;
+    for (let status = numbers.next(); !status.done; status = numbers.next()) {
+        steps++;
+    }
+    const again = numbers.next();
+    return `${String(steps)} ${again.done ? 'done' : 'more'}`;
+}
+function firstOrMissing(numbers: IterableIterator<number> | undefined): number {
+    if (numbers === undefined) {
+        return -1;
+    }
+    const status = numbers.next();
+    if (status.done) {
+        return -2;
+    }
+    return status.value;
+}
+const entries = new Map<string, Entry>();
+const kept = new Set<Entry>();
+for (let index = 0; index < 4; index++) {
+    const entry: Entry = { name: `entry ${String(index)}`, order: index * 2 };
+    entries.set(entry.name, entry);
+    if (index % 2 === 1) {
+        kept.add(entry);
+    }
+}
+const sizes = new Map<string, number>();
+const odd = new Set<number>();
+for (let index = 0; index < 3; index++) {
+    sizes.set(`size ${String(index)}`, index + 7);
+    odd.add(index * 2 + 1);
+}
+console.log(elaborate(entries.values()));
+console.log(elaborate(kept.values()));
+console.log(firstLate(entries.values()));
+console.log(firstLate(new Set<Entry>().values()));
+console.log(String(firstTwo(sizes.values())));
+console.log(String(firstTwo(odd.values())));
+console.log(exhausted(odd.keys()));
+console.log(String(firstOrMissing(sizes.values())));
+console.log(String(firstOrMissing(new Map<string, number>().values())));
