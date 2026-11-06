@@ -36,7 +36,8 @@ import (
 // iterableView is one for-of forOf lowered as a view: where it stops if unproven, the value it steps,
 // how it reads each step, the function its loop is in, and the local its loop holds the iterator in
 // (viewLoop), -1 when it can't be named. A hand view is one hand-driven `x.next()` instead
-// (handNextView), which has no loop: its origins are proven the same way, and nothing rewrites it.
+// (handNextView), which has no loop: its origins are proven the same way, and where a generator feeds
+// its parameter, its nexts are rewritten into IteratorNext (handView).
 type iterableView struct {
 	where    *ast.Node
 	iterated ir.Expression
@@ -91,7 +92,7 @@ func (l *lowering) viewLoop(view int, statements []ir.Statement, err error) ([]i
 // that names a parameter (Adamic's (a) on #qk8rztp S2c-2). A detached next (`const n = x.next`,
 // `x.next.call`, a passed `x.next`) is no call of it, so the library-member guard still refuses it;
 // a call with an argument is one, which callClosure stops not yet; and that the parameter is the function's own and its every origin a
-// collection's iterator is proven after lowering (handNextView, checkIterableViews).
+// collection's iterator or a generator's call is proven after lowering (handNextView, checkIterableViews).
 func (l *lowering) handDrivenNext(node *ast.Node) bool {
 	call := node.AsCallExpression()
 	if call.QuestionDotToken != nil || call.Expression.Kind != ast.KindPropertyAccessExpression {
@@ -265,6 +266,9 @@ func (l *lowering) checkIterableViews() error {
 		numbered[origin] = len(origins)
 		return len(origins)
 	}
+	// A parameter's hand views share its origins, since each proves the parameter's read, so the
+	// first a generator feeds rewrites every next on it, and the rest find it done.
+	handed := map[int]bool{}
 	graph := newAllocationFlowGraph(l.result)
 	graph.entry = func(value ir.Expression) int {
 		switch value := value.(type) {
@@ -292,6 +296,7 @@ func (l *lowering) checkIterableViews() error {
 		unproven := slices.Clone(reaches.Reasons)
 		var differently []string
 		var generators []iterableOrigin
+		collections := false
 		for _, number := range reaches.Sites {
 			if number < 1 || number > len(origins) {
 				unproven = append(unproven, "an allocation")
@@ -304,6 +309,7 @@ func (l *lowering) checkIterableViews() error {
 			case origin.collection:
 				// The dispatch's collection arm steps it, or the loop itself does when no generator
 				// feeds the view.
+				collections = true
 			default:
 				unproven = append(unproven, origin.name)
 				continue
@@ -319,8 +325,17 @@ func (l *lowering) checkIterableViews() error {
 			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+strings.Join(differently, "; ")+", read as "+iterableHeldName(view.held)+")")
 		}
 		if view.hand && len(generators) != 0 {
-			// A generator's step returns its value, not a result object (#qk8rztp S2c-2b).
-			return l.notYet(view.where, "a hand-driven next() through a view a generator feeds (#qk8rztp S2c-2b)")
+			read, isRead := iterableViewRead(view.iterated)
+			if !isRead {
+				return fmt.Errorf("lower: compiler bug: the hand-driven next() at %s steps no parameter's read", l.program.Where(view.where))
+			}
+			if !handed[read.Local] {
+				handed[read.Local] = true
+				if err := l.handView(view, read.Local, generators, collections); err != nil {
+					return err
+				}
+			}
+			continue
 		}
 		if len(generators) != 0 {
 			if err := l.generatorView(index, generators); err != nil {
@@ -389,6 +404,12 @@ func iterableViewRead(iterated ir.Expression) (ir.Read, bool) {
 // parameter must be held as an object, whose undefined is a `NULL` pointer the for-of's test has
 // ruled out; `Iterable<string> | undefined` is held as a union, whose undefined is a member the
 // dispatch's plain cast wasn't built to meet, so it stays not yet built (#qk8rztp S2c-3).
+//
+// A parameter stepped by hand instead (#qk8rztp S2c-2b, Lower's count) is read only as the receiver
+// of its no-argument nexts (handNextReceiver) and by its undefined tests, any number of either, and
+// never by a for-of, which checkIterableViews has stopped beside a next already. The count runs on
+// S2c-2a's CallClosure, before handView rewrites it, and every other rule here holds unchanged: with
+// no read but its steps and its tests, nothing but the function's own nexts can name the generator.
 func (l *lowering) generatorParameter(call ir.Call, position int, of ir.IterableOf, views map[int]int) error {
 	if of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return fmt.Errorf("lower: compiler bug: a generator seen as an object with no site")
@@ -405,12 +426,13 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	callee := l.result.Functions[target]
 	parameter := callee.Parameters[position]
 	name := l.result.Locals[parameter].Name
+	hand := false
 	for _, view := range l.iterableViews {
 		if read, isRead := iterableViewRead(view.iterated); view.hand && isRead && read.Local == parameter {
-			return l.generatorNotYet(where, "passed into the parameter "+name+", which a hand-driven next() reads (#qk8rztp S2c-2b)")
+			hand = true
 		}
 	}
-	if index, isView := views[parameter]; !isView || l.iterableViews[index].function != target {
+	if index, isView := views[parameter]; !hand && (!isView || l.iterableViews[index].function != target) {
 		return l.generatorNotYet(where, "passed into the parameter "+name+", whose one use isn't a for-of over it")
 	}
 	switch {
@@ -425,11 +447,15 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	}
 	// Every field that names a local counts, not only Read and Assign: a for-of head, a pattern's
 	// binding and a catch write one too (Lower's must), and anything else that names it is a use. An
-	// undefined test of the parameter is the one node not gone into, so its read isn't counted, and
-	// nothing else is exempt (#qk8rztp S2c-3).
+	// undefined test of the parameter is a node not gone into, so its read isn't counted (#qk8rztp
+	// S2c-3), and so, for a parameter stepped by hand, is each of its nexts, its receiver read once
+	// whether the narrowing's Defined is over it or not (S2c-2b). Nothing else is exempt.
 	var uses localUseCount
 	count := func(node any) bool {
 		if undefinedTestOf(node, parameter) {
+			return false
+		}
+		if _, isNext := handNextReceiver(node, parameter); hand && isNext {
 			return false
 		}
 		uses.node(node, parameter)
@@ -445,8 +471,84 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	if uses.named != 0 {
 		return l.generatorNotYet(where, "passed into the parameter "+name+", which the lowered function names other than by a read")
 	}
-	if uses.reads != 1 {
+	if hand && uses.reads != 0 {
+		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where its no-argument nexts and undefined tests are its only uses", name, uses.reads))
+	}
+	if !hand && uses.reads != 1 {
 		return l.generatorNotYet(where, fmt.Sprintf("passed into the parameter %s, read %d times where one for-of over it is its only use", name, uses.reads))
+	}
+	return nil
+}
+
+// handNextReceiver is the receiver of a hand-driven next() over parameter, as callClosure lowers one
+// (handDrivenNext, handNextView): a CallClosure through no direct target, with no argument and no
+// spread, whose callee is next read as a method with no `?.`, off the parameter's own read, bare or
+// under exactly one ir.Defined, the narrowing a `| undefined` parameter's read gets past its test
+// (Lower's ruling 1 on #qk8rztp S2c-2b). A Defined over anything else, a field, a call, another local
+// or another Defined, is no next of it, and neither is any other node that holds the read.
+func handNextReceiver(node any, parameter int) (ir.Expression, bool) {
+	call, isCall := node.(ir.CallClosure)
+	if !isCall || call.Direct != 0 || len(call.Arguments) != 0 || len(call.Spread) != 0 {
+		return nil, false
+	}
+	property, isProperty := call.Closure.(ir.Property)
+	if !isProperty || property.Name != "next" || !property.Method || property.Optional {
+		return nil, false
+	}
+	receiver := property.Object
+	if defined, isDefined := receiver.(ir.Defined); isDefined {
+		receiver = defined.Value
+	}
+	read, isRead := receiver.(ir.Read)
+	if !isRead || read.Local != parameter {
+		return nil, false
+	}
+	return property.Object, true
+}
+
+// handNextHolds says whether a hand-driven next()'s result can hold a generator's yields, held as of:
+// a number, a boolean or a reference, the three kinds the runtime's one builder of a step's result
+// makes (map_set.c's adamic_iterator_result). It is an allowlist (Adamic's and Language's ruling 4 on
+// #qk8rztp S2c-2b), so a maybe-number, a maybe-boolean, whose one byte read as a pointer would be a
+// wrong answer rather than a stop, the null and undefined representations, and anything the
+// classifier doesn't name stay not yet built. generatorSignature admits none of them as a yield
+// today, so this is the second line, and the runtime's own allowlist the third.
+func handNextHolds(of ir.Type) bool {
+	return of == ir.Number || of == ir.Boolean || of.IsReference()
+}
+
+// handView admits a hand view a generator feeds (#qk8rztp S2c-2b), a collection's iterator feeding
+// it too or not, and rewrites every next on its parameter into IteratorNext: each CallClosure
+// handNextReceiver names, in the function the parameter belongs to, keeping its receiver, the
+// narrowing's Defined included, so an undefined the proof missed panics in Defined's words. It reads
+// the proof checkIterableViews has just made of the view, never a second walk (Lower's and Compiler's
+// ruling 2), and stops where the step can't be built: generators of more than one function, since
+// the step names the one whose ResumeMayThrow says whether its caller tests for a throw, and a yield
+// no result holds (handNextHolds). A view whose origins hold no generator never gets here and keeps
+// S2c-2a's CallClosure, so its emitted code doesn't move, and a set the proof can't close stopped
+// before it.
+func (l *lowering) handView(view iterableView, parameter int, generators []iterableOrigin, collections bool) error {
+	function, err := l.oneGeneratorFunction(view, generators)
+	if err != nil {
+		return err
+	}
+	yields := l.result.Functions[function].Yields
+	if !handNextHolds(yields) {
+		return l.notYet(view.where, "a hand-driven next() through a view a generator feeds whose yields, held as "+iterableTypeName(yields)+", no step's result holds yet (#qk8rztp S2c-2b)")
+	}
+	site := l.program.Where(view.where)
+	rewritten := 0
+	rewrite := func(node any) any {
+		iterator, isNext := handNextReceiver(node, parameter)
+		if !isNext {
+			return node
+		}
+		rewritten++
+		return ir.IteratorNext{Iterator: iterator, Function: function, Of: yields, Collection: collections, Site: site}
+	}
+	l.result.Functions[view.function].Body = rewriteShapeStatements(l.result.Functions[view.function].Body, rewrite)
+	if rewritten == 0 {
+		return fmt.Errorf("lower: compiler bug: the hand-driven next() at %s has no next to rewrite", site)
 	}
 	return nil
 }
@@ -464,12 +566,24 @@ func (l *lowering) generatorView(index int, generators []iterableOrigin) error {
 	case view.holder < 0 || view.function < 0:
 		return fmt.Errorf("lower: compiler bug: the iterable view at %s has no loop to dispatch", l.program.Where(view.where))
 	}
+	function, err := l.oneGeneratorFunction(view, generators)
+	if err != nil {
+		return err
+	}
+	return l.dispatchView(view, function)
+}
+
+// oneGeneratorFunction is the one generator function whose frames reach a view, or the stop for a
+// view generators of more than one function feed: a step names the one function whose throws it may
+// leave (Lower's seam on #qk8rztp S2c-1), a dispatch's GeneratorNext and a hand-driven IteratorNext
+// alike.
+func (l *lowering) oneGeneratorFunction(view iterableView, generators []iterableOrigin) (int, error) {
 	for _, other := range generators[1:] {
 		if other.generator != generators[0].generator {
-			return l.notYet(view.where, "a view that generators of more than one function feed (a step names the one function whose throws it may leave) (#qk8rztp S2c-1)")
+			return 0, l.notYet(view.where, "a view that generators of more than one function feed (a step names the one function whose throws it may leave) (#qk8rztp S2c-1)")
 		}
 	}
-	return l.dispatchView(view, generators[0].generator-1)
+	return generators[0].generator - 1, nil
 }
 
 // dispatchView rewrites a view's loop, lowered as a collection iterator's (libraryIteratorLoop), into
