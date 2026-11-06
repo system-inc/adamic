@@ -1,0 +1,82 @@
+[
+  {
+    "mutant": "repeated-fixed",
+    "test": "^TestFunctionBind$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "function_bind_test.go:40: javascript: stdout differs; Node stdout \"abc\\n12\\nbuilt1:one\\nbuilt1:two\\n1\\nfalse\\nfalse\\nkept1:later\\na\\nb\\ncaught\\n10\\n4\\n9\\n13\\n17\\n\" stderr \"\" exit 0; backend stdout \"abc\\n12\\nbuilt2:one\\nbuilt3:two\\n3\\nfalse\\nfalse\\nkept3:later\\na\\nb\\ncaught\\n10\\n4\\n9\\n13\\n17\\n\" stderr \"\" exit 0",
+    "log": "/tmp/adamic-bind-mutants/repeated-fixed.log"
+  },
+  {
+    "mutant": "widened-path",
+    "test": "^TestMethodBindRefusals$/^path$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "function_bind_test.go:160: want \"bind through a receiver path\", got <nil>",
+    "log": "/tmp/adamic-bind-mutants/widened-path.log"
+  },
+  {
+    "mutant": "dropped-links",
+    "test": "^TestMethodBind$/^bind_cycle_cache_bound[.]a$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "==91869==ERROR: LeakSanitizer: detected memory leaks",
+    "log": "/tmp/adamic-bind-mutants/dropped-links.log"
+  },
+  {
+    "mutant": "dropped-optional",
+    "test": "^TestMethodBind$/^method_bind[.]a$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "function_bind_test.go:114: native stdout differs: Node \"own\\nown\\nclass\\nescaped\\nescaped\\nfirst\\ntrue\\n0\\ntrue\\ntrue\\ntrue\\n0\\nrealpath\\nroot/file\\nvoid class\\nmethod a\\nmethod b\\nmethod caught\\n\", native \"own\\nown\\nclass\\nescaped\\nescaped\\nfirst\\nfalse\\n1\\nfalse\\nfalse\\nfalse\\n3\\nrealpath\\nroot/file\\nvoid class\\nmethod a\\nmethod b\\nmethod caught\\n\" ()",
+    "log": "/tmp/adamic-bind-mutants/dropped-optional.log"
+  },
+  {
+    "mutant": "late-lookup",
+    "test": "^TestMethodBind$/^method_bind[.]a$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "function_bind_test.go:106: javascript stdout differs: Node \"own\\nown\\nclass\\nescaped\\nescaped\\nfirst\\ntrue\\n0\\ntrue\\ntrue\\ntrue\\n0\\nrealpath\\nroot/file\\nvoid class\\nmethod a\\nmethod b\\nmethod caught\\n\" (), backend \"own\\nown\\nclass\\nescaped\\nescaped\\nsecond\\ntrue\\n0\\ntrue\\ntrue\\ntrue\\n0\\nrealpath\\nroot/file\\nvoid class\\nmethod a\\nmethod b\\nmethod caught\\n\" ()",
+    "log": "/tmp/adamic-bind-mutants/late-lookup.log"
+  },
+  {
+    "mutant": "allowed-suspension",
+    "test": "^TestMethodBindRefusals$/^async_fixed$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "function_bind_test.go:160: want \"suspension inside method binding operands\", got <nil>",
+    "log": "/tmp/adamic-bind-mutants/allowed-suspension.log"
+  },
+  {
+    "mutant": "dropped-static-table",
+    "test": "^TestMethodBind$/^method_bind[.]a$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "javascript exit codes differ; backend panics TypeError: fn is not a function instead of printing static",
+    "log": "/tmp/bind-static-mutant.log"
+  },
+  {
+    "mutant": "dropped-library-stop",
+    "test": "^TestFunctionBindRefusals$/^inherited_library$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "want \"bind of an inherited library function\", got <nil>",
+    "log": "/tmp/bind-dropped-library-stop-mutant.log"
+  },
+  {
+    "mutant": "dropped-metadata-site",
+    "test": "^TestFunctionBindRefusals$/^opaque_metadata$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "panic: runtime error: invalid memory address or nil pointer dereference",
+    "log": "/tmp/bind-dropped-metadata-site-mutant.log"
+  },
+  {
+    "mutant": "dropped-null-sentinel",
+    "test": "^TestMethodBind$/^method_bind[.]a$",
+    "exit": 1,
+    "caught": true,
+    "evidence": "native stdout differs; null arm false and effects 1 instead of true and 0",
+    "log": "/tmp/bind-nullish-mutant.log"
+  }
+]

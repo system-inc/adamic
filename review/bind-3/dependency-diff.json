@@ -1,0 +1,708 @@
+{
+  "added_packages": [
+    "bench",
+    "bench/regex",
+    "bridge/tsgo",
+    "cloud/reports/decode-ascii",
+    "cmd/adamic",
+    "cmd/adamic-gate",
+    "cmd/adamic-meter",
+    "cmd/adamic-stage1-progress",
+    "cmd/adamic-test262",
+    "internal/buildcache",
+    "internal/childguard",
+    "internal/flow",
+    "internal/fresh",
+    "internal/fuzz",
+    "internal/ir",
+    "internal/javascript",
+    "internal/load",
+    "internal/lower",
+    "internal/oracle",
+    "internal/regexp",
+    "internal/testguard",
+    "internal/unicodeproperties",
+    "stage1/cohere/css",
+    "stage1/cohere/cssnumbers",
+    "stage1/cohere/cssstrings",
+    "stage1/cohere/estree",
+    "stage1/cohere/formatfiles",
+    "stage1/cohere/gitignore",
+    "stage1/cohere/graphql",
+    "stage1/cohere/graphql/printer",
+    "stage1/cohere/json",
+    "stage1/cohere/lint",
+    "stage1/cohere/lint/helpers",
+    "stage1/cohere/lint/helpers/comments",
+    "stage1/cohere/lint/inventory",
+    "stage1/cohere/lint/regex",
+    "stage1/cohere/lint/rules/no-underscore-dangle",
+    "stage1/cohere/lint/rules/no-unsafe-negation",
+    "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "stage1/cohere/lint/rules/typescript-no-this-alias",
+    "stage1/cohere/lint/shards",
+    "stage1/cohere/markdownblocks",
+    "stage1/cohere/markdownblocks/tools/generate_classes",
+    "stage1/cohere/markdownblocks/tools/generate_entities",
+    "stage1/cohere/markdownblocks/tools/generate_width",
+    "stage1/cohere/markdowninline",
+    "stage1/cohere/mediaquery",
+    "stage1/cohere/selector",
+    "stage1/cohere/static_single_assignment",
+    "stage1/cohere/suppression",
+    "stage1/cohere/tsprinter",
+    "stage1/cohere/typeaware",
+    "stage1/cohere/values",
+    "stage1/cohere/yaml",
+    "stage1/typescript/parser",
+    "stage1/typescript/scanner",
+    "stage3/census/latent/refusalrewrite",
+    "stage3/census/latent/replay",
+    "stage3/census/latent/statecopy",
+    "stage3/census/latent/statementrewrite",
+    "stage3/census/tool",
+    "stage3/drivers/parser/probe",
+    "stage3/fixtures",
+    "stage3/lane/adaptedtree",
+    "stage3/ledger/checker-259",
+    "stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "removed_packages": [],
+  "added_dependencies": {
+    "internal/unicodeproperties": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/census/latent/statecopy": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/ledger/checker-259/rerun-2026-10-08": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/lower": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/rules/no-unsafe-optional-chaining": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/ir": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/leakcheck": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower"
+    ],
+    "internal/fresh": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/inventory": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/tsprinter": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/census/latent/replay": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/compilercensus": [
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/mediaquery": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/yaml": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cmd/adamic-test262": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/markdownblocks/tools/generate_classes": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/helpers": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/helpers/comments": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/drivers/parser/probe": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cmd/adamic-gate": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/selector": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/estree": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cloud/reports/decode-ascii": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/static_single_assignment": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/typeaware": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/markdownblocks/tools/generate_width": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cmd/adamic": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "bridge/tsgo": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/cssstrings": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cmd/adamic-stage1-progress": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/childguard": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/fuzz": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/load": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/graphql": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/markdowninline": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/regex": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/typescript/scanner": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/markdownblocks/tools/generate_entities": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/shards": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/javascript": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "bench/regex": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/ledger/checker-259": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "bench": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/rules/no-unsafe-negation": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/css": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/census/latent/refusalrewrite": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/rules/typescript-no-this-alias": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/regexp": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/lane/adaptedtree": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/boundedrun": [
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/suppression": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/lowered": [
+      "cmd/adamic",
+      "internal/javascript"
+    ],
+    "stage1/cohere/json": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/census/latent/statementrewrite": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/markdownblocks": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/gitignore": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/formatfiles": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/values": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/census/tool": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/lint/rules/no-underscore-dangle": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage3/fixtures": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/graphql/printer": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/typescript/parser": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/flow": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/ccjobserver": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower"
+    ],
+    "internal/oracle": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "stage1/cohere/cssnumbers": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "cmd/adamic-meter": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/buildcache": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ],
+    "internal/testguard": [
+      "cmd/adamic",
+      "internal/flow",
+      "internal/ir",
+      "internal/javascript",
+      "internal/load",
+      "internal/lower",
+      "internal/native"
+    ]
+  },
+  "removed_dependencies": {
+    "stage3/lane": [
+      "stage3/lane/adaptedtree"
+    ]
+  }
+}
