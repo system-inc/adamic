@@ -87,6 +87,10 @@ func (l *lowering) statement(node *ast.Node) (result []ir.Statement, err error) 
 	case ast.KindExpressionStatement:
 		return l.expressionStatement(node.AsExpressionStatement().Expression)
 	case ast.KindVariableStatement:
+		if l.hostBindingDeclared(node) {
+			// A host binding is the host's: nothing is declared for it (host_bindings.go).
+			return nil, nil
+		}
 		return l.variables(node.AsVariableStatement().DeclarationList)
 	case ast.KindBlock:
 		body, err := l.statements(node.AsBlock().Statements.Nodes)
@@ -228,6 +232,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
+		if statements, handled, err := l.hostBindingAndStatement(expression); handled {
+			return statements, err
+		}
 		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
 			value, err := l.comma(expression)
 			if err != nil {
