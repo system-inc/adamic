@@ -1,0 +1,24 @@
+{
+  "label": "32x",
+  "index": 2,
+  "reference": "src/compiler/watchPublic.ts:123:1",
+  "name": "createIncrementalCompilerHost",
+  "actual": "src/compiler/watchPublic.ts:122:1",
+  "checker_rejected": false,
+  "stop": {
+    "kind": "NotYet",
+    "where": "src/compiler/watchPublic.ts:124:23",
+    "reason": "a call through ?. (an optional call)"
+  },
+  "metrics": {
+    "command": [
+      "/workspace/scratch/bind2/latent-build/latent",
+      "/workspace/bind2-32x-tree/src/compiler",
+      "/workspace/scratch/bind2/latent-raw-32x-2/records.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 16.182112623999274,
+    "limit_seconds": 1440
+  },
+  "binary_sha256": "7db83476ddb4fb4cdf931b8be5cfc4ef2214ff62d3ccdd5e935803f8f200e937"
+}
