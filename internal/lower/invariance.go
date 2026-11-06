@@ -161,9 +161,12 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if len(fromSignatures) == 1 && len(toSignatures) == 1 && len(fromSignatures[0].TypeParameters()) > 0 && len(toSignatures[0].TypeParameters()) == 0 {
 			fromSignatures = []*checker.Signature{instantiateSignatureInContextOf(l.checker, fromSignatures[0], toSignatures[0], nil, nil)}
 		}
-		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
-		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
+		// Each position the viewed signature hands an argument to (anyRelatedPositions), typed as a
+		// call there sees it: a rest parameter gives its element at that position, never its whole
+		// tuple or array, so a listener `(seen: Error) => void` seen as `(...args: [error: Error]) =>
+		// void` is related Error to Error (#6xzs6gj).
+		for position := range anyRelatedPositions(fromSignatures[0], toSignatures[0]) {
+			takes, given := l.callableParameterTypeAt(fromSignatures[0], position), l.callableParameterTypeAt(toSignatures[0], position)
 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.

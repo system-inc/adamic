@@ -372,6 +372,18 @@ func (l *lowering) censusCallableParameterType(parameter *ast.Symbol) *checker.T
 	return of
 }
 
+// callableParameterTypeAt is a signature's parameter type at position, as a call there sees it: its own
+// parameter's (censusCallableParameterType, which adds undefined for one with an initializer), or, at or
+// past a rest parameter, the rest's element at that position (GetTypeAtPosition), never the rest's whole
+// tuple or array (#6xzs6gj).
+func (l *lowering) callableParameterTypeAt(signature *checker.Signature, position int) *checker.Type {
+	parameters := signature.Parameters()
+	if position < len(parameters) && !(signature.HasRestParameter() && position == len(parameters)-1) {
+		return l.censusCallableParameterType(parameters[position])
+	}
+	return l.checker.GetTypeAtPosition(signature, position)
+}
+
 // Only exactly true is truthy in boolean | undefined. Equality evaluates the value once.
 func censusBooleanCondition(value ir.Expression) ir.Expression {
 	if value.Type() == ir.MaybeBoolean {
