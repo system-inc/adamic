@@ -872,11 +872,22 @@ type (
 		ProgramRegion bool
 	}
 
+	// BoundMethod resolves Object.Name once, before evaluating Fixed. Factory
+	// captures the resolved closure arm, Object and Fixed in ordinary cells.
+	BoundMethod struct {
+		Object   Expression
+		Name     string
+		Optional bool
+		Fixed    []Expression
+		Factory  int
+	}
+
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
 		// Direct identifies canonical sibling code sharing Closure as its environment.
 		Direct       int
-		Bound        bool // call the target and receiver kept by the current bound closure
+		Bound        bool   // call the target and receiver kept by the current bound closure
+		BoundName    string // class method name, for result ownership on the kept code arm
 		Closure      Expression
 		Arguments    []Expression
 		Spread       []bool
@@ -1199,6 +1210,7 @@ func (Trim) Type() Type          { return String }
 func (CodePoints) Type() Type    { return Array }
 func (StringIndex) Type() Type   { return String }
 func (MapEntries) Type() Type    { return Array }
+func (BoundMethod) Type() Type   { return Closure }
 func (BoundClosure) Type() Type  { return Closure }
 func (MakeClosure) Type() Type   { return Closure }
 func (CheckedCast) Type() Type   { return Object }

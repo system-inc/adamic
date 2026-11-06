@@ -19,10 +19,10 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	if _, builtin := l.libraryMethod(target, map[*ast.Symbol]bool{}); builtin {
 		return nil, false, nil
 	}
-	if node.Flags&ast.NodeFlagsOptionalChain != 0 || access.QuestionDotToken != nil {
+	if (node.Flags&ast.NodeFlagsOptionalChain != 0 || access.QuestionDotToken != nil) && target.Kind != ast.KindPropertyAccessExpression {
 		return nil, true, l.notYet(node, "bind through an optional chain")
 	}
-	proven := l.concrete(l.checker.GetTypeAtLocation(target))
+	proven := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(target)))
 	signatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
 	if l.isLibraryType(proven, "Function") || len(signatures) != 1 {
 		return nil, true, l.notYet(node, "bind without one declared function signature")
@@ -30,14 +30,20 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	if len(call.Arguments.Nodes) == 0 || hasSpread(node) {
 		return nil, true, l.notYet(node, "bind without an explicit receiver or with spread fixed arguments")
 	}
+	method := false
 	if target.Kind == ast.KindPropertyAccessExpression {
-		symbol := l.memberSymbol(target)
-		if symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 {
-			return nil, true, l.notYet(node, "bind of a method value before receiver dispatch is captured")
+		if err := l.bindReceiverRule(node); err != nil {
+			return nil, true, err
 		}
-		if !l.bindOwnPlainProperty(target.AsPropertyAccessExpression().Expression) {
-			return nil, true, l.notYet(node, "bind of a function property before receiver dispatch is captured")
+		receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+		argument := ast.SkipParentheses(call.Arguments.Nodes[0])
+		method = ast.IsIdentifier(receiver) && ast.IsIdentifier(argument) && l.symbol(receiver) == l.symbol(argument)
+		if !method && !l.bindOwnPlainProperty(receiver) {
+			return nil, true, l.notYet(node, "bind of a function property without a captured receiver lookup")
 		}
+	}
+	if predicateOfSignature(l.checker, signatures[0]) != nil {
+		return nil, true, l.notYet(node, "bind of a narrowing function signature")
 	}
 	parameters := signatures[0].Parameters()
 	for _, parameter := range parameters {
@@ -47,7 +53,13 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 			}
 		}
 	}
-	value, err := l.expression(target)
+	var value ir.Expression
+	var err error
+	if method {
+		value = ir.Undefined{Of: ir.Closure}
+	} else {
+		value, err = l.expression(target)
+	}
 	if err != nil {
 		return nil, true, err
 	}
@@ -84,7 +96,7 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 		environment = append(environment, local)
 		reads = append(reads, ir.Read{Local: local, Of: value.Type()})
 	}
-	boundType := l.concrete(l.checker.GetTypeAtLocation(node))
+	boundType := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
 	boundSignatures := l.checker.GetSignaturesOfType(boundType, checker.SignatureKindCall)
 	if len(boundSignatures) != 1 {
 		return nil, true, l.notYet(node, "bind result without one declared function signature")
@@ -117,6 +129,9 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	invoke := ir.CallClosure{Bound: true, Closure: reads[0], Arguments: arguments, FunctionType: int(proven.Id()), Returns: function.Returns}
+	if method {
+		invoke.BoundName = target.Name().Text()
+	}
 	if function.Returns == 0 {
 		function.Body = []ir.Statement{ir.Evaluate{Value: invoke}, ir.Return{}}
 	} else {
@@ -130,6 +145,10 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	l.result.Functions[maker].Parameters = environment
 	l.result.Functions[maker].Body = []ir.Statement{ir.Return{Value: made}}
+	if method {
+		l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: target, source: values[1], copied: l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression), reader: "bind lookup"})
+		return ir.BoundMethod{Object: values[1], Name: target.Name().Text(), Optional: access.QuestionDotToken != nil, Fixed: values[2:], Factory: maker}, true, nil
+	}
 	return ir.Call{Function: maker, Arguments: values, Returns: ir.Closure}, true, nil
 }
 
@@ -164,6 +183,11 @@ func (l *lowering) boundSource(node *ast.Node, seen map[*ast.Symbol]bool) bool {
 }
 
 func (l *lowering) boundObservation(node *ast.Node) error {
+	if node.Kind == ast.KindCallExpression {
+		if err := l.bindReceiverRule(node); err != nil {
+			return err
+		}
+	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
 		if l.boundSource(access.Expression, map[*ast.Symbol]bool{}) {
@@ -196,7 +220,11 @@ func (l *lowering) checkBoundArguments() error {
 		var found error
 		walk(function.Body, func(node any) bool {
 			if call, ok := node.(ir.CallClosure); ok && call.Bound {
-				for _, target := range l.result.FunctionTypeTargets[call.FunctionType] {
+				candidates := append([]int{}, l.result.FunctionTypeTargets[call.FunctionType]...)
+				if call.BoundName != "" {
+					candidates = append(candidates, l.result.MethodsNamed(call.BoundName)...)
+				}
+				for _, target := range candidates {
 					candidate := l.result.Functions[target]
 					if candidate.ReadsArguments || candidate.RestElement != 0 {
 						found = l.notYet(record.node, "bind of a function that observes its argument count or collects rest arguments")
@@ -250,4 +278,106 @@ func (l *lowering) bindOwnPlainProperty(receiver *ast.Node) bool {
 		}
 	}
 	return true
+}
+
+// Only the direct X.m.bind(X) head owns dispatch. All paths are stopped even
+// when a type declares plain fields: an actual getter can satisfy that view.
+func (l *lowering) bindReceiverRule(node *ast.Node) error {
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "bind" || !l.libraryMember(callee) {
+		return nil
+	}
+	target := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+	if target.Kind == ast.KindElementAccessExpression {
+		return l.notYet(node, "bind through an indexed receiver")
+	}
+	if target.Kind != ast.KindPropertyAccessExpression {
+		return nil
+	}
+	if _, builtin := l.libraryMethod(target, map[*ast.Symbol]bool{}); builtin {
+		return nil
+	}
+	receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+	if !ast.IsIdentifier(receiver) {
+		if receiver.Kind == ast.KindCallExpression {
+			return l.notYet(node, "bind with a call as its method receiver")
+		}
+		return l.notYet(node, "bind through a receiver path (a getter can change the receiver)")
+	}
+	if len(call.Arguments.Nodes) == 0 {
+		return l.notYet(node, "method bind without its receiver")
+	}
+	argument := ast.SkipParentheses(call.Arguments.Nodes[0])
+	same := ast.IsIdentifier(argument) && l.symbol(receiver) == l.symbol(argument)
+	symbol := l.memberSymbol(target)
+	if !same {
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 {
+			return l.notYet(node, "method bind with a different receiver")
+		}
+		return nil
+	}
+	if !l.stableBindReceiver(receiver) {
+		return l.notYet(node, "method bind with an assigned receiver identifier")
+	}
+	if target.AsPropertyAccessExpression().QuestionDotToken != nil || call.QuestionDotToken != nil {
+		return l.notYet(node, "bind outside the direct method optional-chain head")
+	}
+	if l.bindGetters == nil {
+		l.bindGetters = map[string]bool{}
+		var visit ast.Visitor
+		visit = func(current *ast.Node) bool {
+			if current.Kind == ast.KindGetAccessor && current.Name() != nil {
+				l.bindGetters[current.Name().Text()] = true
+			}
+			current.ForEachChild(visit)
+			return false
+		}
+		for _, file := range l.program.Files() {
+			file.AsNode().ForEachChild(visit)
+		}
+	}
+	if l.bindGetters[target.Name().Text()] {
+		return l.notYet(node, "bind of a getter-backed method value")
+	}
+	return nil
+}
+
+func (l *lowering) stableBindReceiver(node *ast.Node) bool {
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind == ast.KindParameter {
+		return !l.assignedSymbol(symbol)
+	}
+	return declaration.Kind == ast.KindVariableDeclaration && declaration.Parent != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0
+}
+
+func (l *lowering) directBindMethodRead(node *ast.Node) bool {
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	parent := node.Parent
+	if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Name().Text() != "bind" || !called(parent) || !l.libraryMember(parent) {
+		return false
+	}
+	receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+	outer := parent.Parent
+	for outer != nil && outer.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer == nil || outer.Kind != ast.KindCallExpression || len(outer.AsCallExpression().Arguments.Nodes) == 0 {
+		return false
+	}
+	argument := ast.SkipParentheses(outer.AsCallExpression().Arguments.Nodes[0])
+	return ast.IsIdentifier(receiver) && ast.IsIdentifier(argument) && l.symbol(receiver) == l.symbol(argument) && l.stableBindReceiver(receiver) && l.bindReceiverRule(outer) == nil
+}
+
+// The links of ordinary and bound closures are the cells their environment owns.
+// The cycle proof and Program membership must read the same kept edges;
+// allocation and destruction continue to use the owning environment itself.
+func (l *lowering) closureLinks(closure closureRecord) []int {
+	return l.result.Functions[closure.function].Environment
 }

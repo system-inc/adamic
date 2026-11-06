@@ -83,7 +83,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 			}
 		}
 		return viewReadsNoField
-	case ir.JSONEncode:
+	case ir.BoundMethod, ir.JSONEncode:
 		return viewReadNotYet
 	case ir.JSONStringify:
 		if value.Value != nil && value.Value.Type() == ir.Array {

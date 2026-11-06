@@ -104,6 +104,7 @@ var writesNothing = []struct {
 	{ir.Length{}, "reads an array's length"},
 	{ir.LibraryGlobal{}, "a built-in's identity"},
 	{ir.Logical{}, "one of its operands"},
+	{ir.BoundMethod{}, "a fresh bound closure; fixed operands may call, invocation is CallClosure"},
 	{ir.BoundClosure{}, "a fresh closure over existing captured cells; calling it is CallClosure"},
 	{ir.MakeClosure{}, "a new function value; a call of it is CallClosure"},
 	{ir.MakeError{}, "a new Error"},

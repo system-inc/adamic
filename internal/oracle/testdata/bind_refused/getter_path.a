@@ -1,0 +1,10 @@
+// Node 24 prints second. This is Language's program verbatim after this comment.
+interface Inner { name: string; show(this: Inner): string }
+interface Holder { readonly inner: Inner }
+function show(this: Inner): string { return this.name; }
+const first: Inner = { name: "first", show };
+const second: Inner = { name: "second", show };
+let reads = 0;
+const holder: Holder = { get inner(): Inner { reads++; return reads === 1 ? first : second; } };
+const bound = holder.inner.show.bind(holder.inner);
+console.log(bound());

@@ -1,0 +1,6 @@
+// Node calls a's method with b, printing b.
+interface H { name: string; m(): string }
+const a: H = { name: "a", m() { return this.name; } };
+const b: H = { name: "b", m() { return this.name; } };
+const bound = a.m.bind(b);
+console.log(bound());

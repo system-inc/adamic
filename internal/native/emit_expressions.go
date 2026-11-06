@@ -342,6 +342,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
+	case ir.BoundMethod:
+		return e.boundMethod(expression)
 	case ir.BoundClosure:
 		return e.makeClosure(ir.MakeClosure{Function: expression.Function, ProgramRegion: expression.ProgramRegion}, true, expression.GraphTypes)
 	case ir.MakeClosure:
@@ -932,4 +934,42 @@ func (e *emitter) makeClosure(expression ir.MakeClosure, bound bool, graphTypes 
 		e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
 	}
 	return closure
+}
+
+// Lookup precedes every fixed argument. The own closure is held independently
+// of the object, so replacing its field cannot retarget an existing binding.
+func (e *emitter) boundMethod(expression ir.BoundMethod) string {
+	object := e.snapshot(ir.Object, e.value(expression.Object))
+	method := e.temporary()
+	if e.program.ClosureConventionNeeded() {
+		e.line("adamic_method_entry %s = {0};", method)
+	} else {
+		e.line("adamic_method_entry %s = NULL;", method)
+	}
+	target := e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", object, cString(expression.Name), e.cache(), method))
+	makeValue := func() string {
+		arguments := []string{target, object}
+		for _, fixed := range expression.Fixed {
+			arguments = append(arguments, e.value(fixed))
+		}
+		result := e.own(ir.Closure, fmt.Sprintf("%s(%s)", e.functionName(expression.Factory), strings.Join(arguments, ", ")))
+		e.line("%s->bound_method = %s;", result, method)
+		return result
+	}
+	if !expression.Optional {
+		return makeValue()
+	}
+	text, value, owned := e.asideWith(makeValue)
+	result := e.temporary()
+	e.line("adamic_closure *%s = NULL;", result)
+	present := e.methodPresent(method)
+	e.line("if (%s != NULL || %s) {", target, present)
+	e.out.WriteString(text)
+	e.line("%s = %s;", result, retained(value))
+	for index := len(owned) - 1; index >= 0; index-- {
+		e.line("adamic_release(%s);", owned[index])
+	}
+	e.line("}")
+	e.owned = append(e.owned, result)
+	return result
 }

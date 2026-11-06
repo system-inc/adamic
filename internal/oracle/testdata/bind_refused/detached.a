@@ -1,0 +1,4 @@
+// Node allows the detached value to be bound back and prints host.
+const o = { m(): string { return "host"; } };
+const m = o.m;
+console.log(m.bind(o)());

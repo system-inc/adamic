@@ -1,0 +1,5 @@
+// Node evaluates getHost twice and prints host.
+interface H { m(): string }
+function getHost(): H { return { m(): string { return "host"; } }; }
+const bound = getHost().m.bind(getHost());
+console.log(bound());
