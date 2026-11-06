@@ -17,8 +17,9 @@ import (
 // holdsOpenNumericEnum for any union holding one, failing closed on an enum that isn't purely numeric.
 // Each shape is pinned for both. Mutants: openNumericEnumType's size check dropped, under which the
 // wider union reads open to it; holdsOpenNumericEnum ignoring impure, under which the heterogeneous
-// literal reads closed to it; and wholeNumericEnums counting an enum whole once one member is there,
-// under which the partial unions read open to both.
+// literal reads closed to it; and wholeNumericEnums asking one member more than the enum has, under
+// which the pure and single-member enums read closed to both callers. The same pins pass against main's
+// two separate definitions (7e3c0682), so the helper moves no answer.
 func TestOpenNumericEnumHasOneDefinition(t *testing.T) {
 	t.Parallel()
 	const source = `enum Kind { A, B, C }
