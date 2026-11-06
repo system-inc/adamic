@@ -17,7 +17,7 @@ const adamicViewElement = (array,index,relative,check) => {
  const storage=adamicArrayStorage.get(array);
  const references=contract && [3,4,5,6,8,10].includes(contract.Of);
  const fail=kind=>panic('element read failed: '+check.View+' is not a '+check.ViewType+'; expected '+check.ViewType+', found '+kind);
- if(check.Contract && storage && storage.references!==references)fail(storage.kind);
+ if(check.Contract && storage && storage.references && !references)fail(storage.kind);
  const value=array[index];
  if(check.Contract && !adamicUntaggedPlainSelect(value,adamicArrayContracts,check.Contract,check.Where,check.ViewType,true))fail(value===null?'null':Array.isArray(value)?'array':value instanceof Map?'Map':adamicTypeOf(value));
  return value;
