@@ -9,19 +9,19 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"uint16", "uint16_notyet", "class_value", "class_cache_or", "class_cache_local", "class_cache_capture_notyet"} {
+	for _, name := range []string{"uint16", "uint16_conversion", "class_value", "class_cache_or", "class_cache_local", "class_cache_capture_notyet"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "uint16" || name == "uint16_notyet" || name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
+		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "uint16" || name == "uint16_conversion" || name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
 	}
 }
 
 // Uint16 constructors lower, so source Node holds their conversions and views.
 func TestNewExpressionUint16AgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"uint16", "uint16_notyet"} {
+	for _, name := range []string{"uint16", "uint16_conversion"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_"+name+".a"))
 			if err != nil {

@@ -774,7 +774,7 @@ var freshCorpusPaths = []string{
 	"../oracle/testdata/new_expression_class_cache_or.a",
 	"../oracle/testdata/new_expression_class_value.a",
 	"../oracle/testdata/new_expression_uint16.a",
-	"../oracle/testdata/new_expression_uint16_notyet.a",
+	"../oracle/testdata/new_expression_uint16_conversion.a",
 	"../oracle/testdata/node_buffer_bom.a",
 	"../oracle/testdata/node_buffer_crypto.a",
 	"../oracle/testdata/node_buffer_digest_twice.a",
@@ -2017,7 +2017,7 @@ var freshCorpusTests = [][]func(*testing.T){
 		TestFreshWrites____oracle_testdata_new_expression_class_cache_or_a_90ec1f83cbec,
 		TestFreshWrites____oracle_testdata_new_expression_class_value_a_f485e42005f2,
 		TestFreshWrites____oracle_testdata_new_expression_uint16_a_f98ef2da22a9,
-		TestFreshWrites____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3,
+		TestFreshWrites____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f,
 		TestFreshWrites____oracle_testdata_node_buffer_bom_a_e668b0027d17,
 		TestFreshWrites____oracle_testdata_node_buffer_crypto_a_edd0dd804f10,
 		TestFreshWrites____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841,
@@ -7109,7 +7109,7 @@ func TestFreshWrites____oracle_testdata_new_expression_uint16_a_f98ef2da22a9(t *
 	checkFreshProgram(t, freshCorpusPaths[769])
 }
 
-func TestFreshWrites____oracle_testdata_new_expression_uint16_notyet_a_ec1fa3b8ade3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_new_expression_uint16_conversion_a_8c5e849e807f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[770])
