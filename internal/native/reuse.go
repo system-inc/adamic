@@ -349,10 +349,10 @@ func reachesGlobal(program *ir.Program, expression ir.Expression, global int, se
 	case ir.RegExpCall:
 		return expression.Replacement != nil
 	case ir.ObjectLiteral:
-		// A spread runs every getter its source may own (SpreadGetters), a set lowering reads by
-		// flow off the accessor registry, never off the source's type, since a getter satisfies a
-		// declared plain field (Memory's and Compiler's ruling on #qk8rztp S2c-2b). Without a spread
-		// it runs nothing.
+		// A spread runs every getter its source may own (SpreadGetters), a set lowering reads off
+		// the accessor registry, never a test of the source's type, since a getter satisfies a
+		// declared plain field (Memory's and Compiler's ruling on #qk8rztp S2c-2b). Each candidate's
+		// body is run through touches for this global. Without a spread it runs nothing.
 		found := false
 		for _, getter := range expression.SpreadGetters {
 			if touches(program, getter, global, seen) {
