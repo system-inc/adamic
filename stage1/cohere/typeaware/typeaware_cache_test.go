@@ -76,9 +76,11 @@ func TestTypeAwareKeysNameTheBuildsCompiler(t *testing.T) {
 		t.Fatal(err)
 	}
 	unset := make([]buildcache.Inputs, len(keys))
+	// clang for the build's triple (toolchain.Compilers, #5xsd2ha).
+	clang, _ := toolchain.Compilers(os.Environ())
 	for i, key := range keys {
 		unset[i] = key.inputs()
-		if !slices.Contains(unset[i].Flags, "CC=clang") {
+		if !slices.Contains(unset[i].Flags, "CC="+clang) {
 			t.Errorf("%s: with CC unset the key's flags %q don't name clang, which cgo runs", key.name, unset[i].Flags)
 		}
 	}

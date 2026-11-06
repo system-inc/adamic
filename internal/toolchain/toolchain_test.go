@@ -155,21 +155,23 @@ func TestACommandRunInADirectoryIsToldItStandsThere(t *testing.T) {
 	}
 }
 
-// A tool's C and C++ compilers are clang and clang++ by name when the caller names neither, never go's default of gcc
-// from PATH (#eehjrv6: 66 units' cgo ran the machine's gcc, as and ld); a caller's own compiler is kept, and a
-// request's wins. go itself, under Env, reports CC as clang. Mutant: Env leaving CC unset (go reports gcc on Linux, and
-// on a Mac the test's own CC=clang still fails the unset check).
+// A tool's C and C++ compilers are clang and clang++ by name, each with the build's triple (Compilers), when the caller
+// names neither, never go's default of gcc from PATH (#eehjrv6: 66 units' cgo ran the machine's gcc, as and ld); a
+// caller's own compiler is kept, and a request's wins. go itself, under Env, reports CC as clang with the triple.
+// Mutant: Env leaving CC unset (go reports gcc on Linux, and on a Mac the test's own CC=clang still fails the unset
+// check).
 // Not parallel: t.Setenv.
 func TestAToolsCompilersAreClangUnlessTheCallerNamesOne(t *testing.T) {
 	// Empty is unnamed, as go reads it.
 	t.Setenv("CC", "")
 	t.Setenv("CXX", "")
 	environment := values(Env())
-	if environment["CC"] != "clang" || environment["CXX"] != "clang++" {
-		t.Fatalf("with no compiler named, CC=%q and CXX=%q", environment["CC"], environment["CXX"])
+	c, cPlusPlus := Compilers(os.Environ())
+	if environment["CC"] != c || environment["CXX"] != cPlusPlus || !strings.HasPrefix(c, "clang") || !strings.HasPrefix(cPlusPlus, "clang++") {
+		t.Fatalf("with no compiler named, CC=%q and CXX=%q, want %q and %q", environment["CC"], environment["CXX"], c, cPlusPlus)
 	}
-	if output, err := Command("go", "env", "CC", "CXX").Output(); err != nil || strings.Fields(string(output))[0] != "clang" {
-		t.Fatalf("go under Env reports %q (%v)", output, err)
+	if output, err := Command("go", "env", "CC", "CXX").Output(); err != nil || !strings.HasPrefix(string(output), c+"\n") {
+		t.Fatalf("go under Env reports %q (%v), want CC %q", output, err, c)
 	}
 	t.Setenv("CC", "/usr/bin/cc")
 	if environment := values(Env("CXX=g++")); environment["CC"] != "/usr/bin/cc" || environment["CXX"] != "g++" {

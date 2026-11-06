@@ -476,7 +476,8 @@ func jsxSetupInputs() buildcache.Inputs {
 }
 
 // TestJsxSetupKeyNamesTheBuildsCompiler holds the setup key to the compiler its go runs build with. With no CC, toolchain
-// names clang, so the key must be the one an explicit CC=clang gives; another compiler must move it. Each answer comes
+// names clang for the build's triple (toolchain.Compilers), so the key must be the one that CC set explicitly gives;
+// another compiler must move it. Each answer comes
 // from a child of this binary, since Tool reads a tool once per process.
 func TestJsxSetupKeyNamesTheBuildsCompiler(t *testing.T) {
 	t.Parallel()
@@ -511,9 +512,10 @@ func TestJsxSetupKeyNamesTheBuildsCompiler(t *testing.T) {
 		t.Fatalf("CC=%s: the child printed no key:\n%s", compiler, output)
 		return ""
 	}
-	unset, clang, gcc := key(""), key("clang"), key("gcc")
+	named, _ := toolchain.Compilers(os.Environ())
+	unset, clang, gcc := key(""), key(named), key("gcc")
 	if unset != clang {
-		t.Errorf("with no CC the build runs clang, but the key (%s) isn't CC=clang's (%s)", unset, clang)
+		t.Errorf("with no CC the build runs %s, but the key (%s) isn't CC=%s's (%s)", named, unset, named, clang)
 	}
 	if gcc == clang {
 		t.Errorf("CC=gcc keys as clang does (%s)", gcc)
