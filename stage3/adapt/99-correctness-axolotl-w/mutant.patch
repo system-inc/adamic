@@ -1,0 +1,11 @@
+--- accepted/src/compiler/core.ts
++++ mutant/src/compiler/core.ts
+@@ -807,7 +807,7 @@
+ export function sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T>;
+ /** @internal */
+ export function sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T> {
+-    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as unknown as Comparer<T>);
++    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);
+ }
+ 
+ /** @internal */

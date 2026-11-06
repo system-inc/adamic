@@ -1,0 +1,13 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "sortAndDeduplicate",
+    "beforeDeclarations": 3,
+    "afterDeclarations": 3,
+    "before": "export function sortAndDeduplicate(array: readonly string[]): SortedReadonlyArray<string>;\n/** @internal */\nexport function sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T>;\n/** @internal */\nexport function sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T> {\n    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as any as Comparer<T>);\n}",
+    "after": "export function sortAndDeduplicate(array: readonly string[]): SortedReadonlyArray<string>;\n/** @internal */\nexport function sortAndDeduplicate<T>(array: readonly T[], comparer: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T>;\n/** @internal */\nexport function sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T> {\n    return deduplicateSorted(toSorted(array, comparer), equalityComparer ?? comparer ?? compareStringsCaseSensitive as unknown as Comparer<T>);\n}",
+    "ownerBeforeSha256": "45373eaefc021a1998d753029fce730dde218176d2badf4bfdde3875b4540621",
+    "ownerAfterSha256": "00c8022b4b896a0c72d66e88a52af362c32e5e3d655ed8b61801f22ca41865fa",
+    "siteEdits": 1
+  }
+]
