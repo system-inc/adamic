@@ -81,13 +81,10 @@ func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElemen
 	if element == nil {
 		return nil, nil
 	}
-	// Only a readonly array can hold a viewed allocation: a mutable array field in a view is NotYet, and so is a
-	// cast from a viewed array to a mutable one (the ruled cut on #6wfvfhm). So a read through a mutable array
-	// type never meets a view, and checking it would only cost a check and two ownership calls per element on
-	// every ordinary array of a union. Pinned by TestViewElementCheckOnlyReadonly.
-	if !l.isLibraryType(target, "ReadonlyArray") {
-		return nil, nil
-	}
+	// The key is the element type, mutable array or readonly: filter, map and slice hand a viewed readonly
+	// array's own elements to a new mutable array, so a mutable array can hold viewed elements too (Lower's seam 1
+	// on #6wfvfhm). The price is a check on every element read of a union array whose element type has a contract,
+	// viewed or not: map_union_value_contextual_array.a's recorded counts carry it (four retains and four releases).
 	element = l.concrete(element)
 	check := &ir.ViewElementCheck{Where: l.program.Where(node), ViewType: l.checker.TypeToString(element)}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
