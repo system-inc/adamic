@@ -50,7 +50,27 @@
     "stage3-lane-file-026",
     "stage3-lane-file-027",
     "stage3-lane-file-028",
-    "stage3-lane-file-029"
+    "stage3-lane-file-029",
+    "stage3-lane-file-030",
+    "stage3-lane-file-031",
+    "stage3-lane-file-032",
+    "stage3-lane-file-033",
+    "stage3-lane-file-034",
+    "stage3-lane-file-035",
+    "stage3-lane-file-036",
+    "stage3-lane-file-037",
+    "stage3-lane-file-038",
+    "stage3-lane-file-039",
+    "stage3-lane-file-040",
+    "stage3-lane-file-041",
+    "stage3-lane-file-042",
+    "stage3-lane-file-043",
+    "stage3-lane-file-044",
+    "stage3-lane-file-045",
+    "stage3-lane-file-046",
+    "stage3-lane-file-047",
+    "stage3-lane-file-048",
+    "stage3-lane-file-049"
   ],
   "pieces": [
     {
@@ -138,6 +158,85 @@
       "callers": {},
       "failed": []
     },
+    {
+      "piece": 3,
+      "seconds": 91.2983650860001,
+      "units": [
+        "stage3-lane-file-030",
+        "stage3-lane-file-031",
+        "stage3-lane-file-032",
+        "stage3-lane-file-033",
+        "stage3-lane-file-034",
+        "stage3-lane-file-035",
+        "stage3-lane-file-036",
+        "stage3-lane-file-037",
+        "stage3-lane-file-038",
+        "stage3-lane-file-039",
+        "stage3-lane-file-040",
+        "stage3-lane-file-041",
+        "stage3-lane-file-042",
+        "stage3-lane-file-043",
+        "stage3-lane-file-044",
+        "stage3-lane-file-045",
+        "stage3-lane-file-046",
+        "stage3-lane-file-047",
+        "stage3-lane-file-048",
+        "stage3-lane-file-049"
+      ],
+      "calls": 124,
+      "counts": {
+        "in-range non-negative integer": 0,
+        "in-range negative integer": 124,
+        "out-of-range integer": 0,
+        "non-integer": 0,
+        "array undefined": 0
+      },
+      "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+      "callers": {
+        "in-range negative integer": {
+          "src/compiler/transformers/es2015.ts:4452": 62,
+          "src/compiler/transformers/es2015.ts:4471": 62
+        }
+      },
+      "failed": [],
+      "recorderVersion": 2,
+      "unitDeadlineSeconds": 90,
+      "attemptSuffix": "-retry"
+    }
+  ],
+  "counts": {
+    "in-range non-negative integer": 414,
+    "in-range negative integer": 124,
+    "out-of-range integer": 217,
+    "non-integer": 0,
+    "array undefined": 167
+  },
+  "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+  "callers": {
+    "in-range negative integer": {
+      "src/compiler/transformers/es2015.ts:4452": 62,
+      "src/compiler/transformers/es2015.ts:4471": 62
+    },
+    "out-of-range integer": {
+      "src/services/codefixes/convertToAsyncFunction.ts:389": 211,
+      "src/services/codefixes/convertToAsyncFunction.ts:392": 5,
+      "src/services/codefixes/convertToAsyncFunction.ts:395": 1
+    },
+    "non-integer": {},
+    "array undefined": {
+      "src/services/codefixes/convertToAsyncFunction.ts:269": 134,
+      "src/services/codefixes/convertToAsyncFunction.ts:277": 30,
+      "src/services/codefixes/convertToAsyncFunction.ts:273": 3
+    }
+  },
+  "oracleCounts": {
+    "pass": 4775,
+    "fail": 1,
+    "skip": 0
+  },
+  "countScope": "one union of the unchanged 398 lane manifest shards; planted probes excluded",
+  "complete": false,
+  "excludedAttempts": [
     {
       "piece": 3,
       "seconds": 327.263756069,
@@ -429,36 +528,13 @@
             "seconds": 29.56355891799967
           }
         }
-      ]
+      ],
+      "excludedFromCensus": true,
+      "reason": "normal 30-second deadlines; 17 units timed out; retry uses supported 90-second measurement deadline"
     }
   ],
-  "counts": {
-    "in-range non-negative integer": 414,
-    "in-range negative integer": 0,
-    "out-of-range integer": 217,
-    "non-integer": 0,
-    "array undefined": 167
-  },
-  "nonIntegerOffsetsIncludingUndefinedArrays": 0,
-  "callers": {
-    "in-range negative integer": {},
-    "out-of-range integer": {
-      "src/services/codefixes/convertToAsyncFunction.ts:389": 211,
-      "src/services/codefixes/convertToAsyncFunction.ts:392": 5,
-      "src/services/codefixes/convertToAsyncFunction.ts:395": 1
-    },
-    "non-integer": {},
-    "array undefined": {
-      "src/services/codefixes/convertToAsyncFunction.ts:269": 134,
-      "src/services/codefixes/convertToAsyncFunction.ts:277": 30,
-      "src/services/codefixes/convertToAsyncFunction.ts:273": 3
-    }
-  },
-  "oracleCounts": {
-    "pass": 1027,
-    "fail": 1,
-    "skip": 0
-  },
-  "countScope": "one union of the unchanged 398 lane manifest shards; planted probes excluded",
-  "complete": false
+  "recorderVersions": {
+    "1": "native source mapping, first 40 successful units",
+    "2": "exception-only offline mapping; comparison verifies 263 calls and all required callers"
+  }
 }

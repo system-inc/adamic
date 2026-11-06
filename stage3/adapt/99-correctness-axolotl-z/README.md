@@ -8,10 +8,16 @@ as a JavaScript-changing adaptation, admitted only on a count. Lib es2022 is ref
 
 ELEMENTAT-COUNT.json records each completed, committed piece of the single
 398-shard lane union. Each shard runs through the unchanged stage3/lane/shard.py
-and its ordinary identity, baseline and API guards. Two units run concurrently,
-with the normal 30-second unit budget. Each piece has at most 20 units and an
+and its ordinary identity, baseline and API guards. The first two completed pieces use two units concurrently and the normal
+30-second budget. After deadline failures, subsequent measurement pieces use
+four units and the runner-supported 90-second deadline. Tests and all identity,
+baseline and API guards are unchanged. Failed attempts and diagnostic probes
+are excluded from the census and retained separately. Each piece has at most
+20 units and an
 independent wall bound below 25 minutes. Raw call lines retain offset, length,
-class and source-mapped caller. Seeded calls use a separate excluded directory.
+class and the required callers. Recorder v2 captures stacks only outside the
+first class and resolves source maps offline; a 263-call comparison proves the
+same census fields and caller identities as v1. Seeded calls use a separate excluded directory.
 The wrapper is installed only in the scratch counted source, never in adapt.cjs.
 The raw source and built-file manifest is checked after every piece.
 
