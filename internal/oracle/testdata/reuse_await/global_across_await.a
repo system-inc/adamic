@@ -1,29 +1,37 @@
-// A global moved into an assignment's evaluation across an await (Memory's ruling on #qk8rztp
-// S2c-2b, question 1). grow reads g before its await and writes g after it, and swap writes g while
-// grow is suspended. Node prints a1x2: grow's read of a1 comes before the await, and its write comes
-// last. Natively the reuse proof's move takes g's value into the concatenation with no retain only
-// when nothing the assignment evaluates can reach g, and an await runs every other ready task before
-// the expression resumes, so it reaches g: grow holds a1 counted, and swap's write can't free it
-// under the suspended concatenation. Main took an await for reaching nothing, and the resumed
-// concatenation read a1 freed. Two promises made, then each awaited, rather than Promise.all, which
-// no fixture lowers yet.
+// A global read before an await and written after it, while another task writes it during the
+// suspension (Memory's question 1 on #qk8rztp S2c-2b). grow reads g, a1, then awaits later(), and
+// swap writes g while grow is suspended. Node prints a1x2|b3, then a1x2: grow's read comes before
+// the await, and its write comes last. Natively flow.NormalizeAsync snapshots every operand before
+// a suspension into a frame cell that owns what it holds, so grow keeps a1 counted across the await
+// whatever reuse says, and swap's write can't free it. Reuse's await case is therefore not this
+// program's guard: native/reuse.go's movable meets no await in a normalized instruction, and
+// touches meets one only in an async callee, whose frame owns its parameters. The two tasks are
+// awaited in one expression after both are made, as async_review/accepted/concurrent_plain.a's are,
+// each catching what it awaits and returning a constant from the catch, so neither completion can
+// throw, at the string-length limit or otherwise, before both are awaited.
 let g = `a${String(1)}`;
 async function later(): Promise<string> {
-    await null;
+    await Promise.resolve();
     return `x${String(2)}`;
 }
-async function grow(): Promise<void> {
-    g = g + await later();
+async function grow(): Promise<string> {
+    try {
+        g = g + await later();
+        return g;
+    } catch {
+        return 'never';
+    }
 }
-async function swap(): Promise<void> {
-    await null;
-    g = `b${String(3)}`;
+async function swap(): Promise<string> {
+    try {
+        await Promise.resolve();
+        g = `b${String(3)}`;
+        return g;
+    } catch {
+        return 'never';
+    }
 }
-async function run(): Promise<void> {
-    const one = grow();
-    const two = swap();
-    await one;
-    await two;
-    console.log(g);
-}
-await run();
+const one = grow();
+const two = swap();
+console.log(`${await one}|${await two}`);
+console.log(g);
