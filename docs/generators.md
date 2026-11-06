@@ -106,8 +106,23 @@ closure, so the library-member guard lets that one call by; a detached `next`, `
 `return()` and `throw()` stay refused, and `next(x)` stays not yet built, as does a for-of beside
 the nexts over the same parameter, an interleaving nothing has held to Node. The result's `done` and
 `value` are read off the fresh object each call returns: `value` is `T` only where `done` has
-narrowed it, and anywhere else it is `any`, which the any rules stop. A generator's call into such a
-parameter stays not yet built, since its step hands back its value, not a result (S2c-2b).
+narrowed it, and anywhere else it is `any`, which the any rules stop.
+
+A generator's direct call can feed such a parameter too, alone or beside a Map's or a Set's iterator
+at another call site (#qk8rztp S2c-2b). Once the proof holds, each `next()` on the parameter becomes
+`ir.IteratorNext`, which natively is `adamic_iterator_next` (runtime/generator.c): a generator
+steps, and its yield is moved into a fresh result the one builder every iterator step shares makes
+(map_set.c's `adamic_iterator_result`), so its shape, slots and representation bytes never differ by
+origin; a collection's iterator runs its own next; and anything else stops the program, naming the
+site. A throw out of the body builds no result, and the caller tests for it before reading one; the
+body has finished, so a later `next()` answers done, as Node's does. On JavaScript the step is the
+generator's own `next()`, and where a collection's iterator feeds the parameter too, a kind test
+first. A view no generator feeds keeps the call it had, so its emitted code doesn't move. The
+parameter's every read must be a no-argument `next()` over it, bare or past its undefined test, or
+one of its undefined tests, any number of either, and nothing else: not passed on, not a for-of, not
+written or captured. The yield must be a number, a boolean or a reference; a `boolean | undefined`
+or `number | undefined` yield stops already at the declaration, as no one present slot. Generators
+of two functions into one hand-driven parameter stay not yet built.
 
 ## How it runs
 
@@ -188,8 +203,8 @@ static parts still run; the refusal walk still reads both, and refuses what is r
 async generator, rule 2400, among them).
 
 - **A generator anywhere but its consumer:** stored in a variable, passed as an argument other
-  than straight into a one-read `Iterable<T>` parameter, returned, put in an array or a field, read
-  through a view, or the generator function used as a value. A
+  than straight into a one-read `Iterable<T>` parameter or an `IterableIterator<T>` one stepped only
+  by hand, returned, put in an array or a field, or the generator function used as a value. A
   generator object as a value needs `next`, `return` and `throw` as methods, a result object, a
   retain around each step, and the cycle finder seeing its cells as slots.
 - **Destructuring a generator's call, and an `Array.from` mapper.** Destructuring takes only the
