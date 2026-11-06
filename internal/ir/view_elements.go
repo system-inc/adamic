@@ -10,6 +10,13 @@ type ViewElement struct {
 	Where        string
 	ViewType     string
 	Of           Type
+	// Element is the array's own element representation, the read's ArrayIndex's. A read put back
+	// raw takes it, never Of: Of is the read's type, and a maybe element's read is a maybe too.
+	Element Type
+	// Unrelated is a read whose element type lowering's key relates to no element type a view
+	// holds, so it can't hand out a viewed element: lowering's array check puts it back as the raw
+	// ArrayIndex it was, Optional included, and never stops it.
+	Unrelated, Optional bool
 }
 
 func (read ViewElement) Type() Type { return read.Of }
@@ -19,6 +26,8 @@ func (read ViewElement) Type() Type { return read.Of }
 type ViewElementCheck struct {
 	Contract        ViewContractID
 	Where, ViewType string
+	// Unrelated is ViewElement's: the handout reads raw, and its check is dropped.
+	Unrelated bool
 }
 
 // ViewArrayUse retains an unsupported library member's source after its helper
