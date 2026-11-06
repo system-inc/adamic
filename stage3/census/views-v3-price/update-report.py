@@ -4,11 +4,26 @@ import hashlib,json,pathlib
 p=pathlib.Path(__file__).resolve().parent
 pieces=[json.loads(x.read_text()) for x in sorted((p/'pieces').glob('*.json'))] if (p/'pieces').exists() else []
 pieces=[r for group in pieces for r in group.get('records',[group])]
+declaration_plan=json.loads((p/'declaration-plan/INDEX.json').read_text()) if (p/'declaration-plan/INDEX.json').exists() else None
+declaration_state=json.loads((p/'declaration-plan/RESULTS.json').read_text()) if (p/'declaration-plan/RESULTS.json').exists() else None
+if declaration_state:
+ for result in declaration_state['results'].values():
+  if result['status']=='complete' and not result.get('seed'):pieces.extend(result['records'])
+ aggregate={}
+ for record in pieces:
+  name=record['file']
+  if name not in aggregate:aggregate[name]=record
+  else:
+   for side in ['main','head']:
+    for key,value in record['sides'][side].items():
+     if type(value) is int:aggregate[name]['sides'][side][key]=aggregate[name]['sides'][side].get(key,0)+value
+ pieces=list(aggregate.values())
 source=json.loads((p/'source-summary.json').read_text()) if (p/'source-summary.json').exists() else None
 plan=json.loads((p/'plan.json').read_text()) if (p/'plan.json').exists() else {}
 assert len({r['file'] for r in pieces})==len(pieces),'duplicate observed file'
 complete=bool(plan) and {r['file'] for r in pieces}==set(plan['files'])
-lines=['# Views V3 checked element price','',f'**Exact latent closure totals: {"complete" if complete else "incomplete"}.** '+f'{len(pieces)} completed paired file pieces'+(f" of {len(plan['files'])}." if plan else '.'),'',
+if declaration_plan:complete=complete and sum(r['sides']['main']['units'] for r in pieces)==declaration_plan['units']
+lines=['# Views V3 checked element price','',f'**Exact latent closure totals: {"complete" if complete else "incomplete"}.** '+(f"{sum(r['sides']['main']['units'] for r in pieces)} of {declaration_plan['units']} full-mode units paired across {len(pieces)} observed files." if declaration_plan else f'{len(pieces)} completed paired file pieces'+(f" of {len(plan['files'])}." if plan else '.')),'',
  f"**Source upper bound (seven forms): {source['seven_form_upper_bound']:,}; readonly subset: {source['seven_form_readonly_subset']:,}.** Broader named roads: {source['upper_bound']:,} / {source['readonly_subset']:,}. Neither is the admission rule." if source else '**Source upper bound and readonly subset: pending completed main apply.**','',
 
  '| Latent measure'+(' (observed pieces only)' if not complete else '')+' | Main | Head |','|---|---:|---:|']
@@ -27,9 +42,9 @@ lines+=['','Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linu
 '',
 'The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), map-good (1,1), for-of-good (1,1). Main gives (0,0) for all three. Both skip-kind mutants fail the same known-count assertions. A separate shared-pointer probe confirms one check reached three ways counts once, and its skip-check mutant fails. Every other latent field is byte-identical on both trees for the fixtures and mutants. counter-proof.json and counter-proof.tar.gz retain this proof.','',
 '## Per-file latent counts','',
-'| File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |','|---|---:|---:|---:|---:|---:|---:|']
+'| File | Units paired / planned | Main elements | Main checks | Head elements | Head checks | Main attempted / free / panic | Head attempted / free / panic |','|---|---:|---:|---:|---:|---:|---:|---:|']
 for r in pieces:
- a,b=r['sides']['main'],r['sides']['head'];lines.append(f"| {r['file']} | {a['view_elements']} | {a['view_element_checks']} | {b['view_elements']} | {b['view_element_checks']} | {a['finding_free_attempted']} | {b['finding_free_attempted']} |")
+ a,b=r['sides']['main'],r['sides']['head'];planned=len(declaration_plan['inventory'][r['file']]['units']) if declaration_plan else a['units'];lines.append(f"| {r['file']} | {a['units']} / {planned} | {a['view_elements']} | {a['view_element_checks']} | {b['view_elements']} | {b['view_element_checks']} | {a['attempted']} / {a['finding_free_attempted']} / {a.get('panicked_units',0)} | {b['attempted']} / {b['finding_free_attempted']} / {b.get('panicked_units',0)} |")
 lines+=['','## Top ten observed latent files','']
 for side in ['main','head']:
  lines += [side+':','']
@@ -52,6 +67,11 @@ if source:
 lines+=['','## Evidence and status','',
 'Completed raw streams, meter baselines, paired deltas, logs and inner SHA256SUMS are packed in pieces/*.tar.gz. SHA256SUMS in this directory identifies every archive. The earlier raw-checkpoint.tar.gz records the superseded admission investigation and interrupted first apply; it is not current census evidence. Reproduction sources live in this directory; the meter and production compiler remain unchanged.','',
 'Full closure totals remain unavailable until every planned file is complete.' if not complete else 'Every planned file is complete.','']
-if (p/'STOPPED.md').exists():lines += ['## Stop point','',(p/'STOPPED.md').read_text().split('\n',1)[1]]
+if declaration_plan:
+ lines += ['## Declaration partition','',f"The frozen shared plan has {declaration_plan['top_units']} top-level declarations owning {declaration_plan['units']} full-mode units, including nested declarations, in {len(declaration_plan['pieces'])} initial pieces. Go inventories from both compilers match the independent stock TypeScript inventory. Each unit belongs to exactly one contiguous top-level interval. Audits reject lost, duplicated and moved units, including a move that preserves the global inventory.",'',
+ 'The posted four whole-file observations are seed leaves and are never remeasured. New pieces use the scheduling-only selector in full mode; first-error mode is not substituted. Selection-off output is byte-identical to the previously proven counted and original meter fixture streams on both compilers, and disjoint selected fixture units and lowering findings exactly reconstruct the whole fixture. New chunks run main then head and are paired immediately. They do not independently rerun a third and fourth meter binary: the original field-identity proof and the new selector-off proof are retained in declaration-selector-proof.tar.gz. This distinction avoids claiming a per-piece four-run identity test that was not performed.','',
+ 'Each new paired piece has a combined ten-minute limit, with raw output and timers saved even on interruption. An interrupted interval is never rerun unchanged: its immutable refinement partitions its top-level atoms and all owned units between two contiguous children. A single atomic declaration that times out is reported blocked rather than silently omitted. The shared root INDEX stays frozen and active refinements must preserve its complete inventory. Raw piece payloads are packed into rolling declaration-data archives to keep the file count bounded.','']
+ if declaration_state and declaration_state.get('stop'):lines += ['Current stop: '+str(declaration_state['stop']),'']
+elif (p/'STOPPED.md').exists():lines += ['## Stop point','',(p/'STOPPED.md').read_text().split('\n',1)[1]]
 (p/'REPORT.md').write_text('\n'.join(lines))
 (p/'SHA256SUMS').write_text(''.join(f'{hashlib.sha256(x.read_bytes()).hexdigest()}  {x.relative_to(p)}\n' for x in sorted(p.rglob('*.tar.gz'))))

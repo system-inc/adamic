@@ -1,0 +1,42 @@
+// Scheduling only. Every selected top-level declaration retains its full meter units.
+package lower
+import("encoding/json";"os";"strings";"github.com/system-inc/adamic/internal/load")
+type pricePlanFile struct { File string `json:"file"`; TopUnits []string `json:"top_units"` }
+type priceSelection struct { ID string `json:"id"`; Files []pricePlanFile `json:"files"` }
+var priceSelectionLoaded bool
+var priceSelectedTops map[string]bool
+func priceTopSelected(top string) bool {
+ path:=os.Getenv("PRICE_DECLARATION_PIECE");if path==""{return true}
+ if !priceSelectionLoaded{
+  data,err:=os.ReadFile(path);if err!=nil{panic(err)}
+  var selection priceSelection;if err:=json.Unmarshal(data,&selection);err!=nil{panic(err)}
+  root:=os.Getenv("PRICE_DECLARATION_ROOT");if root==""||selection.ID==""||len(selection.Files)==0{panic("invalid declaration selection")}
+  priceSelectedTops=map[string]bool{}
+  for _,file:=range selection.Files{for _,unit:=range file.TopUnits{
+   key:=strings.TrimSuffix(root,"/")+"/"+unit
+   if priceSelectedTops[key]{panic("duplicate declaration selection")};priceSelectedTops[key]=true
+  }}
+  priceSelectionLoaded=true
+ }
+ return priceSelectedTops[top]
+}
+type PriceInventoryUnit struct {
+ Where string `json:"where"`;Top string `json:"top"`;Parent string `json:"parent"`;Depth int `json:"depth"`
+ Start int `json:"start"`;End int `json:"end"`;Kind string `json:"kind"`;Name string `json:"name"`
+}
+type PriceInventoryFile struct {File string `json:"file"`;Tops []PriceInventoryUnit `json:"tops"`;Units []PriceInventoryUnit `json:"units"`}
+func PriceInventory(program *load.Program) []PriceInventoryFile {
+ result:=[]PriceInventoryFile{}
+ for _,file:=range program.Files(){
+  row:=PriceInventoryFile{File:program.FileName(file),Tops:[]PriceInventoryUnit{},Units:[]PriceInventoryUnit{}}
+  for _,node:=range file.Statements.Nodes{
+   row.Tops=append(row.Tops,PriceInventoryUnit{Where:program.Where(node),Top:program.Where(node),Start:node.Pos(),End:node.End(),Kind:node.Kind.String()})
+  }
+  for _,candidate:=range latentCandidates(program,file){
+   node:=candidate.node;unit:=PriceInventoryUnit{Where:program.Where(node),Top:candidate.top,Parent:candidate.parent,Depth:candidate.depth,Start:node.Pos(),End:node.End(),Kind:node.Kind.String()}
+   if node.Name()!=nil{unit.Name=node.Name().Text()};row.Units=append(row.Units,unit)
+  }
+  result=append(result,row)
+ }
+ return result
+}

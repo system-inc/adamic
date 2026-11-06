@@ -1,6 +1,6 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 4 completed paired file pieces of 81.
+**Exact latent closure totals: incomplete.** 37 of 10721 full-mode units paired across 4 observed files.
 
 **Source upper bound (seven forms): 2,518; readonly subset: 1,216.** Broader named roads: 2,861 / 1,302. Neither is the admission rule.
 
@@ -33,12 +33,12 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 
 ## Per-file latent counts
 
-| File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |
-|---|---:|---:|---:|---:|---:|---:|
-| src/compiler/_namespaces/ts.moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 1 | 1 |
-| src/compiler/semver.ts | 0 | 0 | 12 | 3 | 21 | 21 |
-| src/tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | 1 |
-| src/tsc/tsc.ts | 0 | 0 | 0 | 0 | 5 | 5 |
+| File | Units paired / planned | Main elements | Main checks | Head elements | Head checks | Main attempted / free / panic | Head attempted / free / panic |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| src/compiler/_namespaces/ts.moduleSpecifiers.ts | 1 / 1 | 0 | 0 | 0 | 0 | 1 / 1 / 0 | 1 / 1 / 0 |
+| src/compiler/semver.ts | 29 / 29 | 0 | 0 | 12 | 3 | 29 / 21 / 0 | 29 / 21 / 0 |
+| src/tsc/_namespaces/ts.ts | 1 / 1 | 0 | 0 | 0 | 0 | 1 / 1 / 0 | 1 / 1 / 0 |
+| src/tsc/tsc.ts | 6 / 6 | 0 | 0 | 0 | 0 | 6 / 5 / 0 | 6 / 5 / 0 |
 
 ## Top ten observed latent files
 
@@ -208,34 +208,10 @@ Completed raw streams, meter baselines, paired deltas, logs and inner SHA256SUMS
 
 Full closure totals remain unavailable until every planned file is complete.
 
-## Stop point
+## Declaration partition
 
+The frozen shared plan has 4564 top-level declarations owning 10721 full-mode units, including nested declarations, in 153 initial pieces. Go inventories from both compilers match the independent stock TypeScript inventory. Each unit belongs to exactly one contiguous top-level interval. Audits reject lost, duplicated and moved units, including a move that preserves the global inventory.
 
-The unmodified main full-latent meter baseline for the group containing
-binder.ts, _namespaces/ts.ts and _namespaces/ts.performance.ts exceeded its
-23-minute limit. subprocess.TimeoutExpired reports 1379.998793027 seconds.
-Its stream contains only the complete entry header, with no completed file
-records. The measurement counter was not running in that child. This group
-contributes no counts or units to the report.
+The posted four whole-file observations are seed leaves and are never remeasured. New pieces use the scheduling-only selector in full mode; first-error mode is not substituted. Selection-off output is byte-identical to the previously proven counted and original meter fixture streams on both compilers, and disjoint selected fixture units and lowering findings exactly reconstruct the whole fixture. New chunks run main then head and are paired immediately. They do not independently rerun a third and fourth meter binary: the original field-identity proof and the new selector-off proof are retained in declaration-selector-proof.tar.gz. This distinction avoids claiming a per-piece four-run identity test that was not performed.
 
-budget-stop.tar.gz preserves the exact runner error, partial stream, process
-log, selected files, timeout metadata and the runner source loaded when this
-legacy group started. The Python traceback displayed a line from the subsequently
-updated on-disk runner; loaded-runner.py preserves the actual source version.
-
-The smaller semver piece completed independently. Four of 81 files are paired;
-closure totals and a full top-ten IR ranking remain unavailable. All completed
-raw binary runs were committed and plainly pushed; their paired archives retain
-the exact raw streams and timings. Both entry programs are checker-clean, with
-zero diagnostics. The two own apply products have identical bytes in all 746
-src files. The source upper bound is complete.
-
-The original whole-group timer was superseded by separately checkpointing each
-binary run within 23 minutes. Its outer controller was stopped, while its tracked
-baseline child retained the original deadline. That child timed out and its
-runner exited; no measurement process is left running.
-
-To resume, first prepare finer file or unit scheduling for the timed-out group
-and prove its scheduling-only behavior and meter identity. Check whether an
-individual giant enclosing unit also exceeds the budget. Do not treat the
-unfinished baseline or the four completed files as an 81-file total.
+Each new paired piece has a combined ten-minute limit, with raw output and timers saved even on interruption. An interrupted interval is never rerun unchanged: its immutable refinement partitions its top-level atoms and all owned units between two contiguous children. A single atomic declaration that times out is reported blocked rather than silently omitted. The shared root INDEX stays frozen and active refinements must preserve its complete inventory. Raw piece payloads are packed into rolling declaration-data archives to keep the file count bounded.
