@@ -34,7 +34,8 @@ import (
 // local. The placeholder rather than the else branch, because the test still runs as written, so the
 // placeholder is reached only if the test itself was wrong, and then it stops loudly rather than taking
 // a branch on a guess. Nothing in the program may define an Absent name: a write to it, and a
-// `globalThis.<name>` or `globalThis[name]` write naming any row, is refused.
+// write naming any row through the global object, `globalThis.<name>` or `globalThis[name]` by any name
+// for it, is refused.
 //
 // Provided rows (process, performance) are pending today, so no read routes through a host model yet;
 // their model is named in the row for when their columns clear.
@@ -283,10 +284,13 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 // hostBindingWriteFix is what a refused write to a host binding is told.
 const hostBindingWriteFix = "a host binding is the host's to define, and nothing in the program may; keep the value in a variable of your own"
 
-// hostBindingGlobalThisRefusal refuses, at the write, an assignment, update or delete through globalThis
-// whose key names a host binding or may: globalThis.onProfilerEvent = f would define an Absent name
-// behind its folded typeof. It runs before every other rule, so the stop is this ruling's, not a rule's
-// that happens to meet globalThis or delete first.
+// hostBindingGlobalThisRefusal refuses, at the write, an assignment, update or delete through the global
+// object whose key names a host binding or may: globalThis.onProfilerEvent = f would define an Absent
+// name behind its folded typeof. The receiver is judged by its type, typeof globalThis, through whatever
+// name reads it: globalThis, an alias of it, Node's global, globalThis.globalThis. It runs before every
+// other rule, so the stop is this ruling's, not a rule's that happens to meet the receiver or delete
+// first. A receiver widened to another type (object, a record view) is no longer typeof globalThis; the
+// stops that judge those today are pinned in TestHostBindingFoldRestsOnTheseStops.
 func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 	var target *ast.Node
 	switch node.Kind {
@@ -321,10 +325,7 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		return nil
 	}
 	receiver = ast.SkipParentheses(receiver)
-	if !ast.IsIdentifier(receiver) || receiver.Text() != "globalThis" {
-		return nil
-	}
-	if symbol := l.checker.GetSymbolAtLocation(receiver); symbol != nil && len(symbol.Declarations) > 0 && !load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+	if !l.globalObject(receiver) {
 		return nil
 	}
 	if known && hostBindingNamed(name) == nil {
@@ -335,6 +336,13 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		what = "a write through globalThis whose key may name a host binding"
 	}
 	return &Refused{Where: l.program.Where(target), What: what, Fix: hostBindingWriteFix}
+}
+
+// globalObject reports whether an expression's type is typeof globalThis: the checker's own globalThis
+// symbol is that type's symbol, whatever name the expression reads it by.
+func (l *lowering) globalObject(node *ast.Node) bool {
+	global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
+	return global != nil && l.checker.GetTypeAtLocation(node).Symbol() == global
 }
 
 func init() {
