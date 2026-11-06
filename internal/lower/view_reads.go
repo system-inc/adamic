@@ -48,7 +48,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 			}
 		}
 		return viewReadsNoField
-	case ir.JSONEncode:
+	case ir.BoundMethod, ir.JSONEncode:
 		return viewReadNotYet
 	case ir.CheckedCast, ir.DynamicProperty:
 		return viewReadChecks
