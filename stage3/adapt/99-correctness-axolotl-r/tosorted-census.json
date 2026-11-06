@@ -1360,5 +1360,440 @@
       "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
       "seconds": 17.024781462
     }
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/legacyDecorators.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 34.442356384
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/legacyDecorators.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 26.516701342
+    }
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 26.547901849
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 21.241938591
+    }
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 29.660070699
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 24.013221971
+    }
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/module/module.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 20.143183075
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/module/module.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 19.154058184
+    }
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/module/system.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 30.2210489
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/module/system.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 28.950469179
+    }
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/namedEvaluation.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 20.885455723
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/namedEvaluation.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 39.332479536
+    }
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/taggedTemplate.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 19.081604336
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/taggedTemplate.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 20.875290012
+    }
+  },
+  {
+    "root": "transformers/ts.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 20.030788128
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 21.326950333
+    }
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/typeSerializer.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 19.973937886999998
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/typeSerializer.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 25.145100741
+    }
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/transformers/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 17.127403068
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/transformers/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 19.343870651
+    }
+  },
+  {
+    "root": "tsbuild.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/tsbuild.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 18.990556049
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/tsbuild.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 21.176098093
+    }
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/tsbuildPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 18.698811787
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/tsbuildPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 20.043959501
+    }
+  },
+  {
+    "root": "types.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/types.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 4.866640512
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/types.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 5.477791885
+    }
+  },
+  {
+    "root": "utilities.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 21.350495874
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/utilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 19.57598227
+    }
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/utilitiesPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 20.348487232
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/utilitiesPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 19.61453016
+    }
+  },
+  {
+    "root": "visitorPublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/visitorPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 18.061483455
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/visitorPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 21.131595303
+    }
+  },
+  {
+    "root": "watch.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/watch.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 23.63950777
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/watch.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 38.87051139
+    }
+  },
+  {
+    "root": "watchPublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/watchPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 20.267704856
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/watchPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 20.621976871
+    }
+  },
+  {
+    "root": "watchUtilities.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/tosorted/before/src/compiler/watchUtilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/before/src/compiler/core.ts:1049:34",
+      "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+      "fix": "take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "seconds": 35.566713415
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/tosorted/step2/after/src/compiler/watchUtilities.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/tosorted/step2/after/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 43.271561148
+    }
   }
 ]
