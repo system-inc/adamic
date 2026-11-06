@@ -166,6 +166,11 @@ func TestUnbrandedPresenceIsRefused(t *testing.T) {
 		{"an object spread", sortedValue + "const copy = { ...sorted };\nconsole.log(String(copy.length));\n", sortedMember + " (an object spread)"},
 		{"an element write, a literal key", sortedValue + "sorted[' __sortedArrayBrand'] = undefined;\nconsole.log(String(sorted.length));\n", sortedMember + " (a write)"},
 		{"an element write, a key not a literal", sortedValue + "const key: ' __sortedArrayBrand' = ' __sortedArrayBrand';\nsorted[key] = undefined;\nconsole.log(String(sorted.length));\n", sortedMember + " (a write)"},
+		{"propertyIsEnumerable, Language's l04", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconsole.log(String(s.propertyIsEnumerable(\" __sortedArrayBrand\")));\n", "an observation of SortedArray<number>'s phantom member  __sortedArrayBrand (propertyIsEnumerable)"},
+		{"__lookupGetter__, an Object.prototype member no list names", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconsole.log(String(typeof s.__lookupGetter__(\" __sortedArrayBrand\")));\n", "an observation of SortedArray<number>'s phantom member  __sortedArrayBrand (__lookupGetter__)"},
+		{"hasOwnProperty, a key the brand doesn't add", sortedValue + "console.log(String(sorted.hasOwnProperty('length')));\n", sortedMember + " (hasOwnProperty)"},
+		{"in through a type parameter's union constraint, Language's l13", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nfunction pick<T extends SortedArray<number> | { n: number }>(x: T): number { if (\" __sortedArrayBrand\" in x) return x.length; return x.n; }\nconsole.log(String(pick(s)));\n", "an observation of SortedArray<number>'s phantom member  __sortedArrayBrand (an `in` test)"},
+		{"in through a union with a constrained type parameter, Language's l14", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nfunction pick<T extends SortedArray<number>>(x: T | { n: number }): number { if (\" __sortedArrayBrand\" in x) return x.length; return x.n; }\nconsole.log(String(pick(s)));\n", "an observation of SortedArray<number>'s phantom member  __sortedArrayBrand (an `in` test)"},
 		{"a property write", markedValue + "marked.__marked = undefined;\nconsole.log(String(marked.length));\n", "an observation of Marked<number>'s phantom member __marked (a write)"},
 	} {
 		_, err := lowerSourceAs(t, row.source, ".ts")
@@ -255,5 +260,33 @@ func TestUnbrandedCastSeesTheBrand(t *testing.T) {
 	}
 	if seen != len(want) {
 		t.Fatalf("judged %d parameters, want %d", seen, len(want))
+	}
+}
+
+// Roads rulings.md:31 names that rule 450 doesn't refuse, because each already stops at a later rule, held
+// here so the head that lifts one of those stops meets this test first (Language's attack on #gb0fqaa). Each
+// row must not lower; its present stop is pinned by its words.
+func TestUnbrandedPresenceHeldElsewhere(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source, want string }{
+		{"for...in, b08", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nlet k = \"\"; for (const each in s) k += each; console.log(k);\n", ""},
+		{"Reflect.has, b13", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconsole.log(String(Reflect.has(s, \" __sortedArrayBrand\")));\n", ""},
+		{"Reflect.ownKeys, l06", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconsole.log(String(Reflect.ownKeys(s).length));\n", ""},
+		{"Reflect.get, l05", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconsole.log(String(Reflect.get(s, \" __sortedArrayBrand\")));\n", ""},
+		{"destructuring the brand member, b14", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconst { \" __sortedArrayBrand\": mark } = s; console.log(String(mark));\n", ""},
+		{"destructuring the brand member into a write, l08", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nlet mark: undefined; ({ \" __sortedArrayBrand\": mark } = s); console.log(String(mark));\n", ""},
+		{"Object.keys through object, l10", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nconst o: object = s;\nconsole.log(Object.keys(o).join(\",\"));\n", ""},
+		{"Object.keys through a generic, l11", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\nfunction keysOf<T extends object>(x: T): string[] { return Object.keys(x); }\nconsole.log(keysOf(s).join(\",\"));\n", ""},
+		{"delete, l07", "interface SortedArray<T> extends Array<T> { \" __sortedArrayBrand\": undefined; }\ninterface SortedReadonlyArray<T> extends ReadonlyArray<T> { readonly \" __sortedArrayBrand\": undefined; }\nfunction mint(xs: number[]): SortedArray<number> { return xs as unknown as SortedArray<number>; }\nconst s = mint([3, 1]);\ndelete (s as { \" __sortedArrayBrand\"?: undefined })[\" __sortedArrayBrand\"]; console.log(\"deleted\");\n", ""},
+	} {
+		_, err := lowerSourceAs(t, row.source, ".ts")
+		if err == nil {
+			t.Errorf("%s: lowers, but it observes the brand member and must stop", row.name)
+			continue
+		}
+		t.Logf("%s: %v", row.name, err)
+		if !strings.Contains(err.Error(), row.want) {
+			t.Errorf("%s: got %v, want a stop containing %q", row.name, err, row.want)
+		}
 	}
 }
