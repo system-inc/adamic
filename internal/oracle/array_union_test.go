@@ -132,3 +132,36 @@ func TestArrayUnionLayoutRefused(t *testing.T) {
 		})
 	}
 }
+
+// Source Node observes the replacement array. Adamic's established narrowing
+// contract stops before reading it as the class (TestNarrowedUnionMemberCheck).
+func TestArrayUnionClassNarrowingInvalidated(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/array_union.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "array_union.a")
+	source = append(source, []byte("\narrayUnionClassNarrowing();\n")...)
+	if err := os.WriteFile(path, source, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	const observation = "er-class-read-is-array:true\n"
+	node := onNode(t, path)
+	if node.exitCode != 0 || len(node.stderr) != 0 || !strings.HasSuffix(string(node.stdout), observation) {
+		t.Fatalf("source Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := run{stdout: []byte(strings.TrimSuffix(string(node.stdout), observation)), exitCode: 70,
+		stderr: []byte("adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n")}
+	machine, _ := natively(t, program)
+	for backend, got := range map[string]run{"native": machine, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Errorf("%s: %s: exit %d stdout %q stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+		}
+	}
+	t.Logf("source Node: %s; native and JavaScript must stop before that class read", strings.TrimSpace(observation))
+}

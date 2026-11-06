@@ -52,3 +52,15 @@ flattenExtensions(extensionMutable, "em");
 flattenExtensions(extensionReadonly, "er");
 flattenStrings(stringMutable, "sm");
 flattenStrings(stringReadonly, "sr");
+
+// The checker keeps the class narrowing across replaceArrayUnionClass(), which
+// installs an array read from the readonly arm. The separate probe calls this.
+let arrayUnionNarrowedValue: Extension | readonly Extension[] | undefined;
+function replaceArrayUnionClass(): void { arrayUnionNarrowedValue = extensionReadonly[1]; }
+function arrayUnionClassNarrowing(): void {
+    arrayUnionNarrowedValue = new Extension("before");
+    if (arrayUnionNarrowedValue instanceof Extension) {
+        replaceArrayUnionClass();
+        console.log("er-class-read-is-array:" + Array.isArray(arrayUnionNarrowedValue));
+    }
+}
