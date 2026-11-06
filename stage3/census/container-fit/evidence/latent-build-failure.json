@@ -1,0 +1,7 @@
+{
+  "stage": "overlay state generation",
+  "compiler": "f913c480175d88b31adbefa5825d1283ac2da2f2",
+  "reason": "lowering.containerFits: mutable named container containerFitPair requires an explicit copier",
+  "latent_measurements_started": false,
+  "resolution": "Stopped latent work at fail-closed measurement compatibility guard; no copier whitelist change or snapshot bypass."
+}
