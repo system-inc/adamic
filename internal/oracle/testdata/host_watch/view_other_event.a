@@ -1,0 +1,8 @@
+import * as fs from 'node:fs';
+// tsc's view of its watcher (sys.ts:895) admits any event name, where only 'error' is bound: it
+// stops by name at run time. Node would listen.
+interface FsWatchWorkerWatcher { close(): void; on(eventName: string, listener: () => void): void; }
+const watcher: FsWatchWorkerWatcher = fs.watch('.', {persistent: true}, (eventType, filename) => { console.log(`${eventType} ${filename ?? 'null'}`); });
+watcher.on("change", () => { console.log('wrong event'); });
+console.log('wrong: listened');
+watcher.close();

@@ -1,0 +1,36 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// sys.ts's own shape (tsc 6.0.3, :891-897, :1262-1283, :1772-1784): the options a run-time conditional
+// of two literals, the listener a parameter and an arrow, the watcher seen as FsWatchWorkerWatcher
+// through a union of the two workers, its on("error") and its close through FileWatcher.
+type FsWatchCallback = (eventName: "rename" | "change", relativeFileName: string | undefined | null, modifiedTime?: Date) => void;
+interface FileWatcher { close(): void; }
+interface FsWatchWorkerWatcher extends FileWatcher { on(eventName: string, listener: () => void): void; }
+const fsSupportsRecursiveFsWatch = process.platform === "win32" || process.platform === "darwin";
+function fsWatchWorker(fileOrDirectory: string, recursive: boolean, callback: FsWatchCallback) {
+ return fs.watch(fileOrDirectory, fsSupportsRecursiveFsWatch ? { persistent: true, recursive: !!recursive } : { persistent: true }, callback);
+}
+function fsWatchWorkerHandlingTimestamp(fileOrDirectory: string, recursive: boolean, callback: FsWatchCallback): FsWatchWorkerWatcher {
+ return fsWatchWorker(fileOrDirectory, recursive, (eventName, relativeFileName, currentModifiedTime) => {
+  callback(eventName, relativeFileName, currentModifiedTime);
+ });
+}
+function watchPresent(path: string, timestamps: boolean, callback: FsWatchCallback): FileWatcher {
+ const presentWatcher = (timestamps ? fsWatchWorkerHandlingTimestamp : fsWatchWorker)(path, false, callback);
+ presentWatcher.on("error", () => { callback("rename", ""); });
+ return presentWatcher;
+}
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-'));
+let watcher: FileWatcher | undefined;
+function changed(eventName: "rename" | "change", relativeFileName: string | undefined | null): void {
+ console.log(`${eventName} ${relativeFileName ?? 'none'}`);
+ if (relativeFileName === 'end' && watcher !== undefined) {
+  watcher.close();
+  watcher = undefined;
+  fs.rmSync(directory, {recursive: true, force: true});
+ }
+}
+watcher = watchPresent(directory, fs.existsSync('adamic-fswatch-timestamps'), changed);
+fs.writeFileSync(join(directory, 'a.txt'), 'data');
+fs.writeFileSync(join(directory, 'end'), '');

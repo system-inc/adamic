@@ -28,6 +28,9 @@ func init() {
 var wasiHostPlatformFixtures = map[string]bool{
 	"internal/oracle/testdata/process_platform/compare.a": true,
 	"internal/oracle/testdata/process_platform/print.a":   true,
+
+	// tsc's own options conditional reads it (sys.ts:1500).
+	"internal/oracle/testdata/host_watch/tsc_shape.a": true,
 }
 
 const wasiHostPlatformPanic = "adamic: panic: process.platform: a wasm32-wasi module can't see its host's platform\n"

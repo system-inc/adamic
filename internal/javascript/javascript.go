@@ -307,6 +307,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicWatchFileListener(") {
 		code = nodeWatchFileRuntime + code
 	}
+	if strings.Contains(code, "adamicFSWatch(") {
+		code = nodeWatchRuntime + code
+	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
 	}
