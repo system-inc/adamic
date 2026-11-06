@@ -1,0 +1,13 @@
+61:func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+109:	if to.Flags()&checker.TypeFlagsTypeParameter != 0 {
+118:	if from.Flags()&checker.TypeFlagsTypeParameter != 0 {
+204:func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
+252:func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+259:func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+449:func (l *lowering) refuseWidening(node *ast.Node) error {
+587:	return l.wideningRefusal(node, own, contextual, found)
+675:	return l.wideningRefusal(node, own, contextual, found)
+710:func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+736:	if found.target.Flags()&checker.TypeFlagsTypeParameter != 0 {
+737:		what = "a value of type " + l.checker.TypeToString(found.source) + " seen as " + l.checker.TypeToString(found.target) + ", a type parameter whose constraint " + l.checker.TypeToString(l.checker.GetBaseConstraintOfType(found.target)) + " can be written, so it can write what " + l.checker.TypeToString(found.source) + " can't hold"
+1135:		return l.wideningRefusal(node, own, contextual, found)
