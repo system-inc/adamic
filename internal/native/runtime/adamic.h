@@ -587,6 +587,12 @@ extern const adamic_methods adamic_host_methods;
 // adamic_host_stop stops, in the runtime value form naming the key, when the value is a host object
 // (union.c): every reader of a value's names by a key calls it before reading one.
 void adamic_host_stop(const adamic_heap *value, const adamic_string *key);
+// adamic_keyed_stats_shape_publish tells a run-time key read which shape is an fs.Stats' (#zhrjf2t):
+// node_fs_file.c publishes its stat shape each time it makes one, so union.c knows a Stats by its
+// shape's address without referencing node_fs_file.c, which runtimes that leave the fs out don't link
+// (the RegExp witness's among them). Before any Stats is made nothing is published and nothing
+// matches, which is right, since no Stats can reach a read before one exists.
+void adamic_keyed_stats_shape_publish(const adamic_shape *shape);
 // adamic_host_stop_keys stops Object.keys of a host object, with a message that names no key.
 void adamic_host_stop_keys(const adamic_heap *value);
 // adamic_error_to_string is String(error) for an Error, Error.prototype.toString over its name and
