@@ -215,8 +215,8 @@ func (l *lowering) reaches(proven *checker.Type, found func(*checker.Type) bool,
 	if found(proven) {
 		return true
 	}
-	if l.checker.IsArrayType(proven) {
-		return l.reaches(l.checker.GetElementTypeOfArrayType(proven), found, seen)
+	if l.isArrayType(proven) {
+		return l.reaches(l.elementTypeOfArray(proven), found, seen)
 	}
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
 		if l.reaches(l.checker.GetTypeOfSymbol(field), found, seen) {
@@ -244,7 +244,7 @@ func (l *lowering) nullableReferenceArray(proven *checker.Type) bool {
 	if checker.IsTupleType(proven) {
 		return slices.ContainsFunc(l.checker.GetTypeArguments(proven), l.nullableReference)
 	}
-	return l.checker.IsArrayType(proven) && l.nullableReference(l.checker.GetElementTypeOfArrayType(proven))
+	return l.isArrayType(proven) && l.nullableReference(l.elementTypeOfArray(proven))
 }
 
 // nullableReference says whether a value of this type may be null and isn't held as a Union, whose

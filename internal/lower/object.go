@@ -412,10 +412,10 @@ func (l *lowering) readElementType(node *ast.Node) (ir.Type, error) {
 	}
 	elements := make([]*checker.Type, 0, len(array.Types()))
 	for _, arm := range array.Types() {
-		if !l.checker.IsArrayType(arm) {
+		if !l.isArrayType(arm) {
 			return 0, l.notYet(node, "an array union read with non-array arm "+l.checker.TypeToString(arm))
 		}
-		elements = append(elements, l.checker.GetElementTypeOfArrayType(arm))
+		elements = append(elements, l.elementTypeOfArray(arm))
 	}
 	result, known := l.kept(l.checker.GetUnionType(elements))
 	if !known || !boxedSlot(result) {
