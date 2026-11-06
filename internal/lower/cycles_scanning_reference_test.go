@@ -1665,8 +1665,20 @@ func scanLowerChecked(program *load.Program, typeChecker *checker.Checker, entry
 	return scanLowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, nil, ownershipQuery...)
 }
 
+// As lowerCheckedWithCycleTypes does: the element key, and the second lowering with every read
+// checked when the key misses. Without it, the reference builds a contract at every array read the
+// real pipeline leaves raw, and TestCycleFinderEquality goes red on their ViewContracts (#6wfvfhm).
 func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
-	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery}
+	key := &viewElementKey{}
+	built, err := scanLowerWithElementKey(key, program, typeChecker, entry, plan, discovery, cycleTypes, ownershipQuery...)
+	if len(key.misses) == 0 {
+		return built, err
+	}
+	return scanLowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, cycleTypes, ownershipQuery...)
+}
+
+func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -1678,6 +1690,8 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does, before any view is made or any element read lowers.
+	lowering.collectViewedElements(modules)
 	lowering.noteInheritance(modules)
 	if err := lowering.enumInitialization(modules); err != nil {
 		return nil, err
@@ -1717,7 +1731,7 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 		return nil, err
 	}
 	lowering.finishToPrimitive()
-	// As lowerCheckedWithCycleTypes does, before exceptions: a view a generator feeds is rewritten
+	// As lowerWithElementKey does, before exceptions: a view a generator feeds is rewritten
 	// into its dispatch there, interning the dispatch's panic message, so both modes' IR and string
 	// tables agree (#qk8rztp S2c-1).
 	if err := lowering.checkIterableViews(); err != nil {
@@ -1732,7 +1746,7 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
-	// As lowerCheckedWithCycleTypes does, so a generator program stops or lowers alike in both.
+	// As lowerWithElementKey does, so a generator program stops or lowers alike in both.
 	if err := checkGeneratorRoads(lowering.result); err != nil {
 		return nil, err
 	}
@@ -1754,7 +1768,7 @@ func scanLowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.
 	if err := lowering.scanFindCycles(modules); err != nil {
 		return nil, err
 	}
-	// As lowerCheckedWithCycleTypes does: without it, TestCycleFinderEquality goes red on the
+	// As lowerWithElementKey does: without it, TestCycleFinderEquality goes red on the
 	// reland_refused view_spread fixtures, which the reference lowers where lowering stops.
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
