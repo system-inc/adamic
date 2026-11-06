@@ -15,7 +15,7 @@
   },
   "stop": null,
   "checks": {
-    "1": "pending rerun for ownership revision",
+    "1": "pass: all 80 baseline outcomes identical; 99x after replay zero writes",
     "2": "pending rerun for ownership revision",
     "3": "pending rerun for ownership revision",
     "4": "pending rerun for ownership revision",
@@ -121,32 +121,10 @@
     }
   ],
   "paired_replay": {
-    "adapters_compared": 45,
-    "equal_prefix": 44,
-    "records_identical": false,
-    "diff_bytes": 2554,
-    "complete": false,
-    "condition": "outcome equality only",
-    "failures": [
-      {
-        "adapter": "95-checker-axolotl-h",
-        "reason": "replay outcome differs",
-        "before": {
-          "adapter": "95-checker-axolotl-h",
-          "exit": 1,
-          "files_written": [],
-          "edits": [],
-          "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: writer owner shape\n+ actual - expected\n\n+ '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854'\n- '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152'\n\n    at adapt (/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs:35:11)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs:86:172)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854',\n  expected: '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
-        },
-        "after": {
-          "adapter": "95-checker-axolotl-h",
-          "exit": 1,
-          "files_written": [],
-          "edits": [],
-          "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: writer owner shape\n+ actual - expected\n\n+ '48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3'\n- '9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1'\n\n    at adapt (/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs:35:11)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs:86:172)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3',\n  expected: '9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
-        }
-      }
-    ]
+    "complete": true,
+    "baseline_adapters_compared": 80,
+    "differences": [],
+    "diff_bytes": 0
   },
   "ownership_handoffs": [
     {

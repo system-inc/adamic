@@ -1,3 +1,15 @@
+# Ownership revision check 1 passes
+
+All 80 baseline adapter replay records match, including exact refusals.
+99x's separately recorded after replay exits 0 with no writes or edits.
+The complete 81-row records (80 baseline adapters plus the 99x entry), empty
+diff, all logs and I/O journals, and whole-tree initial/final manifests are
+under owned/paired-replay/. coverage.json reports zero unjournaled changes.
+The final decision ran only after all adapters, with no early stopping.
+
+The current scope is 28 rewritten and 18 left under prior owner pins. New
+checks 2 through 6 are now running. Earlier 46-site results remain historical.
+
 # Current ownership revision: 28 rewrites, 18 earlier-owner handoffs
 
 The user requires 99x to preserve any site inside an earlier-pinned owner.
