@@ -35,6 +35,9 @@ console.log(String(absent === undefined));
 const dictionary: Record<string, ((a: string) => string) | undefined> = {};
 const dictionaryBound = dictionary.m?.bind(dictionary, fixed());
 console.log(String(dictionaryBound === undefined));
+const undefinedRecord: Record<string, (() => number) | undefined> = { m: undefined };
+const undefinedRecordBound = undefinedRecord.m?.bind(undefinedRecord);
+console.log(typeof undefinedRecordBound);
 interface Pending { m: ((a: string) => string) | undefined }
 const record: Pending = { m: undefined };
 const never = record.m?.bind(record, fixed());
