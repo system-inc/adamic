@@ -27,7 +27,7 @@ census moves from core.ts:966:72 to core.ts:1049:34.
 | Both public declarations | Byte-identical |
 | Complete source comparison | Only the two pinned core.ts type arguments differ |
 | Original-spelling mutant | Exact core.ts:966:72 refusal reproduced |
-| Independent-root census, 79 roots | In progress; checkpoint groups retained |
+| Independent-root census, 79 roots | Complete; groups of 20, 20, 20, 19 each committed and pushed |
 
 comparison.json records complete-output hashes and sizes as evidence, never
 adaptation gates. Cast count stays 26 and any count stays 14. The mutant's
@@ -53,3 +53,9 @@ Full logs are retained compressed. The before and after full applies each froze
 their adaptation list; adding later evidence changes product keys, not the
 transformation. The oracle is skipped under the type-only exception, supported
 by the complete JavaScript byte comparisons.
+
+An initial compiler build attempted before the nested checkout was ready failed
+on its missing go.mod. The unchanged build passed after that checkout completed.
+The early failure is retained in build-main-before-setup.log.gz. Group 1 logging
+was archived early; its complete 40-line log was recovered from the open file
+descriptor before it closed. All group logs and raw row pairs were validated.
