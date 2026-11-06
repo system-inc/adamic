@@ -38,7 +38,7 @@ The lower rows are internal/lower/iterable_hand_next_test.go's; run by s2c2a-pro
 Run by s2c2b's h3-proof.sh. The lower rows are internal/lower/iterable_hand_next_test.go's, and the
 oracle's are this directory's hand_next_generator.a, hand_next_generator_throw.a, hand_next_mixed.a
 and hand_next_maybe_string.a. The closed defaults' rows are in internal/ir, internal/worker and
-internal/native.
+internal/native, and the await's witness is internal/oracle/testdata/reuse_await.
 
 | Mutant | Edit | Red |
 |---|---|---|
@@ -54,5 +54,6 @@ internal/native.
 | Purity's default opened | worker/purity.go: the default arm's test made `false && isExpression && ...` | TestCheckPureRefusesAnOperationNoReviewNames |
 | Purity's step not followed | the GeneratorNext arm's `if err := inspect(node.Function); err != nil {` made `if err := error(nil); err != nil {` | TestCheckPureInspectsAGeneratorStepsBody |
 | Reuse's default opened | native/reuse.go, `reachesGlobal`: `return !ir.Inert(expression)` made `return false && ...` | TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal |
+| Reuse's await reaching nothing, main's behavior (Memory's question 1) | native/reuse.go, `reachesGlobal`: `ir.Await` added to the case of an encoding and the host operations, which reach nothing | TestReuseAwaitAgreesWithNode, reuse_await/global_across_await.a, sanitized: swap's write frees a1 while grow's suspended concatenation holds it unretained, and ASan reports heap-use-after-free when it resumes. If the scheduler runs swap only after grow resumes, the row stays green and the awaits want reordering until swap's write lands inside grow's suspension |
 | Reuse's step not followed | the GeneratorNext arm's `return touches(...)` made `return false` | TestReuseFollowsAGeneratorStepIntoItsBody |
 | A switch's IteratorNext case dropped | flow/infer.go, `callsBack`: `case ir.GeneratorNext, ir.IteratorNext:` made `case ir.GeneratorNext:` | TestEverySwitchOverGeneratorNextNamesIteratorNext (internal/ir), naming infer.go's line |
