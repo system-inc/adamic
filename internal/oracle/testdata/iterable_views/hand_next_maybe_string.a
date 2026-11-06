@@ -1,0 +1,32 @@
+// Generator<string | undefined> through a hand-driven next() (Language's pin on #qk8rztp S2c-2b): a
+// string that may be undefined is a reference, its undefined a `NULL` pointer, which the result holds
+// as it holds any reference, so it lowers, agrees with Node and prints the undefined. A boolean or a
+// number that may be undefined stays not yet built (internal/lower's TestHandDrivenNextOverAGeneratorStops).
+function* maybeNames(labels: readonly string[]): Generator<string | undefined, undefined, undefined> {
+    for (let index = 0; index < labels.length; index++) {
+        yield index % 2 === 0 ? undefined : `${labels[index] ?? ''}!`;
+    }
+}
+function described(values: IterableIterator<string | undefined>): string {
+    let all = '';
+    for (let status = values.next(); !status.done; status = values.next()) {
+        all += status.value === undefined ? 'undefined;' : `${status.value};`;
+    }
+    return all;
+}
+function firstPresent(values: IterableIterator<string | undefined>): string {
+    for (let status = values.next(); !status.done; status = values.next()) {
+        if (status.value !== undefined) {
+            return status.value;
+        }
+    }
+    return 'none';
+}
+const labels: string[] = [];
+for (let index = 0; index < 5; index++) {
+    labels.push(`label ${String(index * 7)}`);
+}
+console.log(described(maybeNames(labels)));
+console.log(described(maybeNames([])));
+console.log(firstPresent(maybeNames(labels.slice(1))));
+console.log(firstPresent(maybeNames(['one'])));
