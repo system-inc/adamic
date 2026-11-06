@@ -989,7 +989,8 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 // runtime-built iterator's next() gives it (map_set.c). kind is the value slot's field kind, and
 // element_tag its representation byte, ir.Type's. The result is owned by the caller, and the element
 // is moved in, never retained: a reference the caller borrowed it retains first. At done element is
-// unread, and the value slot holds `NULL` for a reference kind and the absent maybe-number otherwise.
+// unread, and the value slot holds `NULL` for a reference kind, the absent maybe-number for a number
+// kind, and the absent maybe-boolean for a boolean kind, whose byte the builder makes MaybeBoolean.
 // The result is a plain counted object, never adopted into a region.
 adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag);
 // adamic_collection_iterator_is says whether a value is an iterator adamic_collection_iterator made:

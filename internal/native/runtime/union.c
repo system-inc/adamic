@@ -294,6 +294,12 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
 		return number.present ? adamic_box_number(number.number) : NULL;
 	}
+	// A boolean iterator's result at done (map_set.c's adamic_iterator_result).
+	case 9: {
+		adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot.maybe_boolean);
+		if (!boolean.present) return NULL;
+		return boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+	}
 	}
 	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
 		if (entry->shape != object->shape) continue;
@@ -304,6 +310,11 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		case 7: {
 			adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
 			return number.present ? adamic_box_number(number.number) : NULL;
+		}
+		case 9: {
+			adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot.maybe_boolean);
+			if (!boolean.present) return NULL;
+			return boolean.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 		}
 		}
 	}
