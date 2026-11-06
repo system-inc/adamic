@@ -23,5 +23,5 @@ Not held by a mutant: the oracle fixture of tsc's four shapes on both backends. 
 the fixture families on a box; the JavaScript backend holds the shapes to Node (TestUnbrandedArraysAgreeWithNode), and
 internal/oracle/testdata/notyet_element_access/sorted.a, now lowering, holds a SortedReadonlyArray parameter to Node on
 both backends and the leak check.
-| No own-member rule (Language's must) | phantom_array_presence.go: the `l.holdsArrayBrand(access.Expression) && !l.arrayOwnMember(callee)` case made `false &&` | TestUnbrandedPresenceIsRefused, the hasOwnProperty, propertyIsEnumerable, __lookupGetter__ and hasOwnProperty-of-length rows |
+| No own-member rule (Language's must) | phantom_array_presence.go: the `l.holdsArrayBrand(access.Expression) && !l.arrayOwnMember(callee)` case made `false &&` | TestUnbrandedPresenceIsRefused, the hasOwnProperty, propertyIsEnumerable, program-declared Object member and hasOwnProperty-of-length rows |
 | Type parameters unjudged | phantom_array_presence.go, `arrayBrandIn`: the type parameter case appends the parameter instead of its constraint | TestUnbrandedPresenceIsRefused, the l13 and l14 rows, each heard by a later stop instead of rule 450 |
