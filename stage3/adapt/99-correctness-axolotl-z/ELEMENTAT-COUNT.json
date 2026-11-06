@@ -390,7 +390,25 @@
     "stage3-lane-project-reference-cases-18",
     "stage3-lane-project-reference-cases-19",
     "stage3-lane-project-reference-cases-20",
-    "stage3-lane-project-reference-cases-21"
+    "stage3-lane-project-reference-cases-21",
+    "stage3-lane-project-reference-cases-22",
+    "stage3-lane-project-reference-cases-23",
+    "stage3-lane-symlink-case-00",
+    "stage3-lane-symlink-case-01",
+    "stage3-lane-symlink-case-02",
+    "stage3-lane-symlink-case-03",
+    "stage3-lane-symlink-case-04",
+    "stage3-lane-symlink-case-05",
+    "stage3-lane-symlink-case-06",
+    "stage3-lane-symlink-case-07",
+    "stage3-lane-symlink-case-08",
+    "stage3-lane-symlink-case-09",
+    "stage3-lane-symlink-case-10",
+    "stage3-lane-symlink-case-11",
+    "stage3-lane-symlink-case-12",
+    "stage3-lane-symlink-case-13",
+    "stage3-lane-symlink-case-14",
+    "stage3-lane-symlink-case-15"
   ],
   "pieces": [
     {
@@ -1237,6 +1255,44 @@
       "recorderVersion": 2,
       "unitDeadlineSeconds": 90,
       "attemptSuffix": ""
+    },
+    {
+      "piece": 20,
+      "seconds": 36.87151058000018,
+      "units": [
+        "stage3-lane-project-reference-cases-22",
+        "stage3-lane-project-reference-cases-23",
+        "stage3-lane-symlink-case-00",
+        "stage3-lane-symlink-case-01",
+        "stage3-lane-symlink-case-02",
+        "stage3-lane-symlink-case-03",
+        "stage3-lane-symlink-case-04",
+        "stage3-lane-symlink-case-05",
+        "stage3-lane-symlink-case-06",
+        "stage3-lane-symlink-case-07",
+        "stage3-lane-symlink-case-08",
+        "stage3-lane-symlink-case-09",
+        "stage3-lane-symlink-case-10",
+        "stage3-lane-symlink-case-11",
+        "stage3-lane-symlink-case-12",
+        "stage3-lane-symlink-case-13",
+        "stage3-lane-symlink-case-14",
+        "stage3-lane-symlink-case-15"
+      ],
+      "calls": 0,
+      "counts": {
+        "in-range non-negative integer": 0,
+        "in-range negative integer": 0,
+        "out-of-range integer": 0,
+        "non-integer": 0,
+        "array undefined": 0
+      },
+      "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+      "callers": {},
+      "failed": [],
+      "recorderVersion": 2,
+      "unitDeadlineSeconds": 90,
+      "attemptSuffix": ""
     }
   ],
   "counts": {
@@ -1265,12 +1321,12 @@
     }
   },
   "oracleCounts": {
-    "pass": 106327,
+    "pass": 106366,
     "fail": 1,
     "skip": 0
   },
   "countScope": "one union of the unchanged 398 lane manifest shards; planted probes excluded",
-  "complete": false,
+  "complete": true,
   "excludedAttempts": [
     {
       "piece": 3,
