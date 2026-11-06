@@ -438,3 +438,36 @@ const view = base as SyntaxList;
 		}
 	}
 }
+
+// A copy road names its read's line and column, as every other stop does (Language's should on
+// #6wfvfhm, probes p01, p03, p07 and p15). slice, a spread, new Set and new Map have no checked form
+// yet, so a viewed array copied through one stops, and the stop is recorded where the copy's array is
+// read. Without the record, checkViewArrays reaches these roads only through IR nodes that carry no
+// location, and the stop names the file alone.
+func TestViewCopyRoadsStopAtTheirRead(t *testing.T) {
+	t.Parallel()
+	const prelude = `interface Node { readonly kind: number; }
+interface Base { readonly tag: 1; }
+interface SyntaxList extends Base { readonly _children: readonly Node[]; }
+const raw = { tag: 1 as const, _children: [7] };
+const base: Base = raw;
+const view = base as SyntaxList;
+console.log('before');
+`
+	for _, row := range []struct{ road, line, where string }{
+		{"slice", "const copy = view._children.slice();\nconsole.log(String(copy[0]?.kind));\n", "main.ts:8:14"},
+		{"spread", "const copy = [...view._children];\nconsole.log(String(copy[0]?.kind));\n", "main.ts:8:18"},
+		{"Set constructor", "const seen = new Set(view._children);\nfor (const child of seen) {\n    console.log(String(child.kind));\n}\n", "main.ts:8:22"},
+		{"Map constructor", "const byKind = new Map(view._children.map((child, index) => [index, child] as const));\nconsole.log(String(byKind.get(0)?.kind));\n", "main.ts:8:24"},
+	} {
+		t.Run(row.road, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, prelude+row.line+"console.log('after');\n", ".ts")
+			var notYet *NotYet
+			want := "a checked view's array read through " + row.road + " (not checked yet)"
+			if !errors.As(err, &notYet) || notYet.What != want || !strings.HasSuffix(notYet.Where, row.where) {
+				t.Fatalf("got %v, want %q at %s", err, want, row.where)
+			}
+		})
+	}
+}
