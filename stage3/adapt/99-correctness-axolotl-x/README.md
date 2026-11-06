@@ -32,7 +32,7 @@ Current expectation: **28 rewritten, 18 left**. Six left sites belong to 95h;
 twelve belong to 32. The requested two checker sites carry the exact reason
 "owner pinned by 95-checker-axolotl-h; folded there" below. "Folded there"
 records the ownership handoff, not an edit by this branch to another adapter.
-There are zero unsupported-shape refusals and no type-driven fallback yet.
+There are zero unsupported-shape refusals and zero type-driven fallbacks.
 
 ## Adapter contract
 
@@ -110,11 +110,11 @@ covers calls nested within a pinned ancestor function.
 
 ## Current verification
 
-This ownership revision supersedes the earlier 46-site run. Its new full after
-apply and all-adapter paired replay are in progress. The replay records every
-outcome before deciding whether any differ; shared refusals are baselines.
-It compares all 80 baseline adapters, with 99x's after replay recorded separately.
-If clean, types, emitted JavaScript, the one-site negative control, the complete
-lane and all 398 shards, and CW051 measurements will be rerun for this scope.
-Prior 46-site results are historical and do not certify the new scope.
-See PROOF.md and the new owned/ evidence as it is completed.
+Checks 1 through 6 pass for 28 rewrites and 18 earlier-owner handoffs.
+All 80 baseline replay outcomes match. Types pass over all 79 roots, nine
+emitted JavaScript products match the expected changes, and the one-site
+negative control is detected. The unchanged whole lane and all 398 standard
+shards pass with exactly matching observations and sanctioned API bytes.
+All 79 ordinary first stops are unchanged; all six CW051 units were measured
+before and after. See PROOF.md and owned/ for complete current evidence.
+Older receipts outside owned/ describe superseded 46-site experiments.

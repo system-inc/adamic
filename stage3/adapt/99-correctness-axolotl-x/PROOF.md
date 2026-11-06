@@ -1,340 +1,225 @@
-# Ownership revision check 1 passes
+# 99x proof: 28 rewrites, 18 earlier-owner handoffs
 
-All 80 baseline adapter replay records match, including exact refusals.
-99x's separately recorded after replay exits 0 with no writes or edits.
-The complete 81-row records (80 baseline adapters plus the 99x entry), empty
-diff, all logs and I/O journals, and whole-tree initial/final manifests are
-under owned/paired-replay/. coverage.json reports zero unjournaled changes.
-The final decision ran only after all adapters, with no early stopping.
+The current ownership revision passes checks 1 through 6. All current receipts
+are under owned/. Receipts outside owned/ describe earlier 46-site experiments
+and superseded stopping rules; they do not certify this scope.
 
-The current scope is 28 rewritten and 18 left under prior owner pins. New
-checks 2 through 6 are now running. Earlier 46-site results remain historical.
-
-# Current ownership revision: 28 rewrites, 18 earlier-owner handoffs
-
-The user requires 99x to preserve any site inside an earlier-pinned owner.
-The runtime-input audit identifies six sites owned by 95h (two checker sites
-and four under createProgram/getEmitHost) and twelve under 32's complete
-watch-host runtime pins. The revised inventory has 28 rewrites, 18 left,
-ten edited owners and three removed imports. No earlier adapter is edited.
-
-The new 28-site full after apply is running. The revised paired replay will
-run every one of the 80 baseline adapters, retain all differences, and decide
-only after the complete run. Its passive filesystem journal is validated on
-sync, async, unchanged-byte and child-process writes; whole-tree initial and
-final byte/mtime manifests verify that no final change escapes the journal.
-The adapter execution write audit finds writeFileSync and setup's promise
-writeFile; the textual writeSync match in 62 is a quoted TypeScript expression,
-not an adapter-side write. owned/journal/ retains the controls and write audit.
-This replaces repeated whole-tree snapshots without changing adapter behavior.
-
-The owner/refusal/CRLF/direct-replay contracts pass for 28 rewrites and 18 left.
-New run receipts are placed under owned/. All prior 46-site results below are
-historical until individually rerun for this ownership revision.
-
-# 99x proof: stopped at the first unequal replay outcome
-
-The final check 1 condition compares replay outcomes only: files written,
-text edits and exact refusal text must match between main and main plus 99x,
-apart from 99x itself. Shared outcomes are recorded baselines regardless of
-which file or owner they name. No file-name or owner-name guard remains.
-
-The first 44 adapter pairs match. Pair 45, 95-checker-axolotl-h, differs.
-The replay stopped there and no later adapter or shard piece was started.
-No other adaptation directory was edited. The branch is not ready to land.
+javascriptChanging true. No earlier adaptation directory is edited. The exact
+46-site inventory and every handoff reason are in README.md and inventory.json.
+Six sites belong to 95-checker-axolotl-h: two checker-host calls and four calls
+under program.ts createProgram/getEmitHost. Twelve belong to the complete
+watch-host runtime pins in 32-indexed-reads-program. Their adapter directories
+remain untouched. The runtime-input audit and ownership.json record these pins.
+The current adapter edits ten owners in five files and removes three imports.
+core.ts, binder.ts and checker.ts source are byte-identical to the baseline.
 
 ## Results
 
-| Check | Result |
+| Check | Current result |
 | --- | --- |
-| 1 full baseline and after applies, --build-product | Both exit 0 |
-| 1 paired replay | First difference at 95-checker-axolotl-h; 44 earlier outcomes match |
-| 99x owner contract | Six malformed/partial states refused; unrelated edit accepted |
-| 99x direct replay | Zero writes and edits; all 79 roots preserve bytes and nanosecond mtimes |
-| CRLF contract | Pass |
-| 2 adamic types, all 79 roots together | Exit 0, zero diagnostics |
-| 3 all nine emitted JavaScript products | Pass; seven byte-identical, two contain exactly 46 rewritten sites |
-| 4 unchanged whole lane | PASS: 106,366 passing, one sanctioned API failure, zero pending |
-| 4 standard shards | First 40 of 398 pass; remaining 358 not run after check 1 differs |
-| 5 restored-site negative control | Build exits 0; comparison exits 1 and reports exactly one missed site |
-| 6 ordinary census | All 79 first-stop records unchanged; 73 stop at core.ts:810:89 |
-| 6 CW051 latent census | All six units measured before and after, in 12 bounded pieces |
+| 1 full applies with --build-product | Before and after exit 0 |
+| 1 paired replay | All 80 baseline outcomes identical; no differences |
+| Direct replay | Zero writes and edits; bytes and nanosecond mtimes preserved |
+| Owner contracts | Six malformed states refuse before writes; CRLF and unrelated edits pass |
+| 2 types | All 79 roots together, exit 0 and zero diagnostics |
+| 3 emitted JavaScript | Nine products pass; seven byte-identical, two with exactly 28 rewritten sites each |
+| 4 upstream oracle | Whole lane and all 398 standard shards pass; their exact observation union and API bytes agree |
+| 5 negative control | Exactly one restored source site detected, in both compiler bundles |
+| 6 ordinary census | All 79 first stops unchanged; 73 stop at core.ts:810:89 |
+| 6 CW051 | All six units measured on both trees; table below |
 
-Rewritten: 46. Left as written: zero. Six unused import specifiers are removed.
-No cast is added. core.ts and binder.ts source remain byte-identical to main.
+## Provenance and full applies
 
-## Exact check 1 difference
+Base main: 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
+Upstream TypeScript 6.0.3: 050880ce59e30b356b686bd3144efe24f875ebc8.
+99w's complete adapt.cjs, README.md and PROOF.md were read at
+06dad75d0bb482b47046370a60341c054899afed. 99k was read on main. The branch
+remains based on main, never 99w. No Apple compiler overlay was used.
 
-Both sides exit 1 with zero files written and zero edits. Their complete
-refusal text differs because 95h reaches different writer-owner pins:
-
-| Tree | File | Refused owner |
-| --- | --- | --- |
-| Before, main | src/compiler/program.ts | createProgram |
-| After, main plus 99x | src/compiler/checker.ts | createBasicNodeBuilderModuleSpecifierResolutionHost |
-
-95h asserts `writer owner shape` at adapt.cjs:35. On main, the checker-host
-writer matches its pinned SHA-256 9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1.
-After 99x, that same writer hashes to
-48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3.
-That function is one of 99x's 15 owners and contains its two checker rewrites.
-
-Main gets past that writer, then hits an existing createProgram mismatch:
-actual 729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854,
-expected 505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152.
-This is not the earlier shared baseline outcome. The first refusal changes,
-and the exact-text records differ under the user's final condition.
-
-The complete paired records are paired-replay/before.json and after.json.
-Their nonempty records.diff contains the exact differing assertion payloads.
-Every executed adapter has separate compressed logs for both trees.
-final-replay-stop.json maps both refusal hashes to their precise owners;
-replay-checker-owner-hashes.json independently shows the before checker writer
-matches 95h's pin and the after writer does not. 40's builder.ts brand refusal,
-30's addRange refusal and all other matching failures remain baseline records.
-Historical stop files from superseded rules are retained as audit history.
-
-## Provenance and reproduction
-
-Base: unmodified main 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
-Upstream: TypeScript 6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
-99w's adapt.cjs, README.md and PROOF.md were read from
-06dad75d0bb482b47046370a60341c054899afed; 99k's adapter and documentation were
-read from main. This branch was never based on 99w. No Apple compiler overlay
-or compiler implementation change was used.
-
-After sourcing /workspace/adamic-tools/env.sh, cloud/setup.sh completed and
-npm ci installed stage3/api's pinned packages. Setup does not supply the
-upstream source checkout, so the authorized Microsoft TypeScript pin was
-cloned into /workspace/typescript-source. Both full applies used --build-product:
+cloud/setup.sh and npm ci --prefix stage3/api completed after sourcing
+/workspace/adamic-tools/env.sh. Setup did not supply the upstream source,
+so the authorized pinned checkout was cloned to /workspace/typescript-source.
+Setup and package logs are setup.log.gz and npm-api.log.gz. Both complete
+applications used --build-product:
 
 ```sh
-# From an isolated main worktree at /workspace/bind-main:
+# Isolated unmodified main worktree /workspace/bind-main:
 ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product /workspace/bind-before
-# From this branch, after generating the owner pins:
-ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product /workspace/bind-after
+# This branch with the current adapter:
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product /workspace/bind-owned-after
 NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-x/contract.cjs /workspace/bind-before
 ```
 
-Full logs are baseline-apply.log.gz, after-apply.log.gz, setup.log.gz,
-npm-api.log.gz, generate.log.gz and contract.log.gz. self-replay.log.gz records
-all 79 byte/mtime checks on the actual completed after tree. owners.json pins
-15 exact before/after function texts and their SHA-256 values; no whole-file
-hash gates adaptation. source-delta.json confirms exactly six changed source
-files. Evidence additions change product keys without changing the frozen
-transformation. All commits touch only this directory; every push is plain
-to typescript/maybebind-adapt.
+baseline-apply.log.gz records the unchanged before build. owned/after-apply.log.gz
+records the current after build. owned/source-delta.json confirms the five
+changed files. owned/contract.log.gz records direct replay, byte/mtime preservation,
+atomic refusals and CRLF checks. owners.json contains exact before/after texts
+and SHA-256 values for each edited owner, never whole-file hash gates.
 
-The revised paired run uses independent copies to preserve both measured trees:
+## Check 1: all adapter outcomes
 
-```sh
-python3 stage3/adapt/99-correctness-axolotl-x/paired_replay.py /workspace/adamic /workspace/bind-replay-before /workspace/bind-replay-after /workspace/scratch/bind-paired-replay
-```
+paired_replay.py runs the real Python order over independent copies of both
+complete adapted trees. owned/paired-replay/before.json and after.json each
+contain 81 records: 80 baseline adapters and the separately handled 99x entry.
+Every baseline outcome matches: exit status, files written, exact edits and
+exact refusal text. Only tree root paths are normalized. records.diff is empty.
+No early stopping is used. 99x's after replay exits 0, writes zero files and
+makes zero edits; its 18 handed-off calls remain inventoried.
 
-It resumed after eight already-matching records with --resume when the user
-removed the old file-name guard. It records actual writes, including writes
-with unchanged bytes, and exact edits/refusals. Only root paths are normalized.
-The replay was paused during the whole lane's CPU-sensitive test run, then
-resumed and reached the first actual outcome difference reported above.
+Shared refusals are baseline outcomes. In particular 40-explicit-any reports
+`Error: missing reviewed brands: src/compiler/builder.ts` on both trees.
+30-indexed-reads reports `declined site changed: core.ts:992:21` on both.
+The complete exact text and all other outcomes are retained in the records
+and separate compressed adapter logs, including 95h's shared program owner
+refusal. None is treated as a stop when identical on both trees.
 
-## Check 2
+A passive filesystem journal records sync and async writes, including unchanged
+byte writes and inherited child-process writes. Whole-tree byte/mtime manifests
+before and after verify zero unjournaled changes. owned/journal/ retains the
+control and runtime write audit; owned/paired-replay/ retains every journal,
+manifest and coverage.json. This changes observation cost, not adapter behavior.
 
-The unmodified main Adamic binary receives all 79 sorted src/compiler .ts
-paths in one invocation. It exits 0 in 3.650 seconds with zero diagnostics.
-The full type listing is types-after.log.gz; exact arguments and timing are
-in types-after.json. No site required fallback or a cast.
+## Check 2: 79-root types
 
-## Check 3 and negative control
+The unchanged main Adamic binary receives all 79 sorted compiler TypeScript
+roots in one invocation. It exits 0 with zero diagnostics. owned/types.json
+records every argument and timing; owned/types.log.gz is the complete output.
+No type-driven fallback or cast is needed for the 28 remaining rewrites.
 
-Both ordinary `npm run build:compiler` builds exit 0 using the same upstream
-lockfile install. Public and internal declaration files are byte-identical;
-javascript/declarations.json records their hashes. Seven of the nine normal
-JavaScript files are byte-identical. _tsc.js and typescript.js each contain
-exactly 46 corresponding compiler-site rewrites. Existing services calls
-outside src/compiler remain unchanged.
+## Check 3: emitted products
 
-Upstream's normal esbuild target expands the new optional bindings into
-conditionals and generated temporaries. _tsc.js eliminates the now-unused
-core helper, which also removes its naming collision with binder's local
-helper. These are automatic emitter consequences of the 46 source rewrites
-and import cleanup, and are visible in the raw hunks below.
+Both ordinary npm run build:compiler builds exit 0 with the same locked
+upstream dependencies. owned/javascript/ contains every raw diff, build log,
+comparison report and declaration hash. Both public and internal declaration
+files are byte-identical. Seven normal JavaScript products have no changes.
+_tsc.js and typescript.js each contain the same 28 expected source-site changes.
 
-compare.cjs parses the complete products with stock TypeScript 6.0.3. It matches
-only the inventoried owner/member pairs and verifies receiver/temporary symbol
-identity. It reconstructs those 46 expressions, normalizes generated temporary
-names and their bookkeeping declarations, parentheses around the reconstructed
-call, the unused _tsc helper, and binder's generated helper name. The remaining
-complete ASTs must be identical. Both changed files pass with 46 expected
-and 46 bound sites each; no other AST difference remains. Complete hashes,
-comparison results, ordinary build logs and raw diffs are under javascript/.
+The normal emitter lowers each optional binding into a nullish conditional
+and a generated temporary. compare.cjs uses stock TypeScript 6.0.3 to match
+only inventoried owner/member pairs with receiver/temporary symbol identity.
+It reconstructs those expressions and normalizes generated temporary names,
+their declarations and resulting parentheses. The remaining complete ASTs
+must agree. All 18 handed-off core helper calls remain, so the helper stays
+in both bundles and binder's local helper name stays unchanged. There is no
+helper deletion or binder rename exemption. The complete raw hunks appear below.
 
-The negative fixture restores one builder.ts call in
-createBuilderProgram.emitBuildInfo, with its required import. Its prepared
-patch exactly matches the actual source delta. The normal build exits 0.
-The same emitted comparison exits 1 and reports exactly one unique original
-site, host.writeFile in emitBuildInfo. Each changed bundle has 45 bound forms
-and that one restored original form; seven files remain byte-identical.
-The exact report, full logs and normalized negative diffs are retained with
-the restored-site fixtures.
+## Check 4: unchanged whole lane and all shards
 
-## Check 4, completed pieces and stop
+The frozen oracle worktree commit is a94047e854fd6699fc156a53cb98de97ca5c4e01. Its five functional adapter
+inputs match this branch byte for byte. All 746 source files in the prepared
+artifact match /workspace/bind-owned-after. owned/oracle/source-identity.json
+records those assertions. Evidence commits do not alter frozen oracle inputs.
 
-A frozen worktree at 21ad49c10 keeps oracle input hashing stable as evidence
-commits are published. Its adapt.cjs, engine.cjs, owners.json and inventory.json
-bytes match this branch, and all 746 src files in its artifact match the
-checked after tree. oracle/source-identity.json records these assertions.
-The unchanged standard prepare_shards.py producer exits 0 in 804.7 seconds;
-apply, locked install, build and harness phases all exit 0.
-
-The unchanged whole lane command is:
+The unchanged standard prepare_shards.py producer completes all apply, locked
+install, build and harness phases successfully. Its elapsed time is recorded
+in owned/oracle/prepare-metrics.json. The unchanged lane command is:
 
 ```sh
-stage3/lane/run.sh /workspace/scratch/bind-lane-whole --artifact ARTIFACT
+stage3/lane/run.sh /workspace/scratch/bind-owned-lane-whole --artifact ARTIFACT
 ```
 
-It exits 0 with PASS in 365.7 seconds. All runners, eight workers, original
-40-second test timeouts and sanctioned API lines are unchanged. The exact
-result is 106,366 passing, one sanctioned public-API failure and zero pending.
-The complete task observations, execution metadata, report, verdict, raw API
-diff and logs are retained under oracle/whole/.
+The whole lane passes with 106,366 passing, one sanctioned public API failure
+and zero pending. All runners, eight workers, the normal 40-second timeout and
+main's sanctioned API lines are unchanged. Its complete reports, task
+observations, API diff and logs are under owned/oracle/whole/.
 
-The first bounded shard piece executes 40 unchanged standard manifest units
-and all 40 pass in 98.4 seconds. Shards use main's supported
-STAGE3_ADAPTED_TREE product path with a symlink-only view of that same artifact
-and its exact locked dependency installation. Standard shard.py performs its
-normal identity, count, timeout and API checks. No test or expected result is
-changed. Each unit's reports, observations and full logs are retained under
-oracle/shards/; piece metrics and driver output are under oracle/pieces/0/.
-Successful redundant scratch views are discarded; all observations and logs
-are retained. The first piece includes the sanctioned API unit.
+All 398 standard manifest shards pass in ten sequential pieces of at most
+40 shards each. Each piece runs two standard shards concurrently, preserves
+their normal 30-second limit, and is committed and plainly pushed immediately
+after completion. Preparation, whole lane and each piece have a 1440-second
+outer limit, below 25 minutes. Exact timings are in the piece receipts and this table.
 
-The check 1 difference was observed after this completed piece. The remaining
-358 shards and the complete shard-to-whole union comparison were not run.
-Check 4 is therefore incomplete, despite the passing whole lane and first
-40 shards. Producer, whole and shard pieces each have a 1440-second outer
-bound and each completed in less than 25 minutes.
+| Piece | Seconds |
+| --- | ---: |
+| Preparation | 436.374 |
+| Whole lane | 380.284 |
+| Shard piece 0 | 94.139 |
+| Shard piece 1 | 92.229 |
+| Shard piece 2 | 91.580 |
+| Shard piece 3 | 96.292 |
+| Shard piece 4 | 93.772 |
+| Shard piece 5 | 91.528 |
+| Shard piece 6 | 96.295 |
+| Shard piece 7 | 94.365 |
+| Shard piece 8 | 100.884 |
+| Shard piece 9 | 85.320 |
 
-## Check 6 ordinary census
+Shards use main's supported STAGE3_ADAPTED_TREE product path with symlink-only
+views of the same artifact and its exact locked dependency installation.
+No expected count, runner, API line, timeout or test is changed. Standard
+shard.py performs its usual identity, input hash, count, timeout and API checks.
+owned/oracle/shards/ retains all unit reports, observations and logs;
+owned/oracle/pieces/ retains all ten result lists, driver logs and timings.
+Successful redundant scratch views are deleted after their receipts are saved.
 
-Both ordinary runs complete. All 79 single-root TypeScript records are
-present, and every normalized first-stop record is identical. There are zero
-changed first stops. Seventy-three stop at core.ts:810:89 with Refused: a cast
-the runtime can't check. The other six first stops are unchanged as well.
-Their exact kinds, locations and reasons are in census/comparison.json and
-the complete before/after summaries. Raw streams and logs are compressed
-under census/. Non-source JSON rows and the combined-program row emitted by
-the tool are retained but excluded from the 79-root comparison.
+check_oracle_union.py independently verifies all 398 standard verdicts,
+manifest coverage, runtime and product identity, every test identity/status
+multiset against the whole lane, the summed 106,366/1/0 counts, and the exact
+sanctioned failure title and paths. Concatenated shard API diff bytes equal
+the whole lane's bytes. Main's unchanged check_results also passes.
+owned/oracle/union.json is the complete union receipt.
 
-## CW051 before and after
+## Check 5: restored-site negative control
 
-The six unit identities come from core-walls-sort at
-ad29102e9c145c5b480629227574d2ffa235a4b1. The unit selector comes from
-container-fit-census at 654092b95416580c3e5be1f968fb8b14755b4481.
-The census-only overlay uses main's existing latent harness; its two added
-hooks select scheduled files and top-level units without changing registration,
-dependency bodies or first-error behavior. Full/speculative modes are disabled.
-All 12 bounded pieces exit 0, each contains exactly one requested attempted
-unit, and every run reports checker_rejected false. File-wide refusal_scan
-findings are retained separately from the selected unit's lowering stop.
-The maximum piece wall time is 393.4 seconds, below 25 minutes.
+The negative fixture restores the builder.ts host.writeFile call in
+createBuilderProgram.emitBuildInfo and its required import. The fixture patch
+matches the actual source delta. The normal build exits 0, then the identical
+JavaScript comparison exits 1 and reports exactly that one unique original
+site in both bundles. Each bundle has 27 bound sites and one original call;
+the other seven products stay byte-identical. Its dedicated fixture, patch,
+build log and comparison receipt are retained under their negative-control
+file names, including owned/mutant-comparison.json. No extra change is hidden
+by the normalizer.
 
-Historical core-walls locations differ from current main. The helper is now
-at line 1533, and the checker-host unit stops earlier on a method-presence
-boundary. These are the current measured stops, all NotYet:
+## Check 6: ordinary and latent census
+
+owned/census/ contains all before/after records, logs, summaries and the
+comparison. The unchanged /workspace/bind-before baseline measurement is
+reused; the current after measurement was rerun. All 79 single-root TypeScript
+first-stop records agree exactly. There are zero changes. Seventy-three stop
+at core.ts:810:89, Refused: a cast the runtime cannot check. The other six
+records are unchanged too. Extra JSON and whole-program rows are retained
+but excluded from the 79-root comparison.
+
+The six CW051 unit identities come from core-walls-sort at
+ad29102e9c145c5b480629227574d2ffa235a4b1. The scheduling selector comes from
+container-fit-census at 654092b95416580c3e5be1f968fb8b14755b4481. The census-only
+overlay uses main's latent harness. Its two hooks select files and top-level
+units without changing registration, dependency bodies or first-error behavior.
+Full and speculative modes are disabled. Every added Go source ends in .go.txt.
+
+All 12 bounded pieces exit 0, select exactly one requested unit and report
+checker_rejected false. File-wide refusal scans remain separate from selected
+unit lowering stops. The maximum piece wall time is 212.227 seconds, below
+25 minutes. owned/latent/ retains selections, raw streams, logs, timers and
+comparison.json. These are the actual current-main locations, all NotYet:
 
 | Unit | Before | After |
 | --- | --- | --- |
-| createBasicNodeBuilderModuleSpecifierResolutionHost | src/compiler/checker.ts:54279:37 | src/compiler/checker.ts:54278:37 |
-| createWatchHost | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:676:20 |
+| createBasicNodeBuilderModuleSpecifierResolutionHost | src/compiler/checker.ts:54279:37 | src/compiler/checker.ts:54279:37 |
+| createWatchHost | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:677:20 |
 | createIncrementalCompilerHost | src/compiler/core.ts:1533:12 | src/compiler/watchPublic.ts:124:23 |
-| performBuild | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
-| createWatchOfConfigFile | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
-| createWatchOfFilesAndCompilerOptions | src/compiler/core.ts:1533:12 | src/compiler/watch.ts:855:19 |
+| performBuild | src/compiler/core.ts:1533:12 | src/compiler/core.ts:1533:12 |
+| createWatchOfConfigFile | src/compiler/core.ts:1533:12 | src/compiler/core.ts:1533:12 |
+| createWatchOfFilesAndCompilerOptions | src/compiler/core.ts:1533:12 | src/compiler/core.ts:1533:12 |
 
-The checker-host reason on both sides is a presence test of a method whose
-presence the receiver's construction does not prove. All other rows report
-a call through ?. (an optional call), moving from core's helper to the direct
-optional-binding expression. No native-lowering completion is claimed.
-latent/comparison.json retains exact reasons, original unit identifiers and
-timings. Every piece's selection, raw records, log and timers is retained
-under latent/before and latent/after. build_latent.py reproduces the existing
-measurement overlay plus the scheduling-only selector; all added Go sources
-are named .go.txt. No background task or suspended replay remains.
+The checker unit remains at its method-presence boundary because checker.ts
+is unchanged. createWatchHost and createIncrementalCompilerHost move from
+core's optional call to direct optional calls, the form Apple's head lowers.
+The three command-line units stay at core's optional call because the relevant
+watch host owners belong to 32 and remain untouched. No native-lowering
+completion is claimed. Historical core-walls line 1523 is current line 1533.
 
 ## All emitted JavaScript diff hunks
 
-Seven files have no hunks. The complete raw differences in the other two are:
+Seven files have no hunks. These are the complete raw hunks for the other two.
 
 ### _tsc.js
 
 ```diff
 --- before/_tsc.js
 +++ after/_tsc.js
-@@ -793,9 +793,6 @@
-       first2[id] = second[id];
-     }
-   }
--}
--function maybeBind(obj, fn) {
--  return fn == null ? void 0 : fn.bind(obj);
- }
- function createMultiMap() {
-   const map2 = /* @__PURE__ */ new Map();
-@@ -43662,7 +43659,7 @@
-     }
-     function onLeft(left, state, node) {
-       if (!state.skip) {
--        const maybeBound = maybeBind2(left);
-+        const maybeBound = maybeBind(left);
-         if (node.operatorToken.kind === 28 /* CommaToken */) {
-           maybeBindExpressionFlowIfCall(left);
-         }
-@@ -43676,7 +43673,7 @@
-     }
-     function onRight(right, state, node) {
-       if (!state.skip) {
--        const maybeBound = maybeBind2(right);
-+        const maybeBound = maybeBind(right);
-         if (node.operatorToken.kind === 28 /* CommaToken */) {
-           maybeBindExpressionFlowIfCall(right);
-         }
-@@ -43707,7 +43704,7 @@
-       state.skip = false;
-       state.stackIndex--;
-     }
--    function maybeBind2(node) {
-+    function maybeBind(node) {
-       if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {
-         return node;
-       }
-@@ -91038,13 +91035,14 @@
-   return !!(s.flags & 2 /* HasLiteralTypes */);
- }
- function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
-+  var _a, _b;
-   return {
-     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
-     getCurrentDirectory: () => host.getCurrentDirectory(),
--    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
-+    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
-     getPackageJsonInfoCache: () => {
--      var _a;
--      return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
-+      var _a2;
-+      return (_a2 = host.getPackageJsonInfoCache) == null ? void 0 : _a2.call(host);
-     },
-     useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
-     redirectTargetsMap: host.redirectTargetsMap,
-@@ -91055,7 +91053,7 @@
-     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
-     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
-     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
--    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
-+    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
-   };
- }
- var SymbolTrackerImpl = class _SymbolTrackerImpl {
-@@ -122090,6 +122088,7 @@
+@@ -122090,6 +122090,7 @@
    };
  }
  function createCompilerHostWorker(options, setParentNodes, system = sys) {
@@ -342,7 +227,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    const existingDirectories = /* @__PURE__ */ new Map();
    const getCanonicalFileName = createGetCanonicalFileName(system.useCaseSensitiveFileNames);
    function directoryExists(directoryPath) {
-@@ -122129,7 +122128,7 @@
+@@ -122129,7 +122130,7 @@
      realpath,
      readDirectory: (path, extensions, include, exclude, depth) => system.readDirectory(path, extensions, include, exclude, depth),
      createDirectory: (d) => system.createDirectory(d),
@@ -351,66 +236,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    };
    return compilerHost;
  }
-@@ -122734,7 +122733,7 @@
-   };
- }
- function createProgram(_rootNamesOrOptions, _options, _host, _oldProgram, _configFileParsingDiagnostics) {
--  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
-   let _createProgramOptions = isArray(_rootNamesOrOptions) ? createCreateProgramOptions(_rootNamesOrOptions, _options, _host, _oldProgram, _configFileParsingDiagnostics) : _rootNamesOrOptions;
-   const { rootNames, options, configFileParsingDiagnostics, projectReferences, typeScriptVersion: typeScriptVersion2, host: createProgramOptionsHost } = _createProgramOptions;
-   let { oldProgram } = _createProgramOptions;
-@@ -123108,7 +123107,7 @@
-     getFileIncludeReasons: () => programDiagnostics.getFileReasons(),
-     structureIsReused,
-     writeFile: writeFile2,
--    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
-+    getGlobalTypingsCacheLocation: (_p = host.getGlobalTypingsCacheLocation) == null ? void 0 : _p.bind(host)
-   };
-   onProgramCreateComplete();
-   if (!skipVerifyCompilerOptions) {
-@@ -123116,7 +123115,7 @@
-   }
-   mark("afterProgram");
-   measure("Program", "beforeProgram", "afterProgram");
--  (_p = tracing) == null ? void 0 : _p.pop();
-+  (_q = tracing) == null ? void 0 : _q.pop();
-   return program;
-   function getResolvedModule(file, moduleName, mode) {
-     var _a2;
-@@ -123591,6 +123590,7 @@
-     return 2 /* Completely */;
-   }
-   function getEmitHost(writeFileCallback) {
-+    var _a2, _b2, _c2;
-     return {
-       getCanonicalFileName,
-       getCommonSourceDirectory: program.getCommonSourceDirectory,
-@@ -123616,18 +123616,18 @@
-         if (missingFileNames.has(path)) return false;
-         return host.fileExists(f);
-       },
--      realpath: maybeBind(host, host.realpath),
-+      realpath: (_a2 = host.realpath) == null ? void 0 : _a2.bind(host),
-       useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
-       getBuildInfo: () => {
--        var _a2;
--        return (_a2 = program.getBuildInfo) == null ? void 0 : _a2.call(program);
-+        var _a3;
-+        return (_a3 = program.getBuildInfo) == null ? void 0 : _a3.call(program);
-       },
-       getSourceFileFromReference: (file, ref) => program.getSourceFileFromReference(file, ref),
-       redirectTargetsMap,
-       getFileIncludeReasons: program.getFileIncludeReasons,
--      createHash: maybeBind(host, host.createHash),
-+      createHash: (_b2 = host.createHash) == null ? void 0 : _b2.bind(host),
-       getModuleResolutionCache: () => program.getModuleResolutionCache(),
--      trace: maybeBind(host, host.trace),
-+      trace: (_c2 = host.trace) == null ? void 0 : _c2.bind(host),
-       getGlobalTypingsCacheLocation: program.getGlobalTypingsCacheLocation
-     };
-   }
-@@ -125776,6 +125776,7 @@
+@@ -125776,6 +125777,7 @@
    return filter(diagnostic, (d) => !d.skippedOn || !option[d.skippedOn]);
  }
  function parseConfigHostFromCompilerHostLike(host, directoryStructureHost = host) {
@@ -418,7 +244,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    return {
      fileExists: (f) => directoryStructureHost.fileExists(f),
      readDirectory(root, extensions, excludes, includes, depth) {
-@@ -125783,9 +125784,9 @@
+@@ -125783,9 +125785,9 @@
        return directoryStructureHost.readDirectory(root, extensions, excludes, includes, depth);
      },
      readFile: (f) => directoryStructureHost.readFile(f),
@@ -431,7 +257,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      useCaseSensitiveFileNames: host.useCaseSensitiveFileNames(),
      getCurrentDirectory: () => host.getCurrentDirectory(),
      onUnRecoverableConfigFileDiagnostic: host.onUnRecoverableConfigFileDiagnostic || returnUndefined,
-@@ -127473,10 +127474,11 @@
+@@ -127473,10 +127475,11 @@
    }
    return builderProgram;
    function emitBuildInfo(writeFile2, cancellationToken) {
@@ -444,7 +270,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          cancellationToken
        );
        state.buildInfoEmitPending = false;
-@@ -127485,7 +127487,7 @@
+@@ -127485,7 +127488,7 @@
      return emitSkippedWithNoDiagnostics;
    }
    function emitNextAffectedFileOrDtsErrors(writeFile2, cancellationToken, emitOnlyDtsFiles, customTransformers, isForDtsErrors) {
@@ -453,7 +279,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
      let affected = getNextAffectedFile(state, cancellationToken, host);
      const programEmitKind = getBuilderFileEmit(state.compilerOptions);
-@@ -127542,7 +127544,7 @@
+@@ -127542,7 +127545,7 @@
          if (isForDtsErrors || !getBuildInfoEmitPending(state)) return void 0;
          const affected2 = state.program;
          const result2 = affected2.emitBuildInfo(
@@ -462,7 +288,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
            cancellationToken
          );
          state.buildInfoEmitPending = false;
-@@ -127574,12 +127576,12 @@
+@@ -127574,12 +127577,12 @@
        state.seenAffectedFiles.add(affectedSourceFile.resolvedPath);
        if (state.affectedFilesIndex !== void 0) state.affectedFilesIndex++;
        state.buildInfoEmitPending = true;
@@ -478,7 +304,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        if (result.diagnostics.length) (state.emitDiagnosticsPerFile ?? (state.emitDiagnosticsPerFile = /* @__PURE__ */ new Map())).set(affectedSourceFile.resolvedPath, result.diagnostics);
      } else {
        state.changedFilesSet.clear();
-@@ -127611,10 +127613,11 @@
+@@ -127611,10 +127614,11 @@
      );
    }
    function getWriteFileCallback(writeFile2, customTransformers) {
@@ -492,7 +318,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        if (isDeclarationFileName(fileName)) {
          if (!state.compilerOptions.outFile) {
            Debug.assert((sourceFiles == null ? void 0 : sourceFiles.length) === 1);
-@@ -127630,7 +127633,7 @@
+@@ -127630,7 +127634,7 @@
                  host,
                  data
                );
@@ -501,7 +327,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
                if (signature !== file.version) {
                  if (host.storeSignatureInfo) (state.signatureInfo ?? (state.signatureInfo = /* @__PURE__ */ new Map())).set(file.resolvedPath, 1 /* StoredSignatureAtEmit */);
                  if (state.affectedFiles) {
-@@ -129615,13 +129618,14 @@
+@@ -129615,13 +129619,14 @@
  var noopFileWatcher = { close: noop };
  var returnNoopFileWatcher = () => noopFileWatcher;
  function createWatchHost(system = sys, reportWatchStatus2) {
@@ -520,73 +346,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      preferNonRecursiveWatch: system.preferNonRecursiveWatch
    };
  }
-@@ -129656,6 +129660,7 @@
-   return result;
- }
- function createCompilerHostFromProgramHost(host, getCompilerOptions, directoryStructureHost = host) {
-+  var _a, _b, _c, _d, _e, _f, _g, _h;
-   const useCaseSensitiveFileNames2 = host.useCaseSensitiveFileNames();
-   const compilerHost = {
-     getSourceFile: createGetSourceFile(
-@@ -129663,7 +129668,7 @@
-       /*setParentNodes*/
-       void 0
-     ),
--    getDefaultLibLocation: maybeBind(host, host.getDefaultLibLocation),
-+    getDefaultLibLocation: (_a = host.getDefaultLibLocation) == null ? void 0 : _a.bind(host),
-     getDefaultLibFileName: (options) => host.getDefaultLibFileName(options),
-     writeFile: createWriteFileMeasuringIO(
-       (path, data, writeByteOrderMark) => host.writeFile(path, data, writeByteOrderMark),
-@@ -129676,13 +129681,13 @@
-     getNewLine: () => getNewLineCharacter(getCompilerOptions()),
-     fileExists: (f) => host.fileExists(f),
-     readFile: (f) => host.readFile(f),
--    trace: maybeBind(host, host.trace),
--    directoryExists: maybeBind(directoryStructureHost, directoryStructureHost.directoryExists),
--    getDirectories: maybeBind(directoryStructureHost, directoryStructureHost.getDirectories),
--    realpath: maybeBind(host, host.realpath),
--    getEnvironmentVariable: maybeBind(host, host.getEnvironmentVariable) || (() => ""),
--    createHash: maybeBind(host, host.createHash),
--    readDirectory: maybeBind(host, host.readDirectory),
-+    trace: (_b = host.trace) == null ? void 0 : _b.bind(host),
-+    directoryExists: (_c = directoryStructureHost.directoryExists) == null ? void 0 : _c.bind(directoryStructureHost),
-+    getDirectories: (_d = directoryStructureHost.getDirectories) == null ? void 0 : _d.bind(directoryStructureHost),
-+    realpath: (_e = host.realpath) == null ? void 0 : _e.bind(host),
-+    getEnvironmentVariable: ((_f = host.getEnvironmentVariable) == null ? void 0 : _f.bind(host)) || (() => ""),
-+    createHash: (_g = host.createHash) == null ? void 0 : _g.bind(host),
-+    readDirectory: (_h = host.readDirectory) == null ? void 0 : _h.bind(host),
-     storeSignatureInfo: host.storeSignatureInfo,
-     jsDocParsingMode: host.jsDocParsingMode
-   };
-@@ -129732,6 +129737,7 @@
-   };
- }
- function createProgramHost(system, createProgram2) {
-+  var _a, _b, _c, _d;
-   const getDefaultLibLocation = memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())));
-   return {
-     useCaseSensitiveFileNames: () => system.useCaseSensitiveFileNames,
-@@ -129744,15 +129750,15 @@
-     directoryExists: (path) => system.directoryExists(path),
-     getDirectories: (path) => system.getDirectories(path),
-     readDirectory: (path, extensions, exclude, include, depth) => system.readDirectory(path, extensions, exclude, include, depth),
--    realpath: maybeBind(system, system.realpath),
--    getEnvironmentVariable: maybeBind(system, system.getEnvironmentVariable),
-+    realpath: (_a = system.realpath) == null ? void 0 : _a.bind(system),
-+    getEnvironmentVariable: (_b = system.getEnvironmentVariable) == null ? void 0 : _b.bind(system),
-     trace: (s) => system.write(s + system.newLine),
-     createDirectory: (path) => system.createDirectory(path),
-     writeFile: (path, data, writeByteOrderMark) => system.writeFile(path, data, writeByteOrderMark),
--    createHash: maybeBind(system, system.createHash),
-+    createHash: (_c = system.createHash) == null ? void 0 : _c.bind(system),
-     createProgram: createProgram2 || createEmitAndSemanticDiagnosticsBuilderProgram,
-     storeSignatureInfo: system.storeSignatureInfo,
--    now: maybeBind(system, system.now)
-+    now: (_d = system.now) == null ? void 0 : _d.bind(system)
-   };
- }
- function createWatchCompilerHost(system = sys, createProgram2, reportDiagnostic, reportWatchStatus2) {
-@@ -129846,13 +129852,14 @@
+@@ -129846,13 +129851,14 @@
    return createBuilderProgramUsingIncrementalBuildInfo(buildInfo, buildInfoPath, host);
  }
  function createIncrementalCompilerHost(options, system = sys) {
@@ -602,7 +362,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    host.storeSignatureInfo = system.storeSignatureInfo;
    setGetSourceFileAsHashVersioned(host);
    changeCompilerHostLikeToUseCache(host, (fileName) => toPath(fileName, host.getCurrentDirectory(), host.getCanonicalFileName));
-@@ -129872,6 +129879,7 @@
+@@ -129872,6 +129878,7 @@
    return createProgram2(rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences);
  }
  function createWatchProgram(host) {
@@ -610,7 +370,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    let builderProgram;
    let updateLevel;
    let missingFilesMap;
-@@ -129929,7 +129937,7 @@
+@@ -129929,7 +129936,7 @@
    compilerHost.onReleaseParsedCommandLine = onReleaseParsedCommandLine;
    compilerHost.toPath = toPath3;
    compilerHost.getCompilationSettings = () => compilerOptions;
@@ -619,7 +379,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    compilerHost.preferNonRecursiveWatch = host.preferNonRecursiveWatch;
    compilerHost.watchDirectoryOfFailedLookupLocation = (dir, cb, flags) => watchDirectory(dir, cb, flags, watchOptions, WatchType.FailedLookupLocations);
    compilerHost.watchAffectingFileLocation = (file, cb) => watchFile3(file, cb, 2e3 /* High */, watchOptions, WatchType.AffectingFileLocation);
-@@ -129948,21 +129956,21 @@
+@@ -129948,21 +129955,21 @@
      /*logChangesWhenResolvingModule*/
      false
    );
@@ -648,7 +408,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    builderProgram = readBuilderProgram(compilerOptions, compilerHost);
    synchronizeProgram();
    return configFileName ? { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, close, getResolutionCache } : { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, updateRootFileNames, close, getResolutionCache };
-@@ -129995,8 +130003,8 @@
+@@ -129995,8 +130002,8 @@
      }
      if (parsedConfigs) {
        clearMap(parsedConfigs, (config) => {
@@ -659,7 +419,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          config.watcher = void 0;
          if (config.watchedDirectories) clearMap(config.watchedDirectories, closeFileWatcherOf);
          config.watchedDirectories = void 0;
-@@ -130360,13 +130368,13 @@
+@@ -130360,13 +130367,13 @@
      return parsedCommandLine;
    }
    function onReleaseParsedCommandLine(fileName) {
@@ -675,7 +435,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      clearSharedExtendedConfigFileWatcher(path, sharedExtendedConfigFileWatchers);
    }
    function watchFilePath(path, file, callback, pollingInterval, options, watchType) {
-@@ -130453,10 +130461,10 @@
+@@ -130453,10 +130460,10 @@
        (extendedConfigFileName, extendedConfigFilePath) => watchFile3(
          extendedConfigFileName,
          (_fileName, eventKind) => {
@@ -688,7 +448,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
            if (!(projects == null ? void 0 : projects.size)) return;
            projects.forEach((projectPath) => {
              if (configFileName && toPath3(configFileName) === projectPath) {
-@@ -130477,7 +130485,7 @@
+@@ -130477,7 +130484,7 @@
      );
    }
    function watchReferencedProject(configFileName2, configPath, commandLine) {
@@ -697,7 +457,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      commandLine.watcher || (commandLine.watcher = watchFile3(
        configFileName2,
        (_fileName, eventKind) => {
-@@ -130488,14 +130496,14 @@
+@@ -130488,14 +130495,14 @@
          scheduleProgramUpdate();
        },
        2e3 /* High */,
@@ -715,7 +475,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          return watchDirectory(
            directory,
            (fileOrDirectory) => {
-@@ -130524,15 +130532,15 @@
+@@ -130524,15 +130531,15 @@
              }
            },
            flags,
@@ -734,7 +494,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        WatchType.ExtendedConfigOfReferencedProject
      );
    }
-@@ -130577,13 +130585,14 @@
+@@ -130577,13 +130584,14 @@
    };
  }
  function createSolutionBuilderHostBase(system, createProgram2, reportDiagnostic, reportSolutionBuilderStatus) {
@@ -750,7 +510,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    return host;
  }
  function createSolutionBuilderHost(system = sys, createProgram2, reportDiagnostic, reportSolutionBuilderStatus, reportErrorSummary2) {
-@@ -130625,18 +130634,19 @@
+@@ -130625,18 +130633,19 @@
    );
  }
  function createSolutionBuilderState(watch2, hostOrHostWithWatch, rootNames, options, baseWatchOptions) {
@@ -776,7 +536,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    let moduleResolutionCache, typeReferenceDirectiveResolutionCache;
    if (!compilerHost.resolveModuleNameLiterals && !compilerHost.resolveModuleNames) {
      moduleResolutionCache = createModuleResolutionCache(compilerHost.getCurrentDirectory(), compilerHost.getCanonicalFileName);
-@@ -130701,7 +130711,7 @@
+@@ -130701,7 +130710,7 @@
      host,
      hostWithWatch,
      parseConfigFileHost: parseConfigHostFromCompilerHostLike(host),
@@ -792,34 +552,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
 ```diff
 --- before/typescript.js
 +++ after/typescript.js
-@@ -95665,13 +95665,14 @@
-   return !!(s.flags & 2 /* HasLiteralTypes */);
- }
- function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
-+  var _a, _b;
-   return {
-     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
-     getCurrentDirectory: () => host.getCurrentDirectory(),
--    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
-+    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
-     getPackageJsonInfoCache: () => {
--      var _a;
--      return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
-+      var _a2;
-+      return (_a2 = host.getPackageJsonInfoCache) == null ? void 0 : _a2.call(host);
-     },
-     useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
-     redirectTargetsMap: host.redirectTargetsMap,
-@@ -95682,7 +95683,7 @@
-     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
-     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
-     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
--    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
-+    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
-   };
- }
- var SymbolTrackerImpl = class _SymbolTrackerImpl {
-@@ -126922,6 +126923,7 @@
+@@ -126922,6 +126922,7 @@
    };
  }
  function createCompilerHostWorker(options, setParentNodes, system = sys) {
@@ -827,7 +560,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    const existingDirectories = /* @__PURE__ */ new Map();
    const getCanonicalFileName = createGetCanonicalFileName(system.useCaseSensitiveFileNames);
    function directoryExists(directoryPath) {
-@@ -126961,7 +126963,7 @@
+@@ -126961,7 +126962,7 @@
      realpath,
      readDirectory: (path, extensions, include, exclude, depth) => system.readDirectory(path, extensions, include, exclude, depth),
      createDirectory: (d) => system.createDirectory(d),
@@ -836,66 +569,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    };
    return compilerHost;
  }
-@@ -127600,7 +127602,7 @@
-   };
- }
- function createProgram(_rootNamesOrOptions, _options, _host, _oldProgram, _configFileParsingDiagnostics) {
--  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p;
-+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
-   let _createProgramOptions = isArray(_rootNamesOrOptions) ? createCreateProgramOptions(_rootNamesOrOptions, _options, _host, _oldProgram, _configFileParsingDiagnostics) : _rootNamesOrOptions;
-   const { rootNames, options, configFileParsingDiagnostics, projectReferences, typeScriptVersion: typeScriptVersion3, host: createProgramOptionsHost } = _createProgramOptions;
-   let { oldProgram } = _createProgramOptions;
-@@ -127974,7 +127976,7 @@
-     getFileIncludeReasons: () => programDiagnostics.getFileReasons(),
-     structureIsReused,
-     writeFile: writeFile2,
--    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
-+    getGlobalTypingsCacheLocation: (_p = host.getGlobalTypingsCacheLocation) == null ? void 0 : _p.bind(host)
-   };
-   onProgramCreateComplete();
-   if (!skipVerifyCompilerOptions) {
-@@ -127982,7 +127984,7 @@
-   }
-   mark("afterProgram");
-   measure("Program", "beforeProgram", "afterProgram");
--  (_p = tracing) == null ? void 0 : _p.pop();
-+  (_q = tracing) == null ? void 0 : _q.pop();
-   return program;
-   function getResolvedModule(file, moduleName, mode) {
-     var _a2;
-@@ -128457,6 +128459,7 @@
-     return 2 /* Completely */;
-   }
-   function getEmitHost(writeFileCallback) {
-+    var _a2, _b2, _c2;
-     return {
-       getCanonicalFileName,
-       getCommonSourceDirectory: program.getCommonSourceDirectory,
-@@ -128482,18 +128485,18 @@
-         if (missingFileNames.has(path)) return false;
-         return host.fileExists(f);
-       },
--      realpath: maybeBind(host, host.realpath),
-+      realpath: (_a2 = host.realpath) == null ? void 0 : _a2.bind(host),
-       useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
-       getBuildInfo: () => {
--        var _a2;
--        return (_a2 = program.getBuildInfo) == null ? void 0 : _a2.call(program);
-+        var _a3;
-+        return (_a3 = program.getBuildInfo) == null ? void 0 : _a3.call(program);
-       },
-       getSourceFileFromReference: (file, ref) => program.getSourceFileFromReference(file, ref),
-       redirectTargetsMap,
-       getFileIncludeReasons: program.getFileIncludeReasons,
--      createHash: maybeBind(host, host.createHash),
-+      createHash: (_b2 = host.createHash) == null ? void 0 : _b2.bind(host),
-       getModuleResolutionCache: () => program.getModuleResolutionCache(),
--      trace: maybeBind(host, host.trace),
-+      trace: (_c2 = host.trace) == null ? void 0 : _c2.bind(host),
-       getGlobalTypingsCacheLocation: program.getGlobalTypingsCacheLocation
-     };
-   }
-@@ -130642,6 +130645,7 @@
+@@ -130642,6 +130643,7 @@
    return filter(diagnostic, (d) => !d.skippedOn || !option[d.skippedOn]);
  }
  function parseConfigHostFromCompilerHostLike(host, directoryStructureHost = host) {
@@ -903,7 +577,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    return {
      fileExists: (f) => directoryStructureHost.fileExists(f),
      readDirectory(root, extensions, excludes, includes, depth) {
-@@ -130649,9 +130653,9 @@
+@@ -130649,9 +130651,9 @@
        return directoryStructureHost.readDirectory(root, extensions, excludes, includes, depth);
      },
      readFile: (f) => directoryStructureHost.readFile(f),
@@ -916,7 +590,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      useCaseSensitiveFileNames: host.useCaseSensitiveFileNames(),
      getCurrentDirectory: () => host.getCurrentDirectory(),
      onUnRecoverableConfigFileDiagnostic: host.onUnRecoverableConfigFileDiagnostic || returnUndefined,
-@@ -132373,10 +132377,11 @@
+@@ -132373,10 +132375,11 @@
    }
    return builderProgram;
    function emitBuildInfo(writeFile2, cancellationToken) {
@@ -929,7 +603,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          cancellationToken
        );
        state.buildInfoEmitPending = false;
-@@ -132385,7 +132390,7 @@
+@@ -132385,7 +132388,7 @@
      return emitSkippedWithNoDiagnostics;
    }
    function emitNextAffectedFileOrDtsErrors(writeFile2, cancellationToken, emitOnlyDtsFiles, customTransformers, isForDtsErrors) {
@@ -938,7 +612,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
      let affected = getNextAffectedFile(state, cancellationToken, host);
      const programEmitKind = getBuilderFileEmit(state.compilerOptions);
-@@ -132442,7 +132447,7 @@
+@@ -132442,7 +132445,7 @@
          if (isForDtsErrors || !getBuildInfoEmitPending(state)) return void 0;
          const affected2 = state.program;
          const result2 = affected2.emitBuildInfo(
@@ -947,7 +621,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
            cancellationToken
          );
          state.buildInfoEmitPending = false;
-@@ -132474,12 +132479,12 @@
+@@ -132474,12 +132477,12 @@
        state.seenAffectedFiles.add(affectedSourceFile.resolvedPath);
        if (state.affectedFilesIndex !== void 0) state.affectedFilesIndex++;
        state.buildInfoEmitPending = true;
@@ -963,7 +637,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        if (result.diagnostics.length) (state.emitDiagnosticsPerFile ?? (state.emitDiagnosticsPerFile = /* @__PURE__ */ new Map())).set(affectedSourceFile.resolvedPath, result.diagnostics);
      } else {
        state.changedFilesSet.clear();
-@@ -132511,10 +132516,11 @@
+@@ -132511,10 +132514,11 @@
      );
    }
    function getWriteFileCallback(writeFile2, customTransformers) {
@@ -977,7 +651,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        if (isDeclarationFileName(fileName)) {
          if (!state.compilerOptions.outFile) {
            Debug.assert((sourceFiles == null ? void 0 : sourceFiles.length) === 1);
-@@ -132530,7 +132536,7 @@
+@@ -132530,7 +132534,7 @@
                  host,
                  data
                );
@@ -986,7 +660,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
                if (signature !== file.version) {
                  if (host.storeSignatureInfo) (state.signatureInfo ?? (state.signatureInfo = /* @__PURE__ */ new Map())).set(file.resolvedPath, 1 /* StoredSignatureAtEmit */);
                  if (state.affectedFiles) {
-@@ -134542,13 +134548,14 @@
+@@ -134542,13 +134546,14 @@
  var noopFileWatcher = { close: noop };
  var returnNoopFileWatcher = () => noopFileWatcher;
  function createWatchHost(system = sys, reportWatchStatus2) {
@@ -1005,73 +679,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      preferNonRecursiveWatch: system.preferNonRecursiveWatch
    };
  }
-@@ -134583,6 +134590,7 @@
-   return result;
- }
- function createCompilerHostFromProgramHost(host, getCompilerOptions, directoryStructureHost = host) {
-+  var _a, _b, _c, _d, _e, _f, _g, _h;
-   const useCaseSensitiveFileNames2 = host.useCaseSensitiveFileNames();
-   const compilerHost = {
-     getSourceFile: createGetSourceFile(
-@@ -134590,7 +134598,7 @@
-       /*setParentNodes*/
-       void 0
-     ),
--    getDefaultLibLocation: maybeBind(host, host.getDefaultLibLocation),
-+    getDefaultLibLocation: (_a = host.getDefaultLibLocation) == null ? void 0 : _a.bind(host),
-     getDefaultLibFileName: (options) => host.getDefaultLibFileName(options),
-     writeFile: createWriteFileMeasuringIO(
-       (path, data, writeByteOrderMark) => host.writeFile(path, data, writeByteOrderMark),
-@@ -134603,13 +134611,13 @@
-     getNewLine: () => getNewLineCharacter(getCompilerOptions()),
-     fileExists: (f) => host.fileExists(f),
-     readFile: (f) => host.readFile(f),
--    trace: maybeBind(host, host.trace),
--    directoryExists: maybeBind(directoryStructureHost, directoryStructureHost.directoryExists),
--    getDirectories: maybeBind(directoryStructureHost, directoryStructureHost.getDirectories),
--    realpath: maybeBind(host, host.realpath),
--    getEnvironmentVariable: maybeBind(host, host.getEnvironmentVariable) || (() => ""),
--    createHash: maybeBind(host, host.createHash),
--    readDirectory: maybeBind(host, host.readDirectory),
-+    trace: (_b = host.trace) == null ? void 0 : _b.bind(host),
-+    directoryExists: (_c = directoryStructureHost.directoryExists) == null ? void 0 : _c.bind(directoryStructureHost),
-+    getDirectories: (_d = directoryStructureHost.getDirectories) == null ? void 0 : _d.bind(directoryStructureHost),
-+    realpath: (_e = host.realpath) == null ? void 0 : _e.bind(host),
-+    getEnvironmentVariable: ((_f = host.getEnvironmentVariable) == null ? void 0 : _f.bind(host)) || (() => ""),
-+    createHash: (_g = host.createHash) == null ? void 0 : _g.bind(host),
-+    readDirectory: (_h = host.readDirectory) == null ? void 0 : _h.bind(host),
-     storeSignatureInfo: host.storeSignatureInfo,
-     jsDocParsingMode: host.jsDocParsingMode
-   };
-@@ -134659,6 +134667,7 @@
-   };
- }
- function createProgramHost(system, createProgram2) {
-+  var _a, _b, _c, _d;
-   const getDefaultLibLocation = memoize(() => getDirectoryPath(normalizePath(system.getExecutingFilePath())));
-   return {
-     useCaseSensitiveFileNames: () => system.useCaseSensitiveFileNames,
-@@ -134671,15 +134680,15 @@
-     directoryExists: (path) => system.directoryExists(path),
-     getDirectories: (path) => system.getDirectories(path),
-     readDirectory: (path, extensions, exclude, include, depth) => system.readDirectory(path, extensions, exclude, include, depth),
--    realpath: maybeBind(system, system.realpath),
--    getEnvironmentVariable: maybeBind(system, system.getEnvironmentVariable),
-+    realpath: (_a = system.realpath) == null ? void 0 : _a.bind(system),
-+    getEnvironmentVariable: (_b = system.getEnvironmentVariable) == null ? void 0 : _b.bind(system),
-     trace: (s) => system.write(s + system.newLine),
-     createDirectory: (path) => system.createDirectory(path),
-     writeFile: (path, data, writeByteOrderMark) => system.writeFile(path, data, writeByteOrderMark),
--    createHash: maybeBind(system, system.createHash),
-+    createHash: (_c = system.createHash) == null ? void 0 : _c.bind(system),
-     createProgram: createProgram2 || createEmitAndSemanticDiagnosticsBuilderProgram,
-     storeSignatureInfo: system.storeSignatureInfo,
--    now: maybeBind(system, system.now)
-+    now: (_d = system.now) == null ? void 0 : _d.bind(system)
-   };
- }
- function createWatchCompilerHost(system = sys, createProgram2, reportDiagnostic, reportWatchStatus2) {
-@@ -134773,13 +134782,14 @@
+@@ -134773,13 +134778,14 @@
    return createBuilderProgramUsingIncrementalBuildInfo(buildInfo, buildInfoPath, host);
  }
  function createIncrementalCompilerHost(options, system = sys) {
@@ -1087,7 +695,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    host.storeSignatureInfo = system.storeSignatureInfo;
    setGetSourceFileAsHashVersioned(host);
    changeCompilerHostLikeToUseCache(host, (fileName) => toPath(fileName, host.getCurrentDirectory(), host.getCanonicalFileName));
-@@ -134824,6 +134834,7 @@
+@@ -134824,6 +134830,7 @@
    }
  }
  function createWatchProgram(host) {
@@ -1095,7 +703,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    let builderProgram;
    let updateLevel;
    let missingFilesMap;
-@@ -134881,7 +134892,7 @@
+@@ -134881,7 +134888,7 @@
    compilerHost.onReleaseParsedCommandLine = onReleaseParsedCommandLine;
    compilerHost.toPath = toPath3;
    compilerHost.getCompilationSettings = () => compilerOptions;
@@ -1104,7 +712,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    compilerHost.preferNonRecursiveWatch = host.preferNonRecursiveWatch;
    compilerHost.watchDirectoryOfFailedLookupLocation = (dir, cb, flags) => watchDirectory(dir, cb, flags, watchOptions, WatchType.FailedLookupLocations);
    compilerHost.watchAffectingFileLocation = (file, cb) => watchFile3(file, cb, 2e3 /* High */, watchOptions, WatchType.AffectingFileLocation);
-@@ -134900,21 +134911,21 @@
+@@ -134900,21 +134907,21 @@
      /*logChangesWhenResolvingModule*/
      false
    );
@@ -1133,7 +741,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    builderProgram = readBuilderProgram(compilerOptions, compilerHost);
    synchronizeProgram();
    return configFileName ? { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, close, getResolutionCache } : { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, updateRootFileNames, close, getResolutionCache };
-@@ -134947,8 +134958,8 @@
+@@ -134947,8 +134954,8 @@
      }
      if (parsedConfigs) {
        clearMap(parsedConfigs, (config) => {
@@ -1144,7 +752,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          config.watcher = void 0;
          if (config.watchedDirectories) clearMap(config.watchedDirectories, closeFileWatcherOf);
          config.watchedDirectories = void 0;
-@@ -135312,13 +135323,13 @@
+@@ -135312,13 +135319,13 @@
      return parsedCommandLine;
    }
    function onReleaseParsedCommandLine(fileName) {
@@ -1160,7 +768,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      clearSharedExtendedConfigFileWatcher(path, sharedExtendedConfigFileWatchers);
    }
    function watchFilePath(path, file, callback, pollingInterval, options, watchType) {
-@@ -135405,10 +135416,10 @@
+@@ -135405,10 +135412,10 @@
        (extendedConfigFileName, extendedConfigFilePath) => watchFile3(
          extendedConfigFileName,
          (_fileName, eventKind) => {
@@ -1173,7 +781,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
            if (!(projects == null ? void 0 : projects.size)) return;
            projects.forEach((projectPath) => {
              if (configFileName && toPath3(configFileName) === projectPath) {
-@@ -135429,7 +135440,7 @@
+@@ -135429,7 +135436,7 @@
      );
    }
    function watchReferencedProject(configFileName2, configPath, commandLine) {
@@ -1182,7 +790,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
      commandLine.watcher || (commandLine.watcher = watchFile3(
        configFileName2,
        (_fileName, eventKind) => {
-@@ -135440,14 +135451,14 @@
+@@ -135440,14 +135447,14 @@
          scheduleProgramUpdate();
        },
        2e3 /* High */,
@@ -1200,7 +808,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
          return watchDirectory(
            directory,
            (fileOrDirectory) => {
-@@ -135476,15 +135487,15 @@
+@@ -135476,15 +135483,15 @@
              }
            },
            flags,
@@ -1219,7 +827,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
        WatchType.ExtendedConfigOfReferencedProject
      );
    }
-@@ -135550,13 +135561,14 @@
+@@ -135550,13 +135557,14 @@
    };
  }
  function createSolutionBuilderHostBase(system, createProgram2, reportDiagnostic, reportSolutionBuilderStatus) {
@@ -1235,7 +843,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    return host;
  }
  function createSolutionBuilderHost(system = sys, createProgram2, reportDiagnostic, reportSolutionBuilderStatus, reportErrorSummary2) {
-@@ -135598,18 +135610,19 @@
+@@ -135598,18 +135606,19 @@
    );
  }
  function createSolutionBuilderState(watch2, hostOrHostWithWatch, rootNames, options, baseWatchOptions) {
@@ -1261,7 +869,7 @@ Seven files have no hunks. The complete raw differences in the other two are:
    let moduleResolutionCache, typeReferenceDirectiveResolutionCache;
    if (!compilerHost.resolveModuleNameLiterals && !compilerHost.resolveModuleNames) {
      moduleResolutionCache = createModuleResolutionCache(compilerHost.getCurrentDirectory(), compilerHost.getCanonicalFileName);
-@@ -135674,7 +135687,7 @@
+@@ -135674,7 +135683,7 @@
      host,
      hostWithWatch,
      parseConfigFileHost: parseConfigHostFromCompilerHostLike(host),
