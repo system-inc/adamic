@@ -1,0 +1,84 @@
+{
+  "status": "complete",
+  "reason": "The amended 99x composition passes. Fresh applies, all-adapter replay, whole lane, all 398 shards and all requested CW051 configurations are recorded.",
+  "checks": {
+    "1": {
+      "status": "pass",
+      "before_exit": 0,
+      "after_exit": 0,
+      "before_tree": "/workspace/scratch/32r-before",
+      "after_tree": "/workspace/scratch/32r-after",
+      "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source stage3/apply.sh --build-product TREE",
+      "base": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+      "continuation": "continuation/provenance.json",
+      "historical_attempts_at_997331ef1": "The first baseline run overlapped a compiler build and failed its archive step; the first after run exposed an overstrict unused-import assumption. Both were discarded and replaced by the successful fresh full applies."
+    },
+    "2": {
+      "status": "pass",
+      "adapters": 81,
+      "differences": 0,
+      "adapter32_before": "handoff producer runtime drift: appendSourceMap",
+      "adapter32_after": "handoff producer runtime drift: appendSourceMap",
+      "continued_after_refusals": true,
+      "continuation": "continuation/replay-records.json"
+    },
+    "3": {
+      "status": "pass",
+      "roots": 79,
+      "exit": 0,
+      "diagnostics": 0,
+      "continuation": "continuation/provenance.json"
+    },
+    "4": {
+      "status": "pass",
+      "javascriptFiles": 9,
+      "byteIdentical": 7,
+      "changedBundles": {
+        "_tsc.js": 12,
+        "typescript.js": 12
+      },
+      "renames": [],
+      "publicDeclarationsByteIdentical": true,
+      "reuse": "The fresh complete before and after compiler source trees are each byte-identical to the prior proof inputs; all five transformation inputs are unchanged."
+    },
+    "5": {
+      "status": "pass",
+      "halfOwnerRefusesWithoutWrites": true,
+      "foreignSymbolRefusesWithoutWrites": true,
+      "restoredSite": "watch.ts:761:32 createCompilerHostFromProgramHost host.getDefaultLibLocation",
+      "reportedIn": [
+        "_tsc.js",
+        "typescript.js"
+      ],
+      "reuse": "The fresh complete before and after compiler source trees are each byte-identical to the prior proof inputs; all five transformation inputs are unchanged."
+    },
+    "6": {
+      "status": "pass",
+      "main": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+      "wholeLaneExit": 0,
+      "shards": 398,
+      "shardPieces": 10,
+      "eachPieceCommittedAndPushed": true,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "identicalTestIdentitiesAndStatuses": true,
+      "identicalSanctionedAPIBytes": true,
+      "maximumPieceSeconds": 70.70417062099841,
+      "details": "continuation/oracle-union.json"
+    },
+    "7": {
+      "status": "pass",
+      "main": "12fec995",
+      "adapter99x": "5fa773b7",
+      "configurations": 4,
+      "units": 3,
+      "combinedStop": "watch.ts:855:19",
+      "reason": "a call through ?. (an optional call)",
+      "details": "continuation/cw051.json"
+    }
+  },
+  "previousStop": "At 997331ef1, unamended 99x refused the completed fold. That historical stop is superseded by amended 99x 5fa773b7."
+}

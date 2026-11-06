@@ -1,5 +1,52 @@
 # Required indexed reads in the program partition
 
+## maybeBind owner fold, task kpp0f8s
+
+The [continuation on main 12fec995](proof/maybebind/continuation/README.md)
+uses amended 99x at 5fa773b7 and supersedes the earlier composition stop below.
+The twelve source rewrites and their pins are unchanged.
+All requested checks are now recorded: both fresh full applies and all 81
+replay outcomes pass on main 12fec995; the whole lane and all 398 shards pass,
+with each bounded piece committed and pushed. CW051 confirms watch.ts:855:19
+for all three units with 99x 5fa773b7. Packed receipts and the final summary
+are in the continuation linked above.
+
+Adamic's stage 3 ruling (a) on task kpp0f8s spells maybeBind(X, X.m) as
+X.m?.bind(X) when X is one identifier. Under the owner-pin rule, the twelve
+watch.ts sites in createCompilerHostFromProgramHost and createProgramHost
+belong to 32. These twelve edits are JavaScript-changing. The existing
+indexed-read and declaration edits retain their JavaScript-identical contract.
+maybebind-sites.json is the exact twelve-site ledger; coordinates document the
+upstream source and never act as edit offsets.
+
+maybebind.cjs resolves the callee to core.ts's maybeBind with stock 6.0.3's type
+checker, requires exactly two arguments, and requires an identifier receiver
+and a non-optional property access on that same symbol. It recognizes only the
+ledgered expressions in those exact two top-level owners. The original runtime
+hashes and their runtimeAfterSha256 companions in public-host-guards.json accept
+each complete owner before or after, rejecting a half-adapted owner before any
+write. The helper and all other runtime pins retain their original identities.
+
+Each slot still holds a bound method or undefined. The environment-variable
+fallback retains its original position. No property is omitted, and public key
+presence and callable variance proofs remain true. The proof wording in
+public-host-sites.json, resumed-resolved.json and resumed-watch/README.md now
+names optional binding directly. Historical measurement receipts are retained
+as historical evidence, not represented as reruns of this fold.
+
+maybebind-compare.cjs checks all nine emitted products, canonicalizing exactly
+the twelve owner/member expressions and their introduced temporaries. Remaining
+renamed generated bindings and binder helpers are mapped by checker symbols;
+each mapping must have equal occurrence counts and no string/property spelling
+or name read that observes either spelling. The complete normalized ASTs must
+then agree. The independent per-file verify.cjs permits only the twelve source
+rewrites before checking the existing JavaScript-identical edits.
+
+The historical run at 997331ef1 stopped after checks 1 through 5 because the
+then-unamended 99x adapter required these twelve watch calls to remain. Its
+receipts and stopping report are retained in [the historical proof](proof/maybebind/README.md).
+The continuation above completes the requested checks with amended 99x.
+
 ## Current directoryProbablyExists correction, task b5w3ycg
 
 Composition status: PASS on the measured base below. Adaptation 91's unrelated
