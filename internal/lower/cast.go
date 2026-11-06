@@ -30,6 +30,19 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if proof.brandMint != nil {
 		return l.brandMintValue(node, as, proof.brandMint)
 	}
+	if proof.overloadDefault {
+		// The pair's hop to unknown makes no value of its own: x is lowered as itself, and it must already
+		// be stored as the target reads it.
+		operand := ast.SkipParentheses(as.Expression).AsAsExpression().Expression
+		from, target := l.concrete(l.checker.GetTypeAtLocation(operand)), l.concrete(l.checker.GetTypeAtLocation(node))
+		if !l.sameKeeping(from, target, map[[2]*checker.Type]bool{}) {
+			return nil, l.notYet(node, "a proven default cast that changes the runtime representation of "+l.checker.TypeToString(from))
+		}
+		// x goes where the pair goes, never into the hop's unknown, which would read it as a value viewed
+		// as unknown (valueSlotTags).
+		l.keepSlot(operand, l.checker.GetTypeAtLocation(node))
+		return l.expression(operand)
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
