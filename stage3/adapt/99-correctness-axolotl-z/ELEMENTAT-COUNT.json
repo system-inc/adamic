@@ -137,6 +137,299 @@
       "nonIntegerOffsetsIncludingUndefinedArrays": 0,
       "callers": {},
       "failed": []
+    },
+    {
+      "piece": 3,
+      "seconds": 327.263756069,
+      "units": [
+        "stage3-lane-file-030",
+        "stage3-lane-file-031",
+        "stage3-lane-file-032",
+        "stage3-lane-file-033",
+        "stage3-lane-file-034",
+        "stage3-lane-file-035",
+        "stage3-lane-file-036",
+        "stage3-lane-file-037",
+        "stage3-lane-file-038",
+        "stage3-lane-file-039",
+        "stage3-lane-file-040",
+        "stage3-lane-file-041",
+        "stage3-lane-file-042",
+        "stage3-lane-file-043",
+        "stage3-lane-file-044",
+        "stage3-lane-file-045",
+        "stage3-lane-file-046",
+        "stage3-lane-file-047",
+        "stage3-lane-file-048",
+        "stage3-lane-file-049"
+      ],
+      "calls": 0,
+      "counts": {
+        "in-range non-negative integer": 0,
+        "in-range negative integer": 0,
+        "out-of-range integer": 0,
+        "non-integer": 0,
+        "array undefined": 0
+      },
+      "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+      "callers": {},
+      "failed": [
+        {
+          "unit": "stage3-lane-file-033",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-033",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-033 timed out after 30.7 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "56470b4d8529d55b22985c2d436b8fdf4ceac590691ee6a97821b594be68cd5f",
+            "seconds": 30.976852833000066
+          }
+        },
+        {
+          "unit": "stage3-lane-file-034",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-034",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-034 timed out after 30.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "b5975b61239f5a62309b8286090f6db305ccba19f499d9175a0fa911a8142d9f",
+            "seconds": 30.545608678999997
+          }
+        },
+        {
+          "unit": "stage3-lane-file-035",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-035",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-035 timed out after 30.9 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "681dc1eb795ab937fea375a554d8583c64d69014884e80f9c4f7d3c74005640f",
+            "seconds": 30.889485066999896
+          }
+        },
+        {
+          "unit": "stage3-lane-file-036",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-036",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-036 timed out after 31.1 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "6f207a14a04b9516e85523be87de65f22ffc065cce287363b6105176c5667665",
+            "seconds": 31.08283634999998
+          }
+        },
+        {
+          "unit": "stage3-lane-file-037",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-037",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-037 timed out after 29.6 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "94850da6ce67e15db92e8fd31102f67d55e0a17439529873ba604c9468398fa2",
+            "seconds": 29.60494318500014
+          }
+        },
+        {
+          "unit": "stage3-lane-file-038",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-038",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-038 timed out after 30.1 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "420bb4482c3bcf3a5e530d5a57be5e93f13aea8637122187cb8cbbcb2cda67e0",
+            "seconds": 30.073895940000057
+          }
+        },
+        {
+          "unit": "stage3-lane-file-039",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-039",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-039 timed out after 31.7 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "03f368735fe9d37c3108db7dce6ebf505f264549008bfa928959f00f1b3e48d6",
+            "seconds": 31.698987125000258
+          }
+        },
+        {
+          "unit": "stage3-lane-file-040",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-040",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-040 timed out after 30.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "8dc430426587a37e50ecf2ae8eaed753851f2094559c925786ffc712a89e40cf",
+            "seconds": 30.494001409999782
+          }
+        },
+        {
+          "unit": "stage3-lane-file-041",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-041",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-041 timed out after 29.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "4f95aa76a81a47ef0cfeef3a252ad5f2c69e63eadc5d7c4fa24dc11b86933972",
+            "seconds": 29.540522550999867
+          }
+        },
+        {
+          "unit": "stage3-lane-file-042",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-042",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-042 timed out after 29.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "5409af6921ade717c1b5471de93edaae27dbf460f926108dc9032b88ac68bd8d",
+            "seconds": 29.523605807999957
+          }
+        },
+        {
+          "unit": "stage3-lane-file-043",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-043",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-043 timed out after 29.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "74fe7bc68deee3193d20a2828719d577122586c9fed1c296941878bfd99047c4",
+            "seconds": 29.523686566999913
+          }
+        },
+        {
+          "unit": "stage3-lane-file-044",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-044",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-044 timed out after 29.8 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "3c1a5e0d1153dd5442fb162b02678a9f74f9ebca3502a1b9a1333a19a2dc91c0",
+            "seconds": 29.75561591900032
+          }
+        },
+        {
+          "unit": "stage3-lane-file-045",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-045",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-045 timed out after 29.7 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "71a9cbfa6ed13444b92b66fdc80226aa0d4486df00313757b1a66c913a34290f",
+            "seconds": 29.714990581000166
+          }
+        },
+        {
+          "unit": "stage3-lane-file-046",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-046",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-046 timed out after 30.0 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "1981b9ecb3f51f87548af08bd080aca9c2f00cf994dd66e9c64487a846fdb374",
+            "seconds": 29.950723874000232
+          }
+        },
+        {
+          "unit": "stage3-lane-file-047",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-047",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-047 timed out after 29.5 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "82b5aa93851a2c545f04e16a92a27c3bc6bc9b7d84cf40e927576242df852680",
+            "seconds": 29.531896556999982
+          }
+        },
+        {
+          "unit": "stage3-lane-file-048",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-048",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-048 timed out after 30.0 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "291226df88f8715cb81d7497e94cfa588687de8e706893973200b48316c62af3",
+            "seconds": 30.02428660400028
+          }
+        },
+        {
+          "unit": "stage3-lane-file-049",
+          "exit": 1,
+          "report": {
+            "name": "stage3-lane-file-049",
+            "counts": {},
+            "errors": [
+              "stage3-lane-file-049 timed out after 29.6 seconds, past its 30 second limit"
+            ],
+            "status": "fail",
+            "artifact": "stage3-adapted-tree",
+            "inputs_hash": "3e4b511afbb4d8822f5b00cc983c1df11b0ab6ea26d3137bbb9150712f1d31b6",
+            "seconds": 29.56355891799967
+          }
+        }
+      ]
     }
   ],
   "counts": {
