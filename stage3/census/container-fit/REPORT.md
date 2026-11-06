@@ -9,3 +9,7 @@ Base compiler: d4c6b07a. Head: 62ddd4796. Logging head: 29de73556, the same patc
 Partial observations are under evidence/latent/. First-stop classifications, regressions, cap conclusions, log distributions and common-unit time sums remain pending until the planned paired pieces finish.
 
 The prior stopped report is preserved in STOPPED-REPORT.md. The completed ordinary 79-root runs from that report remain valid: the new commit changes meter state generation only. Their first stops all matched, with no ordinary regressions or cap rows; walls were 780.291357 seconds base and 726.362797 seconds head, one sample on this box.
+
+## Public-file budget revision
+
+The initial base utilitiesPublic whole-file p00 reached its 25 minute ceiling at 1,500.120056 seconds. It was intentionally stopped with SIGQUIT and committed/pushed at 258190b0c; this is not a measured compiler panic. Its header-only findings and partial timers are excluded from comparisons. evidence/public-budget-stop.json records replacement public chunks sized from observed timers. Each replacement public chunk will receive the head/log byte check. The requested single whole-file check could not finish inside the piece budget.

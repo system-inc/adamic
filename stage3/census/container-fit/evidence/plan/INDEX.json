@@ -1,6 +1,12 @@
 {
   "pieces": [
-    "p00",
+    "q00",
+    "q01",
+    "q02",
+    "q03",
+    "q04",
+    "q05",
+    "q06",
     "p01",
     "p02",
     "p03",
@@ -24,5 +30,14 @@
   "files": 79,
   "units": 4557,
   "timeout_seconds": 1500,
-  "notes": "utilities.ts uses disjoint top-level chunks as in the reused tooling; other files each belong to exactly one file group; historical costs size schedules only"
+  "notes": "Whole utilitiesPublic p00 reached the 25 minute ceiling and was committed/pushed. Its incomplete findings and partial timers are excluded from comparison. Public is now disjoint contiguous unit chunks sized with observed timers and conservative historical estimates for unobserved units. Every public chunk receives a head/log byte-identity check. Other original pieces are unchanged.",
+  "public_head_check_pieces": [
+    "q00",
+    "q01",
+    "q02",
+    "q03",
+    "q04",
+    "q05",
+    "q06"
+  ]
 }

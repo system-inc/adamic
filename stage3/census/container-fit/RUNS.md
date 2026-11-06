@@ -17,3 +17,7 @@ Use label log for the timed logging head and head only for the p00 byte-identity
 Start p00 base, log, then head. Compare the decompressed log/head records.jsonl bytes exactly. Other pieces need base and log only. All measured children run sequentially so timing does not include another census process. Preserve the log append overhead in head times and label all timing results as one sample on this box.
 
 The previous ordinary 79-root records are unchanged, because the new code only changes measurement state generation. Their results and proof are in ordinary-summary.json and STOPPED-REPORT.md. The old summarize.py/finish.py describe that initial stopped report; do not use them to overwrite the completed latent report. Final latent pairing must use main stage3/census/pair and distinguish changed stops in already blocked units from true regressions.
+
+## Revised public schedule
+
+Initial base p00 timed out at 1,500.120056 seconds and was pushed at 258190b0c. Do not pair or rerun it. INDEX-initial.json preserves the initial plan. Current INDEX.json replaces p00 with q00 onward public chunks; every one needs base, log, and head, with a byte comparison after its head run. Other p01 through p19 remain unchanged. The current index lists exactly one occurrence of every unit.
