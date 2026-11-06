@@ -1,0 +1,22 @@
+// An iterator step result's own keys enumerate as Node's { value, done } do, value then done, for each
+// collection iterator the runtime builds (map_set.c's result shapes, #7nw4kgj): a Map's keys(),
+// values() and entries(), a Set's values(), at a step and once exhausted. Keys and values are built,
+// never only literals. Each result is read where it's made, since Object.keys of a value typed object
+// doesn't lower.
+const table = new Map<string, number>();
+for(let index = 1; index <= 2; index++) {
+    table.set(`key ${String(index)}`, index * 10);
+}
+const keys = table.keys();
+console.log(`map keys step ${Object.keys(keys.next()).join(',')}`);
+keys.next();
+console.log(`map keys done ${Object.keys(keys.next()).join(',')}`);
+const values = table.values();
+console.log(`map values step ${Object.keys(values.next()).join(',')}`);
+const entries = table.entries();
+console.log(`map entries step ${Object.keys(entries.next()).join(',')}`);
+const flags = new Set<boolean>();
+flags.add(1 > 0);
+const flagValues = flags.values();
+console.log(`set values step ${Object.keys(flagValues.next()).join(',')}`);
+console.log(`set values done ${Object.keys(flagValues.next()).join(',')}`);
