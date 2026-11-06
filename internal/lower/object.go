@@ -366,7 +366,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			}
 		} else if contextual := l.slotType(literal); contextual != nil && l.checker.IsArrayType(contextual) {
 			// Layout must follow the destination, even when the literal infers narrower elements.
-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union && l.checker.GetElementTypeOfArrayType(contextual).Flags()&checker.TypeFlagsUnknown == 0 {
+			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
 				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
 					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
 				}
@@ -393,7 +393,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return ir.Number, nil
 	}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
-		return ir.Union, nil
+		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
 	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
@@ -1498,7 +1498,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver), UnknownElements: l.checker.GetElementTypeOfArrayType(l.concrete(l.checker.GetTypeAtLocation(receiver))).Flags()&checker.TypeFlagsUnknown != 0}, true, nil
+		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
