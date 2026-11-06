@@ -1,8 +1,11 @@
-# 99x proof: stopped at check 1
+# 99x proof: revised check 1 stops at the affected-file guard
 
-The task's stop rule applies: ordered replay refused in 30-indexed-reads.
-No later adapter or check was run. The adapter is implemented, but the full
-requested verification is incomplete and this branch is not ready to land.
+The user replaced the original zero-refusal replay rule with a paired replay
+comparison. The new records are identical through 40-explicit-any, but both
+refusals name builder.ts, one of the six files covered by the revised rule's
+affected-file condition. That condition fails. The run stopped there; checks
+2 through 6 remain unrun. No new 99x regression is established by this result.
+The adapter is implemented, but the requested verification remains incomplete.
 
 ## Results
 
@@ -13,14 +16,16 @@ requested verification is incomplete and this branch is not ready to land.
 | 99x owner contract | Pass: six refused malformed states; foreign edit accepted |
 | 99x replay on actual after tree | Zero files and edits; bytes and nanosecond mtimes preserved across 79 roots |
 | CRLF contract | Pass |
-| 1 ordered replay | Failed at 30-indexed-reads, exit 1, zero writes |
+| 1 original ordered replay | Superseded by the user |
+| 1 revised paired replay comparison | Eight adapters compared, identical records, empty diff |
+| 1 revised refusal file/owner guard | Failed at 40-explicit-any: both refusals name builder.ts |
 | 2 Adamic types, all 79 roots | Not run: stopped at check 1 |
 | 3 nine emitted JavaScript files | Not run: stopped at check 1; no emitted diff hunks |
 | 4 upstream oracle and shards | Not run: stopped at check 1 |
 | 5 restored-site negative witness | Fixture and patch prepared; detection not run |
 | 6 latent and ordinary per-file census | Not run: stopped at check 1 |
 
-## Exact stop
+## Historical stop under the original rule
 
 The first three adapters, 00-setup, 10-type-imports and
 20-optional-declarations, exited 0 with no byte or mtime changes. The next
@@ -105,3 +110,64 @@ The ordinary 79-root census also did not run; no changed-first-stop result
 is claimed. The negative fixture restores one builder.ts call and its import,
 but its JavaScript comparison did not run. No Go file was added. All processes
 started for this task have exited; no background work remains.
+
+## Revised check 1: paired replay
+
+The requested replacement condition compares adapter outcomes between main
+and main plus 99x, excluding 99x itself, and requires that no refusal name any
+of 99x's six source files or its named owners. paired_replay.py implements
+both conditions and stops at their first failure.
+
+Independent copies preserve the successful full-apply trees for future work:
+
+```sh
+cp -a --reflink=auto /workspace/bind-before /workspace/bind-replay-before
+cp -a --reflink=auto /workspace/bind-after /workspace/bind-replay-after
+python3 stage3/adapt/99-correctness-axolotl-x/paired_replay.py /workspace/adamic /workspace/bind-replay-before /workspace/bind-replay-after /workspace/scratch/bind-paired-replay > /workspace/scratch/bind-paired-replay.log 2>&1
+```
+
+For each adapter, snapshots record the actual files written, including writes
+that preserve bytes. Text edits are recorded as affected files and added/removed
+line counts; complete patches are retained if any edit occurs. Neither tree
+had any writes or edits during these eight adapters. A nonzero exit records
+the complete refusal output, with only the tree root normalized to <tree>.
+Raw per-adapter logs are retained for both sides. Failures do not stop traversal
+unless records differ or the refusal names a covered file or owner.
+
+| Adapter | Before | After | Equal |
+| --- | --- | --- | --- |
+| 00-setup | Exit 0, zero writes | Exit 0, zero writes | Yes |
+| 10-type-imports | Exit 0, zero writes | Exit 0, zero writes | Yes |
+| 20-optional-declarations | Exit 0, zero writes | Exit 0, zero writes | Yes |
+| 30-indexed-reads | Refuses core.ts:992:21 | Same refusal | Yes |
+| 31-indexed-reads-checker | Exit 0, zero writes | Exit 0, zero writes | Yes |
+| 32-indexed-reads-program | Refuses appendSourceMap runtime drift | Same refusal | Yes |
+| 33-indexed-reads-emit | Refuses sourcemap.ts:215 site drift | Same refusal | Yes |
+| 40-explicit-any | Refuses missing builder.ts brands | Same refusal | Yes |
+
+The two records are paired-replay/before.json and paired-replay/after.json.
+Their exact diff, paired-replay/records.diff, is empty (zero bytes).
+paired-replay/status.json records the failed affected-file condition.
+The full shared refusal at 40-explicit-any includes:
+
+```text
+Error: missing reviewed brands: src/compiler/builder.ts
+```
+
+40's classes.cjs matches brands by key and absolute line. The relevant owners
+are IncrementalBuildInfoFileId and IncrementalBuildInfoFileIdListId, neither
+of which is one of 99x's named function owners. The brand declarations are
+already typed undefined in both trees. Its reviewed lines are 1074 and 1076;
+main's actual lines are 1098 and 1100, and after's are 1097 and 1099. The one-line
+after shift is the removed maybeBind import. Both trees miss the original
+line pins, so this is a shared baseline failure. The rule's file-name condition
+still fails because it names builder.ts. No other adaptation was changed.
+paired-replay-stop-detail.json retains keys, owners and actual/pinned lines.
+
+The source comparison in source-delta.json confirms that the original complete
+src trees differ in exactly the intended six files, with core.ts unchanged.
+The revised run did not reach 99x or later adapters. 99x's direct no-write
+replay and contracts passed in the earlier completed piece. No types, emitted
+JavaScript, oracle, negative detection or census measurements were added in
+this continuation. The six CW051 rows above remain unmeasured. All processes
+started for this continuation have exited.
