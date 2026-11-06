@@ -766,6 +766,7 @@ double adamic_fs_file_utimes_atime_date(const adamic_string *path,const adamic_o
 double adamic_fs_file_utimes_mtime_date(const adamic_string *path,double atime,const adamic_object *mtime) {return fs_utimes(path,atime,adamic_fs_file_date_time(mtime)/1000,false,true);}
 
 #include "node_watch_file_impl.h"
+#include "node_fs_watch_impl.h"
 
 // A require of a module that isn't installed (#redxes2): Node's MODULE_NOT_FOUND, a plain Error with
 // its name, code and the first line of its message. Node's message goes on with the require stack,

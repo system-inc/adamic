@@ -458,3 +458,9 @@
 `runtime-file:node_watch_file_impl.h`
 `node_watch_file_impl.h:watch_pollers:1`
 `node_watch_file_impl.h:watch_next_identity:1`
+
+# Open fs.watch watchers hold their object and listeners until close, the error path or async
+# teardown. The loop thread alone opens, dispatches and closes them; identities never reuse.
+`runtime-file:node_fs_watch_impl.h`
+`node_fs_watch_impl.h:fs_watchers:1`
+`node_fs_watch_impl.h:fs_watcher_next_identity:1`

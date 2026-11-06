@@ -15,6 +15,19 @@ var wasiFileRefusedFixtures = map[string]string{
 }
 
 var wasiRefusedFixtures = map[string]string{
+	// fs.watch's fixtures, refused at their first host entry WASI lacks.
+	"internal/oracle/testdata/host_watch/close_twice.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/create.a":      "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/missing.a":     "wasm32-wasi refuses fs.watch: wasi preview1 has no file system event provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch/mkdir.a":       "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/on_returns.a":  "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/self_close.a":  "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/self_delete.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/tsc_shape.a":   "wasm32-wasi refuses fs.watch: wasi preview1 has no file system event provider; use a native Node host target",
+	"internal/oracle/testdata/host_watch/unlink.a":      "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/unref.a":       "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+	"internal/oracle/testdata/host_watch/write.a":       "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
+
 	"internal/oracle/testdata/host_watch_file/missing.a":        "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
 	"internal/oracle/testdata/host_watch_file/appearance.a":     "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
 	"internal/oracle/testdata/host_watch_file/mtime.a":          "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",

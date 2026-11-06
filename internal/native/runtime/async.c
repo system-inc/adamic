@@ -170,6 +170,7 @@ static void source_record(const struct pollfd *descriptors);
 void adamic_async_teardown(void) {
 #ifdef ADAMIC_NODE_HOST
     adamic_fs_file_watch_shutdown();
+    adamic_fs_file_host_watch_shutdown();
 #endif
     timer_shutdown();
     source_shutdown();

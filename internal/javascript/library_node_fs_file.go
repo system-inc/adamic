@@ -13,6 +13,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	switch call.Operation {
 	case "host_watch_file":
 		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
+	case "host_watch":
+		return "adamicFSWatch(" + strings.Join(args, ", ") + ")"
+	case "host_watch_on":
+		return "adamicFSWatchOn(" + args[0] + ", " + args[1] + ")"
 	case "host_unwatch_file":
 		if len(args) == 2 {
 			args[1] = "adamicWatchFileListener(" + args[1] + ")"
@@ -103,4 +107,34 @@ const adamicWatchFileListener = callback => {
  }
  return adamicWatchFileListeners.get(callback);
 };
+`
+
+// fs.watch's FSWatcher stand-in: Node's watcher behind an object whose close and on are own
+// closures in the closure calling convention, as native's shape holds them, given a prototype that
+// isn't Object's so a run-time key read stops on it as native's host shape does. One adapter per
+// listener keeps its identity, as watchFile's does, and hands it Node's own arguments. recursive
+// stops by name, as native's does.
+const nodeWatchRuntime = `const adamicFSWatchListeners = new WeakMap();
+const adamicFSWatchListener = callback => {
+ if (!adamicFSWatchListeners.has(callback)) {
+  adamicFSWatchListeners.set(callback, (...values) => adamicCall(callback, values));
+ }
+ return adamicFSWatchListeners.get(callback);
+};
+class AdamicFSWatcher {
+ constructor(watcher) {
+  const on = (event, callback) => {
+   if (event !== 'error') panic("NotYet: FSWatcher.on with an event other than 'error'");
+   watcher.on(event, adamicFSWatchListener(callback));
+   return this;
+  };
+  this.close = {code: () => { watcher.close(); }};
+  this.on = {code: (closure, values) => on(values[0], values[1])};
+ }
+}
+const adamicFSWatch = (path, persistent, recursive, callback) => {
+ if (recursive) panic('NotYet: fs.watch with recursive: true');
+ return new AdamicFSWatcher(adamicNodeFSFile.watch(path, {persistent}, adamicFSWatchListener(callback)));
+};
+const adamicFSWatchOn = (watcher, callback) => adamicCall(watcher.on, ['error', callback]);
 `
