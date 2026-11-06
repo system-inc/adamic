@@ -15,7 +15,7 @@ import (
 // object (B2, #52zja36, under Adamic's ruling of Nov 6). Each fixture is held to Node natively under
 // the sanitizers and on the JavaScript backend.
 func init() {
-	for _, name := range []string{"cast"} {
+	for _, name := range []string{"cast", "forin"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -60,10 +60,11 @@ func TestEnumViewCastStops(t *testing.T) {
 // tsc refuses these casts itself (TS2352: neither type sufficiently overlaps), as it did on main: a
 // string-indexed K, K naming a function or a class, a view of string alone over a numeric enum, and
 // Runtime's mutant on #6c4swvt, the view typed number, since the table's reverse keys hold strings. So
-// none of them can reach lowering, let alone compile wrong.
+// none of them can reach lowering, let alone compile wrong. Language's class instance seen as the view
+// is refused the same way: a class has no implicit index signature.
 func TestEnumViewCastsTscRefuses(t *testing.T) {
 	t.Parallel()
-	for _, file := range []string{"stop_key_index.a", "stop_key_function.a", "stop_key_class.a", "stop_string_view.a", "stop_number_view.a"} {
+	for _, file := range []string{"stop_key_index.a", "stop_key_function.a", "stop_key_class.a", "stop_string_view.a", "stop_number_view.a", "stop_class_instance.a"} {
 		t.Run(file, func(t *testing.T) {
 			t.Parallel()
 			_, err := load.Load([]string{enumViewFixture(t, file)})

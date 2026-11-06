@@ -1,0 +1,18 @@
+// Language's class instance seen as the view: a class has no implicit index signature, so tsc refuses
+// the cast (TS2352) before lowering sees it.
+class Point {
+	x = 1;
+	readonly label: string = "p";
+	#hidden = 3;
+	get size(): number {
+		return this.x + this.#hidden;
+	}
+}
+function names(view: Readonly<Record<string, string | number>>): string {
+	const rows: string[] = [];
+	for (const name in view) {
+		rows.push(name);
+	}
+	return rows.join(",");
+}
+console.log(names(new Point() as Readonly<Record<string, string | number>>));
