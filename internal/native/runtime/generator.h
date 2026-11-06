@@ -11,7 +11,9 @@
  * emitted code sets each cell's references after _new; the runtime only
  * reads it. In this first slice no slot outside the consuming loop holds a
  * generator, so no reference cycle through a generator's cells can be built
- * yet; once generators become values, cycles.go must see its cells as slots. */
+ * yet; once generators become values, cycles.go must see its cells as slots.
+ * A nested generator also owns self, the closure it was called through, whose
+ * cells are its parent's: the frame points out at them, never they at it. */
 typedef struct adamic_generator adamic_generator;
 typedef struct adamic_generator_code {
     const char *name; /* for compiler-bug panics */
@@ -30,6 +32,9 @@ struct adamic_generator {
     unsigned state; /* where resume picks up; 0 is the entry */
     unsigned char status;
     adamic_object *error; /* a throw on its way out; NULL at every suspension */
+    /* A nested generator's carrier, retained by its entry and let go of at
+     * finish or the drop walk; NULL for a top-level one. */
+    adamic_closure *self;
     size_t count;
     adamic_cell cells[];
 };
@@ -45,7 +50,7 @@ bool adamic_generator_done(const adamic_generator *);
 bool adamic_generator_is(const void *);
 /* At a yield, for a cell the resume never reads again. */
 void adamic_generator_kill(adamic_generator *, size_t index);
-/* Completion and throw: every counted cell and error released and NULLed. */
+/* Completion and throw: every counted cell, error and self released and NULLed. */
 void adamic_generator_finish(adamic_generator *);
 void adamic_generator_return(adamic_generator *);
 /* An iterable view's for-of left (ir.Block's Closes): a generator it held is returned, so a later

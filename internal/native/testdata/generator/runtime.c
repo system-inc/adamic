@@ -49,9 +49,26 @@ static adamic_generator *counting_new(void) {
         assert(generator->cells[index].owner == &generator->heap);
         assert(!generator->cells[index].references && generator->cells[index].value.reference == NULL);
     }
-    assert(generator->state == 0 && generator->status == adamic_generator_status_start && generator->error == NULL);
+    assert(generator->state == 0 && generator->status == adamic_generator_status_start && generator->error == NULL && generator->self == NULL);
     generator->cells[0].references = generator->cells[1].references = true;
     generator->cells[0].value.reference = adamic_string_from_number(1);
+    return generator;
+}
+
+/* A nested generator's carrier, what the emitted entry retains into self:
+ * a closure whose code nothing here calls. Its maker lets go of it at once,
+ * as a temporary carrier's statement does before the first step, so the
+ * frame's is the only reference. */
+static adamic_value carrier_code(adamic_closure *self, adamic_value *arguments) {
+    (void)self;
+    (void)arguments;
+    return (adamic_value){.number = 0};
+}
+static adamic_generator *carried_new(void) {
+    adamic_generator *generator = counting_new();
+    adamic_closure *carrier = adamic_closure_new(carrier_code, 0);
+    generator->self = adamic_retain(carrier);
+    adamic_release(carrier);
     return generator;
 }
 
@@ -154,6 +171,20 @@ int main(int argc, char **argv) {
         adamic_release(generator);
     } else if (strcmp(mode, "drop_start") == 0) {
         adamic_release(counting_new());
+    } else if (strcmp(mode, "self_finish") == 0) {
+        adamic_generator *generator = carried_new();
+        for (;;) {
+            adamic_value value = adamic_generator_next(generator);
+            if (adamic_generator_done(generator)) {
+                break;
+            }
+            print(value);
+        }
+        /* A done generator no longer pins its parent's cells. */
+        assert(generator->self == NULL);
+        adamic_release(generator);
+    } else if (strcmp(mode, "self_drop_start") == 0) {
+        adamic_release(carried_new());
     } else if (strcmp(mode, "drop_suspended") == 0) {
         adamic_generator *generator = counting_new();
         print(adamic_generator_next(generator));

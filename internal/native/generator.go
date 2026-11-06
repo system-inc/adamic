@@ -21,6 +21,11 @@ import (
 // track (one an expression assigns) counts as live and is never killed. Unlike an async frame, no
 // cell borrows another's value (asyncBorrowedSlots): its premise, that both slots survive every
 // suspension, fails across a yield, whose kill set can release a source while its alias is live.
+//
+// A nested generator (#qk8rztp S3a) is a closure: it is called the way every closure is (adamic_code),
+// through the carrier its call names, and its entry retains that carrier into the frame's self, so
+// its resume reads its parent's cells through self->cells, as any closure's body does, at every step,
+// however soon whatever made the carrier lets go of it.
 func (e *emitter) generatorFunction(index int) string {
 	function := &e.program.Functions[index]
 	identity := stableName("fn", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))
@@ -62,6 +67,11 @@ func (e *emitter) generatorFunction(index int) string {
 	fmt.Fprintf(&out, "static void adamic_generator_resume_%s(adamic_generator *frame, adamic_value *yielded) {\n", identity)
 	// The resume runs on its consumer's stack, so it checks it as every emitted function does.
 	e.line("%s;", stackCheck(name))
+	if function.Closure {
+		// The carrier, under the name every captured read and sibling call emits (cellReference,
+		// ClosureSelf). A top-level generator declares none, so a read through one can't compile.
+		e.line("adamic_closure *self = frame->self; (void)self;")
+	}
 	e.line("switch (frame->state) {")
 	for state, root := range regions.Roots {
 		e.line("case %d: goto adamic_generator_block_%d;", state, root)
@@ -115,19 +125,38 @@ func (e *emitter) generatorFunction(index int) string {
 	out.WriteString("}\n")
 	fmt.Fprintf(&out, "static const adamic_generator_code adamic_generator_code_%s = {%s, adamic_generator_resume_%s};\n", identity, cString(name), identity)
 	fmt.Fprintf(&out, "static %s {\n %s;\n adamic_generator *frame = adamic_generator_new(%d, &adamic_generator_code_%s);\n", e.signature(index), stackCheck(name), len(cells), identity)
+	if function.Closure {
+		// The frame's own reference: the caller's may be a temporary it lets go of before the first
+		// step (Memory's must on #qk8rztp S3a).
+		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
+		if e.program.PackedCountNeeded(index) {
+			out.WriteString(" (void)argument_count;\n")
+		}
+	}
 	for position, local := range cells {
 		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, counted(local))
 	}
-	for _, local := range function.Parameters {
+	for position, local := range function.Parameters {
 		of := e.program.Locals[local].Type
 		value := e.localName(local)
+		if function.Closure {
+			// Packed as a closure's arguments are, as an async closure's entry reads them.
+			value = unslotted(of, fmt.Sprintf("arguments[%d].%s", position, member(of)))
+			if e.program.PackedCountNeeded(index) {
+				value = closureArgument(of, position)
+			}
+		}
 		if of.IsReference() {
 			// Every parameter is the frame's own, kept past the call that made it (rulings.md:320).
 			value = "adamic_retain(" + value + ")"
 		}
 		fmt.Fprintf(&out, " frame->cells[%d].value.%s = %s; frame->cells[%d].ready = true;\n", e.asyncSlots[local], member(of), slotted(of, value), e.asyncSlots[local])
 	}
-	out.WriteString(" return frame;\n}\n")
+	if function.Closure {
+		out.WriteString(" return (adamic_value){.reference = frame};\n}\n")
+	} else {
+		out.WriteString(" return frame;\n}\n")
+	}
 	e.asyncSlots = nil
 	e.asyncBorrows = nil
 	e.function = nil
