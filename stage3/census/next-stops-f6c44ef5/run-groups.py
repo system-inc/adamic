@@ -15,6 +15,9 @@ def git(*args):
 
 def checkpoint(message):
     git('add', str(BASE))
+    logs = sorted(str(p) for p in BASE.rglob('*.log') if p.name != 'checkpoint-push.log')
+    if logs:
+        git('add', '-f', *logs)
     git('commit', '-m', message)
     git('push', 'origin', 'HEAD:refs/heads/' + BRANCH)
 
