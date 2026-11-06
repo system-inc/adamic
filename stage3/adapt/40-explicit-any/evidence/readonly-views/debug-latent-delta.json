@@ -1,0 +1,639 @@
+{
+  "before_findings": 202,
+  "final_findings": 184,
+  "new_refused": [],
+  "new": [
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:399:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:399:29: stage 0 can't lower a Map of SortedReadonlyArray<[number, string]> yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:424:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:424:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:428:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:428:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:432:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:432:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:436:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:436:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:440:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:440:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:444:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:444:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:448:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:448:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:452:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:452:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:456:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:456:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:460:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:460:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:464:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:464:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:468:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:468:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:472:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:472:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:476:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:476:36: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:480:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:480:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:484:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:484:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:488:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:488:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:399:29",
+      "reason": "a Map of SortedReadonlyArray<[number, string]>",
+      "text": "src/compiler/debug.ts:399:29: stage 0 can't lower a Map of SortedReadonlyArray<[number, string]> yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:424:34",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:424:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:428:34",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:428:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:432:34",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:432:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:436:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:436:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:440:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:440:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:444:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:444:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:448:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:448:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:452:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:452:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:456:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:456:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:460:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:460:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:464:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:464:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:468:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:468:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:472:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:472:35: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:476:36",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:476:36: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:480:34",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:480:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:484:34",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:484:34: stage 0 can't lower reading ts yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:488:35",
+      "reason": "reading ts",
+      "text": "src/compiler/debug.ts:488:35: stage 0 can't lower reading ts yet"
+    }
+  ],
+  "removed": [
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:399:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:399:29: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:424:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:424:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:428:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:428:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:432:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:432:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:436:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:436:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:440:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:440:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:444:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:444:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:448:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:448:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:452:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:452:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:456:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:456:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:460:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:460:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:464:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:464:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:468:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:468:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:472:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:472:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:476:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:476:36: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:480:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:480:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:484:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:484:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "src/compiler/debug.ts:488:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "src/compiler/debug.ts:488:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "src/compiler/debug.ts:399:29",
+      "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+      "text": "src/compiler/debug.ts:399:29: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:424:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read",
+      "text": "src/compiler/debug.ts:424:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:428:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read",
+      "text": "src/compiler/debug.ts:428:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:432:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read",
+      "text": "src/compiler/debug.ts:432:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:436:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read",
+      "text": "src/compiler/debug.ts:436:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:440:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read",
+      "text": "src/compiler/debug.ts:440:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:444:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read",
+      "text": "src/compiler/debug.ts:444:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:448:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read",
+      "text": "src/compiler/debug.ts:448:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:452:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read",
+      "text": "src/compiler/debug.ts:452:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:456:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read",
+      "text": "src/compiler/debug.ts:456:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:460:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read",
+      "text": "src/compiler/debug.ts:460:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:464:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read",
+      "text": "src/compiler/debug.ts:464:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:468:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read",
+      "text": "src/compiler/debug.ts:468:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:472:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+      "text": "src/compiler/debug.ts:472:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:476:36",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read",
+      "text": "src/compiler/debug.ts:476:36: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:480:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read",
+      "text": "src/compiler/debug.ts:480:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:484:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read",
+      "text": "src/compiler/debug.ts:484:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:488:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read",
+      "text": "src/compiler/debug.ts:488:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:424:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read",
+      "text": "src/compiler/debug.ts:424:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:428:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read",
+      "text": "src/compiler/debug.ts:428:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SnippetKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:432:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read",
+      "text": "src/compiler/debug.ts:432:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ScriptKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:436:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read",
+      "text": "src/compiler/debug.ts:436:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:440:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read",
+      "text": "src/compiler/debug.ts:440:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"NodeCheckFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:444:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read",
+      "text": "src/compiler/debug.ts:444:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ModifierFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:448:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read",
+      "text": "src/compiler/debug.ts:448:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TransformFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:452:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read",
+      "text": "src/compiler/debug.ts:452:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"EmitFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:456:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read",
+      "text": "src/compiler/debug.ts:456:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SymbolFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:460:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read",
+      "text": "src/compiler/debug.ts:460:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:464:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read",
+      "text": "src/compiler/debug.ts:464:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:468:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read",
+      "text": "src/compiler/debug.ts:468:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"ObjectFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:472:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+      "text": "src/compiler/debug.ts:472:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:476:36",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read",
+      "text": "src/compiler/debug.ts:476:36: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"RelationComparisonResult\", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:480:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read",
+      "text": "src/compiler/debug.ts:480:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"CheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:484:34",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read",
+      "text": "src/compiler/debug.ts:484:34: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"SignatureCheckMode\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:488:35",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read",
+      "text": "src/compiler/debug.ts:488:35: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"TypeFacts\", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "src/compiler/debug.ts:519:56",
+      "reason": "a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read",
+      "text": "src/compiler/debug.ts:519:56: Adamic 0.1 refuses a value of type typeof import(\"src/compiler/_namespaces/ts\") seen as Record<\"FlowFlags\", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ]
+}
