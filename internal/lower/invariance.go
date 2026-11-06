@@ -447,6 +447,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
 		return nil
 	}
+	if literalMember(node) && !judgedLiteralMembers[node.Kind] {
+		return l.unjudgedLiteralMember(node)
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
@@ -482,29 +485,32 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		// went out as a writable W unjudged (#20nf0sm). The name's slot is the checker's contextual type
 		// for the property, or carriedSlot's, both of which look past undefined. Where the checker names no
 		// slot for the name but the literal has one, the property of each member the literal can sit in is
-		// judged instead, so a slot the checker can't name never lets the value through unjudged.
-		name := node.Name()
-		literal := l.slotType(node.Parent)
-		var slots []*checker.Type
-		if slot := l.slotType(name); slot != nil {
-			slots = append(slots, slot)
-		} else if literal != nil {
-			for _, member := range l.literalSlotMembers(node.Parent, literal) {
-				if property := l.checker.GetPropertyOfType(member, name.Text()); property != nil {
-					slots = append(slots, l.checker.GetTypeOfSymbol(property))
-				}
-			}
+		// judged instead, so a slot the checker can't name never lets the value through unjudged
+		// (literalMemberSlots). A shorthand's key is its name, which is always read.
+		slots, key, _ := l.literalMemberSlots(node)
+		own = l.checker.GetTypeAtLocation(node.Name())
+		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
+	case node.Kind == ast.KindGetAccessor && literalMember(node):
+		// { get p(): R { return r; } } is r seen as the literal's property p, judged exactly as { p: r } is:
+		// what the getter returns against each slot of p. Nothing judged it before #wjqtypf, since a getter
+		// isn't an expression, so a readonly R went out as a writable W. A getter paired with a setter is
+		// judged here, by what it returns.
+		slots, key, readable := l.literalMemberSlots(node)
+		if !readable {
+			return l.notYet(node, "a getter in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
 		}
-		own = l.checker.GetTypeAtLocation(name)
-		for _, slot := range slots {
-			contextual = slot
-			if found = l.freshOrWidened(name, own, contextual); found != nil {
-				break
-			}
+		own = l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(node))
+		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
+	case node.Kind == ast.KindMethodDeclaration && literalMember(node):
+		// { get(): R { return r; } } is a function seen as the literal's property: widened's signatures
+		// branch relates the two, its parameters both ways and what it returns covariantly, so a method
+		// returning R seen as one returning W is refused there (#wjqtypf).
+		slots, key, readable := l.literalMemberSlots(node)
+		if !readable {
+			return l.notYet(node, "a method in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
 		}
-		if found == nil && literal != nil && len(slots) > 0 {
-			contextual, found = l.memberLiteralSlotWidened(name, own, literal, name.Text(), contextual)
-		}
+		own = l.checker.GetTypeAtLocation(node)
+		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field. It's judged against each member of the
@@ -611,6 +617,114 @@ func (l *lowering) literalSlotMembers(literal *ast.Node, slot *checker.Type) []*
 		return objects
 	}
 	return members
+}
+
+// judgedLiteralMembers are the kinds of an object literal's member refuseWidening judges against the slot
+// its property goes into: a property, by its initializer; a shorthand, a spread, a getter and a method, each
+// in its own case. A member of any other kind, a setter or one the language adds later, is the value of a
+// property nothing judges, so it falls to unjudgedLiteralMember and fails closed (#wjqtypf): a list of the
+// kinds that are judged, never of the ones that aren't, so a kind nobody listed can't lower unjudged.
+var judgedLiteralMembers = map[ast.Kind]bool{
+	ast.KindPropertyAssignment:          true,
+	ast.KindShorthandPropertyAssignment: true,
+	ast.KindSpreadAssignment:            true,
+	ast.KindGetAccessor:                 true,
+	ast.KindMethodDeclaration:           true,
+}
+
+// literalMember is whether node is a member of an object literal.
+func literalMember(node *ast.Node) bool {
+	return node.Parent != nil && node.Parent.Kind == ast.KindObjectLiteralExpression
+}
+
+// unjudgedLiteralMember is not yet for a member of an object literal whose kind refuseWidening doesn't judge
+// (judgedLiteralMembers), wherever a slot names its property: its value would go into that slot unjudged.
+// Where no slot names it, nothing sees it as anything, and it's let through. A setter beside a getter of the
+// same key is judged by the getter's case, by what the property reads as.
+func (l *lowering) unjudgedLiteralMember(member *ast.Node) error {
+	slots, key, readable := l.literalMemberSlots(member)
+	if readable && len(slots) == 0 {
+		return nil
+	}
+	if member.Kind == ast.KindSetAccessor && readable {
+		for _, sibling := range member.Parent.AsObjectLiteralExpression().Properties.Nodes {
+			if sibling.Kind == ast.KindGetAccessor {
+				if siblingKey, siblingReadable := l.literalMemberKey(sibling); siblingReadable && siblingKey == key {
+					return nil
+				}
+			}
+		}
+	}
+	what := describe(member)
+	if member.Kind == ast.KindSetAccessor {
+		what = "a setter"
+	}
+	return l.notYet(member, what+" in an object literal written where a slot names its property, which stage 0 judges for a property, a shorthand, a spread, a getter and a method only")
+}
+
+// literalMemberSlots is each slot a member of an object literal goes into, with the key it's read under
+// (literalMemberKey): its name's own slot (slotType), or, where the checker names none for the name but the
+// literal has a slot, the key's property in each member of that slot the literal can sit in
+// (literalSlotMembers), so a slot the checker can't name never lets the member through unjudged (#20nf0sm). A
+// getter's or a method's name is a declaration's, never an expression the checker gives a slot, so theirs
+// are always read off the literal's (#wjqtypf). readable is false when the literal has a slot but the key
+// can't be read, and the caller fails closed.
+func (l *lowering) literalMemberSlots(member *ast.Node) (slots []*checker.Type, key string, readable bool) {
+	key, readable = l.literalMemberKey(member)
+	if name := member.Name(); name != nil && ast.IsIdentifier(name) {
+		if slot := l.slotType(name); slot != nil {
+			return []*checker.Type{slot}, key, true
+		}
+	}
+	literal := l.slotType(member.Parent)
+	if literal == nil {
+		return nil, key, true
+	}
+	if !readable {
+		return nil, key, false
+	}
+	for _, slotMember := range l.literalSlotMembers(member.Parent, literal) {
+		if property := l.checker.GetPropertyOfType(slotMember, key); property != nil {
+			slots = append(slots, l.checker.GetTypeOfSymbol(property))
+		}
+	}
+	return slots, key, true
+}
+
+// literalMemberKey is the key a member of an object literal declares its property under: its name's text, or
+// for a computed name ([Symbol.iterator]), the name of the literal's own property it declares, the key tsc
+// binds it under. ok is false when it's neither.
+func (l *lowering) literalMemberKey(member *ast.Node) (key string, ok bool) {
+	name := member.Name()
+	if name == nil {
+		return "", false
+	}
+	if ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name) {
+		return name.Text(), true
+	}
+	for _, property := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(member.Parent)) {
+		if slices.Contains(property.Declarations, member) {
+			return property.Name, true
+		}
+	}
+	return "", false
+}
+
+// literalMemberWidened judges own, the value of a literal's member, against each slot of its property
+// (literalMemberSlots), as a property's initializer is judged against its own, and then, for a union slot,
+// against each member's literal slot (memberLiteralSlotWidened). value is the node the value is judged at.
+func (l *lowering) literalMemberWidened(member *ast.Node, value *ast.Node, own *checker.Type, slots []*checker.Type, key string) (*checker.Type, *widening) {
+	var contextual *checker.Type
+	for _, slot := range slots {
+		contextual = slot
+		if found := l.freshOrWidened(value, own, contextual); found != nil {
+			return contextual, found
+		}
+	}
+	if literal := l.slotType(member.Parent); literal != nil && len(slots) > 0 {
+		return l.memberLiteralSlotWidened(value, own, literal, key, contextual)
+	}
+	return contextual, nil
 }
 
 // conditionalBranchInSlot is whether node is a branch of a conditional that goes straight into a typed
