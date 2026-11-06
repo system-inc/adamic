@@ -6,6 +6,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // An array brand is phantom only while every observation of its member's presence is refused
@@ -16,16 +17,21 @@ import (
 // refused at its node, judged on the checker's own type of the value observed, before any unbranding and
 // before lowering's own handling of that node, by the design Diagnostics ruled on #gb0fqaa (Nov 5):
 //  1. `k in x`, where k is a literal naming a brand member, or isn't a literal.
-//  2. `Object.hasOwn(x, k)` and `x.hasOwnProperty(k)`, with the same key rule.
+//  2. `Object.hasOwn(x, k)`, with the same key rule; and any method call on x that isn't one of its base
+//     array's own members (by the checker's symbol, never by name) and takes a property key, a string or
+//     symbol argument: hasOwnProperty, propertyIsEnumerable, __lookupGetter__ and whatever Object.prototype
+//     grows next fall on the refused side by default (Language's must and Compiler's rule, #gb0fqaa).
 //  3. `Object.keys`, `values`, `entries`, `getOwnPropertyNames`, and `Object.assign`'s every argument.
 //  4. `JSON.stringify(x)`.
 //  5. An object spread `{ ...x }`. An array spread `[...x]` iterates elements, which observes nothing.
 //  6. A write to a brand member: an element write whose key is a literal naming one, or isn't a literal
 //     and isn't a number, and a property write naming one.
 //
-// Left to Language: a value that reaches the observation through a type parameter, an intersection,
-// unknown or any, and the roads not listed (propertyIsEnumerable, Reflect, for-in, delete, a write
-// through a destructuring pattern).
+// A type parameter is judged by its constraint (arrayBrandIn), so b09's lie reached generically is refused
+// here too (Language's l13 and l14). Erased observations through `T extends object`, unknown or `object` see
+// no brand and answer the truth, false, and the checker never narrows a branded type from them. The roads
+// still held only by later stops (for-in, Reflect, destructuring the brand member, delete, Object.keys
+// through object or a generic) are pinned with those stops in TestUnbrandedPresenceHeldElsewhere.
 func (l *lowering) phantomArrayPresenceRefusal(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindBinaryExpression:
@@ -50,8 +56,6 @@ func (l *lowering) phantomArrayPresenceRefusal(node *ast.Node) error {
 		switch {
 		case l.isLibraryGlobal(access.Expression, "Object") && name == "hasOwn" && len(arguments) == 2:
 			return l.phantomPresenceKeyed(node, arguments[0], arguments[1], "Object.hasOwn")
-		case name == "hasOwnProperty" && len(arguments) == 1 && l.libraryMember(callee):
-			return l.phantomPresenceKeyed(node, access.Expression, arguments[0], "hasOwnProperty")
 		case l.isLibraryGlobal(access.Expression, "Object") && (name == "keys" || name == "values" || name == "entries" || name == "getOwnPropertyNames" || name == "assign"):
 			for _, argument := range arguments {
 				if err := l.phantomPresenceWhole(node, argument, "Object."+name); err != nil {
@@ -60,6 +64,8 @@ func (l *lowering) phantomArrayPresenceRefusal(node *ast.Node) error {
 			}
 		case l.isLibraryGlobal(access.Expression, "JSON") && name == "stringify" && len(arguments) > 0:
 			return l.phantomPresenceWhole(node, arguments[0], "JSON.stringify")
+		case l.holdsArrayBrand(access.Expression) && !l.arrayOwnMember(callee) && slices.ContainsFunc(arguments, l.propertyKeyArgument):
+			return l.phantomPresenceWhole(node, access.Expression, name)
 		}
 	}
 	return nil
@@ -72,10 +78,23 @@ func init() {
 // arrayBrandIn is the phantom extension of an array that t is, or has as a union arm, and the phantom
 // members it adds over the array it brands, through every brand between them; or nil.
 func (l *lowering) arrayBrandIn(t *checker.Type) (*checker.Type, []string) {
-	arms := []*checker.Type{t}
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		arms = t.Types()
+	var arms []*checker.Type
+	var add func(t *checker.Type, depth int)
+	add = func(t *checker.Type, depth int) {
+		switch {
+		case t == nil || depth > 8:
+		case t.Flags()&checker.TypeFlagsUnion != 0:
+			for _, part := range t.Types() {
+				add(part, depth+1)
+			}
+		case t.Flags()&checker.TypeFlagsTypeParameter != 0:
+			// Judged by its constraint: `T extends SortedArray<number> | { n: number }` narrows on the brand.
+			add(l.checker.GetBaseConstraintOfType(t), depth+1)
+		default:
+			arms = append(arms, t)
+		}
 	}
+	add(t, 0)
 	for _, arm := range arms {
 		base, members := l.phantomExtension(arm)
 		for base != nil {
@@ -157,4 +176,48 @@ func (l *lowering) phantomPresenceWrite(node, target *ast.Node) error {
 // phantomPresenceRefused is the refusal, in the words Diagnostics gave (#gb0fqaa).
 func (l *lowering) phantomPresenceRefused(node *ast.Node, brand *checker.Type, members []string, road string) error {
 	return &Refused{Where: l.program.Where(node), What: "an observation of " + l.checker.TypeToString(brand) + "'s phantom member " + strings.Join(members, ", ") + " (" + road + ")", Fix: "a phantom brand is never present at run time, so test or copy the value as its base array (`readonly T[]`), or test the other arm's own field (rulings.md:31)"}
+}
+
+// arrayOwnMember is whether a method call's member is declared by Array or ReadonlyArray itself, the base a
+// phantom array brand is held as, by the checker's symbol: every root, every declaration, in the library.
+// Object.prototype's members (hasOwnProperty, propertyIsEnumerable, __lookupGetter__) aren't.
+func (l *lowering) arrayOwnMember(callee *ast.Node) bool {
+	symbol := l.memberSymbol(callee)
+	if symbol == nil {
+		return false
+	}
+	roots := l.checker.GetRootSymbols(symbol)
+	if len(roots) == 0 {
+		return false
+	}
+	for _, root := range roots {
+		if len(root.Declarations) == 0 {
+			return false
+		}
+		for _, declaration := range root.Declarations {
+			owner := declaration.Parent
+			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) || owner == nil || owner.Kind != ast.KindInterfaceDeclaration || (owner.Name().Text() != "Array" && owner.Name().Text() != "ReadonlyArray") {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// propertyKeyArgument is whether an argument could name a property: a string or symbol, or a type that
+// might be one (any, unknown, a type parameter), judged on every union arm.
+func (l *lowering) propertyKeyArgument(argument *ast.Node) bool {
+	argumentType := l.checker.GetTypeAtLocation(argument)
+	if argumentType.Flags()&checker.TypeFlagsUnion != 0 {
+		return slices.ContainsFunc(argumentType.Types(), func(part *checker.Type) bool {
+			return part.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsInstantiable) != 0
+		})
+	}
+	return argumentType.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsInstantiable) != 0
+}
+
+// holdsArrayBrand is whether value's type is, or holds, a phantom array brand.
+func (l *lowering) holdsArrayBrand(value *ast.Node) bool {
+	brand, _ := l.arrayBrandIn(l.checker.GetTypeAtLocation(value))
+	return brand != nil
 }
