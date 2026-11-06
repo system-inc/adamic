@@ -1,0 +1,114 @@
+{
+  "ruling": {
+    "task": "b5w3ycg",
+    "at": "2026-11-06 21:49Z",
+    "road": "b, fallback only, admitted only on a count"
+  },
+  "libRuling": {
+    "task": "axochk",
+    "at": "2026-11-01 16:06Z",
+    "text": "tsc is checked against the lib its own tsconfig declares"
+  },
+  "unitInventory": 398,
+  "completedUnits": [
+    "stage3-lane-async-function-cases-00",
+    "stage3-lane-async-function-cases-01",
+    "stage3-lane-async-function-cases-02",
+    "stage3-lane-build-no-emit-cases-00",
+    "stage3-lane-build-no-emit-cases-01",
+    "stage3-lane-build-no-emit-cases-02",
+    "stage3-lane-byte-comparisons",
+    "stage3-lane-compiler-no-emit-cases-00",
+    "stage3-lane-compiler-no-emit-cases-01",
+    "stage3-lane-compiler-no-emit-cases-02",
+    "stage3-lane-file-000",
+    "stage3-lane-file-001",
+    "stage3-lane-file-002",
+    "stage3-lane-file-003",
+    "stage3-lane-file-004",
+    "stage3-lane-file-005",
+    "stage3-lane-file-006",
+    "stage3-lane-file-007",
+    "stage3-lane-file-008",
+    "stage3-lane-file-009"
+  ],
+  "pieces": [
+    {
+      "piece": 1,
+      "seconds": 110.44107516799977,
+      "units": [
+        "stage3-lane-async-function-cases-00",
+        "stage3-lane-async-function-cases-01",
+        "stage3-lane-async-function-cases-02",
+        "stage3-lane-build-no-emit-cases-00",
+        "stage3-lane-build-no-emit-cases-01",
+        "stage3-lane-build-no-emit-cases-02",
+        "stage3-lane-byte-comparisons",
+        "stage3-lane-compiler-no-emit-cases-00",
+        "stage3-lane-compiler-no-emit-cases-01",
+        "stage3-lane-compiler-no-emit-cases-02",
+        "stage3-lane-file-000",
+        "stage3-lane-file-001",
+        "stage3-lane-file-002",
+        "stage3-lane-file-003",
+        "stage3-lane-file-004",
+        "stage3-lane-file-005",
+        "stage3-lane-file-006",
+        "stage3-lane-file-007",
+        "stage3-lane-file-008",
+        "stage3-lane-file-009"
+      ],
+      "calls": 798,
+      "counts": {
+        "in-range non-negative integer": 414,
+        "in-range negative integer": 0,
+        "out-of-range integer": 217,
+        "non-integer": 0,
+        "array undefined": 167
+      },
+      "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+      "callers": {
+        "out-of-range integer": {
+          "src/services/codefixes/convertToAsyncFunction.ts:389": 211,
+          "src/services/codefixes/convertToAsyncFunction.ts:392": 5,
+          "src/services/codefixes/convertToAsyncFunction.ts:395": 1
+        },
+        "array undefined": {
+          "src/services/codefixes/convertToAsyncFunction.ts:269": 134,
+          "src/services/codefixes/convertToAsyncFunction.ts:277": 30,
+          "src/services/codefixes/convertToAsyncFunction.ts:273": 3
+        }
+      },
+      "failed": []
+    }
+  ],
+  "counts": {
+    "in-range non-negative integer": 414,
+    "in-range negative integer": 0,
+    "out-of-range integer": 217,
+    "non-integer": 0,
+    "array undefined": 167
+  },
+  "nonIntegerOffsetsIncludingUndefinedArrays": 0,
+  "callers": {
+    "in-range negative integer": {},
+    "out-of-range integer": {
+      "src/services/codefixes/convertToAsyncFunction.ts:389": 211,
+      "src/services/codefixes/convertToAsyncFunction.ts:392": 5,
+      "src/services/codefixes/convertToAsyncFunction.ts:395": 1
+    },
+    "non-integer": {},
+    "array undefined": {
+      "src/services/codefixes/convertToAsyncFunction.ts:269": 134,
+      "src/services/codefixes/convertToAsyncFunction.ts:277": 30,
+      "src/services/codefixes/convertToAsyncFunction.ts:273": 3
+    }
+  },
+  "oracleCounts": {
+    "pass": 534,
+    "fail": 1,
+    "skip": 0
+  },
+  "countScope": "one union of the unchanged 398 lane manifest shards; planted probes excluded",
+  "complete": false
+}
