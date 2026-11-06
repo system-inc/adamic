@@ -38,6 +38,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		if !l.sameKeeping(from, target, map[[2]*checker.Type]bool{}) {
 			return nil, l.notYet(node, "a proven default cast that changes the runtime representation of "+l.checker.TypeToString(from))
 		}
+		// x goes where the pair goes, never into the hop's unknown, which would read it as a value viewed
+		// as unknown (valueSlotTags).
+		l.keepSlot(operand, l.checker.GetTypeAtLocation(node))
 		return l.expression(operand)
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
