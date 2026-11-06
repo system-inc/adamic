@@ -1,0 +1,22 @@
+// One builder makes every step result a collection iterator gives (map_set.c's adamic_iterator_result,
+// #ak92fcp). Each iterator here is stepped by hand through next(), one for each kind of value slot: a
+// Map's values() holds numbers, a Set's values() booleans and a string-keyed Map's keys() strings. Each
+// prints a result's own keys, then the next result's value, at a step and once exhausted, held to Node.
+// Keys and values are built, never only literals. Each result is read where it's made, since
+// Object.keys of a value typed object doesn't lower.
+const table = new Map<string, number>();
+for(let index = 1; index <= 2; index++) {
+    table.set(`key ${String(index)}`, index * 10);
+}
+const values = table.values();
+console.log(`map values step ${Object.keys(values.next()).join(',')} ${values.next().value}`);
+console.log(`map values done ${Object.keys(values.next()).join(',')} ${values.next().value}`);
+const flags = new Set<boolean>();
+flags.add(table.size > 1);
+flags.add(table.size > 2);
+const flagValues = flags.values();
+console.log(`set values step ${Object.keys(flagValues.next()).join(',')} ${flagValues.next().value}`);
+console.log(`set values done ${Object.keys(flagValues.next()).join(',')} ${flagValues.next().value}`);
+const keys = table.keys();
+console.log(`map keys step ${Object.keys(keys.next()).join(',')} ${keys.next().value}`);
+console.log(`map keys done ${Object.keys(keys.next()).join(',')} ${keys.next().value}`);
