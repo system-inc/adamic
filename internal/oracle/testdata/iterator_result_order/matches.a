@@ -1,0 +1,8 @@
+// matchAll's step results enumerate value then done, as Node's do (regexp.c's next_shape, #7nw4kgj).
+// Each result is read where it's made, since Object.keys of a value typed object doesn't lower. The
+// input is built, never only a literal.
+const word = ['a', 'b'].join('');
+const matches = `${word}${word}`.matchAll(/a/g);
+console.log(`match step ${Object.keys(matches.next()).join(',')}`);
+matches.next();
+console.log(`match done ${Object.keys(matches.next()).join(',')}`);

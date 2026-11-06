@@ -29,7 +29,7 @@ func TestIteratorResultKeysAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 1 {
-		t.Fatalf("%d programs in %s, want 1: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 2 {
+		t.Fatalf("%d programs in %s, want 2: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
