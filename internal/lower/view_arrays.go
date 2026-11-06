@@ -221,7 +221,7 @@ func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElemen
 		return nil, nil
 	}
 	element = l.concrete(element)
-	check := &ir.ViewElementCheck{Where: l.program.Where(node), ViewType: l.checker.TypeToString(element)}
+	check := &ir.ViewElementCheck{Where: l.program.Where(node), View: elementReadView(node, source), ViewType: l.checker.TypeToString(element)}
 	if !l.elementKeyed(element) {
 		// An unrelated read is marked, so checkViewArrays reads it raw rather than stopping it as unchecked.
 		check.Unrelated = true
@@ -269,7 +269,7 @@ func (l *lowering) viewArrayIndex(node, source *ast.Node, read ir.ArrayIndex) (i
 	if err != nil || check == nil {
 		return read, err
 	}
-	return ir.ViewElement{Array: read.Array, Index: read.Index, Relative: read.Relative, Contract: check.Contract, Where: check.Where, ViewType: check.ViewType, Of: read.Type(), Element: read.Element, Unrelated: check.Unrelated, Optional: read.Optional}, nil
+	return ir.ViewElement{Array: read.Array, Index: read.Index, Relative: read.Relative, Contract: check.Contract, Where: check.Where, View: check.View, ViewType: check.ViewType, Of: read.Type(), Element: read.Element, Unrelated: check.Unrelated, Optional: read.Optional}, nil
 }
 
 func elementContractCheckable(program *ir.Program, id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
@@ -504,7 +504,7 @@ func (l *lowering) checkViewArrays() error {
 		case ir.ViewElement:
 			element = value
 			array = value.Array
-			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, ViewType: value.ViewType}
+			check = &ir.ViewElementCheck{Contract: value.Contract, Where: value.Where, View: value.View, ViewType: value.ViewType}
 		case ir.ArrayPush:
 			array = value.Array
 		case ir.ArrayIndex:
@@ -862,4 +862,26 @@ func viewArrayAggregate(value ir.Expression) bool {
 		return viewArrayAggregate(boxed.Value)
 	}
 	return viewAggregate(value)
+}
+
+// elementReadView is an element read in the program's own words, for its stop, as a field read's is
+// (sourceExpression): an index or at read is its own source text, view._children[1]; a handout, which
+// has no expression of its own, is its receiver and its road, view._children's element, in map.
+func elementReadView(node, source *ast.Node) string {
+	switch node.Kind {
+	case ast.KindElementAccessExpression:
+		return sourceExpression(node)
+	case ast.KindForOfStatement:
+		return sourceExpression(source) + "'s element, in for...of"
+	case ast.KindCallExpression:
+		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+		if callee.Kind == ast.KindPropertyAccessExpression {
+			name := callee.AsPropertyAccessExpression().Name().Text()
+			if name == "at" || name == "values" {
+				return sourceExpression(node)
+			}
+			return sourceExpression(source) + "'s element, in " + name
+		}
+	}
+	return sourceExpression(node)
 }

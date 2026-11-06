@@ -856,7 +856,7 @@ var operators = map[ir.Operator]string{
 func (e *emitter) valueRaw(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.ViewElement:
-		return e.checkedElement(&ir.ViewElementCheck{Contract: expression.Contract, Where: expression.Where, ViewType: expression.ViewType}, e.value(expression.Array), e.value(expression.Index), expression.Relative)
+		return e.checkedElement(&ir.ViewElementCheck{Contract: expression.Contract, Where: expression.Where, View: expression.View, ViewType: expression.ViewType}, e.value(expression.Array), e.value(expression.Index), expression.Relative)
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
 	case ir.TypedArraySort:
