@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "plan_sha256": "b7a9e39e648e4c4f8ca90a0e594f0ff753fac9a8bafada312990aadbdbbb48fe",
+  "results": {
+    "d000": {
+      "status": "complete",
+      "seed": "pieces/src_compiler__namespaces_ts.json",
+      "records": [
+        {
+          "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+          "mode": "full selected-file group in complete tsc closure",
+          "sides": {
+            "main": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 1,
+              "attempted": 1,
+              "ir_observed": 1,
+              "finding_free_attempted": 1,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "c23608d52975a4cf59994b65644ae5807df7bd73fc5cf340b663cbe2bcb952c9",
+              "source_sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+            },
+            "head": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 1,
+              "attempted": 1,
+              "ir_observed": 1,
+              "finding_free_attempted": 1,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "059b3ce24cef0d164777e325abc2cd0f19a82fad9e0f4cae1a1681efd9448a6b",
+              "source_sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+            }
+          }
+        }
+      ],
+      "expected_units": [
+        "src/compiler/_namespaces/ts.moduleSpecifiers.ts:3:1"
+      ]
+    },
+    "d078": {
+      "status": "complete",
+      "seed": "pieces/src_compiler_semver.json",
+      "records": [
+        {
+          "file": "src/compiler/semver.ts",
+          "mode": "full selected-file group in complete tsc closure",
+          "sides": {
+            "main": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 29,
+              "attempted": 29,
+              "panicked_units": 0,
+              "ir_observed": 29,
+              "finding_free_attempted": 21,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "7cb0a34fe631d84d6ebb3acacf7e8b6f71723981d4faeb3642837a3ccac85ef1",
+              "source_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+            },
+            "head": {
+              "view_elements": 12,
+              "view_element_checks": 3,
+              "units": 29,
+              "attempted": 29,
+              "panicked_units": 0,
+              "ir_observed": 29,
+              "finding_free_attempted": 21,
+              "finding_free_view_elements": 4,
+              "finding_free_view_element_checks": 2,
+              "meter_byte_identical": true,
+              "baseline_sha256": "b5fba697306bfef0b7519197e2909facc0e4fa79be523296bb0bdcee3739bd66",
+              "source_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+            }
+          }
+        }
+      ],
+      "expected_units": [
+        "src/compiler/semver.ts:1:1",
+        "src/compiler/semver.ts:20:1",
+        "src/compiler/semver.ts:27:1",
+        "src/compiler/semver.ts:28:1",
+        "src/compiler/semver.ts:34:1",
+        "src/compiler/semver.ts:35:1",
+        "src/compiler/semver.ts:39:1",
+        "src/compiler/semver.ts:46:1",
+        "src/compiler/semver.ts:141:1",
+        "src/compiler/semver.ts:158:1",
+        "src/compiler/semver.ts:207:1",
+        "src/compiler/semver.ts:238:1",
+        "src/compiler/semver.ts:248:1",
+        "src/compiler/semver.ts:249:1",
+        "src/compiler/semver.ts:261:1",
+        "src/compiler/semver.ts:266:1",
+        "src/compiler/semver.ts:274:1",
+        "src/compiler/semver.ts:276:1",
+        "src/compiler/semver.ts:297:1",
+        "src/compiler/semver.ts:314:1",
+        "src/compiler/semver.ts:336:1",
+        "src/compiler/semver.ts:401:1",
+        "src/compiler/semver.ts:405:1",
+        "src/compiler/semver.ts:409:1",
+        "src/compiler/semver.ts:418:1",
+        "src/compiler/semver.ts:425:1",
+        "src/compiler/semver.ts:443:1",
+        "src/compiler/semver.ts:447:1",
+        "src/compiler/semver.ts:451:1"
+      ]
+    },
+    "d151": {
+      "status": "complete",
+      "seed": "pieces/src_tsc__namespaces_ts.json",
+      "records": [
+        {
+          "file": "src/tsc/_namespaces/ts.ts",
+          "mode": "full per-file selection in complete tsc closure",
+          "sides": {
+            "main": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 1,
+              "attempted": 1,
+              "ir_observed": 1,
+              "finding_free_attempted": 1,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "c36c334a9a4ba6afc7f6a0f2f67ff92a0ab32f6858c6308e08426f75678e5dc2",
+              "source_sha256": "4b028aefe422d79561899f8b5720d88dcaa6564f9051f54dcfe4b025b362db15"
+            },
+            "head": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 1,
+              "attempted": 1,
+              "ir_observed": 1,
+              "finding_free_attempted": 1,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "e5b3568f8f6e6233f80e2f44806895f22c087eac204ffbe26cb46a8c31c0769a",
+              "source_sha256": "4b028aefe422d79561899f8b5720d88dcaa6564f9051f54dcfe4b025b362db15"
+            }
+          },
+          "elapsed_seconds": 107.93308011800036
+        }
+      ],
+      "expected_units": [
+        "src/tsc/_namespaces/ts.ts:3:1"
+      ]
+    },
+    "d152": {
+      "status": "complete",
+      "seed": "pieces/src_tsc_tsc.json",
+      "records": [
+        {
+          "file": "src/tsc/tsc.ts",
+          "mode": "full per-file selection in complete tsc closure",
+          "sides": {
+            "main": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 6,
+              "attempted": 6,
+              "ir_observed": 6,
+              "finding_free_attempted": 5,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "6b3c68c620b9311ffdeb48b5c07d6b2ffe8ec2874e8f3797eca308340dd59432",
+              "source_sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332"
+            },
+            "head": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 6,
+              "attempted": 6,
+              "ir_observed": 6,
+              "finding_free_attempted": 5,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0,
+              "meter_byte_identical": true,
+              "baseline_sha256": "d3f3f446905f120e0fa987d708be6c4864bdc6bcf69553a0ecbd936bbcdd1042",
+              "source_sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332"
+            }
+          },
+          "elapsed_seconds": 130.85963102799997
+        }
+      ],
+      "expected_units": [
+        "src/tsc/tsc.ts:1:1",
+        "src/tsc/tsc.ts:6:1",
+        "src/tsc/tsc.ts:12:1",
+        "src/tsc/tsc.ts:16:1",
+        "src/tsc/tsc.ts:20:1",
+        "src/tsc/tsc.ts:24:1"
+      ]
+    },
+    "d009": {
+      "status": "complete",
+      "expected_units": [
+        "src/compiler/builder.ts:1259:1",
+        "src/compiler/builder.ts:1404:5",
+        "src/compiler/builder.ts:1408:5",
+        "src/compiler/builder.ts:1412:5",
+        "src/compiler/builder.ts:1421:5",
+        "src/compiler/builder.ts:1432:5",
+        "src/compiler/builder.ts:1451:5",
+        "src/compiler/builder.ts:1465:5",
+        "src/compiler/builder.ts:1480:5",
+        "src/compiler/builder.ts:1496:5",
+        "src/compiler/builder.ts:1513:5",
+        "src/compiler/builder.ts:1526:5",
+        "src/compiler/builder.ts:1544:5",
+        "src/compiler/builder.ts:1557:5",
+        "src/compiler/builder.ts:1568:5",
+        "src/compiler/builder.ts:1582:5",
+        "src/compiler/builder.ts:1594:1",
+        "src/compiler/builder.ts:1600:1",
+        "src/compiler/builder.ts:1608:1",
+        "src/compiler/builder.ts:1640:1",
+        "src/compiler/builder.ts:1645:1",
+        "src/compiler/builder.ts:1659:5",
+        "src/compiler/builder.ts:1669:5",
+        "src/compiler/builder.ts:1682:1",
+        "src/compiler/builder.ts:1687:1",
+        "src/compiler/builder.ts:1692:1",
+        "src/compiler/builder.ts:1697:1",
+        "src/compiler/builder.ts:1744:5",
+        "src/compiler/builder.ts:1765:5",
+        "src/compiler/builder.ts:1900:5",
+        "src/compiler/builder.ts:1918:5",
+        "src/compiler/builder.ts:1933:5",
+        "src/compiler/builder.ts:1997:13",
+        "src/compiler/builder.ts:2029:5",
+        "src/compiler/builder.ts:2098:5",
+        "src/compiler/builder.ts:2110:5",
+        "src/compiler/builder.ts:2150:5",
+        "src/compiler/builder.ts:2211:5",
+        "src/compiler/builder.ts:2242:1",
+        "src/compiler/builder.ts:2253:1",
+        "src/compiler/builder.ts:2262:1",
+        "src/compiler/builder.ts:2270:1",
+        "src/compiler/builder.ts:2278:1",
+        "src/compiler/builder.ts:2377:5",
+        "src/compiler/builder.ts:2381:5",
+        "src/compiler/builder.ts:2385:5",
+        "src/compiler/builder.ts:2389:5",
+        "src/compiler/builder.ts:2393:5",
+        "src/compiler/builder.ts:2400:5",
+        "src/compiler/builder.ts:2416:5",
+        "src/compiler/builder.ts:2422:1",
+        "src/compiler/builder.ts:2455:5",
+        "src/compiler/builder.ts:2467:1",
+        "src/compiler/builder.ts:2479:1",
+        "src/compiler/builder.ts:2504:5"
+      ],
+      "top_units": [
+        "src/compiler/builder.ts:1259:1",
+        "src/compiler/builder.ts:1594:1",
+        "src/compiler/builder.ts:1600:1",
+        "src/compiler/builder.ts:1608:1",
+        "src/compiler/builder.ts:1640:1",
+        "src/compiler/builder.ts:1645:1",
+        "src/compiler/builder.ts:1682:1",
+        "src/compiler/builder.ts:1687:1",
+        "src/compiler/builder.ts:1692:1",
+        "src/compiler/builder.ts:1697:1",
+        "src/compiler/builder.ts:2242:1",
+        "src/compiler/builder.ts:2253:1",
+        "src/compiler/builder.ts:2262:1",
+        "src/compiler/builder.ts:2270:1",
+        "src/compiler/builder.ts:2278:1",
+        "src/compiler/builder.ts:2422:1",
+        "src/compiler/builder.ts:2467:1",
+        "src/compiler/builder.ts:2479:1"
+      ],
+      "seconds": 298.39316208999935,
+      "timings": {
+        "main": 142.97924150699964,
+        "head": 154.4123327749994
+      },
+      "error": null,
+      "plan_sha256": "b7a9e39e648e4c4f8ca90a0e594f0ff753fac9a8bafada312990aadbdbbb48fe",
+      "records": [
+        {
+          "file": "src/compiler/builder.ts",
+          "sides": {
+            "main": {
+              "view_elements": 0,
+              "view_element_checks": 0,
+              "units": 55,
+              "attempted": 55,
+              "panicked_units": 0,
+              "ir_observed": 55,
+              "finding_free_attempted": 25,
+              "finding_free_view_elements": 0,
+              "finding_free_view_element_checks": 0
+            },
+            "head": {
+              "view_elements": 28,
+              "view_element_checks": 14,
+              "units": 55,
+              "attempted": 55,
+              "panicked_units": 0,
+              "ir_observed": 55,
+              "finding_free_attempted": 25,
+              "finding_free_view_elements": 5,
+              "finding_free_view_element_checks": 4
+            }
+          }
+        }
+      ],
+      "raw": {
+        "bundle": "declaration-data-000.tar.gz",
+        "member": "d009.tar.gz",
+        "sha256": "c765a2a20c09feb7b8bbf1d2b71f896fa7b465dcf51e9bd73e6de9caff9bbaa0"
+      }
+    }
+  },
+  "refinements": {}
+}
