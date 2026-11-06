@@ -9,7 +9,10 @@ import (
 
 // CheckPure is the conservative seam for the forthcoming split analysis.
 // Reflection visits new IR operands automatically, so an added expression cannot
-// silently hide an I/O operation or global read from this interim check.
+// silently hide an I/O operation or global read from this interim check, and an
+// expression with no case here must be ir.Inert, or it is refused: an operation
+// added later, which could run code or reach the host, fails closed until it is
+// reviewed (Compiler's and Adamic's ruling on #qk8rztp S2c-2b).
 func CheckPure(program *ir.Program, function int) error {
 	visited := make(map[int]bool)
 	var inspect func(int) error
@@ -73,6 +76,24 @@ func CheckPure(program *ir.Program, function int) error {
 					if err := inspect(target); err != nil {
 						return err
 					}
+				}
+			case ir.GeneratorNext:
+				// A step runs the body of the generator its frame was made by, whose call may be
+				// outside what this inspects (a caller handed the frame in), so the body is
+				// inspected here.
+				if err := inspect(node.Function); err != nil {
+					return err
+				}
+			case ir.RegExpCall:
+				if node.Replacement != nil {
+					return fmt.Errorf("calls an unbounded function value")
+				}
+			case ir.JSONEncode:
+				// Lowering refuses an operand that bears a getter, so the encoding reads the
+				// value's fields and runs nothing of the program's.
+			default:
+				if expression, isExpression := node.(ir.Expression); isExpression && !ir.Inert(expression) {
+					return fmt.Errorf("impure: an operation no purity review names (%T)", node)
 				}
 			}
 		}
