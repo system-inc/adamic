@@ -38,7 +38,7 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, product := range commandRuntimes {
-		if product.options.Target != "" {
+		if product.options.Target == "wasm32-wasi" {
 			if _, runs := wasitest.Sysroot(t, "ADAMIC_ORACLE_WASI", "the "+product.name+" product's builder"); !runs {
 				continue
 			}
@@ -77,7 +77,7 @@ func productsBuildKey(t *testing.T, root, key string, features []string) bool {
 		return false
 	}
 	for _, variant := range runtimeproducts.Variants {
-		if variant.Options.Target != "" {
+		if variant.Options.Target == "wasm32-wasi" {
 			if _, runs := wasitest.Sysroot(t, variant.Requires, "the runtimeproducts "+variant.Name+" variant's key"); !runs {
 				continue
 			}
