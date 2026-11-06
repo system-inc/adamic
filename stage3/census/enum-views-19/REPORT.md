@@ -1,5 +1,10 @@
 # Enum views: nineteen-site B2 measurement
 
+**Result:** the old cast scan stops disappear at all nineteen sites, but the
+expected owning-unit lowering is not observed. Seventeen formatter units stop
+at the enum live-binding lookup; the other two units stop earlier. The ordinary
+79-root census has zero changed first stops against the pinned earlier main.
+
 Target: 9bdbe75ede31d9b18e49ae3a79843eeaa89c63d4, change chg_bzxjsxe1,
 from typescript/enum-views-readonly-2. This is a fresh worktree and a report-only
 branch, typescript/enum-views-19. Adaptation 40 is unchanged.
@@ -22,6 +27,9 @@ exclusively to Library.
   the ordinary compiler, existing full latent census, and replay worker build.
   Raw provenance, tool hashes, build logs and reference records are in
   01-setup.tar.gz.
+- Full apply and nineteen-unit observations: 02-latent-units.tar.gz.
+- Independent replay and scan-only control: 03-scan-and-replay.tar.gz.
+- Complete ordinary comparison and final audit: 04-ordinary.tar.gz.
 
 ## Nineteen owning-unit results
 
@@ -58,13 +66,14 @@ by internal/lower/namespaces.go:94. Every listed unit has status attempted.
 | 87 | formatSignatureCheckMode / SignatureCheckMode | R0 | N0 | `debug.ts:484:33`: N1 |
 | 88 | formatTypeFacts / TypeFacts | R0 | N0 | `debug.ts:488:34`: N1 |
 | 89 | attachFlowNodeDebugInfoWorker / FlowFlags | R0 | N0 | `debug.ts:496:15`: Refused: in that narrows a union of object types (any object with the key passes) |
-| 91 | makeName / GeneratedIdentifierFlags | R0 | N0 | `emitter.ts:5769:30`: NotYet: a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) |
+| 91 | makeName / GeneratedIdentifierFlags | R0 | N0 | `emitter.ts:5769:30`: NotYet: EmitNode intersection union |
 
 Rule 89's first stop is Refused at debug.ts:496:15: `in that narrows a union of
 object types (any object with the key passes)`, before the getter cast at 519:56.
 Rule 91's first stop is NotYet at emitter.ts:5769:30 on the EmitNode intersection
 union, before the cast at 5790:141. Its unit also records later reads of the
-unavailable autoGenerate binding, including 5790:84. All findings, not just the
+unavailable autoGenerate binding, including 5790:84. The first union reason is
+`a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })`. All findings, not just the
 first, are retained in unit-results.json inside the latent piece.
 
 The emitter replay worker exits 1 because its deliberately requested old
@@ -76,7 +85,7 @@ it does not by itself establish failure of whole-program production lowering.
 
 The target's complete apply passes. Its 79 compiler source files are byte-for-byte
 identical to the prior adaptation-only tree, as source-audit.json records.
-The separate ordinary 79-root census is still running. The separate B2 emitter
+The ordinary 79-root comparison is complete; see below. The separate B2 emitter
 scan has no finding on the nineteenth cast's line. Its scan-only driver matches
 all 21 findings from the full B2 debug scan exactly, lowers no units, and keeps
 the no-output guards. It changes only the scratch driver, stored as .go.txt in
@@ -87,3 +96,63 @@ attempts in the full census.
 
 All raw records are packed in the numbered tar.gz files. SHA256SUMS hashes the
 archives; each archive also contains a SHA256SUMS for its raw member files.
+
+## Ordinary 79-root compiler census
+
+The ordinary production compiler driver ran independently on all 79 .ts roots.
+Three non-TypeScript file records and a whole-program record are preserved raw
+and excluded from this per-file comparison. Only tree prefixes and timings are
+normalized; kind, location, reason, fix and any diagnostics are compared.
+
+| Kind | Main | B2 |
+| --- | ---: | ---: |
+| NotYet | 4 | 4 |
+| Refused | 73 | 73 |
+| accepted | 2 | 2 |
+
+Changed first stops: **0**.
+
+Every root retains its exact first stop or accepted outcome. There is no
+ordinary per-file first-stop movement to attribute to the B2 stack.
+
+The raw census, full normalized per-root comparison and source hash audit are
+in 04-ordinary.tar.gz. The comparison baseline is the earlier pinned main, not
+a claim about an unmeasured moving origin/main tip.
+
+## Reproduction and validation
+
+The ordinary tool is built without a compiler overlay from the pinned target.
+The latent tool and worker use the existing make_overlay.py output; only the
+supplementary scan-only tool adds an early emit after the existing refusal scan.
+The latter's .go.txt source and overlay map are packed in piece 03. No production
+Go, adaptation-40 rule, owner pin, or source fixture is changed.
+
+Commands were run from the fresh worktree after sourcing
+/workspace/adamic-tools/env.sh, with stdout/stderr redirected to the retained
+logs. ADAMIC_TYPESCRIPT_SOURCE points to the pinned TypeScript source. Essential
+commands, using the paths recorded in provenance.json, are:
+
+```sh
+bash stage3/apply.sh /workspace/scratch/ev19/applied --build-product
+go build -o /workspace/scratch/ev19/bin/ ./cmd/adamic ./stage3/census/tool
+python3 stage3/census/latent/make_overlay.py /workspace/enum-views-19 /workspace/scratch/ev19/overlay
+go build -buildvcs=false -overlay=/workspace/scratch/ev19/overlay/overlay.json -o /workspace/scratch/ev19/bin/latent ./stage3/census/latent/tool
+LATENT_FULL=1 LATENT_ONLY_FILE=/workspace/scratch/ev19/applied/src/compiler/debug.ts LATENT_ASSERT_NO_OUTPUT=1 /workspace/scratch/ev19/bin/latent /workspace/scratch/ev19/applied/src/compiler /workspace/scratch/ev19/debug-latent.jsonl
+/workspace/scratch/ev19/bin/replay -project /workspace/scratch/ev19/applied/src/compiler -where /workspace/scratch/ev19/applied/src/compiler/debug.ts:424:33 -kind NotYet -reason 'an enum read through its namespace without a lowered binding'
+/workspace/scratch/ev19/bin/tool /workspace/scratch/ev19/applied/src/compiler /workspace/scratch/ev19/ordinary.jsonl
+```
+
+Each measurement command is wrapped in timeout 1490s with a 10s termination
+grace. All pieces completed without timeout and were committed and plainly
+pushed as completed. The full debug census has 105 units and 166 findings;
+its scan-only control reproduces all 21 refusal-scan findings exactly.
+The old nineteen namespace cast-scan findings are absent, but no owning unit
+completes beyond its cast in these observations. No native lowering or execution
+success is claimed. A census-local missing binding is not, by itself, a proof
+of production whole-program failure.
+
+Archive and member hashes were checked. The final audit records zero active
+measurement processes and confirms that only this report directory differs from
+the requested target. Adaptation 40 remains unchanged. A scan-control count in
+an earlier report commit was corrected from 39 to the observed 21; its raw
+control record was correct throughout.
