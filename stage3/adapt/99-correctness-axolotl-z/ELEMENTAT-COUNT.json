@@ -1627,5 +1627,30 @@
   "recorderVersions": {
     "1": "native source mapping, first 40 successful units",
     "2": "exception-only offline mapping; comparison verifies 263 calls and all required callers"
-  }
+  },
+  "wholeControl": {
+    "exit": 0,
+    "seconds": 1031.3849574060005,
+    "counted": false,
+    "purpose": "unchanged stage3/lane/run.sh control and exact test-union comparison",
+    "profile": "/workspace/scratch/elementat-b/whole-control-tasks.jsonl",
+    "shardUnionIdentical": true,
+    "units": 398,
+    "tests": 106367,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "namesDigest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+    "baselineDiffByteIdentical": true
+  },
+  "totalCalls": 1936,
+  "observedOffsets": [
+    "-1",
+    "0",
+    "1"
+  ],
+  "independentClassificationAgrees": true,
+  "stepB": "Not yet started at this Step A checkpoint; the zero count gate is met, while all-class witness equality remains unresolved"
 }
