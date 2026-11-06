@@ -122,8 +122,11 @@ func TestHostBindingShadowingLocalIsTheLocal(t *testing.T) {
 // Nothing in the program may define a host binding's name (Language's condition 1 on #00qn5az): a write
 // to a `declare let` is refused, and so is a write through the global object whose key names a row, by
 // property or by element, or whose key could name one. The global object is judged by its type, typeof
-// globalThis, through any name: globalThis, an alias, globalThis.globalThis and Node's global. Mutant
-// (e), internal/oracle/testdata/host_bindings/mutants.md: the receiver judged by its spelling again.
+// globalThis, through any name: globalThis, an alias, globalThis.globalThis and Node's global, and through
+// a union or intersection holding it, a type parameter constrained to it, or an arm of ?: that is it even
+// where the checker reduced the union away (other's type a supertype of it). Mutants (e), (f) and (g),
+// internal/oracle/testdata/host_bindings/mutants.md: the receiver judged by its spelling again, by its
+// type's own symbol alone, and without its operands.
 func TestHostBindingWritesAreRefused(t *testing.T) {
 	t.Parallel()
 	const fix = "a host binding is the host's to define, and nothing in the program may; keep the value in a variable of your own"
@@ -138,6 +141,12 @@ func TestHostBindingWritesAreRefused(t *testing.T) {
 		{"an alias of globalThis", map[string]string{"main.ts": "import process from 'node:process';\nconst g = globalThis;\ng.process = process;\n"}, "main.ts:3:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"globalThis.globalThis", map[string]string{"main.ts": "import process from 'node:process';\nglobalThis.globalThis.process = process;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"Node's global", map[string]string{"main.ts": "import process from 'node:process';\nglobal.process = process;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
+		{"a union with the global object", map[string]string{"main.ts": "import process from 'node:process';\nconst other: { process: typeof process; tag: string } = { process, tag: 'other' };\n(process.argv.length > 9 ? globalThis : other).process = process;\n"}, "main.ts:3:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
+		{"a union the checker reduces to its other member", map[string]string{"main.ts": "import process from 'node:process';\nconst other: { process: typeof process } = { process };\n(process.argv.length > 9 ? globalThis : other).process = other.process;\n"}, "main.ts:3:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
+		{"an intersection with the global object", map[string]string{"main.ts": "const fire = (eventName: string): void => {\n\tconsole.log(eventName);\n};\n(globalThis as typeof globalThis & { onProfilerEvent?: (eventName: string) => void }).onProfilerEvent = fire;\n"}, "main.ts:4:1: Adamic 0.1 refuses a write through globalThis to the host binding onProfilerEvent; " + fix},
+		{"a parameter of a union with the global object", map[string]string{"main.ts": "import process from 'node:process';\nfunction put(host: typeof globalThis | { process: typeof process; tag: string }): void {\n\thost.process = process;\n}\nput(globalThis);\n"}, "main.ts:3:2: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
+		{"a parameter of an intersection with the global object", map[string]string{"main.ts": "const fire = (eventName: string): void => {\n\tconsole.log(eventName);\n};\nfunction put(host: typeof globalThis & { onProfilerEvent?: (eventName: string) => void }): void {\n\thost.onProfilerEvent = fire;\n}\nput(globalThis);\n"}, "main.ts:5:2: Adamic 0.1 refuses a write through globalThis to the host binding onProfilerEvent; " + fix},
+		{"a type parameter constrained to the global object", map[string]string{"main.ts": "import process from 'node:process';\nfunction put<G extends typeof globalThis>(host: G): void {\n\thost.process = process;\n}\nput(globalThis);\n"}, "main.ts:3:2: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"globalThis[key]", map[string]string{"main.ts": "import process from 'node:process';\nconst key: 'process' | 'performance' = process.argv.length > 9 ? 'process' : 'performance';\ndelete globalThis[key];\n"}, "main.ts:3:8: Adamic 0.1 refuses a write through globalThis whose key may name a host binding; " + fix},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
