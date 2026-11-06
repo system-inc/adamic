@@ -1,0 +1,45 @@
+// A generator's direct call and a collection's iterator into one IterableIterator<T> parameter at
+// two call sites (#qk8rztp S2c-2b, Lower's pin): each next is an IteratorNext that steps whichever
+// it is at run time, never by its static type, a generator by its frame and a collection's iterator
+// by its own next, natively in adamic_iterator_next and on JavaScript through the kind test. Each
+// result is a fresh object, and next() after done answers done for either.
+interface Entry {
+    readonly name: string;
+    readonly order: number;
+}
+function* made(count: number): Generator<Entry, undefined, undefined> {
+    for (let index = 0; index < count; index++) {
+        yield { name: `made ${String(index)}`, order: index * 3 };
+    }
+}
+function* counted(limit: number): Generator<number, undefined, undefined> {
+    for (let index = 0; index < limit; index++) {
+        yield index + 20;
+    }
+}
+function elaborate(iterator: IterableIterator<Entry>): string {
+    let reported = '';
+    for (let status = iterator.next(); !status.done; status = iterator.next()) {
+        reported += `${status.value.name}:${String(status.value.order)} `;
+    }
+    const again = iterator.next();
+    return reported + (again.done ? 'done' : 'more');
+}
+function firstTwo(numbers: IterableIterator<number>): number {
+    const first = numbers.next();
+    const second = numbers.next();
+    return (first.done ? 0 : first.value) + (second.done ? 0 : second.value * 100);
+}
+const entries = new Map<string, Entry>();
+const odd = new Set<number>();
+for (let index = 0; index < 3; index++) {
+    const entry: Entry = { name: `entry ${String(index)}`, order: index * 5 };
+    entries.set(entry.name, entry);
+    odd.add(index * 2 + 1);
+}
+console.log(elaborate(made(3)));
+console.log(elaborate(entries.values()));
+console.log(elaborate(made(0)));
+console.log(String(firstTwo(counted(4))));
+console.log(String(firstTwo(odd.values())));
+console.log(String(firstTwo(counted(1))));
