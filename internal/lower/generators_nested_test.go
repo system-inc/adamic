@@ -77,22 +77,33 @@ console.log(host('s'));
 			if !isMade || made.Returns != ir.Generator {
 				return true
 			}
-			if made.Direct != generator+1 {
-				t.Errorf("%s: a Generator call direct to %d, want parts (%d)", owner, made.Direct-1, generator)
+			// Its target is read through ClosureTargets, as every reader of a call's targets must
+			// (internal/ir's call_targets_guard_test.go); its carrier is the one closure-shaped value
+			// among its operands, since every argument here is a number.
+			if targets := program.ClosureTargets(made); targets.Unknown || len(targets.Functions) != 1 || targets.Functions[0] != generator {
+				t.Errorf("%s: a Generator call to %v, want parts (%d) alone", owner, targets, generator)
 			}
-			switch carrier := made.Closure.(type) {
-			case ir.Read:
-				carriers[owner] = append(carriers[owner], "binding")
-			case ir.ClosureSelf:
-				carriers[owner] = append(carriers[owner], "self")
-			case ir.MakeClosure:
-				if carrier.Function != generator {
-					t.Errorf("%s: a carrier made for function %d, want parts", owner, carrier.Function)
+			found := []string{}
+			walk(made, func(node any) bool {
+				switch carrier := node.(type) {
+				case ir.Read:
+					if carrier.Of == ir.Closure {
+						found = append(found, "binding")
+					}
+				case ir.ClosureSelf:
+					found = append(found, "self")
+				case ir.MakeClosure:
+					if carrier.Function != generator {
+						t.Errorf("%s: a carrier made for function %d, want parts", owner, carrier.Function)
+					}
+					found = append(found, "made")
 				}
-				carriers[owner] = append(carriers[owner], "made")
-			default:
-				t.Errorf("%s: a carrier %T", owner, made.Closure)
+				return true
+			})
+			if len(found) != 1 {
+				t.Errorf("%s: carriers %v in one call, want one", owner, found)
 			}
+			carriers[owner] = append(carriers[owner], found...)
 			return true
 		}
 	}
@@ -239,8 +250,11 @@ func TestNoCapturedOrEnvironmentLocalCanHoldAGenerator(t *testing.T) {
 		walk(function.Body, func(node any) bool {
 			if call, isCall := node.(ir.Call); isCall {
 				for position, argument := range call.Arguments {
-					if _, isIterable := argument.(ir.IterableOf); isIterable {
-						nested.Locals[nested.Functions[call.Function].Parameters[position]].Captured = true
+					if _, isIterable := argument.(ir.IterableOf); !isIterable {
+						continue
+					}
+					for _, target := range nested.CallTargets(call) {
+						nested.Locals[nested.Functions[target].Parameters[position]].Captured = true
 						parameters++
 					}
 				}
