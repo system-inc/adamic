@@ -7,17 +7,22 @@ import (
 	"testing"
 )
 
-// A getter or a method in an object literal is its property's value, seen as the slot's property, and is
-// judged against it exactly as { p: r } is (#wjqtypf). Before, nothing judged either, since neither is an
-// expression: `{ get p(): R { return r; } }` returned as `{ p: W }` let `make().p.t = 1` write r.t, which R
-// says is readonly, and Node and native both printed 1. p01 to p05 are Language's getter probes (a plain
-// return slot, `{ p: W } | undefined`, a const, an inferred return, an argument), and p06 a method
-// `{ get(): R }` returned as `{ get(): W }`; each is refused. t01 to t06 are their honest twins, W's own
-// field returned, and each lowers and agrees with Node on release, sanitized native and the JavaScript
-// backend. s01, a setter alone under a `{ p: W }` slot, is not yet: a member of a kind refuseWidening
-// doesn't judge fails closed wherever a slot names its property. n01, an arrow returning R seen as one
-// returning W, and n02, a class instance whose method returns R seen through `{ get(): W }`, are the
-// neighbours, refused already. Each program's whole stop is pinned in its .stop file, or "lowers".
+// A getter, a setter or a method in an object literal is part of its property, seen as the slot's property,
+// and is judged against it (#wjqtypf). Before, nothing judged any of them, since none is an expression:
+// `{ get p(): R { return r; } }` returned as `{ p: W }` let `make().p.t = 1` write r.t, which R says is
+// readonly, and Node and native both printed 1. p01 to p05 are Language's getter probes (a plain return
+// slot, `{ p: W } | undefined`, a const, an inferred return, an argument), and p06 a method `{ get(): R }`
+// returned as `{ get(): W }`; each is refused, as { p: r } is. t01 to t06 are their honest twins, W's own
+// field returned. A getter judges what the property reads as, and a setter is judged on its own, by what it
+// takes, since tsc relates only the getter's type (Compiler's must on 0ee9e50b): d01, `{ get p(): Dog, set
+// p(v: Dog) }` written into a `{ p: Animal }` slot, is refused, and its twin t07, taking Animal, lowers. d02,
+// the same literal held by a const first and then seen as `{ p: Animal }`, was refused already. A setter
+// alone is not yet wherever a slot names its property (s01), since the property reads as undefined there,
+// unless what it takes is refused first (s02). g01, a getter alone seen as a writable `{ p: W }` and
+// written, throws a TypeError on Node, strict as a module is, and the same on both backends. n01, an arrow
+// returning R seen as one returning W, and n02, a class instance whose method returns R seen through
+// `{ get(): W }`, are the neighbours, refused already. Each program's whole stop is pinned in its .stop
+// file, or "lowers", which runs it on release, sanitized native and the JavaScript backend against Node.
 // Mutants: MUTANTS.
 func TestLiteralMemberSlots(t *testing.T) {
 	t.Parallel()
@@ -72,7 +77,7 @@ func TestLiteralMemberSlots(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 30 {
-		t.Fatalf("found %d programs, want 30", programs)
+	if programs != 40 {
+		t.Fatalf("found %d programs, want 40", programs)
 	}
 }

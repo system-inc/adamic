@@ -1,1 +1,1 @@
-record
+internal/oracle/testdata/literal_member_slot/p06_method_returning_r.a:5:14: Adamic 0.1 refuses a value of type () => R seen as () => W, whose readonly field t becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep t readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)

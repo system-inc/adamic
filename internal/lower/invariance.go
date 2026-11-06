@@ -493,14 +493,16 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	case node.Kind == ast.KindGetAccessor && literalMember(node):
 		// { get p(): R { return r; } } is r seen as the literal's property p, judged exactly as { p: r } is:
 		// what the getter returns against each slot of p. Nothing judged it before #wjqtypf, since a getter
-		// isn't an expression, so a readonly R went out as a writable W. A getter paired with a setter is
-		// judged here, by what it returns.
+		// isn't an expression, so a readonly R went out as a writable W. A getter judges what the property
+		// reads as; a setter beside it is judged in its own case, by what it takes.
 		slots, key, readable := l.literalMemberSlots(node)
 		if !readable {
 			return l.notYet(node, "a getter in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
 		}
 		own = l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(node))
 		contextual, found = l.literalMemberWidened(node, node.Name(), own, slots, key)
+	case node.Kind == ast.KindSetAccessor && literalMember(node):
+		return l.literalSetterRefusal(node)
 	case node.Kind == ast.KindMethodDeclaration && literalMember(node):
 		// { get(): R { return r; } } is a function seen as the literal's property: widened's signatures
 		// branch relates the two, its parameters both ways and what it returns covariantly, so a method
@@ -620,8 +622,8 @@ func (l *lowering) literalSlotMembers(literal *ast.Node, slot *checker.Type) []*
 }
 
 // judgedLiteralMembers are the kinds of an object literal's member refuseWidening judges against the slot
-// its property goes into: a property, by its initializer; a shorthand, a spread, a getter and a method, each
-// in its own case. A member of any other kind, a setter or one the language adds later, is the value of a
+// its property goes into: a property, by its initializer; a shorthand, a spread, a getter, a setter and a
+// method, each in its own case. A member of any other kind, one the language adds later, is the value of a
 // property nothing judges, so it falls to unjudgedLiteralMember and fails closed (#wjqtypf): a list of the
 // kinds that are judged, never of the ones that aren't, so a kind nobody listed can't lower unjudged.
 var judgedLiteralMembers = map[ast.Kind]bool{
@@ -629,6 +631,7 @@ var judgedLiteralMembers = map[ast.Kind]bool{
 	ast.KindShorthandPropertyAssignment: true,
 	ast.KindSpreadAssignment:            true,
 	ast.KindGetAccessor:                 true,
+	ast.KindSetAccessor:                 true,
 	ast.KindMethodDeclaration:           true,
 }
 
@@ -639,27 +642,52 @@ func literalMember(node *ast.Node) bool {
 
 // unjudgedLiteralMember is not yet for a member of an object literal whose kind refuseWidening doesn't judge
 // (judgedLiteralMembers), wherever a slot names its property: its value would go into that slot unjudged.
-// Where no slot names it, nothing sees it as anything, and it's let through. A setter beside a getter of the
-// same key is judged by the getter's case, by what the property reads as.
+// Where no slot names it, nothing sees it as anything, and it's let through.
 func (l *lowering) unjudgedLiteralMember(member *ast.Node) error {
-	slots, key, readable := l.literalMemberSlots(member)
+	slots, _, readable := l.literalMemberSlots(member)
 	if readable && len(slots) == 0 {
 		return nil
 	}
-	if member.Kind == ast.KindSetAccessor && readable {
-		for _, sibling := range member.Parent.AsObjectLiteralExpression().Properties.Nodes {
-			if sibling.Kind == ast.KindGetAccessor {
-				if siblingKey, siblingReadable := l.literalMemberKey(sibling); siblingReadable && siblingKey == key {
-					return nil
-				}
-			}
+	return l.notYet(member, describe(member)+" in an object literal written where a slot names its property, which stage 0 judges for a property, a shorthand, a spread, a getter, a setter and a method only")
+}
+
+// literalSetterRefusal judges a setter in an object literal against each slot of its property. A writer
+// through the slot can set anything the slot's type holds, so the setter must take all of it, and what it
+// takes must not be seen as a type that can write what it can't hold. tsc relates only what the property
+// reads as, the getter's type, so `{ get p(): Dog, set p(v: Dog) }` was accepted as `{ p: Animal }` and
+// handed a Cat; a getter beside the setter judges the reads, never this road (#wjqtypf, Compiler's must on
+// 0ee9e50b). A setter with no getter beside it is not yet wherever a slot names its property, since the
+// property then reads as undefined where the slot says it holds the slot's type.
+func (l *lowering) literalSetterRefusal(member *ast.Node) error {
+	slots, key, readable := l.literalMemberSlots(member)
+	if !readable {
+		return l.notYet(member, "a setter in an object literal whose key can't be read off the literal's slot, where it would be judged against its property")
+	}
+	if len(slots) == 0 {
+		return nil
+	}
+	parameters := l.checker.GetSignatureFromDeclaration(member).Parameters()
+	if len(parameters) != 1 {
+		return l.notYet(member, "a setter in an object literal without exactly one parameter")
+	}
+	takes := l.checker.GetTypeOfSymbol(parameters[0])
+	for _, slot := range slots {
+		if !l.enumAssignable(slot, takes) || !l.checker.IsTypeAssignableTo(slot, takes) {
+			return &Refused{Where: l.program.Where(member), What: "a setter of " + key + " taking " + l.checker.TypeToString(takes) + " seen as the property " + key + ": " + l.checker.TypeToString(slot) + ", so a write through it can hand the setter what it can't take", Fix: "take " + l.checker.TypeToString(slot) + " in the setter, or make " + key + " readonly in the type it's seen as, which can't write (adamic/invariant-mutable)"}
+		}
+		if found := l.widened(slot, takes, map[[2]*checker.Type]bool{}); found != nil {
+			return l.wideningRefusal(member, slot, takes, found)
 		}
 	}
-	what := describe(member)
-	if member.Kind == ast.KindSetAccessor {
-		what = "a setter"
+	for _, sibling := range member.Parent.AsObjectLiteralExpression().Properties.Nodes {
+		if sibling.Kind != ast.KindGetAccessor {
+			continue
+		}
+		if siblingKey, siblingReadable := l.literalMemberKey(sibling); siblingReadable && siblingKey == key {
+			return nil
+		}
 	}
-	return l.notYet(member, what+" in an object literal written where a slot names its property, which stage 0 judges for a property, a shorthand, a spread, a getter and a method only")
+	return l.notYet(member, "a setter with no getter in an object literal written where a slot names its property, which reads as undefined where the slot says it holds "+l.checker.TypeToString(slots[0]))
 }
 
 // literalMemberSlots is each slot a member of an object literal goes into, with the key it's read under
