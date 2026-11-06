@@ -5,6 +5,10 @@
 // an ambient value declaration, and ruled (Nov 6, #00qn5az) that perf_hooks arrives through a static top-level
 // `node:perf_hooks` namespace import, in 93's idiom, and the declaration goes. isNodeLikeSystem and its require test
 // are 99q's, and Correctness changes them in her own adaptation; this one leaves core.ts alone.
+// 65's cast gave Node's perf_hooks object the file's own Performance type. Without it, Node's Performance reaches
+// tryGetPerformance's inferred return, and Lower refuses its views as the file's types. So tryGetPerformance declares
+// its return with the file's own Performance, and PerformanceTime's timeOrigin is readonly, which makes that view
+// true of Node's object (tsc never writes timeOrigin).
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
@@ -18,6 +22,16 @@ const local = "perfHooks";
 const binding = {
     original: "const { performance } = require(\"perf_hooks\") as { performance?: Performance | undefined };",
     adapted: "const { performance } = perfHooks;",
+};
+// tryGetPerformance's header, from `function` to its body, without a return type and with the file's own view.
+const header = {
+    original: "function tryGetPerformance() ",
+    adapted: "function tryGetPerformance(): { shouldWriteNativeEvents: boolean; performance: Performance; } | undefined ",
+};
+// PerformanceTime's timeOrigin member.
+const timeOrigin = {
+    original: "timeOrigin: number;",
+    adapted: "readonly timeOrigin: number;",
 };
 // 65 appends its declaration with LF line breaks to the CRLF file; removing it gives back the file's own ending.
 const requireText = "declare const require: (specifier: \"perf_hooks\") => any;";
@@ -48,8 +62,9 @@ function identifiers(ts, file, name) {
     return nodes(ts, file, node => ts.isIdentifier(node) && node.text === name);
 }
 
-// The namespace import right after the one ./_namespaces/ts.js import, the binding in tryGetPerformance, and 65's
-// require declaration at the end of the file, each present or absent together.
+// The namespace import right after the one ./_namespaces/ts.js import, the binding in tryGetPerformance, 65's
+// require declaration at the end of the file, tryGetPerformance's return type and PerformanceTime's readonly
+// timeOrigin, each present or absent together.
 function fileState(ts, file) {
     const imports = file.statements.filter(ts.isImportDeclaration);
     const anchor = imports[0];
@@ -82,7 +97,11 @@ function fileState(ts, file) {
         assert.equal(file.text.slice(declaration.end), "\n", "unreviewed text after the require declaration");
         requireDeclaration = { state: "original", declaration };
     }
-    const pieces = { import: importState, binding: bindingState, "require declaration": requireDeclaration.state };
+    const headerState = textState(file.text.slice(owner.getStart(file), owner.body.getStart(file)), header, "tryGetPerformance header");
+    const performanceTime = one(file.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === "PerformanceTime"), "PerformanceTime");
+    const member = one(performanceTime.members.filter(node => ts.isPropertySignature(node) && node.name.getText(file) === "timeOrigin"), "PerformanceTime's timeOrigin");
+    const timeOriginState = textState(member.getText(file), timeOrigin, "timeOrigin member");
+    const pieces = { import: importState, binding: bindingState, "require declaration": requireDeclaration.state, "return type": headerState, timeOrigin: timeOriginState };
     const states = Object.values(pieces);
     assert(states.every(state => state === states[0]), `half-adapted performanceCore.ts: ${Object.entries(pieces).map(([name, state]) => `${name} ${state}`).join(", ")}`);
     // Before, require is named twice (the call and the declaration) and the local nowhere; after, require nowhere
@@ -90,7 +109,10 @@ function fileState(ts, file) {
     const original = states[0] === "original";
     assert.equal(identifiers(ts, file, "require").length, original ? 2 : 0, "performanceCore.ts names require outside the reviewed sites");
     assert.equal(identifiers(ts, file, local).length, original ? 0 : 2, `performanceCore.ts names ${local} outside the reviewed sites`);
-    return { state: states[0], anchor, statement, requireDeclaration };
+    // timeOrigin is named at PerformanceTime's member and tryGetPerformanceHooks's typeof read, both sides, so no other
+    // member redeclares it writable.
+    assert.equal(identifiers(ts, file, "timeOrigin").length, 2, "performanceCore.ts names timeOrigin outside the reviewed sites");
+    return { state: states[0], anchor, statement, requireDeclaration, owner, member };
 }
 
 // Before the edit, by symbol: the require declaration is read only at the binding being replaced, and that read
@@ -136,6 +158,19 @@ function plannedBinding(ts, program, fileName, sysName) {
     return [message(perfDiagnostic)];
 }
 
+// The planned return type's Performance is the file's own interface, never a global one, and the timeOrigin it
+// inherits from PerformanceTime is readonly.
+function localView(ts, program, fileName) {
+    const file = program.getSourceFile(fileName);
+    const checker = program.getTypeChecker();
+    const owner = one(file.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === "tryGetPerformance"), "planned tryGetPerformance");
+    const reference = one(nodes(ts, owner.type, node => ts.isTypeReferenceNode(node) && node.typeName.getText(file) === "Performance"), "the return type's Performance");
+    const declarations = checker.getSymbolAtLocation(reference.typeName)?.declarations ?? [];
+    assert(declarations.length === 1 && ts.isInterfaceDeclaration(declarations[0]) && declarations[0].getSourceFile() === file, "the return type's Performance is not the file's own interface");
+    const member = checker.getTypeAtLocation(reference).getProperty("timeOrigin");
+    assert(member?.declarations?.length === 1 && ts.getCombinedModifierFlags(member.declarations[0]) & ts.ModifierFlags.Readonly, "the return type's timeOrigin is not readonly");
+}
+
 function plannedProgram(ts, program, fileName, text) {
     const host = ts.createCompilerHost(program.getCompilerOptions(), true);
     const original = host.getSourceFile.bind(host);
@@ -170,22 +205,30 @@ function replaceOnce(text, from, to, label) {
 }
 
 // Stock 6.0.3's JavaScript of the planned file is upstream's with the import added and the binding replaced. The
-// expected text is built from the before output, never from source.
-function provesJavaScript(ts, before, after) {
+// expected text is built from the before output, never from source. The return type and readonly are types only:
+// the planned text and the planned text without them give the same JavaScript.
+function provesJavaScript(ts, before, untyped, after) {
     for (const removeComments of [false, true]) {
         let expected = transpile(ts, before, removeComments);
         expected = replaceOnce(expected, `${anchorText}\n`, `${anchorText}\n${importText}\n`, "the ./_namespaces/ts.js import");
         expected = replaceOnce(expected, "const { performance } = require(\"perf_hooks\");\n", `${binding.adapted}\n`, "the perf_hooks require");
+        assert.equal(transpile(ts, untyped, removeComments), transpile(ts, after, removeComments), "the return type or readonly changes JavaScript");
         assert.equal(transpile(ts, after, removeComments), expected, "the adapted JavaScript differs by more than the import and the binding");
     }
 }
 
-// No declaration changes: tryGetPerformance is not exported, and neither the require declaration nor the import
-// reaches a declaration. With stripInternal, as typescript.d.ts is built, and without it.
+// With stripInternal, as typescript.d.ts is built, the declarations are identical: tryGetPerformance is not exported,
+// PerformanceTime is @internal, and neither the require declaration nor the import reaches a declaration. Without
+// stripInternal, the one difference is readonly on PerformanceTime's timeOrigin.
 function provesDeclarations(ts, fileName, before, after) {
     for (const stripInternal of [true, false]) {
         const declare = text => ts.transpileDeclaration(text, { compilerOptions: { stripInternal }, fileName: path.basename(fileName) }).outputText;
-        assert.equal(declare(after), declare(before), `the declarations changed (stripInternal ${stripInternal})`);
+        let expected = declare(before);
+        if (!stripInternal) {
+            assert.equal(expected.split(`    ${timeOrigin.original}`).length - 1, 1, "the declarations lack PerformanceTime's timeOrigin");
+            expected = expected.replace(`    ${timeOrigin.original}`, `    ${timeOrigin.adapted}`);
+        }
+        assert.equal(declare(after), expected, `the declarations changed (stripInternal ${stripInternal})`);
     }
 }
 
@@ -212,23 +255,32 @@ function plan(tree, ts) {
         // From the end of the last statement before the declaration to the end of the file: `Date.now;\r\n` again.
         { start: declaration.getFullStart(), end: text.length, text: "\r\n" },
     ];
+    const types = [
+        { start: found.owner.getStart(file), end: found.owner.body.getStart(file), text: header.adapted },
+        { start: found.member.getStart(file), end: found.member.end, text: timeOrigin.adapted },
+    ];
     const evidence = [
         { site: "perf_hooks import", file: performanceName, line: where(found.anchor) + 1, before: "", after: importText },
         { site: "tryGetPerformance binding", file: performanceName, line: where(found.statement), before: binding.original, after: binding.adapted },
         { site: "require declaration", file: performanceName, line: where(declaration), before: requireText, after: "" },
+        { site: "tryGetPerformance return type", file: performanceName, line: where(found.owner), before: header.original, after: header.adapted },
+        { site: "PerformanceTime timeOrigin", file: performanceName, line: where(found.member), before: timeOrigin.original, after: timeOrigin.adapted },
     ];
-    const after = apply(text, edits);
+    const untyped = apply(text, edits);
+    const after = apply(text, [...edits, ...types]);
     // Re-read the planned text: it must parse, be CRLF throughout, and be exactly this adaptation's state.
     const replanned = ts.createSourceFile(fileName, after, ts.ScriptTarget.Latest, true);
     assert.equal(replanned.parseDiagnostics.length, 0, "adapted syntax error");
     assert.equal(after.split("\r\n").length, after.split("\n").length, "the adapted performanceCore.ts has a line break that is not CRLF");
     assert.equal(fileState(ts, replanned).state, "adapted", "the planned text is not this adaptation's");
-    provesJavaScript(ts, text, after);
+    provesJavaScript(ts, text, untyped, after);
     provesDeclarations(ts, fileName, text, after);
     // The planned tree type-checks as before under 47's program: the same diagnostics plus at most the unresolved
-    // specifier's, which sys.ts's node: imports share, and the perfHooks read bound to the import.
+    // specifier's, which sys.ts's node: imports share, the perfHooks read bound to the import, and the return type's
+    // Performance the file's own, with timeOrigin readonly.
     const planned = plannedProgram(ts, program, fileName, after);
     const unresolved = plannedBinding(ts, planned, fileName, path.join(tree, "src/compiler/sys.ts"));
+    localView(ts, planned, fileName);
     assert.deepEqual(diagnosticsOf(ts, planned, fileName), [...diagnosticsOf(ts, program, fileName), ...unresolved].sort(), "performanceCore.ts's diagnostics changed");
     evidence.push({ site: "47's program", file: performanceName, before: diagnosticsOf(ts, program, fileName), after: diagnosticsOf(ts, planned, fileName) });
     return { fileName, before: text, after, evidence };
@@ -241,7 +293,7 @@ function adapt(tree, ts) {
     return { files: change.after === change.before ? 0 : 1, javascriptChanging: true, evidence: change.evidence };
 }
 
-module.exports = { adapt, plan, binding, importText, anchorText };
+module.exports = { adapt, plan, binding, header, timeOrigin, importText, anchorText };
 if (require.main === module) {
     try {
         if (process.argv.length !== 3) throw new Error("usage: node adapt.cjs <tree>");
