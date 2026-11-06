@@ -15,10 +15,13 @@ import (
 // undefined. Narrowing had nothing to do with it: the same return outside the if lowered too (a probe on
 // Home, Nov 6). Each road a shorthand goes into a slot is pinned with a union slot, in .a and .ts: a
 // return inside an if and outside one, an argument, an assignment, an array literal's element, and a
-// union of two object types. A generator's yield stops first at the generator's own NotYet on main, so
+// union of two object types. A spread into the same slots was the same hole (Lower's neighbor): a union's
+// own properties are only those every member has, so { ...h } was judged against none, and it's pinned
+// beside a spread into a plain { p: W }, refused on main already. A generator's yield stops first at the generator's own NotYet on main, so
 // it's pinned by that stop until generators lower. The honest twin, a W through the same return, lowers
-// and agrees with Node. Mutant: the shorthand case reading GetPropertyOfType off the literal's slot again,
-// under which the five union-holding-undefined roads lower.
+// and agrees with Node, and so does an honest spread. Mutants: the shorthand case reading GetPropertyOfType
+// off the literal's slot again, under which the shorthand roads with a union slot lower; and
+// literalSlotMembers answering the whole slot, under which the two union spreads lower.
 func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
 	t.Parallel()
 	const refusal = "Adamic 0.1 refuses a value of type R seen as W, whose readonly field t becomes writable"
@@ -29,6 +32,9 @@ func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
 		{"assignment", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nlet o: { p: W } | undefined = undefined;\no = { p };\nif (o) { o.p.t = 1; }\nconsole.log(String(p.t));\n", ":5:7"},
 		{"array_element", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst xs: ({ p: W } | undefined)[] = [{ p }];\nfor (const o of xs) { if (o) { o.p.t = 1; } }\nconsole.log(String(p.t));\n", ":4:41"},
 		{"object_union", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst o: { p: W } | { q: number } = { p };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(p.t));\n", ":4:39"},
+		{"spread", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } | undefined { return { ...h }; }\nconst r: R = { t: 2 };\nconst x = make({ p: r });\nif (x) { x.p.t = 1; }\nconsole.log(String(r.t));\n", ":3:61"},
+		{"spread_object_union", "interface R { readonly t: number }\ninterface W { t: number }\nconst r: R = { t: 2 };\nconst h = { p: r };\nconst o: { p: W } | { q: number } = { ...h };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(r.t));\n", ":5:39"},
+		{"spread_no_union", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } { return { ...h }; }\nconst r: R = { t: 2 };\nmake({ p: r }).p.t = 1;\nconsole.log(String(r.t));\n", ":3:49"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
@@ -48,6 +54,10 @@ func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
 			t.Fatal("want the generator stopped, got it lowered")
 		}
 		t.Logf("yield: %v", err)
+	})
+	t.Run("honest_spread", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: W }): { p: W } | undefined { return { ...h }; }\nconst w: W = { t: 2 };\nconst x = make({ p: w });\nif (x) { x.p.t = 1; }\nconsole.log(String(w.t));\n", ".ts")
 	})
 	t.Run("honest", func(t *testing.T) {
 		t.Parallel()
