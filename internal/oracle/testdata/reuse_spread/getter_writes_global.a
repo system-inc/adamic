@@ -1,0 +1,22 @@
+// A spread whose source's getter writes a global the call was handed (Memory's and Compiler's ruling
+// on #qk8rztp S2c-2b): natively a spread copies its source through adamic_object_copy_checked, which
+// calls the getter of every accessor the source owns, an object literal's own among them. describe
+// is handed tree, a global, and source, whose getter replaces tree. Reuse may lend or move a global
+// into a call only when nothing the call runs touches it, and the spread's getters are part of what
+// it runs (ir.ObjectLiteral's SpreadGetters), so tree stays counted: the getter's write lets go of the
+// old tree while describe still reads it. Node prints 11 tree1, then swapped5.
+type Tree = { value: number; label: string };
+let tree: Tree = { value: 1, label: `tree${String(1)}` };
+const source: Tree = {
+    get value(): number {
+        tree = { value: 5, label: `swapped${String(5)}` };
+        return 10;
+    },
+    label: `source${String(2)}`,
+};
+function describe(node: Tree, extra: Tree): string {
+    const copy = { ...extra };
+    return `${String(node.value + copy.value)} ${node.label}`;
+}
+console.log(describe(tree, source));
+console.log(tree.label);

@@ -17,7 +17,8 @@ import (
 // loops that call a callback, ArrayMap, ArrayVisit, ArrayReduce, ArrayFrom, ArraySort, MapForEach,
 // ParallelMap), a generator's step (GeneratorNext), a pattern's replacement callback (RegExpCall), a
 // run-time key read, which calls whichever getter its key names (DynamicKeyedProperty), an encoding,
-// which internal/flow takes to call back (JSONEncode), a suspension (Await, Yield), and every host
+// which internal/flow takes to call back (JSONEncode), an object literal, whose spread runs its
+// source's getters (ObjectLiteral, SpreadGetters), a suspension (Await, Yield), and every host
 // operation (FileStatus, NodeFSFile, NodeHostCall, ProcessCall, ProgramArguments, ReadDirectory,
 // ReadTextFile, WriteTextFile).
 //
@@ -41,8 +42,7 @@ var inertExpressions = func() map[string]bool {
 		GeneratorDone HasAccessor HasOwn HasProperty InstanceOf IsCollectionIterator IsGenerator IsNull IsUndefined
 		IterableOf JSONDecode JSONNull JoinEnter JoinLeave Length LibraryGlobal Logical LogicalAssignment MakeClosure
 		MakeError MapClear MapDelete MapEntries MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf
-		Narrow NodeBufferCall Null NumberCall NumberConstant NumberFormat NumberToString ObjectKeys ObjectLiteral
-		OwnFunction PhantomMember PlaceholderUse PromiseValue Property Read RecordCall RecordCoalesce RecordLiteral
+		Narrow NodeBufferCall Null NumberCall NumberConstant NumberFormat NumberToString ObjectKeys OwnFunction PhantomMember PlaceholderUse PromiseValue Property Read RecordCall RecordCoalesce RecordLiteral
 		RecordStorage RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant
 		StringFromCodes StringIndex StringIterator StringLength ToFixed Trim Truthy TypeOf TypedArrayFill TypedArrayNew
 		TypedArraySet TypedArraySort TypedArraySubarray Unary Undefined UnknownKind Unwrap Utf8At Utf8Length Void WeakOf
