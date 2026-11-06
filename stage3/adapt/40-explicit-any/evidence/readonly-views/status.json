@@ -1,0 +1,20 @@
+{
+  "task": "52zja36",
+  "base": "63e14a0b2b61cf251ad74292e42d5fd09af804b3",
+  "status": "stopped",
+  "reason": "ordered adapter replay refuses on both baseline and amended tree",
+  "adaptation": "30-indexed-reads",
+  "owner": "addRange",
+  "site": "core.ts:992:21",
+  "message": "declined site changed: core.ts:992:21",
+  "debug_owner_conflict": "not established: ordered replay stopped before later adapters",
+  "checks": {
+    "1": "both full applies pass; replay 00,10,20 zero changed files; 30 refuses without writes",
+    "2": "focused enum planner passes; full stage3 consumer tests not run",
+    "3": "not run",
+    "4": "focused complete source file JS transpilation identical; baseline normal compiler build passes; full artifact comparison not run",
+    "5": "ordinary baseline census interrupted after replay refusal; no complete comparison or latent site stops",
+    "6": "not run"
+  },
+  "additional_rule_changes": []
+}

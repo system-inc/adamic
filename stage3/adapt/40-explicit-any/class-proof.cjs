@@ -13,7 +13,7 @@ function enclosing(node) {
 function declarationProjection(text, contracts) {
     const src=ts.createSourceFile('api.d.ts',text,ts.ScriptTarget.Latest,true), edits=[];let aliasNeeded=false;
     function visit(n) {
-        if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end,className==='brands'?'undefined':'Record<string, string | number>']);
+        if (((ts.isPropertyDeclaration(n)||ts.isPropertySignature(n))&&className==='brands'||ts.isParameter(n)&&className==='enum-display')&&n.type?.kind===ts.SyntaxKind.AnyKeyword&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) edits.push([n.type.getStart(src),n.type.end,className==='brands'?'undefined':'Readonly<Record<string, string | number>>']);
         if(className==='diagnostic'&&ts.isParameter(n)&&contracts.some(c=>c.key===n.name.text&&c.owner===enclosing(n))) {
             if(n.type?.kind===ts.SyntaxKind.AnyKeyword)edits.push([n.type.getStart(src),n.type.end,'string | number']);
             else if(ts.isArrayTypeNode(n.type)&&n.type.elementType.kind===ts.SyntaxKind.AnyKeyword){edits.push([n.type.elementType.getStart(src),n.type.elementType.end,'DiagnosticArguments[number]']);aliasNeeded=true;}
@@ -142,7 +142,7 @@ if(mode==='before') {
     host.readFile=file=>{
         const text=originalRead(file);
         if(className==='brands'&&file===path.join(tree,'src/compiler/checker.ts'))return text.replace('declare _symbolLinksBrand: undefined;','declare _symbolLinksBrand: string;');
-        if(className==='enum-display'&&file===path.join(tree,'src/compiler/debug.ts'))return text.replace('enumObject: Record<string, string | number>','enumObject: Record<string, boolean>');
+        if(className==='enum-display'&&file===path.join(tree,'src/compiler/debug.ts'))return text.replace('enumObject: Readonly<Record<string, string | number>>','enumObject: Readonly<Record<string, boolean>>');
         if(className==='diagnostic'&&file===path.join(tree,'src/compiler/commandLineParser.ts'))return text.replace('...args: DiagnosticArguments[number][]','...args: boolean[]');
         return text;
     };
