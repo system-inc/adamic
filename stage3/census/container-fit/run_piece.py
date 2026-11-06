@@ -32,21 +32,25 @@ with (D/'process.log').open('w') as log:
  finally:
   if child.poll() is None:os.killpg(child.pid,signal.SIGKILL);child.wait()
 metrics=dict(returncode=code,wall_seconds=time.monotonic()-start,utc_end=datetime.datetime.now(datetime.timezone.utc).isoformat(),timed_out=time.monotonic()-start>=1500)
-if code==0:
- rows=[json.loads(x) for x in (D/'records.jsonl').read_text().splitlines()]
- if a.mode=='latent':
-  norm=lambda s:s.replace(str(T)+'/', '')
-  assert rows[0]['latent_mode']=='first-error'
-  assert {norm(r['file']) for r in rows[1:]}=={f['file'] for f in sel['files']}
-  units=[norm(u['where']) for r in rows[1:] for u in r['units']];assert len(units)==len(set(units))
-  assert set(units)==set(sel['expected_units'])
-  for r in rows[1:]:
-   for finding in r['findings']:
-    if finding['phase']=='lowering':assert norm(finding['unit']) in set(units)
-  timers=[json.loads(x) for x in (D/'times.jsonl').read_text().splitlines()]
-  assert {t['where'] for t in timers}=={u['where'] for r in rows[1:] for u in r['units'] if u['status'] in ['attempted','panic']}
-  metrics.update(units=len(units),timers=len(timers),unit_wall_seconds=sum(t['wall_seconds'] for t in timers),unit_cpu_seconds=sum(t['cpu_seconds'] for t in timers))
- else:assert len([r for r in rows if len(r['roots'])==1 and r['roots'][0].endswith('.ts')])==79
+validation_error=None
+try:
+ if code==0:
+  rows=[json.loads(x) for x in (D/'records.jsonl').read_text().splitlines()]
+  if a.mode=='latent':
+   norm=lambda s:s.replace(str(T)+'/', '')
+   assert rows[0]['latent_mode']=='first-error'
+   assert {norm(r['file']) for r in rows[1:]}=={f['file'] for f in sel['files']}
+   units=[norm(u['where']) for r in rows[1:] for u in r['units']];assert len(units)==len(set(units))
+   assert set(units)==set(sel['expected_units'])
+   for r in rows[1:]:
+    for finding in r['findings']:
+     if finding['phase']=='lowering':assert norm(finding['unit']) in set(units)
+   timers=[json.loads(x) for x in (D/'times.jsonl').read_text().splitlines()]
+   assert {t['where'] for t in timers}=={u['where'] for r in rows[1:] for u in r['units'] if u['status'] in ['attempted','panic']}
+   metrics.update(units=len(units),timers=len(timers),unit_wall_seconds=sum(t['wall_seconds'] for t in timers),unit_cpu_seconds=sum(t['cpu_seconds'] for t in timers))
+  else:assert len([r for r in rows if len(r['roots'])==1 and r['roots'][0].endswith('.ts')])==79
+except Exception as error:
+ validation_error=repr(error);metrics['validation_error']=validation_error
 for f in list(D.iterdir()):
  if f.suffix in ['.jsonl','.log']:
   metrics[f.name+'_sha256']=hashlib.sha256(f.read_bytes()).hexdigest()
@@ -62,3 +66,5 @@ with (O/'evidence/publication.log').open('a') as f:
 print(json.dumps(metrics),flush=True)
 if result.returncode:raise SystemExit('ordinary push failed, stop before next piece')
 if code:raise SystemExit('measurement failed, evidence committed and pushed')
+
+if validation_error:raise SystemExit("measurement validation failed; evidence committed and pushed: "+validation_error)
