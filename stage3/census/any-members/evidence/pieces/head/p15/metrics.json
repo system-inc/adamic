@@ -1,0 +1,24 @@
+{
+  "identity": {
+    "schema": 1,
+    "label": "head",
+    "piece": "p15",
+    "plan_sha256": "c028b544d5695bce350d42b224dcdd4b30fc45898f4c6e064f3f6c258a4cda33",
+    "selection_sha256": "896b6e19133bfd8eb8b5771b7d3466a2ce1ecb78e5c3042bac1b2e4386554968",
+    "binary_sha256": "f559657d3235c041bc6c550db01b9a091da2019dd8fd3dd614512c765f36d640",
+    "source_manifest_sha256": "a6efcf70dc06e41587289ae002591fd75e11fc211de14f706e1c56f28a500ce0"
+  },
+  "start_utc": "2026-11-06T01:50:16.411219+00:00",
+  "expected_units": 90,
+  "expected_timed_units": 90,
+  "estimated_seconds": 354.98156391,
+  "returncode": 0,
+  "end_utc": "2026-11-06T01:55:21.749260+00:00",
+  "process_wall_seconds": 305.33807279500616,
+  "process_cpu_seconds": 340.5704370000003,
+  "failure": null,
+  "latent_sha256": "977f2ac505f98dd63c3a2d1b6afdddcbf4b411348c697d5ab3c9bc587d970e94",
+  "times_sha256": "212643278c1fac65a0c117369b5c4cf8e09ebb053f652c54149b1795cd9054c5",
+  "unit_wall_seconds": 269.580342843,
+  "unit_cpu_seconds": 298.313463
+}
