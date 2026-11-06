@@ -72,6 +72,10 @@ func (l *lowering) ambientRefusal(node *ast.Node) error {
 	} else if ambientDeclaration(node) {
 		switch node.Kind {
 		case ast.KindVariableStatement:
+			// A .ts file's declaration a host-binding row names lowers by its row (host_bindings.go).
+			if matched, err := l.hostBindingStatement(node); matched {
+				return err
+			}
 			what = "an ambient value declaration"
 		case ast.KindFunctionDeclaration:
 			what = "an ambient function declaration"

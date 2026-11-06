@@ -85,6 +85,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 	for _, statement := range statements {
 		switch statement.Kind {
 		case ast.KindVariableStatement:
+			if l.hostBindingDeclared(statement) {
+				continue // the host's names are the host's (host_bindings.go)
+			}
 			list := statement.AsVariableStatement().DeclarationList
 			if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
 				continue // statements() refuses var where it stands
