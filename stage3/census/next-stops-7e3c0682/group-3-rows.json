@@ -1,0 +1,202 @@
+[
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 11.45154652
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/sys.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 11.157153452
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 11.262229478
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 10.880834622
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 10.5633577
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 13.811927477
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 14.04148054
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 10.765803825
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 10.958337867000001
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 11.498401222
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 9.835406267
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 12.850354216
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 12.972068355
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 14.371629998
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 14.200419491
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 12.870971828
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 15.181169101
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 15.244331509
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 13.189829367
+  },
+  {
+    "roots": [
+      "/workspace/next-stops-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/next-stops-adapted/src/compiler/core.ts:966:72",
+    "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 12.496051762
+  }
+]
