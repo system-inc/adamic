@@ -89,6 +89,7 @@ var localFields = map[string]localField{
 	"BoundMethod.Factory":             {why: "a factory function index"},
 	"BoundClosure.Function":           {why: "a function's index"},
 	"BoundClosure.GraphTypes":         {why: "allocation sites and graph types"},
+	"IteratorNext.Function":           {why: "a function's index"},
 	"MakeClosure.Function":            {why: "a function's index"},
 	"Method.Function":                 {why: "a function's index"},
 	"InstanceOf.Class":                {why: "a class's index"},

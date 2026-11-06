@@ -49,6 +49,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		panic("native: yield was not exposed before state cutting")
 	case ir.GeneratorNext:
 		return e.generatorNext(expression)
+	case ir.IteratorNext:
+		return e.iteratorNext(expression)
 	case ir.GeneratorDone:
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_generator_done(%s)", generatorPointer(expression.Generator, e.value(expression.Generator))))
 	case ir.IterableOf:

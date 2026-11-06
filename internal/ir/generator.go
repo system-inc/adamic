@@ -24,6 +24,26 @@ type GeneratorNext struct {
 
 func (g GeneratorNext) Type() Type { return g.Of }
 
+// IteratorNext is a hand-driven `x.next()` through an IterableIterator<T> parameter a generator
+// feeds (#qk8rztp S2c-2b): the result object iterator.next() gives, owned by the caller, as Node's
+// is, a fresh { value, done } each call. Iterator is the parameter's read, through the narrowing's
+// Defined or not. A generator steps, and the value it yields, held as Of (a number, a boolean or a
+// reference), is moved into the result; once its body has finished, or a throw has left it, the
+// result is done. A collection's iterator, when Collection says one feeds the parameter too, runs its
+// own next. Function is the one generator function whose frames reach it, whose ResumeMayThrow says
+// whether the caller tests for a throw (IteratorNextMayThrow); natively a throw builds no result.
+// Site is where the next is, which the loud default for anything else names. Lowering makes it only
+// by rewriting the S2c-2a CallClosure over next once the origins are proven (lower/iterable_views.go).
+type IteratorNext struct {
+	Iterator   Expression
+	Function   int
+	Of         Type
+	Collection bool
+	Site       string
+}
+
+func (IteratorNext) Type() Type { return Object }
+
 // IterableOf is a generator held where a slot typed Iterable<T> or IterableIterator<T> is, an
 // object: the only door from a Generator value to an Object-typed slot (Compiler, on #qk8rztp S2c-1).
 // It is a direct call's argument and nothing else (checkGeneratorRoads), and it adds no retain or
@@ -69,5 +89,11 @@ func (p *Program) HasGenerators() bool {
 
 // GeneratorNextMayThrow is a step that can leave a throw pending: one whose body a throw can leave.
 func (p *Program) GeneratorNextMayThrow(next GeneratorNext) bool {
+	return p.Functions[next.Function].ResumeMayThrow
+}
+
+// IteratorNextMayThrow is a hand-driven next() that can leave a throw pending: one whose generator's
+// body a throw can leave. A collection's iterator's next throws nothing.
+func (p *Program) IteratorNextMayThrow(next IteratorNext) bool {
 	return p.Functions[next.Function].ResumeMayThrow
 }
