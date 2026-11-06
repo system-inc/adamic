@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "seconds": 284.232,
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baselineDiffs": [
+    "api/typescript.d.ts"
+  ],
+  "artifact": "972f66fa46df8a2e07b1905b3c832309134d1620a5f2d451dae2232978bb038c",
+  "under25Minutes": true,
+  "rawArchive": "whole.tar.gz",
+  "sha256List": "whole.sha256"
+}

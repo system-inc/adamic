@@ -1,0 +1,18 @@
+{
+  "seconds": 4.973531678999279,
+  "exit": 0,
+  "timeoutSeconds": 1440,
+  "command": [
+    "timeout",
+    "--kill-after=10s",
+    "1440",
+    "python3",
+    "-B",
+    "/workspace/scratch/95h6-oracle-checkout/stage3/lane/merge_shards.py",
+    "/workspace/scratch/95h6-oracle-shards",
+    "--whole",
+    "/workspace/scratch/95h6-oracle-whole",
+    "--output",
+    "/workspace/scratch/95h6-oracle-merge.json"
+  ]
+}

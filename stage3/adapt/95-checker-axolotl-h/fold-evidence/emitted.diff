@@ -1,0 +1,112 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -43662,7 +43662,7 @@
+     }
+     function onLeft(left, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(left);
++        const maybeBound = maybeBind3(left);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(left);
+         }
+@@ -43676,7 +43676,7 @@
+     }
+     function onRight(right, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(right);
++        const maybeBound = maybeBind3(right);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(right);
+         }
+@@ -43707,7 +43707,7 @@
+       state.skip = false;
+       state.stackIndex--;
+     }
+-    function maybeBind2(node) {
++    function maybeBind3(node) {
+       if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {
+         return node;
+       }
+@@ -91038,13 +91038,14 @@
+   return !!(s.flags & 2 /* HasLiteralTypes */);
+ }
+ function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
++  var _a, _b;
+   return {
+     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
+     getCurrentDirectory: () => host.getCurrentDirectory(),
+-    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
++    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
+     getPackageJsonInfoCache: () => {
+-      var _a;
+-      return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
++      var _a2;
++      return (_a2 = host.getPackageJsonInfoCache) == null ? void 0 : _a2.call(host);
+     },
+     useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
+     redirectTargetsMap: host.redirectTargetsMap,
+@@ -91055,7 +91056,7 @@
+     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
+     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
+     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
+-    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
++    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
+   };
+ }
+ var SymbolTrackerImpl = class _SymbolTrackerImpl {
+--- before/typescript.js
++++ after/typescript.js
+@@ -48189,7 +48189,7 @@
+     }
+     function onLeft(left, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(left);
++        const maybeBound = maybeBind3(left);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(left);
+         }
+@@ -48203,7 +48203,7 @@
+     }
+     function onRight(right, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(right);
++        const maybeBound = maybeBind3(right);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(right);
+         }
+@@ -48234,7 +48234,7 @@
+       state.skip = false;
+       state.stackIndex--;
+     }
+-    function maybeBind2(node) {
++    function maybeBind3(node) {
+       if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {
+         return node;
+       }
+@@ -95665,13 +95665,14 @@
+   return !!(s.flags & 2 /* HasLiteralTypes */);
+ }
+ function createBasicNodeBuilderModuleSpecifierResolutionHost(host) {
++  var _a, _b;
+   return {
+     getCommonSourceDirectory: !!host.getCommonSourceDirectory ? () => host.getCommonSourceDirectory() : () => "",
+     getCurrentDirectory: () => host.getCurrentDirectory(),
+-    getSymlinkCache: maybeBind(host, host.getSymlinkCache),
++    getSymlinkCache: (_a = host.getSymlinkCache) == null ? void 0 : _a.bind(host),
+     getPackageJsonInfoCache: () => {
+-      var _a;
+-      return (_a = host.getPackageJsonInfoCache) == null ? void 0 : _a.call(host);
++      var _a2;
++      return (_a2 = host.getPackageJsonInfoCache) == null ? void 0 : _a2.call(host);
+     },
+     useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
+     redirectTargetsMap: host.redirectTargetsMap,
+@@ -95682,7 +95683,7 @@
+     readFile: host.readFile ? ((fileName) => host.readFile(fileName)) : void 0,
+     getDefaultResolutionModeForFile: (file) => host.getDefaultResolutionModeForFile(file),
+     getModeForResolutionAtIndex: (file, index) => host.getModeForResolutionAtIndex(file, index),
+-    getGlobalTypingsCacheLocation: maybeBind(host, host.getGlobalTypingsCacheLocation)
++    getGlobalTypingsCacheLocation: (_b = host.getGlobalTypingsCacheLocation) == null ? void 0 : _b.bind(host)
+   };
+ }
+ var SymbolTrackerImpl = class _SymbolTrackerImpl {

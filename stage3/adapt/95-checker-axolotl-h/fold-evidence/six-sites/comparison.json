@@ -1,0 +1,1210 @@
+{
+  "status": "pass",
+  "javascriptChanging": true,
+  "rewrites": 6,
+  "checkerImportRemoved": true,
+  "programImportUntouched": true,
+  "emittedFiles": 9,
+  "emitted": [
+    {
+      "name": "_tsc.js",
+      "identical": false,
+      "onlySixRewrites": true,
+      "renameProof": {
+        "renames": [
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+              "arrow": "getPackageJsonInfoCache"
+            },
+            "before": "_a",
+            "after": "_a2",
+            "member": "call",
+            "normalization": {
+              "from": "_a2",
+              "to": "_a"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 4459853,
+                "end": 4459855,
+                "line": 91046,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4459871,
+                "end": 4459873,
+                "line": 91047,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4459925,
+                "end": 4459927,
+                "line": 91047,
+                "column": 69,
+                "role": "member receiver",
+                "context": "_a.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 4459890,
+                "end": 4459893,
+                "line": 91047,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 4459909,
+                "end": 4459912,
+                "line": 91048,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a2 = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4459964,
+                "end": 4459967,
+                "line": 91048,
+                "column": 70,
+                "role": "member receiver",
+                "context": "_a2.call"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createProgram"
+            },
+            "before": "_p",
+            "after": "_q",
+            "member": "pop",
+            "normalization": {
+              "from": "_q",
+              "to": "_p"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 5714779,
+                "end": 5714781,
+                "line": 122737,
+                "column": 67,
+                "role": "declaration",
+                "context": "_p"
+              },
+              {
+                "start": 5733151,
+                "end": 5733153,
+                "line": 123119,
+                "column": 4,
+                "role": "assignment",
+                "context": "_p = tracing"
+              },
+              {
+                "start": 5733184,
+                "end": 5733186,
+                "line": 123119,
+                "column": 37,
+                "role": "member receiver",
+                "context": "_p.pop"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 5714846,
+                "end": 5714848,
+                "line": 122738,
+                "column": 71,
+                "role": "declaration",
+                "context": "_q"
+              },
+              {
+                "start": 5733241,
+                "end": 5733243,
+                "line": 123120,
+                "column": 4,
+                "role": "assignment",
+                "context": "_q = tracing"
+              },
+              {
+                "start": 5733274,
+                "end": 5733276,
+                "line": 123120,
+                "column": 37,
+                "role": "member receiver",
+                "context": "_q.pop"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost",
+              "arrow": "getBuildInfo"
+            },
+            "before": "_a2",
+            "after": "_a3",
+            "member": "call",
+            "normalization": {
+              "from": "_a3",
+              "to": "_a2"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 5758453,
+                "end": 5758456,
+                "line": 123622,
+                "column": 13,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 5758474,
+                "end": 5758477,
+                "line": 123623,
+                "column": 17,
+                "role": "assignment",
+                "context": "_a2 = program.getBuildInfo"
+              },
+              {
+                "start": 5758521,
+                "end": 5758524,
+                "line": 123623,
+                "column": 64,
+                "role": "member receiver",
+                "context": "_a2.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 5758591,
+                "end": 5758594,
+                "line": 123624,
+                "column": 13,
+                "role": "declaration",
+                "context": "_a3"
+              },
+              {
+                "start": 5758612,
+                "end": 5758615,
+                "line": 123625,
+                "column": 17,
+                "role": "assignment",
+                "context": "_a3 = program.getBuildInfo"
+              },
+              {
+                "start": 5758659,
+                "end": 5758662,
+                "line": 123625,
+                "column": 64,
+                "role": "member receiver",
+                "context": "_a3.call"
+              }
+            ]
+          }
+        ],
+        "introducedTemporaryNormalization": [
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+            },
+            "member": "getSymlinkCache",
+            "actual": "_a",
+            "canonical": "__95h_checker_symlink",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_a",
+              "to": "__95h_checker_symlink"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 4459568,
+                "end": 4459570,
+                "line": 91041,
+                "column": 7,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4459782,
+                "end": 4459784,
+                "line": 91045,
+                "column": 23,
+                "role": "assignment",
+                "context": "_a = host.getSymlinkCache"
+              },
+              {
+                "start": 4459828,
+                "end": 4459830,
+                "line": 91045,
+                "column": 69,
+                "role": "member receiver",
+                "context": "_a.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+            },
+            "member": "getGlobalTypingsCacheLocation",
+            "actual": "_b",
+            "canonical": "__95h_checker_global",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_b",
+              "to": "__95h_checker_global"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 4459572,
+                "end": 4459574,
+                "line": 91041,
+                "column": 11,
+                "role": "declaration",
+                "context": "_b"
+              },
+              {
+                "start": 4460723,
+                "end": 4460725,
+                "line": 91059,
+                "column": 37,
+                "role": "assignment",
+                "context": "_b = host.getGlobalTypingsCacheLocation"
+              },
+              {
+                "start": 4460783,
+                "end": 4460785,
+                "line": 91059,
+                "column": 97,
+                "role": "member receiver",
+                "context": "_b.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createProgram"
+            },
+            "member": "getGlobalTypingsCacheLocation",
+            "actual": "_p",
+            "canonical": "__95h_program_global",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_p",
+              "to": "__95h_program_global"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 5714842,
+                "end": 5714844,
+                "line": 122738,
+                "column": 67,
+                "role": "declaration",
+                "context": "_p"
+              },
+              {
+                "start": 5732982,
+                "end": 5732984,
+                "line": 123112,
+                "column": 37,
+                "role": "assignment",
+                "context": "_p = host.getGlobalTypingsCacheLocation"
+              },
+              {
+                "start": 5733042,
+                "end": 5733044,
+                "line": 123112,
+                "column": 97,
+                "role": "member receiver",
+                "context": "_p.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "realpath",
+            "actual": "_a2",
+            "canonical": "__95h_emit_realpath",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_a2",
+              "to": "__95h_emit_realpath"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 5757399,
+                "end": 5757402,
+                "line": 123595,
+                "column": 9,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 5758422,
+                "end": 5758425,
+                "line": 123621,
+                "column": 18,
+                "role": "assignment",
+                "context": "_a2 = host.realpath"
+              },
+              {
+                "start": 5758462,
+                "end": 5758465,
+                "line": 123621,
+                "column": 58,
+                "role": "member receiver",
+                "context": "_a2.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "createHash",
+            "actual": "_b2",
+            "canonical": "__95h_emit_hash",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_b2",
+              "to": "__95h_emit_hash"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 5757404,
+                "end": 5757407,
+                "line": 123595,
+                "column": 14,
+                "role": "declaration",
+                "context": "_b2"
+              },
+              {
+                "start": 5758888,
+                "end": 5758891,
+                "line": 123630,
+                "column": 20,
+                "role": "assignment",
+                "context": "_b2 = host.createHash"
+              },
+              {
+                "start": 5758930,
+                "end": 5758933,
+                "line": 123630,
+                "column": 62,
+                "role": "member receiver",
+                "context": "_b2.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "trace",
+            "actual": "_c2",
+            "canonical": "__95h_emit_trace",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_c2",
+              "to": "__95h_emit_trace"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 5757409,
+                "end": 5757412,
+                "line": 123595,
+                "column": 19,
+                "role": "declaration",
+                "context": "_c2"
+              },
+              {
+                "start": 5759034,
+                "end": 5759037,
+                "line": 123632,
+                "column": 15,
+                "role": "assignment",
+                "context": "_c2 = host.trace"
+              },
+              {
+                "start": 5759071,
+                "end": 5759074,
+                "line": 123632,
+                "column": 52,
+                "role": "member receiver",
+                "context": "_c2.bind"
+              }
+            ]
+          }
+        ],
+        "observations": {
+          "before": {
+            "spellings": [
+              "_a",
+              "_a2",
+              "_p",
+              "_q",
+              "_a3",
+              "_b",
+              "_b2",
+              "_c2"
+            ],
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0
+          },
+          "after": {
+            "spellings": [
+              "_a",
+              "_a2",
+              "_p",
+              "_q",
+              "_a3",
+              "_b",
+              "_b2",
+              "_c2"
+            ],
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0
+          }
+        },
+        "noOtherRenamesAllowed": true,
+        "allAfterSymbolsDistinct": true
+      },
+      "beforeSha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff",
+      "afterSha256": "72745a412c7bfb2acee732034bfeb86772a31d69e29dc70c1de3dad21db5c2dc",
+      "normalizedSha256": "6c4b042a06a5c6d768a5303038cc83315275f3362d47b649f73cd8124a6daa41",
+      "beforeBytes": 6247416,
+      "afterBytes": 6247604
+    },
+    {
+      "name": "_tsserver.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "afterSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "normalizedSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "beforeBytes": 27889,
+      "afterBytes": 27889
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "afterSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "normalizedSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "beforeBytes": 10364,
+      "afterBytes": 10364
+    },
+    {
+      "name": "tsc.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "afterSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "normalizedSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "beforeBytes": 267,
+      "afterBytes": 267
+    },
+    {
+      "name": "tsserver.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "afterSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "normalizedSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "beforeBytes": 272,
+      "afterBytes": 272
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "afterSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "normalizedSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "beforeBytes": 1013,
+      "afterBytes": 1013
+    },
+    {
+      "name": "typescript.js",
+      "identical": false,
+      "onlySixRewrites": true,
+      "renameProof": {
+        "renames": [
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+              "arrow": "getPackageJsonInfoCache"
+            },
+            "before": "_a",
+            "after": "_a2",
+            "member": "call",
+            "normalization": {
+              "from": "_a2",
+              "to": "_a"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 4697931,
+                "end": 4697933,
+                "line": 95673,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4697949,
+                "end": 4697951,
+                "line": 95674,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4698003,
+                "end": 4698005,
+                "line": 95674,
+                "column": 69,
+                "role": "member receiver",
+                "context": "_a.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 4697968,
+                "end": 4697971,
+                "line": 95674,
+                "column": 11,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 4697987,
+                "end": 4697990,
+                "line": 95675,
+                "column": 15,
+                "role": "assignment",
+                "context": "_a2 = host.getPackageJsonInfoCache"
+              },
+              {
+                "start": 4698042,
+                "end": 4698045,
+                "line": 95675,
+                "column": 70,
+                "role": "member receiver",
+                "context": "_a2.call"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createProgram"
+            },
+            "before": "_p",
+            "after": "_q",
+            "member": "pop",
+            "normalization": {
+              "from": "_q",
+              "to": "_p"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 5963373,
+                "end": 5963375,
+                "line": 127603,
+                "column": 67,
+                "role": "declaration",
+                "context": "_p"
+              },
+              {
+                "start": 5981836,
+                "end": 5981838,
+                "line": 127985,
+                "column": 4,
+                "role": "assignment",
+                "context": "_p = tracing"
+              },
+              {
+                "start": 5981869,
+                "end": 5981871,
+                "line": 127985,
+                "column": 37,
+                "role": "member receiver",
+                "context": "_p.pop"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 5963440,
+                "end": 5963442,
+                "line": 127604,
+                "column": 71,
+                "role": "declaration",
+                "context": "_q"
+              },
+              {
+                "start": 5981926,
+                "end": 5981928,
+                "line": 127986,
+                "column": 4,
+                "role": "assignment",
+                "context": "_q = tracing"
+              },
+              {
+                "start": 5981959,
+                "end": 5981961,
+                "line": 127986,
+                "column": 37,
+                "role": "member receiver",
+                "context": "_q.pop"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost",
+              "arrow": "getBuildInfo"
+            },
+            "before": "_a2",
+            "after": "_a3",
+            "member": "call",
+            "normalization": {
+              "from": "_a3",
+              "to": "_a2"
+            },
+            "beforeCount": 3,
+            "afterCount": 3,
+            "everyOccurrenceRenamed": true,
+            "dotNameReadsBefore": 0,
+            "dotNameReadsAfter": 0,
+            "beforeOccurrences": [
+              {
+                "start": 6007202,
+                "end": 6007205,
+                "line": 128488,
+                "column": 13,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 6007223,
+                "end": 6007226,
+                "line": 128489,
+                "column": 17,
+                "role": "assignment",
+                "context": "_a2 = program.getBuildInfo"
+              },
+              {
+                "start": 6007270,
+                "end": 6007273,
+                "line": 128489,
+                "column": 64,
+                "role": "member receiver",
+                "context": "_a2.call"
+              }
+            ],
+            "afterOccurrences": [
+              {
+                "start": 6007340,
+                "end": 6007343,
+                "line": 128490,
+                "column": 13,
+                "role": "declaration",
+                "context": "_a3"
+              },
+              {
+                "start": 6007361,
+                "end": 6007364,
+                "line": 128491,
+                "column": 17,
+                "role": "assignment",
+                "context": "_a3 = program.getBuildInfo"
+              },
+              {
+                "start": 6007408,
+                "end": 6007411,
+                "line": 128491,
+                "column": 64,
+                "role": "member receiver",
+                "context": "_a3.call"
+              }
+            ]
+          }
+        ],
+        "introducedTemporaryNormalization": [
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+            },
+            "member": "getSymlinkCache",
+            "actual": "_a",
+            "canonical": "__95h_checker_symlink",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_a",
+              "to": "__95h_checker_symlink"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 4697646,
+                "end": 4697648,
+                "line": 95668,
+                "column": 7,
+                "role": "declaration",
+                "context": "_a"
+              },
+              {
+                "start": 4697860,
+                "end": 4697862,
+                "line": 95672,
+                "column": 23,
+                "role": "assignment",
+                "context": "_a = host.getSymlinkCache"
+              },
+              {
+                "start": 4697906,
+                "end": 4697908,
+                "line": 95672,
+                "column": 69,
+                "role": "member receiver",
+                "context": "_a.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost"
+            },
+            "member": "getGlobalTypingsCacheLocation",
+            "actual": "_b",
+            "canonical": "__95h_checker_global",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_b",
+              "to": "__95h_checker_global"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 4697650,
+                "end": 4697652,
+                "line": 95668,
+                "column": 11,
+                "role": "declaration",
+                "context": "_b"
+              },
+              {
+                "start": 4698801,
+                "end": 4698803,
+                "line": 95686,
+                "column": 37,
+                "role": "assignment",
+                "context": "_b = host.getGlobalTypingsCacheLocation"
+              },
+              {
+                "start": 4698861,
+                "end": 4698863,
+                "line": 95686,
+                "column": 97,
+                "role": "member receiver",
+                "context": "_b.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "createProgram"
+            },
+            "member": "getGlobalTypingsCacheLocation",
+            "actual": "_p",
+            "canonical": "__95h_program_global",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_p",
+              "to": "__95h_program_global"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 5963436,
+                "end": 5963438,
+                "line": 127604,
+                "column": 67,
+                "role": "declaration",
+                "context": "_p"
+              },
+              {
+                "start": 5981667,
+                "end": 5981669,
+                "line": 127978,
+                "column": 37,
+                "role": "assignment",
+                "context": "_p = host.getGlobalTypingsCacheLocation"
+              },
+              {
+                "start": 5981727,
+                "end": 5981729,
+                "line": 127978,
+                "column": 97,
+                "role": "member receiver",
+                "context": "_p.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "realpath",
+            "actual": "_a2",
+            "canonical": "__95h_emit_realpath",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_a2",
+              "to": "__95h_emit_realpath"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 6006090,
+                "end": 6006093,
+                "line": 128461,
+                "column": 9,
+                "role": "declaration",
+                "context": "_a2"
+              },
+              {
+                "start": 6007171,
+                "end": 6007174,
+                "line": 128487,
+                "column": 18,
+                "role": "assignment",
+                "context": "_a2 = host.realpath"
+              },
+              {
+                "start": 6007211,
+                "end": 6007214,
+                "line": 128487,
+                "column": 58,
+                "role": "member receiver",
+                "context": "_a2.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "createHash",
+            "actual": "_b2",
+            "canonical": "__95h_emit_hash",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_b2",
+              "to": "__95h_emit_hash"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 6006095,
+                "end": 6006098,
+                "line": 128461,
+                "column": 14,
+                "role": "declaration",
+                "context": "_b2"
+              },
+              {
+                "start": 6007637,
+                "end": 6007640,
+                "line": 128496,
+                "column": 20,
+                "role": "assignment",
+                "context": "_b2 = host.createHash"
+              },
+              {
+                "start": 6007679,
+                "end": 6007682,
+                "line": 128496,
+                "column": 62,
+                "role": "member receiver",
+                "context": "_b2.bind"
+              }
+            ]
+          },
+          {
+            "scope": {
+              "owner": "getEmitHost"
+            },
+            "member": "trace",
+            "actual": "_c2",
+            "canonical": "__95h_emit_trace",
+            "classification": "introduced by optional-bind lowering",
+            "normalization": {
+              "from": "_c2",
+              "to": "__95h_emit_trace"
+            },
+            "occurrences": 3,
+            "dotNameReads": 0,
+            "allUsesInsideOwnRewrite": true,
+            "afterOccurrences": [
+              {
+                "start": 6006100,
+                "end": 6006103,
+                "line": 128461,
+                "column": 19,
+                "role": "declaration",
+                "context": "_c2"
+              },
+              {
+                "start": 6007783,
+                "end": 6007786,
+                "line": 128498,
+                "column": 15,
+                "role": "assignment",
+                "context": "_c2 = host.trace"
+              },
+              {
+                "start": 6007820,
+                "end": 6007823,
+                "line": 128498,
+                "column": 52,
+                "role": "member receiver",
+                "context": "_c2.bind"
+              }
+            ]
+          }
+        ],
+        "observations": {
+          "before": {
+            "spellings": [
+              "_a",
+              "_a2",
+              "_p",
+              "_q",
+              "_a3",
+              "_b",
+              "_b2",
+              "_c2"
+            ],
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0
+          },
+          "after": {
+            "spellings": [
+              "_a",
+              "_a2",
+              "_p",
+              "_q",
+              "_a3",
+              "_b",
+              "_b2",
+              "_c2"
+            ],
+            "stringOrTemplateLiteralMentions": 0,
+            "propertyNameMentions": 0
+          }
+        },
+        "noOtherRenamesAllowed": true,
+        "allAfterSymbolsDistinct": true
+      },
+      "beforeSha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e",
+      "afterSha256": "bebb99e0289fd79f01d121e1fa25d85c738e4996d262ac322382a262e176a67c",
+      "normalizedSha256": "f6656f5ef0d1f6655c062c50de51467c0f7a11779e44388c6e13eb01063e278d",
+      "beforeBytes": 9154984,
+      "afterBytes": 9155172
+    },
+    {
+      "name": "typingsInstaller.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "afterSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "normalizedSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "beforeBytes": 280,
+      "afterBytes": 280
+    },
+    {
+      "name": "watchGuard.js",
+      "identical": true,
+      "onlySixRewrites": true,
+      "observations": {
+        "spellings": [
+          "_a",
+          "_a2",
+          "_p",
+          "_q",
+          "_a3",
+          "_b",
+          "_b2",
+          "_c2"
+        ],
+        "stringOrTemplateLiteralMentions": 0,
+        "propertyNameMentions": 0
+      },
+      "beforeSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "afterSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "normalizedSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "beforeBytes": 2314,
+      "afterBytes": 2314
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "identical": true,
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "identical": true,
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ]
+}
