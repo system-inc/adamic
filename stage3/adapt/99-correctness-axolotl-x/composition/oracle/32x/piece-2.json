@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "units": 40,
+  "metrics": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-x/run_oracle_piece.py",
+      "/workspace/bind2-32x-repo",
+      "/workspace/scratch/bind2/oracle-cache-32x/505930e71d900a91e886e3d153b169858decc4c848b3b2214c56010dc0608c8b",
+      "/workspace/scratch/bind2/oracle-shards-32x",
+      "2"
+    ],
+    "exit": 0,
+    "seconds": 103.1265947230022,
+    "limit_seconds": 1440
+  }
+}
