@@ -1049,6 +1049,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.GeneratorNext:
 		// The body runs, holding whatever the frame holds, and may hand back any of it.
 		return a.call([]value{a.value(expression.Generator)}, expression.Of)
+	case ir.IteratorNext:
+		// As a step: the result the runtime builds holds what the frame yields.
+		return a.call([]value{a.value(expression.Iterator)}, ir.Object)
 	case ir.GeneratorDone:
 		a.value(expression.Generator)
 		return value{}

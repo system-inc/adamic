@@ -84,6 +84,12 @@ func CheckPure(program *ir.Program, function int) error {
 				if err := inspect(node.Function); err != nil {
 					return err
 				}
+			case ir.IteratorNext:
+				// A hand-driven next() steps a generator as GeneratorNext does, and a collection's
+				// iterator by the runtime's own next.
+				if err := inspect(node.Function); err != nil {
+					return err
+				}
 			case ir.RegExpCall:
 				if node.Replacement != nil {
 					return fmt.Errorf("calls an unbounded function value")
