@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"os"
 	"path/filepath"
@@ -8,7 +9,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestViewArrayReadonlyDescriptor(t *testing.T) {
@@ -155,5 +158,238 @@ func TestViewArrayAllowlist(t *testing.T) {
 				t.Fatalf("unchecked %s road did not fail closed: %v", road.member, err)
 			}
 		})
+	}
+}
+
+// keyedProgram is a program lowered with its element key kept, so a test can read the key and ask
+// it about the program's own reads.
+type keyedProgram struct {
+	key      *viewElementKey
+	lowering *lowering
+	entry    *ast.SourceFile
+}
+
+// lowerKeyed lowers the file at path once, with no second lowering when the key misses, which is
+// lowerCheckedWithCycleTypes' fallback. The lowering is nil when it fails.
+func lowerKeyed(t *testing.T, path string) (keyedProgram, error) {
+	t.Helper()
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	entry := loaded.Files()[0]
+	check, release := loaded.Checker(context.Background(), entry)
+	t.Cleanup(release)
+	key := &viewElementKey{}
+	built, err := lowerWithElementKey(key, loaded, check, entry, nil, false, false, nil)
+	return keyedProgram{key: key, lowering: built, entry: entry}, err
+}
+
+// elementAccesses is every array[index] in a file, in source order.
+func elementAccesses(entry *ast.SourceFile) []*ast.Node {
+	var found []*ast.Node
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindElementAccessExpression {
+			found = append(found, node)
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	entry.AsNode().ForEachChild(visit)
+	return found
+}
+
+// loweredElementChecks is the ViewType of every checked element read a lowered program keeps, and
+// how many implicit handouts keep an element check.
+func loweredElementChecks(program *ir.Program) ([]string, int) {
+	var reads []string
+	handouts := 0
+	inspect := func(node any) bool {
+		switch value := node.(type) {
+		case ir.ViewElement:
+			reads = append(reads, value.ViewType)
+		case ir.ForOf:
+			if value.ElementCheck != nil {
+				handouts++
+			}
+		case ir.ArrayMap:
+			if value.ElementCheck != nil {
+				handouts++
+			}
+		case ir.ArrayVisit:
+			if value.ElementCheck != nil {
+				handouts++
+			}
+		case ir.ArrayReduce:
+			if value.ElementCheck != nil {
+				handouts++
+			}
+		}
+		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	return reads, handouts
+}
+
+// The key checks an element read only where the program views an array whose element type is
+// comparable to the read's (Lower's ruling on #6wfvfhm). A program that views no array, here one
+// that views a plain Holder, asks no read for a check, so none is built and it lowers as main does.
+func TestViewElementKeyViewsNoArray(t *testing.T) {
+	t.Parallel()
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", `interface Holder { readonly kind: 'Holder'; readonly count: number; }
+interface Node { readonly kind: number; }
+const raw = {kind: 'Holder' as const, count: 2};
+const base: {readonly kind: 'Holder'} = raw;
+const holder = base as Holder;
+const tokens: number[] = [3, 4];
+const nodes: Node[] = [{kind: 1}];
+let total = 0;
+for (const token of tokens) total += token;
+const kinds = nodes.map((node: Node) => node.kind);
+const first = nodes[0];
+console.log(String(tokens[1]), String(kinds.length), String(total), String(first?.kind), String(holder.count));
+`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if keyed.key.every || len(keyed.key.order) != 0 || len(keyed.key.misses) != 0 {
+		t.Fatalf("a program that views no array keyed every %t, viewed %d, missed %v", keyed.key.every, len(keyed.key.order), keyed.key.misses)
+	}
+	for _, access := range elementAccesses(keyed.entry) {
+		check, err := keyed.lowering.viewArrayElementCheck(access, access.AsElementAccessExpression().Expression)
+		if err != nil || check != nil {
+			t.Errorf("%s: a read in a program that views no array was given a check: %#v, %v", keyed.lowering.program.Where(access), check, err)
+		}
+	}
+	if reads, handouts := loweredElementChecks(keyed.lowering.result); len(reads) != 0 || handouts != 0 {
+		t.Fatalf("a program that views no array kept checked reads %v and %d checked handouts", reads, handouts)
+	}
+}
+
+// A program that views Node[] checks its Node reads, and marks its number[] reads unrelated: they
+// can't hand out a viewed element, so they read raw and never stop as unchecked.
+func TestViewElementKeyMarksUnrelatedReads(t *testing.T) {
+	t.Parallel()
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", `interface Node { readonly kind: number; }
+interface Base { readonly tag: 1; }
+interface SyntaxList extends Base { readonly _children: readonly Node[]; }
+const raw = {tag:1 as const, _children:[{kind:1}]};
+const base: Base = raw;
+const view = base as SyntaxList;
+const tokens: number[] = [3, 4];
+let total = 0;
+for (const token of tokens) total += token;
+const child = view._children[0];
+console.log(String(tokens[1]), String(total), String(child?.kind));
+`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if keyed.key.every || len(keyed.key.order) == 0 || len(keyed.key.misses) != 0 {
+		t.Fatalf("keyed every %t, viewed %d, missed %v", keyed.key.every, len(keyed.key.order), keyed.key.misses)
+	}
+	for _, access := range elementAccesses(keyed.entry) {
+		check, err := keyed.lowering.viewArrayElementCheck(access, access.AsElementAccessExpression().Expression)
+		if err != nil || check == nil {
+			t.Fatalf("%s: no check or mark: %v", keyed.lowering.program.Where(access), err)
+		}
+		if unrelated := check.ViewType == "number"; check.Unrelated != unrelated || !unrelated && check.Contract == 0 {
+			t.Errorf("%s: a read of %s keyed %#v", keyed.lowering.program.Where(access), check.ViewType, check)
+		}
+	}
+	reads, handouts := loweredElementChecks(keyed.lowering.result)
+	if len(reads) != 1 || reads[0] != "Node" || handouts != 0 {
+		t.Fatalf("want the one checked Node read, got reads %v and %d checked handouts", reads, handouts)
+	}
+}
+
+// filter with a type predicate hands a viewed Node out as an Identifier, and Node isn't assignable
+// to Identifier, so the key relates them both ways and the Identifier read stays checked. With the
+// relation one way, T assignable to E only, this goes red (view_elements.mutants.md).
+func TestViewElementKeyPredicateFilter(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("../oracle/testdata/views_v3/filter-predicate-good.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	keyed, err := lowerKeyed(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if keyed.key.every || len(keyed.key.misses) != 0 {
+		t.Fatalf("keyed every %t, missed %v", keyed.key.every, keyed.key.misses)
+	}
+	reads, _ := loweredElementChecks(keyed.lowering.result)
+	if !strings.Contains(strings.Join(reads, ","), "Identifier") {
+		t.Fatalf("the predicate-narrowed read is unchecked: checked reads %v", reads)
+	}
+}
+
+// Lower's condition on the key: every array contract lowering makes is one the pre-pass saw. One it
+// didn't is a read the key may have left raw, and lowerCheckedWithCycleTypes then lowers again with
+// every read checked. Each views_v3 fixture must decide and need no second lowering.
+func TestViewElementKeyAgreesWithLowering(t *testing.T) {
+	t.Parallel()
+	paths, err := filepath.Glob("../oracle/testdata/views_v3/*.ts")
+	if err != nil || len(paths) == 0 {
+		t.Fatalf("no fixtures: %v", err)
+	}
+	for _, path := range paths {
+		// console.ts stops at the prelude's check, before lowering (internal/oracle's TestViewArrayConsole).
+		if filepath.Base(path) == "console.ts" {
+			continue
+		}
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			keyed, _ := lowerKeyed(t, path)
+			if keyed.key.every {
+				t.Fatal("the pre-pass couldn't decide, so every read is checked")
+			}
+			if len(keyed.key.misses) != 0 {
+				t.Fatalf("lowering made array contracts the pre-pass never saw: %v", keyed.key.misses)
+			}
+		})
+	}
+}
+
+// The agreement's own guard: an array contract made where the pre-pass can't see it is a miss.
+// With the miss unrecorded, this goes red (view_elements.mutants.md).
+func TestViewElementKeyMissesAnUnseenArray(t *testing.T) {
+	t.Parallel()
+	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", `interface Node { readonly kind: number; }
+interface Base { readonly tag: 1; }
+interface SyntaxList extends Base { readonly _children: readonly Node[]; }
+const raw = {tag:1 as const, _children:[{kind:1}]};
+const base: Base = raw;
+const view = base as SyntaxList;
+const names: readonly string[] = ['a'];
+console.log(String(view._children[0]?.kind), String(names.length));
+`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(keyed.key.misses) != 0 {
+		t.Fatalf("missed before the unseen contract: %v", keyed.key.misses)
+	}
+	var names *ast.Node
+	for _, statement := range keyed.entry.Statements.Nodes {
+		if statement.Kind == ast.KindVariableStatement {
+			if declaration := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0]; declaration.Name().Text() == "names" {
+				names = declaration
+			}
+		}
+	}
+	if names == nil {
+		t.Fatal("no names declaration")
+	}
+	if _, err := keyed.lowering.viewContract(names, keyed.lowering.checker.GetTypeAtLocation(names.Name())); err != nil {
+		t.Fatal(err)
+	}
+	if len(keyed.key.misses) != 1 {
+		t.Fatalf("an array contract the pre-pass never saw passed unnoticed: misses %v", keyed.key.misses)
 	}
 }
