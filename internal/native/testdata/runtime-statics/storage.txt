@@ -304,6 +304,10 @@
 `union.c:prototype_to_locale_string:1`
 `union.c:prototype_to_string:1`
 `union.c:prototype_value_of:1`
+# The fs.Stats shape a run-time key read knows a Stats by (#zhrjf2t): an atomic pointer, null until
+# node_fs_file.c's file_stat_value publishes &stat_shape with a release store, every publish the same
+# address, read with an acquire load.
+`union.c:keyed_stats_shape:1`
 `union.c:shape_types:1`
 `union.c:shape_types_lock:1`
 `weak.c:table:1`
