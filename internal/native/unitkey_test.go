@@ -419,8 +419,8 @@ func copyUnitKeyProgram(t *testing.T, directory string, compiler string) string 
 // clang's build is the key's by what its program holds and the config files beside it, each read again when it changes
 // under a running process: a config file written beside the program moves the key, as does one beside a link to it,
 // and the program rewritten with another byte at its end moves it too. A script standing in for clang refuses the key,
-// since the program it runs is one the key can't read. Mutants: the program's digest left out; the config files left out
-// of the memo's identity.
+// since the program it runs is one the key can't read. The config's part names what it holds, not its path. Mutants: the
+// program's digest left out; the config files left out of the memo's identity; the config's path left in its part.
 // Not parallel: it publishes an executable copy before other tests fork.
 func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 	compiler := unitKeyCompiler(t)
@@ -440,6 +440,12 @@ func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 	writeUnitKeyFile(t, filepath.Join(root, "copied", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
 	if key(copied) == plain {
 		t.Fatal("a config file written beside clang's program left the key")
+	}
+	// The config is keyed by what it holds, never where it sits (Node's rule on #t3rw158).
+	for _, part := range testUnitKeying(t, unitFirst, common, unitKeyFlags, copied, environment).parts {
+		if strings.HasPrefix(part, "config ") && strings.Contains(part, "clang.cfg") {
+			t.Fatalf("the key names the config by its path: %q", part)
+		}
 	}
 	if err := os.Remove(filepath.Join(root, "copied", "clang.cfg")); err != nil {
 		t.Fatal(err)
