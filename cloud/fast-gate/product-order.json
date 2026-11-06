@@ -2088,38 +2088,31 @@
     ],
     "internal/worker TestProduct_WorkerWasm_001": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_000"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_002": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_001"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_003": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_002"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_004": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_003"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_005": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_004"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_006": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_005"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerWasm_007": [
       "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerCompiler",
-      "internal/worker TestProduct_WorkerWasm_006"
+      "internal/worker TestProduct_WorkerCompiler"
     ],
     "internal/worker TestProduct_WorkerMutants_000": [
       "internal/worker TestProduct_WorkerCompiler",
@@ -2316,127 +2309,47 @@
     "internal/worker TestProduct_WorkerWasmMutants_000": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_001": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_000"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_002": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_001"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_003": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_002"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_004": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_003"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_005": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_004"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_006": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_005"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_007": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_006"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "internal/worker TestProduct_WorkerWasmMutants_008": [
       "internal/worker TestProduct_WorkerCompiler",
       "internal/worker TestProduct_WorkerChecks",
-      "internal/worker TestProduct_WorkerWasmTransform",
-      "internal/worker TestProduct_WorkerWasm_000",
-      "internal/worker TestProduct_WorkerWasm_001",
-      "internal/worker TestProduct_WorkerWasm_002",
-      "internal/worker TestProduct_WorkerWasm_003",
-      "internal/worker TestProduct_WorkerWasm_004",
-      "internal/worker TestProduct_WorkerWasm_005",
-      "internal/worker TestProduct_WorkerWasm_006",
-      "internal/worker TestProduct_WorkerWasm_007",
-      "internal/worker TestProduct_WorkerWasmMutants_007"
+      "internal/worker TestProduct_WorkerWasmTransform"
     ],
     "stage1/cohere/parse TestProduct_ParseDriverNative": [
       "stage1/cohere/parse TestProduct_ParseDriverLower"
