@@ -293,13 +293,13 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			case ir.Closure:
 				name = "function"
 			}
-			nullable := false
+			nullable, excludesArray := false, false
 			if name == "object" {
 				// typeof cannot distinguish object members: null, another class, a typed array
 				// or a promise all say object. Beside the narrowed members, only undefined, null
 				// (tested for below) and the kinds typeof tells from an object may sit, so any
-				// other member, or one whose holding isn't known, stops here, a kind added to the
-				// IR later too.
+				// other member, or one whose holding isn't known, stops here. Arrays use their
+				// own brand check; a class beside an array also excludes that brand below.
 				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 				members := []*checker.Type{declared}
 				if declared.Flags()&checker.TypeFlagsUnion != 0 {
@@ -313,10 +313,14 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 				for _, member := range members {
 					held, known := l.representation(member)
 					if narrowed == ir.Array {
-						// Array.isArray rechecks an array, and this path keeps its own list.
-						if known && (held == ir.Object || held == ir.Map || held == ir.Record) {
+						// Tuples and erased views can hide a layout other than adamic_array.
+						if !l.arrayPredicateDomain(member) {
 							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
 						}
+						continue
+					}
+					if narrowed == ir.Object && isClassInstance(observed) && known && held == ir.Array {
+						excludesArray = true
 						continue
 					}
 					if known && held == narrowed && (slices.Contains(kept, member) || member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0) {
@@ -342,6 +346,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
 			if narrowed == ir.Array {
 				matches = ir.ArrayIsArray{Value: held}
+			}
+			if excludesArray {
+				matches = ir.Binary{Operator: ir.And, Left: matches, Right: ir.Unary{Operator: ir.Not, Operand: ir.ArrayIsArray{Value: held}}}
 			}
 			if nullable {
 				// typeof says object for null too.

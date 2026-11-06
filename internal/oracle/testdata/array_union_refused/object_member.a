@@ -1,0 +1,7 @@
+class Extension { name = "x"; }
+function first(): { name: string } | readonly Extension[] { return [new Extension()]; }
+let v: { name: string } | readonly Extension[] = first();
+v = [new Extension()];
+if (Array.isArray(v)) {
+    console.log(String(v[0] !== undefined));
+}
