@@ -415,10 +415,13 @@ const raw: unknown = JSON.parse('[{"kind": 1}]');
 const nodes = raw as readonly Node[];
 const a: any = nodes;
 const others: Other[] = a;
-console.log(String(others[0].name.length));
+console.log(String(others[0]?.name.length));
 `, ".ts")
-	if err == nil {
-		t.Fatal("an Other[] reached from a viewed Node[] through any lowers its element read raw")
+	// Only a lowering stop counts: a program that fails to load proves nothing about the read.
+	var notYet *NotYet
+	var refused *Refused
+	if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+		t.Fatalf("got %v, want the Other[] read reached from a viewed Node[] through any stopped by lowering, not read raw", err)
 	}
 	t.Logf("stops: %v", err)
 }
