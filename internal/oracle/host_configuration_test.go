@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
 )
 
@@ -30,9 +31,7 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 	stubDirectory := t.TempDir()
 	stub := filepath.Join(stubDirectory, "node-stub")
 	calls := filepath.Join(stubDirectory, "calls")
-	if err := os.WriteFile(stub, []byte("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nprintf '%s\\n' \"$@\" >> '"+calls+"'\nexec '"+node+"' \"$@\"\n"), 0700); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, stub, "#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nprintf '%s\\n' \"$@\" >> '"+calls+"'\nexec '"+node+"' \"$@\"\n")
 	original, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/host/status.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -130,4 +129,42 @@ func TestHostConfigurationOracleReaders(t *testing.T) {
 			})
 		}
 	}
+}
+
+// writeExecutable writes a script the test then executes. A parallel test's fork
+// inherits every descriptor open at that moment until its child execs, and an exec of
+// a file still open for writing fails with ETXTBSY. So forks are held off until the
+// writable descriptor is closed; a rename alone keeps the same inode.
+func writeExecutable(t *testing.T, path, script string) {
+	t.Helper()
+	var temporary string
+	defer func() {
+		if temporary != "" {
+			os.Remove(temporary)
+		}
+	}()
+	func() {
+		syscall.ForkLock.Lock()
+		defer syscall.ForkLock.Unlock()
+		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if err != nil {
+			t.Fatal(err)
+		}
+		temporary = file.Name()
+		if _, err := file.WriteString(script); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Chmod(0700); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+	if err := os.Rename(temporary, path); err != nil {
+		t.Fatal(err)
+	}
+	temporary = ""
 }

@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -188,9 +189,7 @@ func nodeStub(t *testing.T, node, label string) string {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "node-stub")
 	text := fmt.Sprintf("#!/bin/sh\nif [ \"$1\" = -p ]; then echo 'v24.19.0 false'; exit 0; fi\nADAMIC_HOST_CONFIGURATION_PROOF='%s' exec '%s' \"$@\"\n", label, strings.ReplaceAll(node, "'", "'\\''"))
-	if err := os.WriteFile(path, []byte(text), 0700); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, path, text)
 	return path
 }
 
@@ -216,9 +215,7 @@ func TestHostConfigurationProbeIsCached(t *testing.T) {
 		binary := filepath.Join(dir, "node")
 		calls := filepath.Join(dir, "calls")
 		text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
-		if err := os.WriteFile(binary, []byte(text), 0700); err != nil {
-			t.Fatal(err)
-		}
+		writeExecutable(t, binary, text)
 		for i := 0; i < 2; i++ {
 			_, _, err := Resolve(i+1, cfg, func(string) string { return binary })
 			if (err == nil) != (line == "v24.19.0 false") {
@@ -272,9 +269,7 @@ for i in range(2):
 						line = "wrong"
 					}
 					text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
-					if err := os.WriteFile(selected, []byte(text), 0700); err != nil {
-						t.Fatal(err)
-					}
+					writeExecutable(t, selected, text)
 				}
 				cmd := exec.Command(script.binary, script.args...)
 				cmd.Stdin = bytes.NewReader(data)
@@ -302,4 +297,42 @@ for i in range(2):
 			})
 		}
 	}
+}
+
+// writeExecutable writes a script the test then executes. A parallel test's fork
+// inherits every descriptor open at that moment until its child execs, and an exec of
+// a file still open for writing fails with ETXTBSY. So forks are held off until the
+// writable descriptor is closed; a rename alone keeps the same inode.
+func writeExecutable(t *testing.T, path, script string) {
+	t.Helper()
+	var temporary string
+	defer func() {
+		if temporary != "" {
+			os.Remove(temporary)
+		}
+	}()
+	func() {
+		syscall.ForkLock.Lock()
+		defer syscall.ForkLock.Unlock()
+		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
+		if err != nil {
+			t.Fatal(err)
+		}
+		temporary = file.Name()
+		if _, err := file.WriteString(script); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Chmod(0700); err != nil {
+			file.Close()
+			t.Fatal(err)
+		}
+		if err := file.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+	if err := os.Rename(temporary, path); err != nil {
+		t.Fatal(err)
+	}
+	temporary = ""
 }
