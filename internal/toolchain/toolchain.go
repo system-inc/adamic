@@ -68,12 +68,14 @@
 //
 // and sets these when the caller sets neither:
 //
-//   - CC=clang and CXX=clang++: the resolver's clang, by its name, which go finds on Env's PATH (the tools directory
-//     first, as Path finds it). Unset, go's default on Linux is gcc from PATH, and the naughty list's run (#eehjrv6)
-//     found cgo running the machine's gcc, as and ld in 66 units and products: a compiler no key named. By its name,
-//     a key reads CC=clang the same on every machine, and buildcache keys the compiler itself by its report, its
-//     install place dropped (Tool). A machine without clang fails a cgo build naming clang, and never falls back to
-//     gcc. (Loom, Oct 12: one re-key of every cgo product, the run after the gate being uncached anyway.)
+//   - CC=clang and CXX=clang++, each with --target=<triple> for the build's `GOOS` and `GOARCH` (Compilers): the
+//     resolver's clang, by its name, which go finds on Env's PATH (the tools directory first, as Path finds it). Unset,
+//     go's default on Linux is gcc from PATH, and the naughty list's run (#eehjrv6) found cgo running the machine's gcc,
+//     as and ld in 66 units and products: a compiler no key named. By its name, a key reads CC the same on every machine
+//     building for one platform, and buildcache keys the compiler itself by its report, its install place dropped
+//     (Tool). A machine without clang fails a cgo build naming clang, and never falls back to gcc. (Loom, Oct 12: one
+//     re-key of every cgo product, the run after the gate being uncached anyway.) The triple is the one native's builds
+//     pass (#5xsd2ha), so a `GOARCH=arm64` build's cgo compiles for aarch64-linux-gnu, never for the box it runs on.
 //
 // and sets these, whatever the caller had:
 //
@@ -124,9 +126,6 @@ const gocacheSettings = "ADAMIC_GOCACHE_"
 
 // fixed are the settings Env gives every tool, whatever the caller had.
 var fixed = []string{"GOENV=off", "ZERO_AR_DATE=1"}
-
-// compilers are the C and C++ compilers Env names when the caller names neither (the package doc says why).
-var compilers = []string{"CC=clang", "CXX=clang++"}
 
 // gitFixed are the settings GitEnv gives git, whatever the caller had: no configuration but the repository's own.
 var gitFixed = []string{"GIT_CONFIG_GLOBAL=" + os.DevNull, "GIT_CONFIG_NOSYSTEM=1",
@@ -251,7 +250,9 @@ func Env(extra ...string) []string {
 			environment = append(environment, setting)
 		}
 	}
-	for _, compiler := range compilers {
+	// The build's platform is the one go reads: what the caller passes, then extra's, which win.
+	c, cPlusPlus := Compilers(append(slices.Clone(environment), extra...))
+	for _, compiler := range []string{"CC=" + c, "CXX=" + cPlusPlus} {
 		if name, _, _ := strings.Cut(compiler, "="); os.Getenv(name) == "" {
 			environment = append(environment, compiler)
 		}
