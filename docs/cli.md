@@ -9,7 +9,7 @@ page disagree, the code is right and this page is a bug.
 
 ## Usage
 
-The binary prints this, and only this, for every usage error. `TestDocumentedUsageIsTheCommands`
+The binary prints this, and only this, for every usage error, and for `--help`. `TestDocumentedUsageIsTheCommands`
 (`cmd/adamic/cli_doc_test.go`) fails when this block and `usage` (`cmd/adamic/main.go:usage`) differ,
 and when `build` parses a flag the block doesn't name.
 
@@ -20,10 +20,13 @@ usage:
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
   adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic --help | -h
+  adamic --version
 ```
 
-There is no `--help`, `--version`, `run`, `test` or `fix`. Anything the switch doesn't match,
-`--help` included, prints the usage and exits 2 (`cmd/adamic/main.go:run`).
+`--help` or `-h`, alone, prints the usage to stdout and exits 0. There is no `run`, `test` or `fix`.
+Anything else the switch doesn't match, `adamic build --help` included, prints the usage to stderr and exits 2
+(`cmd/adamic/main.go:run`).
 
 ## Commands
 
@@ -38,6 +41,8 @@ directory (`cmd/adamic/main.go:relative`). `.a` and `.ts` are both accepted (`do
 | `c <file>` | checks, lowers and prints the program as C11 | stdout | `cmd/adamic/main.go:run` |
 | `js <file>` | checks, lowers and prints the program as JavaScript | stdout | `cmd/adamic/main.go:run` |
 | `build <file> -o <out>` | checks, lowers, emits C and compiles it with the runtime to a binary at `<out>` | `<out>` | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
+| `--help`, `-h` | prints the usage; loads nothing | stdout | `cmd/adamic/main.go:run` |
+| `--version` | prints, a line each, `adamic <commit>` (go build's `vcs.revision`, with `(modified)` for a changed tree, or `unknown` when nothing was stamped, as under `go run`), `go <version>`, and `clang <path>: <its --version's first line>` for the clang `toolchain.Path` resolves; a clang that can't be found or run is `clang: not found (<error>)` and still exits 0; loads nothing | stdout | `cmd/adamic/main.go:run,writeVersion,revision,clangVersion` |
 
 `c` and `js` take exactly one file (`cmd/adamic/main.go:run`); `types` takes one or more
 (`cmd/adamic/main.go:run`). A program that uses the tsgo checker library can't be printed:
@@ -106,7 +111,7 @@ Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless
 
 | Code | Means | Returned at |
 | --- | --- | --- |
-| 0 | the command did what it says | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
+| 0 | the command did what it says, `--help` and `--version` included, the latter even with no clang to name | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
 | 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:check,compileLibrary`, `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/request.go:compileWASI` |
 | 2 | usage error | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
 | 3 | the machine: the working directory can't be read, so a relative `-o` has nowhere to go. A missing or failing toolchain still exits 1 (#z1ba56x) | `cmd/adamic/tsgo.go:buildWithNativeExports` |
@@ -118,6 +123,9 @@ including an option the target refuses, 3 the machine, 4 a compiler bug. In the 
 working directory that can't be read.
 
 `TestUsageExitStatus` pins 2 and the exact usage text (`cmd/adamic/command_guards_test.go:TestUsageExitStatus`);
+`TestHelpPrintsUsageToStdout` pins `--help` and `-h` at 0 with the usage on stdout, `TestVersionNamesCommitGoAndClang`
+and `TestVersionWithoutClangStillExitsZero` pin `--version`'s three lines at 0, with a clang and without one, and
+`TestRevisionReadsTheStamp` its commit line (`cmd/adamic/command_guards_test.go:TestHelpPrintsUsageToStdout,TestVersionNamesCommitGoAndClang,TestVersionWithoutClangStillExitsZero,TestRevisionReadsTheStamp`);
 `TestBuildWASISanitizeTarget{Before,After}Source` pin a target refusal at 1 with its text, on a file
 that loads (`cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBeforeSource,TestBuildWASISanitizeTargetAfterSource,assertWASISanitizeRefusal`); `TestBuildTargetParsing` pins three malformed
 `--target`s at 2 (`cmd/adamic/target_test.go:TestBuildTargetParsing`); `TestCompilerBugExitsFour` and
@@ -196,7 +204,7 @@ the test harness.
 
 | Tool | Needed for | Found by | Version | Missing |
 | --- | --- | --- | --- | --- |
-| clang | `build`, native | `toolchain.Path("clang")` (`internal/native/library.go:runtimeInputs`) | not checked: its `--version` report only keys the runtime cache (`internal/native/library.go:runtimeInputs,runtimeKeyParts`). `cloud/setup.sh:96` installs 20.1.8 (`ADAMIC_LLVM_VERSION`) when no clang passes its sanitizer probe | `adamic: native: exec: "clang": executable file not found in $PATH`, exit 1 |
+| clang | `build`, native | `toolchain.Path("clang")` (`internal/native/library.go:runtimeInputs`) | not checked: its `--version` report only keys the runtime cache (`internal/native/library.go:runtimeInputs,runtimeKeyParts`), and `adamic --version` prints its first line (`cmd/adamic/main.go:clangVersion`). `cloud/setup.sh:96` installs 20.1.8 (`ADAMIC_LLVM_VERSION`) when no clang passes its sanitizer probe | `adamic: native: exec: "clang": executable file not found in $PATH`, exit 1 |
 | lld | `build`, shipped native release on Linux | clang's `-fuse-ld=lld` (`internal/native/native.go:linkFlags`) | | clang's link error, exit 1 |
 | `llvm-ar`, else `ar` | the runtime archive | beside the compiler, else `toolchain.Path("ar")` (`internal/native/target.go:archiverName`) | | exit 1 |
 | wasi-sdk | `--target wasm32-wasi` | `WASI_SYSROOT` (`internal/native/target.go:ValidateOptions`); clang from `<sysroot>/../../bin/clang` (`internal/native/target.go:WASIClang,compilerName`) | pinned to 27: a clang whose `--version` doesn't begin `clang version 20.1.8-wasi-sdk` is refused by name (`internal/native/target.go:WASISDKVersion,checkWASIClang`). `cloud/setup.sh --wasi-sdk` installs it (`cloud/setup.sh:160-170`) | no `WASI_SYSROOT`: `adamic: native: wasm32-wasi requires WASI_SYSROOT`, exit 1. No SDK clang beside it, or another clang: `adamic: native: wasm32-wasi is pinned to wasi-sdk 27 ...`, exit 1 |
@@ -253,7 +261,6 @@ native Go branches on architecture. `cloud/setup.sh` provisions Linux x86_64 and
 ## Open gaps
 
 - Exit 1 is both a refused program and a missing or failing toolchain (#z1ba56x).
-- No `--help` that exits 0 and no `--version` (#a733mfq).
 - Nothing checks the host clang's version; wasm32's is pinned to wasi-sdk 27 (#h2vm51c).
 - A panic on another goroutine than `run`'s still exits 2 (#4mwb9et).
 - `build`'s source and `-o` are positional (#21m2dv3).
