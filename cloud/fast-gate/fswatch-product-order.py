@@ -25,7 +25,7 @@ for package, filename in [('internal/native', 'fswatch_test.go'),
         if package == 'internal/native':
             # The harness builds its runtime archive inside its own product, as the timer, watchFile
             # and readiness-source harnesses do, and its mutant a private copy there too.
-            if name not in ('TestProduct_FSWatchHarnessRelease', 'TestProduct_FSWatchHarnessSanitized') and 'Mutant' not in name:
+            if name not in ('TestProduct_FSWatchHarnessRelease', 'TestProduct_FSWatchHarnessSanitized', 'TestProduct_FSWatchSharedHarness') and 'Mutant' not in name:
                 raise SystemExit('unclassified native fs.watch product: ' + name)
         elif 'Mutant' not in name:
             # A program's control links the shared Node-host runtime archive, as watchFile's do.
