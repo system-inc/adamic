@@ -38,7 +38,7 @@ func TestOptionsBaseReadsAgreeWithNode(t *testing.T) {
 	for name, printed := range map[string]string{
 		"serialize.ts": "outDir=string out strict=boolean true lib=object target=number 9 paths=object noEmit=boolean false\n" +
 			"watchFile=number 4 excludeFiles=object\n\ntrue:out:4\n",
-		"own_keys.ts": "target,strict,outDir,lib,configFile\nlib=object outDir=string out strict=boolean false target=number 9\n" +
+		"own_keys.ts": "target,strict,outDir,lib,configFilePath,configFile\nconfigFilePath=string tsconfig.json lib=object outDir=string out strict=boolean false target=number 9\n" +
 			"false:9:tsconfig.json\n0\n",
 		"substitution.ts": "false:/project/out:src:true:tsconfig.json:outDir,rootDir,strict,lib,configFilePath\n${configDir}/out:src:true:tsconfig.json\n" +
 			"true:out:undefined:undefined:kept.json:outDir,target,configFilePath\nout:9:undefined:kept.json\ntrue\n",
@@ -126,9 +126,10 @@ func TestOptionsBaseBackCastRefused(t *testing.T) {
 }
 
 // A function over Options, boxed as a union, seen as one over a record of strings: the view drops strict, but the
-// index value representations differ, so it stops at the existing storage stop. Mutant: drop the first condition,
-// one representation and sameKeeping, and it's admitted there, to be refused later as another rule's widening, or
-// read wrong.
+// index value representations differ, so it stops at the existing storage stop. It's reached through a parameter,
+// where no contract is dropped (parameterStorage); with that lifted, the first condition, one representation and
+// sameKeeping, stops it alone. Mutant: lift both, and it's admitted there, to be refused later as another rule's
+// widening, or read wrong. Outside a parameter, tsc's relation and a union slot leave no mismatch to reach.
 func TestOptionsBaseRepresentationMismatchStops(t *testing.T) {
 	t.Parallel()
 	path := optionsBasePath(t, "representation.ts")
@@ -141,7 +142,7 @@ func TestOptionsBaseRepresentationMismatchStops(t *testing.T) {
 }
 
 // A named field held as a union, kind?: string | number, is read back unchecked, so the view keeps its contract and
-// stops at the existing storage stop. Mutant: drop the third condition's readGuardedInUnionSlot test, and it lowers.
+// stops at the existing storage stop. Mutant: drop the third condition's scalar test, and it lowers.
 func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 	t.Parallel()
 	path := optionsBasePath(t, "unchecked_union.ts")
@@ -150,6 +151,93 @@ func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:22" {
 		t.Fatalf("want NotYet %q at :19:22, got %v", want, err)
+	}
+}
+
+// Language's must (08:38Z): an object-kind field, paths?: MapLike<string[]>, is never dropped, since the native
+// union-slot check read an honest MapLike written under it through the view as another member of the slot's union,
+// where Node and the JavaScript backend read it (paths_honest.ts, g5 p06). So each of Language's paths programs stops
+// not yet at the view, before its write: the honest one and the lies (g5 p01 to p05), which stopped at their reads.
+// Mutant: let object kinds be dropped again, and they lower; paths_honest.ts then disagrees with Node natively, which
+// the failure shows.
+func TestOptionsBaseObjectFieldStops(t *testing.T) {
+	t.Parallel()
+	const want = "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)"
+	for name, printed := range map[string]string{
+		"paths_honest.ts": "a\n",
+		"paths_string.ts": "undefined\n",
+		"paths_array.ts":  "string\n1\n",
+		"paths_number.ts": "after\n",
+		"paths_keys.ts":   "0,1\n",
+		"paths_mixed.ts":  "number\n",
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != printed {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if err == nil {
+				native, _ := natively(t, program)
+				t.Fatalf("lowered, want NotYet %q at :19:12; Node %s; native %s; javascript %s", want, optionsBaseShown(node), optionsBaseShown(native), optionsBaseShown(onJavaScriptBackend(t, program)))
+			}
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
+				t.Fatalf("want NotYet %q at :19:12, got %v", want, err)
+			}
+		})
+	}
+}
+
+// Language's should (08:38Z): a function over CompilerOptions seen as one over OptionsBase is handed an OptionsBase,
+// so the view through its parameter adds strict. A view drops no contract through a parameter (parameterStorage),
+// so each of Language's g4 p01 to p04 stops not yet at the view, as on main, where 419579d6 let the view through to
+// the optional-widening refusal. Mutant: leave droppedContractsRead set through parameters, and each is refused
+// there again.
+func TestOptionsBaseParameterViewStops(t *testing.T) {
+	t.Parallel()
+	const function = "a (o: CompilerOptions) => string seen as (o: OptionsBase) => string (fixed objects and records have different storage; copy explicitly)"
+	for name, stop := range map[string]struct{ what, at string }{
+		"parameter_function.ts":   {function, ":20:7"},
+		"parameter_bivariance.ts": {function, ":23:27"},
+		"parameter_argument.ts":   {function, ":26:25"},
+		"parameter_implements.ts": {"a StrictReader seen as Reader (fixed objects and records have different storage; copy explicitly)", ":28:7"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			_, err := lowered(t, path)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || notYet.What != stop.what || notYet.Where != path+stop.at {
+				t.Fatalf("want NotYet %q at %s, got %v", stop.what, stop.at, err)
+			}
+		})
+	}
+}
+
+// Language's g4 p06: a method over CompilerOptions written in a literal where Reader's read takes OptionsBase. A
+// literal is made as its slot, so recordStorageView never sees the method, here as on main, and it lowers. Its body's
+// named read stops on the "yes" under strict on both backends, so it rests on the read check alone. Stopping it at
+// the method is a rule for methods written in literals, which this head doesn't make.
+func TestOptionsBaseLiteralMethodStopsAtRead(t *testing.T) {
+	t.Parallel()
+	path := optionsBasePath(t, "method_parameter.ts")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatalf("must lower, as on main: %v", err)
+	}
+	node := onNode(t, path)
+	if node.exitCode != 0 || string(node.stdout) != "on\n" {
+		t.Fatalf("Node: %s", optionsBaseShown(node))
+	}
+	native, _ := natively(t, program)
+	want := run{stderr: []byte("adamic: panic: field read failed: o.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n"), exitCode: 70}
+	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+		}
 	}
 }
 

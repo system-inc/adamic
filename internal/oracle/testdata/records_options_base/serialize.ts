@@ -1,6 +1,7 @@
 // tsc's serializeOptionBaseObject (commandLineParser.ts:2795) and its callers at 2788 and 2792: a CompilerOptions and
 // a WatchOptions, records whose named options OptionsBase drops, read through OptionsBase by for...in, an own-key test
-// and options[name], into a fresh list. The view only reads the object it's handed, keys in insertion order.
+// and options[name], into a fresh list. The view only reads the object it's handed, keys in insertion order. The
+// object-kind options are index entries here, not declared: a declared one keeps the view not yet (paths_*.ts).
 interface MapLike<T> {
     [index: string]: T;
 }
@@ -12,14 +13,11 @@ type CompilerOptionsValue = string | number | boolean | (string | number)[] | st
 interface CompilerOptions {
     strict?: boolean;
     outDir?: string;
-    lib?: string[];
     target?: number;
-    paths?: MapLike<string[]>;
     [option: string]: CompilerOptionsValue | undefined;
 }
 interface WatchOptions {
     watchFile?: WatchFileKind;
-    excludeFiles?: string[];
     [option: string]: CompilerOptionsValue | undefined;
 }
 interface OptionsBase {

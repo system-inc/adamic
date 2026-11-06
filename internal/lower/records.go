@@ -535,13 +535,16 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 			break
 		}
 		ownParameters, viewedParameters := own[0].Parameters(), viewed[0].Parameters()
-		for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
-			// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
-				return false, true
+		parameters := l.parameterStorage(func() bool {
+			for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
+				// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
+				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
+					return false
+				}
 			}
-		}
-		return returned, true
+			return true
+		})
+		return returned && parameters, true
 	}
 	return l.sameRecordStorage(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}), false
 }
@@ -597,12 +600,15 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	a, b := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		ap, bp := a[0].Parameters(), b[0].Parameters()
-		for i := 0; i < len(ap) && i < len(bp); i++ {
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), visited) {
-				return false
+		parameters := l.parameterStorage(func() bool {
+			for i := 0; i < len(ap) && i < len(bp); i++ {
+				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), visited) {
+					return false
+				}
 			}
-		}
-		return l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), visited)
+			return true
+		})
+		return parameters && l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), visited)
 	}
 	if l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := l.typeArguments(from), l.typeArguments(to)

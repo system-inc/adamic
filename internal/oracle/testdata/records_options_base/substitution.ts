@@ -11,7 +11,6 @@ interface CompilerOptions {
     strict?: boolean;
     outDir?: string;
     rootDir?: string;
-    lib?: string[];
     target?: number;
     configFilePath?: string | undefined;
     [option: string]: CompilerOptionsValue | undefined;
