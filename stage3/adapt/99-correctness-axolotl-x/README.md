@@ -125,7 +125,8 @@ emitted JavaScript products match the expected changes, and the one-site
 negative control is detected. The unchanged whole lane and all 398 standard
 shards pass with exactly matching observations and sanctioned API bytes.
 All 79 ordinary first stops are unchanged; all six CW051 units were measured
-before and after. See PROOF.md and owned/ for complete current evidence.
+before and after. See the historical PROOF section and owned/ for that
+delivery's complete evidence.
 Original receipts outside owned/ and composition/ describe superseded
 46-site experiments. owned/ certifies the earlier 28-site delivery;
 composition/ contains the current continuation.
@@ -142,7 +143,12 @@ new receipts; the prior owned/ receipts certify the historical run only.
 The no-write controls cover each partial owner group and restored unused
 imports in builder.ts, watch.ts and program.ts. A complete group may contain
 other core helper call shapes; 99x counts only inventoried originals when
-checking the all-present/all-absent boundary and leaves replacement code opaque. A complete synthetic owner-fold control exercises zero remaining
+checking the all-present/all-absent boundary and leaves replacement code
+opaque. A complete synthetic owner-fold control exercises zero remaining
 program/watch calls, import cleanup, checker byte preservation and a replay
-that preserves source bytes and nanosecond mtimes. Full apply, type, emitted
-JavaScript, oracle and CW051 composition measurements are in progress.
+that preserves source bytes and nanosecond mtimes. All four composition
+applies, 79-root type checks and nine-file JavaScript
+comparisons pass. Both required whole lanes and all 398 shards for each pass,
+with exact test-identity/status and API-byte unions. All six CW051 units are
+measured before and after main plus 32 plus 99x. See PROOF.md for the table
+and composition/ for packed current receipts.
