@@ -8,28 +8,9 @@ import (
 	goruntime "runtime"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/toolchain"
 )
-
-// triples are the native targets, one row for each platform a native build is for: the build's goos and goarch
-// (buildPlatform), and the triple clang is handed for them (--target), Debian's spelling on linux and Apple's on
-// macOS. A platform with no row has no native build.
-var triples = [...]struct{ goos, goarch, triple string }{
-	{"linux", "amd64", "x86_64-linux-gnu"},
-	{"linux", "arm64", "aarch64-linux-gnu"},
-	{"darwin", "arm64", "arm64-apple-macosx"},
-	{"darwin", "amd64", "x86_64-apple-macosx"},
-}
-
-// Triple is the target a native build for goos and goarch names to clang, or an error naming the pair when the table
-// holds no row for it.
-func Triple(goos, goarch string) (string, error) {
-	for _, row := range triples {
-		if row.goos == goos && row.goarch == goarch {
-			return row.triple, nil
-		}
-	}
-	return "", fmt.Errorf("native: no native target for %s/%s: a native build is for linux/amd64, linux/arm64, darwin/arm64 or darwin/amd64", goos, goarch)
-}
 
 // buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, as go reads them, so a
 // build cross-compiled for arm64 on an amd64 box names, keys and links arm64 (#5xsd2ha). Either one unset is this
@@ -53,16 +34,17 @@ func darwinBuild() bool {
 	return goos == "darwin"
 }
 
-// ResolveTarget is options with an empty Target made the build's own triple (Triple of buildPlatform), so every flag and
-// key reads a named target, never "" for native. Any other Target is kept as it is, for ValidateOptions to accept or
-// refuse. It fails only when the build's platform has no row. Flags, ValidateOptions and every key resolve through it.
+// ResolveTarget is options with an empty Target made the build's own triple (toolchain.Triple of buildPlatform, the one
+// table cgo's compilers read too), so every flag and key reads a named target, never "" for native. Any other Target is
+// kept as it is, for ValidateOptions to accept or refuse. It fails only when the build's platform has no row. Flags,
+// ValidateOptions and every key resolve through it.
 func ResolveTarget(options Options) (Options, error) {
 	if options.Target != "" {
 		return options, nil
 	}
-	triple, err := Triple(buildPlatform())
+	triple, err := toolchain.Triple(buildPlatform())
 	if err != nil {
-		return options, err
+		return options, fmt.Errorf("native: %w", err)
 	}
 	options.Target = triple
 	return options, nil
@@ -73,16 +55,14 @@ func ResolveTarget(options Options) (Options, error) {
 // none is pinned. A linux triple for an arch this host isn't (`GOARCH=arm64` on an amd64 box) compiles against the
 // host's C library as it did before the triple was named: #5xsd2ha's second half pins that build's sysroot.
 func nativeTargetRefusal(triple string) error {
-	for _, row := range triples {
-		if row.triple != triple {
-			continue
-		}
-		if row.goos == "darwin" && (row.goos != goruntime.GOOS || row.goarch != goruntime.GOARCH) {
-			return fmt.Errorf("native: %s: a darwin cross build has no pinned SDK, and this host is %s/%s", triple, goruntime.GOOS, goruntime.GOARCH)
-		}
-		return nil
+	goos, goarch, found := toolchain.TriplePlatform(triple)
+	if !found {
+		return fmt.Errorf("native: unsupported target %q", triple)
 	}
-	return fmt.Errorf("native: unsupported target %q", triple)
+	if goos == "darwin" && (goos != goruntime.GOOS || goarch != goruntime.GOARCH) {
+		return fmt.Errorf("native: %s: a darwin cross build has no pinned SDK, and this host is %s/%s", triple, goruntime.GOOS, goruntime.GOARCH)
+	}
+	return nil
 }
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
