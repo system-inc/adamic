@@ -37,5 +37,18 @@
     "output_sha256": "b5fba697306bfef0b7519197e2909facc0e4fa79be523296bb0bdcee3739bd66",
     "archive_sha256": "3f711fb4d25f263d56ebd94b5aa10e8fb740ae6b34f79a8ed8877c45c92b97ca",
     "archive": "legs/src_compiler_semver-head-meter.tar.gz"
+  },
+  "src_compiler_semver-head-count": {
+    "stem": "src_compiler_semver",
+    "label": "head",
+    "variant": "count",
+    "elapsed_seconds_upper_bound": 54.38822434199983,
+    "exit_verification": "child exit status 0",
+    "files": [
+      "src/compiler/semver.ts"
+    ],
+    "output_sha256": "a2480ccaa4d84c28dc20e9fa9d22ab7ddb7ededbb1461c176498e99b40bedaed",
+    "archive_sha256": "b0f8b3bc14ee0573dd6d46c303a5b961ba0b26155a4095174d630d36eb07aa01",
+    "archive": "legs/src_compiler_semver-head-count.tar.gz"
   }
 }
