@@ -1,0 +1,28 @@
+{
+  "name": "stage3-lane-symlink-case-13",
+  "counts": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "a21ce71a4afd76de14aa316ecf7dbedb70118f3c07e50aa6b48c23b077b04d7b",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/bind-owned-oracle-repo/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-symlink-case-13/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ sys::\\ symlinkWatching::\\ with\\ virtualFileSystem::\\ watchDirectory\\ using\\ polling$"
+  ],
+  "failures": [],
+  "seconds": 2.572960037001394
+}

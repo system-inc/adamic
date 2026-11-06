@@ -1,0 +1,28 @@
+{
+  "name": "stage3-lane-project-reference-cases-16",
+  "counts": {
+    "pass": 9,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "86ee7a52ae86f9d1b2d803c49ca14074f9ecc8fdad241116a899cea7586d7721",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/bind-owned-oracle-repo/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-project-reference-cases-16/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ doesnt\\ have\\ project\\ reference\\ with\\ dtsMap\\ file,\\ change\\ as\\ rename\\ \\ timeout\\ after\\ delete$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ with\\ dtsMap\\ file,\\ when\\ file\\ is\\ deleted\\ after\\ actions\\ on\\ the\\ projects$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ defining\\ project:\\ rename\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ with\\ dtsMap\\ file,\\ when\\ file\\ is\\ deleted\\ after\\ actions\\ on\\ the\\ projects$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ project\\ that\\ uses\\ dependency:\\ goToDef\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ dependency\\ dts\\ changes,\\ when\\ timeout\\ does\\ not\\ occur\\ before\\ request$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ from\\ project\\ that\\ uses\\ dependency:\\ goToDef\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ dependency\\ dtsMap\\ changes,\\ when\\ timeout\\ occurs\\ before\\ request$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ doesnt\\ have\\ project\\ reference\\ goToDef\\ and\\ rename\\ locations$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ has\\ disableSourceOfProjectReferenceRedirect\\ along\\ with\\ project\\ reference\\ usage\\ file\\ changes,\\ when\\ timeout\\ does\\ not\\ occur\\ before\\ request$|^unittests::\\ tsserver::\\ projectReferencesSourcemap::\\ with\\ project\\ references\\ and\\ tsbuild\\ source\\ map\\ when\\ opening\\ depedency\\ and\\ usage\\ project:\\ goToDef\\ and\\ rename\\ when\\ main\\ tsconfig\\ has\\ project\\ reference\\ usage\\ file\\ changes,\\ when\\ timeout\\ does\\ not\\ occur\\ before\\ request$"
+  ],
+  "failures": [],
+  "seconds": 4.140711733998614
+}

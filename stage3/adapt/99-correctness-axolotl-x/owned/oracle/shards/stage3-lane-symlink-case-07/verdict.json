@@ -1,0 +1,28 @@
+{
+  "name": "stage3-lane-symlink-case-07",
+  "counts": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "errors": [],
+  "status": "pass",
+  "artifact": "stage3-adapted-tree",
+  "inputs_hash": "eefb6ebbfce3131624b0c3b4ff91da74f7ea31093aa8cc343724c5c14f20fc07",
+  "failed_tests": [],
+  "baseline_diffs": [],
+  "upstream_exit": 0,
+  "producer_phases": null,
+  "command": [
+    "node",
+    "/workspace/bind-owned-oracle-repo/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/bind-owned-oracle-shards/units/stage3-lane-symlink-case-07/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ sys::\\ symlinkWatching::\\ with\\ virtualFileSystem::\\ recursive\\ watchDirectory\\ using\\ fsEvents\\ when\\ linked\\ in\\ same\\ folder\\ Windows$"
+  ],
+  "failures": [],
+  "seconds": 4.907549584999288
+}
