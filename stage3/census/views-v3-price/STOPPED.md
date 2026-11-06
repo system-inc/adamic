@@ -1,30 +1,35 @@
-# Exact closure census stopped at the baseline budget
+# Declaration census checkpoint at the box reserve
 
-The unmodified main full-latent meter baseline for the group containing
-binder.ts, _namespaces/ts.ts and _namespaces/ts.performance.ts exceeded its
-23-minute limit. subprocess.TimeoutExpired reports 1379.998793027 seconds.
-Its stream contains only the complete entry header, with no completed file
-records. The measurement counter was not running in that child. This group
-contributes no counts or units to the report.
+Stopped at the recorded conservative box reserve, rather than starting another
+ten-minute pair without enough allowance before 17:04 UTC. This box was already
+77 minutes old when this continuation began. No measurement process remains
+running. The paired closure count is still incomplete.
 
-budget-stop.tar.gz preserves the exact runner error, partial stream, process
-log, selected files, timeout metadata and the runner source loaded when this
-legacy group started. The Python traceback displayed a line from the subsequently
-updated on-disk runner; loaded-runner.py preserves the actual source version.
+The frozen shared plan covers 81 files, 4,564 top-level declarations and 10,721
+full-mode units. Both Go inventories agree with the independent TypeScript
+inventory. All planned units occur once, in contiguous source intervals with
+unchanged nesting and ownership. Lost, duplicate and moved-unit controls fail;
+contiguous refinement preserves the complete inventory.
 
-The smaller semver piece completed independently. Four of 81 files are paired;
-closure totals and a full top-ten IR ranking remain unavailable. All completed
-raw binary runs were committed and plainly pushed; their paired archives retain
-the exact raw streams and timings. Both entry programs are checker-clean, with
-zero diagnostics. The two own apply products have identical bytes in all 746
-src files. The source upper bound is complete.
+Two new declaration chunks completed sequential main/head runs, runtime unit
+and timer audits, pairing, commits and ordinary pushes:
 
-The original whole-group timer was superseded by separately checkpointing each
-binary run within 23 minutes. Its outer controller was stopped, while its tracked
-baseline child retained the original deadline. That child timed out and its
-runner exited; no measurement process is left running.
+- d009: builder.ts, 55 units, 298.393 seconds.
+- d036: executeCommandLine.ts, 69 units, 427.478 seconds.
 
-To resume, first prepare finer file or unit scheduling for the timed-out group
-and prove its scheduling-only behavior and meter identity. Check whether an
-individual giant enclosing unit also exceeds the budget. Do not treat the
-unfinished baseline or the four completed files as an 81-file total.
+Together with the four posted seed files, 161 units are paired. Each side has
+160 attempted units, 94 finding-free attempted units and zero panicked units.
+Retained IR totals for those observed units are main (0 ViewElement, 0 checks)
+and head (48 ViewElement, 28 checks). Finding-free head units contain (15, 12).
+These are observed-unit totals, not the missing full closure totals.
+
+There were no interrupted new declaration chunks. The runner records and packs
+interruptions, then substitutes disjoint contiguous child intervals without
+rerunning the parent; a single indivisible declaration is explicitly blocked.
+The earlier unmodified full-file baseline timeout remains in budget-stop.tar.gz.
+
+Resume with a fresh explicit box budget and the same INDEX.json and compiler
+pins. Completed seeds and chunks must not run again. The next pending piece
+recorded by this run is d023; execution order may prioritize remaining work but
+must not move a unit's frozen assignment. Full per-file and top-ten totals are
+unavailable until every active leaf is complete.

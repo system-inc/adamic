@@ -2,9 +2,34 @@
   "box": "4b7d656a5150",
   "head": "9626d0113f08269e519ba216ff7f95ff84af16db",
   "main": "2c3f322975b2dee68889e82eab0bbca324d417a9",
+  "status": "stopped at box reserve; full totals incomplete",
+  "planned_units": 10721,
+  "paired_units": 161,
+  "next_piece": "d023",
   "live_measurement_processes": [],
-  "counter_source_sha256": "b4b8e12278d1ce0cd466c4bf489453372d1dcd9431fac49a1e22bf0b72199cb7",
-  "paired_files": 4,
-  "planned_files": 81,
-  "status": "stopped at unmodified main baseline budget; source inventory complete"
+  "plan_sha256": "b7a9e39e648e4c4f8ca90a0e594f0ff753fac9a8bafada312990aadbdbbb48fe",
+  "totals": {
+    "main": {
+      "view_elements": 0,
+      "view_element_checks": 0,
+      "units": 161,
+      "attempted": 160,
+      "ir_observed": 160,
+      "finding_free_attempted": 94,
+      "finding_free_view_elements": 0,
+      "finding_free_view_element_checks": 0,
+      "panicked_units": 0
+    },
+    "head": {
+      "view_elements": 48,
+      "view_element_checks": 28,
+      "units": 161,
+      "attempted": 160,
+      "ir_observed": 160,
+      "finding_free_attempted": 94,
+      "finding_free_view_elements": 15,
+      "finding_free_view_element_checks": 12,
+      "panicked_units": 0
+    }
+  }
 }

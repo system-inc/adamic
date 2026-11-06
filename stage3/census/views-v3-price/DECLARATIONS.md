@@ -35,3 +35,8 @@ until they fit the remaining box budget. This ordering does not change assignmen
 The conservative box stop is 17:04 UTC on 2026-11-06, leaving shutdown and push
 reserve before this box reaches two hours. A fresh continuation must explicitly
 record a new box budget; it must not silently alter the frozen source plan.
+
+A fresh box can supply an explicit PRICE_BOX_BUDGET JSON file containing
+`box` and `stop_before_utc`. The runner records it in RESULTS.json while retaining
+the immutable shared source plan and all completed unit assignments. This does
+not authorize rerunning an interrupted parent or changing the compiler pins.

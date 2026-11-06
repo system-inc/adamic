@@ -8,7 +8,11 @@ index_path=D/'RESULTS.json'
 state=json.loads(index_path.read_text()) if index_path.exists() else dict(schema=1,plan_sha256=plan_hash,results={},refinements={})
 assert state['plan_sha256']==plan_hash
 source_manifest=json.loads((P/'source-manifest.json').read_text())
-stop_at=datetime.datetime.fromisoformat(plan['stop_before_utc']).timestamp()
+budget_path=os.getenv('PRICE_BOX_BUDGET')
+budget=json.loads(pathlib.Path(budget_path).read_text()) if budget_path else {'stop_before_utc':plan['stop_before_utc'],'box':os.uname().nodename}
+assert budget['box']==os.uname().nodename,'box budget belongs to a different box'
+stop_at=datetime.datetime.fromisoformat(budget['stop_before_utc']).timestamp()
+state['box_budget']=budget
 limit=int(sys.argv[1]) if len(sys.argv)>1 else 999
 
 def dump():index_path.write_text(json.dumps(state,indent=2)+'\n')
@@ -113,7 +117,8 @@ while processed<limit:
    (scratch/(side+'-pair.jsonl')).write_text(''.join(json.dumps(r,separators=(',',':'))+'\n' for r in pair))
   with (scratch/'pair.log').open('w') as log:
    subprocess.run(['python3',str(P.parent/'pair/pair.py'),str(scratch/'main-pair.jsonl'),str(scratch/'head-pair.jsonl'),'/workspace/v3-main-adapted-complete','--typescript',str(P.parents[1]/'api/node_modules/typescript'),'--json',str(scratch/'pair.json'),'--report',str(scratch/'pair.md')],stdout=log,stderr=log,check=True,timeout=max(1,deadline-time.monotonic()))
- except Exception as exc:error=repr(exc)
+ except Exception as exc:
+  error=repr(exc);interrupted=interrupted or isinstance(exc,subprocess.TimeoutExpired)
  result=dict(status='interrupted' if interrupted else 'failed' if error else 'complete',expected_units=piece['expected_units'],top_units=[a['where'] for a in piece['top_atoms']],seconds=time.monotonic()-started,timings=timings,error=error,plan_sha256=plan_hash)
  if not error:
   perfile={f['file']:{'file':f['file'],'sides':{}} for f in piece['files']}
