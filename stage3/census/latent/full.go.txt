@@ -70,7 +70,7 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 			if v.IsNil() {
 				return reflect.Zero(v.Type())
 			}
-			if !speculative && latentSharedIRPointer(v.Type()) {
+			if latentSharedIRPointer(v.Type()) {
 				return v
 			}
 			if v.Type().Elem().PkgPath() != "github.com/system-inc/adamic/internal/ir" {
@@ -94,9 +94,16 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 		case reflect.Struct:
 			result := reflect.New(v.Type()).Elem()
 			if speculative {
-				result.Set(v)
+				// Start private caches empty; reflection cannot clear them after a shallow copy.
+				for index := 0; index < v.NumField(); index++ {
+					if latentPrivateIRField(v, index) { continue }
+					if !result.Field(index).CanSet() {
+						panic("latent state copy: unexported IR field " + v.Type().Field(index).Name)
+					}
+					result.Field(index).Set(v.Field(index))
+				}
 				for _, index := range latentSpecMutableFields(v.Type()) {
-					if latentEmptyArgumentCache(v, index) { continue }
+					if latentPrivateIRField(v, index) { continue }
 					if !result.Field(index).CanSet() {
 						panic("latent state copy: unexported IR field " + v.Type().Field(index).Name)
 					}
@@ -238,11 +245,4 @@ func latentNestedDeclarations(body *ast.Node, visit ast.Visitor) {
 		return false
 	}
 	body.ForEachChild(walk)
-}
-
-// The speculative copy's carve-out: it copies a struct whole first, so only the
-// backend derivation cache needs naming, and only its nil state is accepted.
-// The full copy's table is statecopy's irPrivateFields.
-func latentEmptyArgumentCache(v reflect.Value, index int) bool {
-    return v.Type() == reflect.TypeFor[ir.Program]() && v.Type().Field(index).Name == "argumentFacts" && v.Field(index).IsNil()
 }

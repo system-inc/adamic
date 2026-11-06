@@ -1,13 +1,17 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestLatentStatecopySortedMapProgramMembership(t *testing.T) {
@@ -270,5 +274,78 @@ func TestLatentCarryFactsIgnoresUncarriedFields(t *testing.T) {
 	}
 	if gaps := carryFactGuardGaps(root, path); len(gaps) > 0 {
 		t.Fatalf("an unrelated lowering field must retain the default unit snapshot: %v", gaps)
+	}
+}
+
+// Compile the actual speculative copier and the generated private-field answers together.
+// LATENT_STATECOPY_MUTANT selects an old full.go.txt saved under a mutant filename.
+func TestLatentSpeculativePrivateIRFields(t *testing.T) {
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Run("build-refusal", TestLatentStatecopyRefusesAnUnnamedPrivateIRField)
+	generated := generate(root, filepath.Join(root, "internal/lower/lower.go"))
+	full := filepath.Join(root, "stage3/census/latent/full.go.txt")
+	if mutant := os.Getenv("LATENT_STATECOPY_MUTANT"); mutant != "" {
+		full = mutant
+	}
+	extract := func(path string, source any, names map[string]bool) string {
+		fs := token.NewFileSet()
+		file, err := parser.ParseFile(fs, path, source, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		result := ""
+		for _, decl := range file.Decls {
+			if fn, ok := decl.(*ast.FuncDecl); ok && names[fn.Name.Name] {
+				result += printed(fn) + "\n"
+			}
+			if group, ok := decl.(*ast.GenDecl); ok && group.Tok == token.VAR {
+				for _, spec := range group.Specs {
+					if v, ok := spec.(*ast.ValueSpec); ok && names[v.Names[0].Name] {
+						result += printed(group) + "\n"
+					}
+				}
+			}
+		}
+		return result
+	}
+	source := "package probe\nimport (\"reflect\"; \"os\"; \"github.com/system-inc/adamic/internal/ir\")\n"
+	source += extract("generated.go", generated, map[string]bool{"latentPrivateIRField": true, "latentSharedIRPointer": true})
+	source += extract(full, nil, map[string]bool{"latentCopyIR": true, "latentEmptyArgumentCache": true})
+	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{"latentSpeculativeEnabled": true, "latentSpecImmutable": true, "latentSpecImmutableTypes": true, "latentSpecMutableFields": true, "latentSpecMutableFieldCache": true, "latentSpecFunctionSchema": true, "latentSpecFunctionSchemas": true})
+	folder := t.TempDir()
+	files := map[string]string{
+		"go.mod":  fmt.Sprintf("module github.com/system-inc/adamic/probe\ngo 1.27.0\nrequire github.com/system-inc/adamic v0.0.0\nreplace github.com/system-inc/adamic => %s\n", root),
+		"copy.go": source,
+		"copy_test.go": `package probe
+import ("testing"; "reflect"; "github.com/system-inc/adamic/internal/ir")
+func TestPrivateCopy(t *testing.T) {
+ t.Setenv("LATENT_SPECULATIVE","1")
+ p := &ir.Program{}
+ p.MethodsNamed("witness")
+ if reflect.ValueOf(p).Elem().FieldByName("methodTables").IsNil() { t.Fatal("source cache was not populated") }
+ copied := latentCopyIR(p,map[any]any{})
+ if !reflect.ValueOf(copied).Elem().FieldByName("methodTables").IsNil() { t.Fatal("speculative copy shares methodTables") }
+ if reflect.ValueOf(p).Elem().FieldByName("methodTables").IsNil() { t.Fatal("copy changed source cache") }
+ identity := &ir.GeneratedType{}
+ if latentCopyIR(identity,map[any]any{}) != identity { t.Fatal("shared pointer identity changed") }
+}
+`,
+	}
+	for name, text := range files {
+		if err := os.WriteFile(filepath.Join(folder, name), []byte(text), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "go", "test", "-mod=mod", "-count=1", ".")
+	command.Dir = folder
+	command.Env = append(os.Environ(), "GOWORK=off")
+	output, err := command.CombinedOutput()
+	if err != nil {
+		t.Fatalf("speculative copier: %v\n%s", err, output)
 	}
 }
