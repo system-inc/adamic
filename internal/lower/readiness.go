@@ -426,7 +426,7 @@ func readinessCalls(instruction *flow.Instruction) bool {
 	calls := false
 	walk(node, func(node any) bool {
 		switch node.(type) {
-		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach, ir.GeneratorNext:
+		case ir.Call, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArraySort, ir.ArrayFrom, ir.MapForEach, ir.GeneratorNext, ir.IteratorNext:
 			calls = true
 		}
 		return true
