@@ -983,6 +983,13 @@ typedef struct adamic_map_iterator {
 adamic_map_iterator *adamic_map_iterate(adamic_map *map);
 adamic_object *adamic_string_iterator(adamic_string *string);
 adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int key, int value, bool set);
+// adamic_iterator_result is one step's { value, done }, value in slot 0 and done in slot 1, as every
+// runtime-built iterator's next() gives it (map_set.c). kind is the value slot's field kind, and
+// element_tag its representation byte, ir.Type's. The result is owned by the caller, and the element
+// is moved in, never retained: a reference the caller borrowed it retains first. At done element is
+// unread, and the value slot holds `NULL` for a reference kind and the absent maybe-number otherwise.
+// The result is a plain counted object, never adopted into a region.
+adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag);
 // adamic_collection_iterator_is says whether a value is an iterator adamic_collection_iterator made:
 // an object of the iterator shape whose next is a collection's, never a string's iterator, which
 // shares the shape. An iterable view's dispatch asks it (ir.IsCollectionIterator).
