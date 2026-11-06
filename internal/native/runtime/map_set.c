@@ -74,8 +74,9 @@ static const adamic_field_kind pair_kinds[][2] = {{adamic_field_number, adamic_f
 static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[0]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[1]}, {2, pair_names, pair_references[1], &adamic_host_methods, pair_kinds[2]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[3]}, {2, pair_names, pair_references[0], &adamic_host_methods, pair_kinds[4]}, {2, pair_names, pair_references[1], &adamic_host_methods, pair_kinds[5]}, {2, pair_names, pair_references[2], &adamic_host_methods, pair_kinds[6]}, {2, pair_names, pair_references[2], &adamic_host_methods, pair_kinds[7]}, {2, pair_names, pair_references[3], &adamic_host_methods, pair_kinds[8]}};
 
 // adamic_iterator_result (adamic.h) is the one place a step result is built, a collection's and a
-// string's alike. At done a number or a boolean kind's value holds the packed absent maybe-number, as
-// its representation byte then says MaybeNumber, which union.c's dynamic_slot reads first.
+// string's alike. At done a number kind's value holds the packed absent maybe-number, as its
+// representation byte then says MaybeNumber, and a boolean kind's the absent maybe-boolean, its byte
+// MaybeBoolean, which the builder writes itself. union.c's dynamic_slot reads that byte first.
 adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adamic_value element, unsigned char element_tag) {
 	adamic_object *result = adamic_object_new(&result_shapes[kind]);
 	adamic_register_shape_types(&result_metadata[kind]);
@@ -86,6 +87,13 @@ adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adam
 		result->slots[0] = element;
 	} else if (kind == adamic_field_reference) {
 		result->slots[0].reference = NULL;
+	} else if (kind == adamic_field_boolean) {
+		// A static read of the boolean | undefined value reads slot.maybe_boolean, the low byte, and the
+		// absent maybe-number's low byte is 0x01, which is true: a Set<boolean> or a Map's boolean
+		// values() stepped past its end read true where Node reads undefined.
+		result->slots[0].number = 0;
+		result->slots[0].maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){false, false});
+		adamic_object_field_types(result)[0] = adamic_ir_MaybeBoolean;
 	} else {
 		result->slots[0].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
 	}

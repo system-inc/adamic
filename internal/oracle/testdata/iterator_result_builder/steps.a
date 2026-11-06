@@ -3,7 +3,11 @@
 // Map's values() holds numbers, a Set's values() booleans and a string-keyed Map's keys() strings. Each
 // prints a result's own keys, then the next result's value, at a step and once exhausted, held to Node.
 // Keys and values are built, never only literals. Each result is read where it's made, since
-// Object.keys of a value typed object doesn't lower.
+// Object.keys of a value typed object doesn't lower. A boolean result's value at done is the absent
+// maybe-boolean, which read true before (#ak92fcp), and the boolean Set's results are read once more by a
+// run-time key, so union.c's dynamic_slot reads each result's representation byte.
+import { propertyOf } from '../reflect_get/hostErrors.ts';
+
 const table = new Map<string, number>();
 for(let index = 1; index <= 2; index++) {
     table.set(`key ${String(index)}`, index * 10);
@@ -17,6 +21,13 @@ flags.add(table.size > 2);
 const flagValues = flags.values();
 console.log(`set values step ${Object.keys(flagValues.next()).join(',')} ${flagValues.next().value}`);
 console.log(`set values done ${Object.keys(flagValues.next()).join(',')} ${flagValues.next().value}`);
+const valueKey = ['val', 'ue'].join('');
+const keyedFlags = flags.values();
+const keyedStep = propertyOf(keyedFlags.next(), valueKey);
+console.log(`set values by key step ${typeof keyedStep} ${String(keyedStep)}`);
+keyedFlags.next();
+const keyedDone = propertyOf(keyedFlags.next(), valueKey);
+console.log(`set values by key done ${typeof keyedDone} ${String(keyedDone)}`);
 const keys = table.keys();
 console.log(`map keys step ${Object.keys(keys.next()).join(',')} ${keys.next().value}`);
 console.log(`map keys done ${Object.keys(keys.next()).join(',')} ${keys.next().value}`);
