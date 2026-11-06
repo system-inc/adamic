@@ -8,7 +8,22 @@ import subprocess
 import sys
 from unit_status import DEFERRED, audit_deferred, body_eligible, unit_counts
 
-binary, output = map(lambda p: Path(p).resolve(), sys.argv[1:])
+import argparse
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('binary', type=Path)
+parser.add_argument('output', type=Path)
+parser.add_argument('--project', type=Path, help='audit a real entry instead of the synthetic fixtures')
+parser.add_argument('--mode', choices=['speculative'], help='real-project mode; requires --project')
+parser.add_argument('--baseline', type=Path, help='main overlay for common-unit comparisons')
+parser.add_argument('--seconds', type=int, default=1200)
+args = parser.parse_args()
+if args.mode and not args.project:
+    parser.error('--mode requires --project')
+binary, output = args.binary.resolve(), args.output.resolve()
+if args.project:
+    from project_audit import run_project
+    sys.exit(run_project(binary, output, args.project.resolve(),
+                         args.baseline.resolve() if args.baseline else None, args.seconds))
 output.mkdir(parents=True, exist_ok=True)
 source = output/'source'
 source.mkdir(exist_ok=True)
