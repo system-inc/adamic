@@ -8,8 +8,9 @@ import (
 )
 
 // spreadTree is a plain-typed global and a function whose spread of its second parameter may meet a
-// getter, which each probe below hands it.
-const spreadTree = "type Tree = { value: number; label: string };\nlet tree: Tree = { value: 1, label: `tree${String(1)}` };\nfunction describe(node: Tree, extra: Tree): string { const copy = { ...extra }; return `${String(node.value + copy.value)} ${node.label}`; }\n"
+// getter, which each probe below hands it. Tree's fields are readonly, as a getter without a setter
+// is, so a class instance with one is assignable to it without the readonly-seen-as-writable stop.
+const spreadTree = "type Tree = { readonly value: number; readonly label: string };\nlet tree: Tree = { value: 1, label: `tree${String(1)}` };\nfunction describe(node: Tree, extra: Tree): string { const copy = { ...extra }; return `${String(node.value + copy.value)} ${node.label}`; }\n"
 
 // spreadGettersOf is, for every object literal with a spread, the names of the getters lowering says
 // it may run, sorted.
