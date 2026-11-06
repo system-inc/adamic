@@ -1,0 +1,171 @@
+[
+  {
+    "before": [
+      "core.ts:966:72",
+      "Refused",
+      "a value of type T[] seen as {}[], which can write {} where T is read"
+    ],
+    "after": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "status": "moved",
+    "roots": [
+      "_namespaces/ts.moduleSpecifiers.ts",
+      "_namespaces/ts.performance.ts",
+      "_namespaces/ts.ts",
+      "binder.ts",
+      "builder.ts",
+      "builderPublic.ts",
+      "builderState.ts",
+      "builderStatePublic.ts",
+      "checker.ts",
+      "commandLineParser.ts",
+      "emitter.ts",
+      "executeCommandLine.ts",
+      "expressionToTypeNode.ts",
+      "factory/baseNodeFactory.ts",
+      "factory/emitHelpers.ts",
+      "factory/emitNode.ts",
+      "factory/nodeChildren.ts",
+      "factory/nodeConverters.ts",
+      "factory/nodeFactory.ts",
+      "factory/nodeTests.ts",
+      "factory/parenthesizerRules.ts",
+      "factory/utilities.ts",
+      "factory/utilitiesPublic.ts",
+      "moduleNameResolver.ts",
+      "moduleSpecifiers.ts",
+      "parser.ts",
+      "path.ts",
+      "performance.ts",
+      "performanceCore.ts",
+      "program.ts",
+      "programDiagnostics.ts",
+      "resolutionCache.ts",
+      "scanner.ts",
+      "semver.ts",
+      "sourcemap.ts",
+      "symbolWalker.ts",
+      "sys.ts",
+      "tracing.ts",
+      "transformer.ts",
+      "transformers/classFields.ts",
+      "transformers/classThis.ts",
+      "transformers/declarations.ts",
+      "transformers/declarations/diagnostics.ts",
+      "transformers/destructuring.ts",
+      "transformers/es2015.ts",
+      "transformers/es2016.ts",
+      "transformers/es2017.ts",
+      "transformers/es2018.ts",
+      "transformers/es2019.ts",
+      "transformers/es2020.ts",
+      "transformers/es2021.ts",
+      "transformers/esDecorators.ts",
+      "transformers/esnext.ts",
+      "transformers/generators.ts",
+      "transformers/jsx.ts",
+      "transformers/legacyDecorators.ts",
+      "transformers/module/esnextAnd2015.ts",
+      "transformers/module/impliedNodeFormatDependent.ts",
+      "transformers/module/module.ts",
+      "transformers/module/system.ts",
+      "transformers/namedEvaluation.ts",
+      "transformers/taggedTemplate.ts",
+      "transformers/ts.ts",
+      "transformers/typeSerializer.ts",
+      "transformers/utilities.ts",
+      "tsbuild.ts",
+      "tsbuildPublic.ts",
+      "utilities.ts",
+      "utilitiesPublic.ts",
+      "visitorPublic.ts",
+      "watch.ts",
+      "watchPublic.ts",
+      "watchUtilities.ts"
+    ]
+  },
+  {
+    "before": [
+      "debug.ts:243:59",
+      "NotYet",
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+    ],
+    "after": [
+      "debug.ts:243:59",
+      "NotYet",
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+    ],
+    "status": "unchanged",
+    "roots": [
+      "core.ts"
+    ]
+  },
+  {
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "status": "unchanged",
+    "roots": [
+      "corePublic.ts",
+      "hostErrors.ts"
+    ]
+  },
+  {
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "status": "unchanged",
+    "roots": [
+      "debug.ts"
+    ]
+  },
+  {
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "status": "unchanged",
+    "roots": [
+      "diagnosticInformationMap.generated.ts"
+    ]
+  },
+  {
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "status": "unchanged",
+    "roots": [
+      "types.ts"
+    ]
+  }
+]
