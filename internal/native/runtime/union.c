@@ -581,6 +581,35 @@ static adamic_value regexp_string_iterator_called(adamic_closure *self, adamic_v
 	not_called("Iterator.prototype.", name);
 }
 
+// The functions an fs.Stats inherits, as a run-time key read hands them out (#zhrjf2t): one immortal
+// closure for each name in adamic_dynamic_keyed_stats_names, Stats.prototype's constructor (Stats) and
+// _checkModeProperty and then StatsBase.prototype's is methods, the same from every Stats and every
+// read, as Node's are one function each, with Node's length (dynamic_keyed_names.h, pinned by
+// TestDynamicKeyedStatsLengthsAreNodes). No call reaches one yet, as none reaches Object.prototype's,
+// so each one's code is a guard that stops loudly, naming the prototype Node's function lives on:
+// "Stats isn't called yet", "Stats.prototype._checkModeProperty isn't called yet",
+// "StatsBase.prototype.isFile isn't called yet".
+static adamic_value stats_called(adamic_closure *self, adamic_value *arguments);
+#define STATS_CLOSURE(index, length) static adamic_closure stats_##index = {.heap = {0, adamic_kind_closure, 0}, .code = stats_called, .count = 0, .source_length = length};
+ADAMIC_DYNAMIC_KEYED_STATS_FUNCTIONS(STATS_CLOSURE)
+#undef STATS_CLOSURE
+#define STATS_CLOSURE(index, length) &stats_##index,
+// In adamic_dynamic_keyed_stats_names' order.
+static adamic_closure *const stats_functions[] = {ADAMIC_DYNAMIC_KEYED_STATS_FUNCTIONS(STATS_CLOSURE)};
+#undef STATS_CLOSURE
+_Static_assert(sizeof stats_functions / sizeof stats_functions[0] == sizeof adamic_dynamic_keyed_stats_names / sizeof adamic_dynamic_keyed_stats_names[0], "one closure for each function a Stats inherits");
+
+static adamic_value stats_called(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	const char *name = "an unknown method";
+	for (size_t index = 0; index < sizeof stats_functions / sizeof stats_functions[0]; index++) {
+		if (stats_functions[index] == self) name = adamic_dynamic_keyed_stats_names[index];
+	}
+	if (strcmp(name, "constructor") == 0) not_called("", "Stats");
+	if (strcmp(name, "_checkModeProperty") == 0) not_called("Stats.prototype.", name);
+	not_called("StatsBase.prototype.", name);
+}
+
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
 // class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
 // record, whose shape's methods are adamic_host_methods (adamic.h). The runtime marks each of its own
@@ -732,6 +761,41 @@ static adamic_heap *keyed_regexp_string_iterator(const adamic_string *key) {
 	return prototype_value(key);
 }
 
+// The fields node_fs_file.c's stat shape holds that Node's Stats has too, which a run-time key read
+// answers from the shape's slots: its stat_fields, less the private _fsFileMode.
+static const char *const stats_held_names[] = {"size", "mtimeMs", "mtime", "atime"};
+
+// keyed_stats is a run-time key read of an fs.Stats as Node's answers it, where native holds the
+// answer (#zhrjf2t, the second host shape lifted). Size and mtimeMs are the slot's number and mtime
+// and atime its Date, retained, the same object on every read, as Node's getter caches its own. Each
+// is read by the shape's kinds, as keyed_array reads a match's fields: the shape registers no types
+// for dynamic_slot. A name the Stats inherits answers its immortal closure, Stats.prototype's or
+// StatsBase.prototype's first and then Object.prototype's (prototype_value), so its constructor is
+// Stats and its toString an object's. One of Node's fields native doesn't hold
+// (adamic_dynamic_keyed_stats_field_names) stops, since native would have to make up its value, and
+// any other key reads undefined (NULL), the private _fsFileMode among them: no slot is read for any
+// key but the four held.
+static adamic_heap *keyed_stats(const adamic_object *stats, const adamic_string *key) {
+	if (key_named(key, stats_held_names, sizeof stats_held_names / sizeof stats_held_names[0])) {
+		size_t slot = keyed_slot(stats, key, NULL);
+		if (slot < stats->shape->count) {
+			switch (stats->shape->kinds[slot]) {
+			case adamic_field_number: return adamic_box_number(stats->slots[slot].number);
+			case adamic_field_reference: return adamic_retain(stats->slots[slot].reference);
+			}
+		}
+		static const char message[] = "compiler bug: a Stats' shape doesn't hold a field a run-time key read answers from it";
+		adamic_panic(message, sizeof message - 1);
+	}
+	for (size_t index = 0; index < sizeof stats_functions / sizeof stats_functions[0]; index++) {
+		if (key_is(key, adamic_dynamic_keyed_stats_names[index])) return &stats_functions[index]->heap;
+	}
+	if (key_named(key, adamic_dynamic_keyed_stats_field_names, sizeof adamic_dynamic_keyed_stats_field_names / sizeof adamic_dynamic_keyed_stats_field_names[0])) {
+		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+	}
+	return prototype_value(key);
+}
+
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
 	if (value == NULL || value == &adamic_null) keyed_stop(adamic_dynamic_keyed_stop_nullish, key);
 	switch (value->kind) {
@@ -766,9 +830,12 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	// A matchAll iterator answers as Node's does (#zhrjf2t), known by its shape, before the host test and
 	// before any slot is read, since its slots are private. __proto__ has stopped above, as on an object.
 	if (adamic_regex_iterator_is(object)) return keyed_regexp_string_iterator(key);
+	// So does a Stats, known by its shape too (adamic_fs_file_is_stats), reading only the slots that
+	// hold what Node's own fields hold.
+	if (adamic_fs_file_is_stats(object)) return keyed_stats(object, key);
 	// Any other host object stops for every key, before its own slots are read: a slot may be internal,
-	// its name may be Node's prototype member (a Stats' isFile), or Node may hold a field native's shape
-	// doesn't (memoryUsage's rss). An Error isn't one: its own fields answer as Node's do, and its
+	// its name may be Node's prototype member (a Dirent's isFile), or Node may hold a field native's
+	// shape doesn't (memoryUsage's rss). An Error isn't one: its own fields answer as Node's do, and its
 	// prototype's names stop below.
 	if (host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	if (object->class != NULL) {

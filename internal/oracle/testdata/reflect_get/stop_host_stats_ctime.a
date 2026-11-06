@@ -1,0 +1,10 @@
+// A Stats' ctime is Stats.prototype's date accessor on Node, and native's shape holds no ctime, so a
+// run-time key read of it stops on both backends rather than make up a Date (#zhrjf2t; #6xfkdwj fills
+// it). Node prints object.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const stats = fs.statSync('.');
+console.log(stats.isDirectory() ? 'directory' : 'other');
+const value = propertyOf(stats, 'ctime');
+console.log(typeof value);

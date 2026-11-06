@@ -59,7 +59,11 @@ func reflectGetFixture(t *testing.T, name string) string {
 // map has the wrong length natively; the iterator's input slot handed out, as before its stop, so
 // matchall_reads.a's input is a string natively; a closure made for each read in place of the
 // immortal one, so its next read twice isn't itself natively; the helper's iterator answer dropped,
-// and its RuntimeValue stop put back natively, so matchall_reads.a stops at next on each.
+// and its RuntimeValue stop put back natively, so matchall_reads.a stops at next on each. #zhrjf2t's,
+// a Stats': one closure's length changed in dynamic_keyed_names.h, so stats_reads.a's isFile has the
+// wrong length natively; _fsFileMode answered from its slot, so stats_reads.a's reads a number
+// natively; size read through dynamic_slot rather than the shape's kind, so stats_reads.a panics
+// natively; the helper's Stats test dropped, so stats_reads.a stops at size on the JavaScript backend.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -88,6 +92,10 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"matchall_reads.a", matchAllReadsAnswers},
 		{"stop_host_matchall_input.a", "iterator\nundefined\n"},
 		{"stop_host_matchall_next.a", "iterator\nfunction\n"},
+		{"stats_reads.a", statsReadsAnswers},
+		{"stop_host_object.a", "directory\nfunction\n"},
+		{"stop_host_stats_method.a", "directory\nfunction\n"},
+		{"stop_host_stats_size.a", "directory\nnumber\n"},
 		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
@@ -276,6 +284,34 @@ indices map is an array's: true
 indices missing undefined
 `
 
+// statsReadsAnswers is what stats_reads.a prints on Node.
+const statsReadsAnswers = `size is the static read's: true
+mtimeMs is the static read's: true
+mtime: object, the static read's true, read twice true
+atime: object, the static read's true, read twice true
+mtime is atime: false
+constructor: function 14
+_checkModeProperty: function 1
+isDirectory: function 0
+isFile: function 0
+isBlockDevice: function 0
+isCharacterDevice: function 0
+isSymbolicLink: function 0
+isFIFO: function 0
+isSocket: function 0
+toString: function 0
+valueOf: function 0
+hasOwnProperty: function 1
+_fsFileMode: undefined
+missing: undefined
+constructor from two Stats: true
+constructor is an object's: false
+isFile from two Stats: true
+isFile is isDirectory: false
+toString is an object's: true
+still a directory: true
+`
+
 // matchAllReadsAnswers is what matchall_reads.a prints on Node.
 const matchAllReadsAnswers = `next: function 0
 constructor: function 0
@@ -415,10 +451,9 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_prototype_class.a", "thing\n", "ClassConstructor", "constructor", "thing\nfunction\n"},
 	{"stop_proto.a", "before\n", "Proto", "__proto__", "before\nobject\n"},
 	{"stop_host_iterator.a", "iterator\n", "RuntimeValue", "constructor", "iterator\nfunction\n"},
-	{"stop_host_object.a", "directory\n", "RuntimeValue", "constructor", "directory\nfunction\n"},
-	{"stop_host_stats_method.a", "directory\n", "RuntimeValue", "isFile", "directory\nfunction\n"},
 	{"stop_host_stats_field.a", "directory\n", "RuntimeValue", "dev", "directory\nnumber\n"},
-	{"stop_host_stats_size.a", "directory\n", "RuntimeValue", "size", "directory\nnumber\n"},
+	{"stop_host_stats_ctime.a", "directory\n", "RuntimeValue", "ctime", "directory\nobject\n"},
+	{"stop_host_stats_date.a", "mtime object\n", "RuntimeValue", "getTime", "mtime object\nfunction\n"},
 	{"stop_host_iterator_next.a", "iterator\n", "RuntimeValue", "next", "iterator\nfunction\n"},
 	{"stop_host_memory_field.a", "memory\n", "RuntimeValue", "rss", "memory\nnumber\n"},
 	{"stop_host_memory_heap.a", "memory number\n", "RuntimeValue", "heapUsed", "memory number\nnumber\n"},
@@ -464,18 +499,19 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // Each stop, on both backends, in the same words byte for byte. The private stop's mutant is
 // TestReflectGetPrivateMutantJavaScript's. stop_prototype_class.a's is the JavaScript helper finding a
 // class's accessors through adamicFindAccessor, which takes Object's constructor for an accessor
-// without a getter, so that backend stops in the setter-only stop's words. stop_host_object.a's are
-// union.c's host_object test dropped, so a Stats' constructor reads as Object's closure natively,
-// and the helper's prototype test dropped, so the JavaScript backend reads Node's Stats.
+// without a getter, so that backend stops in the setter-only stop's words.
 // stop_host_iterator.a's is the JavaScript backend's AdamicIterator made a plain object again
 // (library_map_set.go), so that backend hands out Object as a Map iterator's constructor.
-// The stop_host_ rows after stop_host_object.a are #ey7aysy's: a host object stops for every key.
-// Their mutants are union.c's guard put back on Object.prototype's names only, so
-// stop_host_stats_method.a's isFile reads undefined natively, and
-// TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on pin each runtime shape
-// marked host to Node (host_shapes_test.go's table names each one's fixture); a shape's host sentinel
-// dropped, stat_shape's in node_fs_file.c or the groups shape's in internal/regexp/native.go, and its
-// fixture answers natively. The stop_in_host_ rows are an in test on a host object (Adamic's ruling on
+// The stop_host_stats_ rows are a Stats' fields native doesn't hold (#zhrjf2t), which stop on both
+// backends while its other reads answer (stats_reads.a); their mutant is union.c's keyed_stats
+// answering such a field undefined, so stop_host_stats_field.a's dev reads undefined natively.
+// stop_host_stats_date.a reads a Stats' mtime, a host Date, by a key in turn. The other stop_host_
+// rows are #ey7aysy's: a host object stops for every key. Their mutants are union.c's guard put back
+// on Object.prototype's names only, so stop_host_dirent.a's isFile reads undefined natively, and
+// TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on, and
+// stop_host_stats_date.a, pin each runtime shape marked host to Node (host_shapes_test.go's table
+// names each one's fixture); a shape's host sentinel dropped, the groups shape's in
+// internal/regexp/native.go or date_shape's in node_fs_file.c, and its fixture answers natively. The stop_in_host_ rows are an in test on a host object (Adamic's ruling on
 // #ey7aysy at 23:03Z). Their mutant is union.c's host_stop dropped from adamic_has_property, so
 // stop_in_host_method.a's isFile answers no natively (stop_in_host_internal.a still stops, at the
 // read the in test narrows, which keeps its own guard), and TestReflectGetInMutantJavaScript's.
@@ -518,10 +554,11 @@ func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 
 // The JavaScript backend's host test runs before an own property is read, as native's host_object
 // does (#ey7aysy). Mutant: that early test dropped, so a host value is judged only after hasOwn, as
-// before, and stop_host_stats_method.a's isFile reads undefined there instead of stopping.
+// before, and stop_host_dirent.a's isFile reads undefined there instead of stopping. A Stats answers
+// before the host test (#zhrjf2t), so a Dirent is the pin.
 func TestReflectGetHostMutantJavaScript(t *testing.T) {
 	t.Parallel()
-	path := reflectGetFixture(t, "stop_host_stats_method.a")
+	path := reflectGetFixture(t, "stop_host_dirent.a")
 	program, err := lowered(t, path)
 	if err != nil {
 		t.Fatal(err)
@@ -536,7 +573,7 @@ func TestReflectGetHostMutantJavaScript(t *testing.T) {
 		t.Fatal(err)
 	}
 	got := onNode(t, mutated)
-	want := reflectGetStop(t, "directory\n", "RuntimeValue", "isFile")
+	want := reflectGetStop(t, "entries true\n", "RuntimeValue", "isFile")
 	if disagreement(want, got) == "" {
 		t.Fatalf("the host check's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 	}

@@ -67,35 +67,29 @@
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'heapUsed')\n"
     },
-    "0f3f677bdbc14c1b867e666a44f365584f39988b4d3bc427b6f380a25949c9c5": {
-      "path": "internal/oracle/testdata/reflect_get/stop_host_object.a",
-      "ruling_task": "#0sps03r",
-      "lifting_task": "#zhrjf2t",
-      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'constructor')\n"
-    },
     "90406dcda01828f3d028937b6880a4884f06c47da6eba78182f3449625e7dee6": {
       "path": "internal/oracle/testdata/reflect_get/stop_host_performance_mark.a",
       "ruling_task": "#0sps03r",
       "lifting_task": "#zhrjf2t",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'name')\n"
     },
-    "ca8bee31bdc4c408cd8fe59d2a6a2488a61e5903163c62a4feedc058a158108c": {
+    "e0e189ad46285b6a3a9b0e692e32c6db4e261ef6fd0033c95d10dcbbc25e7edc": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_stats_ctime.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#6xfkdwj",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'ctime')\n"
+    },
+    "4c808dc99612b12a396515ec6307d160c6636213a8559c88a580020369bb55a9": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_stats_date.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'getTime')\n"
+    },
+    "0285816360451925c5b8adb6ffd498a6545d73736ed7b92c2823f25ac08d9173": {
       "path": "internal/oracle/testdata/reflect_get/stop_host_stats_field.a",
       "ruling_task": "#0sps03r",
-      "lifting_task": "#zhrjf2t",
+      "lifting_task": "#6xfkdwj",
       "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'dev')\n"
-    },
-    "4a3fb426d673f5b1ee021557be159d0610369347ce6c3322f0008f62b93a7cac": {
-      "path": "internal/oracle/testdata/reflect_get/stop_host_stats_method.a",
-      "ruling_task": "#0sps03r",
-      "lifting_task": "#zhrjf2t",
-      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'isFile')\n"
-    },
-    "97cf4113c404ed46610ec57ded4d80bdb4774ea8eca3a5993a2e6f63ecf72a5d": {
-      "path": "internal/oracle/testdata/reflect_get/stop_host_stats_size.a",
-      "ruling_task": "#0sps03r",
-      "lifting_task": "#zhrjf2t",
-      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'size')\n"
     },
     "f8a2954f9c6f0d7f4c068effaf7c6d10a2776f547b55ad0203b4cd4998d47993": {
       "path": "internal/oracle/testdata/reflect_get/stop_in_host_error_code.a",
