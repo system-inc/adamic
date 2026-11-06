@@ -83,7 +83,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicDirect = (fn, values) => fn(...values);\n")
 	}
 	builder.WriteString(recordRuntime)
-	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const fn = object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = invoke.bind(object); return make({code: (self, values) => bound(...values)}, object); };\n")
+	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = invoke.bind(object); return make({code: (self, values) => bound(...values)}, object); };\n")
 	builder.WriteString("const adamicBoundCall = (self, values) => { const fn = self.cells[0].value; return adamicCall(fn, fn.receiver ? [self.cells[1].value, ...values] : values); };\n")
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// A static constructor's live parent prototype carries inherited fields. Keep its
