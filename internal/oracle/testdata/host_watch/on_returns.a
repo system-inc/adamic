@@ -1,0 +1,10 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// on('error', listener) gives the watcher back, as an EventEmitter's on does.
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-'));
+const watcher = fs.watch(directory, {persistent: true}, (eventType, filename) => { console.log(`wrong ${eventType} ${filename ?? 'null'}`); });
+const same = watcher.on('error', () => { console.log('wrong error'); });
+console.log(`on returns the watcher ${same === watcher}`);
+watcher.close();
+fs.rmSync(directory, {recursive: true, force: true});

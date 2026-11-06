@@ -74,12 +74,50 @@ func nodeLibraryName(symbol *ast.Symbol) string {
 // nodeHostObject says whether a type is a host object's, a class or interface a Node library file
 // declares, and which of its members its registration names: implementedNodeMembers keys each one
 // by its own declaration's nodeLibraryName, so a member it inherits is named by the interface that
-// declares it. The one place that answers it, for the view check here and Workers' census.
+// declares it, or by the host type itself, the owner's name and the member's. A declaration many
+// host types inherit is registered by its owner only: FSWatcher's on is InternalEventEmitter's, as
+// ChildProcess's is, whose shape has no on (Library on #j71fn59). The one place that answers it, for
+// the view check here and Workers' census.
 func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member *ast.Symbol) bool, host bool) {
-	if proven == nil || proven.Symbol() == nil || nodeLibraryName(proven.Symbol()) == "" {
+	if proven == nil || proven.Symbol() == nil {
 		return nil, false
 	}
-	return nodeLibraryMemberImplemented, true
+	owner := nodeLibraryName(proven.Symbol())
+	if owner == "" {
+		return nil, false
+	}
+	return func(member *ast.Symbol) bool {
+		if nodeLibraryMemberImplemented(member) {
+			return true
+		}
+		// The owner's key is for a member the host type inherits, named by a declaration elsewhere. A
+		// member it declares itself already has that name, and nodeLibraryMemberImplemented has judged
+		// it with its namespace: inspector's Debugger.CallFrame.url and Runtime.CallFrame.url share one
+		// flat name, told apart only there.
+		key := owner + "." + member.Name
+		return key != nodeLibraryName(member) && implementedNodeMembers[key]
+	}, true
+}
+
+// nodeHostOwnedMember names a member read off a host object by the host type it's read off, as
+// nodeHostObject's registration does, node:fs.FSWatcher.on for an FSWatcher's inherited on: for a
+// call through the member, the member's property access, or its name. It's "" for anything else.
+func (l *lowering) nodeHostOwnedMember(node *ast.Node) string {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindCallExpression {
+		node = ast.SkipParentheses(node.AsCallExpression().Expression)
+	}
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		node = node.Parent
+	}
+	if node.Kind != ast.KindPropertyAccessExpression {
+		return ""
+	}
+	owner := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
+	if _, host := l.nodeHostObject(owner); !host {
+		return ""
+	}
+	return nodeLibraryName(owner.Symbol()) + "." + node.Name().Text()
 }
 
 // nodeHostViewDepth bounds how far nodeHostViewReach follows a view into its members' types, and
@@ -521,6 +559,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 		return err
 	}
 	if found, err := l.nodeCommonJSUseRefusal(node); found {
+		return err
+	}
+	if found, err := l.nodeWatchUseRefusal(node); found {
 		return err
 	}
 	name := l.nodeLibraryMember(node)

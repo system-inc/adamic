@@ -1,0 +1,10 @@
+// A host object stops for every key (#ey7aysy): an FSWatcher's close is FSWatcher.prototype's method
+// on Node, where native's shape holds it as its own. Node prints function.
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+const watcher = fs.watch('.', {persistent: true}, (eventType, filename) => { console.log(`${eventType} ${filename ?? 'null'}`); });
+console.log('watching');
+const value = propertyOf(watcher, 'close');
+console.log(typeof value);
+watcher.close();

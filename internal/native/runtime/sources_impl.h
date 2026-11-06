@@ -26,6 +26,7 @@ struct source_entry {
 };
 static source_entry *sources;
 static uintptr_t source_next_identity = 1;
+static bool source_dispatching;
 
 static source_entry *source_find(adamic_source_handle handle) {
     for (source_entry *entry = sources; entry != NULL; entry = entry->next)
@@ -109,11 +110,21 @@ static bool source_dispatch(void) {
     unsigned ready = chosen->ready;
     chosen->ready = 0; /* At most once a turn: only the next wait records it again. */
     chosen->firing = true;
+    source_dispatching = true;
     chosen->dispatch(chosen->data, ready);
+    source_dispatching = false;
     chosen->firing = false;
     if (!chosen->active) free(chosen);
     if (adamic_thrown != NULL) adamic_uncaught();
     return true;
+}
+void adamic_source_drain_jobs(void) {
+    host_loop_thread();
+    if (!source_dispatching) {
+        fputs("adamic: a source's job checkpoint runs only inside its dispatch\n", stderr);
+        abort();
+    }
+    drain_jobs();
 }
 static void source_shutdown(void) {
     while (sources != NULL) {

@@ -479,6 +479,14 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
+	// An arm of a conditional options argument is consumed as the conditional is (fs.watch's, which
+	// nodeHostExactOptions admits for that call alone).
+	if outer.Parent != nil && outer.Parent.Kind == ast.KindConditionalExpression && outer.Parent.AsConditionalExpression().Condition != outer {
+		outer = outer.Parent
+		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+			outer = outer.Parent
+		}
+	}
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindCallExpression {
 		return false
 	}
@@ -500,7 +508,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	}
 	index := 1
 	switch symbol.Name {
-	case "statSync", "mkdirSync", "readFileSync", "rmSync", "mkdtempSync":
+	case "watch", "statSync", "mkdirSync", "readFileSync", "rmSync", "mkdtempSync":
 	case "writeFileSync":
 		index = 2
 	default:

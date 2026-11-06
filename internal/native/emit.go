@@ -59,6 +59,11 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 			regexCallbacks = regexCallbacks || call.Replacement != nil
 		case ir.NodeFSFile:
 			nodeHost = nodeHost || strings.HasPrefix(call.Operation, "host_") || call.Operation == "mkdtemp" || call.Operation == "rm"
+			if call.Operation == "host_watch" {
+				// The runtime calls a watcher's listener as a void call whose target it can't know, and the
+				// watcher's on is a closure the runtime makes, whose watcher comes back owned (node_fs_watch_impl.h).
+				flaggedDiscard, referenceClosure = true, true
+			}
 		case ir.CallClosure:
 			flaggedDiscard = flaggedDiscard || call.Returns == 0 && program.ClosureDiscard(call) == ir.DiscardFlagged
 		case ir.ArrayVisit:

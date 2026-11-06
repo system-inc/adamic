@@ -1,0 +1,19 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// The watched directory removed: a rename as it goes and another as its watch goes, each named by
+// the watched path's basename.
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-'));
+const watched = join(directory, 'd');
+fs.mkdirSync(watched);
+let seen = 0;
+const watcher = fs.watch(watched, {persistent: true}, changed);
+function changed(eventType: string, filename: string | null): void {
+ console.log(`${eventType} ${filename ?? 'null'}`);
+ seen++;
+ if (seen === 2) {
+  watcher.close();
+  fs.rmSync(directory, {recursive: true, force: true});
+ }
+}
+fs.rmSync(watched, {recursive: true, force: true});

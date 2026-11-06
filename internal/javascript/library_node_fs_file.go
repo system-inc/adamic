@@ -13,6 +13,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	switch call.Operation {
 	case "host_watch_file":
 		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
+	case "host_watch":
+		return "adamicFSWatch(" + strings.Join(args, ", ") + ")"
+	case "host_watch_on":
+		return "adamicFSWatchOn(" + args[0] + ", " + args[1] + ")"
 	case "host_unwatch_file":
 		if len(args) == 2 {
 			args[1] = "adamicWatchFileListener(" + args[1] + ")"
@@ -103,4 +107,38 @@ const adamicWatchFileListener = callback => {
  }
  return adamicWatchFileListeners.get(callback);
 };
+`
+
+// fs.watch's FSWatcher stand-in: Node's watcher behind an object whose close and on are own
+// closures in the closure calling convention, as native's shape holds them, given a prototype that
+// isn't Object's so a run-time key read stops on it as native's host shape does. One adapter per
+// listener keeps its identity, as watchFile's does, and hands it Node's own arguments. recursive,
+// and on through a view with another event or after close, stop by name, as native's do; the
+// direct on("error"), which lowering recognized, is Node's own after close too.
+const nodeWatchRuntime = `const adamicFSWatchListeners = new WeakMap();
+const adamicFSWatchListener = callback => {
+ if (!adamicFSWatchListeners.has(callback)) {
+  adamicFSWatchListeners.set(callback, (...values) => adamicCall(callback, values));
+ }
+ return adamicFSWatchListeners.get(callback);
+};
+const adamicFSWatchOns = new WeakMap();
+class AdamicFSWatcher {
+ constructor(watcher) {
+  let closed = false;
+  const on = callback => { watcher.on('error', adamicFSWatchListener(callback)); return this; };
+  this.close = {code: () => { closed = true; watcher.close(); }};
+  this.on = {code: (closure, values) => {
+   if (values[0] !== 'error') panic("NotYet: FSWatcher.on with an event other than 'error'");
+   if (closed) panic('NotYet: FSWatcher.on through a structural view after close');
+   return on(values[1]);
+  }};
+  adamicFSWatchOns.set(this, on);
+ }
+}
+const adamicFSWatch = (path, persistent, recursive, callback) => {
+ if (recursive) panic('NotYet: fs.watch with recursive: true');
+ return new AdamicFSWatcher(adamicNodeFSFile.watch(path, {persistent}, adamicFSWatchListener(callback)));
+};
+const adamicFSWatchOn = (watcher, callback) => adamicFSWatchOns.get(watcher)(callback);
 `

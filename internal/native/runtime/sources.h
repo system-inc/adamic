@@ -27,5 +27,9 @@ bool adamic_source_unref(adamic_source_handle handle);
  * again, not even later in the turn that closes it, and may close itself from
  * its own dispatch. False means stale. */
 bool adamic_source_close(adamic_source_handle handle);
+/* Run the microtasks queued so far: the checkpoint Node takes after each callback
+ * a dispatch makes, where one dispatch makes several (one per inotify event). Only
+ * from inside a source's dispatch, on the loop thread; anywhere else it aborts. */
+void adamic_source_drain_jobs(void);
 #endif
 #endif
