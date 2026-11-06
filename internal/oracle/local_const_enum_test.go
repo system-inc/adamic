@@ -72,7 +72,7 @@ func TestLocalConstEnums(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 10 {
-		t.Fatalf("found %d programs, want 10", programs)
+	if programs != 12 {
+		t.Fatalf("found %d programs, want 12", programs)
 	}
 }
