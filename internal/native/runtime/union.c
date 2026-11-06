@@ -553,6 +553,34 @@ static adamic_value array_prototype_called(adamic_closure *self, adamic_value *a
 	not_called("Array.prototype.", name);
 }
 
+// The functions a matchAll iterator inherits, as a run-time key read hands them out (#zhrjf2t): one
+// immortal closure for each name in adamic_dynamic_keyed_regexp_string_iterator_names,
+// %RegExpStringIteratorPrototype%'s next and then Iterator.prototype's own, its constructor (Iterator)
+// among them, the same from every iterator and every read, as Node's are one function each, with
+// Node's length (dynamic_keyed_names.h, pinned by TestDynamicKeyedRegExpStringIteratorLengthsAreNodes).
+// No call reaches one yet, as none reaches Object.prototype's, so each one's code is a guard that
+// stops loudly.
+static adamic_value regexp_string_iterator_called(adamic_closure *self, adamic_value *arguments);
+#define REGEXP_STRING_ITERATOR_CLOSURE(index, length) static adamic_closure regexp_string_iterator_##index = {.heap = {0, adamic_kind_closure, 0}, .code = regexp_string_iterator_called, .count = 0, .source_length = length};
+ADAMIC_DYNAMIC_KEYED_REGEXP_STRING_ITERATOR_FUNCTIONS(REGEXP_STRING_ITERATOR_CLOSURE)
+#undef REGEXP_STRING_ITERATOR_CLOSURE
+#define REGEXP_STRING_ITERATOR_CLOSURE(index, length) &regexp_string_iterator_##index,
+// In adamic_dynamic_keyed_regexp_string_iterator_names' order.
+static adamic_closure *const regexp_string_iterator_functions[] = {ADAMIC_DYNAMIC_KEYED_REGEXP_STRING_ITERATOR_FUNCTIONS(REGEXP_STRING_ITERATOR_CLOSURE)};
+#undef REGEXP_STRING_ITERATOR_CLOSURE
+_Static_assert(sizeof regexp_string_iterator_functions / sizeof regexp_string_iterator_functions[0] == sizeof adamic_dynamic_keyed_regexp_string_iterator_names / sizeof adamic_dynamic_keyed_regexp_string_iterator_names[0], "one closure for each function a matchAll iterator inherits");
+
+static adamic_value regexp_string_iterator_called(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	const char *name = "an unknown method";
+	for (size_t index = 0; index < sizeof regexp_string_iterator_functions / sizeof regexp_string_iterator_functions[0]; index++) {
+		if (regexp_string_iterator_functions[index] == self) name = adamic_dynamic_keyed_regexp_string_iterator_names[index];
+	}
+	if (strcmp(name, "next") == 0) not_called("RegExp String Iterator's ", name);
+	if (strcmp(name, "constructor") == 0) not_called("", "Iterator");
+	not_called("Iterator.prototype.", name);
+}
+
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
 // class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
 // record, whose shape's methods are adamic_host_methods (adamic.h). The runtime marks each of its own
@@ -691,6 +719,19 @@ static adamic_heap *keyed_tuple(const adamic_object *tuple, const adamic_string 
 	return array_inherited(key);
 }
 
+// keyed_regexp_string_iterator is a run-time key read of a matchAll iterator as Node's answers it
+// (#zhrjf2t, the first host shape lifted): the iterator has no own property on Node, so a name it
+// inherits answers its immortal closure, its prototype's or Iterator.prototype's first and then
+// Object.prototype's (prototype_value), so its toString is an object's and its constructor Iterator,
+// and any other key reads undefined (NULL). Native's iterator holds its regex, input and done as
+// slots, which are private: this is handed the key alone, so no slot is ever read.
+static adamic_heap *keyed_regexp_string_iterator(const adamic_string *key) {
+	for (size_t index = 0; index < sizeof regexp_string_iterator_functions / sizeof regexp_string_iterator_functions[0]; index++) {
+		if (key_is(key, adamic_dynamic_keyed_regexp_string_iterator_names[index])) return &regexp_string_iterator_functions[index]->heap;
+	}
+	return prototype_value(key);
+}
+
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
 	if (value == NULL || value == &adamic_null) keyed_stop(adamic_dynamic_keyed_stop_nullish, key);
 	switch (value->kind) {
@@ -722,10 +763,13 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	if (error && key_named(key, adamic_dynamic_keyed_error_names, sizeof adamic_dynamic_keyed_error_names / sizeof adamic_dynamic_keyed_error_names[0])) {
 		keyed_stop(adamic_dynamic_keyed_stop_error_property, key);
 	}
-	// A host object stops for every key, before its own slots are read: a slot may be internal (a
-	// matchAll iterator's input and regex), its name may be Node's prototype member (a Stats' isFile),
-	// or Node may hold a field native's shape doesn't (memoryUsage's rss). An Error isn't one: its own
-	// fields answer as Node's do, and its prototype's names stop below.
+	// A matchAll iterator answers as Node's does (#zhrjf2t), known by its shape, before the host test and
+	// before any slot is read, since its slots are private. __proto__ has stopped above, as on an object.
+	if (adamic_regex_iterator_is(object)) return keyed_regexp_string_iterator(key);
+	// Any other host object stops for every key, before its own slots are read: a slot may be internal,
+	// its name may be Node's prototype member (a Stats' isFile), or Node may hold a field native's shape
+	// doesn't (memoryUsage's rss). An Error isn't one: its own fields answer as Node's do, and its
+	// prototype's names stop below.
 	if (host_object(object)) keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	if (object->class != NULL) {
 		const adamic_keyed_class *row = keyed_class(object, classes, count);

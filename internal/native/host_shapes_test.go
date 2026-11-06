@@ -177,7 +177,10 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "regexp.c", name: "regex_shape", verdict: hostShapeUnreachable, refusal: "regexp.a", refused: opaqueRefusal},
 	{file: hostShapeRuntime + "regexp.c", name: "match_shape", verdict: hostShapeHost, internal: "a match array's own properties, held behind the array and read only through it (union.c's keyed_array, array_reads.a)"},
 	{file: hostShapeRuntime + "regexp.c", name: "pair_shape", verdict: hostShapeHost, internal: "a match's indices pair: " + tupleReason},
-	{file: hostShapeRuntime + "regexp.c", name: "iterator_shape", verdict: hostShapeHost, stop: "stop_host_matchall_input.a"},
+	// A matchAll iterator answers a run-time key read as Node's does (union.c's
+	// keyed_regexp_string_iterator, matchall_reads.a), but its in test, hasOwnProperty, Object.keys and
+	// String() still stop on it as a host's, so an in test of its private input is the pin.
+	{file: hostShapeRuntime + "regexp.c", name: "iterator_shape", verdict: hostShapeHost, stop: "stop_in_host_iterator.a"},
 	{file: hostShapeRuntime + "regexp.c", name: "next_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('match', "},
 	// The run-time compiler's groups shape is built twice: regex_compile_names' first, which
 	// adamic_regex_compile_new replaces with one holding the compiler's storage before any match

@@ -1,0 +1,34 @@
+// A matchAll iterator read by a run-time key answers as Node's does (#zhrjf2t): each name it inherits,
+// its prototype's next and Iterator.prototype's, is one function from every iterator and every read with
+// Node's length, constructor is Iterator, Object.prototype's names are an object's, and native's private
+// regex, input and done read undefined, as any other key does. The iterator still iterates after.
+import { propertyOf } from './hostErrors.ts';
+
+const names = [
+	'next', 'constructor', 'reduce', 'toArray', 'forEach', 'some', 'every', 'find', 'map', 'filter', 'take', 'drop',
+	'flatMap', 'toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',
+	'__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__', 'input', 'regex', 'done', 'lastIndex',
+	'missing',
+];
+const iterator = 'a1 a2 b3 a4'.matchAll(/a(\d)/g);
+const other = 'zz'.matchAll(/z/g);
+for (const name of names) {
+	const value = propertyOf(iterator, name);
+	if (typeof value === 'function') console.log(`${name}: function ${String(value.length)}`);
+	else console.log(`${name}: ${typeof value}`);
+}
+const object = { present: 'here' };
+console.log(`next from two iterators: ${String(propertyOf(iterator, 'next') === propertyOf(other, 'next'))}`);
+const first = propertyOf(iterator, 'next');
+const second = propertyOf(iterator, 'next');
+console.log(`next read twice: ${String(first === second)}`);
+console.log(`next is map: ${String(propertyOf(iterator, 'next') === propertyOf(iterator, 'map'))}`);
+console.log(`constructor from two iterators: ${String(propertyOf(iterator, 'constructor') === propertyOf(other, 'constructor'))}`);
+console.log(`constructor is an object's: ${String(propertyOf(iterator, 'constructor') === propertyOf(object, 'constructor'))}`);
+console.log(`map is an array's: ${String(propertyOf(iterator, 'map') === propertyOf([1], 'map'))}`);
+console.log(`toString is an object's: ${String(propertyOf(iterator, 'toString') === propertyOf(object, 'toString'))}`);
+console.log(`hasOwnProperty is an object's: ${String(propertyOf(other, 'hasOwnProperty') === propertyOf(object, 'hasOwnProperty'))}`);
+const next = iterator.next().value;
+console.log(`next match: ${next === undefined ? 'none' : `${next[0]} at ${String(next.index)}`}`);
+for (const match of iterator) console.log(`match ${match[0]} at ${String(match.index)} digit ${match[1] ?? 'none'}`);
+console.log(`done: ${String(iterator.next().done)}`);

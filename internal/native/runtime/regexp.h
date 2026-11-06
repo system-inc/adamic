@@ -72,6 +72,7 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input);
 adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex);
 adamic_object *adamic_regex_match_all(adamic_string *input, adamic_object *regex);
 adamic_array *adamic_regex_iterator_step(adamic_object *iterator);
+bool adamic_regex_iterator_is(const adamic_object *object);
 adamic_object *adamic_regex_next(adamic_object *iterator);
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global);

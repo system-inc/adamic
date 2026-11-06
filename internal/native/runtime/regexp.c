@@ -819,6 +819,9 @@ static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_boolean};
 static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, &adamic_host_methods, iterator_kinds};
+// A matchAll iterator is the one object of this shape, so a run-time key read knows it by identity,
+// never by its slots' names, which are private (union.c).
+bool adamic_regex_iterator_is(const adamic_object *object) { return object->shape == &iterator_shape; }
 // regex_require_global leaves Node's TypeError on the pending word for a RegExp without the g flag,
 // and says whether the call may go on; the caller returns what its own emitter lets go.
 static bool regex_require_global(const adamic_regex_program *p, const char *message) {
