@@ -1,0 +1,1 @@
+internal/oracle/testdata/literal_member_slot/d02_setter_paired_const.a:6:29: Adamic 0.1 refuses a value of type { p: Dog; } seen as { p: Animal; }, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
