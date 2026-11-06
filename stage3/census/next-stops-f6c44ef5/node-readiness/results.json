@@ -1,5 +1,5 @@
 {
-  "/workspace/scratch/next-stops-adapted/src/compiler/commandLineParser.ts": {
+  "/workspace/scratch/next-stops-adapted/src/compiler/debug.ts": {
     "program_files": [
       "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
       "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts",
@@ -86,10 +86,10 @@
     "program_files_timeout": false,
     "node_version": "v24.19.0",
     "build_exit": 0,
-    "exit": 0,
+    "exit": 1,
     "timeout": false,
-    "first_error": "",
-    "throws": false
+    "first_error": "TypeError: Cannot read properties of undefined (reading 'assert')",
+    "throws": true
   },
   "/workspace/scratch/next-stops-adapted/src/compiler/diagnosticInformationMap.generated.ts": {
     "program_files": [
@@ -183,7 +183,7 @@
     "first_error": "TypeError: Cannot read properties of undefined (reading 'AbstractKeyword')",
     "throws": true
   },
-  "/workspace/scratch/next-stops-adapted/src/compiler/semver.ts": {
+  "/workspace/scratch/next-stops-adapted/src/compiler/types.ts": {
     "program_files": [
       "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
       "/workspace/scratch/next-stops-adapted/src/compiler/_namespaces/ts.performance.ts",
@@ -270,9 +270,9 @@
     "program_files_timeout": false,
     "node_version": "v24.19.0",
     "build_exit": 0,
-    "exit": 0,
+    "exit": 1,
     "timeout": false,
-    "first_error": "",
-    "throws": false
+    "first_error": "TypeError: Cannot read properties of undefined (reading 'Error')",
+    "throws": true
   }
 }
