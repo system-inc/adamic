@@ -340,17 +340,5 @@ func (l *lowering) regexRuntimeProperty(receiver *ast.Node, name string) bool {
 	case l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray"):
 		return name == "index" || name == "input" || name == "groups" || name == "indices"
 	}
-	if name != "done" && name != "value" {
-		return false
-	}
-	members := []*checker.Type{proven}
-	if proven.Flags()&checker.TypeFlagsUnion != 0 {
-		members = proven.Types()
-	}
-	for _, member := range members {
-		if !l.isLibraryType(member, "IteratorYieldResult", "IteratorReturnResult") {
-			return false
-		}
-	}
-	return true
+	return false
 }

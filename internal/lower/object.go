@@ -468,7 +468,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	// one callee it lets by is a hand-driven `x.next()` callClosure marked (handDrivenNext): a
 	// direct call keeps its receiver, and checkIterableViews proves the receiver is a runtime-built
 	// iterator, whose next is its own closure (Adamic's (a) on #qk8rztp S2c-2).
-	if l.inheritedLibraryMember(node) && node != l.handNext && !l.iteratorResultField(l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), errorClasses...) && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && node != l.handNext && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), errorClasses...) && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -2073,7 +2073,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsElementAccessExpression()
 	index := ast.SkipParentheses(access.ArgumentExpression)
-	if l.inheritedLibraryMember(node) && !l.iteratorResultField(l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
+	if l.inheritedLibraryMember(node) && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) && !l.regexRuntimeProperty(access.Expression, index.Text()) {
 		return nil, l.prototypeRead(node, index.Text())
 	}
 	optional := access.QuestionDotToken != nil
