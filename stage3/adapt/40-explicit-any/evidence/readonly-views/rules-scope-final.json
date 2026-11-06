@@ -1,0 +1,183 @@
+{
+  "changed_rules": [
+    {
+      "id": 69,
+      "file": "src/compiler/debug.ts",
+      "line": 389,
+      "before": "Record<string, string | number>",
+      "after": "Readonly<Record<string, string | number>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 70,
+      "file": "src/compiler/debug.ts",
+      "line": 420,
+      "before": "Record<string, string | number>",
+      "after": "Readonly<Record<string, string | number>>",
+      "authorized_extra": true
+    },
+    {
+      "id": 71,
+      "file": "src/compiler/debug.ts",
+      "line": 422,
+      "before": "Record<string, string | number>",
+      "after": "Readonly<Record<string, string | number>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 72,
+      "file": "src/compiler/debug.ts",
+      "line": 445,
+      "before": "Record<\"SyntaxKind\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"SyntaxKind\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 73,
+      "file": "src/compiler/debug.ts",
+      "line": 449,
+      "before": "Record<\"SnippetKind\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"SnippetKind\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 74,
+      "file": "src/compiler/debug.ts",
+      "line": 453,
+      "before": "Record<\"ScriptKind\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"ScriptKind\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 75,
+      "file": "src/compiler/debug.ts",
+      "line": 457,
+      "before": "Record<\"NodeFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"NodeFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 76,
+      "file": "src/compiler/debug.ts",
+      "line": 461,
+      "before": "Record<\"NodeCheckFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"NodeCheckFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 77,
+      "file": "src/compiler/debug.ts",
+      "line": 465,
+      "before": "Record<\"ModifierFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"ModifierFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 78,
+      "file": "src/compiler/debug.ts",
+      "line": 469,
+      "before": "Record<\"TransformFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"TransformFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 79,
+      "file": "src/compiler/debug.ts",
+      "line": 473,
+      "before": "Record<\"EmitFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"EmitFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 80,
+      "file": "src/compiler/debug.ts",
+      "line": 477,
+      "before": "Record<\"SymbolFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"SymbolFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 81,
+      "file": "src/compiler/debug.ts",
+      "line": 481,
+      "before": "Record<\"TypeFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"TypeFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 82,
+      "file": "src/compiler/debug.ts",
+      "line": 485,
+      "before": "Record<\"SignatureFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"SignatureFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 83,
+      "file": "src/compiler/debug.ts",
+      "line": 489,
+      "before": "Record<\"ObjectFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"ObjectFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 84,
+      "file": "src/compiler/debug.ts",
+      "line": 493,
+      "before": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 85,
+      "file": "src/compiler/debug.ts",
+      "line": 497,
+      "before": "Record<\"RelationComparisonResult\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"RelationComparisonResult\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 86,
+      "file": "src/compiler/debug.ts",
+      "line": 501,
+      "before": "Record<\"CheckMode\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"CheckMode\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 87,
+      "file": "src/compiler/debug.ts",
+      "line": 505,
+      "before": "Record<\"SignatureCheckMode\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"SignatureCheckMode\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 88,
+      "file": "src/compiler/debug.ts",
+      "line": 509,
+      "before": "Record<\"TypeFacts\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"TypeFacts\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 89,
+      "file": "src/compiler/debug.ts",
+      "line": 540,
+      "before": "Record<\"FlowFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"FlowFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    },
+    {
+      "id": 91,
+      "file": "src/compiler/emitter.ts",
+      "line": 5790,
+      "before": "Record<\"GeneratedIdentifierFlags\", Record<string, string | number>>",
+      "after": "Readonly<Record<\"GeneratedIdentifierFlags\", Readonly<Record<string, string | number>>>>",
+      "authorized_extra": false
+    }
+  ],
+  "requested_rules": 21,
+  "authorized_cache_rule": 70,
+  "other_rules_unchanged": true
+}

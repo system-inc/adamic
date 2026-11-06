@@ -66,6 +66,14 @@ compiler source and the exact API exception; its second pass removed zero.
 
 ## Enum display reflection
 
+Task 52zja36 revises the 19 namespace projections to
+`Readonly<Record<"K", Readonly<Record<string, string | number>>>>` and both
+`enumObject` parameters to `Readonly<Record<string, string | number>>`.
+The outer Readonly prevents writable namespace-field storage; the inner
+Readonly describes the enum table read view. The identity cache key also uses
+the same readonly table view, removing two measured storage-view NotYet stops. The measurements below are
+historical. Current verification is in [READONLY-VIEWS.md](READONLY-VIEWS.md).
+
 All 23 sites applied next. formatEnum, getEnumMembers and the cache key use
 Record<string, string | number>, matching forward numeric members and reverse
 string names. Namespace casts project only the actual enum field being read;

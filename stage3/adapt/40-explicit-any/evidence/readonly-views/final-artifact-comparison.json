@@ -1,0 +1,96 @@
+{
+  "status": "pass",
+  "source_files": 746,
+  "changed_sources": [
+    {
+      "file": "src/compiler/debug.ts",
+      "before": "5f7d504116c5d90271f258ec469626f66a03f0419bebe7a7e5261e5822a5f0c9",
+      "after": "2131d3e06954303f8eaae5b70f697d88203ce76836391e844b73409e84f1d092"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "before": "7be216d0f04aebcb91ce166181d06bea298a8b418848f7ea203b4ffaace2550d",
+      "after": "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7"
+    }
+  ],
+  "changed_rules": 22,
+  "javascript_count": 9,
+  "javascript_byte_identical": true,
+  "emitted": [
+    {
+      "file": "_tsc.js",
+      "bytes": 6247416,
+      "sha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff"
+    },
+    {
+      "file": "_tsserver.js",
+      "bytes": 27889,
+      "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "bytes": 10364,
+      "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "file": "tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "file": "tsserver.js",
+      "bytes": 272,
+      "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "bytes": 1013,
+      "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "file": "typescript.js",
+      "bytes": 9154984,
+      "sha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "bytes": 280,
+      "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "file": "watchGuard.js",
+      "bytes": 2314,
+      "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "public_declarations": [
+    {
+      "file": "typescript.d.ts",
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "byte_identical": true,
+      "public_lines_moved": false
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "byte_identical": true,
+      "public_lines_moved": false
+    }
+  ],
+  "other_changed_declarations": [
+    {
+      "file": "compiler/debug.d.ts",
+      "before": "ee179ee0cb9926e14fff98c38903bdc9a59e018162a2b71922edebc350c54932",
+      "after": "83774022e64171a206f1c61bfce01e920acc3b1e3a5897ce8bb2605deb09c254",
+      "only_readonly_enum_parameter": true
+    },
+    {
+      "file": "typescript.internal.d.ts",
+      "before": "cb770faa0ce2e9c690ad82e12ea3b0bd2afd99ac4d8cb3962b18a7a9e1ed58bd",
+      "after": "a860f16601a5903ac1b4f7306f2d0d80656158ed76f85b2eb0fb98e8076b1e6e",
+      "only_readonly_enum_parameter": true
+    }
+  ]
+}
