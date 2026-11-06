@@ -1,0 +1,67 @@
+{
+  "pass": true,
+  "files": [
+    {
+      "file": "_tsc.js",
+      "byteIdentical": false,
+      "expectedSites": 28,
+      "boundSites": 28,
+      "remainingOriginal": [],
+      "generatedTemps": 28,
+      "inventoryEqual": true,
+      "normalizedEqual": true,
+      "pass": true,
+      "beforeSha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff",
+      "afterSha256": "b31e7853d13f1992fe3dd3678e222e95ccc5f5323903e5e40780a1ccbbb85f7b"
+    },
+    {
+      "file": "_tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsc.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "typescript.js",
+      "byteIdentical": false,
+      "expectedSites": 28,
+      "boundSites": 28,
+      "remainingOriginal": [],
+      "generatedTemps": 28,
+      "inventoryEqual": true,
+      "normalizedEqual": true,
+      "pass": true,
+      "beforeSha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e",
+      "afterSha256": "fa93cabe664186db0fd054dd08d628c1b780840c0576506fdedd2aaf04aa7dbd"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "watchGuard.js",
+      "byteIdentical": true,
+      "pass": true
+    }
+  ],
+  "unexpectedSites": []
+}
