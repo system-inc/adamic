@@ -46,12 +46,18 @@ owners.json pins the exact before/after text and SHA-256 of ten edited owners,
 never whole-file hashes. Changed, missing, duplicate, moved and half-adapted
 owners and mixed tree/import states fail before any write. Every source file
 is reread before writing. CRLF is preserved; replay writes zero files and
-preserves bytes and mtimes. Handed-off calls are preserved and checked against
-their separate inventory. No cast is added.
+preserves bytes and mtimes. For every ownership.json row, all original handed-off calls must remain or
+all must be absent. A mixed group refuses and names its owner. 99x does not
+validate or edit the replacement code in a wholly absent group. No cast is added.
 
-Five source files change. The maybeBind imports are removed only in builder.ts,
-tsbuildPublic.ts and watchPublic.ts. program.ts and watch.ts retain imports for
-their handed-off calls; checker.ts is untouched. Python's actual sort places
+Five source files are eligible to change. Their maybeBind import specifier is
+removed exactly when no core maybeBind call remains after 99x. inspect derives
+its import requirement from symbol-resolved calls in each file, rather than
+the historical inventory.imports list. On main the removed imports are in
+builder.ts, tsbuildPublic.ts and watchPublic.ts; a complete 32 fold also lets
+99x remove watch.ts's import. A complete program owner fold lets 99x remove
+program.ts's import. checker.ts has no 99x site, so 99x never changes or checks
+its import. Removing that import after its final use is 95h's fold's job. Python's actual sort places
 99x after 99u and before 99-wasm-crypto-import. No other directory is reordered.
 
 ## All 46 original sites
@@ -118,3 +124,18 @@ shards pass with exactly matching observations and sanctioned API bytes.
 All 79 ordinary first stops are unchanged; all six CW051 units were measured
 before and after. See PROOF.md and owned/ for complete current evidence.
 Older receipts outside owned/ describe superseded 46-site experiments.
+
+## Fold composition continuation
+
+This continuation starts at typescript/maybebind-adapt-1, a6d5f494, on main
+322f8056. The 28 own sites and ten exact owner pins are unchanged. The old
+18-left total is now conditional: complete earlier-owner folds reduce it,
+without granting 99x ownership of their replacement expressions. Strict own
+owner, half-adapted tree and import checks remain. composition/ contains the
+new receipts; the prior owned/ receipts certify the historical run only.
+
+The no-write controls cover each partial owner group and a restored unused
+import. A complete synthetic owner-fold control exercises zero remaining
+program/watch calls, import cleanup, checker byte preservation and a replay
+that preserves source bytes and nanosecond mtimes. Full apply, type, emitted
+JavaScript, oracle and CW051 composition measurements are in progress.

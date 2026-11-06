@@ -1,0 +1,36 @@
+'use strict';
+const e=require('./engine.cjs'),{fs,path,assert}=e;
+const {adapt}=require('./adapt.cjs');
+const inventory=require('./inventory.json'),ownership=require('./ownership.json');
+const base=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const scratch=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'bind2-mutant-'));
+const rows=[];
+function reset(){fs.rmSync(path.join(scratch,'src'),{recursive:true,force:true});fs.cpSync(path.join(base,'src'),path.join(scratch,'src'),{recursive:true});}
+function snapshot(){return e.sources(scratch).map(f=>[f,fs.readFileSync(f),fs.statSync(f,{bigint:true}).mtimeNs]);}
+function unchanged(before){for(const [f,b,t] of before){assert.deepEqual(fs.readFileSync(f),b);assert.equal(fs.statSync(f,{bigint:true}).mtimeNs,t);}}
+function replace(site){const f=path.join(scratch,'src/compiler',site.file),text=fs.readFileSync(f,'utf8');assert.equal(text.split(site.before).length,2);fs.writeFileSync(f,text.replace(site.before,site.after));}
+function refused(name,expected){const before=snapshot();let reason;try{adapt(scratch);}catch(error){reason=error.message;}assert(reason&&reason.includes(expected),reason);unchanged(before);rows.push({name,refused:reason,zeroWrites:true});}
+try{
+ for(const row of ownership){
+  const sites=inventory.left.filter(s=>s.file===row.file&&(s.owner===row.owner||s.owner.startsWith(row.owner+'.')));
+  if(sites.length<2)continue;
+  reset();replace(sites[0]);
+  refused('half owner '+row.file+':'+row.owner,row.file+':'+(row.owner.startsWith('createProgram.')?'createProgram':row.owner));
+ }
+ reset();const applied=adapt(scratch);assert.equal(applied.rewrites,28);
+ const file='builder.ts',f=path.join(scratch,'src/compiler',file);let text=fs.readFileSync(f,'utf8');
+ // Reinsert the original reviewed import line into the same import declaration.
+ const original=fs.readFileSync(path.join(base,'src/compiler',file),'utf8');const pin=inventory.imports.find(s=>s.file===file);assert(pin);
+ const at=original.indexOf(pin.before),following=original.slice(at+pin.before.length).split('\n')[0];assert(following);
+ assert.equal(text.split(following).length,2);fs.writeFileSync(f,text.replace(following,pin.before+following));
+ refused('unused retained import','builder.ts: half-adapted import: 0 core maybeBind calls');
+ reset();for(const site of inventory.left)replace(site);
+ // 99x must not inspect replacement bodies. This harmless foreign-owner edit stays opaque.
+ const checker=path.join(scratch,'src/compiler/checker.ts');fs.appendFileSync(checker,'\n// foreign owner contract\n');
+ const checkerBefore=fs.readFileSync(checker),result=adapt(scratch);assert.equal(result.rewrites,28);assert.equal(result.left,0);
+ assert.deepEqual(fs.readFileSync(checker),checkerBefore);
+ for(const file of ['watch.ts','program.ts'])assert(!/^    maybeBind,$/m.test(fs.readFileSync(path.join(scratch,'src/compiler',file),'utf8')));
+ const before=snapshot();assert.equal(adapt(scratch).files,0);unchanged(before);
+ rows.push({name:'all handed-off groups absent; dynamic program/watch import removal; checker untouched; byte/mtime replay',pass:true,result});
+}finally{fs.rmSync(scratch,{recursive:true,force:true});}
+fs.writeFileSync(path.join(out,'composition-mutant.json'),JSON.stringify(rows,null,2)+'\n');console.log(JSON.stringify(rows,null,2));

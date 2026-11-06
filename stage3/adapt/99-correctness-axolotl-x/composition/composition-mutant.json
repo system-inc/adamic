@@ -1,0 +1,42 @@
+[
+  {
+    "name": "half owner checker.ts:createBasicNodeBuilderModuleSpecifierResolutionHost",
+    "refused": "handed-off owner half folded or inventory drift: checker.ts:createBasicNodeBuilderModuleSpecifierResolutionHost\n+ actual - expected\n\n  [\n    '[\"checker.ts\",\"createBasicNodeBuilderModuleSpecifierResolutionHost\",\"maybeBind(host, host.getGlobalTypingsCacheLocation)\",\"host.getGlobalTypingsCacheLocation?.bind(host)\"]',\n-   '[\"checker.ts\",\"createBasicNodeBuilderModuleSpecifierResolutionHost\",\"maybeBind(host, host.getSymlinkCache)\",\"host.getSymlinkCache?.bind(host)\"]'\n  ]\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "half owner program.ts:createProgram",
+    "refused": "handed-off owner half folded or inventory drift: program.ts:createProgram\n+ actual - expected\n\n  [\n-   '[\"program.ts\",\"createProgram\",\"maybeBind(host, host.getGlobalTypingsCacheLocation)\",\"host.getGlobalTypingsCacheLocation?.bind(host)\"]',\n    '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.createHash)\",\"host.createHash?.bind(host)\"]',\n    '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.realpath)\",\"host.realpath?.bind(host)\"]',\n    '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.trace)\",\"host.trace?.bind(host)\"]'\n  ]\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "half owner program.ts:createProgram.getEmitHost",
+    "refused": "handed-off owner half folded or inventory drift: program.ts:createProgram\n+ actual - expected\n\n  [\n    '[\"program.ts\",\"createProgram\",\"maybeBind(host, host.getGlobalTypingsCacheLocation)\",\"host.getGlobalTypingsCacheLocation?.bind(host)\"]',\n    '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.createHash)\",\"host.createHash?.bind(host)\"]',\n-   '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.realpath)\",\"host.realpath?.bind(host)\"]',\n    '[\"program.ts\",\"createProgram.getEmitHost\",\"maybeBind(host, host.trace)\",\"host.trace?.bind(host)\"]'\n  ]\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "half owner watch.ts:createCompilerHostFromProgramHost",
+    "refused": "handed-off owner half folded or inventory drift: watch.ts:createCompilerHostFromProgramHost\n+ actual - expected\n\n  [\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)\",\"directoryStructureHost.directoryExists?.bind(directoryStructureHost)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)\",\"directoryStructureHost.getDirectories?.bind(directoryStructureHost)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.createHash)\",\"host.createHash?.bind(host)\"]',\n-   '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.getDefaultLibLocation)\",\"host.getDefaultLibLocation?.bind(host)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.getEnvironmentVariable)\",\"host.getEnvironmentVariable?.bind(host)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.readDirectory)\",\"host.readDirectory?.bind(host)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.realpath)\",\"host.realpath?.bind(host)\"]',\n    '[\"watch.ts\",\"createCompilerHostFromProgramHost\",\"maybeBind(host, host.trace)\",\"host.trace?.bind(host)\"]'\n  ]\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "half owner watch.ts:createProgramHost",
+    "refused": "handed-off owner half folded or inventory drift: watch.ts:createProgramHost\n+ actual - expected\n\n  [\n    '[\"watch.ts\",\"createProgramHost\",\"maybeBind(system, system.createHash)\",\"system.createHash?.bind(system)\"]',\n    '[\"watch.ts\",\"createProgramHost\",\"maybeBind(system, system.getEnvironmentVariable)\",\"system.getEnvironmentVariable?.bind(system)\"]',\n    '[\"watch.ts\",\"createProgramHost\",\"maybeBind(system, system.now)\",\"system.now?.bind(system)\"]',\n-   '[\"watch.ts\",\"createProgramHost\",\"maybeBind(system, system.realpath)\",\"system.realpath?.bind(system)\"]'\n  ]\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "unused retained import",
+    "refused": "builder.ts: half-adapted import: 0 core maybeBind calls\n\n1 !== 0\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "all handed-off groups absent; dynamic program/watch import removal; checker untouched; byte/mtime replay",
+    "pass": true,
+    "result": {
+      "files": 5,
+      "rewrites": 28,
+      "left": 0,
+      "javascriptChanging": true
+    }
+  }
+]

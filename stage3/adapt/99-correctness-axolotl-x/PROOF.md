@@ -1,3 +1,19 @@
+# Fold composition continuation
+
+Work is in progress from a6d5f494 on main 322f8056. The adapter accepts each
+earlier-owned group as wholly present or wholly absent, never inspects that
+owner's replacements, and computes import cleanup from remaining core calls.
+The strict ten own-owner pins are unchanged. composition/ holds current
+continuation receipts. The original no-write, half-state, CRLF and replay
+contracts pass, as do five partial-owner and one retained-unused-import
+controls. Full matrix and lane measurements follow.
+
+The proof below is the historical squashed delivery, including its Packed
+evidence section. It is retained intact for audit, not reused to certify
+new fold compositions.
+
+---
+
 # 99x proof: 28 rewrites, 18 earlier-owner handoffs
 
 The current ownership revision passes checks 1 through 6. All current receipts

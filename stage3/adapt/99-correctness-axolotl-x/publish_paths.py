@@ -14,4 +14,4 @@ with Path('/workspace/scratch/bind-publish.lock').open('w') as lock:
     subprocess.run(['git','diff','--cached','--check'],cwd=repo,check=True)
     if subprocess.run(['git','diff','--cached','--quiet'],cwd=repo).returncode:
         subprocess.run(['git','commit','-q','-m',message],cwd=repo,check=True)
-        subprocess.run(['git','push','origin','HEAD:typescript/maybebind-adapt'],cwd=repo,check=True)
+        subprocess.run(['git','push','origin','HEAD:typescript/maybebind-adapt-2'],cwd=repo,check=True)

@@ -100,10 +100,16 @@ function removableImport(file, text) {
     find(source);
     assert.equal(specs.length, 1, `${file}: missing or duplicate maybeBind import`);
     const spec = specs[0];
+    // Count calls to the imported binding, not textual mentions of its spelling.
+    const options = {allowJs:true,noLib:true,noResolve:true,target:ts.ScriptTarget.Latest};
+    const host = ts.createCompilerHost(options);
+    host.getSourceFile = name => name === file ? source : undefined;
+    const checker = ts.createProgram([file],options,host).getTypeChecker();
+    const imported = checker.getSymbolAtLocation(spec.name);
+    assert(imported, `${file}: maybeBind import has no symbol`);
     let uses = 0;
     function count(node) {
-        if (node === spec) return;
-        if (ts.isIdentifier(node) && node.text === 'maybeBind') uses++;
+        if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && checker.getSymbolAtLocation(node.expression) === imported) uses++;
         ts.forEachChild(node, count);
     }
     count(source);

@@ -1,16 +1,22 @@
 'use strict';
-const {fs,path,assert,normalize} = require('./engine.cjs');
+const e = require('./engine.cjs');
+const {fs,path,assert,normalize} = e;
 const os = require('node:os');
 const {adapt,inspect,owners} = require('./adapt.cjs');
 const inventory = require('./inventory.json');
 const tree = path.resolve(process.argv[2]);
 const files = [...new Set(owners.map(pin=>pin.file))];
 const original = new Map(files.map(file=>[file,normalize(fs.readFileSync(path.join(tree,'src/compiler',file),'utf8'))]));
-assert.equal(inspect(original),false,'contract requires baseline');
+function inspectTexts(texts) {
+    const replacements=new Map([...texts].map(([file,text])=>[path.join(tree,'src/compiler',file),text]));
+    const scanned=e.scan(tree,e.program(tree,replacements));
+    return inspect(texts,[...scanned.sites,...scanned.refused]);
+}
+assert.equal(inspectTexts(original),false,'contract requires baseline');
 const rows=[];
 function rejected(name,change) {
     const texts = new Map(original); change(texts);
-    assert.throws(()=>inspect(texts)); rows.push({name,result:'refused'});
+    assert.throws(()=>inspectTexts(texts)); rows.push({name,result:'refused'});
 }
 const pin = owners[0];
 rejected('changed owner',m=>m.set(pin.file,m.get(pin.file).replace(pin.before,pin.before.replace('{','{ /* drift */'))));
