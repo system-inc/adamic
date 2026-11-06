@@ -275,6 +275,9 @@ type lowering struct {
 	// collection's iterator, each proven by checkIterableViews once every call is in
 	// (iterable_views.go).
 	iterableViews []iterableView
+	// handNext is the callee of the hand-driven `x.next()` callClosure is lowering, which property
+	// lets past its library-member guard (handDrivenNext); nil otherwise.
+	handNext *ast.Node
 	// generatorArguments are the generators' calls handed into an Iterable<T> parameter, by
 	// IterableOf's Site (iterableOfGenerator), which checkIterableViews proves.
 	generatorArguments []generatorArgument

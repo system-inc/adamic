@@ -1590,9 +1590,24 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// not retain a source signature to prove its required arguments or ABI.
 		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
+	// A hand-driven `x.next()` over an Iterable view parameter: property lets its callee past the
+	// library-member guard, and handNextView records the call for checkIterableViews to prove.
+	hand := l.handDrivenNext(node)
+	if hand && len(node.AsCallExpression().Arguments.Nodes) != 0 {
+		return nil, l.notYet(node, "next(x) through a view, whose value is sent in (#qk8rztp S2c-2)")
+	}
+	if hand {
+		l.handNext = node.AsCallExpression().Expression
+	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
+	l.handNext = nil
 	if err != nil {
 		return nil, err
+	}
+	if hand {
+		if err := l.handNextView(node, closure); err != nil {
+			return nil, err
+		}
 	}
 	if property, isProperty := closure.(ir.Property); isProperty {
 		// object.name(...) through an interface: the object may be a class's, whose methods aren't

@@ -35,13 +35,15 @@ import (
 
 // iterableView is one for-of forOf lowered as a view: where it stops if unproven, the value it steps,
 // how it reads each step, the function its loop is in, and the local its loop holds the iterator in
-// (viewLoop), -1 when it can't be named.
+// (viewLoop), -1 when it can't be named. A hand view is one hand-driven `x.next()` instead
+// (handNextView), which has no loop: its origins are proven the same way, and nothing rewrites it.
 type iterableView struct {
 	where    *ast.Node
 	iterated ir.Expression
 	held     iterableElement
 	function int
 	holder   int
+	hand     bool
 }
 
 // iterableElement is how a step's value is held: element, and when it is a [key, value] pair, how the
@@ -81,6 +83,63 @@ func (l *lowering) viewLoop(view int, statements []ir.Statement, err error) ([]i
 		}
 	}
 	return statements, nil
+}
+
+// handDrivenNext reports whether a call is a hand-driven `x.next()` over a view: the direct call of
+// lib's next, with no `?.` and no parentheses around the callee, on a bare name typed the
+// library's Iterable<T> or IterableIterator<T> (or either `| undefined`, narrowed), held as an object,
+// that names a parameter (Adamic's (a) on #qk8rztp S2c-2). A detached next (`const n = x.next`,
+// `x.next.call`, a passed `x.next`) is no call of it, so the library-member guard still refuses it;
+// a call with an argument is one, which callClosure stops not yet; and that the parameter is the function's own and its every origin a
+// collection's iterator is proven after lowering (handNextView, checkIterableViews).
+func (l *lowering) handDrivenNext(node *ast.Node) bool {
+	call := node.AsCallExpression()
+	if call.QuestionDotToken != nil || call.Expression.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	callee := call.Expression
+	access := callee.AsPropertyAccessExpression()
+	if access.QuestionDotToken != nil || callee.Flags&ast.NodeFlagsOptionalChain != 0 || callee.Name().Text() != "next" || !ast.IsIdentifier(access.Expression) {
+		return false
+	}
+	if !l.inheritedLibraryMember(callee) {
+		return false
+	}
+	if _, isView := l.iterableViewElement(access.Expression); !isView {
+		return false
+	}
+	if held, known := l.representation(l.checker.GetTypeAtLocation(access.Expression)); !known || held != ir.Object {
+		return false
+	}
+	symbol := l.symbol(access.Expression)
+	if symbol == nil {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind != ast.KindParameter {
+			return false
+		}
+	}
+	return len(symbol.Declarations) == 1
+}
+
+// handNextView records a hand-driven next's receiver as a view, once callClosure has lowered the
+// callee: a read, through the narrowing's ir.Defined or not (iterableViewRead), of one of the
+// function's own parameters. A parameter of an enclosing function, read from a closure, is no view,
+// and is refused as main refuses any library next.
+func (l *lowering) handNextView(node *ast.Node, closure ir.Expression) error {
+	callee := node.AsCallExpression().Expression
+	property, isProperty := closure.(ir.Property)
+	if !isProperty {
+		return l.prototypeRead(callee, "next")
+	}
+	read, isRead := iterableViewRead(property.Object)
+	if !isRead || l.function == nil || !slices.Contains(l.function.Parameters, read.Local) {
+		return l.prototypeRead(callee, "next")
+	}
+	held, _ := l.iterableViewElement(callee.AsPropertyAccessExpression().Expression)
+	l.iterableViews = append(l.iterableViews, iterableView{where: node, iterated: property.Object, held: held, function: l.functionIndex, holder: -1, hand: true})
+	return nil
 }
 
 // generatorOrigin is how a generator's call handed in through IterableOf holds what it steps: what
@@ -237,6 +296,10 @@ func (l *lowering) checkIterableViews() error {
 		if len(differently) != 0 {
 			return l.notYet(view.where, "a view over an iterable whose origins yield values held differently ("+strings.Join(differently, "; ")+", read as "+iterableHeldName(view.held)+")")
 		}
+		if view.hand && len(generators) != 0 {
+			// A generator's step returns its value, not a result object (#qk8rztp S2c-2b).
+			return l.notYet(view.where, "a hand-driven next() through a view a generator feeds (#qk8rztp S2c-2b)")
+		}
 		if len(generators) != 0 {
 			if err := l.generatorView(index, generators); err != nil {
 				return err
@@ -260,7 +323,7 @@ func (l *lowering) checkIterableViews() error {
 func (l *lowering) checkGeneratorArguments() error {
 	views := map[int]int{}
 	for index, view := range l.iterableViews {
-		if read, isRead := iterableViewRead(view.iterated); isRead {
+		if read, isRead := iterableViewRead(view.iterated); isRead && !view.hand {
 			views[read.Local] = index
 		}
 	}
@@ -320,6 +383,11 @@ func (l *lowering) generatorParameter(call ir.Call, position int, of ir.Iterable
 	callee := l.result.Functions[target]
 	parameter := callee.Parameters[position]
 	name := l.result.Locals[parameter].Name
+	for _, view := range l.iterableViews {
+		if read, isRead := iterableViewRead(view.iterated); view.hand && isRead && read.Local == parameter {
+			return l.generatorNotYet(where, "passed into the parameter "+name+", which a hand-driven next() reads (#qk8rztp S2c-2b)")
+		}
+	}
 	if index, isView := views[parameter]; !isView || l.iterableViews[index].function != target {
 		return l.generatorNotYet(where, "passed into the parameter "+name+", whose one use isn't a for-of over it")
 	}
