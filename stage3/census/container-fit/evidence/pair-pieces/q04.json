@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/transformers/destructuring.ts": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+    "src/compiler/parser.ts": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 32,
+        "NotYet": 8
+      },
+      "after": {
+        "Refused": 32,
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "a cast the runtime can't check": {
+        "before": 17,
+        "after": 17,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a non-object representation passed through an opaque object parameter": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a property a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type undefined seen as T, a type parameter whose constraint Node can be written, so it can write what undefined can't hold": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from Identifier to Identifier: optional field id has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.VariableDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in Node absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of skipPartiallyEmittedExpressions result Expression cannot be served by implementation result Node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "Refused": 31,
+        "NotYet": 8
+      },
+      "after": {
+        "Refused": 31,
+        "NotYet": 8
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
