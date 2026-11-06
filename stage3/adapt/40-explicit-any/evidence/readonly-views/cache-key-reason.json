@@ -1,0 +1,30 @@
+{
+  "rule": 70,
+  "before": "Record<string, string | number>",
+  "after": "Readonly<Record<string, string | number>>",
+  "reason": "Identity cache keys must accept the readonly enum table view without changing storage representation. No writes occur through these keys.",
+  "motivating_findings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/ro-after/src/compiler/debug.ts:401:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/ro-after/src/compiler/debug.ts:405:46",
+      "reason": "a Readonly<Record<string, string | number>> seen as Record<string, string | number> (fixed objects and records have different storage; copy explicitly)",
+      "text": "/workspace/scratch/ro-after/src/compiler/debug.ts:405:46: stage 0 can't lower a Readonly<Record<string, string | number>> seen as Record<string, string | number> (fixed objects and records have different storage; copy explicitly) yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/ro-after/src/compiler/debug.ts:401:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/ro-after/src/compiler/debug.ts:419:29",
+      "reason": "a Readonly<Record<string, string | number>> seen as Record<string, string | number> (fixed objects and records have different storage; copy explicitly)",
+      "text": "/workspace/scratch/ro-after/src/compiler/debug.ts:419:29: stage 0 can't lower a Readonly<Record<string, string | number>> seen as Record<string, string | number> (fixed objects and records have different storage; copy explicitly) yet"
+    }
+  ]
+}

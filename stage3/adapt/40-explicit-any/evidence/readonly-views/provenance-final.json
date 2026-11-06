@@ -1,0 +1,21 @@
+{
+  "compiler_base": "63e14a0b2b61cf251ad74292e42d5fd09af804b3",
+  "typescript_source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "versions": {
+    "node": "v24.19.0",
+    "go": "go version go1.27.1 linux/amd64"
+  },
+  "binary_sha256": {
+    "/workspace/scratch/ro-bin/latent": "1b9bd908d34a8e7c118d124dd42a9440285e673092d0f6dc5d678c2a79b0c0fc",
+    "/workspace/scratch/ro-bin/adamic": "e7130b57d983fe768b4ddbd241c5fd4d841d29dcf8ba31981346f19031fbf7bd",
+    "/workspace/scratch/ro-bin/scan-only": "a2212ee82e663102d06883c1e6ad467ec09beb5e7fd44ebea873f626d7d6265f",
+    "/workspace/scratch/ro-bin/replay": "dae0719436c99d8c588ddd76c0fbf9987562d97ca7465af07a4399055aa63733",
+    "/workspace/scratch/ro-bin/tool": "12100fb213ecdc145797ac9617a5627f356b1ae3aa67b1b4960ca80bf9f655ed"
+  },
+  "production_compiler_go_unchanged": true,
+  "final_rule_file_sha256": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576",
+  "ordinary_census_driver": "unmodified stage3/census/tool",
+  "latent_full_driver": "existing main overlay",
+  "emitter_scan_driver": "scan-only-units.go.txt; same refusal scan, no unit lowering",
+  "scope": "only stage3/adapt/40-explicit-any/ may differ from base"
+}
