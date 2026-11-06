@@ -317,6 +317,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(item, "spreading an array of other elements")
 			}
 			spreads = true
+			// The spread is a read of the whole array, so a viewed one stops here, at the spread's own
+			// line and column, before checkViewArrays' fallback can name only the file.
+			l.recordViewArrayUse(item, value, "spread")
 		} else {
 			// An element of number | undefined is a packed word: a number or undefined is made one.
 			value = fit(value, element)
@@ -1492,6 +1495,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) > 2 {
 			return nil, true, l.notYet(node, "slice with more than two arguments")
 		}
+		l.recordViewArrayUse(node, array, "slice")
 		return ir.ArraySlice{Array: array, Arguments: arguments, Element: element}, true, nil
 	}
 	if name == "push" {

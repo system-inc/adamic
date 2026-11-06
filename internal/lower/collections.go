@@ -161,6 +161,7 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	if element != ir.Object {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
+	l.recordViewArrayUse(source, pairs, "Map constructor")
 	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
 }
 
@@ -181,7 +182,9 @@ func (l *lowering) newMapFromOptional(source *ast.Node, sourceType *checker.Type
 	if pairs.Type() != ir.Array {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
-	return ir.MapNew{Key: key, Value: value, Pairs: ir.Coalesce{Value: pairs, Fallback: ir.ArrayLiteral{Element: ir.Object}, Of: ir.Array}}, nil
+	optional := ir.Coalesce{Value: pairs, Fallback: ir.ArrayLiteral{Element: ir.Object}, Of: ir.Array}
+	l.recordViewArrayUse(source, optional, "Map constructor")
+	return ir.MapNew{Key: key, Value: value, Pairs: optional}, nil
 }
 
 // pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its
