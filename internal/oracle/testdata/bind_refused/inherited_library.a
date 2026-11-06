@@ -1,0 +1,4 @@
+// Node prints /x/. Inherited intrinsic signatures are outside declared-function binding.
+const expression = /x/;
+const show = expression.toString.bind(expression);
+console.log(show());
