@@ -1,0 +1,30 @@
+{
+  "commit": "a35f12a5410ab79d759daed08daf8f1cac0c2183",
+  "apply_exit": 0,
+  "oracle_exit": 1,
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "artifact": "2bd2e2f4c33d019df5647a0dbc087e13c86974dd4147446d73f5d78bfe855e35",
+  "producer_phases": {
+    "apply": {
+      "exit": 0,
+      "seconds": 251.02
+    },
+    "install": {
+      "exit": 0,
+      "seconds": 2.104
+    },
+    "build": {
+      "exit": 0,
+      "seconds": 20.361
+    },
+    "harness": {
+      "exit": 0,
+      "seconds": 0.836
+    }
+  },
+  "wall_seconds": 277.498
+}
