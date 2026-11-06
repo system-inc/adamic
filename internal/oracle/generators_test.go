@@ -16,7 +16,9 @@ import (
 // dropped by a call as a statement, whatever iterator type it is declared to return; and S3a's
 // function* nested in a function's body, made through its parent's closure, whose frame keeps it,
 // consumed by a for-of over its call, the parameter or a call as a statement (the nested_ fixtures,
-// tsc's checker.ts shapes among them). Each fixture in testdata/generators agrees with Node natively,
+// tsc's checker.ts shapes among them); and S3b's anonymous function* written in place and called, a
+// closure of its own made for the call, consumed the same three ways (the in_place_ fixtures, tsc's
+// elaborateJsxComponents shape among them). Each fixture in testdata/generators agrees with Node natively,
 // sanitized and on the JavaScript backend, and one that finishes leaks nothing: every way out of the
 // consuming loop (exhaustion, break, return, a throw from the body or the loop, a labeled jump to an
 // outer loop) and of the body (completion, an early return, a throw) lets go of the generator once
@@ -42,8 +44,8 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			generatorAgrees(t, directory+"/"+entry.Name())
 		})
 	}
-	if programs != 50 {
-		t.Fatalf("%d programs in %s, want 50: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 54 {
+		t.Fatalf("%d programs in %s, want 54: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
 
