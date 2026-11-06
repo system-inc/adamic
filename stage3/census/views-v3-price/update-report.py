@@ -6,12 +6,13 @@ pieces=[json.loads(x.read_text()) for x in sorted((p/'pieces').glob('*.json'))] 
 pieces=[r for group in pieces for r in group.get('records',[group])]
 source=json.loads((p/'source-summary.json').read_text()) if (p/'source-summary.json').exists() else None
 plan=json.loads((p/'plan.json').read_text()) if (p/'plan.json').exists() else {}
-complete=bool(plan) and len(pieces)==len(plan['files'])
+assert len({r['file'] for r in pieces})==len(pieces),'duplicate observed file'
+complete=bool(plan) and {r['file'] for r in pieces}==set(plan['files'])
 lines=['# Views V3 checked element price','',f'**Exact latent closure totals: {"complete" if complete else "incomplete"}.** '+f'{len(pieces)} completed paired file pieces'+(f" of {len(plan['files'])}." if plan else '.'),'',
  f"**Source upper bound: {source['upper_bound']:,}; readonly subset: {source['readonly_subset']:,}.** Neither is the admission rule." if source else '**Source upper bound and readonly subset: pending completed main apply.**','',
  '| Latent measure'+(' (observed pieces only)' if not complete else '')+' | Main | Head |','|---|---:|---:|']
-keys=['view_elements','view_element_checks','units','attempted','ir_observed','finding_free_attempted','finding_free_view_elements','finding_free_view_element_checks']
-for k in keys:lines.append('| '+k+' | '+' | '.join(str(sum(r['sides'][s][k] for r in pieces)) if pieces else 'Not measured' for s in ['main','head'])+' |')
+keys=['view_elements','view_element_checks','units','attempted','panicked_units','ir_observed','finding_free_attempted','finding_free_view_elements','finding_free_view_element_checks']
+for k in keys:lines.append('| '+k+' | '+' | '.join(str(sum(r['sides'][s].get(k,0) for r in pieces)) if pieces else 'Not measured' for s in ['main','head'])+' |')
 lines+=['','Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.',
 'Head `9626d0113f08269e519ba216ff7f95ff84af16db`; main `2c3f322975b2dee68889e82eab0bbca324d417a9`.',
 'Report base `12fec995dcadc7f1ae94e4ba63835884451378ae`; upstream TypeScript `050880ce59e30b356b686bd3144efe24f875ebc8`.',

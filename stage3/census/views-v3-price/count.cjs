@@ -50,7 +50,8 @@ function read(n) {
  return true;
 }
 const rows=[];
-for(const source of program.getSourceFiles().filter(f=>fixture?roots.includes(f.fileName):f.fileName.startsWith(path.join(tree,'src')+path.sep) && !f.isDeclarationFile).sort((a,b)=>a.fileName.localeCompare(b.fileName))) {
+const sources=program.getSourceFiles().filter(f=>fixture?roots.includes(f.fileName):f.fileName.startsWith(path.join(tree,'src')+path.sep) && !f.isDeclarationFile).sort((a,b)=>a.fileName.localeCompare(b.fileName));
+for(const source of sources) {
  function add(node,receiver,form) {
   if(process.env.V3_MUTANT_SKIP_INDEX==='1' && form==='index') return;
   const type=checker.getTypeAtLocation(receiver), a=arrayShape(type);
@@ -80,6 +81,7 @@ for(const source of program.getSourceFiles().filter(f=>fixture?roots.includes(f.
 fs.writeFileSync(out+'.jsonl.gz',zlib.gzipSync(rows.map(r=>JSON.stringify(r)).join('\n')+(rows.length?'\n':''),{mtime:0}));
 function group(key) {
  const m={};
+ if(key==='file') for(const source of sources) m[path.relative(tree,source.fileName)]={upper_bound:0,readonly_subset:0};
  if(key==='form') for(const k of ['index','at','for-of','spread','slice','map','forEach']) m[k]={upper_bound:0,readonly_subset:0};
  for(const r of rows) {const k=r[key];m[k]||={upper_bound:0,readonly_subset:0};m[k].upper_bound++;m[k].readonly_subset+=+r.readonly;}
  return Object.fromEntries(Object.entries(m).sort((a,b)=>b[1].upper_bound-a[1].upper_bound||a[0].localeCompare(b[0])));

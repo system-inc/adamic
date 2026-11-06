@@ -36,7 +36,7 @@ for label in ('main','head'):
   units=row['units'];findings=row['findings'];blocked={f['unit'] for f in findings if f['phase']=='lowering'}
   free=[u for u in units if u['status']=='attempted' and u['where'] not in blocked]
   records[name]['sides'][label]={'view_elements':sum(u['view_elements'] for u in units),'view_element_checks':sum(u['view_element_checks'] for u in units),
-   'units':len(units),'attempted':sum(u['status']=='attempted' for u in units),'ir_observed':sum(u['ir_measured'] for u in units),
+   'units':len(units),'attempted':sum(u['status'] in ('attempted','panic') for u in units),'panicked_units':sum(u['status']=='panic' for u in units),'ir_observed':sum(u['ir_measured'] for u in units),
    'finding_free_attempted':len(free),'finding_free_view_elements':sum(u['view_elements'] for u in free),'finding_free_view_element_checks':sum(u['view_element_checks'] for u in free),
    'meter_byte_identical':True,'baseline_sha256':hashlib.sha256(baseline).hexdigest(),'source_sha256':hashlib.sha256((tree/name).read_bytes()).hexdigest()}
  assert seen==set(names)
