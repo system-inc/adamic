@@ -125,7 +125,13 @@ qualifies. The declaration's line must declare that type, and the repair must
 replace exactly one place. An optional field's read expects its declared type
 plus undefined, so `name?: Identifier` declares a stop that expected
 `Identifier | undefined`; a required field declares exactly its type (#1yr7rdh,
-Adamic, Oct 28). Its repair is arbitrary text rather than a pinned
+Adamic, Oct 28). An element read through a checked view's array field is the
+same hatch (#6wfvfhm, Adamic, Nov 6): its stop is one line of `adamic: panic:
+element read failed: <expression> is not a <T>; expected <T>, found <kind>`, the
+pattern grown by exactly that alternation, and its expected type is the
+array's element, so the declaration's line must declare an array of exactly
+that element, as `readonly T[]`, `T[]` or `ReadonlyArray<T>`, or a union as
+`readonly (T)[]` or `ReadonlyArray<T>`. Its repair is arbitrary text rather than a pinned
 literal, so a run that sees the stop also runs the repaired copy, written with the
 witness's own extension so a `.ts` witness's repair compiles as `.ts`, and the entry
 is a witness only when that copy agrees with Node (`repair_agree` in JSON).
