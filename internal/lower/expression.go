@@ -1333,6 +1333,20 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
 	}
+	if generatorInPlace(callee) {
+		// A generator written in place and called (#qk8rztp S3b): its for-of and its call as a
+		// statement lower it before this, and the one-read Iterable<T> parameter takes it here, as a
+		// named generator's call. Any other use is a value no slot can hold yet, stopped before its
+		// body is lowered.
+		if !l.iterableArgument(node) {
+			return nil, l.inPlaceNotYet(node)
+		}
+		function, err := l.inPlaceGenerator(callee)
+		if err != nil {
+			return nil, err
+		}
+		return l.iterableOfGenerator(node, function)
+	}
 	if direct := l.nestedSibling(callee); direct >= 0 {
 		arguments := []ir.Expression{}
 		for _, argument := range call.Arguments.Nodes {

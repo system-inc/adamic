@@ -24,10 +24,40 @@ import (
 // frame keeps (runtime/generator.h's self), so its body reads its parent's cells, live, whenever it
 // is stepped. Its consumers are a for-of over its call, the call as a statement, and a one-read
 // Iterable<T> parameter's argument; a write inside it to a local it captured stops as not yet built.
+//
+// Since S3b, so does an anonymous function* written in place and called at once, as tsc's
+// elaborateJsxComponents writes one (checker.ts:21781): a closure of its own, lowered once, the first
+// time a consumer asks for it (inPlaceGenerator), whose call makes its frame through a closure made
+// for the call, its carrier, which the frame keeps as a nested generator's does.
 
 // generatorNotYet is a generator form this slice doesn't lower.
 func (l *lowering) generatorNotYet(node *ast.Node, what string) error {
 	return l.notYet(node, "a generator function "+what+" (#qk8rztp)")
+}
+
+// generatorTitle is where a stop about a generator's whole declaration points, and what it calls the
+// generator: its name and "a generator function", or, for one written in place with no name, the
+// expression itself and "a generator written in place" (Lower, on #qk8rztp S3b). Every such stop
+// goes through it (generatorDeclarationNotYet), so an anonymous one reads not yet built, never a
+// panic on a missing name.
+func generatorTitle(declaration *ast.Node) (*ast.Node, string) {
+	if name := declaration.Name(); name != nil {
+		return name, "a generator function"
+	}
+	return declaration, "a generator written in place"
+}
+
+// generatorDeclarationNotYet is generatorNotYet for a stop about a generator's whole declaration,
+// pointed at and named by generatorTitle.
+func (l *lowering) generatorDeclarationNotYet(declaration *ast.Node, what string) error {
+	where, title := generatorTitle(declaration)
+	return l.notYet(where, title+" "+what+" (#qk8rztp)")
+}
+
+// inPlaceNotYet stops a generator written in place and called whose call is used any other way: a
+// value no slot can hold yet, as a named generator's call used so is.
+func (l *lowering) inPlaceNotYet(node *ast.Node) error {
+	return l.notYet(node, "a generator written in place and called, used other than by a for-of over its call, a call as a statement or a one-read Iterable parameter (#qk8rztp)")
 }
 
 // generatorDeclaration reports whether a function-like node is a synchronous generator.
@@ -44,18 +74,49 @@ func generatorDeclaration(node *ast.Node) bool {
 }
 
 // loweredGenerator is a generator declaration this slice lowers: a named function* declared at a
-// module's top level, or one nestedGenerator lowers. A generic one at the top level is lowered once
-// per instantiation, where it's called, as every generic function is (generic.go), and its yielded
-// type is judged at that instance, so one nothing instantiates costs nothing. Every other generator
-// stops at lowering, wherever lowering reaches its declaration, in the words generatorForm gives it
-// (Lower, open question 7 on #qk8rztp); only an async generator is stopped before lowering, refused
-// for good by rule 2400. It reads syntax alone, so the refusal walk's void rules (generatorStepped)
-// and lowering agree on which calls are a lowered generator's.
+// module's top level, one nestedGenerator lowers, or one written in place (generatorInPlace). A
+// generic one at the top level is lowered once per instantiation, where it's called, as every
+// generic function is (generic.go), and its yielded type is judged at that instance, so one nothing
+// instantiates costs nothing. Every other generator stops at lowering, wherever lowering reaches its
+// declaration, in the words generatorForm gives it (Lower, open question 7 on #qk8rztp); only an
+// async generator is stopped before lowering, refused for good by rule 2400. It reads syntax alone,
+// so the refusal walk's void rules (generatorStepped) and lowering agree on which calls are a lowered
+// generator's.
 func loweredGenerator(node *ast.Node) bool {
 	topLevel := node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil &&
 		node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && node.Name() != nil &&
 		!ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync)
-	return topLevel || nestedGenerator(node)
+	return topLevel || nestedGenerator(node) || generatorInPlace(node)
+}
+
+// generatorInPlace is a generator expression S3b lowers (#qk8rztp S3b): anonymous, not async, with no
+// type parameter of its own or in scope, and called where it's written (calledInPlace). A name of its
+// own would bind it inside its body, where a call through it makes a second frame through a carrier
+// no rule here covers, so a named one stays not yet built (Lower). That the function it's written in
+// doesn't suspend is a fact of lowering, so inPlaceGenerator says it there.
+func generatorInPlace(node *ast.Node) bool {
+	return node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil && node.Name() == nil && node.Body() != nil &&
+		len(node.TypeParameters()) == 0 && !genericScope(node.Parent) && !ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) && calledInPlace(node) != nil
+}
+
+// calledInPlace is the call a function expression is the callee of, any parentheses around it
+// skipped (Adamic's word on #qk8rztp S3b, as Lower read it), or nil. That call is then the
+// expression's one use, so nothing else can step the frame it makes. A comma, a conditional's arm, a
+// variable in between, .call, .apply or .bind, an optional call, a tag and new are each no such call.
+func calledInPlace(node *ast.Node) *ast.Node {
+	// The callee as the call writes it, its parentheses included.
+	callee := node
+	for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
+		callee = callee.Parent
+	}
+	if callee.Parent == nil || callee.Parent.Kind != ast.KindCallExpression {
+		return nil
+	}
+	call := callee.Parent.AsCallExpression()
+	if call.Expression != callee || call.QuestionDotToken != nil {
+		return nil
+	}
+	return callee.Parent
 }
 
 // nestedGenerator is a generator declaration S3a lowers as a nested function (#qk8rztp S3a): named,
@@ -105,6 +166,12 @@ func generatorImplementation(declaration *ast.Node) *ast.Node {
 // generatorForm names the form of a generator declaration this slice doesn't lower, for its stop.
 func generatorForm(node *ast.Node) string {
 	switch {
+	case node.Kind == ast.KindFunctionExpression && calledInPlace(node) != nil && len(node.TypeParameters()) != 0:
+		// One written in place is lowered once, with the function it's written in, never per
+		// instance (#qk8rztp S3b).
+		return "written in place with type parameters of its own"
+	case node.Kind == ast.KindFunctionExpression && calledInPlace(node) != nil && genericScope(node.Parent):
+		return "written in place inside a generic function or class"
 	case node.Kind == ast.KindFunctionExpression:
 		return "written as an expression"
 	case node.Kind == ast.KindMethodDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindObjectLiteralExpression:
@@ -148,15 +215,15 @@ func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.No
 	// (Compiler's risk 2), so a generator declared MapIterator or SetIterator is stepped as a generator,
 	// never read as a collection's iterator.
 	if !l.isLibraryType(returns, "Generator", "IterableIterator", "MapIterator", "SetIterator") {
-		return l.generatorNotYet(declaration.Name(), "declared to return "+l.checker.TypeToString(returns))
+		return l.generatorDeclarationNotYet(declaration, "declared to return "+l.checker.TypeToString(returns))
 	}
 	arguments := l.checker.GetTypeArguments(returns)
 	if len(arguments) == 0 {
-		return l.generatorNotYet(declaration.Name(), "without a yielded type")
+		return l.generatorDeclarationNotYet(declaration, "without a yielded type")
 	}
 	yielded := arguments[0]
 	if yielded.Flags()&checker.TypeFlagsNever != 0 {
-		return l.generatorNotYet(declaration.Name(), "that yields nothing")
+		return l.generatorDeclarationNotYet(declaration, "that yields nothing")
 	}
 	of, known := l.representation(yielded)
 	switch {
@@ -168,31 +235,32 @@ func (l *lowering) generatorSignature(function *ir.Function, declaration *ast.No
 		function.AsyncSite = l.asyncSite(declaration)
 		return nil
 	}
-	return l.generatorNotYet(declaration.Name(), "yielding "+l.checker.TypeToString(yielded)+" (each yielded value must be one present slot)")
+	return l.generatorDeclarationNotYet(declaration, "yielding "+l.checker.TypeToString(yielded)+" (each yielded value must be one present slot)")
 }
 
 // checkGeneratorBody stops what a lowered generator body holds that its frame can't yet: a local a
 // closure captures, which would put a canonical closure's environment on a generator's cells
 // (closure.c's canonical_owner panics on one), arguments, whose count no frame cell carries yet, and,
-// in a nested generator, a write to a local it captured (nestedGeneratorWrites).
+// in a nested generator or one written in place, each a closure, a write to a local it captured
+// (nestedGeneratorWrites). Each stop names its declaration through generatorTitle.
 func (l *lowering) checkGeneratorBody(index int, declaration *ast.Node) error {
 	function := l.result.Functions[index]
 	if !function.Generator {
 		return nil
 	}
 	if function.ArgumentsCount != 0 || function.ReadsArguments {
-		return l.generatorNotYet(declaration.Name(), "reading arguments")
+		return l.generatorDeclarationNotYet(declaration, "reading arguments")
 	}
 	if function.NestedFrame || function.FrameIdentity != 0 {
-		return l.generatorNotYet(declaration.Name(), "declaring a nested function")
+		return l.generatorDeclarationNotYet(declaration, "declaring a nested function")
 	}
 	for local, declared := range l.result.Locals {
 		if declared.Function == index && declared.Captured {
-			where := declaration.Name()
+			where, title := generatorTitle(declaration)
 			if node := l.localNodes[local]; node != nil {
 				where = node
 			}
-			return l.generatorNotYet(where, "whose local '"+declared.Name+"' a closure captures (a frame cell can't be a closure's environment yet)")
+			return l.notYet(where, title+" whose local '"+declared.Name+"' a closure captures (a frame cell can't be a closure's environment yet) (#qk8rztp)")
 		}
 	}
 	if function.Closure {
@@ -248,7 +316,12 @@ func (l *lowering) nestedGeneratorWrites(index int, declaration *ast.Node) error
 				})
 			}
 			if count.writes != 0 {
-				return l.generatorNotYet(declaration.Name(), "where '"+declared.Name+"', a captured local, is written inside a nested generator")
+				// A generator written in place is named by generatorTitle already.
+				writer := "a nested generator"
+				if declaration.Kind == ast.KindFunctionExpression {
+					writer = "it"
+				}
+				return l.generatorDeclarationNotYet(declaration, "where '"+declared.Name+"', a captured local, is written inside "+writer)
 			}
 		}
 	}
@@ -299,17 +372,25 @@ func (l *lowering) yieldStatement(node *ast.Node) ([]ir.Statement, error) {
 // checker resolved, so a generator called another way still routes by its origin, never by its
 // declared iterator type, and generatorCall stops it there. A generic generator's function is its
 // instance for this call, lowered here if no call has made it yet, which is why this can fail. A
-// nested generator is found by its binding in its parent's scope (nestedGeneratorCallee).
+// nested generator is found by its binding in its parent's scope (nestedGeneratorCallee), and one
+// written in place is the callee itself, lowered the first time any consumer asks
+// (inPlaceGenerator).
 func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 	node = ast.SkipParentheses(node)
 	if node.Kind != ast.KindCallExpression {
 		return 0, false, nil
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if generatorInPlace(callee) {
+		index, err := l.inPlaceGenerator(callee)
+		return index, err == nil, err
+	}
 	named := callee
 	if !ast.IsIdentifier(callee) {
+		// A generator written in place is the callee itself, above, so a declaration with no name
+		// reached here is one this call doesn't place, and it fails closed (Adamic on #qk8rztp S3b).
 		signature := l.checker.GetResolvedSignature(node)
-		if signature == nil || signature.Declaration() == nil || !loweredGenerator(signature.Declaration()) {
+		if signature == nil || signature.Declaration() == nil || !loweredGenerator(signature.Declaration()) || signature.Declaration().Name() == nil {
 			return 0, false, nil
 		}
 		named = signature.Declaration().Name()
@@ -335,9 +416,10 @@ func (l *lowering) generatorCallee(node *ast.Node) (int, bool, error) {
 // of its body. Only the two consumers that keep the generator to themselves call it.
 func (l *lowering) generatorCall(node *ast.Node, function int) (ir.Expression, error) {
 	call := ast.SkipParentheses(node).AsCallExpression()
-	if !ast.IsIdentifier(ast.SkipParentheses(call.Expression)) {
+	if callee := ast.SkipParentheses(call.Expression); !ast.IsIdentifier(callee) && !generatorInPlace(callee) {
 		// A callee other than the generator's name could do something before the call (a getter, a
-		// comma's left), which no consumer here evaluates yet (Compiler, on #qk8rztp).
+		// comma's left), which no consumer here evaluates yet (Compiler, on #qk8rztp). One written in
+		// place does nothing before it but make its closure, the carrier its call is made through.
 		return nil, l.generatorNotYet(node, "called other than by its name")
 	}
 	if call.QuestionDotToken != nil {
@@ -377,11 +459,16 @@ func (l *lowering) nestedGeneratorCallee(name *ast.Node) (int, bool) {
 // (ClosureSelf); from an anonymous closure that forwards to the group, one made for the call
 // (MakeClosure), as call does for any nested function; and from anywhere else in the parent's scope,
 // the parent's own binding of it, or one made as nestedReference makes it. The frame keeps that
-// carrier (its self), so whatever made it may let go of it before the first step.
+// carrier (its self), so whatever made it may let go of it before the first step. A generator
+// written in place has no binding: its carrier is its own closure, made for the call with the
+// expression's own cells, a temporary its statement lets go of, which the frame keeps all the same
+// (#qk8rztp S3b, Memory's reading of S3a's must).
 func (l *lowering) nestedGeneratorCall(call *ast.CallExpression, function int) (ir.Expression, error) {
 	callee := ast.SkipParentheses(call.Expression)
 	var carrier ir.Expression
-	if l.nestedSibling(callee) == function {
+	if generatorInPlace(callee) {
+		carrier = ir.MakeClosure{Function: function}
+	} else if l.nestedSibling(callee) == function {
 		carrier = ir.ClosureSelf{}
 		if l.function.NestedParent != l.result.Functions[function].NestedParent {
 			carrier = ir.MakeClosure{Function: function}
@@ -402,6 +489,57 @@ func (l *lowering) nestedGeneratorCall(call *ast.CallExpression, function int) (
 		arguments = append(arguments, fit(value, l.result.Locals[parameters[position]].Type))
 	}
 	return ir.CallClosure{Closure: carrier, Direct: function + 1, Arguments: arguments, Returns: ir.Generator}, nil
+}
+
+// inPlaceGeneratorKey is a generator written in place, by its expression and the function it's
+// lowered in (Lower's and Compiler's key on #qk8rztp S3b).
+type inPlaceGeneratorKey struct {
+	expression *ast.Node
+	function   int
+}
+
+// inPlaceGenerator is the function a generator written in place lowers to: the one this lowering
+// made the first time a consumer asked, or made now. A consumer asks before it decides (forOf, a
+// statement, planIteration, iterated and an array literal's spread each read generatorCallee first,
+// and the array literal asks again through iterated), so one call may be asked about more than once,
+// and the expression must still be one function (TestInPlaceGeneratorIsLoweredOncePerSite).
+func (l *lowering) inPlaceGenerator(expression *ast.Node) (int, error) {
+	if index, lowered := l.inPlaceGenerators[inPlaceGeneratorKey{expression: expression, function: l.functionIndex}]; lowered {
+		return index, nil
+	}
+	return l.lowerInPlaceGenerator(expression)
+}
+
+// lowerInPlaceGenerator lowers a generator written in place as the closure it is, with its own
+// cells, once: a second lowering of the same expression in the same function would be a second
+// function for one call, which only a missed cache read could ask for, so it is a compiler bug said
+// out loud. It stops one at a module's top level or inside a function that suspends, whose locals
+// live in its own frame's cells, which no closure's environment can be yet (nestedDeclarations'
+// stop for a nested generator).
+func (l *lowering) lowerInPlaceGenerator(expression *ast.Node) (int, error) {
+	key := inPlaceGeneratorKey{expression: expression, function: l.functionIndex}
+	if index, lowered := l.inPlaceGenerators[key]; lowered {
+		return 0, fmt.Errorf("lower: compiler bug: the generator written in place at %s lowered again, where function %d already is it", l.program.Where(expression), index)
+	}
+	switch {
+	case l.function == nil:
+		return 0, l.generatorNotYet(expression, "written in place at a module's top level")
+	case l.function.Suspends():
+		return 0, l.generatorNotYet(expression, "written in place inside an async function or a generator")
+	}
+	made, err := l.closureExpression(expression)
+	if err != nil {
+		return 0, err
+	}
+	closure, isClosure := made.(ir.MakeClosure)
+	if !isClosure || !l.result.Functions[closure.Function].Generator {
+		return 0, fmt.Errorf("lower: compiler bug: the generator written in place at %s lowered to no generator's closure", l.program.Where(expression))
+	}
+	if l.inPlaceGenerators == nil {
+		l.inPlaceGenerators = map[inPlaceGeneratorKey]int{}
+	}
+	l.inPlaceGenerators[key] = closure.Function
+	return closure.Function, nil
 }
 
 // iterableArgument reports whether a generator's call, parentheses aside, is an argument passed
@@ -737,7 +875,7 @@ func makesGenerator(value ir.Expression) bool {
 // helper's local, held only by its loop, so the helper's way out, a return or a throw, lets go of it.
 func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression, ir.Type, error) {
 	if l.result.Functions[function].Closure {
-		return nil, 0, l.nestedCollectNotYet(node)
+		return nil, 0, l.nestedCollectNotYet(node, function)
 	}
 	if l.function != nil && l.function.Suspends() {
 		return nil, 0, l.generatorNotYet(node, "consumed by spread or Array.from inside an async function or a generator")
@@ -783,8 +921,13 @@ func (l *lowering) collectGenerator(node *ast.Node, function int) (ir.Expression
 // nestedCollectNotYet stops a nested generator's call a collect helper would step. The helper makes
 // the frame, so it would be handed the carrier, and it is an ordinary function, whose parameters
 // region.go's environment proof doesn't count as escaping: the parent's environment could be put off
-// the heap while the frame holds a closure into it (Memory's seam on #qk8rztp S3a, #s6tt5xt).
-func (l *lowering) nestedCollectNotYet(node *ast.Node) error {
+// the heap while the frame holds a closure into it (Memory's seam on #qk8rztp S3a, #s6tt5xt). A
+// generator written in place is a closure too, with a carrier of its own, so it stops the same way,
+// in its own words (#qk8rztp S3b).
+func (l *lowering) nestedCollectNotYet(node *ast.Node, function int) error {
+	if l.result.Functions[function].NestedParent == 0 {
+		return l.generatorNotYet(node, "written in place and consumed by spread, Array.from, new Map or new Set")
+	}
 	return l.generatorNotYet(node, "declared inside a function and consumed by spread, Array.from, new Map or new Set")
 }
 
@@ -797,7 +940,7 @@ func (l *lowering) nestedCollectNotYet(node *ast.Node) error {
 // generator yields, never from its declared iterator type.
 func (l *lowering) newMapFromGenerator(source *ast.Node, function int, key ir.Type, value ir.Type) (ir.Expression, error) {
 	if l.result.Functions[function].Closure {
-		return nil, l.nestedCollectNotYet(source)
+		return nil, l.nestedCollectNotYet(source, function)
 	}
 	pairKey, pairValue, isPair := l.generatorPairTypes(source)
 	if !isPair {
@@ -848,17 +991,24 @@ func (l *lowering) generatorPairTypes(source *ast.Node) (ir.Type, ir.Type, bool)
 // spread and Array.from (S1c) and for new Map and new Set (S2b-1c). cohere's gate never refused the
 // S1c programs: it has no twin of no-void-read, and its no-void-widening judges function-type
 // relations (#z7zv50g).
+//
+// The callee is placed by its body, never by its name alone (Adamic on #qk8rztp S3b): a name's one
+// declaration, which must be a generator this compiler lowers, or a generator written in place and
+// called at once, whose body is the callee itself. Anything else it can't place, a comma, a
+// conditional's arm or an ordinary function written in place among them, stays judged.
 func (l *lowering) generatorStepped(node *ast.Node) bool {
 	if node.Kind != ast.KindCallExpression {
 		return false
 	}
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if !ast.IsIdentifier(callee) {
-		return false
-	}
-	symbol := l.symbol(callee)
-	if symbol == nil || len(symbol.Declarations) != 1 || !loweredGenerator(symbol.Declarations[0]) {
-		return false
+	if !generatorInPlace(callee) {
+		if !ast.IsIdentifier(callee) {
+			return false
+		}
+		symbol := l.symbol(callee)
+		if symbol == nil || len(symbol.Declarations) != 1 || !loweredGenerator(symbol.Declarations[0]) {
+			return false
+		}
 	}
 	if !l.steppedSite(node) {
 		return false
