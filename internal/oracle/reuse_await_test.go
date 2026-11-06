@@ -7,13 +7,13 @@ import (
 	"testing"
 )
 
-// A global moved into an assignment's evaluation across an await (Memory's ruling on #qk8rztp
-// S2c-2b, question 1): native/reuse.go's reachesGlobal takes an await, which has no case of its own
-// and isn't ir.Inert, as reaching the global, since every other ready task runs before the
-// expression resumes. Each program in testdata/reuse_await agrees with Node natively, sanitized and
-// on the JavaScript backend, and leaks nothing. Mutant (h3-proof.sh, and testdata/iterable_views'
-// mutants.md): Await put on reachesGlobal's not-reaching side, main's behavior, and the sanitized
-// run reports heap-use-after-free on the resumed concatenation.
+// A global read before an await and written after it, while another task writes it during the
+// suspension (Memory's question 1 on #qk8rztp S2c-2b). Each program in testdata/reuse_await agrees
+// with Node natively, sanitized and on the JavaScript backend, and leaks nothing. Natively
+// flow.NormalizeAsync snapshots every operand before a suspension into a frame cell that owns its
+// value, so the program is safe whatever native/reuse.go's reachesGlobal says of an await. Mutant
+// (h3-proof.sh, and testdata/iterable_views' mutants.md), expected to survive by that reading: Await put on reachesGlobal's not-reaching side, main's behavior. A heap-use-after-free under
+// it would mean the snapshot doesn't hold the read, and this program is the witness after all.
 func TestReuseAwaitAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/reuse_await"
