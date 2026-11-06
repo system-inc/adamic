@@ -1053,7 +1053,8 @@ func toolValue(name, label string, arguments, environment []string) string {
 		if strings.TrimSpace(report) == "" {
 			report = diagnostics.String()
 		}
-		value = label + ": " + toolReport(installedAs(path, report))
+		// The report's config files are read by the paths it names, so they're keyed before the install prefix is rewritten.
+		value = label + ": " + installedAs(path, toolReport(report))
 		if err != nil {
 			value += " (" + err.Error() + ")"
 		}
@@ -1064,10 +1065,12 @@ func toolValue(name, label string, arguments, environment []string) string {
 // toolReport is a tool's report without the lines that say only where it is installed: clang's --version ends
 // with InstalledDir, which differs by home (/home/ahra, /home/cloud, /root on a Codex instance) for the same clang,
 // and would key one product apart on every machine (Loom, Oct 9: a key that depends on the home directory is a
-// reproducibility bug). Everything that names what the tool is (its version, target and thread model) stays.
+// reproducibility bug). Everything that names what the tool is (its version, target and thread model) stays. Each
+// config file clang reports reading is keyed by what it holds and by the files it names, never by its path
+// (toolchain.ConfigurationsByContent, Node's rule on #t3rw158).
 func toolReport(output string) string {
 	lines := []string{}
-	for _, line := range strings.Split(strings.TrimSpace(output), "\n") {
+	for _, line := range strings.Split(toolchain.ConfigurationsByContent(strings.TrimSpace(output)), "\n") {
 		if strings.HasPrefix(strings.TrimSpace(line), "InstalledDir:") {
 			continue
 		}
