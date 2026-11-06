@@ -1,20 +1,20 @@
 # Views V3 checked element price
 
-**Exact latent closure totals: incomplete.** 3 completed paired file pieces of 81.
+**Exact latent closure totals: incomplete.** 4 completed paired file pieces of 81.
 
 **Source upper bound: 2,861; readonly subset: 1,302.** Neither is the admission rule.
 
 | Latent measure (observed pieces only) | Main | Head |
 |---|---:|---:|
-| view_elements | 0 | 0 |
-| view_element_checks | 0 | 0 |
-| units | 8 | 8 |
-| attempted | 8 | 8 |
+| view_elements | 0 | 12 |
+| view_element_checks | 0 | 3 |
+| units | 37 | 37 |
+| attempted | 37 | 37 |
 | panicked_units | 0 | 0 |
-| ir_observed | 8 | 8 |
-| finding_free_attempted | 7 | 7 |
-| finding_free_view_elements | 0 | 0 |
-| finding_free_view_element_checks | 0 | 0 |
+| ir_observed | 37 | 37 |
+| finding_free_attempted | 28 | 28 |
+| finding_free_view_elements | 0 | 4 |
+| finding_free_view_element_checks | 0 | 2 |
 
 Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.
 Head `9626d0113f08269e519ba216ff7f95ff84af16db`; main `2c3f322975b2dee68889e82eab0bbca324d417a9`.
@@ -36,6 +36,7 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 | File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |
 |---|---:|---:|---:|---:|---:|---:|
 | src/compiler/_namespaces/ts.moduleSpecifiers.ts | 0 | 0 | 0 | 0 | 1 | 1 |
+| src/compiler/semver.ts | 0 | 0 | 12 | 3 | 21 | 21 |
 | src/tsc/_namespaces/ts.ts | 0 | 0 | 0 | 0 | 1 | 1 |
 | src/tsc/tsc.ts | 0 | 0 | 0 | 0 | 5 | 5 |
 
@@ -44,10 +45,12 @@ The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), m
 main:
 
 - src/compiler/_namespaces/ts.moduleSpecifiers.ts: 0 elements, 0 checks
+- src/compiler/semver.ts: 0 elements, 0 checks
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
 - src/tsc/tsc.ts: 0 elements, 0 checks
 head:
 
+- src/compiler/semver.ts: 12 elements, 3 checks
 - src/compiler/_namespaces/ts.moduleSpecifiers.ts: 0 elements, 0 checks
 - src/tsc/_namespaces/ts.ts: 0 elements, 0 checks
 - src/tsc/tsc.ts: 0 elements, 0 checks

@@ -1,0 +1,88 @@
+{
+  "legs": [
+    {
+      "stem": "src_compiler_semver",
+      "label": "head",
+      "variant": "count",
+      "elapsed_seconds_upper_bound": 54.38822434199983,
+      "exit_verification": "child exit status 0",
+      "files": [
+        "src/compiler/semver.ts"
+      ],
+      "output_sha256": "a2480ccaa4d84c28dc20e9fa9d22ab7ddb7ededbb1461c176498e99b40bedaed"
+    },
+    {
+      "stem": "src_compiler_semver",
+      "label": "head",
+      "variant": "meter",
+      "elapsed_seconds_upper_bound": 66.05280653099999,
+      "exit_verification": "child exit status 0",
+      "files": [
+        "src/compiler/semver.ts"
+      ],
+      "output_sha256": "b5fba697306bfef0b7519197e2909facc0e4fa79be523296bb0bdcee3739bd66"
+    },
+    {
+      "stem": "src_compiler_semver",
+      "label": "main",
+      "variant": "count",
+      "elapsed_seconds_upper_bound": 57.86792605100027,
+      "exit_verification": "child exit status 0",
+      "files": [
+        "src/compiler/semver.ts"
+      ],
+      "output_sha256": "171c335c74aaf279950c5f95a50867e5d238848a317a3907c951c5e0491d3aa8"
+    },
+    {
+      "stem": "src_compiler_semver",
+      "label": "main",
+      "variant": "meter",
+      "elapsed_seconds_upper_bound": 67.63048517900006,
+      "exit_verification": "child exit status 0",
+      "files": [
+        "src/compiler/semver.ts"
+      ],
+      "output_sha256": "7cb0a34fe631d84d6ebb3acacf7e8b6f71723981d4faeb3642837a3ccac85ef1"
+    }
+  ],
+  "files": [
+    "src/compiler/semver.ts"
+  ],
+  "records": [
+    {
+      "file": "src/compiler/semver.ts",
+      "mode": "full selected-file group in complete tsc closure",
+      "sides": {
+        "main": {
+          "view_elements": 0,
+          "view_element_checks": 0,
+          "units": 29,
+          "attempted": 29,
+          "panicked_units": 0,
+          "ir_observed": 29,
+          "finding_free_attempted": 21,
+          "finding_free_view_elements": 0,
+          "finding_free_view_element_checks": 0,
+          "meter_byte_identical": true,
+          "baseline_sha256": "7cb0a34fe631d84d6ebb3acacf7e8b6f71723981d4faeb3642837a3ccac85ef1",
+          "source_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+        },
+        "head": {
+          "view_elements": 12,
+          "view_element_checks": 3,
+          "units": 29,
+          "attempted": 29,
+          "panicked_units": 0,
+          "ir_observed": 29,
+          "finding_free_attempted": 21,
+          "finding_free_view_elements": 4,
+          "finding_free_view_element_checks": 2,
+          "meter_byte_identical": true,
+          "baseline_sha256": "b5fba697306bfef0b7519197e2909facc0e4fa79be523296bb0bdcee3739bd66",
+          "source_sha256": "0a19b693308f3b71ea1dbb2054540e1d281e34bb321fbb0b20d78870640f49af"
+        }
+      }
+    }
+  ],
+  "elapsed_seconds": 257.7175725709999
+}
