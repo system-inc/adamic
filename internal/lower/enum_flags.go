@@ -158,35 +158,6 @@ func (l *lowering) flagWriteRefusal(node *ast.Node, target *checker.Type) error 
 	return &Refused{Where: l.program.Where(node), What: "a number outside the proven flag domain assigned to " + l.checker.TypeToString(target) + "; its domain is a closed union of non-negative int32 bit subsets", Fix: "use this enum's members with | or ^ on two proven flags, or & with one proven flag; keep complement, arithmetic and shifts in a number (adamic/enum-flags)"}
 }
 
-// A literal shift through the sign bit is explicitly refused rather than silently opting out.
-func (l *lowering) flagInitializerBound(node *ast.Node) error {
-	if node == nil {
-		return nil
-	}
-	node = ast.SkipParentheses(node)
-	if node.Kind != ast.KindBinaryExpression {
-		return nil
-	}
-	binary := node.AsBinaryExpression()
-	if binary.OperatorToken.Kind == ast.KindBarToken {
-		if err := l.flagInitializerBound(binary.Left); err != nil {
-			return err
-		}
-		return l.flagInitializerBound(binary.Right)
-	}
-	if binary.OperatorToken.Kind == ast.KindLessThanLessThanToken && l.flagLiteral(binary.Left, 1) {
-		right := ast.SkipParentheses(binary.Right)
-		if right.Kind == ast.KindNumericLiteral {
-			literal := l.checker.GetTypeAtLocation(right)
-			value := reflect.ValueOf(literal.AsLiteralType().Value()).Float()
-			if value < 0 || value > 30 || value != math.Trunc(value) {
-				return &Refused{Where: l.program.Where(node), What: "a flag initializer outside the non-negative int32 bound", Fix: "use 1 << n with a literal n from 0 to 30 (adamic/enum-flags)"}
-			}
-		}
-	}
-	return nil
-}
-
 func (l *lowering) flagUpdate(node, updated *ast.Node) bool {
 	if node.Kind != ast.KindBinaryExpression {
 		return false

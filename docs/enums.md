@@ -300,7 +300,6 @@ These programs are refused, with a rule and a fix in the diagnostic:
 | `const value: Flags = Flags.A + 1` | Arithmetic produces a number. |
 | `flags++` | Increment writes an unproven number into a flag slot. |
 | `flags <<= 1` | A compound shift leaves the domain. |
-| `enum Bad { A = 1 << 31 }` | The sign bit exceeds the non-negative int32 bound. |
 | `enum Color { Red, Green, Blue }; const c: Color = Color.Red | Color.Green` | Implicit initializers do not opt into flags. |
 | A flag switch without `default` | Declared cases do not cover the flag domain. |
 | `const value: Flags = Flags.A | Other.B` | OR requires two operands from this enum. |
