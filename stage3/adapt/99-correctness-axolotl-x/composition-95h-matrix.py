@@ -9,6 +9,9 @@ p=Path(__file__).resolve().parent;repo=p.parents[2];scratch=Path('/workspace/scr
 f=scratch/'apply-main/metrics.json'
 while not f.exists():time.sleep(5)
 assert json.loads(f.read_text())['exit']==0
+f=scratch/'apply-x/metrics.json'
+while not f.exists():time.sleep(5)
+assert json.loads(f.read_text())['exit']==0
 # The original main apply is complete; subsequent matrix builds read its output tree.
 shutil.copytree('/workspace/bind2-x-repo/stage3/adapt/99-correctness-axolotl-x',target/'stage3/adapt/99-correctness-axolotl-x',dirs_exist_ok=True)
 subprocess.run(['git','restore','--source='+fold,'--staged','--worktree','stage3/adapt/95-checker-axolotl-h'],cwd=target,check=True)

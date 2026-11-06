@@ -28,7 +28,8 @@ literal JSON references too, and distinguishes full-owner pins from local
 expression or ancestry guards. owner-pin-audit.json, owner-pin-audit-extra.json
 and ownership.json retain the evidence. No earlier adaptation directory changes.
 
-Current expectation: **28 rewritten, 18 left**. Six left sites belong to 95h;
+Baseline without earlier folds: **28 rewritten, 18 left**. Complete earlier
+folds reduce the remaining-original count; the 28 own rewrites stay unchanged. Six left sites belong to 95h;
 twelve belong to 32. The requested two checker sites carry the exact reason
 "owner pinned by 95-checker-axolotl-h; folded there" below. "Folded there"
 records the ownership handoff, not an edit by this branch to another adapter.
@@ -134,8 +135,10 @@ without granting 99x ownership of their replacement expressions. Strict own
 owner, half-adapted tree and import checks remain. composition/ contains the
 new receipts; the prior owned/ receipts certify the historical run only.
 
-The no-write controls cover each partial owner group and a restored unused
-import. A complete synthetic owner-fold control exercises zero remaining
+The no-write controls cover each partial owner group and restored unused
+imports in builder.ts, watch.ts and program.ts. A complete group may contain
+other core helper call shapes; 99x counts only inventoried originals when
+checking the all-present/all-absent boundary and leaves replacement code opaque. A complete synthetic owner-fold control exercises zero remaining
 program/watch calls, import cleanup, checker byte preservation and a replay
 that preserves source bytes and nanosecond mtimes. Full apply, type, emitted
 JavaScript, oracle and CW051 composition measurements are in progress.

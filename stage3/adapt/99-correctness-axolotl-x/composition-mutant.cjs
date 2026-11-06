@@ -34,7 +34,15 @@ try{
  const checker=path.join(scratch,'src/compiler/checker.ts');fs.appendFileSync(checker,'\n// foreign owner contract\n');
  const checkerBefore=fs.readFileSync(checker),result=adapt(scratch);assert.equal(result.rewrites,28);assert.equal(result.left,0);
  assert.deepEqual(fs.readFileSync(checker),checkerBefore);
- for(const file of ['watch.ts','program.ts'])assert(!/^    maybeBind,$/m.test(fs.readFileSync(path.join(scratch,'src/compiler',file),'utf8')));
+ for(const file of ['watch.ts','program.ts'])assert(!/^    maybeBind,\r?$/m.test(fs.readFileSync(path.join(scratch,'src/compiler',file),'utf8')));
+ for(const file of ['watch.ts','program.ts']){
+  const name=path.join(scratch,'src/compiler',file),saved=fs.readFileSync(name,'utf8'),original=fs.readFileSync(path.join(base,'src/compiler',file),'utf8');
+  const eol=original.includes('\r\n')?'\r\n':'\n',line='    maybeBind,'+eol,at=original.indexOf(line);assert(at>=0);
+  const following=original.slice(at+line.length).split(eol)[0];assert.equal(saved.split(following).length,2);
+  fs.writeFileSync(name,saved.replace(following,line+following));
+  refused('unused retained dynamic import '+file,file+': half-adapted import: 0 core maybeBind calls');
+  fs.writeFileSync(name,saved);
+ }
  const before=snapshot();assert.equal(adapt(scratch).files,0);unchanged(before);
  rows.push({name:'all handed-off groups absent; dynamic program/watch import removal; checker untouched; byte/mtime replay',pass:true,result});
 }finally{fs.rmSync(scratch,{recursive:true,force:true});}

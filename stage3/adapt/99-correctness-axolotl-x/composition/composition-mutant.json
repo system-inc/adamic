@@ -30,6 +30,16 @@
     "zeroWrites": true
   },
   {
+    "name": "unused retained dynamic import watch.ts",
+    "refused": "watch.ts: half-adapted import: 0 core maybeBind calls\n\n1 !== 0\n",
+    "zeroWrites": true
+  },
+  {
+    "name": "unused retained dynamic import program.ts",
+    "refused": "program.ts: half-adapted import: 0 core maybeBind calls\n\n1 !== 0\n",
+    "zeroWrites": true
+  },
+  {
     "name": "all handed-off groups absent; dynamic program/watch import removal; checker untouched; byte/mtime replay",
     "pass": true,
     "result": {
