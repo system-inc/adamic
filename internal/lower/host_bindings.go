@@ -292,7 +292,7 @@ const hostBindingWriteFix = "a host binding is the host's to define, and nothing
 // where the checker's type for the whole forgot it (globalObjectOperand). It runs before every
 // other rule, so the stop is this ruling's, not a rule's that happens to meet the receiver or delete
 // first. A receiver widened to another type (object, a record view) is no longer typeof globalThis; the
-// stops that judge those today are pinned in TestHostBindingFoldRestsOnTheseStops.
+// stop that judges those, the global object as a value, is global_object.go's.
 func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 	var target *ast.Node
 	switch node.Kind {
@@ -338,70 +338,6 @@ func (l *lowering) hostBindingGlobalThisRefusal(node *ast.Node) error {
 		what = "a write through globalThis whose key may name a host binding"
 	}
 	return &Refused{Where: l.program.Where(target), What: what, Fix: hostBindingWriteFix}
-}
-
-// globalObject reports whether an expression's type may be typeof globalThis, whatever name the
-// expression reads it by: the checker's own globalThis symbol is that type's symbol. It fails closed
-// (globalObjectType): a union or intersection holding the global object, and a type parameter whose
-// constraint is it, may be the global object too, though the type itself has no such symbol (Compiler's
-// read of b5a2f3f3).
-func (l *lowering) globalObject(node *ast.Node) bool {
-	global := l.checker.GetGlobalSymbol("globalThis", ast.SymbolFlagsModule, nil)
-	return global != nil && l.globalObjectType(l.checker.GetTypeAtLocation(node), global, map[*checker.Type]bool{})
-}
-
-// globalObjectOperand reports whether an expression may evaluate to an operand of it that is the global
-// object, where the checker's type for the whole no longer says so: (flag ? globalThis : other) is other's
-// type alone when other's is a supertype of typeof globalThis (both carry process), since a conditional's
-// union is reduced by subtype. So the arms of ?:, the operands of ||, && and ??, the right of a comma or an
-// assignment, and what a cast or a non-null assertion holds are each judged as the global object too.
-func (l *lowering) globalObjectOperand(node *ast.Node) bool {
-	node = ast.SkipParentheses(node)
-	var operands []*ast.Node
-	switch node.Kind {
-	case ast.KindConditionalExpression:
-		operands = []*ast.Node{node.AsConditionalExpression().WhenTrue, node.AsConditionalExpression().WhenFalse}
-	case ast.KindBinaryExpression:
-		binary := node.AsBinaryExpression()
-		switch binary.OperatorToken.Kind {
-		case ast.KindBarBarToken, ast.KindAmpersandAmpersandToken, ast.KindQuestionQuestionToken:
-			operands = []*ast.Node{binary.Left, binary.Right}
-		case ast.KindCommaToken, ast.KindEqualsToken:
-			operands = []*ast.Node{binary.Right}
-		}
-	case ast.KindAsExpression, ast.KindSatisfiesExpression, ast.KindNonNullExpression, ast.KindTypeAssertionExpression:
-		operands = []*ast.Node{node.Expression()}
-	}
-	for _, operand := range operands {
-		if l.globalObject(operand) || l.globalObjectOperand(operand) {
-			return true
-		}
-	}
-	return false
-}
-
-// globalObjectType reports whether a type is the global object's, a union or intersection any member
-// of which is, or an instantiable type (a type parameter, an indexed access, a conditional) whose base
-// constraint is.
-func (l *lowering) globalObjectType(proven *checker.Type, global *ast.Symbol, seen map[*checker.Type]bool) bool {
-	if proven == nil || seen[proven] {
-		return false
-	}
-	seen[proven] = true
-	if proven.Symbol() == global {
-		return true
-	}
-	if proven.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
-		for _, member := range proven.Types() {
-			if l.globalObjectType(member, global, seen) {
-				return true
-			}
-		}
-	}
-	if proven.Flags()&checker.TypeFlagsInstantiable != 0 {
-		return l.globalObjectType(l.checker.GetBaseConstraintOfType(proven), global, seen)
-	}
-	return false
 }
 
 func init() {
