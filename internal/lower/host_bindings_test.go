@@ -156,6 +156,34 @@ func TestHostBindingWritesAreRefused(t *testing.T) {
 	}
 }
 
+// An Absent host binding's fold rests on the stops these get on globalThis, as method presence rests on
+// the same ones (TestMethodPresenceRestsOnTheseStops): Object.defineProperty, Reflect.set and
+// Object.assign would each define onProfilerEvent behind its folded typeof, and none has a rule of the
+// host bindings' own. Each stops on its own line, before the guarded read below it: defineProperty as
+// refused, Reflect.set and Object.assign only as not yet, so lifting either of those is where the fold
+// needs a rule of its own, and this pin goes red to say so.
+func TestHostBindingFoldRestsOnTheseStops(t *testing.T) {
+	t.Parallel()
+	const handler = "const fire = (eventName: string): void => {\n\tconsole.log(eventName);\n};\n"
+	const guarded = "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n"
+	for _, probe := range []struct{ name, definition, want string }{
+		{"Object.defineProperty", "Object.defineProperty(globalThis, \"onProfilerEvent\", { value: fire });\n", "performance.ts:5:1: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores"},
+		{"Reflect.set", "Reflect.set(globalThis, \"onProfilerEvent\", fire);\n", "performance.ts:5:1: stage 0 can't lower a namespace member without a lowered binding yet"},
+		{"Object.assign", "Object.assign(globalThis, { onProfilerEvent: fire });\n", "performance.ts:5:15: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerModules(t, map[string]string{
+				"performance.ts": profilerDeclaration + handler + probe.definition + guarded,
+				"main.ts":        "import { run } from './performance.ts';\nrun('one');\n",
+			})
+			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
+				t.Errorf("got %v, want the stop %s", err, probe.want)
+			}
+		})
+	}
+}
+
 // A declaration the table doesn't name, exactly, stays refused as an ambient value declaration: another
 // type, another file, another keyword, an exported one, and one beside a declarator the table names.
 func TestHostBindingUnmatchedDeclarationIsRefused(t *testing.T) {
