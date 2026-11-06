@@ -90,6 +90,15 @@ func CheckPure(program *ir.Program, function int) error {
 				if err := inspect(node.Function); err != nil {
 					return err
 				}
+			case ir.ObjectLiteral:
+				// A spread runs every getter its source may own, the set lowering reads by flow off
+				// the accessor registry, never off the source's type (Memory's and Compiler's
+				// ruling on #qk8rztp S2c-2b), so each must be pure.
+				for _, getter := range node.SpreadGetters {
+					if err := inspect(getter); err != nil {
+						return err
+					}
+				}
 			case ir.RegExpCall:
 				if node.Replacement != nil {
 					return fmt.Errorf("calls an unbounded function value")
