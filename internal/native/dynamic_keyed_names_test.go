@@ -36,7 +36,7 @@ func dynamicKeyedNamesHeader() []byte {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"error", ir.DynamicKeyedErrorNames}} {
+	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames.Names()}, {"error", ir.DynamicKeyedErrorNames}} {
 		fmt.Fprintf(&text, "static const char *const adamic_dynamic_keyed_%s_names[] = {\n", list.name)
 		for _, name := range list.names {
 			fmt.Fprintf(&text, "\t%s,\n", cString(name))
@@ -44,17 +44,23 @@ func dynamicKeyedNamesHeader() []byte {
 		text.WriteString("};\n\n")
 	}
 	// A closure is a struct with a flexible array member, so the closures can't be one array: union.c
-	// gives this a function(index, length) macro and defines one static closure for each.
-	text.WriteString("// Each of adamic_dynamic_keyed_array_prototype_names by its index, with Node's length for it.\n")
-	text.WriteString("#define ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_FUNCTIONS(function) \\\n")
-	for index, function := range ir.DynamicKeyedArrayPrototypeNames {
-		fmt.Fprintf(&text, "\tfunction(%d, %d)", index, function.Length)
-		if index < len(ir.DynamicKeyedArrayPrototypeNames)-1 {
-			text.WriteString(" \\")
+	// gives each of these a function(index, length) macro and defines one static closure for each.
+	for _, table := range []struct {
+		name      string
+		functions ir.DynamicKeyedFunctions
+	}{{"array_prototype", ir.DynamicKeyedArrayPrototypeNames}, {"regexp_string_iterator", ir.DynamicKeyedRegExpStringIteratorNames}} {
+		fmt.Fprintf(&text, "// Each of adamic_dynamic_keyed_%s_names by its index, with Node's length for it.\n", table.name)
+		fmt.Fprintf(&text, "#define ADAMIC_DYNAMIC_KEYED_%s_FUNCTIONS(function) \\\n", strings.ToUpper(table.name))
+		for index, function := range table.functions {
+			fmt.Fprintf(&text, "\tfunction(%d, %d)", index, function.Length)
+			if index < len(table.functions)-1 {
+				text.WriteString(" \\")
+			}
+			text.WriteString("\n")
 		}
 		text.WriteString("\n")
 	}
-	text.WriteString("\n#endif\n")
+	text.WriteString("#endif\n")
 	return text.Bytes()
 }
 
