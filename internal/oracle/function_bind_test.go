@@ -53,15 +53,16 @@ func TestFunctionBind(t *testing.T) {
 func TestFunctionBindRefusals(t *testing.T) {
 	t.Parallel()
 	for name, reason := range map[string]string{
-		"this_widening":  "this outside a method",
-		"length":         "a bound function's length",
-		"typeof_length":  "a bound function's length",
-		"name":           "a bound function's name",
-		"rebind":         "bind of a bound function",
-		"new":            "new on a bound function",
-		"dynamic_length": "dynamic function descriptors",
-		"dynamic_name":   "dynamic function descriptors",
-		"dynamic_bind":   "dynamic function descriptors",
+		"this_widening":     "this outside a method",
+		"inherited_library": "bind of an inherited library function",
+		"length":            "a bound function's length",
+		"typeof_length":     "a bound function's length",
+		"name":              "a bound function's name",
+		"rebind":            "bind of a bound function",
+		"new":               "new on a bound function",
+		"dynamic_length":    "dynamic function descriptors",
+		"dynamic_name":      "dynamic function descriptors",
+		"dynamic_bind":      "dynamic function descriptors",
 	} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_refused/"+name+".a"))
@@ -74,6 +75,17 @@ func TestFunctionBindRefusals(t *testing.T) {
 			}
 		})
 	}
+	t.Run("opaque_metadata", func(t *testing.T) {
+		t.Parallel()
+		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_refused/opaque_metadata.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		_, err = lowered(t, path)
+		if err == nil || !strings.Contains(err.Error(), "a dynamic-shape object in a graph program") || !strings.Contains(err.Error(), "opaque_metadata.ts:4:") {
+			t.Fatalf("want the existing graph/dynamic refusal at its source read, got %v", err)
+		}
+	})
 }
 
 func TestFunctionBindWASI(t *testing.T) {
