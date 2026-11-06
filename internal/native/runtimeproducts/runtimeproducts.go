@@ -61,6 +61,11 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/program_region/parse.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/node_fs_directory_system.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/host_realpath/closure.a"},
+	// fs.watch's programs: the runtime calls a listener and the watcher's on as void calls whose targets it
+	// can't know, and on gives its watcher back owned (native's emit.go).
+	{[]string{"ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/host_watch/tsc_shape.a"},
+	// And one whose listener is async.
+	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/host_watch/two_events.a"},
 }
 
 // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a

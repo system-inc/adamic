@@ -1,0 +1,17 @@
+import * as fs from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+// A directory made in a watched directory is a rename of it, and a write inside it is nothing: the
+// watch isn't recursive.
+const directory = fs.mkdtempSync(join(tmpdir(), 'adamic-fswatch-'));
+const watcher = fs.watch(directory, {persistent: true}, changed);
+function changed(eventType: string, filename: string | null): void {
+ console.log(`${eventType} ${filename ?? 'null'}`);
+ if (filename === 'end') {
+  watcher.close();
+  fs.rmSync(directory, {recursive: true, force: true});
+ }
+}
+fs.mkdirSync(join(directory, 'sub'));
+fs.writeFileSync(join(directory, 'sub', 'x'), 'x');
+fs.writeFileSync(join(directory, 'end'), '');

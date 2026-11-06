@@ -2,14 +2,14 @@ package fresh
 
 import "github.com/system-inc/adamic/internal/ir"
 
-// nodeFSFile evaluates arguments in order. A watcher retains its listener;
-// conservatively let its reachable values escape. Other host calls borrow
-// without retaining or storing references and return independently owned
-// Stats/Date objects or primitive values. Stats.mtime is independently owned too.
+// nodeFSFile evaluates arguments in order. A watcher retains its listener, and
+// FSWatcher.on its receiver too; conservatively let their reachable values escape.
+// Other host calls borrow without retaining or storing references and return
+// independently owned Stats/Date objects or primitive values. Stats.mtime is independently owned too.
 func (a *analysis) nodeFSFile(expression ir.NodeFSFile) value {
 	for _, argument := range expression.Arguments {
 		held := a.value(argument)
-		if expression.Operation == "host_watch_file" {
+		if expression.RetainsListener() {
 			a.state.escape(held)
 		}
 	}
