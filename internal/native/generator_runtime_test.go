@@ -89,7 +89,7 @@ func generatorRuntimeGuard(t *testing.T, mode, want, old, replacement, diagnosti
 			t.Logf("%s mutant caught by %s: %s", mode, diagnostic, firstSanitizerLine(output))
 			continue
 		}
-		if panic, panics := runningPanics[mode]; panics {
+		if panic, panics := modePanics[mode]; panics {
 			if exit != 70 || !strings.Contains(stderr.String(), panic) {
 				t.Fatalf("%s: %v\n%s", mode, err, output)
 			}
@@ -157,11 +157,15 @@ func TestGeneratorRuntimeDropError(t *testing.T) {
 	generatorRuntimeGuard(t, "drop_error", "1\n", "if (generator->error != NULL) { drop(generator->error); }", "(void)0;", "heap values leaked")
 }
 
-// runningPanics is what each mode that calls into a running generator must panic with: the
-// compiler-bug stop names the generator and the verb it was called with.
-var runningPanics = map[string]string{
-	"reentrant": "adamic: panic: compiler bug: reentering resumed while running",
-	"returning": "adamic: panic: compiler bug: returning returned while running",
+// modePanics is what each mode that reaches a compiler-bug stop must panic with. A call into a
+// running generator names the generator and the verb it was called with; a hand-driven next() names
+// its site and what it was handed.
+var modePanics = map[string]string{
+	"reentrant":  "adamic: panic: compiler bug: reentering resumed while running",
+	"returning":  "adamic: panic: compiler bug: returning returned while running",
+	"next_other": "adamic: panic: compiler bug: the hand-driven next() at harness.ts:3:9 steps a value that is neither a generator nor a collection's iterator",
+	"next_null":  "adamic: panic: compiler bug: the hand-driven next() at harness.ts:3:9 steps a value that is neither a generator nor a collection's iterator",
+	"next_kind":  "adamic: panic: compiler bug: the hand-driven next() at harness.ts:3:9 steps a generator whose yields no result holds",
 }
 
 func TestGeneratorRuntimeReentrant(t *testing.T) {
@@ -192,4 +196,55 @@ func TestGeneratorRuntimeInitialize(t *testing.T) {
 	// Each cell starts empty and owned by the generator, and the initializer is the only thing that
 	// makes it so: _new has no zero fill, since the initializer writes every cell whole.
 	generatorRuntimeGuard(t, "drop_start", "", "adamic_environment_initialize_cells(&generator->heap, generator->cells, count);", "(void)0;", "Assertion")
+}
+
+// A hand-driven next() through a view a generator feeds (adamic_iterator_next, #qk8rztp S2c-2b), held
+// to Memory's ownership contract on #qk8rztp before any compiler code calls it. Each row is a twin of
+// one of her pins, and its mutant is one exact text of generator.c.
+
+// P1's twin: a string generator run to done, each result owning the value moved into it. M1: the arm
+// retains the yielded value as well, and every string outlives its result in the counts.
+func TestGeneratorRuntimeNextStrings(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_strings", "1\n2\n", "    return adamic_iterator_result(kind, present, yielded, tag);", "    if (present) { adamic_retain(yielded.reference); }\n    return adamic_iterator_result(kind, present, yielded, tag);", "heap values leaked")
+}
+
+// P2's twin: one step, its value read, then the result and the suspended frame dropped. M2: the arm
+// treats the value as borrowed and releases it after the build, so the result holds a freed string.
+func TestGeneratorRuntimeNextDrop(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_drop", "1\n", "    return adamic_iterator_result(kind, present, yielded, tag);", "    adamic_object *built = adamic_iterator_result(kind, present, yielded, tag);\n    adamic_release(yielded.reference);\n    return built;", "heap-use-after-free")
+}
+
+// P3's twin: the body throws on the second step, the arm returns NULL and builds nothing, and next()
+// after the throw answers done. M3: the builder runs before the throw test, and its result leaks.
+func TestGeneratorRuntimeNextThrow(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_throw", "5\nError: 6\n", "            return NULL;\n        }\n        return generator_result(", "            (void)generator_result(generator, kind, element_type, yielded);\n            return NULL;\n        }\n        return generator_result(", "heap values leaked")
+}
+
+// P4: a number generator stepped to done and once more reads its value present, then absent twice,
+// and the done result's keys are value,done, in the order #7nw4kgj gave the shared shapes. M4: done
+// passes the frame's zero through as present, and the harness's presence assertion stops it.
+func TestGeneratorRuntimeNextDone(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_done", "1 10\n0\n0\nvalue,done\n", "bool present = !adamic_generator_done(generator);", "bool present = true;", "Assertion")
+}
+
+// A collection's iterator steps through the same entry by its own next, and its results are its own.
+func TestGeneratorRuntimeNextCollection(t *testing.T) {
+	t.Parallel()
+	generatorRuntimeGuard(t, "next_collection", "7\n8\n", "", "", "")
+}
+
+// The loud default: a value the proof should have ruled out, a string or NULL, panics naming the site,
+// never a fault, and a yield off the allowlist panics before any step.
+func TestGeneratorRuntimeNextLoudDefault(t *testing.T) {
+	t.Parallel()
+	for _, mode := range []string{"next_other", "next_null", "next_kind"} {
+		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
+			generatorRuntimeGuard(t, mode, "", "", "", "")
+		})
+	}
 }
