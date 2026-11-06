@@ -646,7 +646,7 @@ func (f *cycleFinder) reachLinks(node cycleNode) []cycleNode {
 			if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
 				continue
 			}
-			for _, local := range f.l.result.Functions[closure.function].Environment {
+			for _, local := range f.l.closureLinks(closure) {
 				links = append(links, cycleNode{cell: local + 1})
 			}
 		}

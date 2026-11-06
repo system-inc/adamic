@@ -1,0 +1,5 @@
+// Node binds the indexed method and prints host.
+interface H { m(): string }
+const host: H = { m(): string { return "host"; } };
+const key: "m" = "m";
+console.log(host[key].bind(host)());

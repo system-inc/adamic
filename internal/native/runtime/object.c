@@ -132,6 +132,11 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 }
 
 adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method) {
+	if (adamic_record_is(object)) {
+		adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+		const adamic_value *slot = adamic_record_get_own(object, &key);
+		return slot == NULL ? NULL : slot->reference;
+	}
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
@@ -150,10 +155,8 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 				found = true;
 			}
 		}
-		if (!found) {
-			static const char message[] = "compiler bug: a method the checker proved is there is missing";
-			adamic_panic(message, sizeof message - 1);
-		}
+		// Optional binding observes absence without caching a made-up slot.
+		if (!found) { return NULL; }
 		adamic_slot_cache_store(cache, shape, slot);
 	}
 	if (slot < shape->count) {

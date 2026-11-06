@@ -1,0 +1,9 @@
+interface O { f: (() => void) | undefined }
+function g(value: O): void { console.log(String(value.f !== undefined)); }
+function run(): void {
+ const o: O = { f: undefined };
+ o.f = g.bind(undefined, o);
+ const callback = o.f;
+ if (callback !== undefined) callback();
+}
+run();

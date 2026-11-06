@@ -1,0 +1,4 @@
+// Node reads the getter once and prints getter.
+interface H { readonly m: () => string }
+const host: H = { get m(): () => string { return (): string => "getter"; } };
+console.log(host.m.bind(host)());

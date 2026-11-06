@@ -411,7 +411,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 		for _, closure := range f.l.closureRecords {
 			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range f.l.result.Functions[closure.function].Environment {
+				for _, local := range f.l.closureLinks(closure) {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}

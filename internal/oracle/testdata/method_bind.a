@@ -1,0 +1,58 @@
+interface H { name: string; m(): string }
+const host: H = { name: "own", m() { return this.name; } };
+const direct = host.m.bind(host);
+console.log(direct());
+const present = host.m?.bind(host);
+if (present !== undefined) console.log(present());
+class C { name: string = "class"; m(): string { return this.name; } }
+const instance = new C();
+console.log(instance.m.bind(instance)());
+function escape(h: H): () => string { return h.m.bind(h); }
+const escaped = escape({ name: "escaped", m() { return this.name; } });
+const array: (() => string)[] = [escaped];
+for (const callback of array) console.log(callback());
+const captured = (): string => escaped();
+console.log(captured());
+interface P { m: () => string }
+const replaceable: P = { m: (): string => "first" };
+const old = replaceable.m.bind(replaceable);
+replaceable.m = (): string => "second";
+console.log(old());
+let effects = 0;
+function fixed(): string { effects++; return "fixed" + String(effects); }
+interface Optional { m?: (a: string) => string }
+const missing: Optional = {};
+const absent = missing.m?.bind(missing, fixed());
+console.log(String(absent === undefined));
+console.log(String(effects));
+console.log(String(absent === undefined));
+const dictionary: Record<string, ((a: string) => string) | undefined> = {};
+const dictionaryBound = dictionary.m?.bind(dictionary, fixed());
+console.log(String(dictionaryBound === undefined));
+interface Pending { m: ((a: string) => string) | undefined }
+const record: Pending = { m: undefined };
+const never = record.m?.bind(record, fixed());
+function recordMethod(a: string): string { return a; }
+record.m = recordMethod;
+console.log(String(never === undefined));
+console.log(String(effects));
+interface RealpathHost { prefix: string; realpath?(path: string): string }
+const realHost: RealpathHost = { prefix: "root/", realpath(path: string): string { return this.prefix + path; } };
+// program.ts:1950: the already-written tsc site, rather than changing maybeBind callers.
+const adapted = { realpath: realHost.realpath?.bind(realHost) };
+console.log(Object.keys(adapted).join(","));
+const directRealpath = realHost.realpath?.bind(realHost);
+if (directRealpath !== undefined) console.log(directRealpath("file"));
+
+interface VoidMethod { call(): void }
+class VoidHost { call(): void { console.log("void class"); } }
+const voidHost: VoidMethod = new VoidHost();
+const voidBound = voidHost.call.bind(voidHost);
+voidBound();
+
+interface ThrowHost { m?(a: string, b: string): string }
+const throwingHost: ThrowHost = { m(a: string, b: string): string { return a + b; } };
+function methodA(): string { console.log("method a"); return "owned" + String(effects); }
+function methodB(): string { console.log("method b"); throw new Error("fixed"); }
+try { throwingHost.m?.bind(throwingHost, methodA(), methodB()); }
+catch { console.log("method caught"); }
