@@ -1,114 +1,54 @@
-# Views V3 price: incomplete checkpoint
+# Views V3 checked element price
 
-**Lowered totals: not measured. Source ceiling: not certified.** No zero total is implied.
+**Exact latent closure totals: incomplete.** 0 completed paired file pieces.
 
-| Measurement | Head | Main |
-|---|---|---|
-| ViewElement nodes | Not measured | Not measured |
-| ViewElementCheck nodes | Not measured | Not measured |
-| Units lowered | Not measured | Not measured |
-| Source ceiling on main's adapted tree | Not certified | Not certified |
+**Source upper bound and readonly subset: pending completed main apply.**
 
-Task: 6wfvfhm. Report only, not for landing.
-Box: `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.
-Head: `9626d0113f08269e519ba216ff7f95ff84af16db`.
-Comparison main: `2c3f322975b2dee68889e82eab0bbca324d417a9`.
-Report branch base (fetched origin/main tip): `12fec995dcadc7f1ae94e4ba63835884451378ae`.
-Upstream TypeScript input: `050880ce59e30b356b686bd3144efe24f875ebc8`.
+| Latent measure (observed pieces only) | Main | Head |
+|---|---:|---:|
+| view_elements | Not measured | Not measured |
+| view_element_checks | Not measured | Not measured |
+| units | Not measured | Not measured |
+| attempted | Not measured | Not measured |
+| ir_observed | Not measured | Not measured |
+| finding_free_attempted | Not measured | Not measured |
 
-The source-counter draft follows void-intersections/count.cjs's stock TypeScript
-6.0.3 program construction and compiler options. It records read forms and
-receiver types. It explicitly labels its output provisional. It must not be
-used as the requested ceiling without finishing admission equivalence.
+Task 6wfvfhm. Report only, not for landing. Box `4b7d656a5150`, Linux x86_64, 2026-11-06 UTC.
+Head `9626d0113f08269e519ba216ff7f95ff84af16db`; main `2c3f322975b2dee68889e82eab0bbca324d417a9`.
+Report base `12fec995dcadc7f1ae94e4ba63835884451378ae`; upstream TypeScript `050880ce59e30b356b686bd3144efe24f875ebc8`.
+Both pinned compilers use their own apply.sh products. Only the report directory is committed.
 
-The head's exact nodes are `ir.ViewElement` and `ir.ViewElementCheck`.
-`viewArrayIndex` constructs the former from `viewArrayElementCheck`; implicit
-handouts retain a pointer to the latter in `ElementCheck`. The relevant head
-sources are retained here as `.go.txt` evidence.
+## Exact latent observation
 
-`unionAggregateContract` sets ArrayReadonly only for the library ReadonlyArray.
-It clears the unsupported array-element marker only when
-`elementContractCheckable` succeeds. That predicate includes scalar contracts,
-unknown elements, readonly nested arrays, union representations, certified
-callable producers, recursive object fields and required scalar discriminators.
-It also depends on legacy nullable storage and unsupported-contract metadata.
-Consequently a readonly-array-name test alone is not the exact admission rule.
-The draft leaves representation-sensitive nulls, intersections, tuples and
-callables unresolved. Its apparent candidate count is not a proven lower bound
-or upper bound of the requested ceiling.
+The runtime overlay counts ir.ViewElement and ir.ViewElementCheck by reflection using exact package and type names. It walks returned unit statements and all function bodies lowered in that unit result. Non-nil IR pointers, including ElementCheck, are visited once by identity. Main compiles without the optional types and reports zero. Counts are per isolated unit, so dependencies independently lowered in multiple units count in each observation. These are static IR nodes, not runtime execution counts.
 
-The head also selects checks through a program-wide element key, with
-assignability in either direction and a fallback to every element when the
-pre-pass cannot decide. It can check reads through mutable receivers that can
-hold elements from a viewed readonly array. The source receiver-admission
-inventory and the latent lowered-IR inventory therefore need separate labels.
+The meter retains partial IR after statement rollback and omits final whole-program validation and pruning. attempted excludes skips and deferred generics; ir_observed counts attempts whose snapshot reached the counter; finding_free_attempted counts attempted units with no lowering-phase finding. This last column supplies a strict meaning of units lowered without claiming successful whole-program compilation.
 
-Run `python3 stage3/census/views-v3-price/fixture-test.py` to exercise the draft's
-read-form enumeration. The fixture expects seven reads: index, at, for-of,
-spread, slice, map and forEach. A plain index write and a mutable-array index are
-excluded. The index-skipping mutant produces six and fails the same assertion.
-This proves enumeration on that fixture only, not admission-rule equivalence.
+Each piece selects one file in the full tsc entry closure with LATENT_FULL=1 and LATENT_ONLY_FILE. Deferred instantiated witnesses have that piece context. The unmodified meter and counted binaries run with the identical selection. Removing only view_elements, view_element_checks and ir_measured from the raw counted bytes must reproduce the entire meter output byte for byte on both compilers. The ordinary fields, with only absolute adapted roots canonicalized, are passed to stage3/census/pair. Source bytes must match. All four runs and pairing share a 23-minute deadline; successful pieces are committed and plainly pushed.
 
-The latent overlay addition, known-count lowered fixture, skipped-node mutant,
-byte-identity checks, paired closure pieces, pairing and ranking tables have not
-been implemented or run at this checkpoint. There are no tsc totals or top-file
-rankings to report yet.
+The head-owned fixtures prove (ViewElement, ViewElementCheck): per-read (2,0), map-good (1,1), for-of-good (1,1). Main gives (0,0) for all three. Both skip-kind mutants fail the same known-count assertions. Every other latent field is byte-identical on both trees for the fixtures and mutants. counter-proof.json and counter-proof.tar.gz retain this proof.
 
-## Stop point
+## Per-file latent counts
 
-Stopped at source admission validation. The draft is not an exact port of the
-head's representation- and producer-sensitive admission rule. Its fixture and
-mutant validate only enumeration. Publishing a numeric ceiling from it would
-claim evidence this run does not have. This is an implementation/validation gap,
-not a network denial or an assertion that the requested measurement is impossible.
+| File | Main elements | Main checks | Head elements | Head checks | Main finding-free units | Head finding-free units |
+|---|---:|---:|---:|---:|---:|---:|
 
-The requested setup command was started. Tool and submodule setup completed;
-its final Go cache-warming build was interrupted. The pinned main apply was
-started from its own detached worktree and interrupted during
-`20-optional-declarations`, before completing the adapted product. No tsc source
-counter was run on that partial tree. No head apply or latent run was started.
-All live setup and apply descendants started by this task were terminated.
+## Top ten observed latent files
 
-`raw-checkpoint.tar.gz` contains setup/apply logs, the successful seven-read
-fixture and rejected six-read mutant observations, provenance and hashes of the
-**partial** adapted src tree. These hashes identify interrupted work only.
-The archive contains no tsc census records. `SHA256SUMS` identifies the archive;
-an inner SHA256SUMS identifies each evidence file. Rebuild it with
-`python3 stage3/census/views-v3-price/pack-checkpoint.py` on this box.
+main:
 
-To resume: finish the source admission port and prove it against the head,
-prepare a fresh completed main apply, and run the source census. Then implement
-and validate the reflection overlay, including byte-identity against the meter,
-before committing and pushing each paired latent piece under 25 minutes.
+head:
 
-## Revised scope and counter proof
 
-The follow-up replaces the admission ceiling with a broad source upper bound.
-The source counter now includes mutable and readonly arrays, tuples, and union
-or intersection arms containing one. Readonly includes a readonly array or tuple
-arm; mixed unions can therefore occur in both columns. This is a narrower
-subset of the bound, not the head's admission rule. Array-derived interfaces
-are followed through their base types. The fixture now expects 8 reads, 7 in
-the readonly subset; skipping index reads produces 6 and fails the assertion.
+## Broad source upper bound
 
-The exact latent counter is implemented as a runtime extension of the unmodified
-meter overlay. It walks returned unit statements and every lowered function body
-in that unit's result. It matches IR package and type names through reflection,
-so main compiles without either optional type. Non-nil IR pointers are visited
-once by identity, including ElementCheck pointers. No compiler or meter file is
-edited. Counts describe this latent IR, including retained partial bodies;
-final whole-program validation and pruning are outside the latent meter.
+Stock TypeScript 6.0.3, with the options from void-intersections/count.cjs, enumerates read sites on the completed main adapted tree. Array and readonly-array receivers include tuple receivers, union/intersection arms containing arrays and interfaces inheriting array bases. The readonly subset contains a readonly array or readonly tuple arm, including mixed unions. Neither column ports the checked-view admission rule. Index assignments using plain = are excluded; compound assignments and increments read and count. Repeated loop executions count as one static site. The seven fixture forms are index, at, for-of, spread, slice, map and forEach; named array handout methods are also inventoried by their method name.
 
-The known-count head fixtures pass: per-read has (2 ViewElement, 0 checks),
-map-good has (1, 1), and for-of-good has (1, 1). Main has (0, 0) for each.
-Both skip-kind mutants fail fixtures with the skipped kind. Removing exactly
-the three added unit fields yields byte-identical meter output on both trees
-for every fixture and mutant. See counter-proof.json and counter-proof.tar.gz.
+The source fixture includes mutable and readonly arrays, union, tuple, mutable tuple and intersection receivers. It expects 12 reads with 10 in the readonly subset. The index-skipping mutant fails the same assertion.
 
-Full tsc closure pieces are not yet complete. Each scheduled file is measured
-in the complete entry-root context, using the meter's LATENT_ONLY_FILE selector.
-The four runs in one paired piece have a combined 23-minute deadline. Deferred
-instantiation witnesses have the selected-file scope and are not represented
-as whole-run witnesses. Counts are reported with attempted, IR-observed and
-finding-free attempted unit counts so partial lowering is visible. Each
-completed piece is paired with stage3/census/pair, committed and plainly pushed.
+
+## Evidence and status
+
+Completed raw streams, meter baselines, paired deltas, logs and inner SHA256SUMS are packed in pieces/*.tar.gz. SHA256SUMS in this directory identifies every archive. The earlier raw-checkpoint.tar.gz records the superseded admission investigation and interrupted first apply; it is not current census evidence. Reproduction sources live in this directory; the meter and production compiler remain unchanged.
+
+Full closure totals remain unavailable until every planned file is complete.

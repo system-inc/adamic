@@ -20,7 +20,7 @@ else {
  if (config.error) throw Error(ts.flattenDiagnosticMessageText(config.error.messageText,'\n'));
  const parsed = ts.parseJsonConfigFileContent(config.config,ts.sys,path.dirname(configPath),options,configPath);
  if (parsed.errors.length) throw Error(JSON.stringify(parsed.errors));
- roots = parsed.fileNames;
+ roots = [path.join(tree,'src/tsc/tsc.ts')];
 }
 const program = ts.createProgram({rootNames:roots,options}), checker = program.getTypeChecker();
 // Broad source inventory, deliberately independent of checked-view admission.
@@ -31,13 +31,15 @@ function arrayShape(t, seen = new Set()) {
  if (checker.isArrayType(t)) return {array:true,readonly:t.target?.symbol?.name==='ReadonlyArray'};
  let parts=[];
  if(t.isUnionOrIntersection()) parts=t.types;
- else if(t.flags & ts.TypeFlags.Object) {
+ else if(t.flags & ts.TypeFlags.TypeParameter) {
+  const c=checker.getBaseConstraintOfType(t); if(c) parts=[c];
+ } else if(t.flags & ts.TypeFlags.Object) {
   try {parts=checker.getBaseTypes(t)||[];} catch {}
  }
  const shapes=parts.map(x=>arrayShape(x,seen));
  return {array:shapes.some(x=>x.array),readonly:shapes.some(x=>x.readonly)};
 }
-const roads = new Set(['at','values','map','forEach','some','every','filter','find','findIndex','findLast','findLastIndex','reduce','reduceRight','slice','concat','join','indexOf','includes','pop','shift','splice','reverse','sort','fill','copyWithin','parallelMap']);
+const roads = new Set(['at','values','map','forEach','some','every','filter','find','findIndex','findLast','findLastIndex','reduce','reduceRight','slice','concat','join','indexOf','includes','pop','shift','splice','reverse','sort','copyWithin','parallelMap']);
 function unparen(n) {while(n.parent && ts.isParenthesizedExpression(n.parent)) n=n.parent; return n;}
 function read(n) {
  const site=unparen(n),p=site.parent;
@@ -46,7 +48,7 @@ function read(n) {
  return true;
 }
 const rows=[];
-for(const source of program.getSourceFiles().filter(f=>fixture?roots.includes(f.fileName):f.fileName.startsWith(path.join(tree,'src/compiler')+path.sep)).sort((a,b)=>a.fileName.localeCompare(b.fileName))) {
+for(const source of program.getSourceFiles().filter(f=>fixture?roots.includes(f.fileName):f.fileName.startsWith(path.join(tree,'src')+path.sep) && !f.isDeclarationFile).sort((a,b)=>a.fileName.localeCompare(b.fileName))) {
  function add(node,receiver,form) {
   if(process.env.V3_MUTANT_SKIP_INDEX==='1' && form==='index') return;
   const type=checker.getTypeAtLocation(receiver), a=arrayShape(type);

@@ -53,8 +53,9 @@ with tarfile.open(piece.with_suffix('.tar.gz'),'w:gz') as archive:
  for n,data in sorted(files.items()):
   info=tarfile.TarInfo(n);info.size=len(data);info.mtime=0;archive.addfile(info,io.BytesIO(data))
 piece.with_suffix('.json').write_text(json.dumps(summary,indent=2)+'\n')
+subprocess.run(['python3',str(report/'update-report.py')],check=True)
 with (scratch/'publication.log').open('w') as log:
- subprocess.run(['git','add',str(piece.with_suffix('.json')),str(piece.with_suffix('.tar.gz'))],check=True,stdout=log,stderr=log)
+ subprocess.run(['git','add',str(piece.with_suffix('.json')),str(piece.with_suffix('.tar.gz')),str(report/'REPORT.md'),str(report/'SHA256SUMS')],check=True,stdout=log,stderr=log)
  subprocess.run(['git','commit','-m','census: views-v3 price piece '+name],check=True,stdout=log,stderr=log)
  subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/views-v3-price'],check=True,stdout=log,stderr=log)
 print(json.dumps(summary),flush=True)

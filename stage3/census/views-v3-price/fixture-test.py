@@ -14,11 +14,19 @@ const d=a.slice();
 const e=a.map(x=>x);
 a.forEach(x=>console.log(x));
 const f=mutable[0];
+declare const union: readonly Node[] | Node[];
+const g=union[0];
+declare const tuple: readonly [Node];
+const h=tuple[0];
+declare const mutableTuple: [Node];
+const i=mutableTuple[0];
+declare const intersection: readonly Node[] & {readonly brand: 1};
+const j=intersection[0];
 '''
-expected = {k:dict(upper_bound=2 if k=='index' else 1,readonly_subset=1) for k in ['at','for-of','forEach','index','map','slice','spread']}
+expected = {k:dict(upper_bound=6 if k=='index' else 1,readonly_subset=4 if k=='index' else 1) for k in ['at','for-of','forEach','index','map','slice','spread']}
 def verify(data):
-    assert data['upper_bound'] == 8, data
-    assert data['readonly_subset'] == 7, data
+    assert data['upper_bound'] == 12, data
+    assert data['readonly_subset'] == 10, data
     assert data['forms'] == expected, data
 with tempfile.TemporaryDirectory(prefix='v3-price-fixture-') as scratch:
     scratch = pathlib.Path(scratch)
