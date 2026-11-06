@@ -18,6 +18,7 @@ func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 		"is_file": ir.Boolean, "is_directory": ir.Boolean,
 		"is_symbolic_link": ir.Boolean, "date_new": ir.Object,
 		"host_watch_file": ir.Number, "host_unwatch_file": ir.Number,
+		"host_watch": ir.Object, "host_watch_on": ir.Object,
 		"host_stdout_columns": ir.MaybeNumber, "host_stdout_is_tty": ir.MaybeBoolean,
 		"host_stdout_write": ir.Number, "date_time": ir.Number, "host_realpath": ir.String,
 	}
@@ -96,6 +97,24 @@ func TestWatchFileRetainedOperandsEscape(t *testing.T) {
 		}}}}
 		writes := fresh.ProveWrites(program)
 		want := operation == "host_unwatch_file"
+		if len(writes) != 1 || writes[0].Proven != want {
+			t.Fatalf("%s: retained holder versus borrowed holder: %+v", operation, writes)
+		}
+	}
+}
+
+// fs.watch's listener and FSWatcher.on's receiver and listener are held by the runtime past the call.
+func TestWatchRetainedOperandsEscape(t *testing.T) {
+	t.Parallel()
+	for _, operation := range []string{"host_watch", "host_watch_on", "date_time"} {
+		program := &ir.Program{Locals: []ir.Local{{Type: ir.Object, Function: 0}, {Type: ir.Object, Function: 0}}, Functions: []ir.Function{{Name: "retain", Closure: true, Parameters: []int{0}, Body: []ir.Statement{
+			ir.Declare{Local: 1, Value: ir.ObjectLiteral{}},
+			ir.Evaluate{Value: ir.NodeFSFile{Operation: operation, Of: ir.Object, Arguments: []ir.Expression{ir.Read{Local: 1, Of: ir.Object}}}},
+			ir.SetProperty{Object: ir.Read{Local: 1, Of: ir.Object}, Name: "saved", Value: ir.Read{Local: 0, Of: ir.Object}, Site: 1},
+			ir.Return{},
+		}}}}
+		writes := fresh.ProveWrites(program)
+		want := operation == "date_time"
 		if len(writes) != 1 || writes[0].Proven != want {
 			t.Fatalf("%s: retained holder versus borrowed holder: %+v", operation, writes)
 		}

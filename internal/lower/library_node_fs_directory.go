@@ -60,7 +60,8 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 			if module == "" {
 				continue
 			}
-			if owner == "StatsBase" {
+			// A Stats' or an FSWatcher's members are a host object's, read by name (library_node_watch.go).
+			if owner == "StatsBase" || owner == "FSWatcher" {
 				return "", ""
 			}
 			member := symbol.Name

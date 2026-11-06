@@ -23,7 +23,7 @@ Lowering admits a Node member only when it's registered with a real lowering and
 
 The registered set at `dc8a6497` is 99 names (the console registry's three plus `RegisterNodeLibraryMembers` in library_node.go, library_node_fs_buffer.go, library_node_fs_directory.go, library_node_fs_file.go, library_node_host.go and library_node_process.go). Two more are bound by name without registration, both read only on `process.stdout`: `node:tty.WriteStream.isTTY` and `node:tty.WriteStream.columns` (library_node_host.go). Each `any` was joined to its member by the name `nodeLibraryMember` builds for its declaration.
 
-**Value-carrying `any`s inside a registered or bound member: none.** So this audit has no Modelled entries yet, and the relation walk's host list is empty.
+**Value-carrying `any`s inside a registered or bound member: one,** reached since `node:fs.FSWatcher.on` was registered for fs.watch (#j71fn59). It's modelled below.
 
 The Profile data slice (#cn4yapb, November 6, 2026) additionally registers
 Profiler.Profile.nodes, Profiler.ProfileNode.callFrame and Runtime.CallFrame.url
@@ -38,7 +38,11 @@ None for `any`. Host corrections that only add truth live in internal/load/host_
 
 ## Modelled
 
-None. A registered member whose declared type carries a value-carrying `any` gets an entry here before it's registered: the call, the lowering rule that supplies the real type, its adapter's argument and result checks, and a pin that goes red with the rule removed (library-any.md's standing rule, from M3). Language attacks it before it lands.
+A registered member whose declared type carries a value-carrying `any` gets an entry here before it's registered: the call, the lowering rule that supplies the real type, its adapter's argument and result checks, and a pin that goes red with the rule removed (library-any.md's standing rule, from M3). Language attacks it before it lands.
+
+| Declaration | Where | The call | The real type, and the rule that supplies it | Adapter checks | Pin |
+| --- | --- | --- | --- | --- | --- |
+| `InternalEventEmitter.on(eventName, listener: (...args: any[]) => void)`, the general overload, reached through `node:fs.FSWatcher.on` | events.d.ts:878 | `watcher.on("error", listener)` on a value fs.watch made, as tsc's sys.ts:1270 writes it | `Error`. nodeWatchOn (internal/lower/library_node_watch.go) admits only the literal event `"error"`. A listener the Error can be type-checks against the typed overload, `(...args: [Error]) => void`, and never sees this `any`. One the Error can't be type-checks only through this overload, where the method relation's parameter refusal (invariance.go, widened over callable parameters, adamic/invariant-mutable) refuses it before lowering. Past Node's one argument, the listener gets undefined | The runtime's error path (node_fs_watch_impl.h) hands exactly one argument, a real Error made by adamic_error_new_kind. The JavaScript backend's AdamicFSWatcher passes Node's own. `on` returns its receiver, the watcher, never a value from the `any` | TestNodeWatchErrorListenerOnTheAnyOverloadIsRefused: listeners taking a Map, a class, number \| boolean and string \| number are each refused there. With the relation's parameter refusal skipped, each lowers and the test goes red. TestNodeWatchOtherFormsRefused's "other event" row pins the event rule |
 
 ## Registered members whose `any` carries no value
 
@@ -83,7 +87,7 @@ Twelve of them are reachable as globals when a program uses Node's types without
 
 ## The list the walk reads
 
-The relation walk's host list is the Modelled section's ids, and today it's empty. The walk carries no host exemption of its own, so every host `any` it meets is counted. Registering a Node member is the point where this file has to change. Before a registration whose declared type carries a value-carrying `any` lands, the `any` gets a Modelled entry with its pin, or a correction in host_axioms.json. Otherwise it stays counted, and the program fails closed at the relation.
+The relation walk's host list is the Modelled section's ids: today, events.d.ts:878 alone. The walk carries no host exemption of its own, so every host `any` it meets is counted. Registering a Node member is the point where this file has to change. Before a registration whose declared type carries a value-carrying `any` lands, the `any` gets a Modelled entry with its pin, or a correction in host_axioms.json. Otherwise it stays counted, and the program fails closed at the relation.
 
 TestHostAnyAudit (internal/lower/host_any_audit_test.go) holds that rule, so nobody has to remember it. It walks every registered Node name, and the two read by name on stdout, through its declared type with this file's polarity: union and intersection members, library containers' type arguments, call results, and callback parameters. It stops at a member no registration names, since rule 800 refuses that hop by name, and the host-object view check refuses it through a program type (#8k12t4s). A value-carrying host `any` it reaches that isn't in the Modelled table fails it, naming the registration and the `any`'s file and line. At main's registrations it reaches none.
 

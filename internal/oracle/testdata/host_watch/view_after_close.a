@@ -1,0 +1,8 @@
+import * as fs from 'node:fs';
+// on through tsc's view after close has no open watcher to give back: it stops by name. Node would
+// keep the listener, never calling it.
+interface FsWatchWorkerWatcher { close(): void; on(eventName: string, listener: () => void): void; }
+const watcher: FsWatchWorkerWatcher = fs.watch('.', {persistent: true}, (eventType, filename) => { console.log(`${eventType} ${filename ?? 'null'}`); });
+watcher.close();
+watcher.on('error', () => { console.log('wrong error'); });
+console.log('wrong: listened after close');
