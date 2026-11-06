@@ -1,0 +1,19 @@
+{
+  "side": "before",
+  "mode": "compiler",
+  "wall_budget_seconds": 120,
+  "wall_seconds": 120.3184226169999,
+  "exit_code": -15,
+  "samples": [
+    {
+      "seconds": 60,
+      "times_bytes": 17893,
+      "latent_bytes": 165
+    },
+    {
+      "seconds": 120,
+      "times_bytes": 21628,
+      "latent_bytes": 165
+    }
+  ]
+}

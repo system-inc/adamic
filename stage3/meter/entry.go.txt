@@ -69,6 +69,13 @@ func main() {
 		diagnostics = []string{}
 	}
 	if len(diagnostics) != 0 && os.Getenv("LATENT_FULL") != "1" {
+		// No unit is attempted on this path, but the pass still owns an empty
+		// timing sidecar for archiving alongside its blocked metadata record.
+		if path := os.Getenv("LATENT_TIMES"); path != "" {
+			if err := os.WriteFile(path, nil, 0666); err != nil {
+				panic(err)
+			}
+		}
 		if err := encoder.Encode(map[string]any{"roots": paths, "status": "blocked", "checker_rejected": true,
 			"diagnostics": diagnostics}); err != nil {
 			panic(err)

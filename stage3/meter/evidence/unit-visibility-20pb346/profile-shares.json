@@ -1,0 +1,20 @@
+{
+  "before": {
+    "duration_seconds": 120.0,
+    "sampled_cpu_seconds": 163.15,
+    "flat_seconds": 1.27,
+    "flat_percent": 0.78,
+    "cumulative_seconds": 17.67,
+    "cumulative_percent": 10.83,
+    "GOMEMLIMIT": "8GiB"
+  },
+  "after": {
+    "duration_seconds": 120.0,
+    "sampled_cpu_seconds": 166.65,
+    "flat_seconds": 0.23,
+    "flat_percent": 0.14,
+    "cumulative_seconds": 0.8,
+    "cumulative_percent": 0.48,
+    "GOMEMLIMIT": "8GiB"
+  }
+}

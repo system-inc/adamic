@@ -104,9 +104,10 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 				}
 				return result
 			}
+			fields := latentPrivateIRFields[v.Type()]
 			for i := 0; i < v.NumField(); i++ {
 				// statecopy generates this from its table of unexported IR fields, refusing any it doesn't name.
-				if latentPrivateIRField(v, i) { continue }
+				if latentPrivateIRField(v, i, fields) { continue }
 				if !result.Field(i).CanSet() {
 					panic("latent state copy: unexported IR field " + v.Type().Field(i).Name)
 				}

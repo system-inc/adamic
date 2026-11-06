@@ -168,13 +168,34 @@ class CompilerSelectionTests(unittest.TestCase):
                          {'main': 'main', 'area': 'main'})
         self.assertEqual(report['trees']['main']['adapted_tree'], report['trees']['area']['adapted_tree'])
         for relative in ('census.jsonl.gz', 'latent.jsonl.gz', 'latent-times.jsonl.gz',
-                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz'):
+                         'tsc/census.jsonl.gz', 'tsc/latent.jsonl.gz', 'tsc/latent-times.jsonl.gz'):
             self.assertEqual(gzip.decompress((run / 'main' / relative).read_bytes()),
                              gzip.decompress((run / 'area' / relative).read_bytes()))
         for label in ('main', 'area'):
             tree = report['trees'][label]
             self.assertEqual(tree['tree_commit'], self.main)
         return run, report
+
+    def test_entry_times_sidecar_preserves_report_20pb346(self):
+        run, before = self.measure()
+        for label in ('main', 'area'):
+            path = run / label / 'tsc/latent-times.jsonl.gz'
+            self.assertTrue(path.exists(), 'entry pass did not write its own times file')
+            # The fixture driver creates an empty time stream. Give the reader
+            # deliberately invalid entry times to prove it ignores this sidecar.
+            (run / label / 'tsc/latent-times.jsonl').write_text('not a timing record\n')
+        for path in run.rglob('*.jsonl.gz'):
+            if path.parent.name != 'tsc' or path.name != 'latent-times.jsonl.gz':
+                path.with_suffix('').write_bytes(gzip.decompress(path.read_bytes()))
+        tree = Path(before['trees']['main']['adapted_tree'])
+        baseline = report_pair(tree, tree, run, 'stamp', self.main, self.main, run)
+        json_before, markdown_before = (run / 'report.json').read_bytes(), (run / 'report.md').read_bytes()
+        for label in ('main', 'area'):
+            (run / label / 'tsc/latent-times.jsonl').unlink()
+        after = report_pair(tree, tree, run, 'stamp', self.main, self.main, run)
+        self.assertEqual(after, baseline)
+        self.assertEqual((run / 'report.json').read_bytes(), json_before)
+        self.assertEqual((run / 'report.md').read_bytes(), markdown_before)
 
     def test_default_uses_checkout_compiler_for_both_trees(self):
         run, result = self.measure()

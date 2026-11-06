@@ -106,7 +106,7 @@ for label in main; do
     mkdir -p "$run/$label/tsc"
     # Only main is measured; area is a compatibility label for these same records.
     "$binaries/census" "$entry" "$run/$label/tsc/census.jsonl" > "$run/$label/tsc/census.log" 2>&1
-    LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
+    LATENT_TIMES="$run/$label/tsc/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
     "$binaries/census" "$scratch/$label-adapted/src/compiler" "$run/$label/census.jsonl" > "$run/$label/census.log" 2>&1
     LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
 done
@@ -121,7 +121,7 @@ if git cat-file -e "$main_commit:stage3/meter/runs" 2>/dev/null; then
     tar -xf "$scratch/committed-runs.tar" -C "$scratch/committed"
 fi
 STAGE3_METER_COMMIT="$checkout_commit" python3 stage3/meter/report.py "$scratch/main-adapted" "$scratch/main-adapted" "$run" "$stamp" "$main_commit" "$area_commit" "$scratch/committed/stage3/meter/runs"
-gzip "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
+gzip "$run/main/tsc/latent-times.jsonl" "$run/area/tsc/latent-times.jsonl" "$run/main/latent-times.jsonl" "$run/area/latent-times.jsonl" "$run/main/tsc/census.jsonl" "$run/area/tsc/census.jsonl" "$run/main/tsc/latent.jsonl" "$run/area/tsc/latent.jsonl" "$run/main/census.jsonl" "$run/area/census.jsonl" "$run/main/latent.jsonl" "$run/area/latent.jsonl"
 python3 - "$run" "$SECONDS" <<'PYTHON'
 import json, pathlib, sys
 run = pathlib.Path(sys.argv[1])

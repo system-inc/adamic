@@ -1,5 +1,6 @@
 """Build a scratch-only lower overlay. Production Lower is disabled in this binary."""
 import json
+import re
 import pathlib
 import sys
 import subprocess
@@ -59,6 +60,14 @@ statement_output = scratch / 'internal_lower_statements.go'
 subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
                 str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
+# Keep the tested plan implementation inside the scratch lower package: per-ref
+# compiler checkouts need not already contain this measurement helper package.
+private_fields = (territory / 'privatefields/plan.go').read_text().replace('package privatefields', 'package lower', 1)
+for old, new in {'Policy': 'latentPrivateIRPolicy', 'Nil': 'latentPrivateIRNil',
+                 'Empty': 'latentPrivateIREmpty', 'Plan': 'latentPrivateIRPlan',
+                 'planField': 'latentPrivateIRPlanField', 'New': 'latentNewPrivateIRPlan'}.items():
+    private_fields = re.sub(r'\b' + old + r'\b', new, private_fields)
+overlay('internal/lower/latent_private_fields.go', private_fields)
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.

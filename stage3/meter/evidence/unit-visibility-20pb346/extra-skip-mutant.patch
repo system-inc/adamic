@@ -1,0 +1,10 @@
+--- a/stage3/census/latent/privatefields/plan.go
++++ b/stage3/census/latent/privatefields/plan.go
+@@ -32,6 +32,7 @@
+ }
+ 
+ func (plan Plan) Skip(value reflect.Value, index int) bool {
++ if index == 0 { return true }
+ 	if len(plan.fields) == 0 {
+ 		return false
+ 	}

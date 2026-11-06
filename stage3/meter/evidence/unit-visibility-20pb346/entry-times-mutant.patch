@@ -1,0 +1,11 @@
+--- a/stage3/meter/twice-daily.sh
++++ b/stage3/meter/twice-daily.sh
+@@ -106,7 +106,7 @@
+     mkdir -p "$run/$label/tsc"
+     # Only main is measured; area is a compatibility label for these same records.
+     "$binaries/census" "$entry" "$run/$label/tsc/census.jsonl" > "$run/$label/tsc/census.log" 2>&1
+-    LATENT_TIMES="$run/$label/tsc/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
++    LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/entry-census" "$entry" "$run/$label/tsc/latent.jsonl" > "$run/$label/tsc/latent.log" 2>&1
+     "$binaries/census" "$scratch/$label-adapted/src/compiler" "$run/$label/census.jsonl" > "$run/$label/census.log" 2>&1
+     LATENT_TIMES="$run/$label/latent-times.jsonl" LATENT_FULL=$latent_full LATENT_ASSERT_NO_OUTPUT=1 "$binaries/latent-census" "$scratch/$label-adapted/src/compiler" "$run/$label/latent.jsonl" > "$run/$label/latent.log" 2>&1
+ done

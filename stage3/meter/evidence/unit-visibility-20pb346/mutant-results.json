@@ -1,0 +1,42 @@
+[
+  {
+    "mutant": "entry-times-mutant",
+    "command": [
+      "python3",
+      "-E",
+      "-S",
+      "-B",
+      "-m",
+      "unittest",
+      "compiler_test.CompilerSelectionTests.test_entry_times_sidecar_preserves_report_20pb346"
+    ],
+    "exit_code": 1,
+    "killed": true
+  },
+  {
+    "mutant": "extra-skip-mutant",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "./stage3/census/latent/privatefields",
+      "-run",
+      "^TestLatentPrivateIRPlanPreservesUnlistedFields20pb346$"
+    ],
+    "exit_code": 1,
+    "killed": true
+  },
+  {
+    "mutant": "private-nil-mutant",
+    "command": [
+      "go",
+      "test",
+      "-count=1",
+      "./stage3/census/latent/privatefields",
+      "-run",
+      "^TestLatentPrivateIRPlanRejectsPopulatedNilCache20pb346$"
+    ],
+    "exit_code": 1,
+    "killed": true
+  }
+]

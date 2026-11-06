@@ -1,0 +1,18 @@
+{
+  "base": "31d7a244808fa8092643926d21ab9d310a54cce3",
+  "go": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "submodules": "06af2e399c6c1fb93fd570b774027942747400b4 cohere (06af2e39)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfee1)",
+  "product_key": "b40b26ed97e862891ac9e67661590545200000a23b7b40e8057f63d193353335",
+  "binaries": {
+    "before-entry": "f53c53be94ed61267d38d4ef8f3bd9a6eea916dbc55ccdf9c1f2da564cd316fd",
+    "before-compiler": "7a0221e2009b7c37abd1e5e8bdeaeb8c550ee2ddd33c3d04d78dba115a133b98",
+    "after-entry": "5cffd913912ceb51467373ada48ab77b655c94cfb3dc55b3dbe8f5fc68574db5",
+    "after-compiler": "95a6908e8bd79e3fa6ab37a4c05fabdd9bf720bece3858c885134d2f94a66a1e"
+  },
+  "fixture_pin": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  }
+}

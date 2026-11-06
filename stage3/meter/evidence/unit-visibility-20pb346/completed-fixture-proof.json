@@ -1,0 +1,78 @@
+{
+  "runs": [
+    {
+      "side": "before",
+      "mode": "entry",
+      "latent": false,
+      "wall_seconds": 0.1144857930003127
+    },
+    {
+      "side": "before",
+      "mode": "entry",
+      "latent": true,
+      "wall_seconds": 0.06415961500033518
+    },
+    {
+      "side": "before",
+      "mode": "compiler",
+      "latent": false,
+      "wall_seconds": 0.11447891300031188
+    },
+    {
+      "side": "before",
+      "mode": "compiler",
+      "latent": true,
+      "wall_seconds": 0.06441568700029165
+    },
+    {
+      "side": "after",
+      "mode": "entry",
+      "latent": false,
+      "wall_seconds": 0.11410132900027747
+    },
+    {
+      "side": "after",
+      "mode": "entry",
+      "latent": true,
+      "wall_seconds": 0.06411828799991781
+    },
+    {
+      "side": "after",
+      "mode": "compiler",
+      "latent": false,
+      "wall_seconds": 0.1145347460001176
+    },
+    {
+      "side": "after",
+      "mode": "compiler",
+      "latent": true,
+      "wall_seconds": 0.0642440390001866
+    }
+  ],
+  "comparisons": [
+    {
+      "stream": "latent.jsonl",
+      "bytes": 4371,
+      "sha256": "0bfe3874b756c6b14f32dc24375813aeb0f21a92e505778909ff31f0aefa57df",
+      "units": 6,
+      "cross_file_witness": true
+    },
+    {
+      "stream": "tsc/latent.jsonl",
+      "bytes": 5928,
+      "sha256": "17f3ebb6c95093d8a4d3785fb4edd223000895184583066c2ec14ed960450ccb",
+      "units": 8,
+      "cross_file_witness": true
+    },
+    {
+      "stream": "report.json",
+      "bytes": 13783,
+      "sha256": "74fed0b15ea00b2c9f60dc95dbe346bb6c652f5c0ea5b79b0c75e236e5fbd9ec"
+    },
+    {
+      "stream": "report.md",
+      "bytes": 4077,
+      "sha256": "c2915302c3b637f31ed4beae159f4968c0253cdc0eeab0d2357c31371456ed6d"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 """Run generated nil-hook copies, including a permissive copier mutant."""
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -41,14 +42,20 @@ class HookTests(unittest.TestCase):
                     (root / package / 'stub.go').write_text('package ' + package + '\ntype ' + typename + ' struct{}\n')
                 # The generator's IR cache policies name these types even in a hook-only fixture.
                 (root / 'ir').mkdir()
-                (root / 'ir/stub.go').write_text('package ir\ntype Program struct{}\n'
-                                              'type BoundaryStringTable struct{}\ntype GeneratedType struct{}\n')
+                (root / 'ir/stub.go').write_text('package ir\ntype Program struct{argumentFacts *int; methodTables *int}\n'
+                                              'type BoundaryStringTable struct{indexes map[string]int}\ntype GeneratedType struct{}\n')
+                plan = (ROOT / 'stage3/census/latent/privatefields/plan.go').read_text().replace('package privatefields', 'package lower', 1)
+                for old, new in {'Policy': 'latentPrivateIRPolicy', 'Nil': 'latentPrivateIRNil',
+                                 'Empty': 'latentPrivateIREmpty', 'Plan': 'latentPrivateIRPlan',
+                                 'planField': 'latentPrivateIRPlanField', 'New': 'latentNewPrivateIRPlan'}.items():
+                    plan = re.sub(r'\b' + old + r'\b', new, plan)
+                (root / 'private_plan.go').write_text(plan)
                 output.write_text(generated)
                 (root / 'shape.go').write_text('package lower\nimport("probe/ast";"probe/checker")\ntype lowering struct { ' + field + ' }\n')
                 (root / 'copy_test.go').write_text('''package lower
 import("testing";"probe/ast";"probe/checker")
-func TestNil(t *testing.T){result:=latentCopy_lowering(lowering{},map[any]any{});if result.impliedTargetQuery!=nil{t.Fatal("nil changed")}}
-func TestPopulated(t *testing.T){defer func(){if recover()==nil{t.Fatal("populated hook accepted")}}();latentCopy_lowering(lowering{impliedTargetQuery:func(*ast.Node)*checker.Type{return nil}},map[any]any{})}
+func TestLatentGeneratedNilHook20pb346(t *testing.T){t.Parallel();result:=latentCopy_lowering(lowering{},map[any]any{});if result.impliedTargetQuery!=nil{t.Fatal("nil changed")}}
+func TestLatentGeneratedPopulatedHook20pb346(t *testing.T){t.Parallel();defer func(){if recover()==nil{t.Fatal("populated hook accepted")}}();latentCopy_lowering(lowering{impliedTargetQuery:func(*ast.Node)*checker.Type{return nil}},map[any]any{})}
 ''')
                 code, log = self.command(['go', 'test', '-count=1', '.'], root, root / 'copy.log')
                 self.assertEqual(code, 0, log)

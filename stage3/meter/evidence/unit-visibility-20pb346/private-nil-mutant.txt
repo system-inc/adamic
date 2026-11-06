@@ -1,0 +1,5 @@
+--- FAIL: TestLatentPrivateIRPlanRejectsPopulatedNilCache20pb346 (0.00s)
+    plan_test.go:48: panic=<nil>, want "latent state copy: populated IR cache planFixture20pb346.cache is unsupported"
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/privatefields	0.002s
+FAIL

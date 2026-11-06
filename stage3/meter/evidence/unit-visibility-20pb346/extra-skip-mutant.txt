@@ -1,0 +1,20 @@
+--- FAIL: TestLatentPrivateIRPlanPreservesUnlistedFields20pb346 (0.00s)
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+    plan_test.go:30: field Exported: skip=true, want false
+    plan_test.go:33: zero plan skipped field 0
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/latent/privatefields	0.003s
+FAIL

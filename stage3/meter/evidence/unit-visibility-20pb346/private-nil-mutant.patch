@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/privatefields/plan.go
++++ b/stage3/census/latent/privatefields/plan.go
+@@ -36,7 +36,7 @@
+ 		return false
+ 	}
+ 	f := plan.fields[index]
+-	if f.policy == Nil && !value.Field(index).IsNil() {
++	if false && f.policy == Nil && !value.Field(index).IsNil() {
+ 		panic("latent state copy: populated IR cache " + f.name + " is unsupported")
+ 	}
+ 	return f.policy != 0

@@ -306,19 +306,36 @@ func generate(repository, lowerInput string) []byte {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
-	body.WriteString("// latentPrivateIRField is whether the full copy leaves an unexported IR field at its zero value.\n")
-	body.WriteString("func latentPrivateIRField(v reflect.Value, index int) bool {field:=v.Type().Field(index).Name;")
+	// Construct every field-index plan once at package initialization. The table and
+	// plans are immutable after publication, so concurrent copies need no locks.
+	body.WriteString("var latentPrivateIRFields = map[reflect.Type]latentPrivateIRPlan{\n")
+	owners := map[string][]string{}
+	var order []string
 	for _, key := range keys {
-		owner, field, _ := strings.Cut(key, ".")
-		test := "v.Type()==reflect.TypeFor[ir." + owner + "]()&&field==" + fmt.Sprintf("%q", field)
-		switch irPrivateFields[key] {
-		case privateNil:
-			fmt.Fprintf(&body, "if %s {if !v.Field(index).IsNil(){panic(%q)}; return true};", test, "latent state copy: populated IR cache "+key+" is unsupported")
-		case privateEmpty:
-			fmt.Fprintf(&body, "if %s {return true};", test)
+		if irPrivateFields[key] == privateShared {
+			continue
 		}
+		owner, _, _ := strings.Cut(key, ".")
+		if owners[owner] == nil {
+			order = append(order, owner)
+		}
+		owners[owner] = append(owners[owner], key)
 	}
-	body.WriteString("return false}\n")
+	for _, owner := range order {
+		fmt.Fprintf(&body, "reflect.TypeFor[ir.%s]():latentNewPrivateIRPlan(reflect.TypeFor[ir.%s](),map[string]latentPrivateIRPolicy{", owner, owner)
+		for _, key := range owners[owner] {
+			_, field, _ := strings.Cut(key, ".")
+			policy := "Empty"
+			if irPrivateFields[key] == privateNil {
+				policy = "Nil"
+			}
+			fmt.Fprintf(&body, "%q:latentPrivateIR%s,", field, policy)
+		}
+		body.WriteString("}),\n")
+	}
+	body.WriteString("}\n")
+	body.WriteString("// latentPrivateIRField applies the cached field-index answer for this struct.\n")
+	body.WriteString("func latentPrivateIRField(v reflect.Value, index int, fields latentPrivateIRPlan) bool {return fields.Skip(v,index)}\n")
 	body.WriteString("// latentSharedIRPointer is whether the full copy shares an IR pointer rather than copying what it points to.\n")
 	body.WriteString("func latentSharedIRPointer(t reflect.Type) bool {")
 	for _, key := range keys {

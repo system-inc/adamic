@@ -180,7 +180,7 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 		}
 	}
 	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
-	for _, want := range []string{"func latentPrivateIRField(", "func latentSharedIRPointer(", "reflect.TypeFor[*ir.GeneratedType]()", `field == "methodTables"`} {
+	for _, want := range []string{"func latentPrivateIRField(", "func latentSharedIRPointer(", "reflect.TypeFor[*ir.GeneratedType]()", `"methodTables": latentPrivateIREmpty`} {
 		if !strings.Contains(generated, want) {
 			t.Errorf("the generated copier lacks %s", want)
 		}

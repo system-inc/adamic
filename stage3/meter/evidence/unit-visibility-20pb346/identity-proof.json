@@ -1,0 +1,28 @@
+{
+  "full": {
+    "before": {
+      "completed": false,
+      "reason": "controlled retry stopped, or after side not started"
+    },
+    "after": {
+      "completed": false,
+      "reason": "controlled retry stopped, or after side not started"
+    }
+  },
+  "capped": {
+    "entry": {
+      "before_units": 1528,
+      "after_units": 1568,
+      "common_prefix_units": 1528,
+      "capped_latent_bytes": 6139,
+      "capped_sha256": "f3a6bf4ab9c9521da5c392aedc37d08b8fb052cd6560b95ce73f622eda6758a0"
+    },
+    "compiler": {
+      "before_units": 98,
+      "after_units": 98,
+      "common_prefix_units": 98,
+      "capped_latent_bytes": 165,
+      "capped_sha256": "86ce19e6dc41429e9a29fbd957b3098c7b19d69e4e6e5692c8dbf0aabd888432"
+    }
+  }
+}

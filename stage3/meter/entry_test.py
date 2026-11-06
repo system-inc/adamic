@@ -158,7 +158,10 @@ class EntryCensusTests(unittest.TestCase):
                                    check=True, stdout=log, stderr=log)
                 with (run / 'latent.log').open('w') as log:
                     subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
-                                   check=True, env=dict(os.environ, LATENT_ASSERT_NO_OUTPUT='1'), stdout=log, stderr=log)
+                                   check=True, env=dict(os.environ, LATENT_FULL='0', LATENT_ASSERT_NO_OUTPUT='1', LATENT_TIMES=str(run / 'latent-times.jsonl')), stdout=log, stderr=log)
+                times = run / 'latent-times.jsonl'
+                self.assertTrue(times.exists(), 'entry pass did not create its timing sidecar')
+                self.assertEqual(times.stat().st_size == 0, name == 'planted')
                 observations.append(entry_summary(tree, run))
             clean, planted = observations
             self.assertTrue(clean['checker_whole_program'])

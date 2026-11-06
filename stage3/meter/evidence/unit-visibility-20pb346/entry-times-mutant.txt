@@ -1,0 +1,23 @@
+F
+======================================================================
+FAIL: test_entry_times_sidecar_preserves_report_20pb346 (compiler_test.CompilerSelectionTests.test_entry_times_sidecar_preserves_report_20pb346)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 180, in test_entry_times_sidecar_preserves_report_20pb346
+    run, before = self.measure()
+                  ^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 163, in measure
+    self.command('bash', 'stage3/meter/twice-daily.sh')
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 155, in command
+    self.assertEqual(result.returncode, 0, output)
+AssertionError: 1 != 0 : From /tmp/adamic-gate/tmpfbhs6r2a/remote
+ * [new branch]      main       -> origin/main
+run: /tmp/adamic-gate/tmpfbhs6r2a/repository/stage3/meter/runs/20261105T181548Z.ZlPfw0
+gzip: /tmp/adamic-gate/tmpfbhs6r2a/repository/stage3/meter/runs/20261105T181548Z.ZlPfw0/main/tsc/latent-times.jsonl: No such file or directory
+gzip: /tmp/adamic-gate/tmpfbhs6r2a/repository/stage3/meter/runs/20261105T181548Z.ZlPfw0/area/tsc/latent-times.jsonl: No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.263s
+
+FAILED (failures=1)

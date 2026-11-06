@@ -1,0 +1,24 @@
+{
+  "side": "after",
+  "mode": "entry",
+  "wall_budget_seconds": 180,
+  "wall_seconds": 180.11562552800024,
+  "exit_code": -15,
+  "samples": [
+    {
+      "seconds": 60,
+      "times_bytes": 37664,
+      "latent_bytes": 6139
+    },
+    {
+      "seconds": 120,
+      "times_bytes": 52137,
+      "latent_bytes": 6139
+    },
+    {
+      "seconds": 180,
+      "times_bytes": 234984,
+      "latent_bytes": 6139
+    }
+  ]
+}

@@ -105,15 +105,31 @@ memory, and the starting load average. The ending load average is added after
 measurement, before reporting. `report.json` preserves this as `box` and Markdown
 prints the box below the run header.
 
-Each compiler-directory census also writes `latent-times.jsonl`, compressed after
-reporting. It contains one `{file, where, wall_seconds, cpu_seconds}` record per
-attempted unit, including recovered panics, in a stream separate from the
-byte-comparable findings. Deferred and checker-skipped units have no time record.
-Wall time uses Go's monotonic clock; CPU is the process's user plus system time
-from `getrusage(RUSAGE_SELF)`. The driver is sequential, so a unit includes its
-synchronous dependency work. Registration within an attempt is included; shared
-file setup and writing the time record are excluded. Both first-error and full
-mode record times. Only main runs; area copies its times as well as its findings.
+Each latent pass writes its own `latent-times.jsonl`, compressed after reporting:
+`main/tsc/latent-times.jsonl` for the entry pass and `main/latent-times.jsonl`
+for the compiler-directory pass. Each completed unit adds one record directly
+to the file, with no user-space buffer. Read that pass's times file for progress
+while it runs. A slow unit can leave the file unchanged until the unit finishes.
+The entry timing sidecar is ignored by `report.py`, preserving today's report;
+the compiler timing sidecar still supplies its existing timing tables.
+
+Each timing record contains `{file, where, wall_seconds, cpu_seconds}` for an
+attempted unit, including recovered panics. Deferred and checker-skipped units
+have no time record. Wall time uses Go's monotonic clock; CPU is the process's
+user plus system time from `getrusage(RUSAGE_SELF)`. The driver is sequential,
+so each unit includes synchronous dependency work and registration within its
+attempt. Shared file setup and writing the timing record are excluded. Both
+first-error and full mode record times. Only main runs; area copies its times
+as well as its findings.
+
+`latent.jsonl` keeps its initial metadata line during a pass and writes its file
+records only when the pass returns. This buffering preserves final record bytes:
+a concrete generic call in a later file can set an earlier deferred unit's
+`instantiated` field. Preserving traversal order alone cannot make immediate
+file records identical. See `stage3/census/latent/audit_deferred.py` for the
+cross-file witness fixture. In speculative mode, boundary inventory and depth
+also depend on later files. Lack of growth in `latent.jsonl` does not identify
+a stuck unit; inspect the matching timing sidecar.
 
 Each tree's `latent_time` JSON block contains wall/CPU totals, `files` summed and
 sorted by descending wall time, and `slowest_units` (at most ten). Source locations
