@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	goruntime "runtime"
 	"slices"
 	"sort"
 	"strings"
@@ -439,7 +438,9 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	}
 	// v1: keyed by main.c preprocessed, every file it read by its bytes, in the dependency list's order, and the compile's
 	// arguments, every per-build place a placeholder (#2r9xhqs).
-	parts := []string{"adamic-objects-v1", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// The platform is the build's (buildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
+	goos, goarch := buildPlatform()
+	parts := []string{"adamic-objects-v1", "os " + goos, "arch " + goarch}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
 	for _, argument := range compile.Args[1:] {

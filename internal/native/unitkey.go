@@ -14,7 +14,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	goruntime "runtime"
 	"slices"
 	"sort"
 	"strings"
@@ -506,7 +505,9 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 	}
 	// v4: keyed before clang runs, by the unit's bytes and its headers' resolution, never by its preprocessed bytes.
 	// v5: objects no longer carry where the compiler is installed or the sysroot sits (clangIn, #8wgk65j).
-	parts := []string{"adamic-units-v5", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// The platform is the build's (buildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
+	goos, goarch := buildPlatform()
+	parts := []string{"adamic-units-v5", "os " + goos, "arch " + goarch}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
 	for _, flag := range flags {

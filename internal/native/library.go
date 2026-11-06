@@ -9,7 +9,6 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
-	goruntime "runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -47,7 +46,8 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 // them. Portable are the same parts as every machine spells them, for a key that travels: Compiler and Archiver are
 // left for the caller to key by what they report, and every path inside the compiler's installation is named from
 // it, so a runner reaching clang through $ADAMIC_TOOLS/bin keys as Workshop does through ~/.adamic-tools/bin (#94aa17s's
-// class: typeaware's native keyed apart on the two). Features and Options are what asked for it.
+// class: typeaware's native keyed apart on the two). Features and Options are what asked for it, Options with its
+// target resolved (ResolveTarget), so a request never reads "" for the triple its flags name.
 type RuntimeRequest struct {
 	Parts    []string
 	Portable []string
@@ -322,7 +322,11 @@ func runtimePlatformParts() []string {
 	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
 	// v7: objects no longer carry where the compiler is installed or the sysroot sits (clangIn), so a v6 archive whose
 	// debug info named either is never reused (#8wgk65j).
-	return []string{"adamic-runtime-v7", "ir-tags " + ir.TypeTagFingerprint(), "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// The platform is the build's (buildPlatform), not this process's, so an arm64 archive cross-built on an amd64 box is
+	// never keyed as amd64; its flags name its triple too (--target), which moves every native archive's key without a
+	// new version, and leaves a wasm32 archive's where it was (#5xsd2ha).
+	goos, goarch := buildPlatform()
+	return []string{"adamic-runtime-v7", "ir-tags " + ir.TypeTagFingerprint(), "os " + goos, "arch " + goarch}
 }
 
 // runtimeSourceParts are what a runtime key reads of what is compiled: the system headers the compile reads, every
@@ -351,6 +355,10 @@ func partsKey(parts []string) string {
 
 // runtimeRequest is the request for the archive these inputs compile, its parts read as the cache's key reads them.
 func runtimeRequest(files []runtimeFile, flags []string, compiler string, version string, options Options) (RuntimeRequest, error) {
+	options, err := ResolveTarget(options)
+	if err != nil {
+		return RuntimeRequest{}, err
+	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
 		return RuntimeRequest{}, err
@@ -720,9 +728,10 @@ func dependencies(rules []byte) []string {
 }
 
 // RuntimeLinkFlags retains every translation unit, as Build did when linking the object files
-// directly. In particular a count-reporting destructor must run even for an empty main.
+// directly. In particular a count-reporting destructor must run even for an empty main. Which linker's spelling is
+// the build's platform's (darwinBuild).
 func RuntimeLinkFlags(library string) []string {
-	if goruntime.GOOS == "darwin" {
+	if darwinBuild() {
 		return []string{"-Xlinker", "-force_load", "-Xlinker", library}
 	}
 	return []string{"-Xlinker", "--whole-archive", library, "-Xlinker", "--no-whole-archive"}
