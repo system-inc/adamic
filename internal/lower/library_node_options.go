@@ -43,7 +43,7 @@ func (l *lowering) nodeHostConsumesOptionsPosition(node *ast.Node, index int) bo
 	}
 	optionIndex := 1
 	switch l.nodeLibraryMember(node) {
-	case "node:fs.watchFile", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.readFileSync", "node:fs.rmSync", "node:fs.mkdtempSync":
+	case "node:fs.watch", "node:fs.watchFile", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.readFileSync", "node:fs.rmSync", "node:fs.mkdtempSync":
 	case "node:fs.writeFileSync":
 		optionIndex = 2
 	default:
@@ -86,6 +86,12 @@ func (l *lowering) nodeHostExactOptions(argument, call *ast.Node) bool {
 	argument = unwrap(argument)
 	if argument.Kind == ast.KindObjectLiteralExpression {
 		return l.exactObject(argument, 0)
+	}
+	// fs.watch's options are tsc's conditional of two literals (sys.ts:1779), each consumed as one is.
+	if argument.Kind == ast.KindConditionalExpression && l.nodeLibraryMember(call) == nodeWatchName {
+		conditional := argument.AsConditionalExpression()
+		whenTrue, whenNot := unwrap(conditional.WhenTrue), unwrap(conditional.WhenFalse)
+		return whenTrue.Kind == ast.KindObjectLiteralExpression && whenNot.Kind == ast.KindObjectLiteralExpression && l.exactObject(whenTrue, 0) && l.exactObject(whenNot, 0)
 	}
 	if !ast.IsIdentifier(argument) {
 		return false

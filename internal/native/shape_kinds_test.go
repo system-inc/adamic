@@ -52,7 +52,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"},
 	{"Record", "runtime/record.c"}, {"RegExp", "runtime/regexp.c"},
 	{"TSGo", "runtime/tsgo.c"}, {"NodeProcess", "runtime/node_process.c"}, {"ProcessStatus", "runtime/process.c"},
-	{"NodeFS", "runtime/node_fs_file.c"}, {"NodeCrypto", "runtime/node_crypto.c"},
+	{"NodeFS", "runtime/node_fs_file.c"}, {"NodeFSWatch", "runtime/node_fs_watch_impl.h"}, {"NodeCrypto", "runtime/node_crypto.c"},
 	{"Reflection", "runtime/library_object.c"}, {"Iterators", "runtime/map_set.c"},
 	{"CaptureGroups", ""}, {"Emitted", ""},
 	{"Graph", "graph_regions_test.go"}, {"GraphAdoption", "graph_concurrency_test.go"},
@@ -333,6 +333,8 @@ func TestShapeKindsTSGo(t *testing.T) { t.Parallel(); checkShapeProducer(t, "TSG
 func TestShapeKindsNodeProcess(t *testing.T) { t.Parallel(); checkShapeProducer(t, "NodeProcess") }
 
 func TestShapeKindsNodeFS(t *testing.T) { t.Parallel(); checkShapeProducer(t, "NodeFS") }
+
+func TestShapeKindsNodeFSWatch(t *testing.T) { t.Parallel(); checkShapeProducer(t, "NodeFSWatch") }
 
 func TestShapeKindsNodeCrypto(t *testing.T) { t.Parallel(); checkShapeProducer(t, "NodeCrypto") }
 
