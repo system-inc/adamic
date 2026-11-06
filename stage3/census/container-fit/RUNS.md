@@ -27,3 +27,5 @@ API orchestration may invoke the independent per-piece calls in order; it does n
 ## Supplemental full-file check
 
 After the primary partition is complete, r00 measures the whole utilitiesPublic file for head and log only. It is a duplicate validation sample, excluded from primary walk totals and LATENT_TIMES comparisons. Observed public unit sums plus setup predict about 27 minutes. Each invocation uses a 1,740 second child ceiling, at most 10 seconds for termination, and a 15 second publication timeout. An outer `timeout --kill-after=5s 1780` bounds every box process below 30 minutes, including the supervisor. Stop and retry publication separately if it fails. Never include r00 in the primary partition index.
+
+Supplemental r00 outcome: head intentionally stopped at 1740.113 seconds with 193 completed timer records (exact count is in whole-public-status.json). Whole-file log run was not started. The completed primary partition and seven exact public chunk comparisons are unchanged.

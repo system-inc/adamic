@@ -1,0 +1,17 @@
+{
+  "status": "stopped_at_budget",
+  "head_metrics": {
+    "returncode": 2,
+    "wall_seconds": 1740.113144633,
+    "utc_end": "2026-11-06T10:20:56.458811+00:00",
+    "timed_out": true,
+    "times.jsonl_sha256": "d9f2ddc32838b51095fc1b800eaa2ddd8f3be5f44fbd53cebba5f466d9cc1f26",
+    "records.jsonl_sha256": "2a1ff7f7ced2cbbf79399f1c2ca2f1bd54845c791873b3fa8a8c2a641eb126b8",
+    "process.log_sha256": "31a3b57a28f96a3ce7f9ce8f3615ab569e34c808c8ea57590641aee6733c56c1"
+  },
+  "completed_timing_records": 193,
+  "logging_whole_file_run": "not started after head budget stop",
+  "whole_file_byte_comparison": "incomplete",
+  "chunk_comparisons": "all seven complete and byte-identical",
+  "excluded_from_primary_totals": true
+}

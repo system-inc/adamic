@@ -1,4 +1,9 @@
-base exit 0 roots 79 wall_seconds 780.291356628
-head exit 0 roots 79 wall_seconds 726.3627966020001
-Source hashes, raw archive hashes, root coverage, time bounds and report-only branch scope verified.
-Unavailable latent outcomes are null, not zero or empty result lists.
+Complete primary latent census: 26 disjoint pieces, 79 files, 4557 units exactly once, 4056 common timed units.
+Source hashes, raw record hashes, selected unit identities and exact timer coverage validated by latent_report.py.
+All seven public head/log chunk record streams byte-identical.
+Zero regressions, zero panics, zero cap rows; 36 changed first stops in already-blocked units.
+Full latent Go subtree passes; broad fixed-array mutant fails the named struct-array refusal case.
+Base/head/log latent overlays compile; selector admission audit passes for all three.
+Ordinary 79-root results retained without changes to compiler behavior.
+All report commits are scoped to stage3/census/container-fit/.
+Supplemental whole-public status is recorded separately; duplicate work excluded from primary totals.

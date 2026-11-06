@@ -141,10 +141,10 @@ if proof.exists():
  whole=json.loads(proof.read_text());assert whole['equal']
  text=text.replace('The single whole-file byte check could not be completed within the piece budget; every public unit is covered by the replacement chunk checks.', 'A separate supplemental whole-file head/log comparison also completed below the 30 minute process limit with byte-identical records. Its raw hashes, timings and coverage are in evidence/whole-public-byte-identity.json. Supplemental duplicate work is excluded from the primary timing sums and pair distributions. The original p00 sizing attempt remains excluded.')
 else:
- text=text.replace('The single whole-file byte check could not be completed within the piece budget; every public unit is covered by the replacement chunk checks.', 'Every public unit is covered by the replacement chunk checks. See evidence/whole-public-status.json for the separately bounded supplemental whole-file attempt, if present.')
+ text=text.replace('The single whole-file byte check could not be completed within the piece budget; every public unit is covered by the replacement chunk checks.', 'Every public unit is covered by the replacement chunk checks. The supplemental whole-file head attempt r00 also hit its hard 29 minute ceiling (1740.113 seconds); its matching logging run was not started. Whole-file byte comparison is incomplete. This intentional budget stop is archived and excluded from compiler panics, paired findings and timing sums. See evidence/whole-public-status.json.')
 (O/'REPORT.md').write_text(text)
 report=O/'latent-pair-report.md';report.write_text(report.read_text().replace(chr(92)*2+'|',chr(92)+'|'))
 dump(O/'latent-outcome.json',dict(status='complete',statecopy='62ddd47969e5168e5a0e74a23498b85d144b2361',utilities_sites=len(public_rows),binder_roots=len(binder),regressions=len(view['regressions']),changed_blocked=len(blocked),cap_rows=len(caps),pair_counts=pairs,time_sums=time_summary['sums'],common_timed_units=len(common)))
 print(json.dumps({k:v for k,v in json.loads((O/'latent-outcome.json').read_text()).items() if k!='pair_counts'},indent=2))
 
-(O/'outcome.json').write_bytes((O/'latent-outcome.json').read_bytes())
+v=json.loads((O/'latent-outcome.json').read_text());v['whole_file_byte_comparison']='incomplete: head budget stop';v['chunk_byte_comparisons']='all seven identical';dump(O/'latent-outcome.json',v);dump(O/'outcome.json',v)
