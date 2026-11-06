@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	goruntime "runtime"
 	"slices"
 	"strings"
 	"time"
@@ -121,7 +120,7 @@ func buildTSGo(source, output, archive string, options Options, oneCall bool) er
 	// main.c is compiled first and linked as main.o, for linkOne's reasons: on macOS so the debug map names it main.o
 	// alone, and elsewhere so the compile is a step of its own, the binary the one call's bytes.
 	program := "main.c"
-	if goruntime.GOOS == "darwin" || !oneCall {
+	if darwinBuild() || !oneCall {
 		compile := clangIn(directory, compilerName(options), append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
