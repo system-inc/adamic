@@ -30,6 +30,29 @@ The lower rows are internal/lower/iterable_hand_next_test.go's; run by s2c2a-pro
 | next(x) let through | lower/expression.go, `callClosure`: `if hand && len(...Arguments.Nodes) != 0 {` made `if false {` | the same test's next(x) row: it stops otherwise, or compiles |
 | A for-of beside a hand next let through | lower/iterable_views.go, `checkIterableViews`: the mixed test made `&& false` | TestHandDrivenNextStopsOnEveryOtherRoad, the mixed rows in .a and .ts: they compile |
 | No hand next let past the guard | lower/object.go, `property`: `node != l.handNext` made `true` | the same fixture: every next() is refused, as on main |
-| A generator into a hand parameter not stopped there | lower/iterable_views.go, `generatorParameter`: the hand loop's test made `&& false` | TestHandDrivenNextStopsOnEveryOtherRoad, the generator row: it stops as one use that isn't a for-of instead |
 | IteratorYieldResult's fields admitted in iteratorResultField (dropped from the head) | an earlier draft let them past prototype.go's owner test | it survived on Golem (job 01M6Q811): hand_next.a's done and value reads lower on main by a road that doesn't reach that guard, so the head doesn't change it. Which road isn't traced yet |
 | The narrowing check dropped (Adamic's) | none: the narrowing isn't a check of this slice's | an unnarrowed or done-arm `status.value` is `T \| any`, which is any, and the any rules stop it as they stop any value; the two value rows pin that it stops |
+
+## A hand-driven next() through a view a generator feeds (#qk8rztp S2c-2b)
+
+Run by s2c2b's h3-proof.sh. The lower rows are internal/lower/iterable_hand_next_test.go's, and the
+oracle's are this directory's hand_next_generator.a, hand_next_generator_throw.a, hand_next_mixed.a
+and hand_next_maybe_string.a. The closed defaults' rows are in internal/ir, internal/worker and
+internal/native.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| M1: the arm retains the yielded value | native/runtime/generator.c, `generator_result`: `return adamic_iterator_result(kind, present, yielded, tag);` made `if (kind == adamic_field_reference && present) { adamic_retain(yielded.reference); } return ...` | hand_next_generator.a: every diagnostic outlives its result, and the counts leak |
+| M3: the result built before the throw test | `adamic_iterator_next`: `if (adamic_thrown != NULL) {` made `if (adamic_thrown != NULL && generator_result(generator, kind, element_type, yielded) != NULL) {` | hand_next_generator_throw.a: the throw's step builds a done result nothing lets go of |
+| The exemption widened to any call | lower/iterable_views.go, `generatorParameter`: `hand && isNext {` made `hand && (isNext \|\| fmt.Sprintf("%T", node) == "ir.Call") {` | TestHandDrivenNextOverAGeneratorStops, the forward row: the count passes it, and checkGeneratorRoads' hand road stops it as a compiler bug instead of NotYet |
+| The exemption dropped | the same line made `false && hand && isNext {` | TestHandDrivenNextOverAGeneratorLowers: every row stops, read as many times as it has nexts |
+| MaybeBoolean admitted | `handNextHolds`: `\|\| of == ir.MaybeBoolean` added to its return | TestHandNextHoldsOnlyNumbersBooleansAndReferences, the MaybeBoolean row. No program reaches it, since generatorSignature stops a `boolean \| undefined` yield first |
+| A Defined over any operand taken | `handNextReceiver`: `receiver = defined.Value` made `return property.Object, defined.Value != nil` | TestHandNextReceiverIsTheParametersOwnRead, the holder.it row. A source `holder.it.next()` is no hand next, so it can't reach the matcher |
+| The rewrite skipped | `handView`: the `return ir.IteratorNext{...}` line made `_ = iterator; return node` | hand_next_generator.a: S2c-2a's CallClosure steps a generator frame by a next field it hasn't got |
+| IteratorNext never throws | ir/generator.go, `IteratorNextMayThrow`: `return p.Functions[next.Function].ResumeMayThrow` made `return false && ...` | hand_next_generator_throw.a: nothing tests for the throw, and the `NULL` result is read |
+| The inert default opened | ir/inert.go, `Inert`: its last line made `return true \|\| ...` | TestInertFailsClosedOnAMadeUpExpression |
+| Purity's default opened | worker/purity.go: the default arm's test made `false && isExpression && ...` | TestCheckPureRefusesAnOperationNoReviewNames |
+| Purity's step not followed | the GeneratorNext arm's `if err := inspect(node.Function); err != nil {` made `if err := error(nil); err != nil {` | TestCheckPureInspectsAGeneratorStepsBody |
+| Reuse's default opened | native/reuse.go, `reachesGlobal`: `return !ir.Inert(expression)` made `return false && ...` | TestReuseTakesAnOperationNoReviewNamesAsTouchingTheGlobal |
+| Reuse's step not followed | the GeneratorNext arm's `return touches(...)` made `return false` | TestReuseFollowsAGeneratorStepIntoItsBody |
+| A switch's IteratorNext case dropped | flow/infer.go, `callsBack`: `case ir.GeneratorNext, ir.IteratorNext:` made `case ir.GeneratorNext:` | TestEverySwitchOverGeneratorNextNamesIteratorNext (internal/ir), naming infer.go's line |
