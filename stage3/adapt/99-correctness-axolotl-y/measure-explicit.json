@@ -1,0 +1,160 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/workspace/y-before",
+  "combineTypeParameter": "T",
+  "calls": [
+    {
+      "line": 966,
+      "column": 9,
+      "text": "isArray(xs)",
+      "arguments": [
+        {
+          "text": "xs",
+          "type": "T | T[]",
+          "sameAsCombineT": false
+        }
+      ],
+      "signature": "(value: unknown): value is readonly unknown[]",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "unknown"
+        }
+      ],
+      "returnType": "boolean",
+      "arrayElementIsCombineT": false
+    },
+    {
+      "line": 966,
+      "column": 29,
+      "text": "isArray(ys)",
+      "arguments": [
+        {
+          "text": "ys",
+          "type": "T | T[]",
+          "sameAsCombineT": false
+        }
+      ],
+      "signature": "(value: unknown): value is readonly unknown[]",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "unknown"
+        }
+      ],
+      "returnType": "boolean",
+      "arrayElementIsCombineT": false
+    },
+    {
+      "line": 966,
+      "column": 43,
+      "text": "concatenate(xs, ys)",
+      "arguments": [
+        {
+          "text": "xs",
+          "type": "T[]",
+          "sameAsCombineT": false
+        },
+        {
+          "text": "ys",
+          "type": "T[]",
+          "sameAsCombineT": false
+        }
+      ],
+      "signature": "(array1: T[], array2: T[]): T[]",
+      "parameters": [
+        {
+          "name": "array1",
+          "type": "T[]"
+        },
+        {
+          "name": "array2",
+          "type": "T[]"
+        }
+      ],
+      "returnType": "T[]",
+      "arrayElementIsCombineT": true
+    },
+    {
+      "line": 966,
+      "column": 65,
+      "text": "append<T>(xs, ys)",
+      "arguments": [
+        {
+          "text": "xs",
+          "type": "T[]",
+          "sameAsCombineT": false
+        },
+        {
+          "text": "ys",
+          "type": "T",
+          "sameAsCombineT": true
+        }
+      ],
+      "signature": "(to: T[], value: T | undefined): T[]",
+      "parameters": [
+        {
+          "name": "to",
+          "type": "T[]"
+        },
+        {
+          "name": "value",
+          "type": "T | undefined"
+        }
+      ],
+      "returnType": "T[]",
+      "arrayElementIsCombineT": true
+    },
+    {
+      "line": 967,
+      "column": 9,
+      "text": "isArray(ys)",
+      "arguments": [
+        {
+          "text": "ys",
+          "type": "T | T[]",
+          "sameAsCombineT": false
+        }
+      ],
+      "signature": "(value: unknown): value is readonly unknown[]",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "unknown"
+        }
+      ],
+      "returnType": "boolean",
+      "arrayElementIsCombineT": false
+    },
+    {
+      "line": 967,
+      "column": 29,
+      "text": "append<T>(ys, xs)",
+      "arguments": [
+        {
+          "text": "ys",
+          "type": "T[]",
+          "sameAsCombineT": false
+        },
+        {
+          "text": "xs",
+          "type": "T",
+          "sameAsCombineT": true
+        }
+      ],
+      "signature": "(to: T[], value: T | undefined): T[]",
+      "parameters": [
+        {
+          "name": "to",
+          "type": "T[]"
+        },
+        {
+          "name": "value",
+          "type": "T | undefined"
+        }
+      ],
+      "returnType": "T[]",
+      "arrayElementIsCombineT": true
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "sourceFiles": 746,
+  "mutantEqualsBaseline": true,
+  "kind": "Refused",
+  "where": "core.ts:966:72",
+  "reason": "a value of type T[] seen as {}[], which can write {} where T is read",
+  "matchesReportedFirstStop": true,
+  "patchCheckExit": 0,
+  "patchPreservesCRLF": true
+}
