@@ -1,32 +1,106 @@
-# 99-correctness-axolotl-x: blocked evidence
+# 99x: bind host methods at the read
 
-Task kpp0f8s. Base origin/main: 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
+Task kpp0f8s. javascriptChanging true.
+Base main: 3e395f9e5a7038d859ec8930be72cde68d8be3ff.
+Pinned upstream: TypeScript 6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
 
-Status: not implemented. javascriptChanging true is the requested classification
-of the proposed adaptation, not a claim that this branch changes JavaScript.
+Adamic's November 6, 2026 ruling authorizes stage 3 to replace
+`maybeBind(X, X.m)` with `X.m?.bind(X)` where X is one identifier.
+Apple's apple/bind-1 head supplies the separate bound-method lowering work.
+This branch changes no compiler implementation or policy.
 
-Adamic's ruling, supplied in the task on November 6, 2026, authorizes a stage 3
-rewrite of maybeBind(X, X.m) to X.m?.bind(X) for a single identifier X.
-Both forms read X, then X.m, then X again with nothing between. A function
-returns bound to X; undefined returns undefined; any other truthy value throws
-TypeError at .bind in both. core.ts's maybeBind body must remain unchanged.
+The equivalence argument supplied in the ruling is that both forms read X,
+then X.m, then X again with nothing between. If the slot holds a function,
+both return it bound to X; undefined returns undefined; anything else truthy
+throws TypeError at .bind in both. The core.ts maybeBind body is unchanged.
 
-Requested inventory: 46 sites across builder.ts (3), checker.ts (2),
-program.ts (8), tsbuildPublic.ts (8), watch.ts (16), watchPublic.ts (9).
-These are task-supplied counts, not a measured AST inventory. All 46 requested
-sites remain as written because implementation never began. Rewritten: 0.
-No import specifier was removed. No casts were added.
+## Adapter
 
-The user requires reading both reference adapters in full first. The k adapter
-was read in full. The w adapter does not exist at the fetched main tip or in
-the three related adaptation heads inspected. See prerequisites.log.
+Run `NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-x/adapt.cjs TREE`.
+The API must be stock TypeScript 6.0.3. The scanner resolves the callee's symbol
+to core.ts's exported declaration, requires exactly two arguments, requires
+an Identifier receiver and a non-optional property access, and compares the
+receiver identifiers' symbols. binder.ts's two calls to its own one-argument
+helper are excluded by symbol identity and remain unchanged.
 
-Check 1's baseline full apply with --build-product exited 1 before cloning or
-running any adaptation: ADAMIC_TYPESCRIPT_SOURCE is unset. apply.py requires
-the gate inputs' pinned TypeScript v6.0.3 checkout at
-050880ce59e30b356b686bd3144efe24f875ebc8. See check1-before.log.
-The task explicitly says to stop and push on a check 1 failure.
+owners.json pins exact before/after text and SHA-256 for all 15 innermost named
+owners. Nested getEmitHost and its createProgram parent are both pinned.
+No whole-file hash gates adaptation. Missing, duplicate, moved, changed or
+half-adapted owners and mixed file/tree/import states fail before any write.
+Every source file is reread before writes. CRLF is preserved. An adapted replay
+returns zero files and preserves bytes and mtimes. generate.cjs is an explicit
+pin-generation tool, never called by apply.
 
-This directory contains evidence only. It has no adapt.cjs and is not a
-runnable adaptation. Do not treat this branch as ready to merge or apply.
-See PROOF.md for the exact stopping point and unrun checks.
+The frozen inventory has 46 rewrites, zero refused core calls and zero sites
+left as written. No cast is added. All six maybeBind import specifiers become
+unused and are removed: builder.ts, checker.ts, program.ts, tsbuildPublic.ts,
+watch.ts and watchPublic.ts. binder.ts's local helper is not a refused core call.
+
+Python's actual directory sort places 99x after 99u and before
+99-wasm-crypto-import. The fixed requested directory name cannot sort after
+99-wasm-crypto-import; no other adaptation directory has been changed.
+
+## Site inventory
+
+Coordinates below are from the pinned pristine source. inventory.json also
+records the fully adapted main coordinates used to generate the owner pins.
+
+| File:line:column | Owner | Original call |
+| --- | --- | --- |
+| builder.ts:1727:30 | createBuilderProgram.emitBuildInfo | `maybeBind(host, host.writeFile)` |
+| builder.ts:1815:34 | createBuilderProgram.emitNextAffectedFileOrDtsErrors | `maybeBind(host, host.writeFile)` |
+| builder.ts:1914:78 | createBuilderProgram.getWriteFileCallback | `maybeBind(host, host.writeFile)` |
+| checker.ts:54264:26 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getSymlinkCache)` |
+| checker.ts:54275:40 | createBasicNodeBuilderModuleSpecifierResolutionHost | `maybeBind(host, host.getGlobalTypingsCacheLocation)` |
+| program.ts:494:21 | createCompilerHostWorker | `maybeBind(system, system.createHash)` |
+| program.ts:1956:40 | createProgram | `maybeBind(host, host.getGlobalTypingsCacheLocation)` |
+| program.ts:2626:23 | createProgram.getEmitHost | `maybeBind(host, host.realpath)` |
+| program.ts:2632:25 | createProgram.getEmitHost | `maybeBind(host, host.createHash)` |
+| program.ts:2634:20 | createProgram.getEmitHost | `maybeBind(host, host.trace)` |
+| program.ts:5114:26 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` |
+| program.ts:5115:25 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` |
+| program.ts:5116:19 | parseConfigHostFromCompilerHostLike | `maybeBind(directoryStructureHost, directoryStructureHost.realpath)` |
+| tsbuildPublic.ts:302:16 | createSolutionBuilderHostBase | `maybeBind(system, system.now)` |
+| tsbuildPublic.ts:438:46 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNameLiterals)` |
+| tsbuildPublic.ts:439:60 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` |
+| tsbuildPublic.ts:440:35 | createSolutionBuilderState | `maybeBind(host, host.resolveLibrary)` |
+| tsbuildPublic.ts:441:39 | createSolutionBuilderState | `maybeBind(host, host.resolveModuleNames)` |
+| tsbuildPublic.ts:442:51 | createSolutionBuilderState | `maybeBind(host, host.resolveTypeReferenceDirectives)` |
+| tsbuildPublic.ts:443:45 | createSolutionBuilderState | `maybeBind(host, host.getModuleResolutionCache)` |
+| tsbuildPublic.ts:500:16 | createSolutionBuilderState | `maybeBind(host, host.trace)` |
+| watch.ts:677:20 | createWatchHost | `maybeBind(system, system.watchFile)` |
+| watch.ts:678:25 | createWatchHost | `maybeBind(system, system.watchDirectory)` |
+| watch.ts:679:21 | createWatchHost | `maybeBind(system, system.setTimeout)` |
+| watch.ts:680:23 | createWatchHost | `maybeBind(system, system.clearTimeout)` |
+| watch.ts:761:32 | createCompilerHostFromProgramHost | `maybeBind(host, host.getDefaultLibLocation)` |
+| watch.ts:774:16 | createCompilerHostFromProgramHost | `maybeBind(host, host.trace)` |
+| watch.ts:775:26 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)` |
+| watch.ts:776:25 | createCompilerHostFromProgramHost | `maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)` |
+| watch.ts:777:19 | createCompilerHostFromProgramHost | `maybeBind(host, host.realpath)` |
+| watch.ts:778:33 | createCompilerHostFromProgramHost | `maybeBind(host, host.getEnvironmentVariable)` |
+| watch.ts:779:21 | createCompilerHostFromProgramHost | `maybeBind(host, host.createHash)` |
+| watch.ts:780:24 | createCompilerHostFromProgramHost | `maybeBind(host, host.readDirectory)` |
+| watch.ts:856:19 | createProgramHost | `maybeBind(system, system.realpath)` |
+| watch.ts:857:33 | createProgramHost | `maybeBind(system, system.getEnvironmentVariable)` |
+| watch.ts:861:21 | createProgramHost | `maybeBind(system, system.createHash)` |
+| watch.ts:864:14 | createProgramHost | `maybeBind(system, system.now)` |
+| watchPublic.ts:125:23 | createIncrementalCompilerHost | `maybeBind(system, system.createHash)` |
+| watchPublic.ts:506:56 | createWatchProgram | `maybeBind(host, host.useSourceOfProjectReferenceRedirect)` |
+| watchPublic.ts:529:46 | createWatchProgram | `maybeBind(host, host.resolveModuleNameLiterals)` |
+| watchPublic.ts:530:39 | createWatchProgram | `maybeBind(host, host.resolveModuleNames)` |
+| watchPublic.ts:534:60 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectiveReferences)` |
+| watchPublic.ts:535:51 | createWatchProgram | `maybeBind(host, host.resolveTypeReferenceDirectives)` |
+| watchPublic.ts:543:9 | createWatchProgram | `maybeBind(host, host.getModuleResolutionCache)` |
+| watchPublic.ts:549:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedResolutions)` |
+| watchPublic.ts:552:9 | createWatchProgram | `maybeBind(host, host.hasInvalidatedLibResolutions)` |
+
+## Evidence
+
+The earlier missing-source stop is retained in check1-before.log and
+prerequisites.log as historical evidence. The user supplied the reference
+location and setup authorization on continuation. 99w's adapt.cjs, README.md
+and PROOF.md were read from 06dad75d; 99k's main adapter and documentation were
+also read. Setup completed successfully, the pinned source was cloned, and
+the full baseline apply passed. New logs supersede the historical stop.
+PROOF.md records the current checks. Tests write logs outside this hashed
+directory while running; completed evidence is copied here before publication.
