@@ -23,9 +23,14 @@ def git(*args):
 for index in range(0, len(roots), 20):
     group = index // 20 + 1
     raw = out / f'group-{group}.jsonl'
-    rows = []
-    with raw.open('wb') as stream, (out / f'group-{group}.log').open('wb') as log:
-        for root in roots[index:index+20]:
+    rows_path = out / f'group-{group}-rows.json'
+    rows = json.loads(rows_path.read_text()) if rows_path.exists() else []
+    assert [r['roots'][0] for r in rows] == [str(p) for p in roots[index:index+len(rows)]]
+    if len(rows) == len(roots[index:index+20]):
+        continue
+    assert not raw.exists() or len(raw.read_bytes().splitlines()) == 2*len(rows)
+    with raw.open('ab') as stream, (out / f'group-{group}.log').open('ab') as log:
+        for root in roots[index+len(rows):index+20]:
             temporary = Path('/workspace/scratch/next-stops-37f8314b/root.jsonl')
             if temporary.exists():
                 temporary.unlink()
