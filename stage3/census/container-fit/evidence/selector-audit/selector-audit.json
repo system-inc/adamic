@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "sources": {
+    "a.a": "import { identity } from \"./b.a\";\nexport function caller(): number { return identity(1); }\nexport function pieceProbe(): number { return 1; }\n",
+    "b.a": "export function identity<T>(value: T): T { return value; }\nfunction another(): number { return 1; }\nconst sentinel: number = 1;\n"
+  },
+  "mode_off_identical_both_compilers": true,
+  "disjoint_file_and_unit_selectors": true,
+  "first_stops_match": true,
+  "actual_witness_scope_difference": [
+    {
+      "unit": "b.a:1:1",
+      "name": "identity",
+      "whole": true,
+      "piece": false
+    }
+  ],
+  "controls_rejected": [
+    "dropped piece",
+    "duplicate piece",
+    "moved finding with unchanged global site identity"
+  ]
+}

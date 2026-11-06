@@ -1,0 +1,318 @@
+{
+  "schema": 1,
+  "id": "p19",
+  "files": [
+    {
+      "file": "src/compiler/builderState.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "all_units": true,
+      "units": []
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "all_units": true,
+      "units": []
+    }
+  ],
+  "expected_units": [
+    "src/compiler/builderState.ts:1:1",
+    "src/compiler/builderState.ts:39:1",
+    "src/compiler/builderState.ts:56:1",
+    "src/compiler/builderState.ts:62:1",
+    "src/compiler/builderState.ts:100:1",
+    "src/compiler/builderStatePublic.ts:1:1",
+    "src/compiler/builderStatePublic.ts:6:1",
+    "src/compiler/builderStatePublic.ts:12:1",
+    "src/compiler/corePublic.ts:3:1",
+    "src/compiler/corePublic.ts:6:1",
+    "src/compiler/corePublic.ts:13:1",
+    "src/compiler/corePublic.ts:17:1",
+    "src/compiler/corePublic.ts:21:1",
+    "src/compiler/corePublic.ts:30:1",
+    "src/compiler/corePublic.ts:37:1",
+    "src/compiler/corePublic.ts:40:1",
+    "src/compiler/corePublic.ts:43:1",
+    "src/compiler/debug.ts:1:1",
+    "src/compiler/debug.ts:2:1",
+    "src/compiler/debug.ts:97:1",
+    "src/compiler/debug.ts:106:1",
+    "src/compiler/debug.ts:111:1",
+    "src/compiler/diagnosticInformationMap.generated.ts:4:1",
+    "src/compiler/diagnosticInformationMap.generated.ts:6:1",
+    "src/compiler/diagnosticInformationMap.generated.ts:12:1",
+    "src/compiler/expressionToTypeNode.ts:1:1",
+    "src/compiler/expressionToTypeNode.ts:160:1",
+    "src/compiler/expressionToTypeNode.ts:164:1",
+    "src/compiler/expressionToTypeNode.ts:165:1",
+    "src/compiler/expressionToTypeNode.ts:166:1",
+    "src/compiler/expressionToTypeNode.ts:169:1",
+    "src/compiler/expressionToTypeNode.ts:170:1",
+    "src/compiler/expressionToTypeNode.ts:171:1",
+    "src/compiler/expressionToTypeNode.ts:174:1",
+    "src/compiler/factory/baseNodeFactory.ts:1:1",
+    "src/compiler/factory/baseNodeFactory.ts:13:1",
+    "src/compiler/factory/baseNodeFactory.ts:26:1",
+    "src/compiler/factory/nodeConverters.ts:1:1",
+    "src/compiler/factory/nodeConverters.ts:41:1",
+    "src/compiler/factory/nodeConverters.ts:183:1",
+    "src/compiler/factory/utilitiesPublic.ts:1:1",
+    "src/compiler/factory/utilitiesPublic.ts:10:1",
+    "src/compiler/factory/utilitiesPublic.ts:14:1",
+    "src/compiler/factory/utilitiesPublic.ts:43:1",
+    "src/compiler/hostErrors.ts:2:1",
+    "src/compiler/hostErrors.ts:7:1",
+    "src/compiler/hostErrors.ts:12:1",
+    "src/compiler/performanceCore.ts:1:1",
+    "src/compiler/performanceCore.ts:7:1",
+    "src/compiler/performanceCore.ts:14:1",
+    "src/compiler/performanceCore.ts:20:1",
+    "src/compiler/performanceCore.ts:28:1",
+    "src/compiler/performanceCore.ts:30:1",
+    "src/compiler/performanceCore.ts:61:1",
+    "src/compiler/performanceCore.ts:89:1",
+    "src/compiler/performanceCore.ts:90:1",
+    "src/compiler/performanceCore.ts:93:1",
+    "src/compiler/performanceCore.ts:102:1",
+    "src/compiler/performanceCore.ts:104:1",
+    "src/compiler/programDiagnostics.ts:1:1",
+    "src/compiler/programDiagnostics.ts:58:1",
+    "src/compiler/programDiagnostics.ts:65:1",
+    "src/compiler/programDiagnostics.ts:72:1",
+    "src/compiler/programDiagnostics.ts:89:1",
+    "src/compiler/tracing.ts:1:1",
+    "src/compiler/tracing.ts:24:1",
+    "src/compiler/tracing.ts:25:1",
+    "src/compiler/tracing.ts:31:1",
+    "src/compiler/tracing.ts:38:1",
+    "src/compiler/tracing.ts:369:1",
+    "src/compiler/tracing.ts:371:1",
+    "src/compiler/tracing.ts:374:1",
+    "src/compiler/tracing.ts:378:1",
+    "src/compiler/tracing.ts:379:1",
+    "src/compiler/transformers/es2015.ts:1:1",
+    "src/compiler/transformers/es2015.ts:220:1",
+    "src/compiler/transformers/es2015.ts:266:1",
+    "src/compiler/transformers/es2015.ts:272:1",
+    "src/compiler/transformers/es2015.ts:278:1",
+    "src/compiler/transformers/es2015.ts:283:1",
+    "src/compiler/transformers/es2015.ts:289:1",
+    "src/compiler/transformers/es2015.ts:367:1",
+    "src/compiler/transformers/es2015.ts:371:1",
+    "src/compiler/transformers/es2015.ts:472:1",
+    "src/compiler/transformers/es2015.ts:478:1",
+    "src/compiler/transformers/es2015.ts:483:1",
+    "src/compiler/transformers/es2015.ts:488:1",
+    "src/compiler/transformers/es2016.ts:1:1",
+    "src/compiler/transformers/es2016.ts:21:1",
+    "src/compiler/transformers/es2017.ts:1:1",
+    "src/compiler/transformers/es2017.ts:104:1",
+    "src/compiler/transformers/es2017.ts:106:1",
+    "src/compiler/transformers/es2017.ts:112:1",
+    "src/compiler/transformers/es2017.ts:119:1",
+    "src/compiler/transformers/es2017.ts:1059:1",
+    "src/compiler/transformers/es2018.ts:1:1",
+    "src/compiler/transformers/es2018.ts:115:1",
+    "src/compiler/transformers/es2018.ts:122:1",
+    "src/compiler/transformers/es2018.ts:154:1",
+    "src/compiler/transformers/es2019.ts:1:1",
+    "src/compiler/transformers/es2019.ts:17:1",
+    "src/compiler/transformers/es2020.ts:1:1",
+    "src/compiler/transformers/es2020.ts:42:1",
+    "src/compiler/transformers/es2021.ts:1:1",
+    "src/compiler/transformers/es2021.ts:25:1",
+    "src/compiler/transformers/esDecorators.ts:1:1",
+    "src/compiler/transformers/esDecorators.ts:227:1",
+    "src/compiler/transformers/esDecorators.ts:234:1",
+    "src/compiler/transformers/esDecorators.ts:262:1",
+    "src/compiler/transformers/esDecorators.ts:269:1",
+    "src/compiler/transformers/esDecorators.ts:276:1",
+    "src/compiler/transformers/esDecorators.ts:281:1",
+    "src/compiler/transformers/esDecorators.ts:288:1",
+    "src/compiler/transformers/esDecorators.ts:295:1",
+    "src/compiler/transformers/jsx.ts:1:1",
+    "src/compiler/transformers/jsx.ts:92:1",
+    "src/compiler/transformers/jsx.ts:683:1",
+    "src/compiler/transformers/legacyDecorators.ts:1:1",
+    "src/compiler/transformers/legacyDecorators.ts:88:1",
+    "src/compiler/transformers/module/module.ts:1:1",
+    "src/compiler/transformers/module/module.ts:174:1",
+    "src/compiler/transformers/module/module.ts:2499:1",
+    "src/compiler/transformers/module/system.ts:1:1",
+    "src/compiler/transformers/module/system.ts:137:1",
+    "src/compiler/transformers/taggedTemplate.ts:1:1",
+    "src/compiler/transformers/taggedTemplate.ts:29:1",
+    "src/compiler/transformers/taggedTemplate.ts:35:1",
+    "src/compiler/transformers/taggedTemplate.ts:101:1",
+    "src/compiler/transformers/taggedTemplate.ts:110:1",
+    "src/compiler/transformers/ts.ts:1:1",
+    "src/compiler/transformers/ts.ts:209:1",
+    "src/compiler/transformers/ts.ts:211:1",
+    "src/compiler/transformers/ts.ts:219:1",
+    "src/compiler/transformers/ts.ts:235:1",
+    "src/compiler/tsbuild.ts:1:1",
+    "src/compiler/tsbuild.ts:10:1",
+    "src/compiler/tsbuild.ts:41:1",
+    "src/compiler/tsbuild.ts:58:1",
+    "src/compiler/tsbuild.ts:177:1",
+    "src/compiler/watchPublic.ts:1:1",
+    "src/compiler/watchPublic.ts:99:1",
+    "src/compiler/watchPublic.ts:106:1",
+    "src/compiler/watchPublic.ts:123:1",
+    "src/compiler/watchPublic.ts:132:1",
+    "src/compiler/watchPublic.ts:141:1",
+    "src/compiler/watchPublic.ts:155:1",
+    "src/compiler/watchPublic.ts:157:1",
+    "src/compiler/watchPublic.ts:160:1",
+    "src/compiler/watchPublic.ts:174:1",
+    "src/compiler/watchPublic.ts:277:1",
+    "src/compiler/watchPublic.ts:291:1",
+    "src/compiler/watchPublic.ts:307:1",
+    "src/compiler/watchPublic.ts:330:1",
+    "src/compiler/watchPublic.ts:335:1",
+    "src/compiler/watchPublic.ts:353:1",
+    "src/compiler/watchPublic.ts:359:1",
+    "src/compiler/watchPublic.ts:367:1",
+    "src/compiler/watchPublic.ts:368:1",
+    "src/compiler/watchPublic.ts:369:1",
+    "src/compiler/watchPublic.ts:396:1",
+    "src/compiler/watchPublic.ts:408:1",
+    "src/compiler/watchPublic.ts:415:1",
+    "src/compiler/watchPublic.ts:419:1",
+    "src/compiler/watchPublic.ts:420:1"
+  ],
+  "estimated_unit_seconds": 11.792992061
+}
