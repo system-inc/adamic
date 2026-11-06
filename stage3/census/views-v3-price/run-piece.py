@@ -36,6 +36,8 @@ for label in ('main','head'):
  summary['sides'][label]={'view_elements':sum(u['view_elements'] for u in units),'view_element_checks':sum(u['view_element_checks'] for u in units),
  'units':len(units),'attempted':sum(u['status']=='attempted' for u in units),'ir_observed':len(observed),
  'finding_free_attempted':sum(u['status']=='attempted' and u['where'] not in blocked for u in units),
+ 'finding_free_view_elements':sum(u['view_elements'] for u in units if u['status']=='attempted' and u['where'] not in blocked),
+ 'finding_free_view_element_checks':sum(u['view_element_checks'] for u in units if u['status']=='attempted' and u['where'] not in blocked),
  'meter_byte_identical':True,'baseline_sha256':hashlib.sha256(baseline).hexdigest(),'source_sha256':hashlib.sha256(src.read_bytes()).hexdigest()}
  # The pair tool compares ordinary meter fields. Only canonicalize the absolute tree prefix.
  normalized=baseline.replace(str(tree).encode(),b'/V3_TREE')
