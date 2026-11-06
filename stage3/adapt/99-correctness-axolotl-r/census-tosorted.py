@@ -10,30 +10,38 @@ manifest=json.loads((scratch/'ready-for-census.json').read_text())
 def frozen():
  assert manifest=={str(p.relative_to(scratch/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/'after/src').rglob('*')) if p.is_file()}
 frozen()
-allrows=[]
+allrows=json.loads((out/'tosorted-census.json').read_text()) if (out/'tosorted-census.json').exists() else []
+assert len(allrows) in [0,20,40,60,79]
+completed=len(allrows)
+assert [r['root'] for r in allrows]==[str(p) for p in roots[:completed]]
 def git(*args):
  with (raw/'census-push.log').open('a') as log:subprocess.run(['git',*args],cwd=repo,stdout=log,stderr=log,check=True)
 def run(side,groupdir,relative):
  tree,binary=(before,'census-batch-base') if side=='37f8314b' else (after,'census-batch')
  paths=[str(tree/p) for p in relative];input=groupdir/(side+'-roots.json');input.write_text(json.dumps(paths,indent=2)+'\n');output=groupdir/(side+'.jsonl')
  env=dict(os.environ,GOMAXPROCS='2')
- with (groupdir/(side+'.log')).open('w') as log:
-  process=subprocess.Popen([str(scratch/'bin'/binary),str(input),str(output)],stdout=log,stderr=log,env=env,start_new_session=True)
-  try:code=process.wait(timeout=3600)
-  except BaseException:
-   os.killpg(process.pid,signal.SIGTERM)
-   try:process.wait(timeout=10)
-   except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
-   raise
- assert code==0,(side,code)
+ if not output.exists():
+  with (groupdir/(side+'.log')).open('w') as log:
+   process=subprocess.Popen([str(scratch/'bin'/binary),str(input),str(output)],stdout=log,stderr=log,env=env,start_new_session=True)
+   try:code=process.wait(timeout=3600)
+   except BaseException:
+    os.killpg(process.pid,signal.SIGTERM)
+    try:process.wait(timeout=10)
+    except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
+    raise
+  assert code==0,(side,code)
  rows=[json.loads(line) for line in output.read_text().splitlines()];assert len(rows)==len(paths)
- assert [r['roots'] for r in rows]==[[p] for p in paths]
+ assert all(len(r['roots'])==1 for r in rows)
+ assert len({r['roots'][0] for r in rows})==len(paths)
+ assert {r['roots'][0] for r in rows}==set(paths)
  return side,rows
 for start in range(0,79,20):
  frozen()
- group=start//20+1;directory=raw/f'census-group-{group}';directory.mkdir();relative=roots[start:start+20]
+ if start<completed:continue
+ group=start//20+1;directory=raw/f'census-group-{group}';directory.mkdir(exist_ok=True);relative=roots[start:start+20]
  with ThreadPoolExecutor(max_workers=2) as pool:results=dict(pool.map(lambda side:run(side,directory,relative),['37f8314b','after']))
- pairs=[{'root':str(p),'before':a,'after':b} for p,a,b in zip(relative,results['37f8314b'],results['after'])];allrows.extend(pairs)
+ indexed={side:{r['roots'][0]:r for r in observations} for side,observations in results.items()}
+ pairs=[{'root':str(p),'before':indexed['37f8314b'][str(before/p)],'after':indexed['after'][str(after/p)]} for p in relative];allrows.extend(pairs)
  (out/'tosorted-census.json').write_text(json.dumps(allrows,indent=2)+'\n')
  (directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(directory.iterdir()) if p.is_file()))
  archive=out/f'tosorted-group-{group}.tar.gz'
