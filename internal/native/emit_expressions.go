@@ -342,49 +342,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("adamic_string_char_code_at(%s, %s)", value, index)
 	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
 		return e.libraryLanguageValue(expression)
+	case ir.BoundClosure:
+		return e.makeClosure(ir.MakeClosure{Function: expression.Function, ProgramRegion: expression.ProgramRegion}, true, expression.GraphTypes)
 	case ir.MakeClosure:
-		target := e.program.Functions[expression.Function]
-		environment := target.Environment
-		if target.NestedParent > 0 {
-			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
-			if identity > 0 {
-				cells := make([]string, 0, len(environment))
-				for _, local := range environment {
-					cells = append(cells, e.cellReference(local))
-				}
-				constructor := "adamic_closure_canonical"
-				if e.program.PackedCountNeeded(expression.Function) {
-					constructor = "adamic_counted_closure_canonical"
-				}
-				if target.GraphClosure {
-					constructor += "_graph"
-				}
-				discard := ""
-				if e.closureDiscards {
-					// Stored once, where the closure is made, not on each return of the cached one.
-					discard = ", " + e.discardOf(expression.Function)
-				}
-				closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s}%s)", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", "), discard))
-				e.line("%s->source_length = %d;", closure, target.SourceLength)
-				return closure
-			}
-		}
-		constructor := "adamic_closure_new"
-		if e.program.PackedCountNeeded(expression.Function) {
-			constructor = "adamic_counted_closure_new"
-		}
-		closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
-		e.line("%s->source_length = %d;", closure, target.SourceLength)
-		if e.program.Functions[expression.Function].Receiver {
-			e.line("%s->receiver = true;", closure)
-		}
-		e.closureDiscard(closure, expression.Function)
-		e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), target.GraphClosure && !expression.ProgramRegion && !target.ProgramRegion)
-		e.adoptProgram(closure, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", closure, len(environment), closure), expression.ProgramRegion || target.ProgramRegion)
-		for index, local := range environment {
-			e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
-		}
-		return closure
+		return e.makeClosure(expression, false, nil)
 	case ir.CallClosure:
 		property, isProperty := expression.Closure.(ir.Property)
 		if !isProperty || !property.Method {
@@ -921,3 +882,54 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 // narrowedAwayMessage is the panic of a number or a boolean the checker narrowed undefined out of,
 // read where a call since put it back (ir.Unwrap). JavaScript would go on computing with undefined.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
+
+func (e *emitter) makeClosure(expression ir.MakeClosure, bound bool, graphTypes []int) string {
+	target := e.program.Functions[expression.Function]
+	environment := target.Environment
+	if !bound && target.NestedParent > 0 {
+		identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+		if identity > 0 {
+			cells := make([]string, 0, len(environment))
+			for _, local := range environment {
+				cells = append(cells, e.cellReference(local))
+			}
+			constructor := "adamic_closure_canonical"
+			if e.program.PackedCountNeeded(expression.Function) {
+				constructor = "adamic_counted_closure_canonical"
+			}
+			if target.GraphClosure {
+				constructor += "_graph"
+			}
+			discard := ""
+			if e.closureDiscards {
+				// Stored once, where the closure is made, not on each return of the cached one.
+				discard = ", " + e.discardOf(expression.Function)
+			}
+			closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s}%s)", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", "), discard))
+			e.line("%s->source_length = %d;", closure, target.SourceLength)
+			return closure
+		}
+	}
+	constructor := "adamic_closure_new"
+	if bound {
+		constructor = "adamic_bound_closure_new"
+	}
+	if e.program.PackedCountNeeded(expression.Function) {
+		constructor = "adamic_counted_closure_new"
+		if bound {
+			constructor = "adamic_counted_bound_closure_new"
+		}
+	}
+	closure := e.own(ir.Closure, fmt.Sprintf("%s(%s, %d)", constructor, e.functionName(expression.Function), len(environment)))
+	e.line("%s->source_length = %d;", closure, target.SourceLength)
+	if e.program.Functions[expression.Function].Receiver {
+		e.line("%s->receiver = true;", closure)
+	}
+	e.closureDiscard(closure, expression.Function)
+	e.adoptGraph(closure, fmt.Sprintf("sizeof *%s + %d * sizeof(adamic_cell *)", closure, len(environment)), (target.GraphClosure || e.graphTypes(graphTypes)) && !expression.ProgramRegion && !target.ProgramRegion)
+	e.adoptProgram(closure, fmt.Sprintf("sizeof *%s + %d * sizeof %s->cells[0]", closure, len(environment), closure), expression.ProgramRegion || target.ProgramRegion)
+	for index, local := range environment {
+		e.line("%s->cells[%d] = %s;", closure, index, e.heldReferenceIn(closure, e.cellReference(local)))
+	}
+	return closure
+}

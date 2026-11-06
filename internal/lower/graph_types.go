@@ -20,6 +20,9 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
 	}
 	switch value := value.(type) {
+	case ir.BoundClosure:
+		value.GraphTypes = ids
+		return value
 	case ir.ObjectLiteral:
 		if value.Record {
 			l.graphDynamicSite = node

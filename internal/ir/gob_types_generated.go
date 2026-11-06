@@ -30,6 +30,7 @@ var gobTypes = []any{
 	Block{},
 	BooleanConstant{},
 	BooleanToString{},
+	BoundClosure{},
 	Box{},
 	Break{},
 	Call{},

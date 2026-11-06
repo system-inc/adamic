@@ -1,0 +1,4 @@
+// Node constructs an instance of C through its bound constructor.
+class C { value: number = 7; }
+const Bound = C.bind(undefined);
+console.log(String(new Bound().value));

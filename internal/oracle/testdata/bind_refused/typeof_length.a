@@ -1,0 +1,4 @@
+// Node: number. typeof must not erase the bound length stop.
+function f(a: number, b: number): number { return a + b; }
+const bound = f.bind(undefined, 1);
+console.log(typeof bound.length);
