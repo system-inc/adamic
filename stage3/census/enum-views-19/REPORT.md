@@ -23,13 +23,61 @@ exclusively to Library.
   Raw provenance, tool hashes, build logs and reference records are in
   01-setup.tar.gz.
 
-## Pending measurements
+## Nineteen owning-unit results
 
-The target's full apply is running. Next pieces measure debug.ts's full latent
-units, emitter.ts's nineteenth owning unit, and the ordinary 79-root census.
-Each run is bounded below 25 minutes and each completed piece is committed and
-plainly pushed. Cast scan admission and actual owning-unit lowering outcomes
-will be reported separately, including earlier boundaries where present.
+The expected result is not observed by this latent measurement. All 18 debug.ts
+casts lose the old namespace-value refusal-scan finding, but the 17 formatter
+units stop at the enum read itself. None reaches a later stop or completes.
+The FlowFlags getter owner and emitter's owner are blocked earlier. This report
+records the unchanged existing full latent/unit-replay method; it does not
+modify census registration to supply missing enum bindings.
+
+Earlier main and adaptation-only columns describe cast scan stops, as the prior
+SITE-STOPS.md did. The B2 column describes actual owning-unit lowering. `R0` is
+Refused at invariance.go:673; `N0` is NotYet at module_namespace.go:27. `N1` is
+NotYet: "an enum read through its namespace without a lowered binding", emitted
+by internal/lower/namespaces.go:94. Every listed unit has status attempted.
+
+| Rule | Owner / enum | Main cast scan | Adaptation-only cast scan | B2 unit first stop |
+| --- | --- | --- | --- | --- |
+| 72 | formatSyntaxKind / SyntaxKind | R0 | N0 | `debug.ts:424:33`: N1 |
+| 73 | formatSnippetKind / SnippetKind | R0 | N0 | `debug.ts:428:33`: N1 |
+| 74 | formatScriptKind / ScriptKind | R0 | N0 | `debug.ts:432:33`: N1 |
+| 75 | formatNodeFlags / NodeFlags | R0 | N0 | `debug.ts:436:34`: N1 |
+| 76 | formatNodeCheckFlags / NodeCheckFlags | R0 | N0 | `debug.ts:440:34`: N1 |
+| 77 | formatModifierFlags / ModifierFlags | R0 | N0 | `debug.ts:444:34`: N1 |
+| 78 | formatTransformFlags / TransformFlags | R0 | N0 | `debug.ts:448:34`: N1 |
+| 79 | formatEmitFlags / EmitFlags | R0 | N0 | `debug.ts:452:34`: N1 |
+| 80 | formatSymbolFlags / SymbolFlags | R0 | N0 | `debug.ts:456:34`: N1 |
+| 81 | formatTypeFlags / TypeFlags | R0 | N0 | `debug.ts:460:34`: N1 |
+| 82 | formatSignatureFlags / SignatureFlags | R0 | N0 | `debug.ts:464:34`: N1 |
+| 83 | formatObjectFlags / ObjectFlags | R0 | N0 | `debug.ts:468:34`: N1 |
+| 84 | formatFlowFlags / FlowFlags | R0 | N0 | `debug.ts:472:34`: N1 |
+| 85 | formatRelationComparisonResult / RelationComparisonResult | R0 | N0 | `debug.ts:476:35`: N1 |
+| 86 | formatCheckMode / CheckMode | R0 | N0 | `debug.ts:480:33`: N1 |
+| 87 | formatSignatureCheckMode / SignatureCheckMode | R0 | N0 | `debug.ts:484:33`: N1 |
+| 88 | formatTypeFacts / TypeFacts | R0 | N0 | `debug.ts:488:34`: N1 |
+| 89 | attachFlowNodeDebugInfoWorker / FlowFlags | R0 | N0 | `debug.ts:496:15`: Refused: in that narrows a union of object types (any object with the key passes) |
+| 91 | makeName / GeneratedIdentifierFlags | R0 | N0 | `emitter.ts:5769:30`: NotYet: a value of type (EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; }) |
+
+Rule 89's first stop is Refused at debug.ts:496:15: `in that narrows a union of
+object types (any object with the key passes)`, before the getter cast at 519:56.
+Rule 91's first stop is NotYet at emitter.ts:5769:30 on the EmitNode intersection
+union, before the cast at 5790:141. Its unit also records later reads of the
+unavailable autoGenerate binding, including 5790:84. All findings, not just the
+first, are retained in unit-results.json inside the latent piece.
+
+The emitter replay worker exits 1 because its deliberately requested old
+namespace signature does not reproduce; it still returns the complete selected
+makeName unit and its actual findings. This is not a timeout or worker crash.
+No successful cast lowering is inferred from the absence of a scan finding.
+The missing-binding observation may reflect the latent registration context;
+it does not by itself establish failure of whole-program production lowering.
+
+The target's complete apply passes. Its 79 compiler source files are byte-for-byte
+identical to the prior adaptation-only tree, as source-audit.json records.
+The separate ordinary 79-root census is still running. A B2 emitter cast scan
+and a representative single-unit confirmation are also being retained.
 
 All raw records are packed in the numbered tar.gz files. SHA256SUMS hashes the
 archives; each archive also contains a SHA256SUMS for its raw member files.
