@@ -144,6 +144,7 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 	}
 	class := len(l.result.Classes) + 1
 	l.result.Classes = append(l.result.Classes, ir.Class{Source: l.sourceIdentity(node), Name: "literal_accessors", Constructor: -1, Literal: true})
+	l.classHolder(class, l.concrete(l.checker.GetTypeAtLocation(node)))
 	literal := ir.ObjectLiteral{Class: class}
 	keys := map[string]bool{}
 	for _, property := range properties {
@@ -213,22 +214,19 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 type accessorReach struct {
 	graph  *allocationFlowGraph
 	owners map[int]map[string]bool
-	// classes is the class each owning allocation is made as, whose chain spreadGetters walks.
-	classes map[int]int
 }
 
 func newAccessorReach(program *ir.Program) *accessorReach {
 	numbered := *program
 	numbered.Functions = append([]ir.Function(nil), program.Functions...)
 	assignAllocationSites(&numbered)
-	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}, classes: map[int]int{}}
+	reach := &accessorReach{graph: newAllocationFlowGraph(&numbered), owners: map[int]map[string]bool{}}
 	own := func(node any) bool {
 		literal, isLiteral := node.(ir.ObjectLiteral)
 		if !isLiteral || literal.Class == 0 || len(literal.GraphTypes) == 0 {
 			return true
 		}
 		site := literal.GraphTypes[len(literal.GraphTypes)-1]
-		reach.classes[site] = literal.Class
 		// An object owns its class's accessors and every base's, as adamic_accessor_find finds them.
 		for class := literal.Class; class != 0; class = program.Classes[class-1].Base {
 			for _, accessor := range program.Classes[class-1].Accessors {
@@ -394,7 +392,7 @@ func (l *lowering) finishAccessors() error {
 			case ir.ObjectLiteral:
 				if expression.Spread != nil {
 					expression.NoReuse = true
-					expression.SpreadGetters = l.spreadGetters(reach, original.(ir.ObjectLiteral).Spread)
+					expression.SpreadGetters = l.spreadGetters(expression)
 					node = expression
 				}
 			case ir.Property:
@@ -477,21 +475,39 @@ func (l *lowering) hasAccessorStorage(proven *checker.Type) bool {
 	return false
 }
 
-// spreadGetters is the getters a spread of source may run (ir.ObjectLiteral's SpreadGetters): each
-// getter of the class chain of every allocation that can reach source, read from the accessor
-// registry, an object literal's synthetic class and a base's included, and every registered getter
-// when the reach is unknown, so it fails closed. A fresh data literal reaches none. It is judged by
-// flow and never by source's static type: a class instance whose getter satisfies a declared plain
-// field is assignable to that type, so a type test would fail open (Memory's and Compiler's ruling on
-// #qk8rztp S2c-2b).
-func (l *lowering) spreadGetters(reach *accessorReach, source ir.Expression) []int {
-	if plainDataSpreadSource(source) {
+// classHolder notes a class's instance type, the holder spreadGetters holds against a spread.
+func (l *lowering) classHolder(class int, holder *checker.Type) {
+	if l.classHolders == nil {
+		l.classHolders = map[int]*checker.Type{}
+	}
+	l.classHolders[class] = holder
+}
+
+// spreadGetters is the getters a spread may run (ir.ObjectLiteral's SpreadGetters), read from the
+// accessor registry, never from class declarations: every getter on the chain of every registered
+// class, an object literal's synthetic class and a base's getters included, whose instances are
+// assignable to the type the spread sees its source as, as cycles.go's accessorCaptures asks. A class
+// or a spread whose type isn't known counts, so it fails closed, and a fresh data literal takes none.
+// It is a getter set and never a type test of the source: a class instance whose getter satisfies a
+// declared plain field is assignable to that plain type, so "the source's type has no accessor" would
+// fail open (Memory's and Compiler's ruling on #qk8rztp S2c-2b). It over-approximates, since a spread
+// copies own properties only and a class's getter is its prototype's, which is the safe direction.
+func (l *lowering) spreadGetters(literal ir.ObjectLiteral) []int {
+	if plainDataSpreadSource(literal.Spread) {
 		return nil
+	}
+	var viewed *checker.Type
+	if literal.SpreadSite > 0 && literal.SpreadSite <= len(l.spreadSources) {
+		viewed = l.spreadSources[literal.SpreadSite-1]
 	}
 	var getters []int
 	seen := map[int]bool{}
-	chain := func(class int) {
-		for ; class != 0; class = l.result.Classes[class-1].Base {
+	for index := range l.result.Classes {
+		holder := l.classHolders[index+1]
+		if viewed != nil && holder != nil && !l.checker.IsTypeAssignableTo(holder, viewed) {
+			continue
+		}
+		for class := index + 1; class != 0; class = l.result.Classes[class-1].Base {
 			for _, accessor := range l.result.Classes[class-1].Accessors {
 				if accessor.Getter >= 0 && !seen[accessor.Getter] {
 					seen[accessor.Getter] = true
@@ -499,16 +515,6 @@ func (l *lowering) spreadGetters(reach *accessorReach, source ir.Expression) []i
 				}
 			}
 		}
-	}
-	allocations := reach.graph.ReachingAllocations(source)
-	if allocations.Unknown {
-		for class := range l.result.Classes {
-			chain(class + 1)
-		}
-		return getters
-	}
-	for _, site := range allocations.Sites {
-		chain(reach.classes[site])
 	}
 	return getters
 }
