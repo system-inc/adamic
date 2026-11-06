@@ -855,9 +855,10 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 	}
 	return result;
 }
-static const char *const next_names[] = {"done", "value"};
-static const bool next_references[] = {false, true};
-static const adamic_field_kind next_kinds[] = {adamic_field_boolean, adamic_field_reference};
+// value, then done, as Node's { value, done } has them, so its keys enumerate as Node's do (#7nw4kgj).
+static const char *const next_names[] = {"value", "done"};
+static const bool next_references[] = {true, false};
+static const adamic_field_kind next_kinds[] = {adamic_field_reference, adamic_field_boolean};
 static const adamic_shape next_shape = {2, next_names, next_references, NULL, next_kinds};
 // matchAll's iterator result is a plain object on Node, as the iterator isn't, so its shape isn't
 // marked host (adamic.h), where the iterator's is, and Object.prototype's names answer on it by a
@@ -869,9 +870,9 @@ adamic_object *adamic_regex_next(adamic_object *iterator) {
 	adamic_array *value = adamic_regex_iterator_step(iterator);
 	adamic_object *result = adamic_object_new(&next_shape);
 	adamic_register_shape_types(&next_metadata);
-	result->slots[0].boolean = value == NULL;
-	adamic_object_field_types(result)[0] = adamic_ir_Boolean;
-	result->slots[1].reference = value;
+	result->slots[0].reference = value;
+	result->slots[1].boolean = value == NULL;
+	adamic_object_field_types(result)[1] = adamic_ir_Boolean;
 	return result;
 }
 double adamic_regex_search(adamic_string *input, adamic_object *regex) {
