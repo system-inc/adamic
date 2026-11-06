@@ -1297,3 +1297,15 @@ program row. Complete streams are retained; the 79-root comparison selects
 only single-root .ts records. Nothing is suppressed or treated as accepted.
 Census logs and all raw records are retained under census/. This completes
 both ordinary and six-unit latent components of check 6.
+
+## Check 4 whole-lane piece
+
+The unchanged stage3/lane/run.sh --artifact command exits 0 with PASS in
+365.7 seconds, below the 25-minute piece limit. It reports exactly 106,366
+passing tests, one sanctioned public-API failure and zero pending tests.
+All runners, eight workers, original test timeouts and sanctioned API lines
+are unchanged. The oracle uses the frozen verified after-tree artifact.
+The replay was temporarily paused for the whole test's CPU budget and has
+now resumed. Whole task observations, verdict, execution metadata, API diff
+and full logs are retained under oracle/whole/. The 398 standard shards
+are the remaining part of check 4.

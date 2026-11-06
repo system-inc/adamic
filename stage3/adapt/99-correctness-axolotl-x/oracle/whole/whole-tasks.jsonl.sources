@@ -1,0 +1,327 @@
+{"title":"unittests:: assert","file":"src/testRunner/unittests/asserts.ts"}
+{"title":"unittests:: base64","file":"src/testRunner/unittests/base64.ts"}
+{"title":"unittests:: builder","file":"src/testRunner/unittests/builder.ts"}
+{"title":"unittests:: canWatch::","file":"src/testRunner/unittests/canWatch.ts"}
+{"title":"comment parsing","file":"src/testRunner/unittests/comments.ts"}
+{"title":"unittests:: compilerCore","file":"src/testRunner/unittests/compilerCore.ts"}
+{"title":"unittests:: config:: commandLineParsing:: parseCommandLine","file":"src/testRunner/unittests/config/commandLineParsing.ts"}
+{"title":"unittests:: config:: commandLineParsing:: parseBuildOptions","file":"src/testRunner/unittests/config/commandLineParsing.ts"}
+{"title":"unittests:: config:: commandLineParsing:: optionDeclarations","file":"src/testRunner/unittests/config/commandLineParsing.ts"}
+{"title":"unittests:: config:: configurationExtension","file":"src/testRunner/unittests/config/configurationExtension.ts"}
+{"title":"unittests:: config:: convertCompilerOptionsFromJson","file":"src/testRunner/unittests/config/convertCompilerOptionsFromJson.ts"}
+{"title":"unittests:: config:: convertTypeAcquisitionFromJson","file":"src/testRunner/unittests/config/convertTypeAcquisitionFromJson.ts"}
+{"title":"unittests:: config:: initTSConfig","file":"src/testRunner/unittests/config/initializeTSConfig.ts"}
+{"title":"unittests:: config:: matchFiles","file":"src/testRunner/unittests/config/matchFiles.ts"}
+{"title":"unittests:: config:: showConfig","file":"src/testRunner/unittests/config/showConfig.ts"}
+{"title":"unittests:: config:: tsconfigParsing:: parseConfigFileTextToJson","file":"src/testRunner/unittests/config/tsconfigParsing.ts"}
+{"title":"unittests:: config:: tsconfigParsingWatchOptions:: parseConfigFileTextToJson","file":"src/testRunner/unittests/config/tsconfigParsingWatchOptions.ts"}
+{"title":"unittests:: convertToBase64","file":"src/testRunner/unittests/convertToBase64.ts"}
+{"title":"unittests:: customTransforms","file":"src/testRunner/unittests/customTransforms.ts"}
+{"title":"unittests:: debugDeprecation","file":"src/testRunner/unittests/debugDeprecation.ts"}
+{"title":"unittests:: internalApi:: diagnosticCollection","file":"src/testRunner/unittests/diagnosticCollection.ts"}
+{"title":"unittests:: evaluation:: arraySpread","file":"src/testRunner/unittests/evaluation/arraySpread.ts"}
+{"title":"unittests:: evaluation:: asyncArrowEvaluation","file":"src/testRunner/unittests/evaluation/asyncArrow.ts"}
+{"title":"unittests:: evaluation:: asyncGeneratorEvaluation","file":"src/testRunner/unittests/evaluation/asyncGenerator.ts"}
+{"title":"unittests:: evaluation:: autoAccessors","file":"src/testRunner/unittests/evaluation/autoAccessors.ts"}
+{"title":"unittests:: evaluation:: awaiter","file":"src/testRunner/unittests/evaluation/awaiter.ts"}
+{"title":"unittests:: evaluation:: awaitUsingDeclarations","file":"src/testRunner/unittests/evaluation/awaitUsingDeclarations.ts"}
+{"title":"unittests:: evaluation:: constEnum","file":"src/testRunner/unittests/evaluation/constEnum.ts"}
+{"title":"unittests:: evaluation:: destructuring","file":"src/testRunner/unittests/evaluation/destructuring.ts"}
+{"title":"unittests:: evaluation:: esDecorators","file":"src/testRunner/unittests/evaluation/esDecorators.ts"}
+{"title":"unittests:: evaluation:: esDecoratorsMetadata","file":"src/testRunner/unittests/evaluation/esDecoratorsMetadata.ts"}
+{"title":"unittests:: evaluation:: externalModules","file":"src/testRunner/unittests/evaluation/externalModules.ts"}
+{"title":"unittests:: evaluation:: forAwaitOfEvaluation","file":"src/testRunner/unittests/evaluation/forAwaitOf.ts"}
+{"title":"unittests:: evaluation:: forOfEvaluation","file":"src/testRunner/unittests/evaluation/forOf.ts"}
+{"title":"unittests:: evaluation:: generatorEvaluation","file":"src/testRunner/unittests/evaluation/generator.ts"}
+{"title":"unittests:: evaluation:: objectRest","file":"src/testRunner/unittests/evaluation/objectRest.ts"}
+{"title":"unittests:: evaluation:: optionalCall","file":"src/testRunner/unittests/evaluation/optionalCall.ts"}
+{"title":"unittests:: evaluation:: superInStaticInitializer","file":"src/testRunner/unittests/evaluation/superInStaticInitializer.ts"}
+{"title":"unittests:: evaluation:: templateLiteral","file":"src/testRunner/unittests/evaluation/templateLiteral.ts"}
+{"title":"unittests:: evaluation:: updateExpressionInModule","file":"src/testRunner/unittests/evaluation/updateExpressionInModule.ts"}
+{"title":"unittests:: evaluation:: usingDeclarations","file":"src/testRunner/unittests/evaluation/usingDeclarations.ts"}
+{"title":"unittests:: FactoryAPI","file":"src/testRunner/unittests/factory.ts"}
+{"title":"unittests:: incrementalParser::","file":"src/testRunner/unittests/incrementalParser.ts"}
+{"title":"unittests:: JSDocParsing","file":"src/testRunner/unittests/jsDocParsing.ts"}
+{"title":"unittests:: jsonParserRecovery","file":"src/testRunner/unittests/jsonParserRecovery.ts"}
+{"title":"unittests:: moduleResolution:: Node module resolution - relative paths","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: Node module resolution - non-relative paths","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: Relative imports","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: Files with different casing with forceConsistentCasingInFileNames","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: baseUrl augmented module resolution","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: ModuleResolutionHost.directoryExists","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: moduleResolution:: Type reference directive resolution: ","file":"src/testRunner/unittests/moduleResolution.ts"}
+{"title":"unittests:: BigInt literal base conversions","file":"src/testRunner/unittests/parsePseudoBigInt.ts"}
+{"title":"unittests:: core paths","file":"src/testRunner/unittests/paths.ts"}
+{"title":"unittests:: PrinterAPI","file":"src/testRunner/unittests/printer.ts"}
+{"title":"unittests:: programApi:: Program.getMissingFilePaths","file":"src/testRunner/unittests/programApi.ts"}
+{"title":"unittests:: Program.isSourceFileFromExternalLibrary","file":"src/testRunner/unittests/programApi.ts"}
+{"title":"unittests:: Program.getNodeCount / Program.getIdentifierCount","file":"src/testRunner/unittests/programApi.ts"}
+{"title":"unittests:: programApi:: Program.getTypeChecker / Program.getSemanticDiagnostics","file":"src/testRunner/unittests/programApi.ts"}
+{"title":"unittests:: programApi:: CompilerOptions relative paths","file":"src/testRunner/unittests/programApi.ts"}
+{"title":"unittests:: Public APIs","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: token to string","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: createPrivateIdentifier","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: JSDoc newlines","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: isPropertyName","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: getTypeAtLocation","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: validateLocaleAndSetLanguage","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs :: forEachChild of @param comments in JSDoc","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: getChild* methods on EndOfFileToken with JSDoc","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: get syntactic and effective modifiers","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: Public APIs:: createProgram","file":"src/testRunner/unittests/publicApi.ts"}
+{"title":"unittests:: regExpScannerRecovery","file":"src/testRunner/unittests/regExpScannerRecovery.ts"}
+{"title":"unittests:: reuseProgramStructure:: General","file":"src/testRunner/unittests/reuseProgramStructure.ts"}
+{"title":"unittests:: reuseProgramStructure:: host is optional","file":"src/testRunner/unittests/reuseProgramStructure.ts"}
+{"title":"unittests:: reuseProgramStructure:: isProgramUptoDate::","file":"src/testRunner/unittests/reuseProgramStructure.ts"}
+{"title":"unittests:: semver","file":"src/testRunner/unittests/semver.ts"}
+{"title":"unittests:: services:: cancellableLanguageServiceOperations","file":"src/testRunner/unittests/services/cancellableLanguageServiceOperations.ts"}
+{"title":"unittests:: services:: Colorization","file":"src/testRunner/unittests/services/colorization.ts"}
+{"title":"unittests:: services:: convertToAsyncFunction::","file":"src/testRunner/unittests/services/convertToAsyncFunction.ts"}
+{"title":"unittests:: services:: DocumentRegistry","file":"src/testRunner/unittests/services/documentRegistry.ts"}
+{"title":"unittests:: services:: extract:: extractConstants","file":"src/testRunner/unittests/services/extract/constants.ts"}
+{"title":"unittests:: services:: extract:: extractFunctions","file":"src/testRunner/unittests/services/extract/functions.ts"}
+{"title":"unittests:: services:: extract:: extractRanges","file":"src/testRunner/unittests/services/extract/ranges.ts"}
+{"title":"unittests:: services:: extract:: Symbol Walker","file":"src/testRunner/unittests/services/extract/symbolWalker.ts"}
+{"title":"unittests:: services:: hostNewLineSupport","file":"src/testRunner/unittests/services/hostNewLineSupport.ts"}
+{"title":"unittests:: services:: languageService::","file":"src/testRunner/unittests/services/languageService.ts"}
+{"title":"unittests:: services:: organizeImports::","file":"src/testRunner/unittests/services/organizeImports.ts"}
+{"title":"unittests:: services:: PatternMatcher","file":"src/testRunner/unittests/services/patternMatcher.ts"}
+{"title":"unittests:: services:: PreProcessFile:","file":"src/testRunner/unittests/services/preProcessFile.ts"}
+{"title":"unittests:: services:: textChanges","file":"src/testRunner/unittests/services/textChanges.ts"}
+{"title":"unittests:: services:: Transpile","file":"src/testRunner/unittests/services/transpile.ts"}
+{"title":"unittests:: services:: utilities","file":"src/testRunner/unittests/services/utilities.ts"}
+{"title":"unittests:: skipJSDocParsing","file":"src/testRunner/unittests/skipJSDocParsing.ts"}
+{"title":"unittests:: sys:: symlinkWatching::","file":"src/testRunner/unittests/sys/symlinkWatching.ts"}
+{"title":"unittests:: TransformAPI","file":"src/testRunner/unittests/transform.ts"}
+{"title":"unittests:: tsbuild:: outFile:: amdModulesWithOut:: on amd modules with --out","file":"src/testRunner/unittests/tsbuild/amdModulesWithOut.ts"}
+{"title":"unittests:: tsbuild - clean::","file":"src/testRunner/unittests/tsbuild/clean.ts"}
+{"title":"unittests:: tsbuild:: commandLine::","file":"src/testRunner/unittests/tsbuild/commandLine.ts"}
+{"title":"unittests:: tsbuild:: configFileErrors:: when tsconfig extends the missing file","file":"src/testRunner/unittests/tsbuild/configFileErrors.ts"}
+{"title":"unittests:: tsbuild:: configFileErrors:: reports syntax errors in config file","file":"src/testRunner/unittests/tsbuild/configFileErrors.ts"}
+{"title":"unittests:: tsbuild:: configFileExtends:: when tsconfig extends another config","file":"src/testRunner/unittests/tsbuild/configFileExtends.ts"}
+{"title":"unittests:: tsbuild:: when containerOnly project is referenced","file":"src/testRunner/unittests/tsbuild/containerOnlyReferenced.ts"}
+{"title":"unittests:: tsbuild:: declarationEmit::","file":"src/testRunner/unittests/tsbuild/declarationEmit.ts"}
+{"title":"unittests:: tsbuild:: on demo:: project","file":"src/testRunner/unittests/tsbuild/demo.ts"}
+{"title":"unittests:: tsbuild:: on project with emitDeclarationOnly:: set to true","file":"src/testRunner/unittests/tsbuild/emitDeclarationOnly.ts"}
+{"title":"unittests:: tsbuild:: emptyFiles:: option in tsconfig","file":"src/testRunner/unittests/tsbuild/emptyFiles.ts"}
+{"title":"unittests:: tsbuild:: exitCodeOnBogusFile:: test exit code","file":"src/testRunner/unittests/tsbuild/exitCodeOnBogusFile.ts"}
+{"title":"unittests:: tsbuild:: extends::","file":"src/testRunner/unittests/tsbuild/extends.ts"}
+{"title":"unittests:: tsbuild:: fileDelete::","file":"src/testRunner/unittests/tsbuild/fileDelete.ts"}
+{"title":"unittests:: tsbuild:: graphOrdering::","file":"src/testRunner/unittests/tsbuild/graphOrdering.ts"}
+{"title":"unittests:: tsbuild:: inferredTypeFromTransitiveModule::","file":"src/testRunner/unittests/tsbuild/inferredTypeFromTransitiveModule.ts"}
+{"title":"unittests:: tsbuild:: javascriptProjectEmit::","file":"src/testRunner/unittests/tsbuild/javascriptProjectEmit.ts"}
+{"title":"unittests:: tsbuild:: lateBoundSymbol:: interface is merged and contains late bound member","file":"src/testRunner/unittests/tsbuild/lateBoundSymbol.ts"}
+{"title":"unittests:: tsbuild:: libraryResolution:: library file resolution","file":"src/testRunner/unittests/tsbuild/libraryResolution.ts"}
+{"title":"unittests:: tsbuild:: moduleResolution:: handles the modules and options from referenced project correctly","file":"src/testRunner/unittests/tsbuild/moduleResolution.ts"}
+{"title":"unittests:: tsbuild:: moduleResolution:: impliedNodeFormat differs between projects for shared file","file":"src/testRunner/unittests/tsbuild/moduleResolution.ts"}
+{"title":"unittests:: tsbuild:: moduleResolution:: resolution sharing","file":"src/testRunner/unittests/tsbuild/moduleResolution.ts"}
+{"title":"unittests:: tsbuild:: moduleSpecifiers:: synthesized module specifiers to referenced projects resolve correctly","file":"src/testRunner/unittests/tsbuild/moduleSpecifiers.ts"}
+{"title":"unittests:: tsbuild:: moduleSpecifiers:: synthesized module specifiers across referenced projects resolve correctly","file":"src/testRunner/unittests/tsbuild/moduleSpecifiers.ts"}
+{"title":"unittests:: tsbuild:: noCheck::","file":"src/testRunner/unittests/tsbuild/noCheck.ts"}
+{"title":"unittests:: tsbuild:: noEmit::","file":"src/testRunner/unittests/tsbuild/noEmit.ts"}
+{"title":"unittests:: tsbuild - with noEmitOnError::","file":"src/testRunner/unittests/tsbuild/noEmitOnError.ts"}
+{"title":"unittests:: tsbuild:: outFile::","file":"src/testRunner/unittests/tsbuild/outFile.ts"}
+{"title":"unittests:: tsbuild:: outputPaths::","file":"src/testRunner/unittests/tsbuild/outputPaths.ts"}
+{"title":"unittests:: tsbuild:: PublicAPI:: with custom transformers when passed to build","file":"src/testRunner/unittests/tsbuild/publicApi.ts"}
+{"title":"unittests:: tsbuild:: projectReferenceWithRootDirInParent:: with rootDir of project reference in parentDirectory","file":"src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts"}
+{"title":"unittests:: tsbuild:: with resolveJsonModule:: option on project resolveJsonModuleAndComposite","file":"src/testRunner/unittests/tsbuild/resolveJsonModule.ts"}
+{"title":"unittests:: tsbuild:: with resolveJsonModule:: option on project importJsonFromProjectReference","file":"src/testRunner/unittests/tsbuild/resolveJsonModule.ts"}
+{"title":"unittests:: tsbuild:: roots::","file":"src/testRunner/unittests/tsbuild/roots.ts"}
+{"title":"unittests:: tsbuild:: on 'sample1' project","file":"src/testRunner/unittests/tsbuild/sample.ts"}
+{"title":"unittests:: tsbuild:: transitiveReferences:: when project reference is referenced transitively","file":"src/testRunner/unittests/tsbuild/transitiveReferences.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: configFileErrors:: reports syntax errors in config file","file":"src/testRunner/unittests/tsbuildWatch/configFileErrors.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: with demo:: project","file":"src/testRunner/unittests/tsbuildWatch/demo.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: extends::","file":"src/testRunner/unittests/tsbuildWatch/extends.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: libraryResolution:: library file resolution","file":"src/testRunner/unittests/tsbuildWatch/libraryResolution.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: moduleResolution::","file":"src/testRunner/unittests/tsbuildWatch/moduleResolution.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: with noEmit::","file":"src/testRunner/unittests/tsbuildWatch/noEmit.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: with noEmitOnError::","file":"src/testRunner/unittests/tsbuildWatch/noEmitOnError.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: programUpdates::","file":"src/testRunner/unittests/tsbuildWatch/programUpdates.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: projectsBuilding::","file":"src/testRunner/unittests/tsbuildWatch/projectsBuilding.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: publicAPI:: Public API with custom transformers","file":"src/testRunner/unittests/tsbuildWatch/publicApi.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: reexport:: with reexport when referenced project reexports definitions from another file","file":"src/testRunner/unittests/tsbuildWatch/reexport.ts"}
+{"title":"unittests:: tsbuildWatch:: watchMode:: roots::","file":"src/testRunner/unittests/tsbuildWatch/roots.ts"}
+{"title":"unittests:: tsbuildWatch:: watchEnvironment:: tsbuild:: watchMode:: with different watch environments","file":"src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts"}
+{"title":"unittests:: tsc:: builder cancellationToken::","file":"src/testRunner/unittests/tsc/cancellationToken.ts"}
+{"title":"unittests:: tsc:: commandLine::","file":"src/testRunner/unittests/tsc/commandLine.ts"}
+{"title":"unittests:: tsc:: composite::","file":"src/testRunner/unittests/tsc/composite.ts"}
+{"title":"unittests:: tsc:: declarationEmit::","file":"src/testRunner/unittests/tsc/declarationEmit.ts"}
+{"title":"unittests:: tsc:: extends::","file":"src/testRunner/unittests/tsc/extends.ts"}
+{"title":"unittests:: tsc:: forceConsistentCasingInFileNames::","file":"src/testRunner/unittests/tsc/forceConsistentCasingInFileNames.ts"}
+{"title":"unittests:: tsc:: ignoreConfig::","file":"src/testRunner/unittests/tsc/ignoreConfig.ts"}
+{"title":"unittests:: tsc:: incremental::","file":"src/testRunner/unittests/tsc/incremental.ts"}
+{"title":"unittests:: tsc:: libraryResolution:: library file resolution","file":"src/testRunner/unittests/tsc/libraryResolution.ts"}
+{"title":"unittests:: tsc:: listFilesOnly::","file":"src/testRunner/unittests/tsc/listFilesOnly.ts"}
+{"title":"unittests:: tsc:: moduleResolution::","file":"src/testRunner/unittests/tsc/moduleResolution.ts"}
+{"title":"unittests:: tsc:: noCheck::","file":"src/testRunner/unittests/tsc/noCheck.ts"}
+{"title":"unittests:: tsc:: noEmit::","file":"src/testRunner/unittests/tsc/noEmit.ts"}
+{"title":"unittests:: tsc:: noEmitOnError::","file":"src/testRunner/unittests/tsc/noEmitOnError.ts"}
+{"title":"unittests:: tsc:: projectReferences::","file":"src/testRunner/unittests/tsc/projectReferences.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references meta check","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references constraint checking for settings","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references path mapping","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references nice-behavior","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references behavior changes under composite: true","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: projectReferencesConfig:: project-references errors when a file in a composite project occurs outside the root","file":"src/testRunner/unittests/tsc/projectReferencesConfig.ts"}
+{"title":"unittests:: tsc:: redirect::","file":"src/testRunner/unittests/tsc/redirect.ts"}
+{"title":"unittests:: tscWatch:: consoleClearing::","file":"src/testRunner/unittests/tscWatch/consoleClearing.ts"}
+{"title":"unittests:: tscWatch:: emit:: with outFile or out setting","file":"src/testRunner/unittests/tscWatch/emit.ts"}
+{"title":"unittests:: tscWatch:: emit:: for configured projects","file":"src/testRunner/unittests/tscWatch/emit.ts"}
+{"title":"unittests:: tscWatch:: emit:: file content","file":"src/testRunner/unittests/tscWatch/emit.ts"}
+{"title":"unittests:: tscWatch:: emit:: with when module emit is specified as node","file":"src/testRunner/unittests/tscWatch/emit.ts"}
+{"title":"unittests:: tscWatch:: emitAndErrorUpdates:: Emit times and Error updates in builder after program changes","file":"src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts"}
+{"title":"unittests:: tscWatch:: extends::","file":"src/testRunner/unittests/tscWatch/extends.ts"}
+{"title":"unittests:: tscWatch:: forceConsistentCasingInFileNames::","file":"src/testRunner/unittests/tscWatch/forceConsistentCasingInFileNames.ts"}
+{"title":"unittests:: tscWatch:: incremental:: emit file --incremental","file":"src/testRunner/unittests/tscWatch/incremental.ts"}
+{"title":"unittests:: tscWatch:: libraryResolution::","file":"src/testRunner/unittests/tscWatch/libraryResolution.ts"}
+{"title":"unittests:: tscWatch:: listFilesOnly::","file":"src/testRunner/unittests/tscWatch/listFilesOnly.ts"}
+{"title":"unittests:: tscWatch:: moduleResolution::","file":"src/testRunner/unittests/tscWatch/moduleResolution.ts"}
+{"title":"unittests:: tscWatch:: nodeNextWatch:: emit when module emit is specified as nodenext","file":"src/testRunner/unittests/tscWatch/nodeNextWatch.ts"}
+{"title":"unittests:: tscWatch:: noEmit::","file":"src/testRunner/unittests/tscWatch/noEmit.ts"}
+{"title":"unittests:: tscWatch:: noEmitOnError::","file":"src/testRunner/unittests/tscWatch/noEmitOnError.ts"}
+{"title":"unittests:: tscWatch:: programUpdates::","file":"src/testRunner/unittests/tscWatch/programUpdates.ts"}
+{"title":"unittests:: tscWatch:: projectsWithReferences:: invoking when references are already built","file":"src/testRunner/unittests/tscWatch/projectsWithReferences.ts"}
+{"title":"unittests:: tscWatch:: resolutionCache:: tsc-watch module resolution caching","file":"src/testRunner/unittests/tscWatch/resolutionCache.ts"}
+{"title":"unittests:: tscWatch:: resolveJsonModule:: emit file --incremental","file":"src/testRunner/unittests/tscWatch/resolveJsonModuleWithIncremental.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: with sourceOfProjectReferenceRedirect::","file":"src/testRunner/unittests/tscWatch/sourceOfProjectReferenceRedirect.ts"}
+{"title":"unittests:: tscWatch:: symlinks::","file":"src/testRunner/unittests/tscWatch/symlinks.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: tsc-watch with custom module resolution","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: tsc-watch expose error count to watch status reporter","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when watchHost does not implement setTimeout or clearTimeout","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when watchHost can add extraFileExtensions to process","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when watchHost uses createSemanticDiagnosticsBuilderProgram","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when getParsedCommandLine is implemented","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when builder emit occurs with emitOnlyDtsFiles","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchAPI:: when creating program with project references but not config file","file":"src/testRunner/unittests/tscWatch/watchApi.ts"}
+{"title":"unittests:: tscWatch:: watchEnvironment:: tsc-watch with different polling/non polling options","file":"src/testRunner/unittests/tscWatch/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: applyChangesToOpenFiles::","file":"src/testRunner/unittests/tsserver/applyChangesToOpenFiles.ts"}
+{"title":"unittests:: tsserver:: autoImportProvider::","file":"src/testRunner/unittests/tsserver/autoImportProvider.ts"}
+{"title":"unittests:: tsserver:: autoImportProvider:: monorepo","file":"src/testRunner/unittests/tsserver/autoImportProvider.ts"}
+{"title":"unittests:: tsserver:: auxiliaryProject::","file":"src/testRunner/unittests/tsserver/auxiliaryProject.ts"}
+{"title":"unittests:: tsserver:: cachingFileSystemInformation:: tsserverProjectSystem CachingFileSystemInformation","file":"src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts"}
+{"title":"unittests:: tsserver:: cancellationToken::","file":"src/testRunner/unittests/tsserver/cancellationToken.ts"}
+{"title":"unittests:: tsserver:: codeFix::","file":"src/testRunner/unittests/tsserver/codeFix.ts"}
+{"title":"unittests:: tsserver:: compileOnSave:: affected list","file":"src/testRunner/unittests/tsserver/compileOnSave.ts"}
+{"title":"unittests:: tsserver:: compileOnSave:: EmitFile test","file":"src/testRunner/unittests/tsserver/compileOnSave.ts"}
+{"title":"unittests:: tsserver:: compileOnSave:: CompileOnSaveAffectedFileListRequest with and without projectFileName in request","file":"src/testRunner/unittests/tsserver/compileOnSave.ts"}
+{"title":"unittests:: tsserver:: completions::","file":"src/testRunner/unittests/tsserver/completions.ts"}
+{"title":"unittests:: tsserver:: completionsIncomplete::","file":"src/testRunner/unittests/tsserver/completionsIncomplete.ts"}
+{"title":"unittests:: tsserver:: configFileSearch:: searching for config file","file":"src/testRunner/unittests/tsserver/configFileSearch.ts"}
+{"title":"unittests:: tsserver:: configuredProjects::","file":"src/testRunner/unittests/tsserver/configuredProjects.ts"}
+{"title":"unittests:: tsserver:: configuredProjects:: non-existing directories listed in config file input array","file":"src/testRunner/unittests/tsserver/configuredProjects.ts"}
+{"title":"unittests:: tsserver:: configuredProjects:: when reading tsconfig file fails","file":"src/testRunner/unittests/tsserver/configuredProjects.ts"}
+{"title":"unittests:: tsserver:: declarationFileMaps:: with declaration file maps:: project references","file":"src/testRunner/unittests/tsserver/declarationFileMaps.ts"}
+{"title":"unittests:: tsserver:: documentRegistry:: document registry in project service","file":"src/testRunner/unittests/tsserver/documentRegistry.ts"}
+{"title":"unittests:: tsserver:: documentRegistry:: works when reusing orphan script info with different scriptKind","file":"src/testRunner/unittests/tsserver/documentRegistry.ts"}
+{"title":"unittests:: tsserver:: duplicatePackages::","file":"src/testRunner/unittests/tsserver/duplicatePackages.ts"}
+{"title":"unittests:: tsserver:: dynamicFiles:: Untitled files","file":"src/testRunner/unittests/tsserver/dynamicFiles.ts"}
+{"title":"unittests:: tsserver:: dynamicFiles:: ","file":"src/testRunner/unittests/tsserver/dynamicFiles.ts"}
+{"title":"unittests:: tsserver:: events:: largeFileReferenced:: with large file","file":"src/testRunner/unittests/tsserver/events/largeFileReferenced.ts"}
+{"title":"unittests:: tsserver:: events:: projectLanguageServiceState::","file":"src/testRunner/unittests/tsserver/events/projectLanguageServiceState.ts"}
+{"title":"unittests:: tsserver:: events:: projectLoading::","file":"src/testRunner/unittests/tsserver/events/projectLoading.ts"}
+{"title":"unittests:: tsserver:: events:: projectUpdatedInBackground::","file":"src/testRunner/unittests/tsserver/events/projectUpdatedInBackground.ts"}
+{"title":"unittests:: tsserver:: events:: watchEvents::","file":"src/testRunner/unittests/tsserver/events/watchEvents.ts"}
+{"title":"unittests:: tsserver:: exportMapCache::","file":"src/testRunner/unittests/tsserver/exportMapCache.ts"}
+{"title":"unittests:: tsserver:: exportMapCache:: project references","file":"src/testRunner/unittests/tsserver/exportMapCache.ts"}
+{"title":"unittests:: tsserver:: extends::","file":"src/testRunner/unittests/tsserver/extends.ts"}
+{"title":"unittests:: tsserver:: externalProjects::","file":"src/testRunner/unittests/tsserver/externalProjects.ts"}
+{"title":"unittests:: tsserver:: services:: findAllReferences::","file":"src/testRunner/unittests/tsserver/findAllReferences.ts"}
+{"title":"unittests:: tsserver:: forceConsistentCasingInFileNames::","file":"src/testRunner/unittests/tsserver/forceConsistentCasingInFileNames.ts"}
+{"title":"unittests:: tsserver:: formatSettings::","file":"src/testRunner/unittests/tsserver/formatSettings.ts"}
+{"title":"unittests:: tsserver:: getApplicableRefactors::","file":"src/testRunner/unittests/tsserver/getApplicableRefactors.ts"}
+{"title":"unittests:: tsserver:: getEditsForFileRename::","file":"src/testRunner/unittests/tsserver/getEditsForFileRename.ts"}
+{"title":"unittests:: tsserver:: getExportReferences::","file":"src/testRunner/unittests/tsserver/getExportReferences.ts"}
+{"title":"unittests:: tsserver:: getFileReferences::","file":"src/testRunner/unittests/tsserver/getFileReferences.ts"}
+{"title":"unittests:: tsserver:: getMoveToRefactoringFileSuggestions::","file":"src/testRunner/unittests/tsserver/getMoveToRefactoringFileSuggestions.ts"}
+{"title":"unittests:: tsserver:: services:: goToDefinition::","file":"src/testRunner/unittests/tsserver/goToDefinition.ts"}
+{"title":"unittests:: tsserver:: importHelpers::","file":"src/testRunner/unittests/tsserver/importHelpers.ts"}
+{"title":"unittests:: tsserver:: inconsistentErrorInEditor::","file":"src/testRunner/unittests/tsserver/inconsistentErrorInEditor.ts"}
+{"title":"unittests:: tsserver:: inferredProjects::","file":"src/testRunner/unittests/tsserver/inferredProjects.ts"}
+{"title":"unittests:: tsserver:: inlayHints::","file":"src/testRunner/unittests/tsserver/inlayHints.ts"}
+{"title":"unittests:: tsserver:: jsdocTag:: jsdoc @link ","file":"src/testRunner/unittests/tsserver/jsdocTag.ts"}
+{"title":"unittests:: tsserver:: languageService::","file":"src/testRunner/unittests/tsserver/languageService.ts"}
+{"title":"unittests:: tsserver:: libraryResolution::","file":"src/testRunner/unittests/tsserver/libraryResolution.ts"}
+{"title":"unittests:: tsserver:: maxNodeModuleJsDepth:: for inferred projects","file":"src/testRunner/unittests/tsserver/maxNodeModuleJsDepth.ts"}
+{"title":"unittests:: tsserver:: with metadataInResponse::","file":"src/testRunner/unittests/tsserver/metadataInResponse.ts"}
+{"title":"unittests:: tsserver:: moduleResolution::","file":"src/testRunner/unittests/tsserver/moduleResolution.ts"}
+{"title":"unittests:: tsserver:: moduleSpecifierCache::","file":"src/testRunner/unittests/tsserver/moduleSpecifierCache.ts"}
+{"title":"unittests:: tsserver:: navTo:: navigate-to for javascript project","file":"src/testRunner/unittests/tsserver/navTo.ts"}
+{"title":"unittests:: tsserver:: occurences:: highlight on string","file":"src/testRunner/unittests/tsserver/occurences.ts"}
+{"title":"unittests:: tsserver:: openfile::","file":"src/testRunner/unittests/tsserver/openFile.ts"}
+{"title":"unittests:: tsserver:: packageJsonInfo::","file":"src/testRunner/unittests/tsserver/packageJsonInfo.ts"}
+{"title":"unittests:: tsserver:: Semantic operations on partialSemanticServer::","file":"src/testRunner/unittests/tsserver/partialSemanticServer.ts"}
+{"title":"unittests:: tsserver:: pasteEdits::","file":"src/testRunner/unittests/tsserver/pasteEdits.ts"}
+{"title":"unittests:: tsserver:: plugins:: loading","file":"src/testRunner/unittests/tsserver/plugins.ts"}
+{"title":"unittests:: tsserver:: plugins:: overriding getSupportedCodeFixes","file":"src/testRunner/unittests/tsserver/plugins.ts"}
+{"title":"unittests:: tsserver:: plugins:: supportedExtensions::","file":"src/testRunner/unittests/tsserver/plugins.ts"}
+{"title":"unittests:: tsserver:: pluginsAsync:: async loaded plugins","file":"src/testRunner/unittests/tsserver/pluginsAsync.ts"}
+{"title":"unittests:: tsserver:: projectErrors::","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: are reported as appropriate","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: for Configure file diagnostics events","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: dont include overwrite emit error","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: reports Options Diagnostic locations correctly with changes in configFile contents","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: with config file change","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: with resolveJsonModule","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: with npm install when","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: with file rename on wsl2::","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectErrors:: dts errors when files dont belong to common root","file":"src/testRunner/unittests/tsserver/projectErrors.ts"}
+{"title":"unittests:: tsserver:: projectReferenceCompileOnSave:: with project references and compile on save","file":"src/testRunner/unittests/tsserver/projectReferenceCompileOnSave.ts"}
+{"title":"unittests:: tsserver:: projectReferenceCompileOnSave:: with project references and compile on save with external projects","file":"src/testRunner/unittests/tsserver/projectReferenceCompileOnSave.ts"}
+{"title":"unittests:: tsserver:: projectReferenceErrors:: with project references and error reporting","file":"src/testRunner/unittests/tsserver/projectReferenceErrors.ts"}
+{"title":"unittests:: tsserver:: with projectReferences:: and tsbuild","file":"src/testRunner/unittests/tsserver/projectReferences.ts"}
+{"title":"unittests:: tsserver:: projectReferencesSourcemap:: with project references and tsbuild source map","file":"src/testRunner/unittests/tsserver/projectReferencesSourcemap.ts"}
+{"title":"unittests:: tsserver:: projectRootFiles:: roots::","file":"src/testRunner/unittests/tsserver/projectRootFiles.ts"}
+{"title":"unittests:: tsserver:: projects::","file":"src/testRunner/unittests/tsserver/projects.ts"}
+{"title":"unittests:: tsserver:: projectsWithReferences:: invoking when references are already built","file":"src/testRunner/unittests/tsserver/projectsWithReferences.ts"}
+{"title":"unittests:: tsserver:: refactors::","file":"src/testRunner/unittests/tsserver/refactors.ts"}
+{"title":"unittests:: tsserver:: regionDiagnostics::","file":"src/testRunner/unittests/tsserver/regionDiagnostics.ts"}
+{"title":"unittests:: tsserver:: reload::","file":"src/testRunner/unittests/tsserver/reload.ts"}
+{"title":"unittests:: tsserver:: reloadProjects::","file":"src/testRunner/unittests/tsserver/reloadProjects.ts"}
+{"title":"unittests:: tsserver:: rename::","file":"src/testRunner/unittests/tsserver/rename.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem extra resolution pass in server host","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem watching @types","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem add the missing module file for inferred project","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem rename a module file and rename back","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem module resolution caching","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: tsserverProjectSystem with project references","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: resolutionCache:: global typings and inferred project watching","file":"src/testRunner/unittests/tsserver/resolutionCache.ts"}
+{"title":"unittests:: tsserver:: Session:: General functionality","file":"src/testRunner/unittests/tsserver/session.ts"}
+{"title":"unittests:: tsserver:: Session:: exceptions","file":"src/testRunner/unittests/tsserver/session.ts"}
+{"title":"unittests:: tsserver:: Session:: how Session is extendable via subclassing","file":"src/testRunner/unittests/tsserver/session.ts"}
+{"title":"unittests:: tsserver:: Session:: an example of using the Session API to create an in-process server","file":"src/testRunner/unittests/tsserver/session.ts"}
+{"title":"unittests:: tsserver:: Session:: helpers","file":"src/testRunner/unittests/tsserver/session.ts"}
+{"title":"unittests:: tsserver:: with skipLibCheck::","file":"src/testRunner/unittests/tsserver/skipLibCheck.ts"}
+{"title":"unittests:: tsserver:: smartSelection::","file":"src/testRunner/unittests/tsserver/smartSelection.ts"}
+{"title":"unittests:: tsserver:: symlinkCache::","file":"src/testRunner/unittests/tsserver/symlinkCache.ts"}
+{"title":"unittests:: tsserver:: symLinks::","file":"src/testRunner/unittests/tsserver/symLinks.ts"}
+{"title":"unittests:: tsserver:: syntacticServer:: Semantic operations on Syntax server","file":"src/testRunner/unittests/tsserver/syntacticServer.ts"}
+{"title":"unittests:: tsserver:: syntaxOperations::","file":"src/testRunner/unittests/tsserver/syntaxOperations.ts"}
+{"title":"unittests:: tsserver:: project telemetry::","file":"src/testRunner/unittests/tsserver/telemetry.ts"}
+{"title":"unittests:: tsserver:: textStorage","file":"src/testRunner/unittests/tsserver/textStorage.ts"}
+{"title":"unittests:: tsserver:: typeAquisition:: autoDiscovery","file":"src/testRunner/unittests/tsserver/typeAquisition.ts"}
+{"title":"unittests:: tsserver:: typeAquisition:: prefer typings to js","file":"src/testRunner/unittests/tsserver/typeAquisition.ts"}
+{"title":"unittests:: tsserver:: typeOnlyImportChains::","file":"src/testRunner/unittests/tsserver/typeOnlyImportChains.ts"}
+{"title":"unittests:: tsserver:: typeReferenceDirectives::","file":"src/testRunner/unittests/tsserver/typeReferenceDirectives.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: local module","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: General functionality","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: Validate package name:","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: Invalid package names","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: discover typings","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: telemetry events","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: progress notifications","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: npm installation command","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: recomputing resolutions of unresolved imports","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: typingsInstaller:: tsserver:: with inferred Project","file":"src/testRunner/unittests/tsserver/typingsInstaller.ts"}
+{"title":"unittests:: tsserver:: VersionCache TS code","file":"src/testRunner/unittests/tsserver/versionCache.ts"}
+{"title":"unittests:: tsserver:: VersionCache simple text","file":"src/testRunner/unittests/tsserver/versionCache.ts"}
+{"title":"unittests:: tsserver:: VersionCache stress test","file":"src/testRunner/unittests/tsserver/versionCache.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: tsserverProjectSystem watchDirectories implementation","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: tsserverProjectSystem Watched recursive directories with windows style file system","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: recursiveWatchDirectory","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: networkStylePaths","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: handles watch compiler options","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: file names on case insensitive file system","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: watchFile is single watcher per file","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: watching at workspaces codespaces style","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests:: tsserver:: watchEnvironment:: perVolumeCasing","file":"src/testRunner/unittests/tsserver/watchEnvironment.ts"}
+{"title":"unittests :: internalApi :: typeParameterIsPossiblyReferenced","file":"src/testRunner/unittests/typeParameterIsPossiblyReferenced.ts"}
