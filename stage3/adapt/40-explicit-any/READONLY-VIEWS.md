@@ -61,7 +61,7 @@ including 40. Both records and the empty diff are retained under
 | 3: adamic types | Final tree, all 79 sorted compiler roots together: exit 0, zero diagnostics |
 | 4: normal product | All nine emitted JavaScript files byte-identical; typescript.d.ts and tsserverlibrary.d.ts byte-identical; no public line moves |
 | 5: cast-specific latent stops | All 19 change from writable-record Refused to namespace-value NotYet |
-| 5: ordinary census | Complete before: 73 Refused, 4 NotYet, 2 accepted; final comparison running |
+| 5: ordinary census | Both 79-root runs: 73 Refused, 4 NotYet, 2 accepted; zero changed first stops |
 | 6: inner-only mutant | Pass: restoring only SyntaxKind's inner-only Readonly still refuses through invariance.go:673 |
 
 The only declaration differences are formatEnum's readonly parameter in
@@ -135,3 +135,10 @@ that matched a cache annotation instead of a named parameter, a snapshot clone
 without custom tree objects, and the scan variant's initially omitted os import.
 They were corrected and the affected checks rerun. Historical initial-after
 results are labeled separately from final cache-aware results.
+
+The completed ordinary comparison is in [ORDINARY-CENSUS.md](evidence/readonly-views/ORDINARY-CENSUS.md)
+and ordinary-comparison.json. Every first stop is identical after normalizing
+only the tree root and omitting timing. The final debug latent delta has zero
+new Refused findings (202 before findings, 184 final findings). All requested
+checks are complete. Started processes were completed or terminated; the final
+cleanup audit is retained with the evidence.
