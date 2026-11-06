@@ -13,8 +13,9 @@ import (
 // `on<E extends keyof T>(eventName: E, listener: (...args: T[E]) => void)`, falsely refused
 // `(seen: Error) => ...`. r01, a class method taking Error seen through an interface method taking
 // `...args: [error: Error]`, and r02, two parameters against a two-element tuple, lower and agree with
-// Node on release, sanitized native and the JavaScript backend. n01, a method taking TypeError seen as
-// one taking Error, which tsc accepts by method bivariance, is still refused, now at the element. Each
+// Node on release, sanitized native and the JavaScript backend. n01, a method needing a field its
+// element doesn't carry (`{ text; code }` seen as taking `{ text }`), which tsc accepts by method
+// bivariance and Node runs printing undefined, is still refused, now at the element. Each
 // program's whole stop is pinned in its .stop file, or "lowers". Mutant: the walk relating a rest
 // parameter's whole type again, and r01 and r02 stop.
 func TestRestParameterRelation(t *testing.T) {
