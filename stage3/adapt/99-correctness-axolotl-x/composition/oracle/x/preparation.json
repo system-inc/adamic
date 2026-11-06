@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "source_files_identical": 746,
+  "frozen_commit": "12123aacb0a7c7671a7a1fca0cec41698eccb5e2",
+  "artifact": "5fcfc5270530759801cf7fe8e6c69fb058ff0fda2c00130ac52e1eac78d4cadd",
+  "metrics": {
+    "command": [
+      "python3",
+      "stage3/lane/prepare_shards.py",
+      "/workspace/scratch/bind2/oracle-cache-x"
+    ],
+    "exit": 0,
+    "seconds": 88.23680464999961,
+    "limit_seconds": 1440
+  }
+}
