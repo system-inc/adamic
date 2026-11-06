@@ -134,8 +134,15 @@ overlay('internal/lower/locals.go', locals_source)
 
 hook = (territory / 'lower.go.txt').read_text()
 if (repository / 'internal/lower/enums.go').exists():
+    # An enum's binding is registered wherever lowering builds its object: every ordinary enum, and, where
+    # the compiler builds a const enum's object where it's reached (#52zja36), a const enum too. A unit has
+    # no entry to walk for reach, so enumObjectBuilt fails closed to built there, as the whole program's
+    # own reach would for tsc's 19 debug.ts casts. Before that, no const enum had a binding.
+    built = '!ast.HasSyntacticModifier(node, ast.ModifierFlagsConst)'
+    if 'func (l *lowering) enumObjectBuilt(declaration *ast.Node) (bool, error)' in (repository / 'internal/lower/enums.go').read_text():
+        built = 'func() bool { built, err := l.enumObjectBuilt(node); return err == nil && built }()'
     hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
-        if !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+        if """ + built + """ {
             func() {
                 defer func() { _ = recover() }()
                 if local, err := l.enumLocal(node); err == nil { l.result.Locals[local].Global = true }
