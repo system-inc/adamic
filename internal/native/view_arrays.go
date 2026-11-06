@@ -13,8 +13,10 @@ func (e *emitter) checkedElement(check *ir.ViewElementCheck, array, index string
 	return fmt.Sprintf("adamic_view_element(%s, %d, %d, %s, %s, %t, %d, %s, %s)", contracts, count, check.Contract, array, index, relative, element, cString(check.Where), cString(check.ViewType))
 }
 
+// A checked read is a pure consumer, as ArrayIndex is (borrow.go's pureKind): adamic_view_element calls no program
+// code and frees nothing, and it returns the element retained, so the array is read lent, with no count of its own.
 func (e *emitter) viewElement(read ir.ViewElement) string {
-	array := e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", e.value(read.Array)))
+	array := e.value(read.Array)
 	index := e.value(read.Index)
 	element := read.Of
 	if read.Contract != 0 {
