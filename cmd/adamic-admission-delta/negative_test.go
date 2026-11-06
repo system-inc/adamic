@@ -344,9 +344,10 @@ func TestNegativeCheckedBoundaryElementStop(t *testing.T) {
 }
 
 // An element read expects the array's element type, so its stop is declared by an array of exactly that
-// element, in the four spellings #6wfvfhm rules, a union's only parenthesized or as ReadonlyArray. An array
-// of another element, a nested array, a union the stop's type is one member of, or the element type
-// declared bare declares nothing, and a field read's stop is never declared by an array. Mutant:
+// element, in the four spellings #6wfvfhm rules, a union's only parenthesized or as ReadonlyArray, as a
+// member or a typed const. An array of another element, a nested array, an array or undefined, a union the
+// stop's type is one member of, or the element type declared bare declares nothing, and a field read's
+// stop is never declared by an array. Mutant:
 // declaresRuledType ignoring element refuses every array.
 func TestNegativeCheckedBoundaryArrayDeclaration(t *testing.T) {
 	t.Parallel()
@@ -360,11 +361,13 @@ func TestNegativeCheckedBoundaryArrayDeclaration(t *testing.T) {
 		{"ReadonlyArray", "Node", "interface List { readonly _children: ReadonlyArray<Node>; }", false, true},
 		{"optional", "Node", "interface List { readonly _children?: readonly Node[]; }", false, true},
 		{"unspaced end", "Node", "interface List {readonly _children: readonly Node[];}", false, true},
+		{"typed const", "Node", "const wide: readonly Node[] = view._children;", false, true},
 		{"union", "Node | Token", "interface List { readonly _children: readonly (Node | Token)[]; }", false, true},
 		{"union ReadonlyArray", "Node | Token", "interface List { readonly _children: ReadonlyArray<Node | Token>; }", false, true},
 		{"another element", "Node", "interface List { readonly _children: readonly Token[]; }", false, false},
 		{"another ReadonlyArray", "Node", "interface List { readonly _children: ReadonlyArray<Token>; }", false, false},
 		{"nested", "Node", "interface List { readonly _children: readonly Node[][]; }", false, false},
+		{"or undefined", "Node", "interface List { readonly _children: readonly Node[] | undefined; }", false, false},
 		{"wider union", "Node", "interface List { readonly _children: readonly (Node | Token)[]; }", false, false},
 		{"union unparenthesized", "Node | Token", "interface List { _children: Node | Token[]; }", false, false},
 		{"bare element", "Node", "interface List { readonly _children: Node; }", false, false},

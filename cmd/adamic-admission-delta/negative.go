@@ -120,7 +120,8 @@ func supportedCheckedBoundary(witness negativeWitness) bool {
 // Oct 28). A required field's read expects exactly its declared type. An element read's stop expects the
 // element type, so it's declared by an array of exactly that element (#6wfvfhm, Adamic, Nov 6), spelled
 // readonly T[], T[] or ReadonlyArray<T>, or readonly (T)[] for a union, where a bare T[] would bind the
-// brackets to the last member alone. The pattern opens at the colon, so name?: readonly T[] declares it too.
+// brackets to the last member alone. The pattern opens at the colon, so name?: readonly T[] declares it too,
+// and the type ends a member or a typed variable: ;, a comma, } or an initializer's =.
 // A field read's stop is never declared by an array, nor an element read's by its bare type.
 func declaresRuledType(declaration, declared string, element bool) bool {
 	if element {
@@ -128,7 +129,7 @@ func declaresRuledType(declaration, declared string, element bool) bool {
 		if strings.Contains(declared, " | ") {
 			spellings = []string{`readonly \(` + regexp.QuoteMeta(declared) + `\)\[\]`, `ReadonlyArray<` + regexp.QuoteMeta(declared) + `>`}
 		}
-		return regexp.MustCompile(`: (` + strings.Join(spellings, "|") + `)(;|,| })`).MatchString(declaration)
+		return regexp.MustCompile(`: (` + strings.Join(spellings, "|") + `)(;|,| }| =)`).MatchString(declaration)
 	}
 	if regexp.MustCompile(`: ` + regexp.QuoteMeta(declared) + `[ ;]`).MatchString(declaration) {
 		return true

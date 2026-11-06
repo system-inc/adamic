@@ -4,7 +4,7 @@ interface SyntaxList extends Base { readonly _children: readonly Node[]; }
 const raw={tag:1 as const,_children:[7]};
 const base: Base = raw;
 const view = base as SyntaxList;
-function first(xs:readonly object[]):object|undefined{return xs[0];}
+const wide: readonly object[] = view._children;
 console.log('before');
-const child=first(view._children);
+const child=wide[0];
 console.log('after');
