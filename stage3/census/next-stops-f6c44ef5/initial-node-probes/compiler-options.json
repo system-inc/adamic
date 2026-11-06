@@ -1,0 +1,22 @@
+{
+  "strict": true,
+  "noUncheckedIndexedAccess": true,
+  "exactOptionalPropertyTypes": true,
+  "erasableSyntaxOnly": false,
+  "verbatimModuleSyntax": true,
+  "allowImportingTsExtensions": true,
+  "noEmit": false,
+  "module": "ESNext",
+  "moduleDetection": "force",
+  "moduleResolution": "bundler",
+  "target": "ES2024",
+  "lib": [
+    "es2024"
+  ],
+  "types": [],
+  "noCheck": true,
+  "rewriteRelativeImportExtensions": true,
+  "sourceMap": true,
+  "rootDir": "/tmp/next-stops-f6c44ef5/adapted",
+  "outDir": "/tmp/meter-node-tor0jt4i"
+}

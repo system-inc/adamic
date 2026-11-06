@@ -1,0 +1,20 @@
+// Measurement graph inspection only; no lowering or output program.
+package main
+
+import (
+    "encoding/json"
+    "os"
+    "github.com/system-inc/adamic/internal/load"
+)
+
+func main() {
+    program, err := load.LatentLoad([]string{os.Args[1]})
+    if err != nil { panic(err) }
+    if len(program.LatentDiagnostics()) != 0 { panic("entry graph is not checker-clean") }
+    program.LatentEntryReach()
+    sources := []string{}
+    for _, file := range program.Files() {
+        sources = append(sources, program.FileName(file))
+    }
+    if err := json.NewEncoder(os.Stdout).Encode(sources); err != nil { panic(err) }
+}

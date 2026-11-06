@@ -1,0 +1,27 @@
+{
+  "first_error": {
+    "pid": 6468,
+    "status": "stopped at final 105-minute bound",
+    "complete": false
+  },
+  "full": {
+    "pid": 7387,
+    "status": "30-minute timeout expired; incomplete",
+    "complete": false
+  },
+  "two_groups": {
+    "pids": [
+      7479,
+      7492
+    ],
+    "status": "stopped in favor of independently checkpointed source-file jobs",
+    "complete": false
+  },
+  "source_file_jobs": {
+    "status": "stopped after exact artifact-rule certification; complete body census not used",
+    "workers": 3,
+    "per_census_limit_seconds": 5400,
+    "coordinator_limit_seconds": 6300
+  },
+  "certification": "artifact-proof.json"
+}
