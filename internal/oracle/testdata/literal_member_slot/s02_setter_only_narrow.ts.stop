@@ -1,1 +1,1 @@
-record
+internal/oracle/testdata/literal_member_slot/s02_setter_only_narrow.ts:5:31: Adamic 0.1 refuses a setter of p taking Dog seen as the property p: Animal, so a write through it can hand the setter what it can't take; take Animal in the setter, or make p readonly in the type it's seen as, which can't write (adamic/invariant-mutable)

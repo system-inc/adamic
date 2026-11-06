@@ -1,1 +1,1 @@
-record
+internal/oracle/testdata/literal_member_slot/s01_setter_only.ts:4:14: stage 0 can't lower a setter with no getter in an object literal written where a slot names its property, which reads as undefined where the slot says it holds W yet

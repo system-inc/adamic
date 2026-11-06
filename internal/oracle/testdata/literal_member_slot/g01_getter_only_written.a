@@ -4,5 +4,5 @@ function make(): { p: W } {
     return { get p(): W { return w; } };
 }
 const x = make();
-try { x.p = { t: 5 }; console.log('wrote'); } catch (e) { console.log(e instanceof TypeError ? 'TypeError' : 'other'); }
+try { x.p = { t: 5 }; console.log('wrote'); } catch (error) { console.log(error instanceof Error ? error.name : 'other'); }
 console.log(String(x.p.t));
