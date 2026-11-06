@@ -502,23 +502,55 @@ static adamic_closure *const prototype_methods[] = {
 };
 _Static_assert(sizeof prototype_methods / sizeof prototype_methods[0] == sizeof adamic_dynamic_keyed_prototype_method_names / sizeof adamic_dynamic_keyed_prototype_method_names[0], "one closure for each of Object.prototype's methods");
 
+// not_called stops a call of a prototype's closure, naming it: the prefix and then the name.
+_Noreturn static void not_called(const char *prefix, const char *name) {
+	static const char suffix[] = " isn't called yet";
+	size_t length = strlen(prefix) + strlen(name) + sizeof suffix - 1;
+	char *message = malloc(length);
+	if (message == NULL) {
+		static const char out_of_memory[] = "out of memory";
+		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
+	}
+	memcpy(message, prefix, strlen(prefix));
+	memcpy(message + strlen(prefix), name, strlen(name));
+	memcpy(message + strlen(prefix) + strlen(name), suffix, sizeof suffix - 1);
+	adamic_panic(message, length);
+}
+
 static adamic_value prototype_method_called(adamic_closure *self, adamic_value *arguments) {
 	(void)arguments;
 	const char *name = "an unknown method";
 	for (size_t index = 0; index < sizeof prototype_methods / sizeof prototype_methods[0]; index++) {
 		if (prototype_methods[index] == self) name = adamic_dynamic_keyed_prototype_method_names[index];
 	}
-	static const char prefix[] = "Object.prototype.", suffix[] = " isn't called yet";
-	size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
-	char *message = malloc(length);
-	if (message == NULL) {
-		static const char out_of_memory[] = "out of memory";
-		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
+	not_called("Object.prototype.", name);
+}
+
+// Array.prototype's own functions, which an array and a tuple inherit, as a run-time key read hands
+// them out (#g187f1e): one immortal closure for each name in
+// adamic_dynamic_keyed_array_prototype_names, the same from every array and every read, as Node's are
+// one function each, with Node's length (dynamic_keyed_names.h, pinned by
+// TestDynamicKeyedArrayPrototypeLengthsAreNodes). An array's constructor, toString and toLocaleString
+// are these, never Object.prototype's, as on Node. No call reaches one yet, as none reaches
+// Object.prototype's, so each one's code is a guard that stops loudly.
+static adamic_value array_prototype_called(adamic_closure *self, adamic_value *arguments);
+#define ARRAY_PROTOTYPE_CLOSURE(index, length) static adamic_closure array_prototype_##index = {.heap = {0, adamic_kind_closure, 0}, .code = array_prototype_called, .count = 0, .source_length = length};
+ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_FUNCTIONS(ARRAY_PROTOTYPE_CLOSURE)
+#undef ARRAY_PROTOTYPE_CLOSURE
+#define ARRAY_PROTOTYPE_CLOSURE(index, length) &array_prototype_##index,
+// In adamic_dynamic_keyed_array_prototype_names' order.
+static adamic_closure *const array_prototype_functions[] = {ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_FUNCTIONS(ARRAY_PROTOTYPE_CLOSURE)};
+#undef ARRAY_PROTOTYPE_CLOSURE
+_Static_assert(sizeof array_prototype_functions / sizeof array_prototype_functions[0] == sizeof adamic_dynamic_keyed_array_prototype_names / sizeof adamic_dynamic_keyed_array_prototype_names[0], "one closure for each of Array.prototype's functions");
+
+static adamic_value array_prototype_called(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	const char *name = "an unknown method";
+	for (size_t index = 0; index < sizeof array_prototype_functions / sizeof array_prototype_functions[0]; index++) {
+		if (array_prototype_functions[index] == self) name = adamic_dynamic_keyed_array_prototype_names[index];
 	}
-	memcpy(message, prefix, sizeof prefix - 1);
-	memcpy(message + sizeof prefix - 1, name, strlen(name));
-	memcpy(message + sizeof prefix - 1 + strlen(name), suffix, sizeof suffix - 1);
-	adamic_panic(message, length);
+	if (strcmp(name, "constructor") == 0) not_called("", "Array");
+	not_called("Array.prototype.", name);
 }
 
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
@@ -562,11 +594,23 @@ static adamic_heap *keyed_array_element(const adamic_array *array, size_t index)
 	adamic_panic(message, sizeof message - 1);
 }
 
+// array_inherited is what an array or a tuple inherits under the key, as an immortal closure:
+// Array.prototype's own function first, then Object.prototype's one (prototype_value), so an array's
+// toString is Array.prototype's and its valueOf Object.prototype's, as on Node. __proto__ stops, as
+// it does on an object, and any other key reads undefined (NULL).
+static adamic_heap *array_inherited(const adamic_string *key) {
+	if (key_is(key, "__proto__")) keyed_stop(adamic_dynamic_keyed_stop_proto, key);
+	for (size_t index = 0; index < sizeof array_prototype_functions / sizeof array_prototype_functions[0]; index++) {
+		if (key_is(key, adamic_dynamic_keyed_array_prototype_names[index])) return &array_prototype_functions[index]->heap;
+	}
+	return prototype_value(key);
+}
+
 // keyed_array is a run-time key read of an array as Node's answers it (#ys4naww): an index below
 // length its element and one past it undefined, length a number, and an own field its value, one the
-// program set (metadata) or a match's (properties). A name the array inherits, Array.prototype's or
-// Object.prototype's, stops, since its methods aren't read yet, and any other key reads undefined.
-// Only array_key's canonical indexes are indexes: "01", "-1" and "1.5" are names, as on Node.
+// program set (metadata) or a match's (properties). A name the array inherits answers its immortal
+// closure (array_inherited, #g187f1e), and any other key reads undefined. Only array_key's canonical
+// indexes are indexes: "01", "-1" and "1.5" are names, as on Node.
 static adamic_heap *keyed_array(const adamic_array *array, const adamic_string *key) {
 	size_t index;
 	if (array_key(key->bytes, key->length, &index)) return index < array->length ? keyed_array_element(array, index) : NULL;
@@ -592,10 +636,59 @@ static adamic_heap *keyed_array(const adamic_array *array, const adamic_string *
 			}
 		}
 	}
-	if (key_named(key, adamic_dynamic_keyed_array_prototype_names, sizeof adamic_dynamic_keyed_array_prototype_names / sizeof adamic_dynamic_keyed_array_prototype_names[0]) || key_is(key, "__proto__") || prototype_value(key) != NULL) {
-		keyed_stop(adamic_dynamic_keyed_stop_array_prototype, key);
+	return array_inherited(key);
+}
+
+// boxable_type says whether dynamic_slot boxes a scalar of this ir.Type representation: a number, a
+// boolean, or a number that may be undefined.
+static bool boxable_type(int type) {
+	return type == 1 || type == 2 || type == 7;
+}
+
+// keyed_tuple_slot is a tuple's slot as a union, owned. dynamic_slot boxes it where it can know the
+// slot: a reference, or a scalar whose representation byte or whose shape's registered types name it,
+// which a program's own tuple, a Map's spread pair and map_set.c's iterator pair carry. A pair the
+// runtime makes with neither, library_object.c's Object.entries pair or regexp.c's indices pair, is
+// marked host, and its shape's kinds say how it holds each slot. Those kinds are exact: an entries
+// pair's value is a plain number, string or boolean (lowering refuses an optional one), and an indices
+// pair holds two numbers. A slot neither path can box is a compiler bug said out loud.
+static adamic_heap *keyed_tuple_slot(const adamic_object *tuple, size_t slot) {
+	unsigned char type = adamic_object_field_types(tuple)[slot];
+	bool registered = false;
+	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
+		if (entry->shape == tuple->shape && boxable_type(entry->types[slot])) registered = true;
 	}
-	return NULL;
+	if (tuple->shape->references[slot] || boxable_type(type) || registered) return dynamic_slot(tuple, slot);
+	if (type == 0 && host_object(tuple)) {
+		switch (tuple->shape->kinds[slot]) {
+		case adamic_field_number: return adamic_box_number(tuple->slots[slot].number);
+		case adamic_field_boolean: return tuple->slots[slot].boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		}
+	}
+	static const char message[] = "compiler bug: a run-time key read reached a tuple slot of unknown representation";
+	adamic_panic(message, sizeof message - 1);
+}
+
+// keyed_tuple is a run-time key read of a tuple by the array rule (#g187f1e), since a tuple is an array
+// on Node and on the JavaScript backend: an index below its length answers its slot, one past it
+// undefined, length a number, a name it inherits its closure (array_inherited), and any other key
+// undefined. Its length is its shape's count: lowering refuses, where an unknown can reach it, a tuple
+// with an optional or rest element, whose length on Node the shape can't say (a left-out optional
+// element is a slot holding undefined, as one written undefined is), so every tuple that reaches here
+// holds all its elements.
+static adamic_heap *keyed_tuple(const adamic_object *tuple, const adamic_string *key) {
+	size_t index;
+	if (array_key(key->bytes, key->length, &index)) {
+		if (index >= tuple->shape->count) return NULL;
+		size_t slot = keyed_slot(tuple, key, NULL);
+		if (slot == tuple->shape->count) {
+			static const char message[] = "compiler bug: a tuple's slots aren't named by their indexes";
+			adamic_panic(message, sizeof message - 1);
+		}
+		return keyed_tuple_slot(tuple, slot);
+	}
+	if (key_is(key, "length")) return adamic_box_number((double)tuple->shape->count);
+	return array_inherited(key);
 }
 
 adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_string *key, const adamic_keyed_class *classes, size_t count) {
@@ -619,7 +712,9 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
 	}
 	adamic_object *object = (adamic_object *)value;
-	if (object->tuple) keyed_stop(adamic_dynamic_keyed_stop_tuple, key);
+	// A tuple is read as an array, before the host test: the pairs the runtime makes are marked host,
+	// and their prototype on Node is Array.prototype.
+	if (object->tuple) return keyed_tuple(object, key);
 	if (object->class != NULL && object->class->is_static) keyed_stop(adamic_dynamic_keyed_stop_static_class, key);
 	if (key->length > 0 && key->bytes[0] == '#') keyed_stop(adamic_dynamic_keyed_stop_private, key);
 	if (key_is(key, "__proto__")) keyed_stop(adamic_dynamic_keyed_stop_proto, key);

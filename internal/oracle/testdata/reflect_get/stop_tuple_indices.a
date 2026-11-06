@@ -1,5 +1,5 @@
-// A match's indices pair is a tuple, read through the match by run-time keys, and stops on both
-// backends as stop_tuple.a's does. Node prints number.
+// A match's indices pair is a tuple, read through the match by run-time keys, and answers on both
+// backends as stop_tuple.a's does (#g187f1e). Node prints number.
 import { propertyOf } from './hostErrors.ts';
 
 const match = /b/d.exec('abc');

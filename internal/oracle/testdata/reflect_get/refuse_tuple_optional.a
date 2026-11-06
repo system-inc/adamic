@@ -1,0 +1,13 @@
+// A tuple with an optional element is NotYet where an unknown views what holds it (#g187f1e):
+// natively a left-out optional element is a slot holding undefined, as one written undefined is, so
+// the tuple's shape can't say its length, where Node's is 1 for [1] and 2 for [1, undefined]. Node
+// prints 1, then 2.
+import { propertyOf } from './hostErrors.ts';
+
+const short: [number, (string | undefined)?] = [1];
+const long: [number, (string | undefined)?] = [1, undefined];
+const holder = { short, long };
+for (const name of ['short', 'long']) {
+	const length = propertyOf(propertyOf(holder, name), 'length');
+	console.log(typeof length === 'number' ? String(length) : typeof length);
+}

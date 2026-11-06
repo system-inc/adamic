@@ -28,7 +28,7 @@ type runtimeNotYetStopList struct {
 
 // runtimeNotYetForms is the closed allowlist of run-time NotYet messages, each followed by
 // " (reading 'key')", and the ruling that made each. The words are internal/ir's DynamicKeyedStops, the
-// ten a ruled fixture reaches. The table's two compiler-bug stops never qualify, and nor does a form
+// eight a ruled fixture reaches. The table's two compiler-bug stops never qualify, and nor does a form
 // not here: a new one needs Adamic's ruling and its line here.
 var runtimeNotYetForms = map[string]string{
 	"a primitive receiver's properties aren't read yet":                     "#zhgxzjg",
@@ -38,8 +38,6 @@ var runtimeNotYetForms = map[string]string{
 	"a class instance's constructor isn't read by a run-time key yet":       "#0sps03r",
 	"this runtime value's properties aren't read by a run-time key yet":     "#0sps03r",
 	"an Error property Node sets and the native Error lacks isn't read yet": "#zhgxzjg",
-	"an array's methods aren't read by a run-time key yet":                  "#ys4naww",
-	"a tuple's properties aren't read by a run-time key yet":                "#ys4naww",
 	"an object literal's getter isn't read by a run-time key yet":           "#zhgxzjg",
 }
 

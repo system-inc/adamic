@@ -1,0 +1,12 @@
+// A tuple with an element that may be null, held as a reference, is NotYet where an unknown views
+// what holds it (#g187f1e): its slot holds null as a null pointer, which a run-time key read can't
+// tell from undefined, as an array of such elements can't (refuse_null_object_array.a). Node prints
+// null.
+import { propertyOf } from './hostErrors.ts';
+
+class Point {
+	x = 1;
+}
+const holder = { pair: [null, 1] as [Point | null, number] };
+const first = propertyOf(propertyOf(holder, 'pair'), '0');
+console.log(first === null ? 'null' : typeof first);

@@ -2,10 +2,9 @@
 // its element, boxed by how the array holds its slots (numbers, booleans, numbers that may be
 // undefined, and references: strings, objects, a mix, null); an index at or past length, a key that
 // isn't a canonical index, and a name no array has read undefined; length answers a number; and a
-// match array answers its own index, input and groups. Array.prototype's names stop
-// (stop_array_method.a). A null element reads null where the array boxes its elements as a Union (a
-// string | null, an object | null | undefined); an object | null array, which holds null as a null
-// pointer, is NotYet where it's viewed as unknown (refuse_null_object_array.a).
+// match array answers its own index, input and groups (array_methods.a reads inherited names). A null
+// element reads null where the array boxes its elements as a Union (a string | null, an object | null
+// | undefined); an object | null array is NotYet where it's viewed (refuse_null_object_array.a).
 import { propertyOf } from './hostErrors.ts';
 
 function show(label: string, value: unknown): void {

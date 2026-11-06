@@ -36,14 +36,25 @@ func dynamicKeyedNamesHeader() []byte {
 	for _, list := range []struct {
 		name  string
 		names []string
-	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames}, {"error", ir.DynamicKeyedErrorNames}} {
+	}{{"prototype_method", ir.DynamicKeyedPrototypeMethods}, {"array_prototype", ir.DynamicKeyedArrayPrototypeNames.Names()}, {"error", ir.DynamicKeyedErrorNames}} {
 		fmt.Fprintf(&text, "static const char *const adamic_dynamic_keyed_%s_names[] = {\n", list.name)
 		for _, name := range list.names {
 			fmt.Fprintf(&text, "\t%s,\n", cString(name))
 		}
 		text.WriteString("};\n\n")
 	}
-	text.WriteString("#endif\n")
+	// A closure is a struct with a flexible array member, so the closures can't be one array: union.c
+	// gives this a function(index, length) macro and defines one static closure for each.
+	text.WriteString("// Each of adamic_dynamic_keyed_array_prototype_names by its index, with Node's length for it.\n")
+	text.WriteString("#define ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_FUNCTIONS(function) \\\n")
+	for index, function := range ir.DynamicKeyedArrayPrototypeNames {
+		fmt.Fprintf(&text, "\tfunction(%d, %d)", index, function.Length)
+		if index < len(ir.DynamicKeyedArrayPrototypeNames)-1 {
+			text.WriteString(" \\")
+		}
+		text.WriteString("\n")
+	}
+	text.WriteString("\n#endif\n")
 	return text.Bytes()
 }
 
