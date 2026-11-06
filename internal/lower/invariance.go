@@ -475,23 +475,41 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		own, contextual, found = l.castSlotWidened(node)
 	case node.Kind == ast.KindShorthandPropertyAssignment:
-		// { pets } is { pets: pets }: the variable seen as the literal's property.
+		// { pets } is { pets: pets }: the variable seen as the literal's property, judged exactly as the
+		// named form's initializer is, against the slot its name has (slotType). Reading the property off
+		// the literal's slot instead missed it whenever that slot was a union holding undefined, such as a
+		// return type `{ p: W } | undefined`: undefined has no p, so the union had none, and a readonly R
+		// went out as a writable W unjudged (#20nf0sm). The name's slot is the checker's contextual type
+		// for the property, or carriedSlot's, both of which look past undefined. Where the checker names no
+		// slot for the name but the literal has one, the property of each member the literal can sit in is
+		// judged instead, so a slot the checker can't name never lets the value through unjudged.
+		name := node.Name()
 		literal := l.slotType(node.Parent)
-		if literal == nil {
-			return nil
+		var slots []*checker.Type
+		if slot := l.slotType(name); slot != nil {
+			slots = append(slots, slot)
+		} else if literal != nil {
+			for _, member := range l.literalSlotMembers(node.Parent, literal) {
+				if property := l.checker.GetPropertyOfType(member, name.Text()); property != nil {
+					slots = append(slots, l.checker.GetTypeOfSymbol(property))
+				}
+			}
 		}
-		property := l.checker.GetPropertyOfType(literal, node.Name().Text())
-		if property == nil {
-			return nil
+		own = l.checker.GetTypeAtLocation(name)
+		for _, slot := range slots {
+			contextual = slot
+			if found = l.freshOrWidened(name, own, contextual); found != nil {
+				break
+			}
 		}
-		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
-		found = l.freshOrWidened(node.Name(), own, contextual)
-		if found == nil {
-			contextual, found = l.memberLiteralSlotWidened(node.Name(), own, literal, node.Name().Text(), contextual)
+		if found == nil && literal != nil && len(slots) > 0 {
+			contextual, found = l.memberLiteralSlotWidened(name, own, literal, name.Text(), contextual)
 		}
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
-		// it is kennel's value seen as the literal's field.
+		// it is kennel's value seen as the literal's field. It's judged against each member of the
+		// literal's slot the literal can sit in, since a union's own properties are only those every
+		// member has, and `{ p: W } | undefined` has none (#20nf0sm, Lower's neighbor).
 		literal := l.slotType(node.Parent)
 		if literal == nil {
 			return nil
@@ -505,14 +523,20 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 				skip[property.Name().Text()] = true
 			}
 		}
-		own, contextual = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression), literal
-		if l.declaredKeys {
-			// A copy writes each of the spread's entries under its key, so a dictionary's can land
-			// under the literal's declared properties; its own declared properties are only copied.
-			found = l.declaredKeyWidened(own, literal, skip, true)
-		}
-		if found == nil {
-			found = l.widenedProperties(own, literal, skip, true, map[[2]*checker.Type]bool{})
+		own = l.checker.GetTypeAtLocation(node.AsSpreadAssignment().Expression)
+		for _, member := range l.literalSlotMembers(node.Parent, literal) {
+			contextual = member
+			if l.declaredKeys {
+				// A copy writes each of the spread's entries under its key, so a dictionary's can land
+				// under the literal's declared properties; its own declared properties are only copied.
+				found = l.declaredKeyWidened(own, member, skip, true)
+			}
+			if found == nil {
+				found = l.widenedProperties(own, member, skip, true, map[[2]*checker.Type]bool{})
+			}
+			if found != nil {
+				break
+			}
 		}
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
@@ -558,6 +582,24 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		return nil
 	}
 	return l.wideningRefusal(node, own, contextual, found)
+}
+
+// literalSlotMembers is each member of an object literal's slot the literal can sit in: the slot itself
+// when it isn't a union, and otherwise every member that isn't a primitive (undefined and null among
+// them) and that the literal's own type is assignable to. A member it isn't assignable to never holds it.
+func (l *lowering) literalSlotMembers(literal *ast.Node, slot *checker.Type) []*checker.Type {
+	if slot.Flags()&checker.TypeFlagsUnion == 0 {
+		return []*checker.Type{slot}
+	}
+	own := l.checker.GetTypeAtLocation(literal)
+	var members []*checker.Type
+	for _, member := range slot.Types() {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 || !l.checker.IsTypeAssignableTo(own, member) {
+			continue
+		}
+		members = append(members, member)
+	}
+	return members
 }
 
 // conditionalBranchInSlot is whether node is a branch of a conditional that goes straight into a typed
