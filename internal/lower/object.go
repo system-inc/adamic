@@ -2162,6 +2162,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		if value, handled, err := l.viewKeyedRead(node, object); handled {
+			return value, err
+		}
 		return l.finiteElementRead(node, object)
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
