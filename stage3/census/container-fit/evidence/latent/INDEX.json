@@ -1,0 +1,44 @@
+{
+  "completed_pairs": [
+    {
+      "piece": "q00",
+      "first_stop_changes": 5,
+      "regressions": 0,
+      "cap_rows": [],
+      "head_log_byte_identity": {
+        "equal": true,
+        "bytes": 223349,
+        "raw_sha256": "7a322040e3a08aec4824b7ceca7b7bc2b851d63e8b9ec87aae115b94293a7d7b"
+      }
+    }
+  ],
+  "planned_pieces": [
+    "q00",
+    "q01",
+    "q02",
+    "q03",
+    "q04",
+    "q05",
+    "q06",
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08",
+    "p09",
+    "p10",
+    "p11",
+    "p12",
+    "p13",
+    "p14",
+    "p15",
+    "p16",
+    "p17",
+    "p18",
+    "p19"
+  ],
+  "failed_sizing_piece": "base/p00; excluded"
+}

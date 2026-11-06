@@ -17,3 +17,11 @@ The initial base utilitiesPublic whole-file p00 reached its 25 minute ceiling at
 ## Completed q00 checkpoint
 
 Base, logging head and unlogged head q00 each completed 80 declarations and 74 timed attempts. Main pair reports five changed first stops, all moving from the Map/Set fit stop to checked predicate membership over an open tag domain. There are zero q00 regressions and zero cap rows. The 223,349-byte head/log record streams are byte-identical; evidence/byte-checks/q00.json records the SHA-256. These are partial findings, not a whole-census result.
+
+## Live completed-pair index
+
+These are partial paired results. Final cohort tables, full regression lists, walk distributions and common-unit sums wait for the entire partition. Each public chunk also has an exact head/log byte check.
+
+| Piece | Changed first stops | Regressions | Cap rows | Public byte check |
+| --- | ---: | ---: | ---: | --- |
+| q00 | 5 | 0 | 0 | equal |
