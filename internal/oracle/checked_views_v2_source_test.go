@@ -216,7 +216,8 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 }
 
 // In .a each cast is refused first, since its tag test, kind === 'Receiver', is one every source value passes
-// (#q97a1rr); its .ts twin keeps the cast a checked view and stays NotYet at the array.
+// (#q97a1rr); its .ts twin keeps the cast a checked view and stays NotYet at the array. Since V3 (#6wfvfhm) each element
+// type has a contract, so the stop is the union of two array types itself, which has no representation yet.
 func TestCheckedViewUntaggedArrayPending(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
@@ -228,7 +229,7 @@ func TestCheckedViewUntaggedArrayPending(t *testing.T) {
 				t.Fatalf("want the vacuous downcast refusal, got %v", err)
 			}
 			_, err = lowered(t, typeScriptTwin(t, path))
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
+			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "a value of type readonly ElementA[] | readonly ElementB[] where an array goes") || variant == "empty" && unsupported.What == "an array of never") {
 				t.Fatalf("twin: array admission must stay NotYet: %v", err)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.
