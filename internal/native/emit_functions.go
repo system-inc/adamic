@@ -376,6 +376,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		packed, count = e.closureArguments(expression)
 	}
 	call := e.packedClosureCall(expression, closure, packed, count)
+	if expression.Bound {
+		call = fmt.Sprintf("adamic_bound_closure_call(self, %s, %s, %d)", packed, count, e.packedArgumentSize(expression))
+	}
 	processHost := false
 	walkExpressions(e.program, func(value ir.Expression) {
 		if host, ok := value.(ir.ProcessCall); ok && host.Operation == "performance" {

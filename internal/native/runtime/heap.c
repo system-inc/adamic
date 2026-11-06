@@ -473,9 +473,7 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 		adamic_closure_uncache(closure);
 #endif
-		for (size_t index = 0; index < closure->count; index++) {
-			let_go(closure->cells[index]);
-		}
+		adamic_closure_free_children(closure, let_go);
 		break;
 	}
 	case adamic_kind_number:

@@ -20,7 +20,7 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 		ir.ObjectLiteral{}, ir.ArrayLiteral{}, ir.MapNew{}, ir.SetNew{},
 		ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{}, ir.ArraySplice{},
 		ir.ArrayConcat{}, ir.MapEntries{}, ir.ArraySlice{}, ir.MapKeys{},
-		ir.MapValues{}, ir.SetValues{}, ir.ArrayVisit{},
+		ir.MapValues{}, ir.SetValues{}, ir.ArrayVisit{}, ir.BoundClosure{},
 	}
 	covered := map[string]bool{}
 	for _, allocation := range allocations {

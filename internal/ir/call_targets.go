@@ -80,6 +80,8 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 		value = effects.Result
 	}
 	switch value := value.(type) {
+	case BoundClosure:
+		return FunctionTargets{Functions: []int{value.Function}}
 	case MakeClosure:
 		return FunctionTargets{Functions: []int{value.Function}}
 	case Read:

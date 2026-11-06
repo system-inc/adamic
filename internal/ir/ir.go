@@ -860,10 +860,19 @@ type (
 		ProgramRegion bool
 	}
 
+	// BoundClosure snapshots a target, receiver and fixed arguments in the ordinary
+	// captured cells of Function. It has fresh identity and no canonical cache.
+	BoundClosure struct {
+		Function      int
+		GraphTypes    []int
+		ProgramRegion bool
+	}
+
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
 		// Direct identifies canonical sibling code sharing Closure as its environment.
 		Direct       int
+		Bound        bool // call the target and receiver kept by the current bound closure
 		Closure      Expression
 		Arguments    []Expression
 		Spread       []bool
@@ -1184,6 +1193,7 @@ func (Trim) Type() Type          { return String }
 func (CodePoints) Type() Type    { return Array }
 func (StringIndex) Type() Type   { return String }
 func (MapEntries) Type() Type    { return Array }
+func (BoundClosure) Type() Type  { return Closure }
 func (MakeClosure) Type() Type   { return Closure }
 func (CheckedCast) Type() Type   { return Object }
 func (c CallClosure) Type() Type { return c.Returns }
