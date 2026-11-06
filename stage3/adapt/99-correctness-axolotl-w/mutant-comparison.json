@@ -1,0 +1,8 @@
+{
+  "sourceFiles": 746,
+  "mutantEqualsBaseline": true,
+  "kind": "Refused",
+  "where": "core.ts:810:89",
+  "reason": "a cast the runtime can't check",
+  "matchesBaselineFirstStop": true
+}

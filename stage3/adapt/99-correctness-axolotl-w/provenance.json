@@ -1,0 +1,37 @@
+{
+  "base": "a28effb2c8107c7321ab317f8461f2f79ddf270e",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compiler": "a28effb2c8107c7321ab317f8461f2f79ddf270e",
+  "compilerOverlay": false,
+  "javascriptChanging": false,
+  "compilerBuildExit": 0,
+  "binaries": {
+    "adamic": {
+      "sha256": "8505d7b9fd67da87933a98c87ba502a421975e2b60ee317aee4a28ee7b1e3bda",
+      "bytes": 42091143
+    },
+    "tool": {
+      "sha256": "11350c36324ba818533afc05203ccd120788c6d8a9bb1b489976f3a0433f07b5",
+      "bytes": 35917635
+    }
+  },
+  "adapterInputs": {
+    "adapt.cjs": "a4694a343b701e7d1b0a009f624b0c63b39033d5d2ec8a2ddfd66d31b423c663",
+    "owners.json": "a70e9088adc617bc8b3cd15affe540928b4ad76971bb2d8509fd4c899a635600",
+    "contract.cjs": "2671effe2364d94a88ad005901749835452695e8373e672103c5fd5dcec8843a",
+    "compare.cjs": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "mutant.cjs": "7c1e58993dc318261a63bb6f876900249768601eb8ff7be1d7e0902d22e2b700"
+  },
+  "sourceTrees": {
+    "before": {
+      "files": 746,
+      "sha256": "f0420a7a47217313a95b18256bd417c979cb763710626669b09b6b77c2be8dcf",
+      "purpose": "measurement provenance only, not an adaptation gate"
+    },
+    "after": {
+      "files": 746,
+      "sha256": "54acf5c861f4825e5351d2c2fc08b9aa26c562c58b6d1c379c589a02ed3b3d0f",
+      "purpose": "measurement provenance only, not an adaptation gate"
+    }
+  }
+}
