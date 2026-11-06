@@ -481,6 +481,12 @@ func (n *inference) value(expression ir.Expression) shape {
 		array := n.value(expression.Array)
 		n.store(array, shape{})
 		return array
+	case ir.BoundMethod:
+		result := shape{fresh: true, unknown: true, holds: n.value(expression.Object).roots()}
+		for _, fixed := range expression.Fixed {
+			result.holds = append(result.holds, n.value(fixed).roots()...)
+		}
+		return result
 	case ir.BoundClosure, ir.MakeClosure:
 		// Its cells hold captured variables, which this graph doesn't track.
 		return shape{fresh: true, unknown: true}

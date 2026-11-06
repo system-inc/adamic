@@ -188,6 +188,9 @@ func (l *lowering) checkViewWidenedReads() error {
 			demanded = unknown || deepReach(graph, whole.source, func(site int) bool { return viewed[site] })
 		}
 		if demanded {
+			if whole.reader == "bind lookup" {
+				return l.notYet(whole.node, "bind through a receiver that may hold a checked view")
+			}
 			return l.notYet(whole.node, "a read of every field of a value of type "+l.checker.TypeToString(whole.copied)+" by "+whole.reader+", which may hold a checked view's value")
 		}
 	}
