@@ -350,9 +350,15 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 //     representation and a read through the index reads its bytes.
 //   - (c) Every named read of the record's value is checked at run time by its declared type, whatever
 //     the receiver it's read through: the slot is boxed as a union, so each read goes through
-//     recordReadType, and the property's representation is one readGuardedInUnionSlot proves stops on a
-//     lie (a scalar's exact tag, a heap member's checked narrow) or is not yet at the read (an array, a
-//     Map). A function's tag says only "function", and a union is read unchecked, so neither is dropped.
+//     recordReadType, and the property is a scalar that check proves by its exact tag or value
+//     (droppedContractScalars). A function's tag says only "function", and a union is read unchecked.
+//     An object kind (a MapLike, an array, a Map, an object) is never dropped, Adamic's condition on
+//     Language's 08:38Z must: an honest MapLike written through the view under paths read as a
+//     non-member of the slot's union natively, where Node and the JavaScript backend read it.
+//
+// The flag is cleared while a function's parameters are walked (parameterStorage): a parameter is
+// handed the other side's value, so the view there runs against the flow and would add the contract
+// it seems to drop, Language's 08:38Z should.
 //
 // A readonly property is dropped on the same conditions: the view may write under its name, and the
 // read holds what it finds there as it does any other write through an index signature. The other way,
@@ -371,5 +377,20 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 		return false
 	}
 	stored, known := l.representation(t)
-	return of == ir.Union && known && readGuardedInUnionSlot[stored.Present()]
+	return of == ir.Union && known && droppedContractScalars[stored.Present()]
+}
+
+// droppedContractScalars is each representation droppedContractRead drops a property of: a scalar whose
+// read from a slot boxed as a union recordReadDeclared proves by its exact tag, and by its value where
+// the declared type is literals (a number, string or boolean, their literal unions and numeric enums).
+var droppedContractScalars = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true}
+
+// parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
+// parameter is handed the other side's value, so no named contract is dropped through it, in either
+// direction.
+func (l *lowering) parameterStorage(check func() bool) bool {
+	dropping := l.droppedContractsRead
+	l.droppedContractsRead = false
+	defer func() { l.droppedContractsRead = dropping }()
+	return check()
 }

@@ -1,6 +1,7 @@
 // tsc's toIncrementalBuildInfoCompilerOptions (builder.ts:1465): CompilerOptions handed to getOwnKeys<T>(map: MapLike<T>)
 // (core.ts:1297), T inferred from its index signature, which reads it by for...in and an own-key test and returns a
-// fresh array. The caller reads each option by its key on its own CompilerOptions.
+// fresh array. The caller reads each option by its key on its own CompilerOptions. lib and configFile are index
+// entries here, not declared: a declared object-kind option keeps the view not yet (paths_*.ts).
 interface MapLike<T> {
     [index: string]: T;
 }
@@ -11,9 +12,8 @@ type CompilerOptionsValue = string | number | boolean | (string | number)[] | st
 interface CompilerOptions {
     strict?: boolean;
     outDir?: string;
-    lib?: string[];
     target?: number;
-    readonly configFile?: SourceFileLike;
+    readonly configFilePath?: string;
     [option: string]: CompilerOptionsValue | SourceFileLike | undefined;
 }
 const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -46,8 +46,8 @@ function toBuildInfo(options: CompilerOptions): string[] {
     return result;
 }
 
-const declared: CompilerOptions = { target: 9, strict: false, outDir: "out", lib: ["es2022"], configFile: { fileName: "tsconfig.json" } };
+const declared: CompilerOptions = { target: 9, strict: false, outDir: "out", lib: ["es2022"], configFilePath: "tsconfig.json", configFile: { fileName: "tsconfig.json" } };
 console.log(getOwnKeys(declared).join(","));
 console.log(toBuildInfo(declared).join(" "));
-console.log(`${declared.strict}:${declared.target}:${declared.configFile === undefined ? "none" : declared.configFile.fileName}`);
+console.log(`${declared.strict}:${declared.target}:${declared.configFilePath}`);
 console.log(`${toBuildInfo({}).length}`);
