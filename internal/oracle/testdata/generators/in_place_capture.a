@@ -1,0 +1,51 @@
+// Memory's must on #qk8rztp S3b, in the shape of tsc's elaborateJsxComponents (checker.ts:21781): a
+// function* written in place and called, in a function with a nested function of its own (a
+// NestedFrame parent, as getInvalidTextualChildDiagnostic makes it), yielding `elem`, a narrowed const
+// declared two blocks deep, which its body reads from that const's cell through its carrier. The
+// carrier is a closure made for the call, released when the statement that made the generator ends,
+// so the frame's entry retains it: the for-of steps after that statement, under the sanitizers, and
+// the one-read Iterable<T> parameter, tsc's elaborateElementwise, steps within its call. A call
+// dropped as a statement lets go of its carrier with its frame and runs none of the body. Every string
+// is built, so a freed carrier or cell reads as a sanitizer report, never as an immortal literal.
+interface Elaboration {
+    readonly errorNode: string;
+    readonly innerExpression: string;
+}
+function elaborateElementwise(iterator: Iterable<Elaboration>, source: string): string {
+    let reported = '';
+    for (const value of iterator) {
+        reported += `${source}<${value.errorNode}=${value.innerExpression}>`;
+    }
+    return reported;
+}
+function elaborateJsxComponents(children: readonly string[], target: string): string {
+    function getElaborationElementForJsxChild(child: string, index: number): Elaboration | undefined {
+        return child.length > 1 ? { errorNode: `${target}${String(index)}`, innerExpression: `${child}!` } : undefined;
+    }
+    let result = '';
+    for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child !== undefined) {
+            const elem = getElaborationElementForJsxChild(child, i);
+            if (elem !== undefined) {
+                for (const stepped of (function* () {
+                    yield elem;
+                })()) {
+                    result += `[${stepped.errorNode}:${stepped.innerExpression}]`;
+                }
+                result += elaborateElementwise(
+                    (function* () {
+                        yield elem;
+                    })(),
+                    `n${String(i)}`,
+                );
+                (function* () {
+                    console.log(`never ${elem.errorNode}`);
+                    yield elem;
+                })();
+            }
+        }
+    }
+    return result;
+}
+console.log(elaborateJsxComponents(['a', 'bc', 'def'], `t${String(1)}`));

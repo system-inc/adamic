@@ -1,0 +1,34 @@
+// a-check: refused adamic/cycle-capable
+// Tree is self-referential, so its two linked literals are Program region members, adopted where they're
+// made. Two generators written in place and called (#qk8rztp S3b) walk them, each on its own counted
+// frame, made through a closure of its own, its carrier, which captures the members' locals: neither
+// the frame nor the carrier is a member or adopted. The for-of steps the first after the statement
+// that made its carrier, and a one-read Iterable<T> parameter steps the second. The names are built by
+// template strings, so a member read after it was freed shows as a wrong name or a sanitizer report,
+// never as an immortal string literal that survives it.
+interface Tree { name: string; next: Tree | undefined; }
+function names(trees: Iterable<Tree>): string {
+    let out = '';
+    for (const tree of trees) {
+        out = out + tree.name + ',';
+    }
+    return out;
+}
+function run(): void {
+    const root: Tree = { name: `root${1}`, next: undefined };
+    const branch: Tree = { name: `branch${2}`, next: root };
+    for (const tree of (function* (): Generator<Tree, void, undefined> {
+        let at: Tree | undefined = branch;
+        while (at !== undefined) {
+            yield at;
+            at = at.next;
+        }
+    })()) {
+        console.log(tree.name);
+    }
+    console.log(names((function* (): Generator<Tree, void, undefined> {
+        yield branch;
+        yield root;
+    })()));
+}
+run();
