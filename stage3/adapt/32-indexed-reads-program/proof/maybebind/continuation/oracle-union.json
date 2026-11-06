@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "units": 398,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "observations": 106367,
+  "identical_test_identities_and_statuses": true,
+  "identical_sanctioned_API_bytes": true,
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "maximum_shard_seconds": 6.984572122000827,
+  "runtime": "144022c09fc02ba8e554f9b78fe2f8ae40f3fdfa314e30db07ea50dc6ec661dd",
+  "product_source": "/workspace/scratch/32r-oracle-results/shards/product"
+}

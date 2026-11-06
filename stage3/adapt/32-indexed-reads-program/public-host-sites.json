@@ -107,7 +107,7 @@
     "before": "now?(): Date;",
     "after": "now?: { now(): Date; }[\"now\"] | undefined;",
     "public": false,
-    "proof": "watch.ts explicitly populates now with maybeBind of an optional host method. maybeBind returns undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
+    "proof": "watch.ts explicitly populates now with system.now?.bind(system). Optional binding returns the bound method or undefined on absence. The owning optional field admits that legitimate value; indexed method extraction preserves the exact callable signature and its original parameter variance. No object shape, evaluation point or runtime value changes."
   },
   {
     "kind": "public-method",

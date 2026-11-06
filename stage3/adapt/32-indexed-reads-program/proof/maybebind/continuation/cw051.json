@@ -1,0 +1,34 @@
+{
+  "status": "pass",
+  "combined": {
+    "main": "12fec995dcadc7f1ae94e4ba63835884451378ae",
+    "fold": "997331ef1ec86480f47f3710fd43e1150407dafc",
+    "adapter99x": "5fa773b799e417c568ae62a4003a801333b87714"
+  },
+  "units": [
+    {
+      "name": "performBuild",
+      "unit": "/workspace/scratch/32r-extra/after/src/compiler/executeCommandLine.ts:812:1",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "name": "createWatchOfConfigFile",
+      "unit": "/workspace/scratch/32r-extra/after/src/compiler/executeCommandLine.ts:1011:1",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19: stage 0 can't lower a call through ?. (an optional call) yet"
+    },
+    {
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "unit": "/workspace/scratch/32r-extra/after/src/compiler/executeCommandLine.ts:1034:1",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19",
+      "reason": "a call through ?. (an optional call)",
+      "text": "/workspace/scratch/32r-extra/after/src/compiler/watch.ts:855:19: stage 0 can't lower a call through ?. (an optional call) yet"
+    }
+  ]
+}

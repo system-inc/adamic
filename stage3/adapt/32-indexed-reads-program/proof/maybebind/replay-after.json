@@ -1,0 +1,574 @@
+[
+  {
+    "adapter": "00-setup",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "10-type-imports",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "20-optional-declarations",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "30-indexed-reads",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "declined site changed: core.ts:992:21"
+  },
+  {
+    "adapter": "31-indexed-reads-checker",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "32-indexed-reads-program",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "handoff producer runtime drift: appendSourceMap"
+  },
+  {
+    "adapter": "33-indexed-reads-emit",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "site drift: sourcemap.ts:215 map.sourcesContent[raw.sourceIndex]"
+  },
+  {
+    "adapter": "40-explicit-any",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "{\"owners\":0,\"removed\":0}\n<repo>/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (<repo>/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at <repo>/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (<repo>/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (<repo>/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "41-explicit-any-remaining",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16\n        if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);\n                                              ^\n\nError: missing or duplicate reviewed site: 31\n    at Object.<anonymous> (<repo>/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16:53)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "42-scanner-any",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "43-any-returns",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "<repo>/stage3/adapt/43-any-returns/adapt.cjs:15\n    else if (count || text.split(rule.after).length !== 2) throw Error('unreviewed site: ' + rule.name);\n                                                           ^\n\nError: unreviewed site: convertConfigFileToObject\n    at Object.<anonymous> (<repo>/stage3/adapt/43-any-returns/adapt.cjs:15:66)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "44-config-generics",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "45-regex-captures",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "46-fix-pragma-empty-argument",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "47-host-errors",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "unreviewed helper import"
+  },
+  {
+    "adapter": "48-memoize",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "49-honest-optionals",
+    "exit": 0,
+    "files_written": [
+      "src/compiler/checker.ts",
+      "src/compiler/core.ts",
+      "src/compiler/emitter.ts",
+      "src/compiler/scanner.ts"
+    ],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "50-temporary-scanner-implicit-returns",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "51-temporary-scanner-fallthrough",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "52-json-values",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "60-temporary-factory-local-symbol",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "61-temporary-factory-type-expression",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "62-temporary-tracing-write",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "63-temporary-tracing-legend",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "64-temporary-parser-range-read",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "65-temporary-node-builtins",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: source site drift: Partial<typeof import(\"perf_hooks\")>\n\n0 !== 1\n\n    at once (<repo>/stage3/adapt/65-temporary-node-builtins/adapt.cjs:7:12)\n    at <repo>/stage3/adapt/65-temporary-node-builtins/adapt.cjs:28:17\n    at Array.map (<anonymous>)\n    at Object.<anonymous> (<repo>/stage3/adapt/65-temporary-node-builtins/adapt.cjs:18:63)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 0,\n  expected: 1,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "70-readonly-views",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "71-writable-views",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "75-optional-widening",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "76-truthful-casts",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: cache ownership/reference drift\n\n0 !== 5\n\n    at plan (<repo>/stage3/adapt/76-truthful-casts/adapt.cjs:41:12)\n    at Object.<anonymous> (<repo>/stage3/adapt/76-truthful-casts/adapt.cjs:58:14)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 0,\n  expected: 5,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "78-variance-marker",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "79-exit-code",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "90-void-widening",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "91-patcher-discard",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "92-tty-host-results",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "93-builtin-imports",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: target owner moved: getNodeSystem\n    at adapt (<repo>/stage3/adapt/93-builtin-imports/adapt.cjs:75:5)\n    at Object.<anonymous> (<repo>/stage3/adapt/93-builtin-imports/adapt.cjs:130:32)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "94-axolotl-property-read",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-a",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-b",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: caller/arity dependency moved: getTypeArguments\n+ actual - expected\n\n+ '08cc607e095404515eca82fdb7acf2faa12d516f23559d82a097c2d0fbab4451'\n- 'c42bc3b30369a29bade4d1bf968960581c119c559b32a99eef8b8a2f504ca993'\n\n    at adapt (<repo>/stage3/adapt/95-checker-axolotl-b/adapt.cjs:34:60)\n    at Object.<anonymous> (<repo>/stage3/adapt/95-checker-axolotl-b/adapt.cjs:102:32)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '08cc607e095404515eca82fdb7acf2faa12d516f23559d82a097c2d0fbab4451',\n  expected: 'c42bc3b30369a29bade4d1bf968960581c119c559b32a99eef8b8a2f504ca993',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "95-checker-axolotl-c",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-d",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-e",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-f",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-g",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "95-checker-axolotl-h",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: writer owner shape\n+ actual - expected\n\n+ '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854'\n- '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152'\n\n    at adapt (<repo>/stage3/adapt/95-checker-axolotl-h/adapt.cjs:35:11)\n    at Object.<anonymous> (<repo>/stage3/adapt/95-checker-axolotl-h/adapt.cjs:86:172)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854',\n  expected: '505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "96-emit-axolotl-a",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "96-emit-axolotl-b",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "96-emit-axolotl-c",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "97-cli-axolotl-a",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "97-cli-axolotl-b",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "97-cli-axolotl-c",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "97-cli-axolotl-d",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "97-cli-axolotl-e",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "98-axolotl-a",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "98-axolotl-b",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "98-axolotl-c",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "98-axolotl-d",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "98-axolotl-e",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "the nodeSystem store: want one, got 0\n\n0 !== 1"
+  },
+  {
+    "adapter": "99-cli-debug-assertion-level",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-cli-perf-hooks-import",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-a",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-b",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-c",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-d",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-e",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-f",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-g",
+    "exit": 1,
+    "files_written": [],
+    "edits": [],
+    "refusal": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: output template spelling drift\n+ actual - expected\n\n+ '`${tab}${tab}// \"${setting}\": ${String(formattedValue)},`'\n- '`${tab}${tab}// \"${setting}\": ${formattedValue},`'\n\n    at locate (<repo>/stage3/adapt/99-correctness-axolotl-g/adapt.cjs:45:16)\n    at adapt (<repo>/stage3/adapt/99-correctness-axolotl-g/adapt.cjs:55:18)\n    at Object.<anonymous> (<repo>/stage3/adapt/99-correctness-axolotl-g/adapt.cjs:73:32)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '`${tab}${tab}// \"${setting}\": ${String(formattedValue)},`',\n  expected: '`${tab}${tab}// \"${setting}\": ${formattedValue},`',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0"
+  },
+  {
+    "adapter": "99-correctness-axolotl-h",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-i",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-j",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-k",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-l",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-m",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-n",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-q",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-r",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-s",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-t",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-u",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-correctness-axolotl-w",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  },
+  {
+    "adapter": "99-wasm-crypto-import",
+    "exit": 0,
+    "files_written": [],
+    "edits": [],
+    "refusal": null
+  }
+]
