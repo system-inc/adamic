@@ -78,7 +78,7 @@ The target's complete apply passes. Its 79 compiler source files are byte-for-by
 identical to the prior adaptation-only tree, as source-audit.json records.
 The separate ordinary 79-root census is still running. The separate B2 emitter
 scan has no finding on the nineteenth cast's line. Its scan-only driver matches
-all 39 findings from the full B2 debug scan exactly, lowers no units, and keeps
+all 21 findings from the full B2 debug scan exactly, lowers no units, and keeps
 the no-output guards. It changes only the scratch driver, stored as .go.txt in
 03-scan-and-replay.tar.gz. No production or adaptation-40 source is edited.
 An independent single-unit formatSyntaxKind replay reproduces N1 with exit 0.
