@@ -238,23 +238,25 @@ func loweredElementChecks(program *ir.Program) ([]string, int) {
 // The key checks an element read only where the program views an array whose element type is
 // comparable to the read's (Lower's ruling on #6wfvfhm). A program that views no array, here one
 // that views a plain Holder, asks no read for a check, so none is built and it lowers as main does.
+// Node shares no field with Holder, so a Holder view can't be held as a Node, and main's V2 rule for
+// a read through a type a view may reach doesn't stop node.id.
 func TestViewElementKeyViewsNoArray(t *testing.T) {
 	t.Parallel()
 	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", `interface Holder { readonly kind: 'Holder'; readonly count: number; }
-interface Node { readonly kind: number; }
+interface Node { readonly id: number; }
 const raw = {kind: 'Holder' as const, count: 2};
 const base: {readonly kind: 'Holder'} = raw;
 const holder = base as Holder;
 const tokens: number[] = [3, 4];
-const nodes: Node[] = [{kind: 1}];
+const nodes: Node[] = [{id: 1}];
 let total = 0;
 for (const token of tokens) total += token;
-const kinds = nodes.map((node: Node) => node.kind);
+const kinds = nodes.map((node: Node) => node.id);
 const first = nodes[0];
 console.log(String(tokens[1]));
 console.log(String(kinds.length));
 console.log(String(total));
-console.log(String(first?.kind));
+console.log(String(first?.id));
 console.log(String(holder.count));
 `))
 	if err != nil {
