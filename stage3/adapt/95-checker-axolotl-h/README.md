@@ -70,16 +70,19 @@ whole-interface or whole-file acceptance pin**, so 97b can modify its own
 members independently. Own slot symbols, optionality and unchanged read types
 are checked; unrecognized writer, member or owner shapes are refused.
 
-All edits are source slices, planned and parsed before one types.ts write.
+All edits are source slices, planned and parsed before writing types.ts and checker.ts.
 Inputs are reread and complete stock JavaScript is compared in both comments
-modes before writing. CRLF is preserved without a printer. No assertion, cast,
-optional chain, default or runtime change is added. --check performs no writes.
-A second run reports files 0, declarations 0; 97b also reruns with zero edits.
+modes before writing. types.ts must remain JavaScript-identical. checker.ts may
+change only by the two optional-bind initializers described below. CRLF is
+preserved without a printer. --check performs no writes. On the isolated H
+fixture a second run reports files 0, declarations 0 and rewrites 0. Full-stack
+replay may refuse later pinned owners, as recorded in the fold evidence.
 
-verify.cjs is independent of the planner. It reconstructs only H's four parsed
-member edits, compares all 746 src files, checks CRLF and complete JavaScript,
-and leaves unrelated 97b edits in the control intact. Exactly one file changes;
-CRLF stays 10,681. types.ts JavaScript is byte-identical:
+verify.cjs is independent of the planner. It reconstructs H's four parsed
+member edits and the two checker initializer edits, compares every src file,
+checks CRLF and complete JavaScript, and leaves unrelated 97b edits in the
+control intact. types.ts JavaScript is byte-identical. The following measurements
+are the historical four-slot run:
 
 | Comments | Bytes | SHA-256 before and after |
 | --- | ---: | --- |
@@ -114,8 +117,9 @@ are retained on the evidence branch.
 
 ## Evidence and reproduction
 
-Only adapt.cjs, verify.cjs, sites.json and this README live here, since every
-file in this directory feeds apply's input key. Logs, raw censuses, oracle
+Every file in this directory feeds apply's input key. The fold evidence below
+is retained here to keep the shipping branch confined to this directory.
+Historical logs, raw censuses, oracle
 reports, undo controls, public API checks and composition results live on
 [typescript/axolotl-checker-h-evidence](https://github.com/system-inc/adamic/tree/typescript/axolotl-checker-h-evidence/stage3/evidence/95-checker-axolotl-h).
 The evidence branch's current report identifies the accepted four-slot run;
@@ -158,3 +162,104 @@ table or other adaptation source is changed by the shipping branch.
 
 Not covered: native tsc compilation/lowering, browser or ESLint integration,
 the whole repository Go gate, or lane acceptance. None is claimed by this head.
+
+## maybeBind fold ledger: task kpp0f8s
+
+Adamic's ruling on task kpp0f8s makes `maybeBind(X, X.m)` become
+`X.m?.bind(X)` when X is one identifier, as a stage 3 JavaScript-changing
+adaptation. Correctness's 99-correctness-axolotl-x owns 44 other sites. Under
+the pinned-owner rule, 95h owns the remaining two initializers in
+`createBasicNodeBuilderModuleSpecifierResolutionHost` in checker.ts:
+
+- `maybeBind(host, host.getSymlinkCache)` becomes `host.getSymlinkCache?.bind(host)`.
+- `maybeBind(host, host.getGlobalTypingsCacheLocation)` becomes `host.getGlobalTypingsCacheLocation?.bind(host)`.
+
+The row retains the exact original owner SHA-256
+`9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1`
+and literal SHA-256
+`3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7`.
+It accepts both complete before and complete after states. An after owner is
+normalized by AST initializer slices back to the original owner pin. A mixed
+state refuses as half-adapted; any foreign literal edit refuses at its hash.
+The callee resolves through the type checker to core.ts's maybeBind declaration,
+and both receiver identifiers must resolve to the same symbol. Only the two
+inventoried non-optional property accesses qualify.
+
+`mayStoreUndefined`, `hostMember` and `destinationOwner` stay unchanged. Both
+forms must have the same pinned value type: `(() => SymlinkCache) | undefined`
+and `(() => string | undefined) | undefined`. The planned after tree is rebound
+and checked before writes. Both forms evaluate host, then host.m, then host;
+a function binds, undefined yields undefined, and another truthy value throws
+TypeError at bind in both forms.
+
+The return value now records `javascriptChanging: true` and per-file
+`javascriptIdentical`: true for types.ts, false for checker.ts. Complete checker
+JavaScript is compared in both comment modes against exactly the two rewrites
+within that owner. The independent verifier checks the same source and emitted
+scope without using the planner. Historical type-only claims above concern
+the original slot widening; they do not classify this fold.
+
+## Fold validation and stop point
+
+This is a stopped implementation, not a claim that the task's done condition
+was met. Base is origin/main `7e3c0682da96cbe01f7ae9b9820f1bd8f1993671`.
+Only this adaptation directory changes. The TypeScript input is exactly
+`050880ce59e30b356b686bd3144efe24f875ebc8` (6.0.3).
+
+| Required check | Result |
+| --- | --- |
+| 1. Full apply before and after, both with --build-product | Both exit 0 |
+| 2. Paired full-tree replay, continuing after refusals | Pass; every outcome matches except 95h; both 95h runs refuse at createProgram |
+| 3. Adamic types, all 79 compiler roots after | Exit 0; zero diagnostics |
+| 4. All nine emitted JavaScript files and both public declarations | FAIL for JavaScript scope; declarations byte-identical |
+| 5. Mutants | Pass; both half-adapted states and changed third member refuse without writes |
+| 6. Lane and all oracle shards | Not run; stopped at check 4 |
+
+The full source comparison finds only the two checker initializers changed;
+both trees already contain the four slot repairs. The isolated prefix test
+also verifies the four declaration repairs, both bound value types, idempotence,
+--check, and the core.ts symbol guard with a foreign imported callee. The
+independent source verifier passes both the prefix and full-tree comparisons.
+
+The ordinary build uses esbuild with target es2020 and node14.17. All emitted
+changes within createBasicNodeBuilderModuleSpecifierResolutionHost match exactly
+esbuild's lowering of the two authorized rewrites, including its temporary
+variables and nested temporary rename. But both _tsc.js and typescript.js also
+rename the binder's unrelated local maybeBind2 function to maybeBind3, at its
+declaration and its two calls. Those hunks are outside the pinned owner. The
+other seven JavaScript files are byte-identical. No allowance for this outside
+rename was added, and no unrelated source or build setting was changed to hide
+it. This fails the requested strict emitted-output scope, so the oracle and
+shard acceptance are not claimed.
+
+All hunks are in [fold-evidence/emitted.diff](fold-evidence/emitted.diff).
+[fold-evidence/emitted-comparison.json](fold-evidence/emitted-comparison.json)
+records every emitted file and both declarations. The declarations have the
+same before/after SHA-256 values:
+
+- typescript.d.ts: c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b
+- tsserverlibrary.d.ts: cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd
+
+[fold-evidence/checks.json](fold-evidence/checks.json) is the check ledger.
+Paired replay records, exact raw stdout/stderr and their diff are retained
+alongside compressed command logs. The before createProgram refusal expects
+505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152 and observes
+729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854; the after
+refusal has exactly the same expected/actual hashes. No earlier checker-owner
+refusal occurs. Product keys also hash later evidence additions; the completed
+source trees remain the ones measured here.
+
+Reproduction after the setup in task kpp0f8s, with NODE_PATH set to this
+checkout's stage3/api/node_modules:
+
+```sh
+# BEFORE_REPO is an isolated checkout of the base above.
+# BEFORE and AFTER are complete --build-product applies of the two checkouts.
+# PREFIX is main's refs/stage3/95-checker-axolotl-h-before archive.
+node stage3/adapt/95-checker-axolotl-h/contract.cjs PREFIX NEW_CONTRACT_OUTPUT
+node stage3/adapt/95-checker-axolotl-h/verify.cjs PREFIX NEW_CONTRACT_OUTPUT
+node stage3/adapt/95-checker-axolotl-h/verify.cjs BEFORE AFTER
+node stage3/adapt/95-checker-axolotl-h/compare.cjs BEFORE AFTER
+python3 -B stage3/adapt/95-checker-axolotl-h/replay.py BEFORE_REPO AFTER_REPO BEFORE AFTER NEW_REPLAY_OUTPUT
+# compare.cjs currently exits 1 for the outside-owner bundle rename.
+```

@@ -1,0 +1,48 @@
+{
+  "fullApply": {
+    "before": 0,
+    "after": 0
+  },
+  "pairedReplay": {
+    "adapters": 81,
+    "differences": [
+      "95-checker-axolotl-h"
+    ],
+    "before95hRefusalOwner": "createProgram",
+    "after95hRefusalOwner": "createProgram",
+    "filesChanged": 0
+  },
+  "types": {
+    "roots": 79,
+    "exit": 0,
+    "diagnostics": 0
+  },
+  "emittedJavaScript": {
+    "files": 9,
+    "identical": 7,
+    "changed": [
+      "_tsc.js",
+      "typescript.js"
+    ],
+    "ownerMatchesExpectedLowering": true,
+    "outsideOwnerIdentical": false,
+    "exit": 1,
+    "stopReason": "esbuild renames binder maybeBind2 to maybeBind3 outside the pinned owner"
+  },
+  "publicDeclarations": {
+    "files": 2,
+    "byteIdentical": true
+  },
+  "mutants": {
+    "halfAdapted": 2,
+    "thirdMemberLiteralHash": true,
+    "wrongReceiver": true,
+    "foreignCalleeSymbol": true,
+    "allRefuseWithoutWrites": true
+  },
+  "oracle": {
+    "status": "not run",
+    "reason": "stopped at required check 4"
+  },
+  "complete": false
+}

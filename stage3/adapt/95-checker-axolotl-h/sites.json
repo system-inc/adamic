@@ -57,7 +57,6 @@
       "file": "src/compiler/checker.ts",
       "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
       "ownerBeforeSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1",
-      "literalSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
       "members": [
         {
           "name": "getCommonSourceDirectory",
@@ -75,10 +74,14 @@
         },
         {
           "name": "getSymlinkCache",
-          "initializer": "maybeBind(host, host.getSymlinkCache)",
+          "initializer": {
+            "before": "maybeBind(host, host.getSymlinkCache)",
+            "after": "host.getSymlinkCache?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": true,
-          "destinationOwner": "ModuleSpecifierResolutionHost"
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "valueType": "(() => SymlinkCache) | undefined"
         },
         {
           "name": "getPackageJsonInfoCache",
@@ -152,12 +155,19 @@
         },
         {
           "name": "getGlobalTypingsCacheLocation",
-          "initializer": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+          "initializer": {
+            "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+            "after": "host.getGlobalTypingsCacheLocation?.bind(host)"
+          },
           "mayStoreUndefined": true,
           "hostMember": true,
-          "destinationOwner": "ModuleSpecifierResolutionHost"
+          "destinationOwner": "ModuleSpecifierResolutionHost",
+          "valueType": "(() => string | undefined) | undefined"
         }
-      ]
+      ],
+      "ownerAfterSha256": "48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3",
+      "literalBeforeSha256": "3f47dd64f51c5c74ad8263d40713a28e424f4d28859e714238b8a2417cbae3d7",
+      "literalAfterSha256": "e6296e4abe989f7b1bc58190c706712874bf38a8ad6ac4ef99b1cdf765d1b8b0"
     },
     {
       "file": "src/compiler/program.ts",

@@ -1,0 +1,11 @@
+--- checker.ts
++++ wrong-receiver-mutant-checker.ts
+@@ -54272,7 +54272,7 @@
+     return {
+         getCommonSourceDirectory: !!(host as Program).getCommonSourceDirectory ? () => (host as Program).getCommonSourceDirectory() : () => "",
+         getCurrentDirectory: () => host.getCurrentDirectory(),
+-        getSymlinkCache: maybeBind(host, host.getSymlinkCache),
++        getSymlinkCache: maybeBind(otherHost, host.getSymlinkCache),
+         getPackageJsonInfoCache: () => host.getPackageJsonInfoCache?.(),
+         useCaseSensitiveFileNames: () => host.useCaseSensitiveFileNames(),
+         redirectTargetsMap: host.redirectTargetsMap,

@@ -1,0 +1,11 @@
+--- checker.ts
++++ wrong-callee-symbol-mutant-checker.ts
+@@ -873,7 +873,7 @@
+     type MappedType,
+     type MappedTypeNode,
+     type MatchingKeys,
+-    maybeBind,
++    some as maybeBind,
+     MemberOverrideStatus,
+     type MetaProperty,
+     type MethodDeclaration,
