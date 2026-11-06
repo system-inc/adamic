@@ -1,0 +1,8 @@
+// Node prints true without running argument: absence guards the await too.
+async function argument(): Promise<string> { console.log("argument"); return "fixed"; }
+async function run(): Promise<void> {
+  const host: { m?: (value: string) => string } = {};
+  const bound = host.m?.bind(host, await argument());
+  console.log(String(bound === undefined));
+}
+await run();

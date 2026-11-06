@@ -147,6 +147,7 @@ func TestMethodBindRefusals(t *testing.T) {
 		"method_write":       "unbound-method",
 		"index_receiver":     "bind through an indexed receiver",
 		"optional_tail":      "a call through ?.",
+		"async_fixed":        "suspension inside method binding operands",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

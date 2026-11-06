@@ -156,6 +156,11 @@ func (n *asyncNormalizer) expression(value ir.Expression, out *[]ir.Statement, s
 		n.failure = n.errorAt(value, "await among structural method operands is not yet proven")
 	}
 	switch value := value.(type) {
+	case ir.BoundMethod:
+		// The lookup and nullish guard must precede a suspending fixed operand.
+		// Generic operand normalization would move that operand before both.
+		n.failure = n.errorAt(value, "suspension inside method binding operands is not yet proven")
+		return value
 	case ir.Effects:
 		body, err := n.statements(value.Body)
 		if err != nil {
