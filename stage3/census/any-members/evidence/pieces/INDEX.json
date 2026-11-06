@@ -697,6 +697,30 @@
       "times_sha256": "7502730c209ff2f1f730b21e0808086d0c2b0e540de09ffb5b252185b4ba92e3",
       "unit_wall_seconds": 217.844847916,
       "unit_cpu_seconds": 241.03686899999985
+    },
+    "p14": {
+      "identity": {
+        "schema": 1,
+        "label": "head",
+        "piece": "p14",
+        "plan_sha256": "c028b544d5695bce350d42b224dcdd4b30fc45898f4c6e064f3f6c258a4cda33",
+        "selection_sha256": "df2c457476b496af4dfab74a04ac370cd9aea6078b345b42e46015c97f3ee16c",
+        "binary_sha256": "f559657d3235c041bc6c550db01b9a091da2019dd8fd3dd614512c765f36d640",
+        "source_manifest_sha256": "a6efcf70dc06e41587289ae002591fd75e11fc211de14f706e1c56f28a500ce0"
+      },
+      "start_utc": "2026-11-06T01:40:00.187059+00:00",
+      "expected_units": 43,
+      "expected_timed_units": 43,
+      "estimated_seconds": 347.14993915700006,
+      "returncode": 0,
+      "end_utc": "2026-11-06T01:44:55.988128+00:00",
+      "process_wall_seconds": 295.80121048599904,
+      "process_cpu_seconds": 330.96566899999925,
+      "failure": null,
+      "latent_sha256": "fc6e25d677fd5d18aad849ee02139e58a2b7ea8ace93ccbdd2f54d219bb1faa0",
+      "times_sha256": "6d8fab7b6a35b0b86683c687c793b22c25a0bd10479501678a3440bdcd9ea4bf",
+      "unit_wall_seconds": 260.171435409,
+      "unit_cpu_seconds": 288.08926600000007
     }
   }
 }
