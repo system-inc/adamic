@@ -5,6 +5,8 @@
 //	adamic js <file.a|file.ts>              print the program as JavaScript
 //	adamic worker <entry.a> --out <dir>    generate a Cloudflare Worker
 //	adamic build <file.a|file.ts> -o <out>  compile it to a native binary
+//	adamic --help | -h                      print the usage
+//	adamic --version                        name the commit, the Go and the clang a bug report needs
 //
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
 // them to stderr as it exits, for measuring what the memory model costs.
@@ -17,13 +19,16 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"runtime/debug"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const usage = `usage:
@@ -31,14 +36,17 @@ const usage = `usage:
   adamic c <file.a|file.ts> [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]`
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]
+  adamic --help | -h
+  adamic --version`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
 }
 
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
-// be compiled, 2 for a usage error, 4 when the compiler itself panicked.
+// be compiled, 2 for a usage error, 4 when the compiler itself panicked. Usage asked for with --help is no error: it
+// goes to stdout and exits 0, as --version does.
 func run(arguments []string) (code int) {
 	defer reportCompilerBug(&code, os.Stderr)
 	// Explanation goes to stderr so C/JavaScript output remains usable.
@@ -65,6 +73,12 @@ func run(arguments []string) (code int) {
 		arguments = filtered
 	}
 	switch {
+	case len(arguments) == 1 && (arguments[0] == "--help" || arguments[0] == "-h"):
+		fmt.Println(usage)
+		return 0
+	case len(arguments) == 1 && arguments[0] == "--version":
+		writeVersion(os.Stdout)
+		return 0
 	case len(arguments) >= 2 && arguments[0] == "worker":
 		return workerCommand(arguments[1:])
 	case len(arguments) >= 2 && arguments[0] == "types":
@@ -117,6 +131,55 @@ func reportCompilerBug(code *int, output io.Writer) {
 		fmt.Fprintf(output, "adamic: compiler bug: %v\n%s", failure, debug.Stack())
 		*code = 4
 	}
+}
+
+// writeVersion names what a bug report needs, a line each: the commit adamic was built from, the Go that built it, and
+// the clang a native build would run, resolved by toolchain.Path as internal/native's runtimeInputs resolves it. A
+// clang that can't be found or run is its own line, never a failure, since a report is most wanted where the
+// toolchain is broken.
+func writeVersion(output io.Writer) {
+	information, ok := debug.ReadBuildInfo()
+	fmt.Fprintf(output, "adamic %s\n", revision(information, ok))
+	fmt.Fprintf(output, "go %s\n", runtime.Version())
+	fmt.Fprintln(output, clangVersion())
+}
+
+// revision is the commit go build stamped, with (modified) when the tree had changes, or unknown when nothing was
+// stamped (go run, go test, -buildvcs=false, or a source tree without its .git).
+func revision(information *debug.BuildInfo, ok bool) string {
+	if !ok {
+		return "unknown"
+	}
+	commit, modified := "", false
+	for _, setting := range information.Settings {
+		switch setting.Key {
+		case "vcs.revision":
+			commit = setting.Value
+		case "vcs.modified":
+			modified = setting.Value == "true"
+		}
+	}
+	if commit == "" {
+		return "unknown"
+	}
+	if modified {
+		return commit + " (modified)"
+	}
+	return commit
+}
+
+// clangVersion is `clang <path>: <its --version's first line>`, or `clang: not found (<why>)`.
+func clangVersion() string {
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		return fmt.Sprintf("clang: not found (%v)", err)
+	}
+	report, err := toolchain.Command(compiler, "--version").Output()
+	if err != nil {
+		return fmt.Sprintf("clang: not found (%v)", err)
+	}
+	first, _, _ := strings.Cut(string(report), "\n")
+	return fmt.Sprintf("clang %s: %s", compiler, strings.TrimSpace(first))
 }
 
 // check loads a program, printing why when it can't. A nil program comes with the exit code.
