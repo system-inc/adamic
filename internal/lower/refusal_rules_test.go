@@ -18,6 +18,9 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// hostBindingGlobalThisRefusal stops a write through globalThis naming a host binding as its own
 		// ruling says, before a rule that meets globalThis or delete first would call it something else.
 		"50 hostBindingGlobalThisRefusal",
+		// globalObjectValueRefusal stops the global object as a value at its consumer's visit, so its words
+		// win over the record view's, node:globals.global's and namespaceRefusal's for those uses.
+		"60 globalObjectValueRefusal",
 		"100 unionSlotWriteRefusal",
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",

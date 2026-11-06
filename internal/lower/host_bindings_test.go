@@ -122,7 +122,8 @@ func TestHostBindingShadowingLocalIsTheLocal(t *testing.T) {
 // Nothing in the program may define a host binding's name (Language's condition 1 on #00qn5az): a write
 // to a `declare let` is refused, and so is a write through the global object whose key names a row, by
 // property or by element, or whose key could name one. The global object is judged by its type, typeof
-// globalThis, through any name: globalThis, an alias, globalThis.globalThis and Node's global. Mutant
+// globalThis, through any name: globalThis, a parameter of that type, globalThis.globalThis and Node's
+// global (an alias of it stops before as the global object as a value, global_object.go). Mutant
 // (e), internal/oracle/testdata/host_bindings/mutants.md: the receiver judged by its spelling again.
 func TestHostBindingWritesAreRefused(t *testing.T) {
 	t.Parallel()
@@ -135,7 +136,7 @@ func TestHostBindingWritesAreRefused(t *testing.T) {
 		{"a write to the declare let", profilerModules("\tonProfilerEvent = (eventName: string): void => {\n\t\tconsole.log(eventName + name);\n\t};\n"), "performance.ts:3:2: Adamic 0.1 refuses a write to the host binding onProfilerEvent; " + fix},
 		{"globalThis.process", map[string]string{"main.ts": "import process from 'node:process';\nglobalThis.process = process;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"globalThis['performance']", map[string]string{"main.ts": "import { performance } from 'node:perf_hooks';\nglobalThis['performance'] = performance;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding performance; " + fix},
-		{"an alias of globalThis", map[string]string{"main.ts": "import process from 'node:process';\nconst g = globalThis;\ng.process = process;\n"}, "main.ts:3:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
+		{"a parameter of the global object's type", map[string]string{"main.ts": "import process from 'node:process';\nfunction put(host: typeof globalThis): void {\n\thost.process = process;\n}\nput(globalThis);\n"}, "main.ts:3:2: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"globalThis.globalThis", map[string]string{"main.ts": "import process from 'node:process';\nglobalThis.globalThis.process = process;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"Node's global", map[string]string{"main.ts": "import process from 'node:process';\nglobal.process = process;\n"}, "main.ts:2:1: Adamic 0.1 refuses a write through globalThis to the host binding process; " + fix},
 		{"globalThis[key]", map[string]string{"main.ts": "import process from 'node:process';\nconst key: 'process' | 'performance' = process.argv.length > 9 ? 'process' : 'performance';\ndelete globalThis[key];\n"}, "main.ts:3:8: Adamic 0.1 refuses a write through globalThis whose key may name a host binding; " + fix},
@@ -158,47 +159,6 @@ func TestHostBindingWritesAreRefused(t *testing.T) {
 	}
 	if _, err := load.Load([]string{main}); err == nil || !strings.Contains(err.Error(), "performance.ts:2:12: error TS7017: Element implicitly has an 'any' type because type 'typeof globalThis' has no index signature.") {
 		t.Errorf("Load: got %v, want the checker's error that globalThis has no onProfilerEvent", err)
-	}
-}
-
-// An Absent host binding's fold rests on the stops these get on the global object beyond rule 50's
-// (hostBindingGlobalThisRefusal), as method presence rests on the same ones
-// (TestMethodPresenceRestsOnTheseStops). Object.defineProperty, Reflect.set and Object.assign through
-// globalThis, through an alias of it, through a view of it widened to object, and through Node's global,
-// and a write through a record or index-signature view of it, would each define onProfilerEvent behind
-// its folded typeof, and rule 50 meets none of them: their receiver isn't a property write's, or is no
-// longer typeof globalThis. Each stops on its own line, before the guarded read below it: defineProperty
-// on globalThis as refused, every other only as not yet ("reading globalThis", the record view, the
-// node:globals global, the namespace member, Object.assign's shape). Lifting any of these is where rule
-// 50 needs to grow, and this pin goes red to say so.
-func TestHostBindingFoldRestsOnTheseStops(t *testing.T) {
-	t.Parallel()
-	const handler = "const fire = (eventName: string): void => {\n\tconsole.log(eventName);\n};\n"
-	const guarded = "export function run(name: string): void {\n\tif (typeof onProfilerEvent === \"function\") {\n\t\tonProfilerEvent(name);\n\t}\n}\n"
-	for _, probe := range []struct{ name, imports, definition, want string }{
-		{"Object.defineProperty", "", "Object.defineProperty(globalThis, \"onProfilerEvent\", { value: fire });\n", "performance.ts:5:1: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores"},
-		{"Reflect.set", "", "Reflect.set(globalThis, \"onProfilerEvent\", fire);\n", "performance.ts:5:1: stage 0 can't lower a namespace member without a lowered binding yet"},
-		{"Object.assign", "", "Object.assign(globalThis, { onProfilerEvent: fire });\n", "performance.ts:5:15: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet"},
-		{"a Record<string, unknown> view", "", "const g: Record<string, unknown> = globalThis;\ng[\"onProfilerEvent\"] = fire;\n", "performance.ts:5:7: stage 0 can't lower a typeof globalThis seen as Record<string, unknown> (fixed objects and records have different storage; copy explicitly) yet"},
-		{"an index-signature view", "", "const g: { [key: string]: unknown } = globalThis;\ng[\"onProfilerEvent\"] = fire;\n", "performance.ts:5:7: stage 0 can't lower a typeof globalThis seen as { [key: string]: unknown; } (fixed objects and records have different storage; copy explicitly) yet"},
-		{"Reflect.set through an object view", "", "const g: object = globalThis;\nReflect.set(g, \"onProfilerEvent\", fire);\n", "performance.ts:5:19: stage 0 can't lower reading globalThis yet"},
-		{"Object.assign through an object view", "", "const g: object = globalThis;\nObject.assign(g, { onProfilerEvent: fire });\n", "performance.ts:5:19: stage 0 can't lower reading globalThis yet"},
-		{"Object.defineProperty through an object view", "", "const g: object = globalThis;\nObject.defineProperty(g, \"onProfilerEvent\", { value: fire });\n", "performance.ts:5:19: stage 0 can't lower reading globalThis yet"},
-		{"Reflect.set through an alias", "", "const g = globalThis;\nReflect.set(g, \"onProfilerEvent\", fire);\n", "performance.ts:5:11: stage 0 can't lower reading globalThis yet"},
-		{"Object.assign through an alias", "", "const g = globalThis;\nObject.assign(g, { onProfilerEvent: fire });\n", "performance.ts:5:11: stage 0 can't lower reading globalThis yet"},
-		{"Object.defineProperty through an alias", "", "const g = globalThis;\nObject.defineProperty(g, \"onProfilerEvent\", { value: fire });\n", "performance.ts:5:11: stage 0 can't lower reading globalThis yet"},
-		{"Object.defineProperty through Node's global", "import process from 'node:process';\n", "console.log(typeof process.argv);\nObject.defineProperty(global, \"onProfilerEvent\", { value: fire });\n", "performance.ts:7:23: stage 0 can't lower node:globals.global other than as global.gc's receiver (fix: name the global itself, without global.) yet"},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerModules(t, map[string]string{
-				"performance.ts": probe.imports + profilerDeclaration + handler + probe.definition + guarded,
-				"main.ts":        "import { run } from './performance.ts';\nrun('one');\n",
-			})
-			if err == nil || !strings.HasSuffix(err.Error(), probe.want) {
-				t.Errorf("got %v, want the stop %s", err, probe.want)
-			}
-		})
 	}
 }
 

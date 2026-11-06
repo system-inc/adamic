@@ -1,3 +1,3 @@
 // Spec: `bigint`, `globalThis` and `Intl` are not built yet
-// Expect: notyet reading globalThis
+// Expect: notyet the global object as a value
 console.log(String(typeof globalThis));

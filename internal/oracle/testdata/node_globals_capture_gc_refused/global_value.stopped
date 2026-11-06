@@ -1,1 +1,1 @@
-internal/oracle/testdata/node_globals_capture_gc_refused/global_value.a:3:14: stage 0 can't lower node:globals.global other than as global.gc's receiver (fix: name the global itself, without global.) yet
+internal/oracle/testdata/node_globals_capture_gc_refused/global_value.a:3:14: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet
