@@ -8,6 +8,8 @@ import (
 
 // Bind arguments enter a normal factory call before any closure is allocated.
 // Its captured parameter cells own the snapshots and participate in the cycle proof.
+// thisArg is captured but never handed to a this body. This is sound only while
+// expression.go stops this outside methods; lifting that stop owes a receiver pass here.
 func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
@@ -148,6 +150,20 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	if method {
 		l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: target, source: values[1], copied: l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression), reader: "bind lookup"})
 		return ir.BoundMethod{Object: values[1], Name: target.Name().Text(), Optional: access.QuestionDotToken != nil, Fixed: values[2:], Factory: maker}, true, nil
+	}
+	if access.QuestionDotToken != nil {
+		function := -1
+		if l.function != nil {
+			function = l.functionIndex
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "optional_bind_target", Type: value.Type(), Function: function, ExpressionAssigned: true})
+		read := ir.Read{Local: local, Of: value.Type()}
+		values[0] = read
+		return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: value}}, Result: ir.Conditional{
+			Condition: ir.Unary{Operator: ir.Not, Operand: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}}},
+			WhenTrue:  ir.Call{Function: maker, Arguments: values, Returns: ir.Closure}, WhenNot: ir.Undefined{Of: ir.Closure}, Of: ir.Closure,
+		}}, true, nil
 	}
 	return ir.Call{Function: maker, Arguments: values, Returns: ir.Closure}, true, nil
 }
