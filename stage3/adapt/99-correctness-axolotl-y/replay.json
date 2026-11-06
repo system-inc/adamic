@@ -1,0 +1,210 @@
+[
+  {
+    "adapter": "00-setup",
+    "before": {
+      "exit": 0,
+      "stdout": "Reading diagnostics from src/compiler/diagnosticMessages.json\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "Reading diagnostics from src/compiler/diagnosticMessages.json\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "10-type-imports",
+    "before": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"imports\": 0,\n  \"exports\": 0,\n  \"generatorImports\": 0,\n  \"regenerated\": false,\n  \"declined\": []\n}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"imports\": 0,\n  \"exports\": 0,\n  \"generatorImports\": 0,\n  \"regenerated\": false,\n  \"declined\": []\n}\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "20-optional-declarations",
+    "before": {
+      "exit": 0,
+      "stdout": "{\n  \"typescript\": \"6.0.3\",\n  \"declarations_changed\": 0,\n  \"declarations\": [],\n  \"resolved_findings\": [],\n  \"initially_declined\": [],\n  \"before\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2584\": 1,\n    \"2591\": 44,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"after\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2584\": 1,\n    \"2591\": 44,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"newly_exposed_consumers\": [],\n  \"declined\": [],\n  \"declined_owners\": [],\n  \"internal_deferred_owners\": []\n}\n",
+      "stderr": "recheck: 60 diagnostics, 0 declarations edited\n"
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\n  \"typescript\": \"6.0.3\",\n  \"declarations_changed\": 0,\n  \"declarations\": [],\n  \"resolved_findings\": [],\n  \"initially_declined\": [],\n  \"before\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2584\": 1,\n    \"2591\": 44,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"after\": {\n    \"2304\": 6,\n    \"2339\": 4,\n    \"2345\": 1,\n    \"2503\": 2,\n    \"2584\": 1,\n    \"2591\": 44,\n    \"7006\": 1,\n    \"7031\": 1\n  },\n  \"newly_exposed_consumers\": [],\n  \"declined\": [],\n  \"declined_owners\": [],\n  \"internal_deferred_owners\": []\n}\n",
+      "stderr": "recheck: 60 diagnostics, 0 declarations edited\n"
+    }
+  },
+  {
+    "adapter": "30-indexed-reads",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "declined site changed: core.ts:992:21\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "declined site changed: core.ts:992:21\n"
+    }
+  },
+  {
+    "adapter": "31-indexed-reads-checker",
+    "before": {
+      "exit": 0,
+      "stdout": "[\n  {\n    \"file\": \"checker.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 18\n  }\n]\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "[\n  {\n    \"file\": \"checker.ts\",\n    \"assertions\": 0,\n    \"zeros\": 0,\n    \"declined\": 18\n  }\n]\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "32-indexed-reads-program",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "handoff producer runtime drift: appendSourceMap\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "handoff producer runtime drift: appendSourceMap\n"
+    }
+  },
+  {
+    "adapter": "33-indexed-reads-emit",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "site drift: sourcemap.ts:215 map.sourcesContent[raw.sourceIndex]\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "site drift: sourcemap.ts:215 map.sourcesContent[raw.sourceIndex]\n"
+    }
+  },
+  {
+    "adapter": "40-explicit-any",
+    "before": {
+      "exit": 1,
+      "stdout": "{\"owners\":0,\"removed\":0}\n",
+      "stderr": "/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at /workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "{\"owners\":0,\"removed\":0}\n",
+      "stderr": "/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at /workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (/workspace/adamic/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0\n"
+    }
+  },
+  {
+    "adapter": "41-explicit-any-remaining",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16\n        if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);\n                                              ^\n\nError: missing or duplicate reviewed site: 31\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16:53)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16\n        if (oldCount !== 1 || newCount !== 0) throw Error('missing or duplicate reviewed site: ' + r.id);\n                                              ^\n\nError: missing or duplicate reviewed site: 31\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs:16:53)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    }
+  },
+  {
+    "adapter": "42-scanner-any",
+    "before": {
+      "exit": 0,
+      "stdout": "{\"adaptation\":42,\"edits\":0}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\"adaptation\":42,\"edits\":0}\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "43-any-returns",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs:15\n    else if (count || text.split(rule.after).length !== 2) throw Error('unreviewed site: ' + rule.name);\n                                                           ^\n\nError: unreviewed site: convertConfigFileToObject\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs:15:66)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs:15\n    else if (count || text.split(rule.after).length !== 2) throw Error('unreviewed site: ' + rule.name);\n                                                           ^\n\nError: unreviewed site: convertConfigFileToObject\n    at Object.<anonymous> (/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs:15:66)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    }
+  },
+  {
+    "adapter": "44-config-generics",
+    "before": {
+      "exit": 0,
+      "stdout": "{\"adaptation\":44,\"sites\":0}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\"adaptation\":44,\"sites\":0}\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "45-regex-captures",
+    "before": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"edits\": 0,\n  \"evidence\": [],\n  \"declined\": [\n    {\n      \"site\": \"XML value groups 2 and 3\",\n      \"reason\": \"alternative branches; whole-expression checked boundary authorized instead\"\n    },\n    {\n      \"site\": \"range operator group 1\",\n      \"reason\": \"optional; truthful parameter includes undefined\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"edits\": 0,\n  \"evidence\": [],\n  \"declined\": [\n    {\n      \"site\": \"XML value groups 2 and 3\",\n      \"reason\": \"alternative branches; whole-expression checked boundary authorized instead\"\n    },\n    {\n      \"site\": \"range operator group 1\",\n      \"reason\": \"optional; truthful parameter includes undefined\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "46-fix-pragma-empty-argument",
+    "before": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"edits\": 0\n}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\n  \"files\": 0,\n  \"edits\": 0\n}\n",
+      "stderr": ""
+    }
+  },
+  {
+    "adapter": "47-host-errors",
+    "before": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "unreviewed helper import\n"
+    },
+    "after": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "unreviewed helper import\n"
+    }
+  },
+  {
+    "adapter": "48-memoize",
+    "before": {
+      "exit": 0,
+      "stdout": "{\"files\":0,\"edits\":0,\"status\":\"applied\",\"alreadyApplied\":true}\n",
+      "stderr": ""
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "{\"files\":0,\"edits\":0,\"status\":\"applied\",\"alreadyApplied\":true}\n",
+      "stderr": ""
+    }
+  }
+]
