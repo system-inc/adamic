@@ -1,0 +1,28 @@
+// A nested generator reads its parent's let through its carrier's cell, never a copy made at its
+// call (Lower's term 1 on #qk8rztp S3a). The parent writes the let between steps, in its for-of's
+// body, and between making the generator and its first step, through the callee's before, which
+// runs before the callee's for-of steps it; each step reads the value written last, as Node's does.
+function consume(items: Iterable<string>, before: () => void): string {
+    before();
+    let joined = '';
+    for (const item of items) {
+        joined += `[${item}]`;
+    }
+    return joined;
+}
+function host(start: string): string {
+    let prefix = `${start}0`;
+    function* tagged(count: number): Generator<string, void, undefined> {
+        for (let index = 0; index < count; index++) {
+            yield `${prefix}:${String(index)}`;
+        }
+    }
+    for (const value of tagged(2)) {
+        console.log(value);
+        prefix = `${start}${String(value.length)}`;
+    }
+    return consume(tagged(3), (): void => {
+        prefix = `${prefix}!`;
+    });
+}
+console.log(host('p'));

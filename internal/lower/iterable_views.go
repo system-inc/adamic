@@ -146,12 +146,20 @@ func (l *lowering) handNextView(node *ast.Node, closure ir.Expression) error {
 // its function yields, and for a [key, value] tuple, how the tuple holds each half
 // (generatorPairTypes, read from what the call yields, never the declared iterator type).
 func (l *lowering) generatorOrigin(of ir.IterableOf) iterableOrigin {
-	call, isCall := of.Value.(ir.Call)
-	if !isCall || call.Returns != ir.Generator || call.Virtual != 0 || of.Site < 1 || of.Site > len(l.generatorArguments) {
+	if !makesGenerator(of.Value) || of.Site < 1 || of.Site > len(l.generatorArguments) {
 		return iterableOrigin{name: "a generator seen as an object other than by its own call"}
 	}
-	// A direct call has the one target it names.
-	targets := l.result.CallTargets(call)
+	// A direct call has the one target it names: a module generator's, or a nested one's through
+	// its carrier (#qk8rztp S3a).
+	var targets []int
+	switch call := of.Value.(type) {
+	case ir.Call:
+		if call.Virtual == 0 {
+			targets = l.result.CallTargets(call)
+		}
+	case ir.CallClosure:
+		targets = []int{call.Direct - 1}
+	}
 	if len(targets) != 1 {
 		return iterableOrigin{name: "a generator seen as an object other than by its own call"}
 	}

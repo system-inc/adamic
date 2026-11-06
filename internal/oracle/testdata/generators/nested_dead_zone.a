@@ -1,0 +1,24 @@
+// A nested generator stepped before its parent's let initializes throws Node's ReferenceError from
+// the step, which a try in the parent catches (Lower's term 1 on #qk8rztp S3a): its read carries the
+// parent's dead-zone readiness, as a nested function's does (dead_zone_caught/destructured.a). Once
+// the let is initialized the same generator reads it. Node prints the error, then the value.
+function host(): string {
+    function* labelled(): Generator<string, void, undefined> {
+        yield `${label}!`;
+    }
+    let result = 'none';
+    try {
+        for (const value of labelled()) {
+            result = value;
+        }
+    } catch (error) {
+        if (error instanceof Error) result = `${error.name}|${error.message}`;
+    }
+    console.log(result);
+    let label = `ready${String(1)}`;
+    for (const value of labelled()) {
+        result = value;
+    }
+    return result;
+}
+console.log(host());

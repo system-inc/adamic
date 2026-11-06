@@ -1324,6 +1324,15 @@ func boxedSlot(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if function, isNested := l.nestedGeneratorCallee(callee); isNested {
+		// As a module generator's call below: its consumers lower it before this, and one passed
+		// straight into a one-body function's Iterable<T> parameter goes in through IterableOf
+		// (#qk8rztp S3a).
+		if l.iterableArgument(node) {
+			return l.iterableOfGenerator(node, function)
+		}
+		return nil, l.generatorNotYet(node, "whose generator is used other than by a for-of over its call or a call as a statement")
+	}
 	if direct := l.nestedSibling(callee); direct >= 0 {
 		arguments := []ir.Expression{}
 		for _, argument := range call.Arguments.Nodes {

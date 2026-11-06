@@ -1,0 +1,60 @@
+// checker.ts's getUnmatchedProperties (:26543): a generator nested in the checker, calling its
+// siblings, handed straight into tsc's firstOrUndefinedIterator (core.ts:1088), whose return inside
+// its for-of closes the generator after one value, as getUnmatchedProperty (:26569) does, so the line
+// logged after that yield never prints, and into an arrayFrom (core.ts:1341), which steps it to its
+// end, as :24402 does. Each parameter's one read is its for-of (#qk8rztp S2c-1, S2c-3), and the
+// generator is made through its parent's closure, from the parent and from a sibling (S3a). It
+// yields objects, as tsc's yields Symbols: an Iterable<string> | undefined is held as a union, which
+// the nullable view doesn't take yet.
+export function firstOrUndefinedIterator<T>(iter: Iterable<T> | undefined): T | undefined {
+    if (iter !== undefined) {
+        for (const value of iter) {
+            return value;
+        }
+    }
+    return undefined;
+}
+export function arrayFrom<T>(iterator: Iterable<T>): T[] {
+    const result: T[] = [];
+    for (const value of iterator) {
+        result.push(value);
+    }
+    return result;
+}
+interface Property {
+    readonly name: string;
+    readonly optional: boolean;
+}
+function createChecker(label: string): string {
+    const lookups = new Map<string, number>();
+    function getPropertyOfType(names: readonly string[], name: string): string | undefined {
+        lookups.set(name, (lookups.get(name) ?? 0) + 1);
+        return names.indexOf(name) >= 0 ? `${label}.${name}` : undefined;
+    }
+    function* getUnmatchedProperties(source: readonly string[], target: readonly Property[], requireOptionalProperties: boolean): Generator<Property, void, undefined> {
+        for (const targetProp of target) {
+            if (requireOptionalProperties || !targetProp.optional) {
+                const sourceProp = getPropertyOfType(source, targetProp.name);
+                if (sourceProp === undefined) {
+                    yield targetProp;
+                    console.log(`${label} after ${targetProp.name}`);
+                }
+            }
+        }
+    }
+    function getUnmatchedProperty(source: readonly string[], target: readonly Property[], requireOptionalProperties: boolean): string {
+        const unmatched = firstOrUndefinedIterator(getUnmatchedProperties(source, target, requireOptionalProperties));
+        return unmatched === undefined ? 'none' : `${label} misses ${unmatched.name}`;
+    }
+    const target: Property[] = [{ name: 'a', optional: false }, { name: 'b', optional: true }, { name: 'c', optional: false }];
+    console.log(getUnmatchedProperty(['a'], target, true));
+    console.log(getUnmatchedProperty(['a', 'b', 'c'], target, true));
+    const all = arrayFrom(getUnmatchedProperties([], target, false));
+    let names = `${String(all.length)}:`;
+    for (const property of all) {
+        names += ` ${property.name}`;
+    }
+    console.log(names);
+    return `${label} looked up a ${String(lookups.get('a') ?? 0)} times`;
+}
+console.log(createChecker(`checker${String(2)}`));

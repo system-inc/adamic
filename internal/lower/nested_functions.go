@@ -18,10 +18,16 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Kind != ast.KindFunctionDeclaration {
 			continue
 		}
-		if generatorDeclaration(node) {
+		if generatorDeclaration(node) && !loweredGenerator(node) {
 			// Before a generic one is put by to instantiate where it's called: its declaration is
 			// reached here, whether or not anything calls it (#qk8rztp, open question 7).
 			return nil, l.generatorNotYet(node, generatorForm(node))
+		}
+		if generatorDeclaration(node) && l.function.Suspends() {
+			// A suspending parent's locals live in its own frame's cells, which no closure's
+			// environment can be yet (async_normalize.go's canonical suspension stop, and
+			// checkGeneratorBody's), so a nested generator there would be a closure over them.
+			return nil, l.generatorNotYet(node, "declared inside an async function or a generator")
 		}
 		if node.Parent != nil && (node.Parent.Kind == ast.KindCaseClause || node.Parent.Kind == ast.KindDefaultClause) {
 			// switchBindings owns the shared case environment and hoists these functions.
@@ -213,12 +219,25 @@ func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error) 
 	if l.result.Locals[local].NestedFunction < 0 {
 		return nil, true, l.notYet(node, "a generic function as a value")
 	}
+	if l.result.Functions[l.result.Locals[local].NestedFunction-1].Generator {
+		// A call through the value would make a frame no consumer keeps to itself, as a module
+		// generator's functionValue stops (#qk8rztp S3a). Its own calls take their carrier from
+		// nestedGeneratorCall, never through here.
+		return nil, true, l.generatorNotYet(node, "used as a value")
+	}
+	return l.nestedValue(local), true, nil
+}
+
+// nestedValue is the function value of the nested declaration local binds: the declaring function's
+// own binding where it is read there, and elsewhere one made with every cell of its group's layout
+// carried in (nestedReferenceEnvironment).
+func (l *lowering) nestedValue(local int) ir.Expression {
 	if l.result.Locals[local].Function != l.functionIndex {
 		index := l.result.Locals[local].NestedFunction - 1
 		l.nestedReferenceEnvironment(index)
-		return ir.MakeClosure{Function: index}, true, nil
+		return ir.MakeClosure{Function: index}
 	}
-	return ir.Read{Local: local, Of: ir.Closure}, true, nil
+	return ir.Read{Local: local, Of: ir.Closure}
 }
 
 // A destructuring initializer keeps its source evaluation order; only the cells

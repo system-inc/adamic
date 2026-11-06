@@ -1,0 +1,24 @@
+// A consumer leaves a nested generator early, by a break in the parent and by a return from inside a
+// sibling's for-of (#qk8rztp S3a): the frame is let go of with what it holds, its carrier among
+// them, so the leak check finds nothing left, and the body never runs past the step taken.
+function host(words: readonly string[]): string {
+    const separator = `|${String(words.length)}`;
+    function* joined(): Generator<string, void, undefined> {
+        for (const word of words) {
+            yield `${word}${separator}`;
+            console.log(`after ${word}`);
+        }
+    }
+    for (const value of joined()) {
+        console.log(value);
+        if (value.startsWith('b')) break;
+    }
+    function first(): string {
+        for (const value of joined()) {
+            return `first ${value}`;
+        }
+        return 'none';
+    }
+    return first();
+}
+console.log(host(['a', 'b', 'c']));
