@@ -194,3 +194,51 @@ func TestEnumViewConstBuiltOnlyWhereReached(t *testing.T) {
 		t.Fatalf("want ConstOrdered built once and ConstKind never, got %v", built)
 	}
 }
+
+// debug.ts's formatSyntaxKind shape, the unit Correctness's census found stopping at namespaces.go:94
+// ("an enum read through its namespace without a lowered binding"): ConstKind, declared in another
+// module of an export * barrel and read through the barrel's namespace in a function of the entry, is
+// built, once, and agrees with Node on both backends with no leak. Reach is walked from the entry
+// lowering lowers, so it sees the cast wherever the entry's modules hold it. Mutant: constEnumReached
+// answering false everywhere turns this, and const.a, into the cast's stop, never a wrong read.
+func TestEnumViewFormatConstAgrees(t *testing.T) {
+	t.Parallel()
+	path := enumViewFixture(t, "format_const.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	built := 0
+	for _, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "ConstKind" {
+			built++
+		}
+	}
+	if built != 1 {
+		t.Fatalf("ConstKind built %d times, want once", built)
+	}
+	truth := onNode(t, path)
+	if string(truth.stdout) != "Identifier Count 9\ntscUsesKeys\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	compiled, binary := natively(t, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatalf("leaks: %s", report)
+	}
+}
+
+// Lower's question on #52zja36: a const enum read by a literal union key, E[k], never reaches lowering,
+// because tsc refuses it (TS2476), so reach needn't count it as a value read.
+func TestEnumViewConstKeyUnionTscRefuses(t *testing.T) {
+	t.Parallel()
+	_, err := load.Load([]string{enumViewFixture(t, "stop_const_key_union.a")})
+	var checked *load.CheckError
+	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2476") {
+		t.Fatalf("want tsc's TS2476, got %v", err)
+	}
+}

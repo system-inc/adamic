@@ -1,0 +1,6 @@
+// Lower's question on #52zja36: E[k] with k a literal union over a const enum. tsc refuses it (TS2476,
+// a const enum member can only be read by a string literal), so it never reaches lowering, and reach
+// never has to count it.
+import { ConstKind } from './barrel.a';
+const name: "Identifier" | "Count" = ["Identifier"].length > 0 ? "Identifier" : "Count";
+console.log(`${ConstKind[name]}`);
