@@ -106,7 +106,8 @@
       "watchUtilities.ts"
     ]
   },
-  "unassigned": [
+  "note": "Each group keeps full project loading; piece-scoped generic witnesses are compared only between matching before/after selections.",
+  "files_assigned_to_unit_pieces": [
     "binder.ts",
     "builder.ts",
     "builderState.ts",
@@ -167,5 +168,8 @@
     "watch.ts",
     "watchPublic.ts"
   ],
-  "note": "Each group keeps full project loading; piece-scoped generic witnesses are compared only between matching before/after selections."
+  "planned_unit_pieces": 257,
+  "candidate_units": 10714,
+  "file_group_units": 809,
+  "unit_piece_units": 9905
 }
