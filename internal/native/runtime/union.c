@@ -783,7 +783,8 @@ static const char *const stats_held_names[] = {"size", "mtimeMs", "mtime", "atim
 // for dynamic_slot. A name the Stats inherits answers its immortal closure, Stats.prototype's or
 // StatsBase.prototype's first and then Object.prototype's (prototype_value), so its constructor is
 // Stats and its toString an object's. One of Node's fields native doesn't hold
-// (adamic_dynamic_keyed_stats_field_names) stops, since native would have to make up its value, and
+// (adamic_dynamic_keyed_stats_field_names) stops in its own form, since native would have to make up
+// its value, and
 // any other key reads undefined (NULL), the private _fsFileMode among them: no slot is read for any
 // key but the four held.
 static adamic_heap *keyed_stats(const adamic_object *stats, const adamic_string *key) {
@@ -802,7 +803,7 @@ static adamic_heap *keyed_stats(const adamic_object *stats, const adamic_string 
 		if (key_is(key, adamic_dynamic_keyed_stats_names[index])) return &stats_functions[index]->heap;
 	}
 	if (key_named(key, adamic_dynamic_keyed_stats_field_names, sizeof adamic_dynamic_keyed_stats_field_names / sizeof adamic_dynamic_keyed_stats_field_names[0])) {
-		keyed_stop(adamic_dynamic_keyed_stop_runtime_value, key);
+		keyed_stop(adamic_dynamic_keyed_stop_stats_field, key);
 	}
 	return prototype_value(key);
 }
