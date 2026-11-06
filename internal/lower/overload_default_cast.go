@@ -50,6 +50,12 @@ func (l *lowering) overloadDefaultPair(node *ast.Node) bool {
 	if symbol == nil {
 		return false
 	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && overloadThisParameter(declaration) {
+			// A this parameter shifts every position the proof compares (Compiler's should).
+			return false
+		}
+	}
 	overloads := 0
 	for _, overload := range symbol.Declarations {
 		if overload.Kind != ast.KindFunctionDeclaration || overload.Body() != nil {
@@ -71,7 +77,70 @@ func (l *lowering) overloadDefaultPair(node *ast.Node) bool {
 			return false
 		}
 	}
-	return overloads > 0
+	return overloads > 0 && l.onlyCalled(symbol)
+}
+
+// overloadThisParameter is whether a declaration's first parameter is a this parameter.
+func overloadThisParameter(declaration *ast.Node) bool {
+	parameters := declaration.Parameters()
+	return len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) && parameters[0].Name().Text() == "this"
+}
+
+// onlyCalled is whether every reference to symbol in the program's own files, through any alias, is the
+// callee of a call, by name or as `namespace.name(...)`, so every call is resolved against the overloads.
+// A function value doesn't have to be: tsc lets a function whose parameter is required go where that
+// parameter is optional, so `const sort: (array: readonly number[], comparer?: Comparer<number>) => ... =
+// sortAndDeduplicate` would reach the default at a T no overload fixed (Compiler's road on 986ad82d). The
+// declarations' own names, import and export bindings and type queries move no value; any other
+// reference, `.call`, `.bind` or a value read, keeps the pair refused.
+func (l *lowering) onlyCalled(symbol *ast.Symbol) bool {
+	only := true
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if !only {
+			return true
+		}
+		if node.Kind == ast.KindIdentifier {
+			if referenced := l.checker.GetSymbolAtLocation(node); referenced != nil && l.checker.SkipAlias(referenced) == symbol && !l.calledOrBound(node) {
+				only = false
+			}
+			return false
+		}
+		node.ForEachChild(visit)
+		return !only
+	}
+	for _, file := range l.program.Files() {
+		if !file.IsDeclarationFile {
+			file.AsNode().ForEachChild(visit)
+		}
+	}
+	return only
+}
+
+// calledOrBound is whether a reference moves no function value: a declaration's own name, an import or
+// export binding, a type query, or the callee of a call, written bare or as a property access's name.
+func (l *lowering) calledOrBound(identifier *ast.Node) bool {
+	parent := identifier.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindFunctionDeclaration:
+		return parent.Name() == identifier
+	case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause, ast.KindNamespaceImport, ast.KindTypeQuery, ast.KindQualifiedName:
+		return true
+	}
+	callee := identifier
+	if parent.Kind == ast.KindPropertyAccessExpression {
+		if parent.AsPropertyAccessExpression().Name() != identifier {
+			return false
+		}
+		callee = parent
+	}
+	for callee.Parent != nil && callee.Parent.Kind == ast.KindParenthesizedExpression {
+		callee = callee.Parent
+	}
+	return callee.Parent != nil && callee.Parent.Kind == ast.KindCallExpression && ast.SkipParentheses(callee.Parent.AsCallExpression().Expression) == ast.SkipParentheses(callee)
 }
 
 // overloadDefaultAbsent is the index of every implementation parameter whose absence reaching node
