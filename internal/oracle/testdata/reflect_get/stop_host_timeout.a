@@ -1,0 +1,10 @@
+// A host object stops for every key (#ey7aysy): a Timeout's refresh is Timeout.prototype's method on
+// Node, where native's shape holds only the timer's identity. Node prints function.
+import 'node:timers';
+import { propertyOf } from './hostErrors.ts';
+
+const timeout = setTimeout(() => { console.log('fired'); }, 1);
+console.log('scheduled');
+const value = propertyOf(timeout, 'refresh');
+console.log(typeof value);
+clearTimeout(timeout);
