@@ -9,6 +9,8 @@ const files = ["corePublic.ts", "performanceCore.ts", "types.ts", "expressionToT
 // Survey line/column fields are documentation, never edit offsets.
 function plan(ts, file, text, check = false, zeroOnly = false) {
     if (file === "utilities.ts") return require("./directory-exists.cjs").plan(ts, file, text, check);
+    const tables = file === "symbolWalker.ts" ? require("./record-tables.cjs").plan(ts, text, check) : { text, edits: 0 };
+    text = tables.text;
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();
@@ -83,7 +85,7 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
     }
     const closure = require("./closure.cjs").plan(ts, file, text, check);
     const handoff = require("./handoffs.cjs").plan(ts, file, closure.text, check);
-    return { ...handoff, contracts: closure.contracts + handoff.contracts, assertions, zeros, declined };
+    return { ...handoff, contracts: closure.contracts + handoff.contracts + tables.edits, assertions, zeros, declined };
 }
 
 function main() {

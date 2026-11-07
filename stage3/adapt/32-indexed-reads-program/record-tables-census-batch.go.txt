@@ -1,0 +1,94 @@
+// Census runs the real stage-0 gate. It never lowers a checker-rejected program.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+	"time"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+)
+
+type run struct {
+	Roots       []string `json:"roots"`
+	Diagnostics []string `json:"diagnostics,omitempty"`
+	Kind        string   `json:"kind"`
+	Where       string   `json:"where,omitempty"`
+	Reason      string   `json:"reason,omitempty"`
+	Fix         string   `json:"fix,omitempty"`
+	Seconds     float64  `json:"seconds"`
+}
+
+func inspect(paths []string) run {
+	started := time.Now()
+	result := run{Roots: paths}
+	program, err := load.Load(paths)
+	if err == nil {
+		_, err = lower.Lower(context.Background(), program)
+		result.Kind = "accepted"
+	}
+	if err != nil {
+		var checked *load.CheckError
+		var refused *lower.Refused
+		var notYet *lower.NotYet
+		switch {
+		case errors.As(err, &checked):
+			result.Kind = "checker"
+			result.Diagnostics = checked.Diagnostics
+		case errors.As(err, &refused):
+			result.Kind = "Refused"
+			result.Where = refused.Where
+			result.Reason = refused.What
+			result.Fix = refused.Fix
+		case errors.As(err, &notYet):
+			result.Kind = "NotYet"
+			result.Where = notYet.Where
+			result.Reason = notYet.What
+		default:
+			result.Kind = "error"
+			result.Reason = err.Error()
+		}
+	}
+	result.Seconds = time.Since(started).Seconds()
+	return result
+}
+
+func main() {
+	if len(os.Args) != 3 {
+		panic("usage: census-batch roots.json output.jsonl")
+	}
+	data, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var paths []string
+	if err := json.Unmarshal(data, &paths); err != nil {
+		panic(err)
+	}
+	if len(paths) == 0 || len(paths) > 20 {
+		panic("a census batch needs 1 to 20 independent roots")
+	}
+	sort.Strings(paths)
+	output, err := os.Create(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	defer output.Close()
+	encoder := json.NewEncoder(output)
+	for index, path := range paths {
+		if !filepath.IsAbs(path) || filepath.Ext(path) != ".ts" {
+			panic("expected an absolute TypeScript root")
+		}
+		result := inspect([]string{path})
+		if err := encoder.Encode(result); err != nil {
+			panic(err)
+		}
+		fmt.Fprintf(os.Stderr, "%d/%d %s %s %.3fs\n", index+1, len(paths), path, result.Kind, result.Seconds)
+	}
+}

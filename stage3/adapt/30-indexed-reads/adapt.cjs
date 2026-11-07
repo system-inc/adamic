@@ -15,12 +15,18 @@ const files = [
 // Addresses are parsed expressions plus their occurrence in the pinned file.
 // Survey line/column fields are documentation, never edit offsets.
 function plan(ts, file, text, check = false, zeroOnly = false) {
+    if (file === "core.ts") require("./getownvalues.cjs").validate(ts, text);
     const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (source.parseDiagnostics.length) throw new Error(`cannot parse ${file}`);
     const groups = new Map();
     function visit(node) {
         if (ts.isElementAccessExpression(node)) {
-            const expression = node.getText(source).replaceAll("!", "");
+            let expression = node.getText(source).replaceAll("!", "");
+            if (file === "core.ts" && expression === "collection[key]") {
+                let owner = node.parent;
+                while (owner && !ts.isFunctionDeclaration(owner)) owner = owner.parent;
+                if (owner?.name?.text === "getOwnValues") expression = "(collection as MapLike<T>)[key]";
+            }
             const group = groups.get(expression) || [];
             group.push(node);
             groups.set(expression, group);
@@ -72,7 +78,8 @@ function plan(ts, file, text, check = false, zeroOnly = false) {
         text = text.slice(0, edit.at) + edit.text + text.slice(edit.at);
     }
     const closure = zeroOnly ? { text, edits: 0 } : planWhole(ts, file, text, check);
-    return { text: closure.text, assertions, zeros, declined, closures: closure.edits };
+    const ownValues = file === "core.ts" && !zeroOnly ? require("./getownvalues.cjs").plan(ts, closure.text, check) : { text: closure.text, edits: 0 };
+    return { text: ownValues.text, assertions, zeros, declined, closures: closure.edits + ownValues.edits };
 }
 
 function main() {

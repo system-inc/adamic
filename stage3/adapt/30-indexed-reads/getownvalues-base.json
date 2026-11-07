@@ -1,0 +1,35 @@
+{
+  "base": {
+    "main": "5a3e6607bb58bca84f65e01a4d153b3a2ba8b301",
+    "prerequisite": "efa9c7dd7ffd4504068e6beeae26a2365eb145f1",
+    "mergedBase": "b74a665d4069f959a5bc71f555da4d77ff83d4c7",
+    "sourceReuse": "complete earlier full apply; origin/main adaptation inputs byte-identical to 8f4efea05, then exact 99z applied",
+    "coreBeforeCounterSha256": "395b00fe5d458447ea495371593a1d646879a72a7882b59a92cb48dfede8d0f8"
+  },
+  "probe": "ordinary stage3/census/tool, unchanged load and lower",
+  "toolSha256": "201a401aec000c19e0939990f29ab57e4d10517466704d9417d7e03ebb7c56ac",
+  "coreSourceSha256": "395b00fe5d458447ea495371593a1d646879a72a7882b59a92cb48dfede8d0f8",
+  "counterPresent": false,
+  "rows": [
+    {
+      "roots": [
+        "/workspace/scratch/gov-a/uncounted/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-a/uncounted/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 33.153702968
+    },
+    {
+      "roots": [
+        "/workspace/scratch/gov-a/uncounted/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-a/uncounted/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 52.130527934
+    }
+  ]
+}

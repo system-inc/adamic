@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript'),crypto=require('node:crypto');
+const name=process.argv[2]+'/src/compiler/core.ts',text=fs.readFileSync(name,'utf8'),source=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true);
+const owners=source.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='getOwnValues'&&n.body);
+if(owners.length!==1)throw Error('owner count');const owner=owners[0];
+const inserted=' (globalThis as any).__getOwnValuesCensus(collection);';
+const after=text.slice(0,owner.body.getStart(source)+1)+inserted+text.slice(owner.body.getStart(source)+1);
+if(after.split('\n').length!==text.split('\n').length)throw Error('line count changed');
+fs.writeFileSync(name,after);const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
+console.log(JSON.stringify({measurementOnly:true,inserted,originalOwner:owner.getText(source),before:hash(text),after:hash(after),lineCountPreserved:true},null,2));

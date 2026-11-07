@@ -1242,3 +1242,19 @@ integration without 70. All 17 owned files pass stock JavaScript identity
 on this fresh tree; their runtime source repairs have not changed.
 
 Continuation default oracle: **106367 passing, zero failing/pending, empty baseline diff**, 367.373 seconds, all default suites and four workers with the documented 1,536 MiB heap budget. New API mutants removing the readonly view and inserting a write into its owner report both exit 1; the four previous API mutants also exit 1. The restored checker passes. Evidence is in remaining-{proof,census,oracle,api,api-mutants,readonly-owners,counterexamples,source-hashes}.json, remaining-baseline.diff, remaining-verify.log and remaining-cache-mutant.log. No new file reaches zero; these owner handoffs and proved declines complete the review without guessing a source repair.
+
+## getOwnValues record-only amendment, b5w3ycg
+
+Ledger: Adamic ruling b5w3ycg, Nov 7 00:55Z, road (b). This owner removes
+getOwnValues's array union and unchecked member cast after adaptation 32
+ports symbolWalker's two sparse id tables to records. The existing ! stays.
+This part erases to identical JavaScript; the paired amendment is labeled
+JavaScript-changing because 32 changes table creation and cleanup.
+
+getownvalues-owners.json pins the exact raw, asserted-before and complete-after
+function. A mixed parameter/read owner, missing ! or changed body refuses.
+The direct after expression aliases the original site only inside this exact
+owner. The complete pre-30 planner still adds the original required ! before
+changing the owner. All files are planned before any writes. No compatibility
+overload or unchecked cast is added. See 32's RECORD-TABLES-PROOF.md for the
+shared proof and the user's explicit internal-declaration allowance.
