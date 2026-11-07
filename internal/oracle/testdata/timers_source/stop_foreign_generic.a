@@ -1,0 +1,13 @@
+// An object that isn't a timer but holds a truthy _onTimeout, reaching clearTimeout as a type
+// parameter, which the compile-time guard doesn't read, stops at run time on both backends after
+// what Node printed so far (Adamic's ruling on #995spev, Nov 7). Node unenrolls it and runs on.
+import 'node:timers';
+
+function clearEach<T>(value: T): void {
+    clearTimeout(value);
+}
+
+const live = setTimeout(() => { console.log('live fired'); }, 1);
+console.log(`live ${live ? 'held' : 'released'}`);
+clearEach({ _onTimeout: ['pending', 'generic'].join(' '), label: 'generic' });
+console.log('cleared the object');

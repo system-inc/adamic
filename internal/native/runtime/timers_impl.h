@@ -106,8 +106,9 @@ bool adamic_timer_unref(adamic_timer_handle handle) {
     return true;
 }
 /* A Timeout's shape: only adamic_node_set_timeout makes an object of it, so its address alone tells
- * clearTimeout a handle from a plain object holding an identity field. */
-static const char *const timeout_names[] = {"identity"};
+ * clearTimeout a handle from a plain object with a number in its one field. The field is private, as
+ * a collator's #compare is, and fields.go's layout proof holds its slot. */
+static const char *const timeout_names[] = {"#identity"};
 static const bool timeout_references[] = {false};
 static const adamic_field_kind timeout_kinds[] = {adamic_field_number};
 static const adamic_shape timeout_shape = {1, timeout_names, timeout_references, &adamic_host_methods, timeout_kinds};
@@ -115,7 +116,7 @@ adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_in
     double delay_ms, size_t argc, const adamic_value *arguments, const bool *references) {
     adamic_timer_handle handle = adamic_timer_start(&timer_provider, callback, invoke, delay_ms, false, argc, arguments, references);
     /* The slot holds the identity as a double, exact through 2^53. */
-    if (handle.identity > 9007199254740991u) abort();
+    if (handle.identity > 9007199254740991u) adamic_invariant("setTimeout: a timer identity past 2^53");
     adamic_object *timeout = adamic_object_new(&timeout_shape);
     timeout->slots[0].number = (double)handle.identity;
     return timeout;
