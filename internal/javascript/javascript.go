@@ -308,7 +308,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicWatchFileListener(") {
 		code = nodeWatchFileRuntime + code
 	}
-	if strings.Contains(code, "adamicSetTimeout(") {
+	if strings.Contains(code, "adamicSetTimeout(") || strings.Contains(code, "adamicClearTimeout(") {
 		code = nodeTimersRuntime + code
 	}
 	if strings.Contains(code, "adamicFSWatch(") {
