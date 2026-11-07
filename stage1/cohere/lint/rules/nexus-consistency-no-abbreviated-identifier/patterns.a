@@ -111,16 +111,16 @@ export function segmentMatches(word: string, text: string): boolean {
 }
 export function replaceSegment(word: string, text: string, replacement: string): string {
     switch(word) {
-        case 'cwd': return text.includes('Cwd') ? text.replace(replaceSegmentCwd1, replacement + '$1') : text;
-        case 'dir': return text.includes('Dir') ? text.replace(replaceSegmentDir1, replacement + '$1') : text;
-        case 'env': return text.includes('Env') ? text.replace(replaceSegmentEnv1, replacement + '$1') : text;
-        case 'cli': return text.includes('Cli') ? text.replace(replaceSegmentCli1, replacement + '$1') : text;
-        case 'len': return text.includes('Len') ? text.replace(replaceSegmentLen1, replacement + '$1') : text;
-        case 'seq': return text.includes('Seq') ? text.replace(replaceSegmentSeq1, replacement + '$1') : text;
-        case 'db': return text.includes('Db') ? text.replace(replaceSegmentDb1, replacement + '$1') : text;
-        case 'tx': return text.includes('Tx') ? text.replace(replaceSegmentTx1, replacement + '$1') : text;
-        case 'vars': return text.includes('Vars') ? text.replace(replaceSegmentVars1, replacement + '$1') : text;
-        case 'var': return text.includes('Var') ? text.replace(replaceSegmentVar1, replacement + '$1') : text;
+        case 'cwd': return text.includes('Cwd') ? text.replace(replaceSegmentCwd1, `${replacement}$1`) : text;
+        case 'dir': return text.includes('Dir') ? text.replace(replaceSegmentDir1, `${replacement}$1`) : text;
+        case 'env': return text.includes('Env') ? text.replace(replaceSegmentEnv1, `${replacement}$1`) : text;
+        case 'cli': return text.includes('Cli') ? text.replace(replaceSegmentCli1, `${replacement}$1`) : text;
+        case 'len': return text.includes('Len') ? text.replace(replaceSegmentLen1, `${replacement}$1`) : text;
+        case 'seq': return text.includes('Seq') ? text.replace(replaceSegmentSeq1, `${replacement}$1`) : text;
+        case 'db': return text.includes('Db') ? text.replace(replaceSegmentDb1, `${replacement}$1`) : text;
+        case 'tx': return text.includes('Tx') ? text.replace(replaceSegmentTx1, `${replacement}$1`) : text;
+        case 'vars': return text.includes('Vars') ? text.replace(replaceSegmentVars1, `${replacement}$1`) : text;
+        case 'var': return text.includes('Var') ? text.replace(replaceSegmentVar1, `${replacement}$1`) : text;
         default: return text;
     }
 }

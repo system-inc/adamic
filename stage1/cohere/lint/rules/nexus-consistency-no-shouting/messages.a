@@ -4,7 +4,7 @@ const description = "{{tokens}} in a comment reads as shouting, and the register
 export function shoutingMessage(tokens: readonly string[]): string {
     const quoted: string[] = [];
     for(const token of tokens.slice(0, 4)) {
-        quoted.push('"' + token + '"');
+        quoted.push(`"${token}"`);
     }
     return description.replace('{{tokens}}', quoted.join(', '));
 }
