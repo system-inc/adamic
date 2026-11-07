@@ -1,0 +1,2754 @@
+[
+  {
+    "label": "worktree",
+    "command": [
+      "git",
+      "worktree",
+      "add",
+      "--detach",
+      "/workspace/scratch/core-compare-amend/main",
+      "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 12.335226696000063,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/worktree.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "apply-after",
+    "command": [
+      "bash",
+      "/workspace/adamic/stage3/apply.sh",
+      "--build-product",
+      "/workspace/scratch/core-compare-amend/after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 482.10707094899954,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/apply-after.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "apply-before",
+    "command": [
+      "bash",
+      "/workspace/scratch/core-compare-amend/main/stage3/apply.sh",
+      "--build-product",
+      "/workspace/scratch/core-compare-amend/before"
+    ],
+    "cwd": "/workspace/scratch/core-compare-amend/main",
+    "childExitCode": 0,
+    "seconds": 491.72638184900006,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/apply-before.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "exit-code-canary",
+    "command": [
+      "bash",
+      "-c",
+      "exec python3 /workspace/scratch/core-compare-amend/exit_canary.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 7,
+    "seconds": 0.11603311799990479,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/exit-code-canary.log",
+    "acceptedCodes": [
+      7
+    ]
+  },
+  {
+    "label": "contract",
+    "command": [
+      "node",
+      "/workspace/scratch/core-compare-amend/contract.cjs"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.881887727000503,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/contract.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "witness",
+    "command": [
+      "node",
+      "/workspace/scratch/core-compare-amend/witness.cjs"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5668114550007886,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/witness.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "types-before",
+    "command": [
+      "/workspace/scratch/core-compare/adamic",
+      "types",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/binder.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/builder.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/builderPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/builderState.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/checker.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/corePublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/debug.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/emitter.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/hostErrors.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/parser.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/path.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/performance.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/performanceCore.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/program.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/scanner.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/semver.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/sourcemap.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/sys.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/tracing.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformer.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/tsbuild.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/types.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/utilities.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/watch.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/watchPublic.ts",
+      "/workspace/scratch/core-compare-amend/before/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 6.136306324000543,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/types-before.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "census-before",
+    "command": [
+      "/workspace/scratch/core-compare/latent",
+      "/workspace/scratch/core-compare-amend/before/src/compiler",
+      "/workspace/scratch/core-compare-amend/census-before/raw.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 26.576897856999494,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/census-before.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "build-before",
+    "command": [
+      "npm",
+      "run",
+      "build:compiler"
+    ],
+    "cwd": "/workspace/scratch/core-compare-amend/before",
+    "childExitCode": 0,
+    "seconds": 25.79414663300122,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/build-before.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "types-after",
+    "command": [
+      "/workspace/scratch/core-compare/adamic",
+      "types",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/binder.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/builder.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/builderPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/builderState.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/checker.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/corePublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/debug.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/emitter.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/hostErrors.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/parser.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/path.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/performance.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/performanceCore.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/program.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/scanner.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/semver.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/sourcemap.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/sys.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/tracing.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformer.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/tsbuild.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/types.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/utilities.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/watch.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/watchPublic.ts",
+      "/workspace/scratch/core-compare-amend/after/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.657107482000356,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/types-after.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "census-after",
+    "command": [
+      "/workspace/scratch/core-compare/latent",
+      "/workspace/scratch/core-compare-amend/after/src/compiler",
+      "/workspace/scratch/core-compare-amend/census-after/raw.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 25.494967767999697,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/census-after.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "build-after",
+    "command": [
+      "npm",
+      "run",
+      "build:compiler"
+    ],
+    "cwd": "/workspace/scratch/core-compare-amend/after",
+    "childExitCode": 0,
+    "seconds": 25.393362685001193,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/build-after.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "comparison",
+    "command": [
+      "node",
+      "/workspace/scratch/core-compare-amend/compare.cjs",
+      "/workspace/scratch/core-compare-amend/before",
+      "/workspace/scratch/core-compare-amend/after",
+      "/workspace/scratch/core-compare-amend/comparison"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.991998194000189,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/comparison.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "census-mutant",
+    "command": [
+      "/workspace/scratch/core-compare/latent",
+      "/workspace/scratch/core-compare-amend/mutant/src/compiler",
+      "/workspace/scratch/core-compare-amend/census-mutant/raw.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 26.38910667899836,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/census-mutant.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "census-comparison",
+    "command": [
+      "python3",
+      "/workspace/scratch/core-compare-amend/compare-census.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.06476468599976215,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/census-comparison.log",
+    "acceptedCodes": [
+      0
+    ]
+  },
+  {
+    "label": "replay/00-setup-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/00-setup/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.2179835050010297,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/00-setup-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/00-setup-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/00-setup/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.2676919360001193,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/00-setup-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/10-type-imports-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/10-type-imports/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 20.266912885999773,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/10-type-imports-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/10-type-imports-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/10-type-imports/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 20.32346305399915,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/10-type-imports-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/20-optional-declarations-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/20-optional-declarations/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 14.371894862000772,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/20-optional-declarations-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/20-optional-declarations-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/20-optional-declarations/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 15.01870660699933,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/20-optional-declarations-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/30-indexed-reads-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/30-indexed-reads/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.4164613199991436,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/30-indexed-reads-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/30-indexed-reads-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/30-indexed-reads/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.41833177899934526,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/30-indexed-reads-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/31-indexed-reads-checker-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/31-indexed-reads-checker/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.135489685999346,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/31-indexed-reads-checker-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/31-indexed-reads-checker-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/31-indexed-reads-checker/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.1804540570010431,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/31-indexed-reads-checker-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/32-indexed-reads-program-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/32-indexed-reads-program/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.6379767599992192,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/32-indexed-reads-program-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/32-indexed-reads-program-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/32-indexed-reads-program/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.6691733629995724,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/32-indexed-reads-program-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/33-indexed-reads-emit-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.47150940299979993,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/33-indexed-reads-emit-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/33-indexed-reads-emit-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/33-indexed-reads-emit/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.47373040299862623,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/33-indexed-reads-emit-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/40-explicit-any-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 2.011277223000434,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/40-explicit-any-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/40-explicit-any-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/40-explicit-any/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 2.0611333569995622,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/40-explicit-any-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/41-explicit-any-remaining-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.6791700289995788,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/41-explicit-any-remaining-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/41-explicit-any-remaining-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.7343502629992145,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/41-explicit-any-remaining-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/42-scanner-any-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/42-scanner-any/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6275932680000551,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/42-scanner-any-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/42-scanner-any-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/42-scanner-any/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6456760679993749,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/42-scanner-any-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/43-any-returns-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.26505936099965766,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/43-any-returns-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/43-any-returns-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/43-any-returns/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.2656627149990527,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/43-any-returns-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/44-config-generics-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/44-config-generics/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.875016518000848,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/44-config-generics-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/44-config-generics-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/44-config-generics/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.9268411199991533,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/44-config-generics-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/45-regex-captures-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/45-regex-captures/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.8367379819992493,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/45-regex-captures-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/45-regex-captures-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/45-regex-captures/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.147125135999886,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/45-regex-captures-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/46-fix-pragma-empty-argument-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.8425445110005967,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/46-fix-pragma-empty-argument-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/46-fix-pragma-empty-argument-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.027009920000637,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/46-fix-pragma-empty-argument-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/47-host-errors-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/47-host-errors/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 3.6543514489985682,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/47-host-errors-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/47-host-errors-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/47-host-errors/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 3.900198368999554,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/47-host-errors-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/48-memoize-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/48-memoize/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3667197890008538,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/48-memoize-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/48-memoize-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/48-memoize/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3676433710006677,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/48-memoize-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/49-honest-optionals-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/49-honest-optionals/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 20.083975995999936,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/49-honest-optionals-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/49-honest-optionals-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/49-honest-optionals/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 20.63007688399921,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/49-honest-optionals-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/50-temporary-scanner-implicit-returns-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4286004879995744,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/50-temporary-scanner-implicit-returns-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/50-temporary-scanner-implicit-returns-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.48792605900052877,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/50-temporary-scanner-implicit-returns-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/51-temporary-scanner-fallthrough-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/51-temporary-scanner-fallthrough/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.06659405199934554,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/51-temporary-scanner-fallthrough-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/51-temporary-scanner-fallthrough-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/51-temporary-scanner-fallthrough/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.06630104499890876,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/51-temporary-scanner-fallthrough-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/52-json-values-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/52-json-values/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.9376749849998305,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/52-json-values-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/52-json-values-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/52-json-values/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.0124331150000216,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/52-json-values-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/60-temporary-factory-local-symbol-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4241295739993802,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/60-temporary-factory-local-symbol-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/60-temporary-factory-local-symbol-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4775557570010278,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/60-temporary-factory-local-symbol-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/61-temporary-factory-type-expression-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/61-temporary-factory-type-expression/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4792753210003866,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/61-temporary-factory-type-expression-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/61-temporary-factory-type-expression-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/61-temporary-factory-type-expression/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4828995860007126,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/61-temporary-factory-type-expression-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/62-temporary-tracing-write-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/62-temporary-tracing-write/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3659359159992164,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/62-temporary-tracing-write-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/62-temporary-tracing-write-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/62-temporary-tracing-write/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3673278370006301,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/62-temporary-tracing-write-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/63-temporary-tracing-legend-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/63-temporary-tracing-legend/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3673931490011455,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/63-temporary-tracing-legend-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/63-temporary-tracing-legend-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/63-temporary-tracing-legend/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3673954440000671,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/63-temporary-tracing-legend-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/64-temporary-parser-range-read-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/64-temporary-parser-range-read/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.36588502199992945,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/64-temporary-parser-range-read-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/64-temporary-parser-range-read-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/64-temporary-parser-range-read/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.36855920900052297,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/64-temporary-parser-range-read-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/65-temporary-node-builtins-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 1.029978705000758,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/65-temporary-node-builtins-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/65-temporary-node-builtins-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 1.1857849219995842,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/65-temporary-node-builtins-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/70-readonly-views-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/70-readonly-views/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 61.77732541300065,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/70-readonly-views-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/70-readonly-views-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/70-readonly-views/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 61.933909933000905,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/70-readonly-views-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/71-writable-views-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/71-writable-views/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 9.405077719000474,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/71-writable-views-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/71-writable-views-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/71-writable-views/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 9.437830009001118,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/71-writable-views-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/75-optional-widening-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/75-optional-widening/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.8148127530002967,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/75-optional-widening-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/75-optional-widening-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/75-optional-widening/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.37996976300019,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/75-optional-widening-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/76-truthful-casts-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/76-truthful-casts/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.37396590299977106,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/76-truthful-casts-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/76-truthful-casts-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/76-truthful-casts/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.47439144600139116,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/76-truthful-casts-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/78-variance-marker-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/78-variance-marker/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 10.39314377700066,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/78-variance-marker-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/78-variance-marker-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/78-variance-marker/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 10.707490949000203,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/78-variance-marker-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/79-exit-code-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/79-exit-code/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.95000133800022,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/79-exit-code-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/79-exit-code-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/79-exit-code/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.1136259819995757,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/79-exit-code-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/90-void-widening-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/90-void-widening/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 18.832073326999307,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/90-void-widening-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/90-void-widening-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/90-void-widening/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 19.09722004700052,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/90-void-widening-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/91-patcher-discard-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.1811853120016167,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/91-patcher-discard-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/91-patcher-discard-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.2429598620001343,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/91-patcher-discard-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/92-tty-host-results-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.537765696999486,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/92-tty-host-results-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/92-tty-host-results-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/92-tty-host-results/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.618255339000825,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/92-tty-host-results-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/93-builtin-imports-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 2.4622166470016964,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/93-builtin-imports-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/93-builtin-imports-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 3.6349880319994554,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/93-builtin-imports-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/94-axolotl-property-read-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/94-axolotl-property-read/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3161052350005775,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/94-axolotl-property-read-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/94-axolotl-property-read-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/94-axolotl-property-read/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3171714719992451,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/94-axolotl-property-read-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-a-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 13.780612800999734,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-a-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-a-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 13.830247939999026,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-a-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-b-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 3.9779055190010695,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-b-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-b-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 4.131565911999132,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-b-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-c-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 11.590344996000567,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-c-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-c-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 11.93981879400053,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-c-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-d-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 12.676728825001192,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-d-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-d-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 13.242228981000153,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-d-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-e-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.556147395998778,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-e-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-e-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.781147351999607,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-e-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-f-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.812960328999907,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-f-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-f-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 5.396501688001081,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-f-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-g-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 6.567750901000181,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-g-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-g-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 6.6527277329987555,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-g-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-h-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 7.206121639999765,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-h-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/95-checker-axolotl-h-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 7.307150503998855,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/95-checker-axolotl-h-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-a-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3669767850005883,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-a-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-a-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3677905299991835,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-a-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-b-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.316015411999615,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-b-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-b-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.36778883500119264,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-b-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-c-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.41737783099961234,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-c-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/96-emit-axolotl-c-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/96-emit-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4226155590004055,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/96-emit-axolotl-c-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-a-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5241129089990864,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-a-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-a-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5705368259987154,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-a-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-b-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0301741900002526,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-b-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-b-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0318041509999603,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-b-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-c-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.41695795899977384,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-c-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-c-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.41764732699994056,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-c-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-d-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2402984949985694,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-d-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-d-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2825802010011103,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-d-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-e-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.625617247998889,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-e-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/97-cli-axolotl-e-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/97-cli-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.8299825220001367,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/97-cli-axolotl-e-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-a-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0908919529993,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-a-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-a-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2409783010007231,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-a-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-b-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2680172750006022,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-b-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-b-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2894141400010994,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-b-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-c-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.9944322379997175,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-c-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-c-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 4.125564416999623,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-c-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-d-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.8768296670004929,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-d-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-d-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.8791572459995223,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-d-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-e-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.7415936680008599,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-e-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/98-axolotl-e-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/98-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.7435679779991915,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/98-axolotl-e-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-cli-debug-assertion-level-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3676227390005806,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-cli-debug-assertion-level-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-cli-debug-assertion-level-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3684153600006539,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-cli-debug-assertion-level-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-cli-perf-hooks-import-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-cli-perf-hooks-import/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.26542963499923644,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-cli-perf-hooks-import-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-cli-perf-hooks-import-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-cli-perf-hooks-import/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.26705319800021243,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-cli-perf-hooks-import-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-a-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5336348799992265,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-a-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-a-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-a/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6138633869995829,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-a-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-b-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.477945267000905,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-b-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-b-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-b/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5180165809997561,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-b-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-c-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0033266369991907,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-c-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-c-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-c/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.1128137260002404,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-c-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-d-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4693108449991996,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-d-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-d-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-d/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4711634029990819,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-d-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-e-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4186902299989015,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-e-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-e-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.42102479400091397,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-e-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-f-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-f/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.8271563119997154,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-f-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-f-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-f/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.936181900999145,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-f-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-g-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-g/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.4662853850004467,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-g-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-g-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-g/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 1,
+    "seconds": 0.4732348349989479,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-g-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-h-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-h/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5413182770007552,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-h-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-h-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-h/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.543105689001095,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-h-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-i-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-i/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6730756560009468,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-i-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-i-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-i/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6750663700004225,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-i-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-j-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.0504814430005354,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-j-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-j-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 2.329575425999792,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-j-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-k-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-k/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0991239080012747,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-k-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-k-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-k/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.183616168998924,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-k-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-l-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-l/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.1791918719991372,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-l-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-l-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-l/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.2366633229994477,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-l-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-m-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-m/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0756191170003149,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-m-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-m-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-m/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.1348089599996456,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-m-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-n-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4251046879999194,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-n-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-n-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.46960883799874864,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-n-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-q-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-q/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.9861910460003855,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-q-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-q-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-q/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0392714839999826,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-q-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-r-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-r/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.1048272980006004,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-r-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-r-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-r/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 3.2788394760009396,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-r-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-s-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-s/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4673739999998361,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-s-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-s-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-s/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4697539509998023,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-s-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-t-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.3658888489990204,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-t-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-t-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4210890139984258,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-t-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-u-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6253938089994335,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-u-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-u-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-u/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.6304792200007796,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-u-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-w-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-w/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0360494880005717,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-w-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-w-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-w/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0794440049994591,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-w-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-y-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-y/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0378204739990906,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-y-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-y-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-y/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 1.0417055140005687,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-y-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-z-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-z/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5681727169994701,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-z-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-axolotl-z-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-axolotl-z/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.5744776460014691,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-axolotl-z-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-core-compare-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-core-compare/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.37023841900008847,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-core-compare-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-correctness-core-compare-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-correctness-core-compare/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 0.4674768579989177,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-correctness-core-compare-before.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-wasm-crypto-import-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 5.91844645799938,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-wasm-crypto-import-after.log",
+    "acceptedCodes": "recorded validation subject"
+  },
+  {
+    "label": "replay/99-wasm-crypto-import-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/core-compare-amend/replay-before"
+    ],
+    "cwd": "/workspace/adamic",
+    "childExitCode": 0,
+    "seconds": 6.068831226999464,
+    "timedOut": false,
+    "log": "/workspace/scratch/core-compare-amend/replay/99-wasm-crypto-import-before.log",
+    "acceptedCodes": "recorded validation subject"
+  }
+]

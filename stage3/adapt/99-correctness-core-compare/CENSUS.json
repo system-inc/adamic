@@ -1,0 +1,124 @@
+{
+  "beforeDistinctSites": 59,
+  "afterDistinctSites": 58,
+  "removed": [
+    [
+      2003,
+      9,
+      "NotYet",
+      "a BinaryExpression with a union of differently held members and a union of differently held members",
+      "lowering"
+    ]
+  ],
+  "newSites": [],
+  "fullCoreCompared": true,
+  "mutantRestoresExactlyOriginalSites": true,
+  "ownerStartLine": 1996,
+  "ownerEndLine": 2005,
+  "lineDelta": 0,
+  "checkerDiagnostics": 0,
+  "ownerProbes": {
+    "before": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1996:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1996:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1998:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1998:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1999:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 70322,
+        "body_end": 70543,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1999:1"
+      }
+    ],
+    "after": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1996:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1996:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1998:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1998:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1999:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 70322,
+        "body_end": 70773,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1999:1"
+      }
+    ],
+    "mutant": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1996:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1996:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1998:1",
+        "kind": "KindFunctionDeclaration",
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1998:1"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1999:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 70322,
+        "body_end": 70543,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "compareComparableValues",
+        "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1999:1"
+      }
+    ]
+  }
+}
