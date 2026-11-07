@@ -96,7 +96,7 @@ function createProgram(name: string): Program {
 const programs: Program[] = [];
 programs.push(createProgram('a'));
 programs.push(createProgram('b'));
-console.log(programs.length);
+console.log(programs.length.toString());
 `)
 	programRegionRootsWant(t, "1", allocating, []string{"addFile", "createProgram", "makeFile"})
 	programRegionRootsWant(t, "2", returning, []string{"createProgram", "makeFile"})
@@ -113,7 +113,7 @@ function createProgram(): Program { const program: Program = { files: [] }; cons
 function createSession(previous: Session | undefined): Session { const session: Session = { program: createProgram(), previous }; return session; }
 const first = createSession(undefined);
 const second = createSession(first);
-console.log(second.program.files.length);
+console.log(second.program.files.length.toString());
 `)
 	programRegionRootsWant(t, "1", allocating, []string{"createSession"})
 	programRegionRootsWant(t, "2", returning, []string{"createSession"})
@@ -129,7 +129,7 @@ function outer(): number {
  const build = (): Program => { const program: Program = { files: [] }; const file: File = { program }; program.files.push(file); return program; };
  return build().files.length + build().files.length;
 }
-console.log(outer());
+console.log(outer().toString());
 `)
 	programRegionRootsWant(t, "1", allocating, []string{"build"})
 	programRegionRootsWant(t, "2", returning, []string{"build"})

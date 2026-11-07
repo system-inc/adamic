@@ -13,11 +13,12 @@ import (
 type programMembership struct {
 	types                     ir.SortedMap[int, bool]
 	cells, functions, classes map[int]bool
-	// tops is the Program root by structure: every member type in a top owning component
-	// (program_region_roots.go), by type id.
-	tops                      map[int]bool
 	identities                []string
 	refusal                   error
+
+	// tops is the Program root by structure: every member type in a top owning component
+	// (program_region_roots.go), by type id.
+	tops map[int]bool
 }
 
 func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.SourceFile) *programMembership {
