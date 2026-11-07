@@ -173,8 +173,12 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 	if err != nil {
 		return nil, nil, err
 	}
+	configured, err := toolchain.ConfigurationsByContent(string(version))
+	if err != nil {
+		return nil, nil, fmt.Errorf("%w: %v", errUncachedUnit, err)
+	}
 	var versionLines []string
-	for _, line := range strings.Split(toolchain.ConfigurationsByContent(string(version)), "\n") {
+	for _, line := range strings.Split(configured, "\n") {
 		if !strings.HasPrefix(line, "InstalledDir:") && line != "" {
 			versionLines = append(versionLines, line)
 		}
