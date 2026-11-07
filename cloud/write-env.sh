@@ -9,6 +9,10 @@
 set -euo pipefail
 tools=$1 gate=$2 markdownDependencies=$3 repository=$4 gocacheprog=$5 wasiDirectory=$6
 environment="$tools/env.sh"
+# Refused on its own, so a caller other than setup.sh can't rewrite a release-owned env.sh either.
+# shellcheck source=cloud/env-owner.sh
+source "$repository/cloud/env-owner.sh"
+adamic_env_refuse_release_owned "$environment"
 
 kept=""
 if [ -f "$environment" ]; then
