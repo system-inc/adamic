@@ -55,9 +55,9 @@ func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 	}
 }
 
-// ValidateOptions takes each linux triple of the table (toolchain's TestTheTripleTable holds its rows), the host's own
-// darwin one alone, and refuses a darwin triple for another platform as a cross build no SDK is pinned for, and a
-// triple the table doesn't hold. Mutant: the darwin refusal dropped.
+// ValidateOptions takes the table's triple for this host alone (toolchain's TestTheTripleTable holds its rows), refuses
+// a darwin triple for another platform as a cross build no SDK is pinned for, a linux one as a cross build whose
+// sysroot isn't pinned yet, and a triple the table doesn't hold. Mutants: the darwin refusal dropped; the linux one.
 func TestValidateOptionsTakesTheTable(t *testing.T) {
 	t.Parallel()
 	want := map[[2]string]string{
@@ -70,9 +70,13 @@ func TestValidateOptionsTakesTheTable(t *testing.T) {
 		err := ValidateOptions(Options{Target: triple})
 		host := platform[0] == goruntime.GOOS && platform[1] == goruntime.GOARCH
 		switch {
-		case platform[0] == "linux" || host:
+		case host:
 			if err != nil {
 				t.Errorf("ValidateOptions refuses %s on %s/%s: %v", triple, goruntime.GOOS, goruntime.GOARCH, err)
+			}
+		case platform[0] == "linux":
+			if err == nil || !strings.Contains(err.Error(), triple+": a linux cross build needs its pinned sysroot (#5xsd2ha)") {
+				t.Errorf("ValidateOptions on %s/%s took %s: %v, want it refused as a linux cross build", goruntime.GOOS, goruntime.GOARCH, triple, err)
 			}
 		case err == nil || !strings.Contains(err.Error(), triple+": a darwin cross build has no pinned SDK"):
 			t.Errorf("ValidateOptions on %s/%s took %s: %v, want it refused as a darwin cross build", goruntime.GOOS, goruntime.GOARCH, triple, err)
@@ -120,6 +124,34 @@ func TestAnEmptyTargetIsTheBuildsTriple(t *testing.T) {
 	t.Setenv("GOARCH", "amd64")
 	if err := ValidateOptions(Options{}); err == nil || !strings.Contains(err.Error(), "no native target for windows/amd64") {
 		t.Errorf("a windows/amd64 build: %v, want it refused by its platform's name", err)
+	}
+}
+
+// A build with `GOARCH` set to the arch this linux host isn't is refused by name, before clang runs: no sysroot for that
+// arch is pinned yet, and without one clang would compile against this host's C library and headers (#5xsd2ha).
+// TestACrossBuildKeysTheBuildsArch holds such a build's flags and keys; this holds that it never builds. Mutant: the
+// linux branch of nativeTargetRefusal dropped, and the build is taken.
+// Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
+func TestALinuxCrossBuildIsRefusedUntilItsSysrootIsPinned(t *testing.T) {
+	other := map[string]string{"amd64": "arm64", "arm64": "amd64"}[goruntime.GOARCH]
+	if goruntime.GOOS != "linux" || other == "" {
+		t.Skipf("a linux cross build is one from a linux/amd64 or linux/arm64 host, and this is %s/%s", goruntime.GOOS, goruntime.GOARCH)
+	}
+	t.Setenv("GOOS", "linux")
+	t.Setenv("GOARCH", other)
+	triple, err := toolchain.Triple("linux", other)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := "native: " + triple + ": a linux cross build needs its pinned sysroot (#5xsd2ha), and this host is linux/" + goruntime.GOARCH
+	for _, options := range []Options{{}, {Sanitize: true}, {Release: true}} {
+		if err := ValidateOptions(options); err == nil || err.Error() != want {
+			t.Errorf("a linux/%s build %+v on this linux/%s host: %v, want %q", other, options, goruntime.GOARCH, err, want)
+		}
+	}
+	t.Setenv("GOARCH", goruntime.GOARCH)
+	if err := ValidateOptions(Options{}); err != nil {
+		t.Errorf("this host's own linux/%s build is refused: %v", goruntime.GOARCH, err)
 	}
 }
 
