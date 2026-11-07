@@ -1,5 +1,5 @@
 import 'node:process';
-const handle = (process.stdout as { readonly _handle?: { setBlocking(blocking: boolean): void } | undefined })._handle;
+const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };
 console.log(`handle ${handle === undefined ? 'undefined' : typeof handle.setBlocking}`);
-if (handle !== undefined) { handle.setBlocking(true); }
+if (handle && handle.setBlocking) { handle.setBlocking(true); }
 process.stdout.write('set blocking\n');
