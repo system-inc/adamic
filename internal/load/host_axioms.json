@@ -387,6 +387,6 @@
       "null": {"result": "undefined", "threw": false},
       "undefined": {"result": "undefined", "threw": false}
     },
-    "ruling": "@system_adamic on #b5w3ycg, point 2: clearTimeout takes unknown"
+    "ruling": "@system_adamic on #995spev, Nov 7: clearTimeout takes unknown (#b5w3ycg, point 2); it widens the published parameter, since Node's clearTimeout accepts any value and returns undefined"
   }
 ]
