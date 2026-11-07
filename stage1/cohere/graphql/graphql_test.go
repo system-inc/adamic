@@ -164,15 +164,15 @@ var mutants = []mutant{
 	{
 		name: "a byte order mark not ignored",
 		file: "lexer.ts",
-		from: "\t\t\tcase 0xfeff: // <BOM>\n",
+		from: "            case 0xfeff: // <BOM>\n",
 		to:   "",
 	},
 	// An edge of a class: a no-break space is no separator, but "Unexpected character: U+00A0.".
 	{
 		name: "a no-break space ignored",
 		file: "lexer.ts",
-		from: "\t\t\tcase 0xfeff: // <BOM>\n",
-		to:   "\t\t\tcase 0xfeff: // <BOM>\n\t\t\tcase 0x00a0:\n",
+		from: "            case 0xfeff: // <BOM>\n",
+		to:   "            case 0xfeff: // <BOM>\n\t\t\tcase 0x00a0:\n",
 	},
 	// An edge of a class: `[`, just past `Z`, taken for a letter, so `a[` is one name.
 	{
@@ -208,7 +208,7 @@ var mutants = []mutant{
 	{
 		name: "a lone surrogate written as itself",
 		file: "lexer.ts",
-		from: "\tif (code >= 0xd800 && code <= 0xdfff) {\n\t\treturn '\\\\u{FFFD}';\n\t}\n",
+		from: "    if(code >= 0xd800 && code <= 0xdfff) {\n        return '\\\\u{FFFD}';\n    }\n",
 		to:   "",
 	},
 	// A carriage return and line feed counted as two lines in an error's location.
@@ -222,8 +222,8 @@ var mutants = []mutant{
 	{
 		name: "the first line's indent common",
 		file: "blockString.ts",
-		from: "if (index !== 0 && indent < commonIndent) {",
-		to:   "if (indent < commonIndent) {",
+		from: "if(index !== 0 && indent < commonIndent) {",
+		to:   "if(indent < commonIndent) {",
 	},
 	// The backslash of an escaped triple quote kept in the value.
 	{
@@ -236,15 +236,15 @@ var mutants = []mutant{
 	{
 		name: "a leading zero's error at the number's start",
 		file: "lexer.ts",
-		from: "throw new Error(syntaxError(body, position, `Invalid number, unexpected digit after 0:",
-		to:   "throw new Error(syntaxError(body, start, `Invalid number, unexpected digit after 0:",
+		from: "throw new Error(\n                syntaxError(\n                    body,\n                    position,\n                    `Invalid number, unexpected digit after 0:",
+		to:   "throw new Error(\n                syntaxError(\n                    body,\n                    start,\n                    `Invalid number, unexpected digit after 0:",
 	},
 	// A throw not taken: an escape graphql-js refuses read as nothing, and the parse goes on.
 	{
 		name: "an invalid escape read as nothing",
 		file: "lexer.ts",
-		from: "\tthrow new Error(syntaxError(body, position, `Invalid character escape sequence: \"${escaped(body.slice(position, position + 2))}\".`));",
-		to:   "\treturn { value: '', size: 2 };",
+		from: "    throw new Error(\n        syntaxError(\n            body,\n            position,\n            `Invalid character escape sequence: \"${escaped(body.slice(position, position + 2))}\".`,\n        ),\n    );",
+		to:   "    return { value: '', size: 2 };",
 	},
 	// unexpected told which token to name, naming the current one instead (`extend thing X` names
 	// `thing`, the lookahead).
@@ -258,22 +258,22 @@ var mutants = []mutant{
 	{
 		name: "no directives an empty list",
 		file: "parser.ts",
-		from: "\t\tif (directives.length > 0) {\n\t\t\treturn { kind: 'List', nodes: directives };\n\t\t}\n\t\treturn undefinedValue;",
-		to:   "\t\treturn { kind: 'List', nodes: directives };",
+		from: "        if(directives.length > 0) {\n            return { kind: 'List', nodes: directives };\n        }\n        return undefinedValue;",
+		to:   "            return { kind: 'List', nodes: directives };",
 	},
 	// A fragment spread without arguments written with arguments undefined, where graphql-js never
 	// writes the field.
 	{
 		name: "a spread's absent arguments written",
 		file: "parser.ts",
-		from: "selections.push(this.node(fragmentStart, 'FragmentSpread', [child('name', name), field('directives', this.parseDirectives(false))]));",
-		to:   "selections.push(this.node(fragmentStart, 'FragmentSpread', [child('name', name), field('arguments', undefinedValue), field('directives', this.parseDirectives(false))]));",
+		from: "                            this.node(fragmentStart, 'FragmentSpread', [\n                                child('name', name),\n                                field('directives', this.parseDirectives(false)),\n                            ]),",
+		to:   "                            this.node(fragmentStart, 'FragmentSpread', [\n                                child('name', name),\n                                field('arguments', undefinedValue),\n                                field('directives', this.parseDirectives(false)),\n                            ]),",
 	},
 	// One of the 21 directive locations forgotten.
 	{
 		name: "FRAGMENT_VARIABLE_DEFINITION no location",
 		file: "parser.ts",
-		from: "\t\tcase 'FRAGMENT_VARIABLE_DEFINITION':\n",
+		from: "        case 'FRAGMENT_VARIABLE_DEFINITION':\n",
 		to:   "",
 	},
 }
