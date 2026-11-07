@@ -25,6 +25,7 @@ var wasiHostRefusals = map[string]TargetRefused{
 	"adamic_node_pid":              {"process.pid", "WASI has no process identifiers"},
 	"adamic_node_platform":         {"process.platform", "WASI has no Node host platform"},
 	"adamic_node_memory_usage":     {"process.memoryUsage", "WASI has no allocator observations"},
+	"adamic_node_set_timeout":      {"setTimeout", "wasi preview1 has no monotonic timer provider"},
 }
 
 func validateBuild(source string, options Options) error {

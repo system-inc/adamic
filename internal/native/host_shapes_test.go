@@ -197,6 +197,9 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "regexp_compile_bytecode.c", scope: "regex_compile_names", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal, replacedBy: hostShapeRuntime + "regexp_compile_runtime.c adamic_regex_compile_new [0]"},
 	{file: hostShapeRuntime + "regexp_compile_ownership.c", name: "regex_owned_shape", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal},
 	{file: hostShapeRuntime + "regexp_compile_runtime.c", scope: "adamic_regex_compile_new", verdict: hostShapeUnreachable, refusal: "regexp_runtime.a", refused: nonconstantRefusal},
+	// setTimeout's Timeout (#995spev): Node's own Timeout on the JavaScript backend, whose prototype
+	// isn't Object's, so it needs no wrapper there.
+	{file: hostShapeRuntime + "timers_impl.h", name: "timeout_shape", verdict: hostShapeHost, stop: "stop_host_timeout.a"},
 	{file: hostShapeRuntime + "tsgo.c", scope: "adamic_tsgo_query_in", name: "shape", verdict: hostShapeUnreachable, refusal: "tsgo_query.a", refused: "an unlinked typescript-go library call"},
 	// Go generators of shapes the runtime's objects take: a regular expression literal's groups
 	// shape, written when the program is compiled; a wasm export's record argument, which the host

@@ -497,6 +497,7 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_host_performance_mark.a", "mark adamic\n", "RuntimeValue", "name", "mark adamic\nstring\n"},
 	{"stop_host_handle.a", "handle true\n", "RuntimeValue", "setBlocking", "handle true\nfunction\n"},
 	{"stop_host_watcher.a", "watching\n", "RuntimeValue", "close", "watching\nfunction\n"},
+	{"stop_host_timeout.a", "scheduled\n", "RuntimeValue", "refresh", "scheduled\nfunction\n"},
 	{"stop_host_groups.a", "groups true\n", "RuntimeValue", "letter", "groups true\nstring\n"},
 	{"stop_host_error_prototype.a", "error made\n", "RuntimeValue", "valueOf", "error made\nfunction\n"},
 	{"stop_host_fs_error_prototype.a", "caught\n", "RuntimeValue", "hasOwnProperty", "caught\nfunction\n"},
