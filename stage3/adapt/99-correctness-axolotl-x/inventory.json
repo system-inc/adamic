@@ -1,0 +1,936 @@
+{
+  "sites": [
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "line": 1751,
+      "column": 30,
+      "before": "maybeBind(host, host.writeFile)",
+      "start": 78311,
+      "end": 78342,
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.emitNextAffectedFileOrDtsErrors",
+      "line": 1839,
+      "column": 34,
+      "before": "maybeBind(host, host.writeFile)",
+      "start": 82448,
+      "end": 82479,
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.getWriteFileCallback",
+      "line": 1938,
+      "column": 78,
+      "before": "maybeBind(host, host.writeFile)",
+      "start": 87646,
+      "end": 87677,
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createCompilerHostWorker",
+      "line": 495,
+      "column": 21,
+      "before": "maybeBind(system, system.createHash)",
+      "start": 15713,
+      "end": 15749,
+      "after": "system.createHash?.bind(system)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5115,
+      "column": 26,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)",
+      "start": 262395,
+      "end": 262468,
+      "after": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5116,
+      "column": 25,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)",
+      "start": 262494,
+      "end": 262566,
+      "after": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5117,
+      "column": 19,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.realpath)",
+      "start": 262586,
+      "end": 262652,
+      "after": "directoryStructureHost.realpath?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderHostBase",
+      "line": 302,
+      "column": 16,
+      "before": "maybeBind(system, system.now)",
+      "start": 10927,
+      "end": 10956,
+      "after": "system.now?.bind(system)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 438,
+      "column": 46,
+      "before": "maybeBind(host, host.resolveModuleNameLiterals)",
+      "start": 17892,
+      "end": 17939,
+      "after": "host.resolveModuleNameLiterals?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 439,
+      "column": 60,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectiveReferences)",
+      "start": 18000,
+      "end": 18061,
+      "after": "host.resolveTypeReferenceDirectiveReferences?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 440,
+      "column": 35,
+      "before": "maybeBind(host, host.resolveLibrary)",
+      "start": 18097,
+      "end": 18133,
+      "after": "host.resolveLibrary?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 441,
+      "column": 39,
+      "before": "maybeBind(host, host.resolveModuleNames)",
+      "start": 18173,
+      "end": 18213,
+      "after": "host.resolveModuleNames?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 442,
+      "column": 51,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectives)",
+      "start": 18265,
+      "end": 18317,
+      "after": "host.resolveTypeReferenceDirectives?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 443,
+      "column": 45,
+      "before": "maybeBind(host, host.getModuleResolutionCache)",
+      "start": 18363,
+      "end": 18409,
+      "after": "host.getModuleResolutionCache?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 500,
+      "column": 16,
+      "before": "maybeBind(host, host.trace)",
+      "start": 21370,
+      "end": 21397,
+      "after": "host.trace?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 677,
+      "column": 20,
+      "before": "maybeBind(system, system.watchFile)",
+      "start": 29471,
+      "end": 29506,
+      "after": "system.watchFile?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 678,
+      "column": 25,
+      "before": "maybeBind(system, system.watchDirectory)",
+      "start": 29557,
+      "end": 29597,
+      "after": "system.watchDirectory?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 679,
+      "column": 21,
+      "before": "maybeBind(system, system.setTimeout)",
+      "start": 29644,
+      "end": 29680,
+      "after": "system.setTimeout?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 680,
+      "column": 23,
+      "before": "maybeBind(system, system.clearTimeout)",
+      "start": 29712,
+      "end": 29750,
+      "after": "system.clearTimeout?.bind(system)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createIncrementalCompilerHost",
+      "line": 125,
+      "column": 23,
+      "before": "maybeBind(system, system.createHash)",
+      "start": 4191,
+      "end": 4227,
+      "after": "system.createHash?.bind(system)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 506,
+      "column": 56,
+      "before": "maybeBind(host, host.useSourceOfProjectReferenceRedirect)",
+      "start": 24672,
+      "end": 24729,
+      "after": "host.useSourceOfProjectReferenceRedirect?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 529,
+      "column": 46,
+      "before": "maybeBind(host, host.resolveModuleNameLiterals)",
+      "start": 26284,
+      "end": 26331,
+      "after": "host.resolveModuleNameLiterals?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 530,
+      "column": 39,
+      "before": "maybeBind(host, host.resolveModuleNames)",
+      "start": 26371,
+      "end": 26411,
+      "after": "host.resolveModuleNames?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 534,
+      "column": 60,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectiveReferences)",
+      "start": 26679,
+      "end": 26740,
+      "after": "host.resolveTypeReferenceDirectiveReferences?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 535,
+      "column": 51,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectives)",
+      "start": 26792,
+      "end": 26844,
+      "after": "host.resolveTypeReferenceDirectives?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 543,
+      "column": 9,
+      "before": "maybeBind(host, host.getModuleResolutionCache)",
+      "start": 27379,
+      "end": 27425,
+      "after": "host.getModuleResolutionCache?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 549,
+      "column": 9,
+      "before": "maybeBind(host, host.hasInvalidatedResolutions)",
+      "start": 27869,
+      "end": 27916,
+      "after": "host.hasInvalidatedResolutions?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 552,
+      "column": 9,
+      "before": "maybeBind(host, host.hasInvalidatedLibResolutions)",
+      "start": 28027,
+      "end": 28077,
+      "after": "host.hasInvalidatedLibResolutions?.bind(host)"
+    }
+  ],
+  "refused": [],
+  "foreign": [
+    {
+      "file": "binder.ts",
+      "owner": "createBinder.createBindBinaryExpressionFlow.onLeft",
+      "line": 1968,
+      "column": 36,
+      "before": "maybeBind(left)",
+      "start": 91205,
+      "end": 91220,
+      "reason": "callee does not resolve to core.ts export"
+    },
+    {
+      "file": "binder.ts",
+      "owner": "createBinder.createBindBinaryExpressionFlow.onRight",
+      "line": 1984,
+      "column": 36,
+      "before": "maybeBind(right)",
+      "start": 91784,
+      "end": 91800,
+      "reason": "callee does not resolve to core.ts export"
+    }
+  ],
+  "left": [
+    {
+      "file": "checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "line": 54281,
+      "column": 26,
+      "before": "maybeBind(host, host.getSymlinkCache)",
+      "start": 3094174,
+      "end": 3094211,
+      "after": "host.getSymlinkCache?.bind(host)",
+      "pinnedOwner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "line": 54292,
+      "column": 40,
+      "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+      "start": 3095055,
+      "end": 3095106,
+      "after": "host.getGlobalTypingsCacheLocation?.bind(host)",
+      "pinnedOwner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram",
+      "line": 1957,
+      "column": 40,
+      "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+      "start": 91633,
+      "end": 91684,
+      "after": "host.getGlobalTypingsCacheLocation?.bind(host)",
+      "pinnedOwner": "createProgram",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2627,
+      "column": 23,
+      "before": "maybeBind(host, host.realpath)",
+      "start": 127755,
+      "end": 127785,
+      "after": "host.realpath?.bind(host)",
+      "pinnedOwner": "createProgram.getEmitHost",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2633,
+      "column": 25,
+      "before": "maybeBind(host, host.createHash)",
+      "start": 128148,
+      "end": 128180,
+      "after": "host.createHash?.bind(host)",
+      "pinnedOwner": "createProgram.getEmitHost",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2635,
+      "column": 20,
+      "before": "maybeBind(host, host.trace)",
+      "start": 128281,
+      "end": 128308,
+      "after": "host.trace?.bind(host)",
+      "pinnedOwner": "createProgram.getEmitHost",
+      "adapter": "95-checker-axolotl-h",
+      "reason": "owner pinned by 95-checker-axolotl-h; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 761,
+      "column": 32,
+      "before": "maybeBind(host, host.getDefaultLibLocation)",
+      "start": 34087,
+      "end": 34130,
+      "after": "host.getDefaultLibLocation?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 774,
+      "column": 16,
+      "before": "maybeBind(host, host.trace)",
+      "start": 34859,
+      "end": 34886,
+      "after": "host.trace?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 775,
+      "column": 26,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)",
+      "start": 34913,
+      "end": 34986,
+      "after": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 776,
+      "column": 25,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)",
+      "start": 35012,
+      "end": 35084,
+      "after": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 777,
+      "column": 19,
+      "before": "maybeBind(host, host.realpath)",
+      "start": 35104,
+      "end": 35134,
+      "after": "host.realpath?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 778,
+      "column": 33,
+      "before": "maybeBind(host, host.getEnvironmentVariable)",
+      "start": 35168,
+      "end": 35212,
+      "after": "host.getEnvironmentVariable?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 779,
+      "column": 21,
+      "before": "maybeBind(host, host.createHash)",
+      "start": 35248,
+      "end": 35280,
+      "after": "host.createHash?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 780,
+      "column": 24,
+      "before": "maybeBind(host, host.readDirectory)",
+      "start": 35305,
+      "end": 35340,
+      "after": "host.readDirectory?.bind(host)",
+      "pinnedOwner": "createCompilerHostFromProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 856,
+      "column": 19,
+      "before": "maybeBind(system, system.realpath)",
+      "start": 38690,
+      "end": 38724,
+      "after": "system.realpath?.bind(system)",
+      "pinnedOwner": "createProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 857,
+      "column": 33,
+      "before": "maybeBind(system, system.getEnvironmentVariable)",
+      "start": 38758,
+      "end": 38806,
+      "after": "system.getEnvironmentVariable?.bind(system)",
+      "pinnedOwner": "createProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 861,
+      "column": 21,
+      "before": "maybeBind(system, system.createHash)",
+      "start": 39050,
+      "end": 39086,
+      "after": "system.createHash?.bind(system)",
+      "pinnedOwner": "createProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 864,
+      "column": 14,
+      "before": "maybeBind(system, system.now)",
+      "start": 39271,
+      "end": 39300,
+      "after": "system.now?.bind(system)",
+      "pinnedOwner": "createProgramHost",
+      "adapter": "32-indexed-reads-program",
+      "reason": "owner pinned by 32-indexed-reads-program; folded there"
+    }
+  ],
+  "origins": [
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "line": 1727,
+      "column": 30,
+      "before": "maybeBind(host, host.writeFile)",
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.emitNextAffectedFileOrDtsErrors",
+      "line": 1815,
+      "column": 34,
+      "before": "maybeBind(host, host.writeFile)",
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "builder.ts",
+      "owner": "createBuilderProgram.getWriteFileCallback",
+      "line": 1914,
+      "column": 78,
+      "before": "maybeBind(host, host.writeFile)",
+      "after": "host.writeFile?.bind(host)"
+    },
+    {
+      "file": "checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "line": 54264,
+      "column": 26,
+      "before": "maybeBind(host, host.getSymlinkCache)",
+      "after": "host.getSymlinkCache?.bind(host)"
+    },
+    {
+      "file": "checker.ts",
+      "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "line": 54275,
+      "column": 40,
+      "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+      "after": "host.getGlobalTypingsCacheLocation?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createCompilerHostWorker",
+      "line": 494,
+      "column": 21,
+      "before": "maybeBind(system, system.createHash)",
+      "after": "system.createHash?.bind(system)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram",
+      "line": 1956,
+      "column": 40,
+      "before": "maybeBind(host, host.getGlobalTypingsCacheLocation)",
+      "after": "host.getGlobalTypingsCacheLocation?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2626,
+      "column": 23,
+      "before": "maybeBind(host, host.realpath)",
+      "after": "host.realpath?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2632,
+      "column": 25,
+      "before": "maybeBind(host, host.createHash)",
+      "after": "host.createHash?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "createProgram.getEmitHost",
+      "line": 2634,
+      "column": 20,
+      "before": "maybeBind(host, host.trace)",
+      "after": "host.trace?.bind(host)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5114,
+      "column": 26,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)",
+      "after": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5115,
+      "column": 25,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)",
+      "after": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "program.ts",
+      "owner": "parseConfigHostFromCompilerHostLike",
+      "line": 5116,
+      "column": 19,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.realpath)",
+      "after": "directoryStructureHost.realpath?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderHostBase",
+      "line": 302,
+      "column": 16,
+      "before": "maybeBind(system, system.now)",
+      "after": "system.now?.bind(system)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 438,
+      "column": 46,
+      "before": "maybeBind(host, host.resolveModuleNameLiterals)",
+      "after": "host.resolveModuleNameLiterals?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 439,
+      "column": 60,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectiveReferences)",
+      "after": "host.resolveTypeReferenceDirectiveReferences?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 440,
+      "column": 35,
+      "before": "maybeBind(host, host.resolveLibrary)",
+      "after": "host.resolveLibrary?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 441,
+      "column": 39,
+      "before": "maybeBind(host, host.resolveModuleNames)",
+      "after": "host.resolveModuleNames?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 442,
+      "column": 51,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectives)",
+      "after": "host.resolveTypeReferenceDirectives?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 443,
+      "column": 45,
+      "before": "maybeBind(host, host.getModuleResolutionCache)",
+      "after": "host.getModuleResolutionCache?.bind(host)"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "owner": "createSolutionBuilderState",
+      "line": 500,
+      "column": 16,
+      "before": "maybeBind(host, host.trace)",
+      "after": "host.trace?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 677,
+      "column": 20,
+      "before": "maybeBind(system, system.watchFile)",
+      "after": "system.watchFile?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 678,
+      "column": 25,
+      "before": "maybeBind(system, system.watchDirectory)",
+      "after": "system.watchDirectory?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 679,
+      "column": 21,
+      "before": "maybeBind(system, system.setTimeout)",
+      "after": "system.setTimeout?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createWatchHost",
+      "line": 680,
+      "column": 23,
+      "before": "maybeBind(system, system.clearTimeout)",
+      "after": "system.clearTimeout?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 761,
+      "column": 32,
+      "before": "maybeBind(host, host.getDefaultLibLocation)",
+      "after": "host.getDefaultLibLocation?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 774,
+      "column": 16,
+      "before": "maybeBind(host, host.trace)",
+      "after": "host.trace?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 775,
+      "column": 26,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.directoryExists)",
+      "after": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 776,
+      "column": 25,
+      "before": "maybeBind(directoryStructureHost, directoryStructureHost.getDirectories)",
+      "after": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 777,
+      "column": 19,
+      "before": "maybeBind(host, host.realpath)",
+      "after": "host.realpath?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 778,
+      "column": 33,
+      "before": "maybeBind(host, host.getEnvironmentVariable)",
+      "after": "host.getEnvironmentVariable?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 779,
+      "column": 21,
+      "before": "maybeBind(host, host.createHash)",
+      "after": "host.createHash?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createCompilerHostFromProgramHost",
+      "line": 780,
+      "column": 24,
+      "before": "maybeBind(host, host.readDirectory)",
+      "after": "host.readDirectory?.bind(host)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 856,
+      "column": 19,
+      "before": "maybeBind(system, system.realpath)",
+      "after": "system.realpath?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 857,
+      "column": 33,
+      "before": "maybeBind(system, system.getEnvironmentVariable)",
+      "after": "system.getEnvironmentVariable?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 861,
+      "column": 21,
+      "before": "maybeBind(system, system.createHash)",
+      "after": "system.createHash?.bind(system)"
+    },
+    {
+      "file": "watch.ts",
+      "owner": "createProgramHost",
+      "line": 864,
+      "column": 14,
+      "before": "maybeBind(system, system.now)",
+      "after": "system.now?.bind(system)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createIncrementalCompilerHost",
+      "line": 125,
+      "column": 23,
+      "before": "maybeBind(system, system.createHash)",
+      "after": "system.createHash?.bind(system)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 506,
+      "column": 56,
+      "before": "maybeBind(host, host.useSourceOfProjectReferenceRedirect)",
+      "after": "host.useSourceOfProjectReferenceRedirect?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 529,
+      "column": 46,
+      "before": "maybeBind(host, host.resolveModuleNameLiterals)",
+      "after": "host.resolveModuleNameLiterals?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 530,
+      "column": 39,
+      "before": "maybeBind(host, host.resolveModuleNames)",
+      "after": "host.resolveModuleNames?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 534,
+      "column": 60,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectiveReferences)",
+      "after": "host.resolveTypeReferenceDirectiveReferences?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 535,
+      "column": 51,
+      "before": "maybeBind(host, host.resolveTypeReferenceDirectives)",
+      "after": "host.resolveTypeReferenceDirectives?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 543,
+      "column": 9,
+      "before": "maybeBind(host, host.getModuleResolutionCache)",
+      "after": "host.getModuleResolutionCache?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 549,
+      "column": 9,
+      "before": "maybeBind(host, host.hasInvalidatedResolutions)",
+      "after": "host.hasInvalidatedResolutions?.bind(host)"
+    },
+    {
+      "file": "watchPublic.ts",
+      "owner": "createWatchProgram",
+      "line": 552,
+      "column": 9,
+      "before": "maybeBind(host, host.hasInvalidatedLibResolutions)",
+      "after": "host.hasInvalidatedLibResolutions?.bind(host)"
+    }
+  ],
+  "imports": [
+    {
+      "file": "builder.ts",
+      "start": 1620,
+      "end": 1635,
+      "before": "    maybeBind,\n",
+      "after": ""
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "start": 2342,
+      "end": 2357,
+      "before": "    maybeBind,\n",
+      "after": ""
+    },
+    {
+      "file": "watchPublic.ts",
+      "start": 1723,
+      "end": 1738,
+      "before": "    maybeBind,\n",
+      "after": ""
+    }
+  ]
+}

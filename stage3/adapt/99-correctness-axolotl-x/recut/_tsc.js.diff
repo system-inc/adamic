@@ -1,0 +1,365 @@
+--- main/_tsc.js
++++ 99x/_tsc.js
+@@ -793,9 +793,6 @@
+       first2[id] = second[id];
+     }
+   }
+-}
+-function maybeBind(obj, fn) {
+-  return fn == null ? void 0 : fn.bind(obj);
+ }
+ function createMultiMap() {
+   const map2 = /* @__PURE__ */ new Map();
+@@ -43662,7 +43659,7 @@
+     }
+     function onLeft(left, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(left);
++        const maybeBound = maybeBind(left);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(left);
+         }
+@@ -43676,7 +43673,7 @@
+     }
+     function onRight(right, state, node) {
+       if (!state.skip) {
+-        const maybeBound = maybeBind2(right);
++        const maybeBound = maybeBind(right);
+         if (node.operatorToken.kind === 28 /* CommaToken */) {
+           maybeBindExpressionFlowIfCall(right);
+         }
+@@ -43707,7 +43704,7 @@
+       state.skip = false;
+       state.stackIndex--;
+     }
+-    function maybeBind2(node) {
++    function maybeBind(node) {
+       if (node && isBinaryExpression(node) && !isDestructuringAssignment(node)) {
+         return node;
+       }
+@@ -122091,6 +122088,7 @@
+   };
+ }
+ function createCompilerHostWorker(options, setParentNodes, system = sys) {
++  var _a;
+   const existingDirectories = /* @__PURE__ */ new Map();
+   const getCanonicalFileName = createGetCanonicalFileName(system.useCaseSensitiveFileNames);
+   function directoryExists(directoryPath) {
+@@ -122130,7 +122128,7 @@
+     realpath,
+     readDirectory: (path, extensions, include, exclude, depth) => system.readDirectory(path, extensions, include, exclude, depth),
+     createDirectory: (d) => system.createDirectory(d),
+-    createHash: maybeBind(system, system.createHash)
++    createHash: (_a = system.createHash) == null ? void 0 : _a.bind(system)
+   };
+   return compilerHost;
+ }
+@@ -125778,6 +125776,7 @@
+   return filter(diagnostic, (d) => !d.skippedOn || !option[d.skippedOn]);
+ }
+ function parseConfigHostFromCompilerHostLike(host, directoryStructureHost = host) {
++  var _a, _b, _c;
+   return {
+     fileExists: (f) => directoryStructureHost.fileExists(f),
+     readDirectory(root, extensions, excludes, includes, depth) {
+@@ -125785,9 +125784,9 @@
+       return directoryStructureHost.readDirectory(root, extensions, excludes, includes, depth);
+     },
+     readFile: (f) => directoryStructureHost.readFile(f),
+-    directoryExists: maybeBind(directoryStructureHost, directoryStructureHost.directoryExists),
+-    getDirectories: maybeBind(directoryStructureHost, directoryStructureHost.getDirectories),
+-    realpath: maybeBind(directoryStructureHost, directoryStructureHost.realpath),
++    directoryExists: (_a = directoryStructureHost.directoryExists) == null ? void 0 : _a.bind(directoryStructureHost),
++    getDirectories: (_b = directoryStructureHost.getDirectories) == null ? void 0 : _b.bind(directoryStructureHost),
++    realpath: (_c = directoryStructureHost.realpath) == null ? void 0 : _c.bind(directoryStructureHost),
+     useCaseSensitiveFileNames: host.useCaseSensitiveFileNames(),
+     getCurrentDirectory: () => host.getCurrentDirectory(),
+     onUnRecoverableConfigFileDiagnostic: host.onUnRecoverableConfigFileDiagnostic || returnUndefined,
+@@ -127475,10 +127474,11 @@
+   }
+   return builderProgram;
+   function emitBuildInfo(writeFile2, cancellationToken) {
++    var _a;
+     Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
+     if (getBuildInfoEmitPending(state)) {
+       const result = state.program.emitBuildInfo(
+-        writeFile2 || maybeBind(host, host.writeFile),
++        writeFile2 || ((_a = host.writeFile) == null ? void 0 : _a.bind(host)),
+         cancellationToken
+       );
+       state.buildInfoEmitPending = false;
+@@ -127487,7 +127487,7 @@
+     return emitSkippedWithNoDiagnostics;
+   }
+   function emitNextAffectedFileOrDtsErrors(writeFile2, cancellationToken, emitOnlyDtsFiles, customTransformers, isForDtsErrors) {
+-    var _a, _b, _c, _d;
++    var _a, _b, _c, _d, _e;
+     Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
+     let affected = getNextAffectedFile(state, cancellationToken, host);
+     const programEmitKind = getBuilderFileEmit(state.compilerOptions);
+@@ -127544,7 +127544,7 @@
+         if (isForDtsErrors || !getBuildInfoEmitPending(state)) return void 0;
+         const affected2 = state.program;
+         const result2 = affected2.emitBuildInfo(
+-          writeFile2 || maybeBind(host, host.writeFile),
++          writeFile2 || ((_b = host.writeFile) == null ? void 0 : _b.bind(host)),
+           cancellationToken
+         );
+         state.buildInfoEmitPending = false;
+@@ -127576,12 +127576,12 @@
+       state.seenAffectedFiles.add(affectedSourceFile.resolvedPath);
+       if (state.affectedFilesIndex !== void 0) state.affectedFilesIndex++;
+       state.buildInfoEmitPending = true;
+-      const existing = ((_b = state.seenEmittedFiles) == null ? void 0 : _b.get(affectedSourceFile.resolvedPath)) || 0 /* None */;
++      const existing = ((_c = state.seenEmittedFiles) == null ? void 0 : _c.get(affectedSourceFile.resolvedPath)) || 0 /* None */;
+       (state.seenEmittedFiles ?? (state.seenEmittedFiles = /* @__PURE__ */ new Map())).set(affectedSourceFile.resolvedPath, emitKind | existing);
+-      const existingPending = ((_c = state.affectedFilesPendingEmit) == null ? void 0 : _c.get(affectedSourceFile.resolvedPath)) || programEmitKind;
++      const existingPending = ((_d = state.affectedFilesPendingEmit) == null ? void 0 : _d.get(affectedSourceFile.resolvedPath)) || programEmitKind;
+       const pendingKind = getPendingEmitKind(existingPending, emitKind | existing);
+       if (pendingKind) (state.affectedFilesPendingEmit ?? (state.affectedFilesPendingEmit = /* @__PURE__ */ new Map())).set(affectedSourceFile.resolvedPath, pendingKind);
+-      else (_d = state.affectedFilesPendingEmit) == null ? void 0 : _d.delete(affectedSourceFile.resolvedPath);
++      else (_e = state.affectedFilesPendingEmit) == null ? void 0 : _e.delete(affectedSourceFile.resolvedPath);
+       if (result.diagnostics.length) (state.emitDiagnosticsPerFile ?? (state.emitDiagnosticsPerFile = /* @__PURE__ */ new Map())).set(affectedSourceFile.resolvedPath, result.diagnostics);
+     } else {
+       state.changedFilesSet.clear();
+@@ -127613,10 +127613,11 @@
+     );
+   }
+   function getWriteFileCallback(writeFile2, customTransformers) {
++    var _a;
+     Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
+-    if (!getEmitDeclarations(state.compilerOptions)) return writeFile2 || maybeBind(host, host.writeFile);
++    if (!getEmitDeclarations(state.compilerOptions)) return writeFile2 || ((_a = host.writeFile) == null ? void 0 : _a.bind(host));
+     return (fileName, text, writeByteOrderMark, onError, sourceFiles, data) => {
+-      var _a, _b, _c;
++      var _a2, _b, _c;
+       if (isDeclarationFileName(fileName)) {
+         if (!state.compilerOptions.outFile) {
+           Debug.assert((sourceFiles == null ? void 0 : sourceFiles.length) === 1);
+@@ -127632,7 +127633,7 @@
+                 host,
+                 data
+               );
+-              if (!((_a = data == null ? void 0 : data.diagnostics) == null ? void 0 : _a.length)) emitSignature = signature;
++              if (!((_a2 = data == null ? void 0 : data.diagnostics) == null ? void 0 : _a2.length)) emitSignature = signature;
+               if (signature !== file.version) {
+                 if (host.storeSignatureInfo) (state.signatureInfo ?? (state.signatureInfo = /* @__PURE__ */ new Map())).set(file.resolvedPath, 1 /* StoredSignatureAtEmit */);
+                 if (state.affectedFiles) {
+@@ -129617,13 +129618,14 @@
+ var noopFileWatcher = { close: noop };
+ var returnNoopFileWatcher = () => noopFileWatcher;
+ function createWatchHost(system = sys, reportWatchStatus2) {
++  var _a, _b, _c, _d;
+   const onWatchStatusChange = reportWatchStatus2 || createWatchStatusReporter(system);
+   return {
+     onWatchStatusChange,
+-    watchFile: maybeBind(system, system.watchFile) || returnNoopFileWatcher,
+-    watchDirectory: maybeBind(system, system.watchDirectory) || returnNoopFileWatcher,
+-    setTimeout: maybeBind(system, system.setTimeout) || noop,
+-    clearTimeout: maybeBind(system, system.clearTimeout) || noop,
++    watchFile: ((_a = system.watchFile) == null ? void 0 : _a.bind(system)) || returnNoopFileWatcher,
++    watchDirectory: ((_b = system.watchDirectory) == null ? void 0 : _b.bind(system)) || returnNoopFileWatcher,
++    setTimeout: ((_c = system.setTimeout) == null ? void 0 : _c.bind(system)) || noop,
++    clearTimeout: ((_d = system.clearTimeout) == null ? void 0 : _d.bind(system)) || noop,
+     preferNonRecursiveWatch: system.preferNonRecursiveWatch
+   };
+ }
+@@ -129850,13 +129852,14 @@
+   return createBuilderProgramUsingIncrementalBuildInfo(buildInfo, buildInfoPath, host);
+ }
+ function createIncrementalCompilerHost(options, system = sys) {
++  var _a;
+   const host = createCompilerHostWorker(
+     options,
+     /*setParentNodes*/
+     void 0,
+     system
+   );
+-  host.createHash = maybeBind(system, system.createHash);
++  host.createHash = (_a = system.createHash) == null ? void 0 : _a.bind(system);
+   host.storeSignatureInfo = system.storeSignatureInfo;
+   setGetSourceFileAsHashVersioned(host);
+   changeCompilerHostLikeToUseCache(host, (fileName) => toPath(fileName, host.getCurrentDirectory(), host.getCanonicalFileName));
+@@ -129876,6 +129879,7 @@
+   return createProgram2(rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences);
+ }
+ function createWatchProgram(host) {
++  var _a, _b, _c, _d, _e, _f, _g, _h;
+   let builderProgram;
+   let updateLevel;
+   let missingFilesMap;
+@@ -129933,7 +129937,7 @@
+   compilerHost.onReleaseParsedCommandLine = onReleaseParsedCommandLine;
+   compilerHost.toPath = toPath3;
+   compilerHost.getCompilationSettings = () => compilerOptions;
+-  compilerHost.useSourceOfProjectReferenceRedirect = maybeBind(host, host.useSourceOfProjectReferenceRedirect);
++  compilerHost.useSourceOfProjectReferenceRedirect = (_a = host.useSourceOfProjectReferenceRedirect) == null ? void 0 : _a.bind(host);
+   compilerHost.preferNonRecursiveWatch = host.preferNonRecursiveWatch;
+   compilerHost.watchDirectoryOfFailedLookupLocation = (dir, cb, flags) => watchDirectory(dir, cb, flags, watchOptions, WatchType.FailedLookupLocations);
+   compilerHost.watchAffectingFileLocation = (file, cb) => watchFile3(file, cb, 2e3 /* High */, watchOptions, WatchType.AffectingFileLocation);
+@@ -129952,21 +129956,21 @@
+     /*logChangesWhenResolvingModule*/
+     false
+   );
+-  compilerHost.resolveModuleNameLiterals = maybeBind(host, host.resolveModuleNameLiterals);
+-  compilerHost.resolveModuleNames = maybeBind(host, host.resolveModuleNames);
++  compilerHost.resolveModuleNameLiterals = (_b = host.resolveModuleNameLiterals) == null ? void 0 : _b.bind(host);
++  compilerHost.resolveModuleNames = (_c = host.resolveModuleNames) == null ? void 0 : _c.bind(host);
+   if (!compilerHost.resolveModuleNameLiterals && !compilerHost.resolveModuleNames) {
+     compilerHost.resolveModuleNameLiterals = resolutionCache.resolveModuleNameLiterals.bind(resolutionCache);
+   }
+-  compilerHost.resolveTypeReferenceDirectiveReferences = maybeBind(host, host.resolveTypeReferenceDirectiveReferences);
+-  compilerHost.resolveTypeReferenceDirectives = maybeBind(host, host.resolveTypeReferenceDirectives);
++  compilerHost.resolveTypeReferenceDirectiveReferences = (_d = host.resolveTypeReferenceDirectiveReferences) == null ? void 0 : _d.bind(host);
++  compilerHost.resolveTypeReferenceDirectives = (_e = host.resolveTypeReferenceDirectives) == null ? void 0 : _e.bind(host);
+   if (!compilerHost.resolveTypeReferenceDirectiveReferences && !compilerHost.resolveTypeReferenceDirectives) {
+     compilerHost.resolveTypeReferenceDirectiveReferences = resolutionCache.resolveTypeReferenceDirectiveReferences.bind(resolutionCache);
+   }
+   compilerHost.resolveLibrary = !host.resolveLibrary ? resolutionCache.resolveLibrary.bind(resolutionCache) : host.resolveLibrary.bind(host);
+-  compilerHost.getModuleResolutionCache = host.resolveModuleNameLiterals || host.resolveModuleNames ? maybeBind(host, host.getModuleResolutionCache) : (() => resolutionCache.getModuleResolutionCache());
++  compilerHost.getModuleResolutionCache = host.resolveModuleNameLiterals || host.resolveModuleNames ? (_f = host.getModuleResolutionCache) == null ? void 0 : _f.bind(host) : (() => resolutionCache.getModuleResolutionCache());
+   const userProvidedResolution = !!host.resolveModuleNameLiterals || !!host.resolveTypeReferenceDirectiveReferences || !!host.resolveModuleNames || !!host.resolveTypeReferenceDirectives;
+-  const customHasInvalidatedResolutions = userProvidedResolution ? maybeBind(host, host.hasInvalidatedResolutions) || returnTrue : returnFalse;
+-  const customHasInvalidLibResolutions = host.resolveLibrary ? maybeBind(host, host.hasInvalidatedLibResolutions) || returnTrue : returnFalse;
++  const customHasInvalidatedResolutions = userProvidedResolution ? ((_g = host.hasInvalidatedResolutions) == null ? void 0 : _g.bind(host)) || returnTrue : returnFalse;
++  const customHasInvalidLibResolutions = host.resolveLibrary ? ((_h = host.hasInvalidatedLibResolutions) == null ? void 0 : _h.bind(host)) || returnTrue : returnFalse;
+   builderProgram = readBuilderProgram(compilerOptions, compilerHost);
+   synchronizeProgram();
+   return configFileName ? { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, close, getResolutionCache } : { getCurrentProgram: getCurrentBuilderProgram, getProgram: updateProgram, updateRootFileNames, close, getResolutionCache };
+@@ -129999,8 +130003,8 @@
+     }
+     if (parsedConfigs) {
+       clearMap(parsedConfigs, (config) => {
+-        var _a;
+-        (_a = config.watcher) == null ? void 0 : _a.close();
++        var _a2;
++        (_a2 = config.watcher) == null ? void 0 : _a2.close();
+         config.watcher = void 0;
+         if (config.watchedDirectories) clearMap(config.watchedDirectories, closeFileWatcherOf);
+         config.watchedDirectories = void 0;
+@@ -130364,13 +130368,13 @@
+     return parsedCommandLine;
+   }
+   function onReleaseParsedCommandLine(fileName) {
+-    var _a;
++    var _a2;
+     const path = toPath3(fileName);
+     const config = parsedConfigs == null ? void 0 : parsedConfigs.get(path);
+     if (!config) return;
+     parsedConfigs.delete(path);
+     if (config.watchedDirectories) clearMap(config.watchedDirectories, closeFileWatcherOf);
+-    (_a = config.watcher) == null ? void 0 : _a.close();
++    (_a2 = config.watcher) == null ? void 0 : _a2.close();
+     clearSharedExtendedConfigFileWatcher(path, sharedExtendedConfigFileWatchers);
+   }
+   function watchFilePath(path, file, callback, pollingInterval, options, watchType) {
+@@ -130457,10 +130461,10 @@
+       (extendedConfigFileName, extendedConfigFilePath) => watchFile3(
+         extendedConfigFileName,
+         (_fileName, eventKind) => {
+-          var _a;
++          var _a2;
+           updateCachedSystemWithFile(extendedConfigFileName, extendedConfigFilePath, eventKind);
+           if (extendedConfigCache) cleanExtendedConfigCache(extendedConfigCache, extendedConfigFilePath, toPath3);
+-          const projects = (_a = sharedExtendedConfigFileWatchers.get(extendedConfigFilePath)) == null ? void 0 : _a.projects;
++          const projects = (_a2 = sharedExtendedConfigFileWatchers.get(extendedConfigFilePath)) == null ? void 0 : _a2.projects;
+           if (!(projects == null ? void 0 : projects.size)) return;
+           projects.forEach((projectPath) => {
+             if (configFileName && toPath3(configFileName) === projectPath) {
+@@ -130481,7 +130485,7 @@
+     );
+   }
+   function watchReferencedProject(configFileName2, configPath, commandLine) {
+-    var _a, _b, _c, _d;
++    var _a2, _b2, _c2, _d2;
+     commandLine.watcher || (commandLine.watcher = watchFile3(
+       configFileName2,
+       (_fileName, eventKind) => {
+@@ -130492,14 +130496,14 @@
+         scheduleProgramUpdate();
+       },
+       2e3 /* High */,
+-      ((_a = commandLine.parsedCommandLine) == null ? void 0 : _a.watchOptions) || watchOptions,
++      ((_a2 = commandLine.parsedCommandLine) == null ? void 0 : _a2.watchOptions) || watchOptions,
+       WatchType.ConfigFileOfReferencedProject
+     ));
+     updateWatchingWildcardDirectories(
+       commandLine.watchedDirectories || (commandLine.watchedDirectories = /* @__PURE__ */ new Map()),
+-      (_b = commandLine.parsedCommandLine) == null ? void 0 : _b.wildcardDirectories,
++      (_b2 = commandLine.parsedCommandLine) == null ? void 0 : _b2.wildcardDirectories,
+       (directory, flags) => {
+-        var _a2;
++        var _a3;
+         return watchDirectory(
+           directory,
+           (fileOrDirectory) => {
+@@ -130528,15 +130532,15 @@
+             }
+           },
+           flags,
+-          ((_a2 = commandLine.parsedCommandLine) == null ? void 0 : _a2.watchOptions) || watchOptions,
++          ((_a3 = commandLine.parsedCommandLine) == null ? void 0 : _a3.watchOptions) || watchOptions,
+           WatchType.WildcardDirectoryOfReferencedProject
+         );
+       }
+     );
+     updateExtendedConfigFilesWatches(
+       configPath,
+-      (_c = commandLine.parsedCommandLine) == null ? void 0 : _c.options,
+-      ((_d = commandLine.parsedCommandLine) == null ? void 0 : _d.watchOptions) || watchOptions,
++      (_c2 = commandLine.parsedCommandLine) == null ? void 0 : _c2.options,
++      ((_d2 = commandLine.parsedCommandLine) == null ? void 0 : _d2.watchOptions) || watchOptions,
+       WatchType.ExtendedConfigOfReferencedProject
+     );
+   }
+@@ -130581,13 +130585,14 @@
+   };
+ }
+ function createSolutionBuilderHostBase(system, createProgram2, reportDiagnostic, reportSolutionBuilderStatus) {
++  var _a;
+   const host = createProgramHost(system, createProgram2);
+   host.getModifiedTime = system.getModifiedTime ? (path) => system.getModifiedTime(path) : returnUndefined;
+   host.setModifiedTime = system.setModifiedTime ? (path, date) => system.setModifiedTime(path, date) : noop;
+   host.deleteFile = system.deleteFile ? (path) => system.deleteFile(path) : noop;
+   host.reportDiagnostic = reportDiagnostic || createDiagnosticReporter(system);
+   host.reportSolutionBuilderStatus = reportSolutionBuilderStatus || createBuilderStatusReporter(system);
+-  host.now = maybeBind(system, system.now);
++  host.now = (_a = system.now) == null ? void 0 : _a.bind(system);
+   return host;
+ }
+ function createSolutionBuilderHost(system = sys, createProgram2, reportDiagnostic, reportSolutionBuilderStatus, reportErrorSummary2) {
+@@ -130629,18 +130634,19 @@
+   );
+ }
+ function createSolutionBuilderState(watch2, hostOrHostWithWatch, rootNames, options, baseWatchOptions) {
++  var _a, _b, _c, _d, _e, _f, _g;
+   const host = hostOrHostWithWatch;
+   const hostWithWatch = hostOrHostWithWatch;
+   const baseCompilerOptions = getCompilerOptionsOfBuildOptions(options);
+   const compilerHost = createCompilerHostFromProgramHost(host, () => state.projectCompilerOptions);
+   setGetSourceFileAsHashVersioned(compilerHost);
+   compilerHost.getParsedCommandLine = (fileName) => parseConfigFile(state, fileName, toResolvedConfigFilePath(state, fileName));
+-  compilerHost.resolveModuleNameLiterals = maybeBind(host, host.resolveModuleNameLiterals);
+-  compilerHost.resolveTypeReferenceDirectiveReferences = maybeBind(host, host.resolveTypeReferenceDirectiveReferences);
+-  compilerHost.resolveLibrary = maybeBind(host, host.resolveLibrary);
+-  compilerHost.resolveModuleNames = maybeBind(host, host.resolveModuleNames);
+-  compilerHost.resolveTypeReferenceDirectives = maybeBind(host, host.resolveTypeReferenceDirectives);
+-  compilerHost.getModuleResolutionCache = maybeBind(host, host.getModuleResolutionCache);
++  compilerHost.resolveModuleNameLiterals = (_a = host.resolveModuleNameLiterals) == null ? void 0 : _a.bind(host);
++  compilerHost.resolveTypeReferenceDirectiveReferences = (_b = host.resolveTypeReferenceDirectiveReferences) == null ? void 0 : _b.bind(host);
++  compilerHost.resolveLibrary = (_c = host.resolveLibrary) == null ? void 0 : _c.bind(host);
++  compilerHost.resolveModuleNames = (_d = host.resolveModuleNames) == null ? void 0 : _d.bind(host);
++  compilerHost.resolveTypeReferenceDirectives = (_e = host.resolveTypeReferenceDirectives) == null ? void 0 : _e.bind(host);
++  compilerHost.getModuleResolutionCache = (_f = host.getModuleResolutionCache) == null ? void 0 : _f.bind(host);
+   let moduleResolutionCache, typeReferenceDirectiveResolutionCache;
+   if (!compilerHost.resolveModuleNameLiterals && !compilerHost.resolveModuleNames) {
+     moduleResolutionCache = createModuleResolutionCache(compilerHost.getCurrentDirectory(), compilerHost.getCanonicalFileName);
+@@ -130705,7 +130711,7 @@
+     host,
+     hostWithWatch,
+     parseConfigFileHost: parseConfigHostFromCompilerHostLike(host),
+-    write: maybeBind(host, host.trace),
++    write: (_g = host.trace) == null ? void 0 : _g.bind(host),
+     // State of solution
+     options,
+     baseCompilerOptions,

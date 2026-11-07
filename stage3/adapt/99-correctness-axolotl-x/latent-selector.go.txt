@@ -1,0 +1,55 @@
+// Census-only first-error selection. This is never a production compiler input.
+package lower
+
+import (
+ "encoding/json"
+ "os"
+ "strings"
+)
+
+type anyMembersCensusFile struct {
+ File string `json:"file"`
+ AllUnits bool `json:"all_units"`
+ Units []string `json:"units"`
+}
+var anyMembersCensusLoaded bool
+var anyMembersCensusFiles map[string]anyMembersCensusFile
+var anyMembersCensusUnits map[string]map[string]bool
+
+// A selector changes scheduled attempts only. All program files, registration,
+// dependency bodies, first-error recovery and witness recording stay unchanged.
+func anyMembersCensusSelected(file, unit string) bool {
+ path := os.Getenv("ANY_MEMBERS_CENSUS_PIECE")
+ if path == "" { return true }
+ if !anyMembersCensusLoaded {
+  data, err := os.ReadFile(path); if err != nil { panic(err) }
+  var plan struct { Schema int `json:"schema"`; Files []anyMembersCensusFile `json:"files"` }
+  if err := json.Unmarshal(data, &plan); err != nil { panic(err) }
+  if plan.Schema != 1 || len(plan.Files) == 0 || os.Getenv("ANY_MEMBERS_CENSUS_ROOT") == "" { panic("invalid first-error piece plan") }
+  anyMembersCensusFiles = map[string]anyMembersCensusFile{}
+  anyMembersCensusUnits = map[string]map[string]bool{}
+  for _, selected := range plan.Files {
+   if _, exists := anyMembersCensusFiles[selected.File]; exists { panic("duplicate piece file") }
+   if !selected.AllUnits && len(selected.Units) == 0 { panic("empty unit selection") }
+   anyMembersCensusFiles[selected.File] = selected
+   units := map[string]bool{}
+   for _, where := range selected.Units {
+    if units[where] { panic("duplicate piece unit") }
+    units[where] = true
+   }
+   anyMembersCensusUnits[selected.File] = units
+  }
+  anyMembersCensusLoaded = true
+ }
+ root := strings.TrimSuffix(os.Getenv("ANY_MEMBERS_CENSUS_ROOT"), "/") + "/"
+ file, unit = strings.TrimPrefix(file, root), strings.TrimPrefix(unit, root)
+ selected, found := anyMembersCensusFiles[file]
+ if found && (unit == "" || selected.AllUnits || anyMembersCensusUnits[file][unit]) {
+  if path := os.Getenv("ADAMIC_FIT_PAIRS_LOG"); path != "" {
+   if f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
+    if unit == "" { f.WriteString("scan "+file+"\n") } else { f.WriteString("unit "+unit+"\n") }; f.Close()
+   }
+  }
+ }
+ return found && (unit == "" || selected.AllUnits || anyMembersCensusUnits[file][unit])
+}

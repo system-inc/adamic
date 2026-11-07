@@ -1,0 +1,21 @@
+{
+  "base": "a6d5f494e46262f805e5be76a4d7c108fe6a3a6c",
+  "main": "322f80565edaa978d928ca559803c578ed67c105",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "fold32": "997331ef1ec86480f47f3710fd43e1150407dafc",
+  "fold95h": "c2714b29c5937f553d79e98e9fae80aab8ed995a",
+  "frozen_shipping_tree": "135908971735a9eebdd45d4442d549d6af7b31eb",
+  "frozen_x_commit": "12123aacb0a7c7671a7a1fca0cec41698eccb5e2",
+  "frozen_x_tree": "8e0caee0cfc8ff9869a640c7e2d06814026b4a84",
+  "frozen_x_tree_identical_to_shipping_commit": true,
+  "frozen_32x_commit": "e67827d068fff8e7919512e42a577823add5035f",
+  "frozen_32x_tree": "c6dc7ffb15be7c16319e0c0eb805a3d4d82c4f88",
+  "other_matrix_heads": {
+    "fold95h": "c2714b29c5937f553d79e98e9fae80aab8ed995a",
+    "heads": {
+      "95hx": "4e7ba234ff8bd65ed16e6296c391938627ad7e5b",
+      "both": "4b737676cb179ba3340c784163dde4fb1f4dffe4"
+    }
+  },
+  "reproduction": "Start at frozen_shipping_tree, overlay only stage3/adapt/32-indexed-reads-program from fold32 and/or stage3/adapt/95-checker-axolotl-h from fold95h, and use the pinned source. Later shipping commits change only evidence and verification helpers, preserving the five functional 99x inputs."
+}

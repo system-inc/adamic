@@ -1,0 +1,26 @@
+{
+  "pass": true,
+  "expectedSites": 28,
+  "sourceFiles": 746,
+  "changed": [
+    "compiler/builder.ts",
+    "compiler/program.ts",
+    "compiler/tsbuildPublic.ts",
+    "compiler/watch.ts",
+    "compiler/watchPublic.ts"
+  ],
+  "importsRemoved": [
+    "builder.ts",
+    "program.ts",
+    "tsbuildPublic.ts",
+    "watch.ts",
+    "watchPublic.ts"
+  ],
+  "replay": {
+    "files": 0,
+    "rewrites": 0,
+    "left": 0,
+    "javascriptChanging": true
+  },
+  "bytesAndMtimePreserved": true
+}
