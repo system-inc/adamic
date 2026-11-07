@@ -143,6 +143,10 @@
 `normalize.c:cached_pairs:1`
 `normalize.c:cached_points:1`
 `normalize.c:cached_points:2`
+# The Intl.Collator shape a call x.compare(...) knows a collator by (#zjndrx5): an atomic pointer, null
+# until library_intl.c's adamic_intl_collator_new publishes &collator_shape with a release store, every
+# publish the same address, read with an acquire load, as union.c's keyed_stats_shape is.
+`object.c:intl_collator_shape:1`
 `parallel.c:changed:1`
 `parallel.c:created:1`
 `parallel.c:enabled:1`

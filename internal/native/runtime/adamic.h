@@ -1007,6 +1007,11 @@ bool adamic_collection_iterator_is(const void *value);
 // undefined: an owned host object whose compare closure stops when called, and which stops itself
 // for a defined locale (library_intl.c, #zjndrx5).
 adamic_object *adamic_intl_collator_new(const adamic_string *locale);
+// adamic_intl_collator_shape_publish tells adamic_object_callee which shape is a collator's, so a call
+// x.compare(...) on one reaches its #compare slot (object.c). library_intl.c publishes it each time it
+// makes one, as node_fs_file.c publishes the Stats shape, and before any collator exists none can be
+// called.
+void adamic_intl_collator_shape_publish(const adamic_shape *shape);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);

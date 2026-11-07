@@ -131,6 +131,15 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 	adamic_panic(message, sizeof message - 1);
 }
 
+// intl_collator_shape is the Intl.Collator shape library_intl.c published (adamic_intl_collator_shape_publish),
+// or null before any collator is made, held as union.c holds the Stats shape: a release store, an
+// acquire load, and only an address to compare with.
+static const void *_Atomic intl_collator_shape;
+
+void adamic_intl_collator_shape_publish(const adamic_shape *shape) {
+	atomic_store_explicit(&intl_collator_shape, shape, memory_order_release);
+}
+
 adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method) {
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
@@ -149,6 +158,15 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 				slot = shape->count + index;
 				found = true;
 			}
+		}
+		// A collator's compare is a getter on Intl.Collator.prototype on Node, never an own field, so its
+		// shape names it #compare and the lookups above miss it (library_intl.c, #zjndrx5). x.compare(...)
+		// on one calls its #compare closure, the shape's first slot. The collator is known by its shape's
+		// address, never by a field's name, so a program's own object, whose compare field or class method
+		// the lookups above found, never reaches here.
+		if (!found && shape == atomic_load_explicit(&intl_collator_shape, memory_order_acquire) && strcmp(name, "compare") == 0) {
+			slot = 0;
+			found = true;
 		}
 		if (!found) {
 			static const char message[] = "compiler bug: a method the checker proved is there is missing";
