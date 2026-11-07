@@ -18,11 +18,21 @@ func programRegionBeginName(function *ast.Node) string {
 	case function.Kind == ast.KindConstructor:
 		return programRegionBeginName(function.Parent) + ".constructor"
 	case function.Name() != nil:
-		return function.Name().Text()
+		return programRegionNameText(function.Name())
 	case function.Parent != nil && function.Parent.Kind == ast.KindVariableDeclaration:
-		return function.Parent.Name().Text()
+		return programRegionNameText(function.Parent.Name())
+	case function.Parent != nil && function.Parent.Kind == ast.KindPropertyAssignment:
+		return programRegionNameText(function.Parent.Name())
 	}
 	return "anonymous"
+}
+
+// programRegionNameText is a declaration name's text, or "computed" for one tsc works out.
+func programRegionNameText(name *ast.Node) string {
+	if ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral || name.Kind == ast.KindNumericLiteral || name.Kind == ast.KindPrivateIdentifier {
+		return name.Text()
+	}
+	return "computed"
 }
 
 // programRegionRoots lowers source with Program discovery and names the functions a begin goes in,
