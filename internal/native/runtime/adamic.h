@@ -305,15 +305,19 @@ enum adamic_discard {
 #endif
 struct adamic_closure {
 	adamic_heap heap;
-	// A bound class method keeps code here; every owning edge remains in cells.
-	adamic_method_entry bound_method;
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
- bool counted;
-
 #else
  adamic_code code;
 #endif
+	// The strict WASI runtime and generated callers can select different conventions.
+	// Reserve both tags so code, metadata and captures keep the same offsets.
+	bool counted;
+	// A bound class method keeps code here; every owning edge remains in cells.
+	union {
+		adamic_method_entry bound_method;
+		struct { bool counted; adamic_method code; } bound_method_storage;
+	};
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  bool receiver;
 #endif
