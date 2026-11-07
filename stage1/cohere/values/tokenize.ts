@@ -304,7 +304,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
 
             case 0x29: // closeParen
                 parentCount--;
-                isURLArg = isURLArg && parentCount > 0;
+                isURLArg &&= parentCount > 0;
                 push(')', ')', line, pos - offset, line, next - offset, pos);
                 break;
 
