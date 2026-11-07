@@ -95,17 +95,32 @@ func flattenedMembers(proven *checker.Type) []*checker.Type {
 	return []*checker.Type{proven}
 }
 
+// numericEnum says whether every member of an enum has a number for its constant value. It's held per enum symbol for
+// the lowering (numericEnums): void widening asks it for every member of a union it reads (holdsOpenNumericEnum), and
+// asking GetConstantValue of every member each time was 20.6% of tsc's entry census's CPU, SyntaxKind alone having
+// some 360 members (#e0k9s2t). The answer is a function of the symbol: its declaration's members and the checker's
+// constant values for them, neither of which lowering rewrites.
 func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
 	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindEnumDeclaration {
 		return false
 	}
+	if numeric, held := l.numericEnums[symbol]; held {
+		return numeric
+	}
+	if l.numericEnums == nil {
+		l.numericEnums = map[*ast.Symbol]bool{}
+	}
+	l.numericEnumWalks++
+	numeric := true
 	for _, member := range symbol.ValueDeclaration.AsEnumDeclaration().Members.Nodes {
 		constant := l.checker.GetConstantValue(member)
 		if constant == nil || reflect.TypeOf(constant).Kind() != reflect.Float64 {
-			return false
+			numeric = false
+			break
 		}
 	}
-	return true
+	l.numericEnums[symbol] = numeric
+	return numeric
 }
 
 // typeof E names the actual enum object and its aliases. Structural copies can omit reverse

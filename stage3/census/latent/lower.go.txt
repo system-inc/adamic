@@ -260,6 +260,8 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// lowering a statement asked again for every schema node's type, keeping each answer's type nodes live in the checker
 	// (#wy2dyf0: the entry census's peak, 7.57 against 5.04 GiB).
 	typeStrings := map[*checker.Type]string{}
+	// And one map of numeric enums, a function of the enum symbol alone (numericEnum, #e0k9s2t).
+	numericEnums := map[*ast.Symbol]bool{}
 	var facts *latentProgramFacts
 	for _, file := range program.Files() {
 		latentFindings = nil
@@ -267,7 +269,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings}
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums}
 		}
 		func() {
 			defer func() {
