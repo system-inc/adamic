@@ -774,8 +774,10 @@ static adamic_heap *keyed_regexp_string_iterator(const adamic_string *key) {
 
 // keyed_stats_shape is the fs.Stats shape node_fs_file.c published (adamic_keyed_stats_shape_publish),
 // or null before any Stats is made. A release store publishes it and an acquire load reads it, so a
-// thread that reads a Stats made on another sees the shape it was made with.
-static const adamic_shape *_Atomic keyed_stats_shape;
+// thread that reads a Stats made on another sees the shape it was made with. It is spelled with const
+// after adamic_shape so TestRuntimeFieldLayoutsAreIncluded, which counts each static constant shape
+// declaration by its spelling as a shape the runtime makes, doesn't take this pointer for one.
+static adamic_shape const *_Atomic keyed_stats_shape;
 
 void adamic_keyed_stats_shape_publish(const adamic_shape *shape) {
 	atomic_store_explicit(&keyed_stats_shape, shape, memory_order_release);
