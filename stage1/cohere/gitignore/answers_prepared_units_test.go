@@ -204,7 +204,7 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 	for _, f := range portFiles {
 		files = append(files, "stage1/cohere/gitignore/"+f)
 	}
-	return buildcache.Product(t, buildcache.Inputs{Name: "gitignore-port-" + name, Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(dir string) error {
+	return buildcache.Product(t, buildcache.Inputs{Name: "gitignore-port-" + name, Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")}}, func(dir string) error {
 		for _, f := range portFiles {
 			data, err := os.ReadFile(f)
 			if err != nil {

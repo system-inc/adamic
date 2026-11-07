@@ -288,7 +288,7 @@ func emittedMismatchNative(t *testing.T) string {
 		lowered := emittedMismatchLowered(t)
 		options := native.Options{Sanitize: true, Split: true, Jobs: 4}
 		flags := append(native.Flags(options), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		product := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-native", Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(out string) error {
+		product := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-native", Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")}}, func(out string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 			if err != nil {
 				return err

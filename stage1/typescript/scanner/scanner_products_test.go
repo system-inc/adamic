@@ -72,7 +72,7 @@ func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 		contents[name] = data
 		flags = append(flags, name+"="+string(data))
 	}
-	inputs := buildcache.Inputs{Name: "scanner-native", Files: []string{"internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	inputs := buildcache.Inputs{Name: "scanner-native", Files: []string{"internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 	return scannerFetch(t, inputs, func(directory string) error {
 		for _, name := range portFiles {
 			if err := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); err != nil {

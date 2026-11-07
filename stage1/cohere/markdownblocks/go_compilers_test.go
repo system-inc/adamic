@@ -60,7 +60,7 @@ func TestMarkdownGoBuildsKeyTheCompilersEnvGivesGo(t *testing.T) {
 	c, cPlusPlus := toolchain.Compilers(os.Environ())
 	for _, build := range builds {
 		inputs := build.inputs(defaults)
-		if !slices.Contains(inputs.Flags, "CC="+c) || !slices.Contains(inputs.Flags, "CXX="+cPlusPlus) || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
+		if !slices.Contains(inputs.Flags, "CC="+c) || !slices.Contains(inputs.Flags, "CXX="+cPlusPlus) || !slices.Contains(inputs.Toolchain, buildcache.CompilerReport("clang")) {
 			t.Fatalf("with CC and CXX unset, %s's key names %+v, want clang, clang++ and clang's report", build.name, defaults)
 		}
 		keys[build.name] = buildcache.NameKey(root, inputs)

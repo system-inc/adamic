@@ -52,7 +52,7 @@ func volumeGuardUnion(t *testing.T, buckets [][]volumeGuardCase, controls []stri
 }
 
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
+	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.CompilerReport("clang"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
 }
 func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)

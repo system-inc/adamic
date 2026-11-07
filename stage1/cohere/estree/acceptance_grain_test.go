@@ -85,7 +85,7 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {

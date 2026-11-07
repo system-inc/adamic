@@ -68,7 +68,7 @@ func delimiterExpressionSanitized(t *testing.T) string {
 		Name:      "markdowninline gap 1_delimiter_expression native sanitized",
 		Files:     append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/gaps/1_delimiter_expression.ts", "stage1/cohere/markdowninline/gaps_test.go"),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		path, err := filepath.Abs("gaps/1_delimiter_expression.ts")

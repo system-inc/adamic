@@ -209,7 +209,7 @@ func formatfilesNativeInputs(source string, mutant *mutant, sanitize bool) build
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), fmt.Sprintf("C-sha256=%x", sha256.Sum256([]byte(source))))
 	return buildcache.Inputs{Name: name,
 		Files: append(compilerinputs.Lowering(), "stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "stage1/cohere/formatfiles/formatfiles_prepare_test.go"),
-		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
+		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")}}
 }
 
 // An edit to a package the compiler links must move every native product's key, and an edit to tsc's baselines, which
