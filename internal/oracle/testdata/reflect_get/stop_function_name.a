@@ -1,0 +1,9 @@
+// A function's length answers by a run-time key (#xdcec18, function_length.a), and its name still
+// stops on both backends alike in the Function form: natively an array's map is an immortal
+// closure, which carries no name, and on the JavaScript backend Node's own function stops in the
+// same words. Node prints map function 1 and then string.
+import { propertyOf } from './hostErrors.ts';
+
+const map = propertyOf([1], 'map');
+console.log(`map ${typeof map} ${String(propertyOf(map, 'length'))}`);
+console.log(typeof propertyOf(map, 'name'));
