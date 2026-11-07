@@ -6,8 +6,8 @@ JavaScript-changing established-shape adaptation. TypeScript 6.0.3,
 explicitly authorized the six non-null assertions and continuation on this branch.
 Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts.
 
-Both row allocations become new Array<number>(s2.length + 1).fill(0), and six
-indexed reads gain !. No other owner text changes. The complete exact owner
+Both row allocations become `new Array<number>(s2.length + 1).fill(0)`, and six
+indexed reads gain `!`. No other owner text changes. The complete exact owner
 texts and hashes are pinned in owners.json. Missing, duplicate, nested,
 drifted and half-adapted owners refuse before any write. Replay writes nothing
 and preserves bytes and mtime. LF/CRLF and all foreign source text survive.
@@ -24,7 +24,10 @@ expression/occurrence pins do not reserve the complete owner.
 Let n = s2.length. Both rows are filled number arrays of length n + 1 and
 retain that representation across swaps. Whenever the middle loop executes,
 minJ >= 1 and maxJ <= n; j increases from minJ through maxJ. The j - 1
-predecessor is therefore nonnegative. The final index n is always in the row.
+predecessor is therefore nonnegative. `minJ` is 1 or the ceiling of the
+positive difference `i - max`, so it is at least 1. `maxJ` is the floor of
+a value no larger than n, so it is at most n. The final index n is always
+in the row.
 
 | Site | Read index | Why in range |
 | --- | --- | --- |
