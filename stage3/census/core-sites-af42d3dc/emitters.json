@@ -1,0 +1,374 @@
+{
+  "F1": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 396,
+      "function": "(*lowering).elementType",
+      "note": "Unknown element storage has no declared runtime representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of unknown with erased element storage (retain its declared element type before reading elements)\")",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F2": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "function": "(*lowering).typeOf",
+      "note": "the checker type has no supported runtime representation",
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F3": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F4": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "function": "(*lowering).typeOf",
+      "note": "the checker type has no supported runtime representation",
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F5": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F6": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F7": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F8": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F9": [
+    {
+      "file": "internal/lower/functions.go",
+      "line": 129,
+      "function": "(*lowering).signature",
+      "note": "Signature return representation is unknown after clockGenericReturnsT01 fallback.",
+      "source_line": "\t\t\t\treturn l.notYet(where, \"a function returning \"+l.checker.TypeToString(returns))",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {"
+    }
+  ],
+  "F10": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "function": "(*lowering).objectCallArguments",
+      "note": "The local refused closure emits Refused; getPrototypeOf is selected by the switch at lines 25 to 26.",
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 26,
+      "function": "(*lowering).objectCallArguments",
+      "note": "Deciding switch arm for getPrototypeOf, setPrototypeOf and create.",
+      "source_line": "\t\treturn refused(\"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F11": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "function": "(*lowering).methodValueRefusal",
+      "note": "",
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F12": [
+    {
+      "file": "internal/lower/prototype.go",
+      "line": 124,
+      "function": "(*lowering).prototypeRead",
+      "note": "",
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}",
+      "function_declaration_line": 120,
+      "function_declaration": "func (l *lowering) prototypeRead(node *ast.Node, name string) error {"
+    }
+  ],
+  "F13": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F14": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F15": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F16": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F17": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F18": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F19": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 107,
+      "function": "(*lowering).hostBindingStatement",
+      "note": "emits NotYet at the declaration",
+      "source_line": "\t\t\tstop = l.notYet(declaration, reason)",
+      "function_declaration_line": 96,
+      "function_declaration": "func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {"
+    }
+  ],
+  "F20": [
+    {
+      "file": "internal/lower/ambient.go",
+      "line": 79,
+      "function": "(*lowering).ambientRefusal",
+      "note": "selects the reason; constructs Refused at line 91",
+      "source_line": "\t\t\twhat = \"an ambient value declaration\"",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/ambient.go",
+      "line": 91,
+      "function": "(*lowering).ambientRefusal",
+      "note": "Constructs the Refused error after the reason is selected at line 79.",
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: what, Fix: \"define the values in a module and import them; use Adamic-generated platform bindings for host values\"}",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F21": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 361,
+      "function": "(*lowering).hostBindingTypeOf",
+      "note": "emits NotYet for typeof process",
+      "source_line": "\t\treturn nil, true, l.notYet(node, stop)",
+      "function_declaration_line": 355,
+      "function_declaration": "func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F22": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F23": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F24": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ]
+}

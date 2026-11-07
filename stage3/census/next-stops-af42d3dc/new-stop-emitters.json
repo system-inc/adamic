@@ -1,0 +1,13 @@
+{
+  "core.ts:2116:26": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "function": "(*lowering).methodValueRefusal",
+      "note": "The deciding function starts at line 260. Its guard at line 261 selects a property access read outside a direct call, without an allowed method-read proof. The method-symbol check at line 269 selects this refusal, emitted at line 282. The enclosing source comments that Intl.Collator.prototype.compare is bound; this report records the current compiler decision without changing it.",
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ]
+}

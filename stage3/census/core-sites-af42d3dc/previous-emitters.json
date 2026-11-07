@@ -1,0 +1,331 @@
+{
+  "refusal_scan|Refused|a cast the runtime can't check": [
+    {
+      "file": "internal/lower/cast_proof.go",
+      "line": 188,
+      "function": "(*lowering).castProof",
+      "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+      "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+      "function_declaration_line": 174,
+      "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+    }
+  ],
+  "refusal_scan|NotYet|a member typed any ([]) related to T at the return site": [
+    {
+      "file": "internal/lower/any_relations.go",
+      "line": 43,
+      "function": "(*lowering).refuseAnyRelation",
+      "note": "stores a lowest-priority refusal.deferred stop; this is not deferred_generic_instantiation",
+      "source_line": "\t\t\tl.refusal.deferred = l.notYet(node, \"a member typed any (\"+found.path+\") related to \"+l.checker.TypeToString(found.target)+\" at the \"+name+\" site\")",
+      "function_declaration_line": 27,
+      "function_declaration": "func (l *lowering) refuseAnyRelation(node *ast.Node) error {"
+    }
+  ],
+  "refusal_scan|NotYet|a non-object representation passed through an opaque object parameter": [
+    {
+      "file": "internal/lower/detached_own.go",
+      "line": 94,
+      "function": "(*lowering).detachedOwnRefusal",
+      "note": "",
+      "source_line": "\t\t\t\treturn l.notYet(node, \"a non-object representation passed through an opaque object parameter\")",
+      "function_declaration_line": 69,
+      "function_declaration": "func (l *lowering) detachedOwnRefusal(node *ast.Node) error {"
+    }
+  ],
+  "refusal_scan|Refused|a method read as a value (add would lose its object, and this with it)": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "function": "(*lowering).methodValueRefusal",
+      "note": "",
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ],
+  "refusal_scan|Refused|a method read as a value (remove would lose its object, and this with it)": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "function": "(*lowering).methodValueRefusal",
+      "note": "",
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ],
+  "refusal_scan|Refused|a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 726,
+      "function": "(*lowering).wideningRefusal",
+      "note": "builds the exact reason; returns Refused at line 740, reached by refuseWidening/refuseWholeWidening",
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 710,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "refusal_scan|Refused|a value of type T[] | undefined seen as (T | undefined)[], which can write T | undefined where T is read": [
+    {
+      "file": "internal/lower/invariance.go",
+      "line": 726,
+      "function": "(*lowering).wideningRefusal",
+      "note": "builds the exact reason; returns Refused at line 740, reached by refuseWidening/refuseWholeWidening",
+      "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+      "function_declaration_line": 710,
+      "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+    }
+  ],
+  "lowering|NotYet|a BinaryExpression with a union of differently held members and a union of differently held members": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 1132,
+      "function": "(*lowering).combine",
+      "note": "typeName at line 1295 supplies union of differently held members",
+      "source_line": "\treturn nil, l.notYet(node, describe(node)+\" with a \"+typeName(left.Type())+\" and a \"+typeName(right.Type()))",
+      "function_declaration_line": 975,
+      "function_declaration": "func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {"
+    }
+  ],
+  "refusal_scan|Refused|a method read as a value (compare would lose its object, and this with it)": [
+    {
+      "file": "internal/lower/refusals.go",
+      "line": 282,
+      "function": "(*lowering).methodValueRefusal",
+      "note": "",
+      "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+      "function_declaration_line": 260,
+      "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+    }
+  ],
+  "lowering|Refused|inherited library member compare read as an own field": [
+    {
+      "file": "internal/lower/prototype.go",
+      "line": 124,
+      "function": "(*lowering).prototypeRead",
+      "note": "",
+      "source_line": "\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}",
+      "function_declaration_line": 120,
+      "function_declaration": "func (l *lowering) prototypeRead(node *ast.Node, name string) error {"
+    }
+  ],
+  "lowering|NotYet|reading comparer": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "lowering|NotYet|new an Identifier": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 1811,
+      "function": "(*lowering).newExpression",
+      "note": "new Array(length) is not handled by this fallback",
+      "source_line": "\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))",
+      "function_declaration_line": 1790,
+      "function_declaration": "func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "lowering|NotYet|reading previous": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "lowering|NotYet|reading current": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "lowering|NotYet|a value of type any": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "function": "(*lowering).typeOf",
+      "note": "the checker type has no supported runtime representation",
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "lowering|NotYet|reading dist": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "lowering|NotYet|assigning to an Identifier": [
+    {
+      "file": "internal/lower/assignments.go",
+      "line": 65,
+      "function": "(*lowering).assignment",
+      "note": "Identifier target has no represented local after rollback",
+      "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "function_declaration_line": 12,
+      "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+    }
+  ],
+  "lowering|NotYet|reading res": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "refusal_scan|Refused|a type predicate whose return is not proven (there is no body proving this parameter)": [
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 50,
+      "function": "(*lowering).proveFlowPredicate",
+      "note": "decides that no function body proves the parameter",
+      "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+      "function_declaration_line": 43,
+      "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+    },
+    {
+      "file": "internal/lower/predicates.go",
+      "line": 40,
+      "function": "(*predicateFlowProof).refused",
+      "note": "constructs the full reason",
+      "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+      "function_declaration_line": 39,
+      "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+    }
+  ],
+  "F43": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 107,
+      "function": "(*lowering).hostBindingStatement",
+      "note": "emits NotYet at the declaration",
+      "source_line": "\t\t\tstop = l.notYet(declaration, reason)",
+      "function_declaration_line": 96,
+      "function_declaration": "func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {"
+    }
+  ],
+  "refusal_scan|Refused|an ambient value declaration": [
+    {
+      "file": "internal/lower/ambient.go",
+      "line": 79,
+      "function": "(*lowering).ambientRefusal",
+      "note": "selects the reason; constructs Refused at line 91",
+      "source_line": "\t\t\twhat = \"an ambient value declaration\"",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F45": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 361,
+      "function": "(*lowering).hostBindingTypeOf",
+      "note": "emits NotYet for typeof process",
+      "source_line": "\t\treturn nil, true, l.notYet(node, stop)",
+      "function_declaration_line": 355,
+      "function_declaration": "func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
+  "F46": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F47": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ],
+  "F48": [
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 139,
+      "function": "hostBindingStop",
+      "note": "constructs the exact reason from the pinned host binding table",
+      "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+      "function_declaration_line": 124,
+      "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+    },
+    {
+      "file": "internal/lower/host_bindings.go",
+      "line": 269,
+      "function": "(*lowering).hostBindingRefusal",
+      "note": "emits NotYet at the Identifier use",
+      "source_line": "\t\treturn l.notYet(node, stop)",
+      "function_declaration_line": 257,
+      "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+    }
+  ]
+}

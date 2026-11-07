@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/after-wave/entry-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/after-wave/entry-census",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 46.1892975589999,
+  "process_group_cleaned": true
+}

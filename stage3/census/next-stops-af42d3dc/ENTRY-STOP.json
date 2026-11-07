@@ -1,0 +1,21 @@
+{
+  "status": {
+    "command": [
+      "/workspace/scratch/after-wave/entry-census",
+      "/workspace/after-wave-adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/after-wave/artifacts/tsc/latent.jsonl"
+    ],
+    "exit_code": -15,
+    "stopping_reason": "configured elapsed-time bound",
+    "seconds": 1800.7562420080003,
+    "process_group_cleaned": true
+  },
+  "last_completed_timing": {
+    "file": "/workspace/after-wave-adapted/src/compiler/utilities.ts",
+    "where": "/workspace/after-wave-adapted/src/compiler/utilities.ts:10805:1",
+    "wall_seconds": 0.5661089,
+    "cpu_seconds": 0.5673879999999372
+  },
+  "active_unit": "not recorded; last completed unit is not the interrupted unit",
+  "raw_records": 1
+}

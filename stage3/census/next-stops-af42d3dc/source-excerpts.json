@@ -1,0 +1,16 @@
+[
+  {
+    "where": "core.ts:2116:26",
+    "kind": "Refused",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "file": "/workspace/after-wave-adapted/src/compiler/core.ts",
+    "name": "core.ts-2116-26.txt",
+    "scope_name": "createIntlCollatorStringComparer",
+    "scope_start": 2113,
+    "scope_end": 2118,
+    "whole_function": true,
+    "text": "    function createIntlCollatorStringComparer(locale: string | undefined): Comparer<string> {\r\n        // Intl.Collator.prototype.compare is bound to the collator. See NOTE in\r\n        // http://www.ecma-international.org/ecma-402/2.0/#sec-Intl.Collator.prototype.compare\r\n        const comparer = new Intl.Collator(locale, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare;\r\n        return (a, b) => compareWithCallback(a, b, comparer);\r\n    }",
+    "site_text": "new Intl.Collator(locale, { usage: \"sort\", sensitivity: \"variant\", numeric: true })",
+    "source_line": "        const comparer = new Intl.Collator(locale, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare;\r"
+  }
+]

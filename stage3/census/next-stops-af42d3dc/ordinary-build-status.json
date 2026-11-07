@@ -1,0 +1,13 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/after-wave/census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "stopping_reason": null,
+  "seconds": 607.4879865360001,
+  "process_group_cleaned": true
+}

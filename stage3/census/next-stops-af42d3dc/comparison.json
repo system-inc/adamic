@@ -1,0 +1,1029 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "binder.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "builder.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "builderPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "builderState.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "checker.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "commandLineParser.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "core.ts",
+    "previous": [
+      "debug.ts:243:59",
+      "NotYet",
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+    ],
+    "current": [
+      "debug.ts:243:59",
+      "NotYet",
+      "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+    ]
+  },
+  {
+    "root": "corePublic.ts",
+    "previous": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "current": [
+      "-",
+      "accepted",
+      "-"
+    ]
+  },
+  {
+    "root": "debug.ts",
+    "previous": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "current": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ]
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "previous": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "current": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ]
+  },
+  {
+    "root": "emitter.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/utilities.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "hostErrors.ts",
+    "previous": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "current": [
+      "-",
+      "accepted",
+      "-"
+    ]
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "parser.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "path.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "performance.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "performanceCore.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "program.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "resolutionCache.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "scanner.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "semver.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "sourcemap.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "symbolWalker.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "sys.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "tracing.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformer.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2016.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2017.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2018.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2019.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2020.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/es2021.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/esDecorators.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/esnext.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/generators.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/jsx.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/legacyDecorators.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/module/esnextAnd2015.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/module/module.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/module/system.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/namedEvaluation.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/taggedTemplate.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/ts.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/typeSerializer.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "transformers/utilities.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "tsbuild.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "tsbuildPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "types.ts",
+    "previous": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "current": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ]
+  },
+  {
+    "root": "utilities.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "utilitiesPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "visitorPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "watch.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "watchPublic.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  },
+  {
+    "root": "watchUtilities.ts",
+    "previous": [
+      "core.ts:1049:34",
+      "Refused",
+      "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold"
+    ],
+    "current": [
+      "core.ts:2116:26",
+      "Refused",
+      "a method read as a value (compare would lose its object, and this with it)"
+    ]
+  }
+]

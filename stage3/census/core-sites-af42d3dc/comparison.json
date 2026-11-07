@@ -1,0 +1,2323 @@
+{
+  "method": "Lexical source_key, kind, exact reason and phase; repeated matching sites paired in source order. Locations are adapted coordinates in their own snapshots. New includes newly surveyed sites before getOwnValues.",
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1322:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1326:26: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U142",
+      "site_unit_name": "getOwnValues",
+      "recording_unit_id": "U142",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        0
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1322:1"
+      ],
+      "id": "F1",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2624:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1339:12",
+      "reason": "a member typed any ([]) related to T at the return site",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1339:12: stage 0 can't lower a member typed any ([]) related to T at the return site yet",
+      "site_unit_id": "U143",
+      "site_unit_name": "arrayOf",
+      "recording_unit_id": null,
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        28
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2624:1"
+      ],
+      "id": "F2",
+      "emitter": [
+        {
+          "file": "internal/lower/any_relations.go",
+          "line": 43,
+          "function": "(*lowering).refuseAnyRelation",
+          "note": "stores a lowest-priority refusal.deferred stop; this is not deferred_generic_instantiation",
+          "source_line": "\t\t\tl.refusal.deferred = l.notYet(node, \"a member typed any (\"+found.path+\") related to \"+l.checker.TypeToString(found.target)+\" at the \"+name+\" site\")",
+          "function_declaration_line": 27,
+          "function_declaration": "func (l *lowering) refuseAnyRelation(node *ast.Node) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1360:1",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1364:29: stage 0 can't lower a non-object representation passed through an opaque object parameter yet",
+      "site_unit_id": "U147",
+      "site_unit_name": "assign",
+      "recording_unit_id": "U147",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        1
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1360:1"
+      ],
+      "id": "F3",
+      "emitter": [
+        {
+          "file": "internal/lower/detached_own.go",
+          "line": 94,
+          "function": "(*lowering).detachedOwnRefusal",
+          "note": "",
+          "source_line": "\t\t\t\treturn l.notYet(node, \"a non-object representation passed through an opaque object parameter\")",
+          "function_declaration_line": 69,
+          "function_declaration": "func (l *lowering) detachedOwnRefusal(node *ast.Node) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1474:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1484:12",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1484:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U167",
+      "site_unit_name": "groupBy",
+      "recording_unit_id": "U167",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        2
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1474:1"
+      ],
+      "id": "F4",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1488:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1492:27",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1492:27: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U168",
+      "site_unit_name": "clone",
+      "recording_unit_id": "U168",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        3
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1488:1"
+      ],
+      "id": "F5",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1506:29",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1506:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U169",
+      "site_unit_name": "extend",
+      "recording_unit_id": "U169",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        4
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1"
+      ],
+      "id": "F6",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1509:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1509:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U169",
+      "site_unit_name": "extend",
+      "recording_unit_id": "U169",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        5
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1"
+      ],
+      "id": "F7",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1509:36",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1509:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U169",
+      "site_unit_name": "extend",
+      "recording_unit_id": "U169",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        6
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1"
+      ],
+      "id": "F8",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1515:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1515:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U169",
+      "site_unit_name": "extend",
+      "recording_unit_id": "U169",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        7
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1"
+      ],
+      "id": "F9",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1515:36",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1515:36: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U169",
+      "site_unit_name": "extend",
+      "recording_unit_id": "U169",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        8
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1505:1"
+      ],
+      "id": "F10",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1523:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1526:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1526:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U170",
+      "site_unit_name": "copyProperties",
+      "recording_unit_id": "U170",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        9
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1523:1"
+      ],
+      "id": "F11",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1553:17",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1553:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U173",
+      "site_unit_name": "createMultiMap",
+      "recording_unit_id": "U173",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        10
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1"
+      ],
+      "id": "F12",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1554:5",
+      "reason": "a method read as a value (add would lose its object, and this with it)",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1554:5: Adamic 0.1 refuses a method read as a value (add would lose its object, and this with it); call it in an arrow that keeps the object: (key, value) => map.add(key, value) (unbound-method)",
+      "site_unit_id": "U173",
+      "site_unit_name": "createMultiMap",
+      "recording_unit_id": "U173",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        11
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1"
+      ],
+      "id": "F13",
+      "emitter": [
+        {
+          "file": "internal/lower/refusals.go",
+          "line": 282,
+          "function": "(*lowering).methodValueRefusal",
+          "note": "",
+          "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+          "function_declaration_line": 260,
+          "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1555:5",
+      "reason": "a method read as a value (remove would lose its object, and this with it)",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1555:5: Adamic 0.1 refuses a method read as a value (remove would lose its object, and this with it); call it in an arrow that keeps the object: (key, value) => map.remove(key, value) (unbound-method)",
+      "site_unit_id": "U173",
+      "site_unit_name": "createMultiMap",
+      "recording_unit_id": "U173",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        12
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1552:1"
+      ],
+      "id": "F14",
+      "emitter": [
+        {
+          "file": "internal/lower/refusals.go",
+          "line": 282,
+          "function": "(*lowering).methodValueRefusal",
+          "note": "",
+          "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+          "function_declaration_line": 260,
+          "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1579:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1580:41",
+      "reason": "a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1580:41: Adamic 0.1 refuses a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "site_unit_id": "U176",
+      "site_unit_name": "createQueue",
+      "recording_unit_id": "U176",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        13
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1579:1"
+      ],
+      "id": "F15",
+      "emitter": [
+        {
+          "file": "internal/lower/invariance.go",
+          "line": 726,
+          "function": "(*lowering).wideningRefusal",
+          "note": "builds the exact reason; returns Refused at line 740, reached by refuseWidening/refuseWholeWidening",
+          "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+          "function_declaration_line": 710,
+          "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1579:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1580:41",
+      "reason": "a value of type T[] | undefined seen as (T | undefined)[], which can write T | undefined where T is read",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1580:41: Adamic 0.1 refuses a value of type T[] | undefined seen as (T | undefined)[], which can write T | undefined where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "site_unit_id": "U176",
+      "site_unit_name": "createQueue",
+      "recording_unit_id": "U176",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        14
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1579:1"
+      ],
+      "id": "F16",
+      "emitter": [
+        {
+          "file": "internal/lower/invariance.go",
+          "line": 726,
+          "function": "(*lowering).wideningRefusal",
+          "note": "builds the exact reason; returns Refused at line 740, reached by refuseWidening/refuseWholeWidening",
+          "source_line": "\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\"",
+          "function_declaration_line": 710,
+          "function_declaration": "func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1591:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:1596:24",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:1596:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U179",
+      "site_unit_name": "dequeue",
+      "recording_unit_id": "U179",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        15
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1591:5"
+      ],
+      "id": "F17",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:1996:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2003:9",
+      "reason": "a BinaryExpression with a union of differently held members and a union of differently held members",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2003:9: stage 0 can't lower a BinaryExpression with a union of differently held members and a union of differently held members yet",
+      "site_unit_id": "U209",
+      "site_unit_name": "compareComparableValues",
+      "recording_unit_id": "U207",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        51,
+        53,
+        55
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1996:1",
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1998:1",
+        "/workspace/core-sites-adapted/src/compiler/core.ts:1999:1"
+      ],
+      "id": "F18",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 1132,
+          "function": "(*lowering).combine",
+          "note": "typeName at line 1295 supplies union of differently held members",
+          "source_line": "\treturn nil, l.notYet(node, describe(node)+\" with a \"+typeName(left.Type())+\" and a \"+typeName(right.Type()))",
+          "function_declaration_line": 975,
+          "function_declaration": "func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2224:20",
+      "reason": "new an Identifier",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2224:20: stage 0 can't lower new an Identifier yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        65
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F22",
+      "emitter": [
+        {
+          "file": "internal/lower/object.go",
+          "line": 1811,
+          "function": "(*lowering).newExpression",
+          "note": "new Array(length) is not handled by this fallback",
+          "source_line": "\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))",
+          "function_declaration_line": 1790,
+          "function_declaration": "func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2225:19",
+      "reason": "new an Identifier",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2225:19: stage 0 can't lower new an Identifier yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        67
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F23",
+      "emitter": [
+        {
+          "file": "internal/lower/object.go",
+          "line": 1811,
+          "function": "(*lowering).newExpression",
+          "note": "new Array(length) is not handled by this fallback",
+          "source_line": "\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))",
+          "function_declaration_line": 1790,
+          "function_declaration": "func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2230:9",
+      "reason": "reading previous",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2230:9: stage 0 can't lower reading previous yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        69
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F24",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2237:9",
+      "reason": "reading current",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2237:9: stage 0 can't lower reading current yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        71
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F25",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2241:13",
+      "reason": "reading current",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2241:13: stage 0 can't lower reading current yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        73
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F26",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2245:19",
+      "reason": "a value of type any",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2245:19: stage 0 can't lower a value of type any yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        75
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F27",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 53,
+          "function": "(*lowering).typeOf",
+          "note": "the checker type has no supported runtime representation",
+          "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+          "function_declaration_line": 16,
+          "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2248:19",
+      "reason": "a value of type any",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2248:19: stage 0 can't lower a value of type any yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        77
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F28",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 53,
+          "function": "(*lowering).typeOf",
+          "note": "the checker type has no supported runtime representation",
+          "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+          "function_declaration_line": 16,
+          "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2251:13",
+      "reason": "reading current",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2251:13: stage 0 can't lower reading current yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        79
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F29",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2252:39",
+      "reason": "reading dist",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2252:39: stage 0 can't lower reading dist yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        81
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F30",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2255:13",
+      "reason": "reading current",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2255:13: stage 0 can't lower reading current yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        83
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F31",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2262:22",
+      "reason": "reading previous",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2262:22: stage 0 can't lower reading previous yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        85
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F32",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2263:9",
+      "reason": "assigning to an Identifier",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2263:9: stage 0 can't lower assigning to an Identifier yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        87
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F33",
+      "emitter": [
+        {
+          "file": "internal/lower/assignments.go",
+          "line": 65,
+          "function": "(*lowering).assignment",
+          "note": "Identifier target has no represented local after rollback",
+          "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+          "function_declaration_line": 12,
+          "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2264:9",
+      "reason": "assigning to an Identifier",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2264:9: stage 0 can't lower assigning to an Identifier yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        89
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F34",
+      "emitter": [
+        {
+          "file": "internal/lower/assignments.go",
+          "line": 65,
+          "function": "(*lowering).assignment",
+          "note": "Identifier target has no represented local after rollback",
+          "source_line": "\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+          "function_declaration_line": 12,
+          "function_declaration": "func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2267:11",
+      "reason": "a value of type any",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2267:11: stage 0 can't lower a value of type any yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        91
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F35",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 53,
+          "function": "(*lowering).typeOf",
+          "note": "the checker type has no supported runtime representation",
+          "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+          "function_declaration_line": 16,
+          "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2268:12",
+      "reason": "reading res",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2268:12: stage 0 can't lower reading res yet",
+      "site_unit_id": "U231",
+      "site_unit_name": "levenshteinWithMax",
+      "recording_unit_id": "U231",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        93
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2223:1"
+      ],
+      "id": "F36",
+      "emitter": [
+        {
+          "file": "internal/lower/expression.go",
+          "line": 660,
+          "function": "(*lowering).enumNeverValue",
+          "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+          "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+          "function_declaration_line": 571,
+          "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+        }
+      ]
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2588:1",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2595:16",
+      "reason": "a cast the runtime can't check",
+      "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2595:16: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "site_unit_id": "U265",
+      "site_unit_name": "takeWhile",
+      "recording_unit_id": "U265",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        22
+      ],
+      "recording_units": [
+        "/workspace/core-sites-adapted/src/compiler/core.ts:2588:1"
+      ],
+      "id": "F42",
+      "emitter": [
+        {
+          "file": "internal/lower/cast_proof.go",
+          "line": 188,
+          "function": "(*lowering).castProof",
+          "note": "castRefusal at line 156 invokes this decision during the refusal scan",
+          "source_line": "\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}",
+          "function_declaration_line": 174,
+          "function_declaration": "func (l *lowering) castProof(node *ast.Node) (castProof, error) {"
+        }
+      ]
+    }
+  ],
+  "remain": [
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2122:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2125:26",
+        "reason": "a method read as a value (compare would lose its object, and this with it)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2125:26: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U222",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          16
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2122:5"
+        ],
+        "id": "F19",
+        "emitter": [
+          {
+            "file": "internal/lower/refusals.go",
+            "line": 282,
+            "function": "(*lowering).methodValueRefusal",
+            "note": "",
+            "source_line": "\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}",
+            "function_declaration_line": 260,
+            "function_declaration": "func (l *lowering) methodValueRefusal(node *ast.Node) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+        "reason": "a method read as a value (compare would lose its object, and this with it)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U222",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          0
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+        ],
+        "id": "F11"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2111:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2125:26",
+        "reason": "inherited library member compare read as an own field",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2125:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U220",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          57,
+          61
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2111:1",
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2122:5"
+        ],
+        "id": "F20",
+        "emitter": [
+          {
+            "file": "internal/lower/prototype.go",
+            "line": 124,
+            "function": "(*lowering).prototypeRead",
+            "note": "",
+            "source_line": "\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}",
+            "function_declaration_line": 120,
+            "function_declaration": "func (l *lowering) prototypeRead(node *ast.Node, name string) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+        "reason": "inherited library member compare read as an own field",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U220",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          31,
+          35
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+        ],
+        "id": "F12"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2111:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2126:52",
+        "reason": "reading comparer",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2126:52: stage 0 can't lower reading comparer yet",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U220",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          59,
+          63
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2111:1",
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2122:5"
+        ],
+        "id": "F21",
+        "emitter": [
+          {
+            "file": "internal/lower/expression.go",
+            "line": 660,
+            "function": "(*lowering).enumNeverValue",
+            "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+            "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+            "function_declaration_line": 571,
+            "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2117:52",
+        "reason": "reading comparer",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2117:52: stage 0 can't lower reading comparer yet",
+        "site_unit_id": "U222",
+        "site_unit_name": "createIntlCollatorStringComparer",
+        "recording_unit_id": "U220",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          33,
+          37
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+        ],
+        "id": "F13"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:66",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:66: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U252",
+        "site_unit_name": "or",
+        "recording_unit_id": "U252",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          17
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2484:1"
+        ],
+        "id": "F37",
+        "emitter": [
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 50,
+            "function": "(*lowering).proveFlowPredicate",
+            "note": "decides that no function body proves the parameter",
+            "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+            "function_declaration_line": 43,
+            "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+          },
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 40,
+            "function": "(*predicateFlowProof).refused",
+            "note": "constructs the full reason",
+            "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+            "function_declaration_line": 39,
+            "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:66",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:66: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U252",
+        "site_unit_name": "or",
+        "recording_unit_id": "U252",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          1
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1"
+        ],
+        "id": "F14"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:91",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2484:91: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U252",
+        "site_unit_name": "or",
+        "recording_unit_id": "U252",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          18
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2484:1"
+        ],
+        "id": "F38",
+        "emitter": [
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 50,
+            "function": "(*lowering).proveFlowPredicate",
+            "note": "decides that no function body proves the parameter",
+            "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+            "function_declaration_line": 43,
+            "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+          },
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 40,
+            "function": "(*predicateFlowProof).refused",
+            "note": "constructs the full reason",
+            "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+            "function_declaration_line": 39,
+            "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:91",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:91: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U252",
+        "site_unit_name": "or",
+        "recording_unit_id": "U252",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          2
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1"
+        ],
+        "id": "F15"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:80",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:80: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          19
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1"
+        ],
+        "id": "F39",
+        "emitter": [
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 50,
+            "function": "(*lowering).proveFlowPredicate",
+            "note": "decides that no function body proves the parameter",
+            "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+            "function_declaration_line": 43,
+            "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+          },
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 40,
+            "function": "(*predicateFlowProof).refused",
+            "note": "constructs the full reason",
+            "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+            "function_declaration_line": 39,
+            "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:80",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:80: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          3
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+        ],
+        "id": "F16"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:105",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          20
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1"
+        ],
+        "id": "F40",
+        "emitter": [
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 50,
+            "function": "(*lowering).proveFlowPredicate",
+            "note": "decides that no function body proves the parameter",
+            "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+            "function_declaration_line": 43,
+            "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+          },
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 40,
+            "function": "(*predicateFlowProof).refused",
+            "note": "constructs the full reason",
+            "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+            "function_declaration_line": 39,
+            "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:105",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          4
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+        ],
+        "id": "F17"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:130",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2486:130: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          21
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2486:1"
+        ],
+        "id": "F41",
+        "emitter": [
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 50,
+            "function": "(*lowering).proveFlowPredicate",
+            "note": "decides that no function body proves the parameter",
+            "source_line": "\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")",
+            "function_declaration_line": 43,
+            "function_declaration": "func (l *lowering) proveFlowPredicate(node *ast.Node) error {"
+          },
+          {
+            "file": "internal/lower/predicates.go",
+            "line": 40,
+            "function": "(*predicateFlowProof).refused",
+            "note": "constructs the full reason",
+            "source_line": "\treturn &Refused{Where: p.l.program.Where(node), What: \"a type predicate whose return is not proven (\" + reason + \")\", Fix: \"inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\"}",
+            "function_declaration_line": 39,
+            "function_declaration": "func (p *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:130",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:130: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "site_unit_id": "U253",
+        "site_unit_name": "or",
+        "recording_unit_id": "U253",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          5
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+        ],
+        "id": "F18"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:15",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U269",
+        "site_unit_name": "process",
+        "recording_unit_id": "U269",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          23
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2614:1"
+        ],
+        "id": "F43",
+        "emitter": [
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 139,
+            "function": "hostBindingStop",
+            "note": "constructs the exact reason from the pinned host binding table",
+            "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+            "function_declaration_line": 124,
+            "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+          },
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 107,
+            "function": "(*lowering).hostBindingStatement",
+            "note": "emits NotYet at the declaration",
+            "source_line": "\t\t\tstop = l.notYet(declaration, reason)",
+            "function_declaration_line": 96,
+            "function_declaration": "func (l *lowering) hostBindingStatement(statement *ast.Node) (bool, error) {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:15",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U269",
+        "site_unit_name": "process",
+        "recording_unit_id": "U269",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          6
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2609:1"
+        ],
+        "id": "F19"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:80",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:80",
+        "reason": "an ambient value declaration",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2614:80: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "site_unit_id": "U270",
+        "site_unit_name": "require",
+        "recording_unit_id": "U270",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          24
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2614:80"
+        ],
+        "id": "F44",
+        "emitter": [
+          {
+            "file": "internal/lower/ambient.go",
+            "line": 79,
+            "function": "(*lowering).ambientRefusal",
+            "note": "selects the reason; constructs Refused at line 91",
+            "source_line": "\t\t\twhat = \"an ambient value declaration\"",
+            "function_declaration_line": 61,
+            "function_declaration": "func (l *lowering) ambientRefusal(node *ast.Node) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80",
+        "reason": "an ambient value declaration",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "site_unit_id": "U270",
+        "site_unit_name": "require",
+        "recording_unit_id": "U270",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          7
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80"
+        ],
+        "id": "F20"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2619:12",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2619:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          95
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1"
+        ],
+        "id": "F45",
+        "emitter": [
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 139,
+            "function": "hostBindingStop",
+            "note": "constructs the exact reason from the pinned host binding table",
+            "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+            "function_declaration_line": 124,
+            "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+          },
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 361,
+            "function": "(*lowering).hostBindingTypeOf",
+            "note": "emits NotYet for typeof process",
+            "source_line": "\t\treturn nil, true, l.notYet(node, stop)",
+            "function_declaration_line": 355,
+            "function_declaration": "func (l *lowering) hostBindingTypeOf(node *ast.Node) (ir.Expression, bool, error) {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:12",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          39
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+        ],
+        "id": "F21"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2619:19",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2619:19: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          25
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1"
+        ],
+        "id": "F46",
+        "emitter": [
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 139,
+            "function": "hostBindingStop",
+            "note": "constructs the exact reason from the pinned host binding table",
+            "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+            "function_declaration_line": 124,
+            "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+          },
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 269,
+            "function": "(*lowering).hostBindingRefusal",
+            "note": "emits NotYet at the Identifier use",
+            "source_line": "\t\treturn l.notYet(node, stop)",
+            "function_declaration_line": 257,
+            "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:19",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:19: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          8
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+        ],
+        "id": "F22"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2620:14",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2620:14: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          26
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1"
+        ],
+        "id": "F47",
+        "emitter": [
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 139,
+            "function": "hostBindingStop",
+            "note": "constructs the exact reason from the pinned host binding table",
+            "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+            "function_declaration_line": 124,
+            "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+          },
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 269,
+            "function": "(*lowering).hostBindingRefusal",
+            "note": "emits NotYet at the Identifier use",
+            "source_line": "\t\treturn l.notYet(node, stop)",
+            "function_declaration_line": 257,
+            "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2615:14",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2615:14: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          9
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+        ],
+        "id": "F23"
+      }
+    },
+    {
+      "old": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/core-sites-adapted/src/compiler/core.ts:2621:13",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/core-sites-adapted/src/compiler/core.ts:2621:13: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          27
+        ],
+        "recording_units": [
+          "/workspace/core-sites-adapted/src/compiler/core.ts:2616:1"
+        ],
+        "id": "F48",
+        "emitter": [
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 139,
+            "function": "hostBindingStop",
+            "note": "constructs the exact reason from the pinned host binding table",
+            "source_line": "\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\"",
+            "function_declaration_line": 124,
+            "function_declaration": "func hostBindingStop(row load.HostBinding) string {"
+          },
+          {
+            "file": "internal/lower/host_bindings.go",
+            "line": 269,
+            "function": "(*lowering).hostBindingRefusal",
+            "note": "emits NotYet at the Identifier use",
+            "source_line": "\t\treturn l.notYet(node, stop)",
+            "function_declaration_line": 257,
+            "function_declaration": "func (l *lowering) hostBindingRefusal(node *ast.Node) error {"
+          }
+        ]
+      },
+      "new": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2616:13",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2616:13: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "site_unit_id": "U271",
+        "site_unit_name": "isNodeLikeSystem",
+        "recording_unit_id": "U271",
+        "in_range": true,
+        "instantiation_independent": true,
+        "raw_finding_indexes": [
+          10
+        ],
+        "recording_units": [
+          "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+        ],
+        "id": "F24"
+      }
+    }
+  ],
+  "new": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:311:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5",
+      "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+      "site_unit_id": "U37",
+      "site_unit_name": "clear",
+      "recording_unit_id": "U37",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        11
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:311:1"
+      ],
+      "id": "F1"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:738:9",
+      "reason": "a value of type NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        13
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F2"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:739:31",
+      "reason": "an array of NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        15
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F3"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:741:15",
+      "reason": "a value of type NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        17
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F4"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:742:26",
+      "reason": "reading next",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        19
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F5"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:756:9",
+      "reason": "an array of T",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        21
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F6"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:759:12",
+      "reason": "reading deduplicated",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        23
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F7"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1049:63",
+      "reason": "an array of T",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet",
+      "site_unit_id": "U114",
+      "site_unit_name": "toSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        25
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F8"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5",
+      "reason": "a function returning T | undefined",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet",
+      "site_unit_id": "U117",
+      "site_unit_name": "elementAt",
+      "recording_unit_id": "U117",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        27
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1"
+      ],
+      "id": "F9"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18",
+      "reason": "Object.getPrototypeOf",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18: Adamic 0.1 refuses Object.getPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition",
+      "site_unit_id": "U141",
+      "site_unit_name": "getAllKeys",
+      "recording_unit_id": "U141",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        29
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1"
+      ],
+      "id": "F10"
+    }
+  ]
+}
