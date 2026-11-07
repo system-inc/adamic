@@ -141,7 +141,27 @@
     "stage3-lane-file-126",
     "stage3-lane-file-127",
     "stage3-lane-file-128",
-    "stage3-lane-file-129"
+    "stage3-lane-file-129",
+    "stage3-lane-file-130",
+    "stage3-lane-file-131",
+    "stage3-lane-file-132",
+    "stage3-lane-file-133",
+    "stage3-lane-file-134",
+    "stage3-lane-file-135",
+    "stage3-lane-file-136",
+    "stage3-lane-file-137",
+    "stage3-lane-file-138",
+    "stage3-lane-file-139",
+    "stage3-lane-file-140",
+    "stage3-lane-file-141",
+    "stage3-lane-file-142",
+    "stage3-lane-file-143",
+    "stage3-lane-file-144",
+    "stage3-lane-file-145",
+    "stage3-lane-file-146",
+    "stage3-lane-file-147",
+    "stage3-lane-file-148",
+    "stage3-lane-file-149"
   ],
   "pieces": [
     {
@@ -423,16 +443,56 @@
       },
       "failed": [],
       "frozenInputsUnchanged": true
+    },
+    {
+      "piece": 8,
+      "units": [
+        "stage3-lane-file-130",
+        "stage3-lane-file-131",
+        "stage3-lane-file-132",
+        "stage3-lane-file-133",
+        "stage3-lane-file-134",
+        "stage3-lane-file-135",
+        "stage3-lane-file-136",
+        "stage3-lane-file-137",
+        "stage3-lane-file-138",
+        "stage3-lane-file-139",
+        "stage3-lane-file-140",
+        "stage3-lane-file-141",
+        "stage3-lane-file-142",
+        "stage3-lane-file-143",
+        "stage3-lane-file-144",
+        "stage3-lane-file-145",
+        "stage3-lane-file-146",
+        "stage3-lane-file-147",
+        "stage3-lane-file-148",
+        "stage3-lane-file-149"
+      ],
+      "seconds": 76.30514227899994,
+      "stats": {
+        "evaluations": 20,
+        "falsy": 20
+      },
+      "actualValues": {
+        "{\"type\": \"undefined\"}": 20
+      },
+      "oracleCounts": {
+        "pass": 6612,
+        "fail": 0,
+        "skip": 0
+      },
+      "failed": [],
+      "frozenInputsUnchanged": true
     }
   ],
-  "evaluations": 140,
+  "evaluations": 160,
   "truthy": 0,
-  "falsy": 140,
+  "falsy": 160,
   "actualValues": {
-    "{\"type\": \"undefined\"}": 140
+    "{\"type\": \"undefined\"}": 160
   },
   "oracleCounts": {
-    "pass": 30215,
+    "pass": 36827,
     "fail": 1,
     "skip": 0
   },
