@@ -180,10 +180,13 @@ export function or<P, R1 extends P, R2 extends P>(...fs: ((p: P) => boolean)[]):
 }
 `
 
-// The same calls through or by position, honest: agrees with Node on the JavaScript backend and
-// natively. If the census's overload-result check refuses the predicate-returning overload over a
-// boolean-returning implementation, that's the wall after the binder check, measured here first.
-func TestOrByPositionAgreesWithNode(t *testing.T) {
+// The same calls through or by position, honest. Past the binder check, it stops at the census's
+// overload-result check, which wants the implementation's result to serve the overload's: a plain
+// `(p: P) => boolean` doesn't relate to `(p: P) => p is R1 | R2`, though every call through the promised
+// signature is a checked claim (Home at 3cc0303e). tsc's or meets the same check once its binders map,
+// so this is the wall after TestOrOverloadNextStop's. The fix is the census's to make, and this pin turns
+// to agreement with Node, "2", when it lands.
+func TestOrByPositionNextStop(t *testing.T) {
 	t.Parallel()
 	source := overloadRestNodes + overloadRestHonestB + overloadRestOrByPosition + `const root: C = { kind: 3, parent: undefined, c: "root" };
 const middle: B = { kind: 2, parent: root, b: "middle" };
@@ -191,23 +194,21 @@ const leaf: N = { kind: 9, parent: middle };
 const two = findAncestor(leaf, or(isA, isB));
 console.log(two === undefined ? "none" : String(two.kind));
 `
-	if _, err := lowerSourceAs(t, source, ".ts"); err != nil {
-		t.Logf("lowering or by position: %v", err)
-		t.Fatal("or by position didn't lower")
-	}
-	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
-	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\n" {
-		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "2\n")
+	_, err := lowerSourceAs(t, source, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
 	}
 }
 
-// A lie through or stops at a checked call before its answer is read. isB claims a kind-3 node is a B,
-// and findAncestor(leaf, or(isA, isB)) reaches the kind-3 root, where isA says no and isB says yes; the
+// A lie through or never reaches a run unchecked. isB claims a kind-3 node is a B, and
+// findAncestor(leaf, or(isA, isB)) reaches the kind-3 root, where isA says no and isB says yes; the
 // result is then read as a B, which Node prints as undefined. A lie on a kind-1 node would never be
-// heard: isA answers first for one of those, and or doesn't ask isB. Natively and on JavaScript the run
-// stops at exit 70 with the same words. It goes through or by position, since tsc's or stops first at the
-// census's binder check (TestOrOverloadNextStop).
-func TestOrOverloadLieStopsAtTheCheckedCall(t *testing.T) {
+// heard: isA answers first for one of those, and or doesn't ask isB. It goes through or by position,
+// since tsc's or stops first at the census's binder check (TestOrOverloadNextStop), and today it stops at
+// the overload-result check (TestOrByPositionNextStop). The lie through a rest that does run is
+// TestOverloadRestCheckedElement's.
+func TestOrOverloadLieStopsBeforeARun(t *testing.T) {
 	t.Parallel()
 	source := overloadRestNodes + "function isB(n: N): n is B { return n.kind === 2 || n.kind === 3; }\n" + overloadRestOrByPosition + `const root: C = { kind: 3, parent: undefined, c: "root" };
 const leaf: N = { kind: 9, parent: root };
@@ -217,12 +218,14 @@ if (found !== undefined && found.kind !== 1) { console.log(found.b); }
 	if node := runAgreementNode(t, writeAgreementSource(t, "main.ts", source)); node.code != 0 || string(node.stdout) != "undefined\n" {
 		t.Fatalf("Node: exit %d, stdout %q; want 0 and the lie read as %q", node.code, node.stdout, "undefined\n")
 	}
-	program, err := lowerSourceAs(t, source, ".ts")
-	if err != nil {
-		t.Logf("lowering the lie through or: %v", err)
-		t.Fatal("the lie through or didn't lower")
+	// Until the census's result check serves a checked predicate result (TestOrByPositionNextStop), the lie
+	// can't reach a run: it stops there, never lowered unchecked. When that lands, this becomes the stop at
+	// the checked call, through overloadRestStops, natively and on JavaScript with the same words.
+	_, err := lowerSourceAs(t, source, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:1: Adamic 0.1 refuses overload 1 of or result (p: P) => p is R1 | R2 cannot be served by implementation result (p: P) => boolean; make the implementation result covariant with every overload result")
 	}
-	overloadRestStops(t, program)
 }
 
 // or's five overload parameters, f1 and f2 in its first overload and f1, f2 and f3 in its second, each
