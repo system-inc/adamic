@@ -660,6 +660,7 @@ A "current region" global would be simpler and wrong. A function called during t
 
 - A region for a statement whose fresh value is assigned to a variable live after it.
 - A callee whose parameter does escape (stores it into a global) treated as non-escaping.
+- A parameter stored into an outer array by index (`outer[0] = p`) treated as non-escaping. region.go's `escaping` marks it in its `SetIndex` arm, and `internal/oracle/region_index_store_test.go` holds it: with the arm's escape removed, `void_index_store.a` gets a statement region and ASan reports the object read after `adamic_region_end` freed it (#22h1bv2). The pin's `keep` returns a sum or nothing, never `p.x`: today `escaping` also counts a scalar field read off a parameter, returned or stored, as the parameter itself, which costs a region but is never unsound, and would mark the escape on its own.
 - A returned-only site whose value is also stored into a field of a parameter.
 - The region passed down to a call that doesn't feed the return.
 
