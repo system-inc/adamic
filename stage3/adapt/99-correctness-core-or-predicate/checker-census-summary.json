@@ -85,7 +85,17 @@
   },
   "after": {
     "process": {
-      "status": "running"
+      "exit_code": -9,
+      "seconds": 3722.1480515003204,
+      "limit_seconds": 5400,
+      "stop_reason": null,
+      "last_completed_unit": {
+        "file": "/workspace/or-predicate-after/src/compiler/checker.ts",
+        "where": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+        "wall_seconds": 0.780015312,
+        "cpu_seconds": 0.7844769999992423
+      },
+      "raw_bytes": 165
     },
     "complete": false,
     "checkerDiagnostics": [],
@@ -134,11 +144,26 @@
         "findingsAvailable": false
       }
     ],
+    "resourceObservation": {
+      "memoryLimitBytes": 17179869184,
+      "observedMemoryEvents": {
+        "low": 0,
+        "high": 0,
+        "max": 1368019,
+        "oom": 2,
+        "oom_kill": 2,
+        "oom_group_kill": 0
+      },
+      "candidateChildExit": -9,
+      "candidateLastCompletedUnit": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+      "candidateSeconds": 3722.1480515003204,
+      "interpretation": "The candidate census received SIGKILL while running alone, and the shared cgroup recorded its second OOM kill. No complete candidate checker finding stream was emitted."
+    },
     "lastCompletedUnit": {
       "file": "/workspace/or-predicate-after/src/compiler/checker.ts",
-      "where": "/workspace/or-predicate-after/src/compiler/checker.ts:30535:5",
-      "wall_seconds": 19.918592688,
-      "cpu_seconds": 20.36439500000006
+      "where": "/workspace/or-predicate-after/src/compiler/checker.ts:36018:5",
+      "wall_seconds": 0.780015312,
+      "cpu_seconds": 0.7844769999992423
     }
   }
 }

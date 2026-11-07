@@ -1,6 +1,6 @@
 # or predicate helpers
 
-Implementation checkpoint for task 1w5bve2. The adaptation is built and its stock
+Implementation and proof result for task 1w5bve2. The adaptation is built and its stock
 TypeScript checks pass. Backend witness acceptance remains blocked on main;
 this branch must not be described as a completed proof or accepted adaptation.
 
@@ -122,12 +122,15 @@ its remaining body lowers. Exact sources, errors and exit codes are retained.
   codes, writes and byte-change outcomes match. Only 71's proved runtime hash
   and 78's proved coordinates differ in their reports; the new adapter replays
   with zero writes. Fourteen pre-existing replay refusals remain identical.
-- The before/after full checker censuses are running at this checkpoint. Each
-  has a 90-minute wall cap and the common 30-minute child-output idle limit.
-  Their final reports will be appended. The baseline attempt has since received
-  SIGKILL after 48.8 minutes while the 16 GiB cgroup recorded an OOM kill; its
-  last completed unit is checker.ts:30917:5. The candidate attempt continues.
-  See CHECKER-CENSUS.md for the current record.
+- Both best-effort full checker censuses ended in SIGKILL while the 16 GiB
+  cgroup recorded OOM kills. Baseline: 2,928.867 seconds, last completed unit
+  checker.ts:30917:5. Candidate: 3,722.148 seconds, last completed unit
+  checker.ts:36018:5. Both ended before the 90-minute wall cap. Neither emitted
+  a complete finding stream, so findings for the four owners of the seven
+  compiler sites are unavailable, not zero. CHECKER-CENSUS.md records every
+  cutoff, owner range, process result and resource observation. The standalone
+  positive witness remains blocked; this best-effort allowance does not waive
+  the missing backend runtime agreement.
 
 Base: origin/main 3214dd465e1155d7bf4d41653e95b29a3f1060a6. TypeScript source:
 050880ce59e30b356b686bd3144efe24f875ebc8. d15620712's parameter rule stays.
@@ -135,9 +138,13 @@ The parked binder exemption is not on this base. The existing pushed history is
 preserved; all updates use plain pushes to typescript/core-or-predicate.
 
 The original baseline evidence archive remains intact. The new proof archive
-will retain both backend blockers and excluded startup probes, including the
+retains both backend blockers and excluded startup probes, including the
 preview accidentally applied to baseline. That baseline was restored and all
 746 source hashes verified before its accepted checker-census attempt began.
 
 BACKEND-BLOCKER.md is the focused compiler handoff. The complete attempted
 witnesses remain failures; the successful stock checks do not waive them.
+
+All task worker processes have finished. The working source transformation is
+complete, but the branch is not proof-complete or ready to land until the
+backend witness condition is resolved.
