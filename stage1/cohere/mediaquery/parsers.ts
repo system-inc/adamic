@@ -19,7 +19,8 @@
 //     value yet (gitignore's GAPS.md, gap 8).
 
 import { panic } from 'adamic';
-import { MediaNode, newContainer, newNode } from './nodes.ts';
+import type { MediaNode } from './nodes.ts';
+import { newContainer, newNode } from './nodes.ts';
 import { leadingWhitespace, startsWithWhitespace, trailingWhitespace, trim } from './whitespace.ts';
 
 // What a parse gives: its value, or the Go's error message.
@@ -78,8 +79,8 @@ function parseMediaFeature(text: string, index: number): Result<readonly MediaNo
     let result: readonly MediaNode[] = [];
     let lastModeIndex = 0;
     let mediaFeature = '';
-    let colon: MediaNode | undefined = undefined;
-    let mediaFeatureValue: MediaNode | undefined = undefined;
+    let colon: MediaNode | undefined;
+    let mediaFeatureValue: MediaNode | undefined;
     let indexLocal = index;
 
     let stringNormalized = text;
@@ -207,7 +208,7 @@ function parseMediaQuery(text: string, index: number): Result<readonly MediaNode
     const resetNode = (): MediaQueryElement => ({ before: '', after: '', value: '', type: '', sourceIndex: 0 });
 
     let node = resetNode();
-    let elementNodes: readonly MediaNode[] | undefined = undefined;
+    let elementNodes: readonly MediaNode[] | undefined;
 
     for(let i = 0; i < text.length; i++) {
         const character = text[i] ?? panic(`index ${i} out of range`);
