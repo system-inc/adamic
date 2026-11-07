@@ -1,0 +1,5 @@
+// A .a file is an ES module whatever its build declares, so its __dirname stays NotYet in a bundled image.
+// Node's globals are typed only for a program that imports a node: module.
+import 'node:process';
+const executingDirectory: string = __dirname;
+console.log(executingDirectory);

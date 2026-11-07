@@ -14,7 +14,8 @@ import (
 
 // compileWASI uses the entry module's handleRequest export, as in the runtime's source witness.
 // Private or dependency-only names are not handlers. An export alias selects its resolved function declaration.
-func compileWASI(path string) (*ir.Program, int, int) {
+// format is the module format the build declares.
+func compileWASI(path string, format lower.ModuleFormat) (*ir.Program, int, int) {
 	program, code := check([]string{path})
 	if program == nil {
 		return nil, -1, code
@@ -24,7 +25,7 @@ func compileWASI(path string) (*ir.Program, int, int) {
 		fmt.Fprintln(os.Stderr, "adamic: "+err.Error())
 		return nil, -1, 1
 	}
-	lowered, err := lower.Lower(context.Background(), program)
+	lowered, err := lower.LowerWithOptions(context.Background(), program, loweringOptions(false, format))
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, -1, 1

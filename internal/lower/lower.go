@@ -28,7 +28,26 @@ type Options struct {
 	ProgramRegion bool
 	// OwnershipQuery adds validation after the existing move proof. Default off.
 	OwnershipQuery bool
+	// ModuleFormat is the module format the build declares its program in. Default ModuleFormatEcmaScript.
+	ModuleFormat ModuleFormat
 }
+
+// ModuleFormat is a module format a build can declare: what Node would run the program as, and so
+// which of Node's module values it has. It's a build input, so internal/lowered's key holds it with
+// every other Options field.
+type ModuleFormat string
+
+const (
+	// ModuleFormatEcmaScript is an ES module, the format every Adamic program is unless its build says
+	// otherwise. It's the zero value, so Options that name no format lower as they always have, and
+	// one format is never spelled two ways.
+	ModuleFormatEcmaScript ModuleFormat = ""
+	// ModuleFormatCommonJSBundle is one bundled image of CommonJS modules, as tsc ships as _tsc.js,
+	// where every module's __filename and __dirname are the running image's (Adamic's ruling on
+	// #0ta3dk9; nodeCommonJSModuleValuesBound). It isn't a module a file each, whose two Node gives
+	// each module of its own.
+	ModuleFormatCommonJSBundle ModuleFormat = "CommonJSBundle"
+)
 
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
@@ -48,13 +67,13 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lowerChecked(program, typeChecker, entry, nil, true, false)
+		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, nil)
 		if err != nil {
 			return nil, err
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerChecked(program, typeChecker, entry, plan, false, options.Debug, options.OwnershipQuery)
+	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, nil, options.OwnershipQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -62,26 +81,28 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 	return built.result, nil
 }
 
+// lowerChecked lowers a program as an ES module, the format every caller but LowerWithOptions lowers in.
 func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, ownershipQuery ...bool) (*lowering, error) {
-	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, nil, ownershipQuery...)
+	return lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, discovery, debug, ModuleFormatEcmaScript, nil, ownershipQuery...)
 }
 
 // Tests retain transient checker types before lazy queries replace them. A checked view's
 // element reads are keyed by what the program views (viewElementKey). An array contract the key's
 // pre-pass didn't see would leave a read it should check raw, so the key fails closed: the program
 // is lowered again with every element read checked.
-func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	key := &viewElementKey{}
-	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
 	if len(key.misses) == 0 {
 		return built, err
 	}
-	return lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+	return lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, moduleFormat, cycleTypes, ownershipQuery...)
 }
 
-func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	lowering.debug = debug
+	lowering.moduleFormat = moduleFormat
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -248,6 +269,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 type lowering struct {
 	debug      bool
 	cycleTypes map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
+	// builds by hand leaves it ModuleFormatEcmaScript.
+	moduleFormat ModuleFormat
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node
