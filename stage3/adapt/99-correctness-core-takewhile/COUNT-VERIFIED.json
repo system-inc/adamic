@@ -1,0 +1,25 @@
+{
+  "complete": true,
+  "units": 398,
+  "calls": 220,
+  "classes": {
+    "none accepted": 215,
+    "middle rejection": 5
+  },
+  "predicates": {
+    "isPrologueDirective": 132,
+    "isExportOrDefaultModifier": 88
+  },
+  "acceptedRangeHoleCalls": 0,
+  "resultDifferences": 0,
+  "predicateSequenceDifferences": 0,
+  "unstableInputs": 0,
+  "oracleCounts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "namesDigest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+  "baselineDiffSha256": "dade0a0d86d5f2ba9de4b812f1aa22e16a5c4d1121f488b1a31f7e30ad14f40f",
+  "archivesAndEveryMemberVerified": true
+}

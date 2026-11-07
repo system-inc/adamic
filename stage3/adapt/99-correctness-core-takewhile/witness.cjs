@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 "use strict";
+const fs = require('node:fs');
 const assert = require("node:assert/strict");
 const { isDeepStrictEqual } = require("node:util");
 
@@ -30,6 +31,22 @@ function proposed(array, predicate) {
         }
         return result;
     }
+}
+
+if (process.argv.length > 2) {
+    assert.equal(process.argv.length, 4);
+    const ts = require('typescript');
+    function extracted(tree) {
+        const text = fs.readFileSync(tree + '/src/compiler/core.ts', 'utf8');
+        const source = ts.createSourceFile('core.ts', text, ts.ScriptTarget.Latest, true);
+        const owners = source.statements.filter(node => ts.isFunctionDeclaration(node) && node.name?.text === 'takeWhile');
+        assert.equal(owners.length, 3);
+        const owner = text.slice(owners[0].getStart(source), owners.at(-1).end).replaceAll('export ', '');
+        const code = ts.transpileModule(owner, { compilerOptions: { target: ts.ScriptTarget.ES2024 } }).outputText;
+        return new Function(code + '; return takeWhile;')();
+    }
+    original = extracted(process.argv[2]);
+    proposed = extracted(process.argv[3]);
 }
 
 function describe(value) {
