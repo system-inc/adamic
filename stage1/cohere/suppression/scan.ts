@@ -1,10 +1,12 @@
-// A port of cohere's internal/lint/suppression/scan.go to Adamic 0.1: where the comments are in a
-// file, as TypeScript lexes it. Each piece names the Go it reads as.
-//
-// The Go walks bytes; the port walks UTF-16 units, and its offsets are UTF-16 indexes where the Go's are
-// byte offsets. Every test the scanner makes is on an ASCII character, and a multi-byte character is
-// one or two units here and two to four bytes there, none of them ASCII, so both take the same
-// decisions; the test converts the Go's offsets to UTF-16 indexes before comparing.
+/*
+ * A port of cohere's internal/lint/suppression/scan.go to Adamic 0.1: where the comments are in a
+ * file, as TypeScript lexes it. Each piece names the Go it reads as.
+ *
+ * The Go walks bytes; the port walks UTF-16 units, and its offsets are UTF-16 indexes where the Go's are
+ * byte offsets. Every test the scanner makes is on an ASCII character, and a multi-byte character is
+ * one or two units here and two to four bytes there, none of them ASCII, so both take the same
+ * decisions; the test converts the Go's offsets to UTF-16 indexes before comparing.
+ */
 
 import { parseEnable } from './directives.ts';
 
@@ -229,7 +231,7 @@ export function buildLineIndex(text: string): (offset: number) => number {
             starts.push(index + 1);
         }
     }
-    return (offset: number): number => {
+    return function(offset: number): number {
         let low = 0;
         let high = starts.length - 1;
         while(low < high) {

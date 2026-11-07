@@ -1,21 +1,23 @@
-// A port of cohere's internal/lint/ecmascript/directives (directives.go and subject.go) to Adamic 0.1:
-// the grammar of suppression comments, and the short list of rules whose findings are about those
-// comments. Each piece names the Go it reads as.
-//
-// Where the port differs from the Go, and why:
-//
-//   - Go's multiple results are objects or undefined, since stage 0 doesn't lower a tuple as a value
-//     yet (gitignore's GAPS.md, gap 8): ParseDisable's (Disable, bool) is a Disable or undefined,
-//     ParseEnable's (rules, found) the rules or undefined, splitScope's three results a ScopeRead or
-//     undefined, and splitReason's two a RuleList.
-//   - Recognize's (scopeWord, honored) is the scope word, or '' where the comment isn't one. It would
-//     be undefined, but stage 0 writes `return undefined` from a function returning string | undefined
-//     as C that clang refuses (mediaquery's GAPS.md, gap 2). For the same reason, and gap 2 here for an
-//     array, splitDirective returns a DirectiveRest and ParseEnable an Enable, objects, which may be
-//     undefined, where the natural results are a string and a list.
-//   - Go's Scope is an int enum; here it is the union of its names.
-//   - cohere 8e30b756 uses JavaScript whitespace for trimming and directive-word boundaries,
-//     matching ESLint. The same set is spelled out here over UTF-16 units.
+/*
+ * A port of cohere's internal/lint/ecmascript/directives (directives.go and subject.go) to Adamic 0.1:
+ * the grammar of suppression comments, and the short list of rules whose findings are about those
+ * comments. Each piece names the Go it reads as.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - Go's multiple results are objects or undefined, since stage 0 doesn't lower a tuple as a value
+ *     yet (gitignore's GAPS.md, gap 8): ParseDisable's (Disable, bool) is a Disable or undefined,
+ *     ParseEnable's (rules, found) the rules or undefined, splitScope's three results a ScopeRead or
+ *     undefined, and splitReason's two a RuleList.
+ *   - Recognize's (scopeWord, honored) is the scope word, or '' where the comment isn't one. It would
+ *     be undefined, but stage 0 writes `return undefined` from a function returning string | undefined
+ *     as C that clang refuses (mediaquery's GAPS.md, gap 2). For the same reason, and gap 2 here for an
+ *     array, splitDirective returns a DirectiveRest and ParseEnable an Enable, objects, which may be
+ *     undefined, where the natural results are a string and a list.
+ *   - Go's Scope is an int enum; here it is the union of its names.
+ *   - cohere 8e30b756 uses JavaScript whitespace for trimming and directive-word boundaries,
+ *     matching ESLint. The same set is spelled out here over UTF-16 units.
+ */
 
 // directives.go: the honored spellings. `cohere-disable` is what new code writes; `verify-disable` is
 // what this tool's directives were called before the rename to Cohere; `eslint-disable` is the
@@ -199,13 +201,15 @@ function parseRuleNames(list: string): readonly string[] {
     return names;
 }
 
-// directives.go: ParseDisable reads one comment's full source text, delimiters included, as a disable
-// directive:
-//
-//	<tool>-disable[-next-line|-line] [rule[, rule...]] [-- reason]
-//
-// Everything after the directive word is optional. No rules means blanket. No reason means the author
-// did not say why, which is recorded rather than rejected.
+/*
+ * directives.go: ParseDisable reads one comment's full source text, delimiters included, as a disable
+ * directive:
+ *
+ * 	<tool>-disable[-next-line|-line] [rule[, rule...]] [-- reason]
+ *
+ * Everything after the directive word is optional. No rules means blanket. No reason means the author
+ * did not say why, which is recorded rather than rejected.
+ */
 export function parseDisable(commentText: string): Disable | undefined {
     const body = trimWhitespace(stripCommentMarkers(commentText));
 
