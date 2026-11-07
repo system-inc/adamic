@@ -48,10 +48,20 @@ export class Input {
         if(end <= start) {
             return '';
         }
-        if(this.css.charCodeAt(start) >= 0xdc00 && this.css.charCodeAt(start) <= 0xdfff && this.css.charCodeAt(start - 1) >= 0xd800 && this.css.charCodeAt(start - 1) <= 0xdbff) {
+        if(
+            this.css.charCodeAt(start) >= 0xdc00 &&
+            this.css.charCodeAt(start) <= 0xdfff &&
+            this.css.charCodeAt(start - 1) >= 0xd800 &&
+            this.css.charCodeAt(start - 1) <= 0xdbff
+        ) {
             start++;
         }
-        if(this.css.charCodeAt(end) >= 0xdc00 && this.css.charCodeAt(end) <= 0xdfff && this.css.charCodeAt(end - 1) >= 0xd800 && this.css.charCodeAt(end - 1) <= 0xdbff) {
+        if(
+            this.css.charCodeAt(end) >= 0xdc00 &&
+            this.css.charCodeAt(end) <= 0xdfff &&
+            this.css.charCodeAt(end - 1) >= 0xd800 &&
+            this.css.charCodeAt(end - 1) <= 0xdbff
+        ) {
             end++;
         }
         return this.css.slice(start, end);
