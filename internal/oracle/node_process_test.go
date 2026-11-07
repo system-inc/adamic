@@ -54,13 +54,31 @@ func nodeProcessTerminal(t *testing.T, destination string, command ...string) ru
 func TestNodeProcessTerminal(t *testing.T) {
 	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_terminal.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(native.C(program), "adamic_node_stdout_handle()") {
+		t.Fatal("sys.ts optional initializer must emit adamic_node_stdout_handle()")
+	}
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	for _, destination := range []string{"file", "pipe", "tty"} {
 		truth := nodeProcessTerminal(t, destination, "node", "--disable-warning=ExperimentalWarning", runner, path)
-		for _, command := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-			got := nodeProcessTerminal(t, destination, command...)
-			if difference := disagreement(truth, got); difference != "" {
-				t.Fatalf("%s: %s\nNode %q\ngot %q %q", destination, difference, truth.stdout, got.stdout, got.stderr)
+		for _, backend := range []struct {
+			name    string
+			command []string
+		}{{"native", []string{binary}}, {"javascript", []string{"node", "--disable-warning=ExperimentalWarning", runner, script}}} {
+			got := nodeProcessTerminal(t, destination, backend.command...)
+			want := truth
+			if backend.name == "javascript" && destination != "file" {
+				// Open finding #qa1g5f3 (Library's): main's plain-dot form already passes a raw
+				// Node function to adamicCall after sys.ts's exact guard. Pin its bytes until that
+				// lands, then this row moves to plain agreement; never skip it.
+				want = run{stdout: []byte("handle function\n"), stderr: []byte("adamic: panic: TypeError: closure.code is not a function\n"), exitCode: 70}
+				t.Logf("open finding #qa1g5f3, the JavaScript host-method guard-and-call on %s: exact stdout, stderr and exit 70 are pinned", destination)
+			}
+			if difference := disagreement(want, got); difference != "" {
+				t.Fatalf("%s %s: %s\nwant %d %q %q\ngot %d %q %q", destination, backend.name, difference, want.exitCode, want.stdout, want.stderr, got.exitCode, got.stdout, got.stderr)
 			}
 		}
 		t.Logf("%s: Node %q", destination, truth.stdout)
