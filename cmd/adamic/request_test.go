@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -55,7 +56,7 @@ func TestWASIRequestSelection(t *testing.T) {
 			if test.name == "alias" && name != "serve" {
 				t.Fatalf("alias selected %q, want serve", name)
 			}
-			program, handler, code := compileWASI(path)
+			program, handler, code := compileWASI(path, lower.ModuleFormatEcmaScript)
 			if test.refused {
 				if code != 1 || program != nil {
 					t.Fatalf("accepted invalid handler, code %d", code)
@@ -137,7 +138,7 @@ func TestWASIRequestModuleSelection(t *testing.T) {
 		if err := os.WriteFile(path, []byte(test.source), 0644); err != nil {
 			t.Fatal(err)
 		}
-		program, handler, code := compileWASI(path)
+		program, handler, code := compileWASI(path, lower.ModuleFormatEcmaScript)
 		if test.refused {
 			if code != 1 || program != nil {
 				t.Fatal("accepted ambiguous IR function names")

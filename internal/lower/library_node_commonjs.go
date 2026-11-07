@@ -1,15 +1,19 @@
 package lower
 
 import (
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 // __filename, __dirname and require are what Node gives a CommonJS module. An Adamic program is an
-// ES module, where Node has none of them, so they're never bound. Each is NotYet under a reason of
-// its own, so the meter names who owns it (#redxes2); none is registered. Two requires tsc makes
-// inside a try lower as the throw its catch sees instead (Adamic's ruling, Nov 3): of
-// source-map-support, and of a computed module path.
+// ES module unless its build declares one bundled image of CommonJS modules, and an ES module has
+// none of them. Each is NotYet under a reason of its own, so the meter names who owns it (#redxes2);
+// none is registered. Two requires tsc makes inside a try lower as the throw its catch sees instead
+// (Adamic's ruling, Nov 3): of source-map-support, and of a computed module path. __filename and
+// __dirname read in a .ts file of a build that declares one bundled image lower as the running
+// image's path and its directory (nodeCommonJSModuleValuesBound).
 const (
 	nodeFilenameMember = "node:module.__filename"
 	nodeDirnameMember  = "node:module.__dirname"
@@ -27,6 +31,10 @@ const nodeCommonJSLoading = ": CommonJS loading with no ES-module answer yet"
 // that's the answer native gives (installed-layout in internal/oracle's ruled divergences).
 const nodeSourceMapSupport = "source-map-support"
 
+// nodeCommonJSModuleValueShape is what a reason for __filename or __dirname used other than by a read
+// of its own name says after naming it, in a file where they're bound.
+const nodeCommonJSModuleValueShape = ": CommonJS module values are bound only for a read of the name itself (fix: read __filename or __dirname by name and keep the path in a variable of the program's own)"
+
 // nodeJavaScriptModuleOpening and nodeJavaScriptModuleClosing are the message a computed require
 // throws with, around the path it was given, in Diagnostics' words (#redxes2): which load failed, the
 // limit, and the one fix. Stock Node would load the module; native can't run JavaScript
@@ -39,12 +47,16 @@ const (
 // nodeCommonJSUseRefusal names __filename and __dirname, and the requires the meter tracks: of
 // crypto, and of a computed module path called with a spread. It refuses the nodes the generic
 // NotYet would, at the same positions, so a site counts as it did: a call's node and its callee's
-// carry one reason at one place. A require that lowers (nodeCommonJSRequireThrows) is found with no
-// refusal. Any other require gives found false and keeps node:module.require.
+// carry one reason at one place. A require that lowers (nodeCommonJSRequireThrows), and a read of
+// __filename or __dirname where they're bound, is found with no refusal. Any other require gives
+// found false and keeps node:module.require.
 func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 	switch l.nodeLibraryMember(node) {
 	case nodeFilenameMember, nodeDirnameMember:
-		return true, l.notYet(node, nodeCommonJSModuleValues)
+		if !l.nodeCommonJSModuleValuesBound(node) {
+			return true, l.notYet(node, nodeCommonJSModuleValues)
+		}
+		return true, l.nodeCommonJSModuleValueRefusal(node)
 	case nodeRequireMember:
 	default:
 		return false, nil
@@ -67,6 +79,66 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 		return true, l.notYet(node, nodeRequireMember+`("`+argument.Text()+`")`+nodeCommonJSLoading+" (fix: import it with an import declaration)")
 	}
 	return false, nil
+}
+
+// nodeCommonJSModuleValuesBound says whether __filename and __dirname are bound where node is:
+// only in a build that declares one bundled image (ModuleFormatCommonJSBundle), a build input
+// lowered.Options keys, and only in a .ts file, since a .a file is an ES module whatever the build
+// declares (Adamic's ruling, Nov 6, #redxes2). Bound, every module of the program gets the image's
+// two values, its real path and its directory, as every module of tsc's _tsc.js gets the bundle's
+// (Adamic's ruling on #0ta3dk9), never a path of its own. Everywhere else they keep
+// nodeCommonJSModuleValues' NotYet. It's the one place the format and the file are judged, so the
+// refusal and the lowering can't disagree.
+func (l *lowering) nodeCommonJSModuleValuesBound(node *ast.Node) bool {
+	return l.moduleFormat == ModuleFormatCommonJSBundle && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+}
+
+// nodeCommonJSModuleValueRefusal judges a use of __filename or __dirname where they're bound. Only a
+// read of the name itself lowers. A CommonJS module's two are its wrapper's locals, never the global
+// object's, so a read through globalThis is undefined on Node and stays NotYet, as does a write,
+// which reaches one module or every module the bundle wraps, as the bundle was made. The name of a
+// property access is judged as its access.
+func (l *lowering) nodeCommonJSModuleValueRefusal(node *ast.Node) error {
+	name := l.nodeLibraryMember(node)
+	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {
+		return l.notYet(node.Parent, name+" through a receiver"+nodeCommonJSModuleValueShape)
+	}
+	if !ast.IsIdentifier(node) {
+		return l.notYet(node, name+" through a receiver"+nodeCommonJSModuleValueShape)
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if ast.IsAssignmentTarget(outer) || outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression {
+		return l.notYet(node, name+" written"+nodeCommonJSModuleValueShape)
+	}
+	return nil
+}
+
+// nodeCommonJSModuleValue lowers a read of __filename to the running image's real path and of
+// __dirname to its directory, where they're bound. The refusal visitor has judged every other use,
+// and it's judged again here, so a use the visitor never saw can't lower.
+func (l *lowering) nodeCommonJSModuleValue(node *ast.Node) (ir.Expression, bool, error) {
+	if !ast.IsIdentifier(node) {
+		return nil, false, nil
+	}
+	operation := ""
+	switch l.nodeLibraryMember(node) {
+	case nodeFilenameMember:
+		operation = "filename"
+	case nodeDirnameMember:
+		operation = "dirname"
+	default:
+		return nil, false, nil
+	}
+	if !l.nodeCommonJSModuleValuesBound(node) {
+		return nil, true, l.notYet(node, nodeCommonJSModuleValues)
+	}
+	if err := l.nodeCommonJSModuleValueRefusal(node); err != nil {
+		return nil, true, err
+	}
+	return ir.ProcessCall{Operation: operation, Of: ir.String}, true, nil
 }
 
 // nodeCommonJSRequireArgument is a require call's first argument as it's judged: past the

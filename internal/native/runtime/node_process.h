@@ -10,6 +10,8 @@ bool adamic_node_next_tick_feature(void);
 double adamic_node_pid(void);
 adamic_array *adamic_node_argv(void);
 adamic_array *adamic_node_exec_argv(void);
+adamic_string *adamic_node_filename(void);
+adamic_string *adamic_node_dirname(void);
 adamic_object *adamic_node_stdout_handle(void);
 bool adamic_node_stdout_write(const adamic_string *text);
 adamic_object *adamic_node_memory_usage(void);
