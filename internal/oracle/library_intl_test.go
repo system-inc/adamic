@@ -1,0 +1,116 @@
+package oracle
+
+import (
+	"path/filepath"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Intl.Collator's head 1 (#zjndrx5, Adamic's ruling at 06:39Z, Runtime's two musts): tsc's collator
+// lowers, and its compare stops honestly at run time. The fixtures are in testdata/intl_collator,
+// out of the top of testdata, which the flow and fresh corpora lower whole. Each is held to Node,
+// natively under the sanitizers and released, and on the JavaScript backend.
+func intlCollatorFixture(t *testing.T, name string) string {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/intl_collator", name))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
+// constructs.a, the one collator fixture that runs to its end, is in the oracle's table too, so its
+// counts are recorded (testdata/counts) and every whole-table check runs it. The stop fixtures stop
+// as run-time NotYets, which stay out of the count registry.
+func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/intl_collator/constructs.a", true, false})
+}
+
+// A collator made from an undefined locale goes on as Node's does, and natively it and its compare
+// closure are freed: the leak check finds nothing.
+func TestIntlCollatorConstructsAsNodeDoes(t *testing.T) {
+	t.Parallel()
+	path := intlCollatorFixture(t, "constructs.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatalf("tsc's collator must lower: %v", err)
+	}
+	truth := onNode(t, path)
+	if want := "collator object\ntwo distinct\n"; truth.exitCode != 0 || string(truth.stdout) != want {
+		t.Fatalf("source Node: exit %d, stdout %q, want %q", truth.exitCode, truth.stdout, want)
+	}
+	got, binary := natively(t, program)
+	for name, run := range map[string]run{"sanitized": got, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, run); difference != "" {
+			t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, run.exitCode, run.stdout, run.stderr)
+		}
+	}
+	if leaked := leaks(t, program, binary); leaked != "" {
+		t.Fatal(leaked)
+	}
+}
+
+// intlCollatorHostStop is the host form's whole message for a key, as ir.DynamicKeyedStops says it.
+func intlCollatorHostStop(key string) string {
+	for _, stop := range ir.DynamicKeyedStops {
+		if stop.Name == "RuntimeValue" {
+			return stop.Message + " (reading '" + key + "')"
+		}
+	}
+	return "no RuntimeValue stop in ir.DynamicKeyedStops"
+}
+
+// intlCollatorStops are the stop fixtures: what each prints before it stops, the whole message it
+// stops in, and what Node prints running the source, which goes on past the stop.
+var intlCollatorStops = []struct{ file, stdout, message, node string }{
+	// Pin 1, tsc's shape. Mutant: library_intl.c's collator_compare answering ordinal order, so the
+	// run goes on past the call natively and prints a line Node's doesn't match.
+	{"tsc_shape.a", "comparer made\n", ir.IntlCollatorCompareStop, "comparer made\ncompared after\n"},
+	// Pin 6, a defined locale, each its own program, since each stops at its construction: 'en' written
+	// in place, a malformed tag whose RangeError the program catches on Node, and 'en' held in a
+	// variable. Mutant: adamic_intl_collator_new's locale test dropped, so each constructs natively and
+	// the run goes on.
+	{"locale_en.a", "before\n", ir.IntlCollatorLocaleStop, "before\ncollator object\n"},
+	{"locale_malformed.a", "undefined object\n", ir.IntlCollatorLocaleStop, "undefined object\nmalformed RangeError\n"},
+	{"locale_variable.a", "locale en\n", ir.IntlCollatorLocaleStop, "locale en\ncollator object\n"},
+	// Pin 7, Object.keys, which stops in the keyless host form and never lists compare. Mutant:
+	// library_intl.c's shape left plain (NULL methods), so native answers from its slots.
+	{"own_keys.a", "collator\n", ir.DynamicKeysStop, "collator\nkeys []\n"},
+	// Pin 7, an in test of compare, true on Node, which stops in the host form keyed on compare. Its
+	// mutant is own_keys.a's: the shape left plain, so native answers from its slot.
+	{"in_compare.a", "collator\n", intlCollatorHostStop("compare"), "collator\nin yes\n"},
+}
+
+// Each stop, on both backends, in the same whole message byte for byte, after exactly Node's output
+// up to it, while Node runs the source to the end.
+func TestIntlCollatorStopsAlikeOnBothBackends(t *testing.T) {
+	t.Parallel()
+	for _, probe := range intlCollatorStops {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path := intlCollatorFixture(t, probe.file)
+			if truth := onNode(t, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("the program must lower and stop at run time: %v", err)
+			}
+			want := run{stdout: []byte(probe.stdout), stderr: []byte("adamic: panic: " + probe.message + "\n"), exitCode: 70}
+			native, _ := natively(t, program)
+			backend := onJavaScriptBackend(t, program)
+			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": backend} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+			if difference := disagreement(native, backend); difference != "" {
+				t.Errorf("the backends differ: %s", difference)
+			}
+		})
+	}
+}

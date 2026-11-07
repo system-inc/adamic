@@ -1,0 +1,15 @@
+// Node throws a RangeError for a malformed tag, which this program catches (Runtime's must 1 on
+// #zjndrx5), so construction must never go on silently natively, where it would answer the catch
+// differently: both backends stop at the construction, inside the try, in the ruled form. A stop is
+// no throw, so the catch never sees it.
+function construct(locale: string | undefined): string {
+	try {
+		const collator = new Intl.Collator(locale, { usage: 'sort', sensitivity: 'variant', numeric: true });
+		return typeof collator;
+	} catch (error) {
+		return error instanceof Error ? error.name : 'other';
+	}
+}
+
+console.log(`undefined ${construct(undefined)}`);
+console.log(`malformed ${construct('not a tag!')}`);

@@ -867,6 +867,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.reflectGet(node); known {
 		return value, true, err
 	}
+	if value, known, err := l.intlCollatorCompare(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.nodeFSDirectoryCall(node); known {
 		return value, true, err
 	}
@@ -1804,6 +1807,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)
+	}
+	if l.isIntlCollator(node.AsNewExpression().Expression) {
+		return l.intlCollatorNew(node)
 	}
 	created := node.AsNewExpression()
 	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {

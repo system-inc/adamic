@@ -1003,6 +1003,10 @@ adamic_object *adamic_iterator_result(adamic_field_kind kind, bool present, adam
 // an object of the iterator shape whose next is a collection's, never a string's iterator, which
 // shares the shape. An iterable view's dispatch asks it (ir.IsCollectionIterator).
 bool adamic_collection_iterator_is(const void *value);
+// adamic_intl_collator_new is new Intl.Collator(locale, tsc's options), locale borrowed and NULL for
+// undefined: an owned host object whose compare closure stops when called, and which stops itself
+// for a defined locale (library_intl.c, #zjndrx5).
+adamic_object *adamic_intl_collator_new(const adamic_string *locale);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);

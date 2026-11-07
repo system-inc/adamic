@@ -107,7 +107,7 @@ func viewReadOf(program *ir.Program, expression ir.Expression) viewRead {
 		ir.ArraySort, ir.ArraySplice, ir.ArrayVisit, ir.Await, ir.Binary, ir.BooleanToString, ir.Box, ir.Call,
 		ir.CallClosure, ir.CharCodeAt, ir.Coalesce, ir.CodePoints, ir.Comma, ir.Concat,
 		ir.Conditional, ir.Defined, ir.Effects, ir.ErrorToString, ir.FileStatus, ir.GeneratorDone, ir.GeneratorNext, ir.HasAccessor, ir.HasOwn, ir.HasProperty,
-		ir.InstanceOf, ir.IsCollectionIterator, ir.IsGenerator, ir.IsNull, ir.IsUndefined, ir.IterableOf, ir.JSONDecode, ir.JoinEnter, ir.Length, ir.Logical,
+		ir.InstanceOf, ir.IntlCollatorNew, ir.IsCollectionIterator, ir.IsGenerator, ir.IsNull, ir.IsUndefined, ir.IterableOf, ir.JSONDecode, ir.JoinEnter, ir.Length, ir.Logical,
 		ir.LogicalAssignment, ir.MakeError, ir.MapClear, ir.MapDelete, ir.MapEntries, ir.MapForEach, ir.MapGet,
 		ir.MapHas, ir.MapKeys, ir.MapNew, ir.MapSet, ir.MapSize, ir.MapValues, ir.MathCall, ir.MaybeOf,
 		ir.MaybeToString, ir.Narrow, ir.NodeBufferCall, ir.NodeFSFile, ir.NodeHostCall, ir.NumberCall,

@@ -1,0 +1,9 @@
+// A host object stops for every key (#ey7aysy): an Intl.Collator's compare is a getter on
+// Intl.Collator.prototype on Node, where native's shape holds it as its own (#zjndrx5, Runtime's must
+// 2), so a run-time key read of it stops rather than hand the slot out. Node prints function.
+import { propertyOf } from './hostErrors.ts';
+
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+const value = propertyOf(collator, 'compare');
+console.log(typeof value);

@@ -1,0 +1,17 @@
+// tsc's collator (core.ts:2097-2101, #zjndrx5 head 1): made from an undefined locale and tsc's options,
+// held in a variable, and compare called on it through the comparer tsc builds around it. Node prints
+// both lines, a10 after a2 under numeric collation; both backends print the first and stop at the
+// call in the one ruled form, Intl.Collator's compare isn't built yet, never an ordinal answer.
+function getUILocale(): string | undefined {
+	return undefined;
+}
+
+function createComparer(locale: string | undefined): (a: string, b: string) => number {
+	const collator = new Intl.Collator(locale, { usage: 'sort', sensitivity: 'variant', numeric: true });
+	return (a, b) => collator.compare(a, b);
+}
+
+const comparer = createComparer(getUILocale());
+console.log('comparer made');
+const result = comparer('a10', 'a2');
+console.log(`compared ${result < 0 ? 'before' : result > 0 ? 'after' : 'equal'}`);
