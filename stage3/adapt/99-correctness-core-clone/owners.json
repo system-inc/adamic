@@ -1,0 +1,13 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "clone",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function clone<T>(object: T): T {\n    const result: any = {};\n    for (const id in object) {\n        if (hasOwnProperty.call(object, id)) {\n            result[id] = (object as any)[id];\n        }\n    }\n    return result;\n}",
+    "after": "export function clone<T>(object: T): T {\n    const result: any = {};\n    for (const id in object) {\n        if (hasOwnProperty.call(object, id)) {\n            result[id] = object[id];\n        }\n    }\n    return result;\n}",
+    "ownerBeforeSha256": "ea3878b75146266eeaeef53fc4eed1463330561b2eb4334411aea18fe6091201",
+    "ownerAfterSha256": "6dc301811cd11853b091dcfc5ad3a7b420731863101525e4e18382dbb94d98b0",
+    "siteEdits": 1
+  }
+]
