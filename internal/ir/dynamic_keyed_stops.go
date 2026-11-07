@@ -84,6 +84,29 @@ func (functions DynamicKeyedFunctions) Names() []string {
 	return names
 }
 
+// NodeNames are the names Node gives the functions, in order: each one's key, but constructor's, which
+// is the constructor's own name.
+func (functions DynamicKeyedFunctions) NodeNames(constructor string) []string {
+	names := []string{}
+	for _, function := range functions {
+		if function.Name == "constructor" {
+			names = append(names, constructor)
+		} else {
+			names = append(names, function.Name)
+		}
+	}
+	return names
+}
+
+// DynamicKeyedObjectNodeNames are the names Node gives Object and then Object.prototype's ten methods
+// (DynamicKeyedPrototypeMethods), in that order, the functions a run-time key read of an object hands
+// out. A run-time key read of one of these functions' name answers it on both backends (#xdcec18), as
+// it does the names of the three tables' functions (DynamicKeyedArrayPrototypeNodeNames,
+// DynamicKeyedRegExpStringIteratorNodeNames and DynamicKeyedStatsNodeNames): natively one immortal
+// string for each (union.c, from dynamic_keyed_names.h), on the JavaScript backend Node's own
+// function's name. TestDynamicKeyedFunctionNodeNamesAreNodes holds all four to the pinned Node's.
+var DynamicKeyedObjectNodeNames = append([]string{"Object"}, DynamicKeyedPrototypeMethods...)
+
 // DynamicKeyedArrayPrototypeNames are Object.getOwnPropertyNames(Array.prototype) on Node, less
 // length, which every array holds as its own, each with Node's Array.prototype[name].length. An array
 // and a tuple inherit each of them, and Object.prototype's names too (DynamicKeyedPrototypeNames), and
@@ -106,6 +129,10 @@ var DynamicKeyedArrayPrototypeNames = DynamicKeyedFunctions{
 	{"with", 2}, {"toLocaleString", 0}, {"toString", 0},
 }
 
+// DynamicKeyedArrayPrototypeNodeNames are the names Node gives DynamicKeyedArrayPrototypeNames'
+// functions, in order: each one's key, and Array for constructor.
+var DynamicKeyedArrayPrototypeNodeNames = DynamicKeyedArrayPrototypeNames.NodeNames("Array")
+
 // DynamicKeyedRegExpStringIteratorNames are the string-keyed names a matchAll iterator inherits on
 // Node, each with the length of the function a read hands out: Object.getOwnPropertyNames of its
 // prototype, %RegExpStringIteratorPrototype% (next), and then of Iterator.prototype, whose constructor
@@ -123,6 +150,11 @@ var DynamicKeyedRegExpStringIteratorNames = DynamicKeyedFunctions{
 	{"every", 1}, {"find", 1}, {"map", 1}, {"filter", 1}, {"take", 1}, {"drop", 1}, {"flatMap", 1},
 }
 
+// DynamicKeyedRegExpStringIteratorNodeNames are the names Node gives
+// DynamicKeyedRegExpStringIteratorNames' functions, in order: each one's key, and Iterator for
+// constructor, the function its getter answers.
+var DynamicKeyedRegExpStringIteratorNodeNames = DynamicKeyedRegExpStringIteratorNames.NodeNames("Iterator")
+
 // DynamicKeyedStatsNames are the functions an fs.Stats inherits on Node, each with the length of the
 // function a read hands out: Stats.prototype's own constructor (Stats) and _checkModeProperty, then
 // StatsBase.prototype's seven is methods, whose own constructor Stats.prototype's shadows. Above
@@ -137,6 +169,13 @@ var DynamicKeyedStatsNames = DynamicKeyedFunctions{
 	{"constructor", 14}, {"_checkModeProperty", 1}, {"isDirectory", 0}, {"isFile", 0}, {"isBlockDevice", 0},
 	{"isCharacterDevice", 0}, {"isSymbolicLink", 0}, {"isFIFO", 0}, {"isSocket", 0},
 }
+
+// DynamicKeyedStatsNodeNames are the names Node gives DynamicKeyedStatsNames' functions, in order:
+// Stats for constructor, and the empty string for each of the other eight, never its key. Node's own
+// source assigns each to its prototype as an anonymous function expression
+// (StatsBase.prototype.isFile = function() {...}), and a function assigned to a property takes no
+// name from it.
+var DynamicKeyedStatsNodeNames = []string{"Stats", "", "", "", "", "", "", "", ""}
 
 // DynamicKeyedStatsFieldNames are the fields Node gives an fs.Stats that native's Stats doesn't hold:
 // its own numbers, then Stats.prototype's date accessors, less the four node_fs_file.c's stat shape

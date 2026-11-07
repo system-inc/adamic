@@ -4,7 +4,7 @@
 // default or rest, as Node's does: an optional parameter counts, and a this parameter never does. A
 // nested function read as a value is the closure its frame's cache hands back, whose length the
 // emitter writes on every hand-back. A class's method stops before its length is read
-// (stop_method.a), and every other key on a function still stops (stop_function_name.a). An
+// (stop_method.a). A function's name is function_name.a's and stop_function_name.a's. An
 // overloaded function, and a function declaration with a this parameter, aren't lowered as values
 // yet, so neither is a row. An object literal's methods are function_length_methods.a's rows, a
 // program of their own, since together with this program's functions and its frame's cache they'd

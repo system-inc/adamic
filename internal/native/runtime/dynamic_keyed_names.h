@@ -225,4 +225,88 @@ static const char *const adamic_dynamic_keyed_error_names[] = {
 	function(7, 0) \
 	function(8, 0)
 
+// Node's name for Object and then each of adamic_dynamic_keyed_prototype_method_names' functions, in order.
+#define ADAMIC_DYNAMIC_KEYED_OBJECT_NODE_NAMES(name) \
+	name("Object") \
+	name("toString") \
+	name("toLocaleString") \
+	name("valueOf") \
+	name("hasOwnProperty") \
+	name("isPrototypeOf") \
+	name("propertyIsEnumerable") \
+	name("__defineGetter__") \
+	name("__defineSetter__") \
+	name("__lookupGetter__") \
+	name("__lookupSetter__")
+
+// Node's name for each of adamic_dynamic_keyed_array_prototype_names' functions, in order.
+#define ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_NODE_NAMES(name) \
+	name("Array") \
+	name("at") \
+	name("concat") \
+	name("copyWithin") \
+	name("fill") \
+	name("find") \
+	name("findIndex") \
+	name("findLast") \
+	name("findLastIndex") \
+	name("lastIndexOf") \
+	name("pop") \
+	name("push") \
+	name("reverse") \
+	name("shift") \
+	name("unshift") \
+	name("slice") \
+	name("sort") \
+	name("splice") \
+	name("includes") \
+	name("indexOf") \
+	name("join") \
+	name("keys") \
+	name("entries") \
+	name("values") \
+	name("forEach") \
+	name("filter") \
+	name("flat") \
+	name("flatMap") \
+	name("map") \
+	name("every") \
+	name("some") \
+	name("reduce") \
+	name("reduceRight") \
+	name("toReversed") \
+	name("toSorted") \
+	name("toSpliced") \
+	name("with") \
+	name("toLocaleString") \
+	name("toString")
+
+// Node's name for each of adamic_dynamic_keyed_regexp_string_iterator_names' functions, in order.
+#define ADAMIC_DYNAMIC_KEYED_REGEXP_STRING_ITERATOR_NODE_NAMES(name) \
+	name("next") \
+	name("Iterator") \
+	name("reduce") \
+	name("toArray") \
+	name("forEach") \
+	name("some") \
+	name("every") \
+	name("find") \
+	name("map") \
+	name("filter") \
+	name("take") \
+	name("drop") \
+	name("flatMap")
+
+// Node's name for each of adamic_dynamic_keyed_stats_names' functions, in order.
+#define ADAMIC_DYNAMIC_KEYED_STATS_NODE_NAMES(name) \
+	name("Stats") \
+	name("") \
+	name("") \
+	name("") \
+	name("") \
+	name("") \
+	name("") \
+	name("") \
+	name("")
+
 #endif

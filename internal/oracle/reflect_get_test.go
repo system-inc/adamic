@@ -69,7 +69,11 @@ func reflectGetFixture(t *testing.T, name string) string {
 // AdamicClosure nor Node's own function, so function_length.a stops on the JavaScript backend; the
 // lowering counting every parameter, so its default and rest rows read 2; the lowering counting a
 // this parameter, so function_length_methods.a's this parameter row reads 1; and the emitter writing
-// 0 on the closure the canonical cache hands back, so its canonical row reads 0 natively.
+// 0 on the closure the canonical cache hands back, so its canonical row reads 0 natively. #xdcec18's,
+// a handed-out function's name: union.c's closure arm stopping for name again, so function_name.a
+// stops at map natively; the helper's Node function stopping for name again, so it stops there on
+// the JavaScript backend; Array's name written as constructor in dynamic_keyed_names.h, so its Array
+// constructor row reads constructor natively.
 func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
@@ -101,6 +105,7 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"stats_reads.a", statsReadsAnswers},
 		{"function_length.a", functionLengthAnswers},
 		{"function_length_methods.a", functionLengthMethodsAnswers},
+		{"function_name.a", functionNameAnswers},
 		{"stop_function_length.a", "map function\nnumber\n"},
 		{"stop_function_length_iterator.a", "next function\nnumber\n"},
 		{"stop_host_object.a", "directory\nfunction\n"},
@@ -341,6 +346,21 @@ optional: function number 2
 optional then default: function number 1
 `
 
+// functionNameAnswers is what function_name.a prints on Node: each name its key, but a constructor's,
+// and a Stats' isFile's, which is anonymous on Node.
+const functionNameAnswers = `map: function string [map]
+array toString: function string [toString]
+Array constructor: function string [Array]
+object toString: function string [toString]
+hasOwnProperty: function string [hasOwnProperty]
+Object constructor: function string [Object]
+next: function string [next]
+iterator map: function string [map]
+Iterator constructor: function string [Iterator]
+isFile: function string []
+Stats constructor: function string [Stats]
+`
+
 // functionLengthMethodsAnswers is what function_length_methods.a prints on Node.
 const functionLengthMethodsAnswers = `literal method: function number 2
 literal method still scales: 6
@@ -512,7 +532,7 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
 	{"stop_error_stack.a", "before\n", "ErrorProperty", "stack", "before\nstring\n"},
 	{"stop_literal_getter.a", "got\n", "ObjectLiteralGetter", "value", "got\nstring\n"},
-	{"stop_function_name.a", "map function 1\n", "Function", "name", "map function 1\nstring\n"},
+	{"stop_function_name.a", "double function 1\n", "Function", "name", "double function 1\nstring\n"},
 }
 
 // reflectGetStop is the run a stop fixture makes on each backend: what it printed, and the stop's
@@ -557,10 +577,11 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // natively. The stop_keys_ rows are Object.keys of a host value, stopping in the keyless message
 // (OwnKeys, Adamic's ruling at 08:28Z); their mutants are the keys guard dropped from
 // adamic_object_keys and from adamic_class_object_keys, and the fixture each path serves answers from
-// native's slots. stop_function_name.a reads a function the read handed out by a key in turn, its
-// name, natively a closure and on the JavaScript backend Node's own function, which stops in the
-// Function form while its length answers (#xdcec18, function_length.a). Its mutant is union.c's
-// closure arm answering name as it answers length, so the native leg runs on.
+// native's slots. stop_function_name.a reads a program's own function by a key in turn, its name,
+// natively a closure and on the JavaScript backend an AdamicClosure, which stops in the Function form
+// while its length answers (#xdcec18, function_length.a), and a handed-out function's name answers
+// (function_name.a). Its mutant is union.c's closure arm answering the empty string for a program's
+// closure's name, so the native leg runs on.
 func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 	t.Parallel()
 	for _, probe := range reflectGetStops {

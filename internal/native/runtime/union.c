@@ -621,6 +621,51 @@ static adamic_value stats_called(adamic_closure *self, adamic_value *arguments) 
 	not_called("StatsBase.prototype.", name);
 }
 
+// The name Node gives each of those functions (#xdcec18), in each family's order, as immortal strings,
+// so a run-time key read of one's name allocates nothing: its key, but each family's constructor's,
+// which is its constructor's own (Object, Array, Iterator, Stats), and a Stats' other functions',
+// which are anonymous on Node (dynamic_keyed_names.h, pinned by
+// TestDynamicKeyedFunctionNodeNamesAreNodes). Each is ASCII, so its units are its bytes.
+#define NODE_NAME(text) ADAMIC_STRING_UNITS(text, sizeof text - 1),
+// Object's first, then prototype_methods' in their order.
+static adamic_string object_node_names[] = {ADAMIC_DYNAMIC_KEYED_OBJECT_NODE_NAMES(NODE_NAME)};
+static adamic_string array_prototype_node_names[] = {ADAMIC_DYNAMIC_KEYED_ARRAY_PROTOTYPE_NODE_NAMES(NODE_NAME)};
+static adamic_string regexp_string_iterator_node_names[] = {ADAMIC_DYNAMIC_KEYED_REGEXP_STRING_ITERATOR_NODE_NAMES(NODE_NAME)};
+static adamic_string stats_node_names[] = {ADAMIC_DYNAMIC_KEYED_STATS_NODE_NAMES(NODE_NAME)};
+#undef NODE_NAME
+_Static_assert(sizeof object_node_names / sizeof object_node_names[0] == 1 + sizeof prototype_methods / sizeof prototype_methods[0], "a name for Object and each of Object.prototype's methods");
+_Static_assert(sizeof array_prototype_node_names / sizeof array_prototype_node_names[0] == sizeof array_prototype_functions / sizeof array_prototype_functions[0], "a name for each of Array.prototype's functions");
+_Static_assert(sizeof regexp_string_iterator_node_names / sizeof regexp_string_iterator_node_names[0] == sizeof regexp_string_iterator_functions / sizeof regexp_string_iterator_functions[0], "a name for each function a matchAll iterator inherits");
+_Static_assert(sizeof stats_node_names / sizeof stats_node_names[0] == sizeof stats_functions / sizeof stats_functions[0], "a name for each function a Stats inherits");
+
+// closure_node_name is Node's name for an immortal closure a run-time key read hands out, found as
+// each one's call guard finds its own: its family by its code, then its place in the family's array.
+// A program's closure is none of these and carries no name, so it's NULL.
+static adamic_string *closure_node_name(const adamic_closure *closure) {
+	if (closure->code == object_called) return &object_node_names[0];
+	if (closure->code == prototype_method_called) {
+		for (size_t index = 0; index < sizeof prototype_methods / sizeof prototype_methods[0]; index++) {
+			if (prototype_methods[index] == closure) return &object_node_names[index + 1];
+		}
+	}
+	if (closure->code == array_prototype_called) {
+		for (size_t index = 0; index < sizeof array_prototype_functions / sizeof array_prototype_functions[0]; index++) {
+			if (array_prototype_functions[index] == closure) return &array_prototype_node_names[index];
+		}
+	}
+	if (closure->code == regexp_string_iterator_called) {
+		for (size_t index = 0; index < sizeof regexp_string_iterator_functions / sizeof regexp_string_iterator_functions[0]; index++) {
+			if (regexp_string_iterator_functions[index] == closure) return &regexp_string_iterator_node_names[index];
+		}
+	}
+	if (closure->code == stats_called) {
+		for (size_t index = 0; index < sizeof stats_functions / sizeof stats_functions[0]; index++) {
+			if (stats_functions[index] == closure) return &stats_node_names[index];
+		}
+	}
+	return NULL;
+}
+
 // host_object is the one predicate for a value whose prototype on Node isn't Object's, a program
 // class's instance aside (#ey7aysy, Adamic's ruling on #0sps03r): an object with no class, not a
 // record, whose shape's methods are adamic_host_methods (adamic.h). The runtime marks each of its own
@@ -830,8 +875,13 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	case adamic_kind_closure:
 		// A function's length answers as Node's does (#xdcec18), the count every closure carries, as the
 		// narrowed read answers it (dynamic_property): a program's from the emitter, an immortal one's
-		// from its table. Every other key, its name among them, still stops.
+		// from its table. So does the name of a function a run-time key read handed out, its immortal
+		// string. A program's function carries no name, so its name stops, as every other key does.
 		if (key_is(key, "length")) return adamic_box_number((double)((adamic_closure *)value)->source_length);
+		if (key_is(key, "name")) {
+			adamic_string *name = closure_node_name((const adamic_closure *)value);
+			if (name != NULL) return &name->heap;
+		}
 		keyed_stop(adamic_dynamic_keyed_stop_function, key);
 	case adamic_kind_array:
 		return keyed_array((const adamic_array *)value, key);

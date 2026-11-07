@@ -1,0 +1,29 @@
+// A function a run-time key read hands out answers its name by a run-time key as Node's does
+// (#xdcec18): natively an immortal closure answers its immortal string, and on the JavaScript backend
+// Node's own function answers its own name. A name is its key, but each prototype's constructor's,
+// which is the constructor's own (Array, Object, Iterator, Stats), and a Stats' isFile's, which is
+// the empty string: Node's own source assigns it to StatsBase.prototype as an anonymous function. A
+// program's own function carries no name natively, so its name still stops (stop_function_name.a).
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+function describe(label: string, value: unknown): void {
+	const name = propertyOf(value, 'name');
+	console.log(`${label}: ${typeof value} ${typeof name} [${String(name)}]`);
+}
+
+const numbers = [1, 2, 3];
+const object = { present: 'here' };
+const iterator = 'ab'.matchAll(/a/g);
+const stats = fs.statSync('.');
+describe('map', propertyOf(numbers, 'map'));
+describe('array toString', propertyOf(numbers, 'toString'));
+describe('Array constructor', propertyOf(numbers, 'constructor'));
+describe('object toString', propertyOf(object, 'toString'));
+describe('hasOwnProperty', propertyOf(object, 'hasOwnProperty'));
+describe('Object constructor', propertyOf(object, 'constructor'));
+describe('next', propertyOf(iterator, 'next'));
+describe('iterator map', propertyOf(iterator, 'map'));
+describe('Iterator constructor', propertyOf(iterator, 'constructor'));
+describe('isFile', propertyOf(stats, 'isFile'));
+describe('Stats constructor', propertyOf(stats, 'constructor'));
