@@ -3,6 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require('typescript');
 const args=process.argv.slice(2),prefix=args[0]==='--prefix';if(prefix)args.shift();
 const [beforeTree,afterTree]=args;assert(beforeTree&&afterTree&&args.length===2,'usage: verify.cjs [--prefix] BEFORE AFTER');assert.equal(ts.version,'6.0.3');
+const multimap=require('./multimap.json');
 const inventory=require('./sites.json'),folds=inventory.literals.filter(row=>row.ownerAfterSha256),hash=text=>crypto.createHash('sha256').update(text).digest('hex');
 const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]).sort();
 const files=tree=>walk(path.join(tree,'src')).map(f=>path.relative(tree,f));
@@ -10,6 +11,21 @@ function nodes(root,predicate){const found=[];function visit(node){if(predicate(
 function enclosing(node){while(node&&!ts.isFunctionDeclaration(node))node=node.parent;return node;}
 function slice(text,edits){for(const edit of [...edits].sort((a,b)=>b.start-a.start))text=text.slice(0,edit.start)+edit.text+text.slice(edit.end);return text;}
 function owners(source,row){const found=nodes(source,n=>ts.isFunctionDeclaration(n)&&n.body&&n.name?.text===row.owner);assert.equal(found.length,1,'unique owner implementation: '+row.owner);return found[0];}
+function multiMapEdits(source,javascript=false){
+ const edits=[],owner=owners(source,{owner:'createProgram'});
+ for(const call of multimap.calls){
+  const matches=nodes(owner,n=>ts.isCallExpression(n)&&n.getText(source)===call.before);assert.equal(matches.length,1,'owned MultiMap before call');
+  const node=matches[0];edits.push({start:node.getStart(source),end:node.end,text:call.after});
+ }
+ const imports=source.statements.filter(n=>ts.isImportDeclaration(n)&&n.moduleSpecifier.text==='./_namespaces/ts.js');assert.equal(imports.length,1);
+ const elements=imports[0].importClause.namedBindings.elements,pin=multimap.import;
+ const previous=elements.filter(n=>n.name.text===pin.previous),next=elements.filter(n=>n.name.text===pin.next);assert.equal(previous.length,1);assert.equal(next.length,1);
+ assert(!elements.some(n=>n.name.text==='multiMapAddValue'),'MultiMap import initially absent');
+ const start=previous[0].end,end=next[0].getStart(source);
+ if(javascript)edits.push({start:end,end,text:'multiMapAddValue, '});
+ else {assert.equal(source.text.slice(start,end),pin.before,'pinned MultiMap before import gap');edits.push({start,end,text:pin.after});}
+ return edits;
+}
 const evidence=[],allowed=new Set(['src/compiler/types.ts',...folds.map(row=>row.file)]);let changedFiles=0,declarations=0,rewrites=0,importsRemoved=0;
 assert.deepEqual(files(beforeTree),files(afterTree));
 for(const relative of files(beforeTree)){
@@ -25,6 +41,7 @@ for(const relative of files(beforeTree)){
    if(text===row.before){edits.push({start:node.getStart(source),end:node.end,text:row.after});declarations++;}
   }
  }else{
+  if(relative==='src/compiler/program.ts')edits.push(...multiMapEdits(source));
   for(const row of folds.filter(row=>row.file===relative)){
    const owner=owners(source,row),nextOwner=owners(next,row);
    const literals=nodes(owner,n=>ts.isObjectLiteralExpression(n)&&enclosing(n)===owner&&row.members.filter(m=>typeof m.initializer==='object').every(m=>n.properties.some(p=>p.name?.getText(source)===m.name)));assert.equal(literals.length,1);
@@ -44,13 +61,14 @@ for(const relative of files(beforeTree)){
    edits.push({start,end,text:pin.after});importsRemoved++;
   }
  }
- assert.equal(after,slice(before,edits),'only four slots, six initializers and one import removal: '+relative);
- const crlf={before:(before.match(/\r\n/g)||[]).length,after:(after.match(/\r\n/g)||[]).length};assert.equal(crlf.after,crlf.before);
+ assert.equal(after,slice(before,edits),'only four slots, six initializers, two MultiMap calls and import edits: '+relative);
+ const crlf={before:(before.match(/\r\n/g)||[]).length,after:(after.match(/\r\n/g)||[]).length};const addedCRLF=relative==='src/compiler/program.ts'?(multimap.import.after.match(/\r\n/g)||[]).length-(multimap.import.before.match(/\r\n/g)||[]).length:0;assert.equal(crlf.after,crlf.before+addedCRLF);
  const javascript=[];
  for(const removeComments of [false,true]){
   const options={fileName:relative,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,verbatimModuleSyntax:true,removeComments}},oldJS=ts.transpileModule(before,options).outputText,newJS=ts.transpileModule(after,options).outputText,jsEdits=[];
   if(relative!=='src/compiler/types.ts'){
    const parsed=ts.createSourceFile(relative+'.js',oldJS,ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
+   if(relative==='src/compiler/program.ts')jsEdits.push(...multiMapEdits(parsed,true));
    for(const row of folds.filter(row=>row.file===relative)){
     const owner=owners(parsed,row);
     for(const member of row.members.filter(m=>typeof m.initializer==='object')){

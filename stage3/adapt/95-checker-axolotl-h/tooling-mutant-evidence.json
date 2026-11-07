@@ -1,0 +1,241 @@
+{
+  "base": "4f2204d913210ff861bb7416e35a41a023e1b5bc",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "checks": [
+    {
+      "check": "contract",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "check": "verify-prefix",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "check": "verify",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "check": "expectation-mutant",
+      "exit": 1,
+      "expected": 1
+    }
+  ],
+  "verifiers": {
+    "verify": {
+      "sourceFiles": 746,
+      "changedFiles": 2,
+      "declarations": 0,
+      "rewrites": 6,
+      "importsRemoved": 1,
+      "prefix": false,
+      "crlf": [
+        {
+          "file": "src/compiler/checker.ts",
+          "before": 54445,
+          "after": 54445
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "before": 5201,
+          "after": 5202
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "before": 10681,
+          "after": 10681
+        }
+      ]
+    },
+    "verify-prefix": {
+      "sourceFiles": 746,
+      "changedFiles": 3,
+      "declarations": 4,
+      "rewrites": 6,
+      "importsRemoved": 1,
+      "prefix": true,
+      "crlf": [
+        {
+          "file": "src/compiler/checker.ts",
+          "before": 54445,
+          "after": 54445
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "before": 5201,
+          "after": 5202
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "before": 10681,
+          "after": 10681
+        }
+      ]
+    }
+  },
+  "ordinaryControl": "Ordered prefix with the four types.ts declaration repairs already present; runtime owners remain before.",
+  "contractRows": [
+    {
+      "name": "multimap-half-owner",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "multimap-half-calls",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "multimap-import-left",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "checker-half-getSymlinkCache",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "checker-half-getGlobalTypingsCacheLocation",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0001",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0010",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0011",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0100",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0101",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0110",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-0111",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1000",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1001",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1010",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1011",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1100",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1101",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-half-1110",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "checker-import-left",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "checker-import-removed-early",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "checker-third-member",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-third-member",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "emit-host-third-member",
+      "refused": true,
+      "writes": 0
+    },
+    {
+      "name": "program-callee-symbol",
+      "refused": true,
+      "writes": 0
+    }
+  ],
+  "multiMapRefusals": [
+    {
+      "name": "multimap-half-owner",
+      "message": "half-adapted MultiMap owner",
+      "beforeSha256": "b9eb03178319054c8da5c0f659c70a17e87e4fa562e405f3c59736e3c853e0ef",
+      "afterSha256": "b9eb03178319054c8da5c0f659c70a17e87e4fa562e405f3c59736e3c853e0ef",
+      "writes": 0
+    },
+    {
+      "name": "multimap-half-calls",
+      "message": "half-adapted MultiMap calls\n\n'after' !== 'before'\n",
+      "beforeSha256": "b8bd55be7941d351de62329410119aae5529afcfb3e0f3b60a07b8d61b8a4916",
+      "afterSha256": "b8bd55be7941d351de62329410119aae5529afcfb3e0f3b60a07b8d61b8a4916",
+      "writes": 0
+    },
+    {
+      "name": "multimap-import-left",
+      "message": "pinned MultiMap import gap\n+ actual - expected\n\n+ ',\\r\\n    '\n- ',\\r\\n    multiMapAddValue,\\r\\n    '\n            ^\n",
+      "beforeSha256": "2f07befb78f84182ecb6d90e3633c15b7136aa2777d771380913704f5867c368",
+      "afterSha256": "2f07befb78f84182ecb6d90e3633c15b7136aa2777d771380913704f5867c368",
+      "writes": 0
+    }
+  ],
+  "selfMutant": {
+    "change": "Remove ,/^half-adapted MultiMap owner$/ from the multimap-half-owner row invocation.",
+    "exit": 1,
+    "diagnostic": "missing refusal expectation: multimap-half-owner"
+  },
+  "testReferenceSearch": "rg -n verify.cjs|contract.cjs stage3 found only the two CLI definitions and README references for 95h; no separate 95h test driver reads them.",
+  "logSha256": {
+    "95h-contract.log": "0d58a5eeecb71ac521290898cbe430b7e4cab393adbc61d823c86c33cf5ca13d",
+    "95h-verify.log": "8d4c86acfc738b77cb402dd35ed27d8300745ac26af78d791b8a5716b889d059",
+    "95h-verify-prefix.log": "19a61bbaaf1226e01e208fc55cc70faa795f9ac3fed59e19a46209fc74633752",
+    "95h-expectation-mutant.log": "9df2c7c6020b2316f9ea88e7bb5a51a59b8771a94552c270780e5d82760557ad"
+  }
+}
