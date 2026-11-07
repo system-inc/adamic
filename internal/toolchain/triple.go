@@ -43,13 +43,11 @@ const (
 	cPlusPlusCompiler = "clang++"
 )
 
-// Compilers are the C and C++ compilers Env names when the caller names neither: clang and clang++ by name, each with
-// the triple of environment's platform, so a `GOARCH=arm64` build's cgo compiles for aarch64-linux-gnu where it would
-// have compiled for the box (#5xsd2ha). The platform is read as go reads it from environment, a list of settings whose
-// last setting of a name wins, `GOOS` and `GOARCH` unset or empty being this process's own. A platform with no row (js
-// and wasip1, whose builds run no cgo) names clang and clang++ alone.
-func Compilers(environment []string) (string, string) {
-	goos, goarch := "", ""
+// Platform is the goos and goarch a build is for, read as go reads them from environment, a list of settings whose last
+// setting of a name wins: `GOOS` and `GOARCH`, each unset or empty being this process's own, runtime.GOOS or
+// runtime.GOARCH, which is what go builds for then. It is the one reader of a build's platform, so cgo's triple
+// (Compilers) and native's (its buildPlatform reads Platform of os.Environ()) can't drift apart (#5xsd2ha).
+func Platform(environment []string) (goos string, goarch string) {
 	for _, setting := range environment {
 		switch name, value, _ := strings.Cut(setting, "="); name {
 		case "GOOS":
@@ -64,7 +62,15 @@ func Compilers(environment []string) (string, string) {
 	if goarch == "" {
 		goarch = runtime.GOARCH
 	}
-	triple, err := Triple(goos, goarch)
+	return goos, goarch
+}
+
+// Compilers are the C and C++ compilers Env names when the caller names neither: clang and clang++ by name, each with
+// the triple of environment's platform (Platform), so a `GOARCH=arm64` build's cgo compiles for aarch64-linux-gnu where
+// it would have compiled for the box (#5xsd2ha). A platform with no row (js and wasip1, whose builds run no cgo) names
+// clang and clang++ alone.
+func Compilers(environment []string) (string, string) {
+	triple, err := Triple(Platform(environment))
 	if err != nil {
 		return cCompiler, cPlusPlusCompiler
 	}
