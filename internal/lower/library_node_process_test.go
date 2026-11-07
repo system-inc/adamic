@@ -37,7 +37,8 @@ func TestNodeProcessPerformanceAliasABI(t *testing.T) {
 
 func TestNodeProcessDeferredSchedulingStaysLoud(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"process.nextTick(()=>{});", "setTimeout(()=>{},0);"} {
+	// setTimeout lowers now (library_node_timers_test.go); nextTick still stops.
+	for _, source := range []string{"process.nextTick(()=>{});"} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()
 			if _, err := lowerSource(t, "import 'node:process'; "+source); err == nil {
