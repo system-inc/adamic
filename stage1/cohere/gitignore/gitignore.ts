@@ -42,7 +42,8 @@
 //     builds a new one, as the Go writes only its copy.
 
 import { panic, utf8Length } from 'adamic';
-import { compileGlob, Glob } from './glob.ts';
+import type { Glob } from './glob.ts';
+import { compileGlob } from './glob.ts';
 import { base, clean, dir } from './path.ts';
 
 // gitignore.go: IgnoreFileName, the per-directory ignore file.
@@ -109,7 +110,7 @@ function stat(tree: WorkingTree, relative: string): Entry | undefined {
             return undefined;
         }
         const parent = dir(current);
-        const resolved = clean(parent === '.' ? entry.target : parent + '/' + entry.target);
+        const resolved = clean(parent === '.' ? entry.target : `${parent}/${entry.target}`);
         if(resolved === '..' || resolved.startsWith('../')) {
             return undefined;
         }
@@ -120,7 +121,7 @@ function stat(tree: WorkingTree, relative: string): Entry | undefined {
 
 // filepath.Join(root, relative), for a message.
 function absolute(tree: WorkingTree, relative: string): string {
-    return relative === '' ? tree.root : tree.root + '/' + relative;
+    return relative === '' ? tree.root : `${tree.root}/${relative}`;
 }
 
 // gitignore.go: Source. It is the rule that decided a path: the ignore file, relative to the repository
@@ -185,7 +186,7 @@ class Rule {
         }
         let below = relativePath;
         if(this.base !== '') {
-            const [after, ok] = cutPrefix(relativePath, this.base + '/');
+            const [after, ok] = cutPrefix(relativePath, `${this.base}/`);
             if(!ok) {
                 return false;
             }
@@ -565,7 +566,7 @@ function compileRule(line: string, file: string, lineNumber: number, base: strin
 
     let sourcePattern = pattern;
     if(negated) {
-        sourcePattern = '!' + sourcePattern;
+        sourcePattern = `!${sourcePattern}`;
     }
     if(directoryOnly) {
         sourcePattern += '/';
@@ -615,7 +616,7 @@ export function joinRelative(directory: string, name: string): string {
     if(directory === '') {
         return name;
     }
-    return directory + '/' + name;
+    return `${directory}/${name}`;
 }
 
 // gitignore.go: displayDirectory.
@@ -687,7 +688,7 @@ function quote(text: string): string {
                 break;
             default:
                 if(code < 0x20 || code === 0x7f) {
-                    quoted += '\\x' + hexDigit(code >> 4) + hexDigit(code & 0xf);
+                    quoted += `\\x${hexDigit(code >> 4)}${hexDigit(code & 0xf)}`;
                 }
                 else {
                     quoted += character;
@@ -695,5 +696,5 @@ function quote(text: string): string {
                 break;
         }
     }
-    return quoted + '"';
+    return `${quoted}"`;
 }
