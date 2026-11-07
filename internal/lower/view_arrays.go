@@ -266,6 +266,9 @@ func (l *lowering) viewArrayElementCheck(node, source *ast.Node) (*ir.ViewElemen
 
 func (l *lowering) viewArrayIndex(node, source *ast.Node, read ir.ArrayIndex) (ir.Expression, error) {
 	check, err := l.viewArrayElementCheck(node, source)
+	if err == nil && check == nil {
+		l.recordViewArrayUse(node, read.Array, "index")
+	}
 	if err != nil || check == nil {
 		return read, err
 	}
@@ -461,8 +464,11 @@ func (l *lowering) checkViewArrays() error {
 			return &NotYet{Where: cast.Where, What: "a cast that makes a viewed readonly array writable"}
 		}
 	}
+	wholeDemanded := func(array ir.Expression) bool {
+		return viewArrayAggregate(array) && demanded(array)
+	}
 	for _, use := range program.ViewArrayUses {
-		if demanded(use.Array) {
+		if (!use.Whole && demanded(use.Array)) || (use.Whole && wholeDemanded(use.Array)) {
 			stop(use.Where, use.Member)
 		}
 	}
@@ -537,6 +543,7 @@ func (l *lowering) checkViewArrays() error {
 			if value.Method == "values" || value.Method == "entries" {
 				for _, arg := range value.Arguments {
 					if arg.Type() == ir.Array && demanded(arg) {
+						// Only an array let through the earlier Object.values/entries refusal reaches this stop; today none is.
 						stop(program.Source, "Object."+value.Method)
 					}
 				}
@@ -557,7 +564,7 @@ func (l *lowering) checkViewArrays() error {
 				}
 			}
 		}
-		if whole && viewArrayAggregate(array) && demanded(array) {
+		if whole && wholeDemanded(array) {
 			stop(program.Source, road.member)
 			return node
 		}
@@ -665,6 +672,10 @@ func (l *lowering) checkViewArrays() error {
 
 func (l *lowering) recordViewArrayUse(node *ast.Node, array ir.Expression, member string) {
 	l.result.ViewArrayUses = append(l.result.ViewArrayUses, ir.ViewArrayUse{Array: array, Member: member, Where: l.program.Where(node)})
+}
+
+func (l *lowering) recordWholeViewArrayUse(node *ast.Node, array ir.Expression) {
+	l.result.ViewArrayUses = append(l.result.ViewArrayUses, ir.ViewArrayUse{Array: array, Member: "JSON.stringify", Where: l.program.Where(node), Whole: true})
 }
 
 // The static checker type is instantiated before this boundary, never keyed by

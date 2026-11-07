@@ -44,5 +44,7 @@ func (l *lowering) encodeJson(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	// It reads every field of the value and of what it holds by the schema, raw (view_reads.go).
 	l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: args[0], source: value, copied: l.concrete(l.checker.GetTypeAtLocation(args[0])), reader: "encodeJson"})
-	return ir.JSONEncode{Value: fit(value, schema.Nodes[schema.Root].Of), Schema: schema}, true, nil
+	encoded := ir.JSONEncode{Value: fit(value, schema.Nodes[schema.Root].Of), Schema: schema}
+	l.recordWholeViewArrayUse(node, encoded.Value)
+	return encoded, true, nil
 }

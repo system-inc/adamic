@@ -448,13 +448,33 @@ func TestViewCopyRoadsStopAtTheirRead(t *testing.T) {
 	t.Parallel()
 	const prelude = `interface Node { readonly kind: number; }
 interface Base { readonly tag: 1; }
-interface SyntaxList extends Base { readonly _children: readonly Node[]; }
-const raw = { tag: 1 as const, _children: [7] };
+interface SyntaxList extends Base { readonly _children: readonly Node[]; readonly counts: readonly number[]; }
+const raw = { tag: 1 as const, _children: [7], counts: [7] };
 const base: Base = raw;
 const view = base as SyntaxList;
 console.log('before');
 `
+	unionPrelude := strings.Replace(prelude, "interface Node { readonly kind: number; }", "interface Node { readonly kind: 1; }\ninterface Other { readonly kind: 2; }", 1)
+	unionPrelude = strings.Replace(unionPrelude, "readonly _children: readonly Node[];", "readonly _children: readonly Node[] | readonly Other[];", 1)
+	// A wider element union whose Map arm has no contract makes the annotation fail softly.
+	widenedPrelude := prelude + "const values: readonly (Node | Map<string, number>)[] = view._children;\n"
 	for _, row := range []struct{ road, line, where string }{
+		{"index", "const item = view._children[0];\n", "main.ts:9:14"},
+		{"at", "const item = values.at(0);\n", "main.ts:9:14"},
+		{"for-of", "for (const item of values) { console.log(String(item !== undefined)); }\n", "main.ts:9:1"},
+		{"map", "const copy = values.map(item => 1);\n", "main.ts:9:14"},
+		{"forEach", "values.forEach(item => console.log(String(item !== undefined)));\n", "main.ts:9:1"},
+		{"reduce", "const count = values.reduce((count, item) => count + 1, 0);\n", "main.ts:9:15"},
+		{"some", "const answer = values.some(item => true);\n", "main.ts:9:16"},
+		{"every", "const answer = values.every(item => true);\n", "main.ts:9:16"},
+		{"filter", "const copy = values.filter(item => true);\n", "main.ts:9:14"},
+		{"find", "const item = values.find(item => true);\n", "main.ts:9:14"},
+		{"findIndex", "const index = values.findIndex(item => true);\n", "main.ts:9:15"},
+		{"findLast", "const item = values.findLast(item => true);\n", "main.ts:9:14"},
+		{"findLastIndex", "const index = values.findLastIndex(item => true);\n", "main.ts:9:15"},
+		{"concat", "const empty: readonly Node[] = [];\nconst copy = empty.concat(view._children);\n", "main.ts:9:14"},
+		{"JSON.stringify", "const text = JSON.stringify(view.counts);\n", "main.ts:8:14"},
+		{"encodeJson", "import { encodeJson } from 'adamic';\nconst text = encodeJson<readonly number[]>(view.counts);\n", "main.ts:9:14"},
 		{"slice", "const copy = view._children.slice();\nconsole.log(String(copy[0]?.kind));\n", "main.ts:8:14"},
 		{"spread", "const copy = [...view._children];\nconsole.log(String(copy[0]?.kind));\n", "main.ts:8:18"},
 		{"Set constructor", "const seen = new Set(view._children);\nfor (const child of seen) {\n    console.log(String(child.kind));\n}\n", "main.ts:8:22"},
@@ -462,14 +482,35 @@ console.log('before');
 	} {
 		t.Run(row.road, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, prelude+row.line+"console.log('after');\n", ".ts")
+			source := prelude
+			switch row.road {
+			case "index":
+				source = unionPrelude
+			case "at", "for-of", "map", "forEach", "reduce", "some", "every", "filter", "find", "findIndex", "findLast", "findLastIndex":
+				source = widenedPrelude
+			}
+			_, err := lowerSourceAs(t, source+row.line+"console.log('after');\n", ".ts")
 			var notYet *NotYet
-			want := "a checked view's array read through " + row.road + " (not checked yet)"
+			member := row.road
+			if member == "at" {
+				member = "index"
+			}
+			if member == "encodeJson" {
+				member = "JSON.stringify"
+			}
+			want := "a checked view's array read through " + member + " (not checked yet)"
 			if !errors.As(err, &notYet) || notYet.What != want || !strings.HasSuffix(notYet.Where, row.where) {
 				t.Fatalf("got %v, want %q at %s", err, want, row.where)
 			}
 		})
 	}
+	t.Run("JSON.stringify unviewed", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerSourceAs(t, prelude+"const plain: number[] = [1, 2];\nconst text = JSON.stringify(plain);\n", ".ts")
+		if err != nil {
+			t.Fatalf("serializer of an unviewed array stopped: %v", err)
+		}
+	})
 }
 
 // The caller uses inferred's unwritten SyntaxList claim, not declared's Claimed claim. The

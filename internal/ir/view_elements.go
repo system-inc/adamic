@@ -33,11 +33,13 @@ type ViewElementCheck struct {
 	Unrelated bool
 }
 
-// ViewArrayUse retains an unsupported library member's source after its helper
-// lowers into smaller operations. Unknown members are never implicitly raw.
+// ViewArrayUse retains an unsupported array road's source after lowering.
+// Unknown members are never implicitly raw.
 type ViewArrayUse struct {
 	Array         Expression
 	Where, Member string
+	// Whole retains the aggregate guard of a whole-value serializer.
+	Whole bool
 }
 
 // A cast excludes only the view origins it introduces itself. An earlier or

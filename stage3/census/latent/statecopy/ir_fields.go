@@ -755,6 +755,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"ViewArrayCast.OriginEnd":            {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewArrayUse.Array":                 {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"ViewArrayUse.Where":                 {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"ViewArrayUse.Whole":                 {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewArrayUse.Member":                {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewContract.Intersection":          {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"ViewContract.IntersectionTag":       {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
