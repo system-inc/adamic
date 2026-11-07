@@ -13,6 +13,9 @@ import (
 type programMembership struct {
 	types                     ir.SortedMap[int, bool]
 	cells, functions, classes map[int]bool
+	// tops is the Program root by structure: every member type in a top owning component
+	// (program_region_roots.go), by type id.
+	tops                      map[int]bool
 	identities                []string
 	refusal                   error
 }
@@ -50,7 +53,7 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 			f.use(proven, l.localNodes[local])
 		}
 	}
-	selected := f.programRegionSelection()
+	selected, owning := f.programRegionOwningMode(true)
 	program := f.l.result
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
@@ -130,7 +133,7 @@ func (l *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.Source
 			break
 		}
 	}
-	plan := &programMembership{types: program.ProgramTypes, cells: map[int]bool{}, functions: map[int]bool{}, classes: map[int]bool{}, identities: programAllocationIdentities(program)}
+	plan := &programMembership{types: program.ProgramTypes, cells: map[int]bool{}, functions: map[int]bool{}, classes: map[int]bool{}, tops: f.programRegionTops(owning, program.ProgramTypes), identities: programAllocationIdentities(program)}
 	for node := range selected {
 		if node.proven != nil && f.l.isLibraryType(node.proven, "Promise") {
 			plan.refusal = &Refused{Where: l.result.Source, What: "a Promise whose payload reaches a Program member", Fix: "remove the captured strong back-reference or use Weak (adamic/cycle-capable)"}

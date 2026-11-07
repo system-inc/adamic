@@ -6,11 +6,23 @@ import (
 )
 
 func ProgramRegionSCC[T comparable](edges, owning map[T][]T) map[T]bool {
+	result := map[T]bool{}
+	for _, component := range ProgramRegionComponents(edges, owning) {
+		for each := range component {
+			result[each] = true
+		}
+	}
+	return result
+}
+
+// ProgramRegionComponents is ProgramRegionSCC's selection kept by strongly connected component:
+// every component that keeps an owning edge inside it.
+func ProgramRegionComponents[T comparable](edges, owning map[T][]T) []map[T]bool {
 	index, low := map[T]int{}, map[T]int{}
 	active := map[T]bool{}
 	stack := []T{}
 	next := 0
-	result := map[T]bool{}
+	result := []map[T]bool{}
 	var visit func(T)
 	visit = func(node T) {
 		next++
@@ -50,9 +62,7 @@ func ProgramRegionSCC[T comparable](edges, owning map[T][]T) map[T]bool {
 			}
 		}
 		if selected {
-			for each := range component {
-				result[each] = true
-			}
+			result = append(result, component)
 		}
 	}
 	for node := range edges {
@@ -67,6 +77,18 @@ func (f *cycleFinder) programRegionSelection() map[cycleNode]bool {
 	return f.programRegionSelectionMode(true)
 }
 func (f *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNode]bool {
+	selected, _ := f.programRegionOwningMode(indexed)
+	return selected
+}
+
+// programRegionOwning is the owning graph the selection is made from, and its selected
+// components before the container rule, which the Program root reads (program_region_roots.go).
+type programRegionOwning struct {
+	owning     map[cycleNode][]cycleNode
+	components []map[cycleNode]bool
+}
+
+func (f *cycleFinder) programRegionOwningMode(indexed bool) (map[cycleNode]bool, programRegionOwning) {
 	candidates := []cycleNode{}
 	for proven := range f.where {
 		candidates = append(candidates, cycleNode{proven: proven})
@@ -133,7 +155,13 @@ func (f *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNode]boo
 		edges[node] = links
 		queue = append(queue, links...)
 	}
-	selected := ProgramRegionSCC(edges, owning)
+	components := ProgramRegionComponents(edges, owning)
+	selected := map[cycleNode]bool{}
+	for _, component := range components {
+		for node := range component {
+			selected[node] = true
+		}
+	}
 	// Compiler's container rule is applied after SCC selection, to concrete
 	// allocation-site types after monomorphization. Views cannot admit a container
 	// whose elements/keys/values are outside the selected component.
@@ -147,7 +175,7 @@ func (f *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNode]boo
 			selected[node] = true
 		}
 	}
-	return selected
+	return selected, programRegionOwning{owning: owning, components: components}
 }
 
 func (f *cycleFinder) programContainer(proven *checker.Type) bool {
