@@ -38,6 +38,7 @@ adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_in
     double delay_ms, size_t argc, const adamic_value *arguments, const bool *references);
 /* clearTimeout called from source takes any value, as Node's does (Adamic's ruling on #b5w3ycg): a
  * Timeout, known by its shape's address and never by a field it holds, is cancelled, and anything
- * else, a primitive as NULL among them, is a no-op that doesn't throw. 0 is the discarded result. */
+ * else, a primitive as NULL among them, is a no-op that doesn't throw, but an object holding a truthy
+ * _onTimeout, which Node would unenroll, stops (#995spev). 0 is the discarded result. */
 double adamic_node_clear_timeout(const adamic_heap *value);
 #endif
