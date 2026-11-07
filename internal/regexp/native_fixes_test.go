@@ -77,14 +77,14 @@ func compareSyntaxCases(test *testing.T, cases []oracleCase) {
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	cmd := exec.CommandContext(
+	command := exec.CommandContext(
 		timeoutContext,
 		"node",
 		"-e",
 		`process.stdout.write(JSON.stringify(JSON.parse(require('fs').readFileSync(0,'utf8')).map(c=>{try{new RegExp(c.Pattern,c.Flags);return true}catch(e){if(!(e instanceof SyntaxError))throw e;return false}})))`,
 	)
-	cmd.Stdin = bytes.NewReader(input)
-	out, combinedOutputError := cmd.CombinedOutput()
+	command.Stdin = bytes.NewReader(input)
+	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("Node: %v %s", combinedOutputError, out)
 	}

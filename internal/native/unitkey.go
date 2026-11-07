@@ -161,12 +161,17 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		}
 		configs = append(configs, more...)
 	}
-	for _, config := range configs {
-		digest, fileDigestError := fileDigest(config)
+	for _, configuration := range configs {
+		digest, fileDigestError := fileDigest(configuration)
 		if fileDigestError != nil {
-			return nil, nil, fmt.Errorf("%w: reading clang's config %s: %v", errorUncachedUnit, config, fileDigestError)
+			return nil, nil, fmt.Errorf(
+				"%w: reading clang's config %s: %v",
+				errorUncachedUnit,
+				configuration,
+				fileDigestError,
+			)
 		}
-		parts = append(parts, "config "+config+" "+digest)
+		parts = append(parts, "config "+configuration+" "+digest)
 	}
 	// Every run is from inside the probe's directory, so the compilation directory the driver hands cc1 is the probe's,
 	// written <probe> below, and not wherever this process runs.

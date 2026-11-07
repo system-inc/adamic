@@ -109,29 +109,29 @@ func CommandContext(callerContext context.Context, name string, args ...string) 
 	if _, ok := callerContext.Deadline(); !ok {
 		panic("boundedrun: child deadline required")
 	}
-	cmd := exec.CommandContext(callerContext, name, args...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
+	command := exec.CommandContext(callerContext, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
 		fmt.Fprintf(
 			os.Stderr,
 			"child %s %v: deadline/cancellation expired; killing process group; descendants=%v\n",
 			name,
 			args,
-			descendantNames(cmd.Process.Pid),
+			descendantNames(command.Process.Pid),
 		)
-		return Kill(cmd)
+		return Kill(command)
 	}
 	// WaitDelay also covers a leader that exited while a descendant holds a pipe.
-	cmd.WaitDelay = time.Second
-	return &Cmd{cmd, callerContext}
+	command.WaitDelay = time.Second
+	return &Cmd{command, callerContext}
 }
 
 // Kill stops all members of the child's group, including grandchildren.
-func Kill(cmd *exec.Cmd) error {
-	if cmd.Process == nil {
+func Kill(command *exec.Cmd) error {
+	if command.Process == nil {
 		return os.ErrProcessDone
 	}
-	killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+	killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	if killError == syscall.ESRCH {
 		return os.ErrProcessDone
 	}

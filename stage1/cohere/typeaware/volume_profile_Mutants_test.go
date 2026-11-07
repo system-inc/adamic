@@ -87,7 +87,7 @@ func runVolumeProfileMutantShard(test *testing.T, shardIndex int) {
 	}
 	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	oracle := volumeProfileMutantOracle(h)
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	sources := append(volumeControls(),
 		"function first(){const value=1;}function second(){const value=2;}",
 		"const X=1;const C=class X<X>{m(){const X=2;}};",
@@ -102,7 +102,7 @@ func runVolumeProfileMutantShard(test *testing.T, shardIndex int) {
 		h.write("native-console.ts", "const detached=console.log;\nexport {};\n"),
 	)
 	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
-	truth := h.must("controls-go", exec.Command(oracle, config, manifest))
+	truth := h.must("controls-go", exec.Command(oracle, configuration, manifest))
 	test.Logf(
 		"%s (setup): %.6fs; slice coverage: %d source mutants, %d controls",
 		test.Name(),
@@ -114,7 +114,7 @@ func runVolumeProfileMutantShard(test *testing.T, shardIndex int) {
 		binary := volumeProfileMutantProduct(h, change)
 		leafStarted := time.Now()
 		shard := &harness{t: test, repository: repository, directory: test.TempDir()}
-		got := shard.must(change.name+"-run", exec.Command(binary, config, manifest))
+		got := shard.must(change.name+"-run", exec.Command(binary, configuration, manifest))
 		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
 			test.Fatalf("%s mutant survived byte oracle", change.name)
 		}

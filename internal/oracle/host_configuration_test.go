@@ -90,14 +90,14 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 				if mode == "selected" {
 					selected = stub
 				}
-				cmd := exec.Command(
+				command := exec.Command(
 					binary,
 					"-test.run=^TestHostConfigurationOracleReaders$",
 					"-test.count=1",
 					"-test.v",
 					"-test.timeout=30s",
 				)
-				cmd.Env = append(
+				command.Env = append(
 					os.Environ(),
 					"ADAMIC_HOST_CONFIGURATION_ORACLE_INPUT="+input,
 					"ADAMIC_HOST_CONFIGURATION_ORACLE_READER="+reader,
@@ -106,7 +106,7 @@ func TestHostConfigurationOracleReaders(test *testing.T) {
 				if writeError := os.WriteFile(calls, nil, 0600); writeError != nil {
 					test.Fatal(writeError)
 				}
-				out, combinedOutputError := cmd.CombinedOutput()
+				out, combinedOutputError := command.CombinedOutput()
 				test.Logf("%s", out)
 				if mode == "unset" || mode == "selected" {
 					for _, backend := range []string{"native"} {

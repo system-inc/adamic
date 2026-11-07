@@ -159,7 +159,7 @@ func versionQuery(call *ast.CallExpr) bool {
 	if !ok || selector.Sel.Name != "Tool" || len(call.Args) != 2 {
 		return false
 	}
-	if pkg, ok := selector.X.(*ast.Ident); !ok || pkg.Name != "buildcache" {
+	if ident, ok := selector.X.(*ast.Ident); !ok || ident.Name != "buildcache" {
 		return false
 	}
 	flag, ok := call.Args[1].(*ast.BasicLit)

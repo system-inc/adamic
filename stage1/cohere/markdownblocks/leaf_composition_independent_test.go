@@ -82,7 +82,7 @@ func leafCompositionFixtureFor(test *testing.T) *leafCompositionFixture {
 		products.sanitized = leafCompositionNative(test, products.source, true)
 		products.release = leafCompositionNative(test, products.source, false)
 		fixture := &leafCompositionFixture{layoutFixture: &layoutFixture{inputs: all}}
-		mutantDir, temporaryDirectoryError := os.MkdirTemp(artifactDirectory, "leaf-composition-mutants-")
+		mutantDirectory, temporaryDirectoryError := os.MkdirTemp(artifactDirectory, "leaf-composition-mutants-")
 		if temporaryDirectoryError != nil {
 			test.Fatal(temporaryDirectoryError)
 		}
@@ -92,16 +92,16 @@ func leafCompositionFixtureFor(test *testing.T) *leafCompositionFixture {
 				test.Fatal(encodeError)
 			}
 		}
-		cases := filepath.Join(mutantDir, "cases.jsonl")
+		cases := filepath.Join(mutantDirectory, "cases.jsonl")
 		write(test, cases, batch.Bytes())
-		mutantCases := filepath.Join(mutantDir, "native.txt")
+		mutantCases := filepath.Join(mutantDirectory, "native.txt")
 		want := leafCompositionExecute(
 			test,
 			nil,
 			products.goList,
 			cases,
 			mutantCases,
-			filepath.Join(mutantDir, "canonical.txt"),
+			filepath.Join(mutantDirectory, "canonical.txt"),
 		)
 		clean(test, "full Go mutant fixtures", want)
 		fixture.mutantInputs, fixture.mutantWant, fixture.mutantNativeCases, fixture.main = all, want.stdout, mutantCases, products.main

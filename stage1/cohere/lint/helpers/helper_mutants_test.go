@@ -176,10 +176,10 @@ func runHelperMutant(test *testing.T, index int) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	execute := func(binary string, args ...string) []byte {
-		cmd := exec.CommandContext(timeoutContext, binary, args...)
+		command := exec.CommandContext(timeoutContext, binary, args...)
 		var stderr bytes.Buffer
-		cmd.Stderr = &stderr
-		output, outputError := cmd.Output()
+		command.Stderr = &stderr
+		output, outputError := command.Output()
 		if outputError != nil || stderr.Len() != 0 {
 			test.Fatalf("%s: %v stderr %s", binary, outputError, &stderr)
 		}
@@ -272,14 +272,14 @@ func TestHelperMutantsPlantedFailure(test *testing.T) {
 	for index := 0; index < helperMutantShards; index++ {
 		name := fmt.Sprintf("TestHelperMutants_%03d", index)
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		cmd := exec.CommandContext(timeoutContext, binary, "-test.run=^"+name+"$", "-test.timeout=9s", "-test.v")
+		command := exec.CommandContext(timeoutContext, binary, "-test.run=^"+name+"$", "-test.timeout=9s", "-test.v")
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_HELPER_MUTANT_PROBE=") {
-				cmd.Env = append(cmd.Env, value)
+				command.Env = append(command.Env, value)
 			}
 		}
-		cmd.Env = append(cmd.Env, "ADAMIC_HELPER_MUTANT_PROBE="+strconv.Itoa(index))
-		output, combinedOutputError := cmd.CombinedOutput()
+		command.Env = append(command.Env, "ADAMIC_HELPER_MUTANT_PROBE="+strconv.Itoa(index))
+		output, combinedOutputError := command.CombinedOutput()
 		cancel()
 		if combinedOutputError == nil ||
 			!bytes.Contains(output, []byte("compiled mutant survived")) ||

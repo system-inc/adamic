@@ -99,11 +99,11 @@ func TestVisitorsCollectContinueAndSkipDiagnosedBodies(test *testing.T) {
 	if createError != nil {
 		test.Fatal(createError)
 	}
-	cmd := exec.Command(probe, "-test.count=1")
-	cmd.Dir = filepath.Dir(probe)
-	cmd.Stdout = log
-	cmd.Stderr = log
-	runError := cmd.Run()
+	command := exec.Command(probe, "-test.count=1")
+	command.Dir = filepath.Dir(probe)
+	command.Stdout = log
+	command.Stderr = log
+	runError := command.Run()
 	_ = log.Close()
 	if runError != nil {
 		contents, _ := os.ReadFile(log.Name())

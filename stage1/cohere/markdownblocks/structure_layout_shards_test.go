@@ -232,7 +232,7 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 	for _, source := range sources {
 		files = append(files, "stage1/cohere/markdownblocks/"+source)
 	}
-	lowerDir := buildcache.Product(test, buildcache.Inputs{
+	lowerDirectory := buildcache.Product(test, buildcache.Inputs{
 		Name:      "markdown-structure-lowered",
 		Files:     files,
 		Flags:     []string{main},
@@ -251,11 +251,11 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+	source, readError := os.ReadFile(filepath.Join(lowerDirectory, "program.c"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	p.javascript, readError = os.ReadFile(filepath.Join(lowerDir, "program.mjs"))
+	p.javascript, readError = os.ReadFile(filepath.Join(lowerDirectory, "program.mjs"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -273,7 +273,7 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 			fmt.Sprintf("source=%x", sha256.Sum256(source)),
 			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
 		)
-		nativeDir := buildcache.Product(test, buildcache.Inputs{
+		nativeDirectory := buildcache.Product(test, buildcache.Inputs{
 			Name:      "markdown-structure-native-modes",
 			Files:     files,
 			Flags:     flags,
@@ -297,8 +297,8 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 			_, resultError := release.result()
 			return resultError
 		})
-		p.sanitized = filepath.Join(nativeDir, "sanitized")
-		p.release = filepath.Join(nativeDir, "release")
+		p.sanitized = filepath.Join(nativeDirectory, "sanitized")
+		p.release = filepath.Join(nativeDirectory, "release")
 	}
 	if target == "native" {
 		return p

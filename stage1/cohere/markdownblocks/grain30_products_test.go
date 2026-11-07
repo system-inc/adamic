@@ -94,7 +94,7 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 	}
 	// Keyed by what lowering reads, the package's and markdowninline's TypeScript, the checker and the compiler, as
 	// the pilot families' lowering is; the whole package directory would rebuild every grain port on any test edit.
-	lowerDir := buildcache.Product(test, buildcache.Inputs{
+	lowerDirectory := buildcache.Product(test, buildcache.Inputs{
 		Name:      "markdown-grain-" + name + "-lowered",
 		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: goTools,
@@ -112,11 +112,11 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	p.backend = filepath.Join(lowerDir, "program.mjs")
+	p.backend = filepath.Join(lowerDirectory, "program.mjs")
 	if target == "lowered" {
 		return p
 	}
-	source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+	source, readError := os.ReadFile(filepath.Join(lowerDirectory, "program.c"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -178,17 +178,17 @@ func grainCommand(test *testing.T, name string, args ...string) (*exec.Cmd, cont
 // output cut short.
 func grainExecute(test *testing.T, env []string, name string, args ...string) run {
 	test.Helper()
-	cmd, ctx := grainCommand(test, name, args...)
+	command, ctx := grainCommand(test, name, args...)
 	if env != nil {
-		cmd.Env = append(os.Environ(), env...)
+		command.Env = append(os.Environ(), env...)
 	}
-	defer textActiveCommands.Delete(cmd)
-	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+	defer textActiveCommands.Delete(command)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exitError) {
 		test.Fatal(captureError)
 	}
-	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 func grainNode(test *testing.T, main string, args ...string) run {
 	test.Helper()
@@ -374,9 +374,9 @@ func grainGenerator(test *testing.T, name string) string {
 	return grainTool(test, name)
 }
 func grainRegenerate(test *testing.T, name, generator, formatter string) {
-	cmd, ctx := grainCommand(test, generator, "-check", "-formatter", formatter)
-	cmd.Dir = markdownLayoutProductRoot(test)
-	if output, textCombinedOutputError := textCombinedOutput(ctx, cmd); textCombinedOutputError != nil {
+	command, ctx := grainCommand(test, generator, "-check", "-formatter", formatter)
+	command.Dir = markdownLayoutProductRoot(test)
+	if output, textCombinedOutputError := textCombinedOutput(ctx, command); textCombinedOutputError != nil {
 		test.Fatalf("%s regeneration: %v\n%s", name, textCombinedOutputError, output)
 	}
 }

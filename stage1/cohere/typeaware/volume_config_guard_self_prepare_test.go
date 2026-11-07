@@ -181,11 +181,11 @@ func runVolumeConfigGuardShard(test *testing.T, shard int) {
 	if shard == 0 {
 		source := h.write("this.ts", "function f(){const x=this.m;const y:number=this;return x;} export {};\n")
 		manifest := h.write("this.manifest", source+"\n")
-		config := h.write(
+		configuration := h.write(
 			"tsconfig.json",
 			`{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`,
 		)
-		observed := volumeGuardRun(h, "nonstrict-this", exec.Command(binary, config, manifest))
+		observed := volumeGuardRun(h, "nonstrict-this", exec.Command(binary, configuration, manifest))
 		message := []byte(
 			"adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n",
 		)
@@ -195,12 +195,12 @@ func runVolumeConfigGuardShard(test *testing.T, shard int) {
 			len(observed.stdout) != 0 {
 			test.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
 		}
-		observed = volumeGuardMust(h, "strict-this-run", exec.Command(mutant, config, manifest))
+		observed = volumeGuardMust(h, "strict-this-run", exec.Command(mutant, configuration, manifest))
 		if len(observed.stderr) != 0 || !bytes.Contains(observed.stdout, []byte("findings ")) {
 			test.Fatal("strict-this mutant did not finish normally")
 		}
 		test.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
-		truth := volumeGuardMust(h, "nonstrict-go", exec.Command(oracle, config, manifest))
+		truth := volumeGuardMust(h, "nonstrict-go", exec.Command(oracle, configuration, manifest))
 		if bytes.Equal(observed.stdout, truth.stdout) {
 			test.Fatal("implicit-this input did not distinguish the production message variants")
 		}
@@ -208,11 +208,11 @@ func runVolumeConfigGuardShard(test *testing.T, shard int) {
 			"implicit-this mutant also differs from independent Go at byte %d",
 			firstDifference(observed.stdout, truth.stdout),
 		)
-		config = h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
-		volumeGuardCompare(h, "strict-this-control", oracle, asan, config, manifest)
+		configuration = h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
+		volumeGuardCompare(h, "strict-this-control", oracle, asan, configuration, manifest)
 
 	}
-	config := h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
+	configuration := h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
 	var paths []string
 	for _, c := range buckets[shard] {
 		if c.key == "strict-this-guard" {
@@ -232,7 +232,7 @@ func runVolumeConfigGuardShard(test *testing.T, shard int) {
 			"edge-controls-asan",
 			oracle,
 			asan,
-			config,
+			configuration,
 			h.write("controls.manifest", strings.Join(paths, "\n")+"\n"),
 		)
 		for _, c := range buckets[shard] {
@@ -265,16 +265,16 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 	switch name {
 	case "stage0":
 		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
-			cmd, cancel := volumeGuardCommand(h.ctx, "go", append(
+			command, cancel := volumeGuardCommand(h.ctx, "go", append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-o",
 				filepath.Join(directory, "adamic"),
 				"./cmd/adamic",
 			)...)
 			defer cancel()
-			cmd.Dir = h.repository
-			cmd.Env = append(cmd.Env, "PWD="+h.repository)
-			output, volumeGuardOutputError := volumeGuardOutput(cmd)
+			command.Dir = h.repository
+			command.Env = append(command.Env, "PWD="+h.repository)
+			output, volumeGuardOutputError := volumeGuardOutput(command)
 			if volumeGuardOutputError != nil {
 				return fmt.Errorf("stage0: %w: %s", volumeGuardOutputError, output)
 			}
@@ -344,10 +344,10 @@ func volumeGuardMutantProductsFor(test *testing.T, products volumeGuardProducts)
 
 // The planted disagreement exercises the same exact byte comparison as every oracle check.
 func volumeGuardFindingBytesEqual(got, want []byte) bool { return bytes.Equal(got, want) }
-func volumeGuardCompare(h *volumeGuardHarness, name, oracle, binary, config, manifest string) result {
+func volumeGuardCompare(h *volumeGuardHarness, name, oracle, binary, configuration, manifest string) result {
 	h.t.Helper()
-	want := volumeGuardMust(h, name+"-go", exec.Command(oracle, config, manifest))
-	got := volumeGuardMust(h, name+"-native", exec.Command(binary, config, manifest))
+	want := volumeGuardMust(h, name+"-go", exec.Command(oracle, configuration, manifest))
+	got := volumeGuardMust(h, name+"-native", exec.Command(binary, configuration, manifest))
 	if len(got.stderr) != 0 {
 		h.t.Fatalf("sanitizer stderr: %s", got.stderr)
 	}
@@ -426,19 +426,19 @@ func TestVolumeConfigGuardAndMutant_015(test *testing.T) {
 // Bound both the driver and compilers it launches without an external deadline tool.
 func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
 	cancelContext, cancel := context.WithCancel(parent)
-	cmd := exec.CommandContext(cancelContext, name, args...)
+	command := exec.CommandContext(cancelContext, name, args...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
 	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
 		tool := toolchain.Command(name, args...)
-		cmd.Path, cmd.Err, cmd.Env = tool.Path, tool.Err, tool.Env
+		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
 	}
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
-		if cmd.Process == nil {
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if killError == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
@@ -449,20 +449,20 @@ func volumeGuardCommand(parent context.Context, name string, args ...string) (*e
 	// which has no Started: volumeGuardUnitContext's cook kills the groups volumeGuardExecute registers before it exits
 	// the process, and a group it couldn't register would outlive the exit. go waits for the compilers it starts before
 	// it exits, so nothing holds a pipe after it, and the cook or the unit's ceiling ends a wait on one that did.
-	return cmd, cancel
+	return command, cancel
 }
 func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) result {
 	h.t.Helper()
-	cmd, cancel := volumeGuardCommand(h.ctx, original.Path, original.Args[1:]...)
+	command, cancel := volumeGuardCommand(h.ctx, original.Path, original.Args[1:]...)
 	defer cancel()
-	cmd.Dir, cmd.Env, cmd.Stdin = original.Dir, original.Env, original.Stdin
+	command.Dir, command.Env, command.Stdin = original.Dir, original.Env, original.Stdin
 	h.next++
-	if cmd.Dir == "" {
-		cmd.Dir = h.repository
+	if command.Dir == "" {
+		command.Dir = h.repository
 	}
-	if cmd.Env != nil {
+	if command.Env != nil {
 		// exec.Cmd sets PWD only for a command with no Env of its own; toolchain's have one.
-		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
+		command.Env = append(command.Env, "PWD="+command.Dir)
 	}
 	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
 	out, createError := os.Create(stem + ".stdout")
@@ -475,9 +475,9 @@ func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) resu
 		h.t.Fatal(createError)
 	}
 	defer report.Close()
-	cmd.Stdout, cmd.Stderr = out, report
+	command.Stdout, command.Stderr = out, report
 	started := time.Now()
-	runError := volumeGuardExecute(cmd)
+	runError := volumeGuardExecute(command)
 	elapsed := time.Since(started)
 	stdout, readError := os.ReadFile(out.Name())
 	if readError != nil {
@@ -493,9 +493,9 @@ func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) resu
 	}
 	return observed
 }
-func volumeGuardMust(h *volumeGuardHarness, name string, cmd *exec.Cmd) result {
+func volumeGuardMust(h *volumeGuardHarness, name string, command *exec.Cmd) result {
 	h.t.Helper()
-	observed := volumeGuardRun(h, name, cmd)
+	observed := volumeGuardRun(h, name, command)
 	if observed.err != nil {
 		h.t.Fatalf("%s: %v\n%s\n%s", name, observed.err, observed.stdout, observed.stderr)
 	}
@@ -504,18 +504,18 @@ func volumeGuardMust(h *volumeGuardHarness, name string, cmd *exec.Cmd) result {
 
 var volumeGuardCommandGroups sync.Map
 
-func volumeGuardExecute(cmd *exec.Cmd) error {
-	if startError := cmd.Start(); startError != nil {
+func volumeGuardExecute(command *exec.Cmd) error {
+	if startError := command.Start(); startError != nil {
 		return startError
 	}
-	volumeGuardCommandGroups.Store(cmd.Process.Pid, struct{}{})
-	defer volumeGuardCommandGroups.Delete(cmd.Process.Pid)
-	return cmd.Wait()
+	volumeGuardCommandGroups.Store(command.Process.Pid, struct{}{})
+	defer volumeGuardCommandGroups.Delete(command.Process.Pid)
+	return command.Wait()
 }
-func volumeGuardOutput(cmd *exec.Cmd) ([]byte, error) {
+func volumeGuardOutput(command *exec.Cmd) ([]byte, error) {
 	var output bytes.Buffer
-	cmd.Stdout, cmd.Stderr = &output, &output
-	volumeGuardExecuteError := volumeGuardExecute(cmd)
+	command.Stdout, command.Stderr = &output, &output
+	volumeGuardExecuteError := volumeGuardExecute(command)
 	return output.Bytes(), volumeGuardExecuteError
 }
 

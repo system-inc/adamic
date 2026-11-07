@@ -177,10 +177,10 @@ func TestHostConfigurationResolversAgree(test *testing.T) {
 			`const {nodeFor}=require('./configuration.cjs');const fs=require('fs');console.log(nodeFor(JSON.parse(fs.readFileSync(0))[0],1));`,
 		}},
 	} {
-		cmd := exec.Command(script.program, script.arguments...)
-		cmd.Stdin = bytes.NewReader(data)
-		cmd.Env = append(os.Environ(), switchName+"=")
-		out, combinedOutputError := cmd.CombinedOutput()
+		command := exec.Command(script.program, script.arguments...)
+		command.Stdin = bytes.NewReader(data)
+		command.Env = append(os.Environ(), switchName+"=")
+		out, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil ||
 			!strings.Contains(string(out), "SKIP: row 1 needs node-without-inspector; set "+switchName) {
 			test.Fatalf("%s: %v %s", script.program, combinedOutputError, out)
@@ -196,7 +196,7 @@ func TestHostConfigurationScriptReaders(test *testing.T) {
 		test.Run(command[0], func(test *testing.T) {
 			timeoutContext, cancel := context.WithTimeout(test.Context(), 20*time.Second)
 			defer cancel()
-			cmd := exec.CommandContext(timeoutContext, command[0], command[1:]...)
+			osCommand := exec.CommandContext(timeoutContext, command[0], command[1:]...)
 			if command[0] == "node" {
 				// setup.sh pins tsc and its adjacent API; no npm install lives in a runner's tree.
 				tsc, lookPathError := exec.LookPath("tsc")
@@ -208,9 +208,9 @@ func TestHostConfigurationScriptReaders(test *testing.T) {
 					test.Fatal(resolveSymlinksError)
 				}
 				api := filepath.Join(filepath.Dir(tsc), "../lib/typescript.js")
-				cmd.Env = append(os.Environ(), "CENSUS_TYPESCRIPT="+api)
+				osCommand.Env = append(os.Environ(), "CENSUS_TYPESCRIPT="+api)
 			}
-			out, combinedOutputError := cmd.CombinedOutput()
+			out, combinedOutputError := osCommand.CombinedOutput()
 			if combinedOutputError != nil {
 				test.Fatalf("reader proofs: %v\n%s", combinedOutputError, out)
 			}
@@ -239,13 +239,13 @@ func TestHostConfigurationRejectsStockNode(test *testing.T) {
 	if lookPathError != nil {
 		test.Fatal(lookPathError)
 	}
-	cfg := &Configuration{
+	configuration := &Configuration{
 		Name:      "node-without-inspector",
 		Node:      "v24.19.0",
 		Configure: "--without-inspector",
 		Ruling:    "#cn4yapb",
 	}
-	_, _, resolveError := Resolve(1, cfg, func(string) string { return node })
+	_, _, resolveError := Resolve(1, configuration, func(string) string { return node })
 	if resolveError == nil ||
 		!strings.Contains(resolveError.Error(), node) ||
 		!strings.Contains(resolveError.Error(), "v24.19.0 true") ||
@@ -257,7 +257,7 @@ func TestHostConfigurationRejectsStockNode(test *testing.T) {
 
 func TestHostConfigurationProbeIsCached(test *testing.T) {
 	test.Parallel()
-	cfg := &Configuration{
+	configuration := &Configuration{
 		Name:      "node-without-inspector",
 		Node:      "v24.19.0",
 		Configure: "--without-inspector",
@@ -270,7 +270,7 @@ func TestHostConfigurationProbeIsCached(test *testing.T) {
 		text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
 		writeExecutable(test, binary, text)
 		for i := 0; i < 2; i++ {
-			_, _, resolveError := Resolve(i+1, cfg, func(string) string { return binary })
+			_, _, resolveError := Resolve(i+1, configuration, func(string) string { return binary })
 			if (resolveError == nil) != (line == "v24.19.0 false") {
 				test.Fatal(resolveError)
 			}
@@ -327,10 +327,10 @@ for i in range(2):
 					text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
 					writeExecutable(test, selected, text)
 				}
-				cmd := exec.Command(script.binary, script.args...)
-				cmd.Stdin = bytes.NewReader(data)
-				cmd.Env = append(os.Environ(), switchName+"="+selected, "PROBE_TEST_MODE="+mode)
-				out, combinedOutputError := cmd.CombinedOutput()
+				command := exec.Command(script.binary, script.args...)
+				command.Stdin = bytes.NewReader(data)
+				command.Env = append(os.Environ(), switchName+"="+selected, "PROBE_TEST_MODE="+mode)
+				out, combinedOutputError := command.CombinedOutput()
 				if mode == "stock" {
 					if combinedOutputError == nil ||
 						!strings.Contains(string(out), "v24.19.0 true") ||

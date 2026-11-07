@@ -127,7 +127,7 @@ func unusedImports(test *testing.T, source []byte) []string {
 		test.Fatal(parseFileError)
 	}
 	var unused []string
-	config := types.Config{
+	configuration := types.Config{
 		Importer: stubImporter{},
 		Error: func(typeCheckError error) {
 			if strings.Contains(typeCheckError.Error(), "imported and not used") {
@@ -135,7 +135,7 @@ func unusedImports(test *testing.T, source []byte) []string {
 			}
 		},
 	}
-	_, _ = config.Check("fixture", fs, []*ast.File{file}, nil)
+	_, _ = configuration.Check("fixture", fs, []*ast.File{file}, nil)
 	return unused
 }
 
@@ -143,7 +143,7 @@ type stubImporter struct{}
 
 func (stubImporter) Import(path string) (*types.Package, error) {
 	name := path[strings.LastIndex(path, "/")+1:]
-	pkg := types.NewPackage(path, name)
-	pkg.MarkComplete()
-	return pkg, nil
+	goPackage := types.NewPackage(path, name)
+	goPackage.MarkComplete()
+	return goPackage, nil
 }

@@ -272,16 +272,16 @@ type packageEvidence struct {
 	Invocations                           []invocation
 }
 
-func checkpointKey(s resumeState, pkg string, patterns []string) string {
+func checkpointKey(s resumeState, packagePath string, patterns []string) string {
 	return digestJSON(struct {
 		State    resumeState
 		Package  string
 		Patterns []string
 		Flags    []string
-	}{s, pkg, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
+	}{s, packagePath, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
 }
-func testArgs(pkg, pattern string) []string {
-	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, pkg}
+func testArgs(packagePath, pattern string) []string {
+	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, packagePath}
 }
 func appendFile(out io.Writer, path string) error {
 	f, openError := os.Open(path)
@@ -297,8 +297,8 @@ func atomicJSON(path string, v any) error {
 	if err != nil {
 		return err
 	}
-	tmp := f.Name()
-	defer os.Remove(tmp)
+	temporary := f.Name()
+	defer os.Remove(temporary)
 	err = writeJSON(f, v)
 	if err == nil {
 		err = f.Sync()
@@ -307,7 +307,7 @@ func atomicJSON(path string, v any) error {
 	if err != nil {
 		return err
 	}
-	if renameError := os.Rename(tmp, path); renameError != nil {
+	if renameError := os.Rename(temporary, path); renameError != nil {
 		return renameError
 	}
 	d, err := os.Open(filepath.Dir(path))
@@ -317,7 +317,7 @@ func atomicJSON(path string, v any) error {
 	defer d.Close()
 	return d.Sync()
 }
-func completePackage(dir string, e packageEvidence, p plan, index int, pkg string) error {
+func completePackage(dir string, e packageEvidence, p plan, index int, packagePath string) error {
 	results, lines, _, readLogError := readLog(filepath.Join(dir, "test.jsonl"))
 	if readLogError != nil {
 		return readLogError
@@ -328,7 +328,7 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 	}
 	units := []unit{}
 	for _, u := range p.Units {
-		if u.Package == pkg && u.Shard == index {
+		if u.Package == packagePath && u.Shard == index {
 			units = append(units, u)
 		}
 	}
@@ -337,7 +337,9 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 		return errors.New("package invocation count differs")
 	}
 	for i, call := range e.Invocations {
-		if call.Package != pkg || !call.Uncached || !reflect.DeepEqual(call.Args, testArgs(pkg, selectors[i])) {
+		if call.Package != packagePath ||
+			!call.Uncached ||
+			!reflect.DeepEqual(call.Args, testArgs(packagePath, selectors[i])) {
 			return errors.New("package invocation inputs differ")
 		}
 	}
@@ -355,7 +357,7 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 		starts[r.key()]++
 	}
 	for _, r := range results {
-		if r.Package != pkg {
+		if r.Package != packagePath {
 			problems = append(problems, "foreign package in checkpoint")
 		}
 		if r.Test == "" {
@@ -388,7 +390,7 @@ func completePackage(dir string, e packageEvidence, p plan, index int, pkg strin
 	}
 	return nil
 }
-func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidence, bool, error) {
+func loadPackage(dir, key string, p plan, index int, packagePath string) (packageEvidence, bool, error) {
 	var e packageEvidence
 	path := filepath.Join(dir, "complete.json")
 	if _, statError := os.Stat(path); os.IsNotExist(statError) {
@@ -399,7 +401,7 @@ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidenc
 	if loadJsonError := loadJSON(path, &e); loadJsonError != nil {
 		return e, false, loadJsonError
 	}
-	if e.Key != key || e.Package != pkg {
+	if e.Key != key || e.Package != packagePath {
 		return e, false, errors.New("package resume key differs")
 	}
 	log, fileDigestError := fileDigest(filepath.Join(dir, "test.jsonl"))
@@ -413,7 +415,7 @@ func loadPackage(dir, key string, p plan, index int, pkg string) (packageEvidenc
 	if log != e.LogDigest || stderr != e.StderrDigest {
 		return e, false, errors.New("package checkpoint checksum differs")
 	}
-	if completePackageError := completePackage(dir, e, p, index, pkg); completePackageError != nil {
+	if completePackageError := completePackage(dir, e, p, index, packagePath); completePackageError != nil {
 		return e, false, completePackageError
 	}
 	return e, true, nil
@@ -436,31 +438,36 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 		}
 	}
 	packages := []string{}
-	for pkg := range byPackage {
-		packages = append(packages, pkg)
+	for packagePath := range byPackage {
+		packages = append(packages, packagePath)
 	}
 	sort.Strings(packages)
 	h := sha256.New()
 	var calls []invocation
 	var problems []string
-	for _, pkg := range packages {
-		packageDir := filepath.Join(dir, "packages", shortHash(pkg))
+	for _, packagePath := range packages {
+		packageDirectory := filepath.Join(dir, "packages", shortHash(packagePath))
 		e, found, loadPackageError := loadPackage(
-			packageDir,
-			checkpointKey(state, pkg, patterns(byPackage[pkg])),
+			packageDirectory,
+			checkpointKey(state, packagePath, patterns(byPackage[packagePath])),
 			p,
 			s.Index,
-			pkg,
+			packagePath,
 		)
 		if loadPackageError != nil || !found {
 			problems = append(
 				problems,
-				fmt.Sprintf("shard %d package %s has no valid complete log: %v", s.Index, pkg, loadPackageError),
+				fmt.Sprintf(
+					"shard %d package %s has no valid complete log: %v",
+					s.Index,
+					packagePath,
+					loadPackageError,
+				),
 			)
 			continue
 		}
 		calls = append(calls, e.Invocations...)
-		if appendFileError := appendFile(h, filepath.Join(packageDir, "test.jsonl")); appendFileError != nil {
+		if appendFileError := appendFile(h, filepath.Join(packageDirectory, "test.jsonl")); appendFileError != nil {
 			problems = append(problems, appendFileError.Error())
 		}
 	}

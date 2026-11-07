@@ -384,12 +384,12 @@ func buildBridgeProduct(test testing.TB, repository, directory, name string) err
 	// A tool named bare (go, clang) is toolchain's program, under toolchain's environment; stage 0, named by its
 	// path, runs as itself.
 	command := func(tool string, arguments ...string) *exec.Cmd {
-		cmd := exec.CommandContext(ctx, tool, arguments...)
+		command := exec.CommandContext(ctx, tool, arguments...)
 		if !strings.ContainsRune(tool, filepath.Separator) {
 			resolved := toolchain.Command(tool, arguments...)
-			cmd.Path, cmd.Err, cmd.Env = resolved.Path, resolved.Err, resolved.Env
+			command.Path, command.Err, command.Env = resolved.Path, resolved.Err, resolved.Env
 		}
-		return cmd
+		return command
 	}
 	if strings.HasSuffix(name, ".a") {
 		arguments := append(
@@ -429,24 +429,24 @@ func buildBridgeProduct(test testing.TB, repository, directory, name string) err
 		} else if name != "tsgo.a" && name != "tsgo-asan.a" {
 			return fmt.Errorf("unknown archive: %s", name)
 		}
-		cmd := command("go", append(arguments, "./bridge/tsgo/archive")...)
+		osCommand := command("go", append(arguments, "./bridge/tsgo/archive")...)
 		if name == "tsgo-asan.a" {
-			cmd.Env = append(
-				cmd.Env,
+			osCommand.Env = append(
+				osCommand.Env,
 				"CC=clang",
 				"CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
 			)
 		}
-		return run(cmd)
+		return run(osCommand)
 	}
 	if name == "stage0" || name == "oracle" {
-		pkg := "./cmd/adamic"
+		packagePath := "./cmd/adamic"
 		if name == "oracle" {
-			pkg = "./bridge/tsgo/oracle"
+			packagePath = "./bridge/tsgo/oracle"
 		}
 		return run(command(
 			"go",
-			append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", destination, pkg)...,
+			append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", destination, packagePath)...,
 		))
 	}
 	if name == "region-stage0" || name == "linkage.test" {

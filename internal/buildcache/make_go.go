@@ -169,8 +169,8 @@ func goExports(root string, packages []string, listingName, directory string, di
 // go/importer asks for a plain path.
 func directPackages(root, real string, packages []string, output []byte) (func(string) bool, error) {
 	named := map[string]bool{}
-	for _, pkg := range packages {
-		named[filepath.ToSlash(filepath.Clean(pkg))] = true
+	for _, packagePath := range packages {
+		named[filepath.ToSlash(filepath.Clean(packagePath))] = true
 	}
 	kept := map[string]bool{}
 	decoder := json.NewDecoder(strings.NewReader(string(output)))

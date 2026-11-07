@@ -194,19 +194,19 @@ func credit(source []byte, declarations []string) (map[int]bool, error) {
 	}
 	return marks, nil
 }
-func blob(root, ref, name string) ([]byte, error) { return git(root, "show", ref+":"+name) }
-func measure(root, ref string, cache map[string]*inventory) (*report, error) {
-	commit, err := git(root, "rev-parse", ref+"^{commit}")
+func blob(root, reference, name string) ([]byte, error) { return git(root, "show", reference+":"+name) }
+func measure(root, reference string, cache map[string]*inventory) (*report, error) {
+	commit, err := git(root, "rev-parse", reference+"^{commit}")
 	if err != nil {
 		return nil, err
 	}
-	link, err := git(root, "ls-tree", ref, "--", "cohere")
+	link, err := git(root, "ls-tree", reference, "--", "cohere")
 	if err != nil {
 		return nil, err
 	}
 	fields := strings.Fields(string(link))
 	if len(fields) != 4 || fields[1] != "commit" {
-		return nil, fmt.Errorf("%s has no cohere gitlink", ref)
+		return nil, fmt.Errorf("%s has no cohere gitlink", reference)
 	}
 	pin := fields[2]
 	inv := cache[pin]
@@ -217,7 +217,7 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
 		}
 		cache[pin] = inv
 	}
-	tree, err := git(root, "ls-tree", "-r", "--name-only", ref, "--", "stage1")
+	tree, err := git(root, "ls-tree", "-r", "--name-only", reference, "--", "stage1")
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,13 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
 			}
 		}
 	}
-	result := &report{Ref: ref, Commit: strings.TrimSpace(string(commit)), Cohere: pin, marks: map[string]map[int]bool{}, partial: map[string]bool{}}
+	result := &report{
+		Ref:     reference,
+		Commit:  strings.TrimSpace(string(commit)),
+		Cohere:  pin,
+		marks:   map[string]map[int]bool{},
+		partial: map[string]bool{},
+	}
 	evidence := map[string][]string{}
 	known := map[string]bool{}
 	for _, spec := range slices {
@@ -241,7 +247,7 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
 			continue
 		}
 		directory := "stage1/cohere/" + spec.Directory
-		gaps, err := blob(root, ref, directory+"/GAPS.md")
+		gaps, err := blob(root, reference, directory+"/GAPS.md")
 		if err != nil {
 			return nil, fmt.Errorf("slice %s needs GAPS.md: %w", directory, err)
 		}
@@ -255,30 +261,30 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
 			active = false
 		}
 		result.Slices = append(result.Slices, sliceRow{directory, active, spec.Note, firstParagraph(string(gaps))})
-		for _, pkg := range spec.Packages {
-			if _, ok := inv.packages[pkg]; !ok {
-				return nil, fmt.Errorf("mapped package %s absent", pkg)
+		for _, packagePath := range spec.Packages {
+			if _, ok := inv.packages[packagePath]; !ok {
+				return nil, fmt.Errorf("mapped package %s absent", packagePath)
 			}
-			evidence[pkg] = appendUnique(evidence[pkg], directory+"/GAPS.md")
+			evidence[packagePath] = appendUnique(evidence[packagePath], directory+"/GAPS.md")
 			if !active {
-				result.partial[pkg] = true
+				result.partial[packagePath] = true
 			}
 		}
 		for _, item := range spec.Coverage {
-			pkg := path.Dir(item.File)
-			if _, ok := inv.packages[pkg]; !ok {
-				return nil, fmt.Errorf("mapped package %s absent", pkg)
+			packagePath := path.Dir(item.File)
+			if _, ok := inv.packages[packagePath]; !ok {
+				return nil, fmt.Errorf("mapped package %s absent", packagePath)
 			}
-			evidence[pkg] = appendUnique(evidence[pkg], directory+"/GAPS.md")
+			evidence[packagePath] = appendUnique(evidence[packagePath], directory+"/GAPS.md")
 			if !active {
-				result.partial[pkg] = true
+				result.partial[packagePath] = true
 			}
 		}
 		if !active {
 			continue
 		}
-		for _, pkg := range spec.Partial {
-			result.partial[pkg] = true
+		for _, packagePath := range spec.Partial {
+			result.partial[packagePath] = true
 		}
 		for _, item := range spec.Coverage {
 			source, ok := inv.sources[item.File]
@@ -295,36 +301,42 @@ func measure(root, ref string, cache map[string]*inventory) (*report, error) {
 			for line := range marks {
 				result.marks[item.File][line] = true
 			}
-			pkg := path.Dir(item.File)
-			evidence[pkg] = appendUnique(evidence[pkg], directory+"/GAPS.md")
+			packagePath := path.Dir(item.File)
+			evidence[packagePath] = appendUnique(evidence[packagePath], directory+"/GAPS.md")
 		}
 	}
 	for directory := range directories {
 		if !known[directory] {
-			return nil, fmt.Errorf("unmapped stage1/cohere/%s: add reviewed source coverage before reporting", directory)
+			return nil, fmt.Errorf(
+				"unmapped stage1/cohere/%s: add reviewed source coverage before reporting",
+				directory,
+			)
 		}
 	}
 	for _, name := range []string{"scanner", "parser"} {
 		directory := "stage1/typescript/" + name
 		if present[directory+"/GAPS.md"] {
-			gaps, err := blob(root, ref, directory+"/GAPS.md")
+			gaps, err := blob(root, reference, directory+"/GAPS.md")
 			if err != nil {
 				return nil, err
 			}
-			result.External = append(result.External, directory+": "+firstParagraph(string(gaps))+" (outside cohere/internal denominator)")
+			result.External = append(
+				result.External,
+				directory+": "+firstParagraph(string(gaps))+" (outside cohere/internal denominator)",
+			)
 		}
 	}
-	for pkg, total := range inv.packages {
-		row := packageRow{Package: pkg, GoLines: total, Evidence: evidence[pkg], Status: "not started"}
+	for packagePath, total := range inv.packages {
+		row := packageRow{Package: packagePath, GoLines: total, Evidence: evidence[packagePath], Status: "not started"}
 		for file, marks := range result.marks {
-			if path.Dir(file) == pkg {
+			if path.Dir(file) == packagePath {
 				row.PortedLines += len(marks)
 			}
 		}
 		if len(row.Evidence) > 0 {
 			row.Status = "partly ported"
 		}
-		if row.PortedLines == total && !result.partial[pkg] {
+		if row.PortedLines == total && !result.partial[packagePath] {
 			row.Status = "ported and held byte-identical"
 		}
 		result.Packages = append(result.Packages, row)
@@ -354,7 +366,13 @@ func finish(result *report) {
 // This is an evidence union, not a merge or a new executable composition.
 func union(reports []*report) (*report, error) {
 	first := reports[0]
-	result := &report{Ref: "main + pending evidence union (not a merge)", Commit: first.Commit, Cohere: first.Cohere, marks: map[string]map[int]bool{}, partial: map[string]bool{}}
+	result := &report{
+		Ref:     "main + pending evidence union (not a merge)",
+		Commit:  first.Commit,
+		Cohere:  first.Cohere,
+		marks:   map[string]map[int]bool{},
+		partial: map[string]bool{},
+	}
 	rows := map[string]*packageRow{}
 	for _, report := range reports {
 		if report.Cohere != first.Cohere {
@@ -368,9 +386,9 @@ func union(reports []*report) (*report, error) {
 				result.marks[file][line] = true
 			}
 		}
-		for pkg, partial := range report.partial {
+		for packagePath, partial := range report.partial {
 			if partial {
-				result.partial[pkg] = true
+				result.partial[packagePath] = true
 			}
 		}
 		for _, row := range report.Packages {
@@ -384,9 +402,9 @@ func union(reports []*report) (*report, error) {
 			}
 		}
 	}
-	for pkg, row := range rows {
+	for packagePath, row := range rows {
 		for file, marks := range result.marks {
-			if path.Dir(file) == pkg {
+			if path.Dir(file) == packagePath {
 				row.PortedLines += len(marks)
 			}
 		}
@@ -394,7 +412,7 @@ func union(reports []*report) (*report, error) {
 		if len(row.Evidence) > 0 {
 			row.Status = "partly ported"
 		}
-		if row.PortedLines == row.GoLines && !result.partial[pkg] {
+		if row.PortedLines == row.GoLines && !result.partial[packagePath] {
 			row.Status = "ported and held byte-identical"
 		}
 		result.Packages = append(result.Packages, *row)
@@ -434,16 +452,16 @@ func pending(root string) ([]string, []string, error) {
 		return nil, nil, err
 	}
 	var refs, integrated []string
-	for _, ref := range strings.Fields(string(output)) {
-		if !strings.HasPrefix(ref, "origin/codex/stage1-") && ref != "origin/codex/typescript-scanner" {
+	for _, reference := range strings.Fields(string(output)) {
+		if !strings.HasPrefix(reference, "origin/codex/stage1-") && reference != "origin/codex/typescript-scanner" {
 			continue
 		}
-		command := toolchain.GitCommand("-C", root, "merge-base", "--is-ancestor", ref, "origin/main")
+		command := toolchain.GitCommand("-C", root, "merge-base", "--is-ancestor", reference, "origin/main")
 		err := command.Run()
 		if err == nil {
-			integrated = append(integrated, ref)
+			integrated = append(integrated, reference)
 		} else if exit, ok := err.(*exec.ExitError); ok && exit.ExitCode() == 1 {
-			refs = append(refs, ref)
+			refs = append(refs, reference)
 		} else {
 			return nil, nil, err
 		}
@@ -452,11 +470,15 @@ func pending(root string) ([]string, []string, error) {
 }
 func main() {
 	root := flag.String("repo", ".", "Adamic repository with initialized cohere submodule")
-	ref := flag.String("ref", "HEAD", "Git snapshot to inventory")
-	branches := flag.Bool("pending", false, "inventory origin/main and every unintegrated fetched stage 1/scanner branch")
+	reference := flag.String("ref", "HEAD", "Git snapshot to inventory")
+	branches := flag.Bool(
+		"pending",
+		false,
+		"inventory origin/main and every unintegrated fetched stage 1/scanner branch",
+	)
 	asJSON := flag.Bool("json", false, "write complete machine-readable reports")
 	flag.Parse()
-	refs := []string{*ref}
+	refs := []string{*reference}
 	var integrated []string
 	if *branches {
 		pendingRefs, already, err := pending(*root)
@@ -468,8 +490,8 @@ func main() {
 	}
 	var reports []*report
 	cache := map[string]*inventory{}
-	for _, ref := range refs {
-		report, err := measure(*root, ref, cache)
+	for _, reference := range refs {
+		report, err := measure(*root, reference, cache)
 		if err != nil {
 			fail(err)
 		}
@@ -505,9 +527,23 @@ func main() {
 			fmt.Fprintln(writer)
 		}
 		writer.Flush()
-		fmt.Printf("TOTAL %d/%d Go lines = %.4f%% conservative credited coverage; %d complete, %d partial, %d not started packages\n", report.Ported, report.Total, report.Percent, report.Complete, report.Partial, report.NotStarted)
+		fmt.Printf(
+			"TOTAL %d/%d Go lines = %.4f%% conservative credited coverage; %d complete, %d partial, %d not started packages\n",
+			report.Ported,
+			report.Total,
+			report.Percent,
+			report.Complete,
+			report.Partial,
+			report.NotStarted,
+		)
 		for _, slice := range report.Slices {
-			fmt.Printf("SCOPE %s credited=%t: %s | GAPS: %s\n", slice.Directory, slice.Credited, slice.Note, slice.GapSummary)
+			fmt.Printf(
+				"SCOPE %s credited=%t: %s | GAPS: %s\n",
+				slice.Directory,
+				slice.Credited,
+				slice.Note,
+				slice.GapSummary,
+			)
 		}
 		for _, dependency := range report.External {
 			fmt.Println("EXTERNAL", dependency)

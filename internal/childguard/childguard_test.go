@@ -76,18 +76,18 @@ func TestChild(test *testing.T) {
 	os.Exit(0)
 }
 func child(mode string) *exec.Cmd {
-	cmd := exec.Command(os.Args[0], "-test.run=^TestChild$")
-	cmd.Env = append(os.Environ(), "CHILDGUARD_TEST="+mode, "GORACE=atexit_sleep_ms=0")
-	return cmd
+	command := exec.Command(os.Args[0], "-test.run=^TestChild$")
+	command.Env = append(os.Environ(), "CHILDGUARD_TEST="+mode, "GORACE=atexit_sleep_ms=0")
+	return command
 }
 
 // Not parallel: child-process scheduling on this machine determines the 5s first-output, 2s stall and 12s ceiling windows.
 func TestProgress(test *testing.T) {
 	var out bytes.Buffer
-	cmd := child("progress")
-	cmd.Stdout = &out
+	command := child("progress")
+	command.Stdout = &out
 	if runError := Run(
-		cmd,
+		command,
 		Options{FirstOutput: 5 * time.Second, Stall: 2 * time.Second, Ceiling: 12 * time.Second},
 	); runError != nil {
 		test.Fatalf("progressing child killed: %v", runError)
@@ -100,10 +100,13 @@ func TestProgress(test *testing.T) {
 // Not parallel: child-process scheduling on this machine determines the 200ms stall and 1200ms elapsed-time bound.
 func TestStalled(test *testing.T) {
 	var out bytes.Buffer
-	cmd := child("stall")
-	cmd.Stderr = &out
+	command := child("stall")
+	command.Stderr = &out
 	start := time.Now()
-	runError := Run(cmd, Options{FirstOutput: 5 * time.Second, Stall: 200 * time.Millisecond, Ceiling: 5 * time.Second})
+	runError := Run(
+		command,
+		Options{FirstOutput: 5 * time.Second, Stall: 200 * time.Millisecond, Ceiling: 5 * time.Second},
+	)
 	var guard *Error
 	if !errors.As(runError, &guard) ||
 		guard.Reason != "stalled" ||
@@ -145,9 +148,9 @@ func TestExitIsNotGuardError(test *testing.T) {
 // A surviving descendant would keep the output pipes open and Run would not return.
 // Not parallel: child-process scheduling on this machine determines the 200ms stall and 2s process-group kill deadline.
 func TestKillsProcessGroup(test *testing.T) {
-	cmd := exec.Command("sh", "-c", "sleep 60 & echo started; wait")
+	command := exec.Command("sh", "-c", "sleep 60 & echo started; wait")
 	done := make(chan error, 1)
-	go func() { done <- Run(cmd, Options{Stall: 200 * time.Millisecond, Ceiling: time.Second}) }()
+	go func() { done <- Run(command, Options{Stall: 200 * time.Millisecond, Ceiling: time.Second}) }()
 	select {
 	case err := <-done:
 		var guard *Error
@@ -197,13 +200,13 @@ func TestChildFinishesWithinDefaultStallWindow(test *testing.T) {
 func TestRunRestoresStdout(test *testing.T) {
 	test.Parallel()
 	var out bytes.Buffer
-	cmd := child("finish")
-	cmd.Stdout = &out
-	if runError := Run(cmd, Options{}); runError != nil {
+	command := child("finish")
+	command.Stdout = &out
+	if runError := Run(command, Options{}); runError != nil {
 		test.Fatal(runError)
 	}
-	if cmd.Stdout != &out {
-		test.Fatalf("stdout was not restored: got %T, want original buffer", cmd.Stdout)
+	if command.Stdout != &out {
+		test.Fatalf("stdout was not restored: got %T, want original buffer", command.Stdout)
 	}
 }
 
@@ -357,11 +360,11 @@ func TestCaptureReadsBothStreamsWhole(test *testing.T) {
 
 func TestCaptureRefusesConfiguredOutput(test *testing.T) {
 	test.Parallel()
-	cmd := child("finish")
-	cmd.Stdout = &bytes.Buffer{}
+	command := child("finish")
+	command.Stdout = &bytes.Buffer{}
 	if _, _, captureError := Capture(
 		context.Background(),
-		cmd,
+		command,
 	); captureError == nil || !strings.Contains(captureError.Error(), "already configured") {
 		test.Fatalf("configured output accepted: %v", captureError)
 	}
@@ -371,11 +374,11 @@ func TestCaptureRefusesConfiguredOutput(test *testing.T) {
 func TestContextCancellationKillsProcessGroup(test *testing.T) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
 	defer cancel()
-	cmd := toolchain.CommandContextIn(timeoutContext, "", "sh", "-c", "sleep 60 & echo started; wait")
+	command := toolchain.CommandContextIn(timeoutContext, "", "sh", "-c", "sleep 60 & echo started; wait")
 	var output bytes.Buffer
-	cmd.Stdout = &output
+	command.Stdout = &output
 	done := make(chan error, 1)
-	go func() { done <- Run(cmd, Options{Unbounded: true}) }()
+	go func() { done <- Run(command, Options{Unbounded: true}) }()
 	select {
 	case err := <-done:
 		if err == nil || timeoutContext.Err() != context.DeadlineExceeded {

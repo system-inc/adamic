@@ -37,7 +37,7 @@ var freshFlags = []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 // builds it compares differ only in the cache.
 func freshGoBuild(
 	test *testing.T,
-	root, output, pkg, goCache string,
+	root, output, packagePath, goCache string,
 	arguments []string,
 	environment ...string,
 ) ([]byte, float64) {
@@ -47,11 +47,11 @@ func freshGoBuild(
 	command := toolchain.CommandIn(
 		root,
 		"go",
-		append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), pkg)...,
+		append(append(append(append([]string{"build"}, freshFlags...), arguments...), "-o", path), packagePath)...,
 	)
 	command.Env = append(append(command.Env, environment...), "GOCACHE="+goCache)
 	if combined, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
-		test.Fatalf("go build %s: %v\n%s", pkg, combinedOutputError, combined)
+		test.Fatalf("go build %s: %v\n%s", packagePath, combinedOutputError, combined)
 	}
 	content, readError := os.ReadFile(path)
 	if readError != nil {
@@ -309,7 +309,7 @@ type inputChange struct {
 // output and the same bytes. A key that ignores the input finds the product from before the change in either place.
 func changeEachInput(
 	test *testing.T,
-	directory, output, pkg string,
+	directory, output, packagePath string,
 	arguments, environment *[]string,
 	steps []inputChange,
 ) {
@@ -323,7 +323,7 @@ func changeEachInput(
 	var previous []byte
 	for _, step := range steps {
 		step.change()
-		fresh, _ := freshGoBuild(test, directory, output, pkg, cache(), *arguments, *environment...)
+		fresh, _ := freshGoBuild(test, directory, output, packagePath, cache(), *arguments, *environment...)
 		if got := run(test, filepath.Join(test.TempDir(), output), fresh); got != step.output {
 			test.Fatalf(
 				"after changing %s a fresh build printed %q, want %q: the test's own expectation is wrong",
@@ -341,7 +341,7 @@ func changeEachInput(
 			before, _ := os.ReadFile(log)
 			// Each step changed the tree under this process, which a unit's never does: key it afresh.
 			forgetInputs()
-			binary := GoBuild(test, output, pkg, *arguments, *environment...)
+			binary := GoBuild(test, output, packagePath, *arguments, *environment...)
 			after, _ := os.ReadFile(log)
 			// The census line this build wrote: 'build <name> <key12> <outcome> <seconds>', after any note about the
 			// store.

@@ -46,7 +46,7 @@ func printerAnswers(test *testing.T, cases, mode string) string {
 	}
 	// The Go printer is css-printer-oracle-1, cohere's css package with testdata/print_side_test.go laid over it, built
 	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
-	cmd := bounded(
+	command := bounded(
 		test,
 		oracles.ComparisonOracle(test, true),
 		"-test.timeout=0",
@@ -54,9 +54,12 @@ func printerAnswers(test *testing.T, cases, mode string) string {
 		"-test.count=1",
 		"-test.run=^TestAdamicPrinterCases$",
 	)
-	cmd.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
-	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
+	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
+	output, combinedOutputError := childguard.CombinedOutput(
+		command,
+		childguard.Options{Stall: oracles.ChildStallLimit},
+	)
 	if combinedOutputError != nil {
 		test.Fatalf("Go printer: %v\n%s", combinedOutputError, output)
 	}

@@ -31,7 +31,7 @@ func TestAnchoredSelectors(test *testing.T) {
 		if createError != nil {
 			test.Fatal(createError)
 		}
-		cmd := exec.Command(
+		command := exec.Command(
 			test2json,
 			"-t",
 			"-p",
@@ -42,10 +42,10 @@ func TestAnchoredSelectors(test *testing.T) {
 			"-test.count=1",
 			"-test.run="+pattern,
 		)
-		cmd.Dir = filepath.Dir(probe)
-		cmd.Stdout = f
-		cmd.Stderr = f
-		runError := cmd.Run()
+		command.Dir = filepath.Dir(probe)
+		command.Stdout = f
+		command.Stderr = f
+		runError := command.Run()
 		f.Close()
 		if runError != nil {
 			test.Fatal(runError)

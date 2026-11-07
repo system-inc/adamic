@@ -45,10 +45,10 @@ func portMatchesPrepare(test *testing.T) {
 func portMatchesPrepareProducts(test *testing.T) {
 	started := time.Now()
 	defer func() { test.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
-	loweredDir := portMatchesProduct(test, "lowered")
+	loweredDirectory := portMatchesProduct(test, "lowered")
 	portMatchesShared.oracle = portMatchesProduct(test, "oracle")
-	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
-	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
+	portMatchesShared.entry = filepath.Join(loweredDirectory, "main.ts")
+	portMatchesShared.script = filepath.Join(loweredDirectory, "program.mjs")
 	portMatchesShared.release = filepath.Join(portMatchesProduct(test, "release"), "port")
 	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(test, "sanitized"), "port")
 	clangTools, portMatchesJsonClangToolchainError := portMatchesJsonClangToolchain()
@@ -61,7 +61,7 @@ func portMatchesPrepareProducts(test *testing.T) {
 	jsonTopState.clangTools = clangTools
 	jsonTopState.oracle = portMatchesShared.oracle
 	for name, directory := range map[string]string{
-		"lowered":   loweredDir,
+		"lowered":   loweredDirectory,
 		"release":   filepath.Dir(portMatchesShared.release),
 		"sanitized": filepath.Dir(portMatchesShared.sanitized),
 	} {

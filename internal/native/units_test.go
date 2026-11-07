@@ -240,10 +240,10 @@ func TestSplitAttributedBindingsAgreeWithNode(test *testing.T) {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		cmd := exec.CommandContext(timeoutContext, command, args...)
+		osCommand := exec.CommandContext(timeoutContext, command, args...)
 		var stderr strings.Builder
-		cmd.Stderr = &stderr
-		output, outputError := cmd.Output()
+		osCommand.Stderr = &stderr
+		output, outputError := osCommand.Output()
 		if outputError != nil || stderr.Len() != 0 {
 			test.Fatalf("execution: %v stderr=%s", outputError, &stderr)
 		}

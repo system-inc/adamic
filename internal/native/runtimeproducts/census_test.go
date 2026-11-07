@@ -139,13 +139,13 @@ func censusImports(
 		return nil, nil, nil, decodeError
 	}
 	exports, listed = map[string]string{}, map[string]bool{}
-	for _, pkg := range listing {
-		path, _, _ := strings.Cut(pkg.ImportPath, " [")
+	for _, listingPackage := range listing {
+		path, _, _ := strings.Cut(listingPackage.ImportPath, " [")
 		listed[path] = true
-		if pkg.Export == "" || path != pkg.ImportPath {
+		if listingPackage.Export == "" || path != listingPackage.ImportPath {
 			continue
 		}
-		exports[path] = filepath.Join(product, pkg.Export)
+		exports[path] = filepath.Join(product, listingPackage.Export)
 		if strings.HasPrefix(path, modulePath+"/") && !strings.HasSuffix(path, ".test") {
 			tree = append(tree, path)
 		}
@@ -1681,13 +1681,13 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, arc
 				buildcacheName = cmp.Or(name, "buildcache")
 			}
 		}
-		qualified := func(expression ast.Expr, pkg, name string) bool {
+		qualified := func(expression ast.Expr, packagePath, name string) bool {
 			selector, ok := ast.Unparen(expression).(*ast.SelectorExpr)
-			if !ok || pkg == "" {
+			if !ok || packagePath == "" {
 				return false
 			}
 			qualifier, ok := selector.X.(*ast.Ident)
-			return ok && qualifier.Name == pkg && selector.Sel.Name == name
+			return ok && qualifier.Name == packagePath && selector.Sel.Name == name
 		}
 		isRequest := func(typ ast.Expr) bool {
 			if star, ok := typ.(*ast.StarExpr); ok {

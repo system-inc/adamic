@@ -52,17 +52,17 @@ func TestCaptureToDrainsAfterWriterError(test *testing.T) {
 	defer cancel()
 	failure := errors.New("destination failed")
 	out := capturePrefix{failure: failure}
-	cmd := child("large")
-	captureToError := CaptureTo(timeoutContext, cmd, &out, nil)
+	command := child("large")
+	captureToError := CaptureTo(timeoutContext, command, &out, nil)
 	if !errors.Is(captureToError, failure) ||
 		timeoutContext.Err() != nil ||
-		cmd.ProcessState == nil ||
-		!cmd.ProcessState.Success() {
+		command.ProcessState == nil ||
+		!command.ProcessState.Success() {
 		test.Fatalf(
 			"destination failure must still drain and reap child: err=%v context=%v state=%v",
 			captureToError,
 			timeoutContext.Err(),
-			cmd.ProcessState,
+			command.ProcessState,
 		)
 	}
 }

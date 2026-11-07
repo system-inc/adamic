@@ -102,17 +102,17 @@ func must(sourceError error) {
 }
 
 func formatData(formatter, output string, data []byte, check bool) {
-	tmp, temporaryFileError := os.CreateTemp("", "adamic-entities-*.ts")
+	temporary, temporaryFileError := os.CreateTemp("", "adamic-entities-*.ts")
 	must(temporaryFileError)
-	defer os.Remove(tmp.Name())
-	_, writeError := tmp.Write(data)
+	defer os.Remove(temporary.Name())
+	_, writeError := temporary.Write(data)
 	must(writeError)
-	must(tmp.Close())
-	out, combinedOutputError := exec.Command(formatter, "--no-cache", "--fix", tmp.Name()).CombinedOutput()
+	must(temporary.Close())
+	out, combinedOutputError := exec.Command(formatter, "--no-cache", "--fix", temporary.Name()).CombinedOutput()
 	if combinedOutputError != nil {
 		panic(fmt.Sprintf("cohere: %v %s", combinedOutputError, out))
 	}
-	result, readError := os.ReadFile(tmp.Name())
+	result, readError := os.ReadFile(temporary.Name())
 	must(readError)
 	if check {
 		actual, readError := os.ReadFile(output)

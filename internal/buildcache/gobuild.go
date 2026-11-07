@@ -28,11 +28,11 @@ import (
 // its overlay reads is inside the repository (@system_adamic, Oct 9 04:57Z): the key adds the overlay's map and each
 // replacement file's content, and leaves out the overlay file's own path, which is a temporary name. One that reads a
 // file outside the repository is refused: such a build stays the caller's own.
-func GoBuild(test testing.TB, output, pkg string, arguments []string, environment ...string) string {
+func GoBuild(test testing.TB, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	return goProduct(
 		test,
-		goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment},
+		goRequest{verb: "build", output: output, pkg: packagePath, arguments: arguments, environment: environment},
 	)
 }
 
@@ -42,13 +42,13 @@ func GoBuild(test testing.TB, output, pkg string, arguments []string, environmen
 // Its key is GoBuild's, with the test files go list -test names, and the module's own go.mod, go.sum and go.work. An
 // overlay file that adds a path the module doesn't have (a harness, a synthesized main) is keyed through the overlay,
 // never as a file on disk.
-func GoTest(test testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+func GoTest(test testing.TB, module, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	return goProduct(test, goRequest{
 		verb:        "test -c",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   arguments,
 		environment: environment,
 	})
@@ -57,13 +57,13 @@ func GoTest(test testing.TB, module, output, pkg string, arguments []string, env
 // GoBuildIn is GoBuild run in module, a directory of the repository with a go.mod of its own (cohere): how a port
 // builds a Go oracle from a main its overlay synthesizes. pkg may name several files, separated by spaces, as go
 // build takes them.
-func GoBuildIn(test testing.TB, module, output, pkg string, arguments []string, environment ...string) string {
+func GoBuildIn(test testing.TB, module, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	return goProduct(test, goRequest{
 		verb:        "build",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   arguments,
 		environment: environment,
 	})
@@ -74,7 +74,7 @@ func GoBuildIn(test testing.TB, module, output, pkg string, arguments []string, 
 // mutation's file, before and after: a changed after-string is another product.
 func GoTestMutated(
 	test testing.TB,
-	module, output, pkg string,
+	module, output, packagePath string,
 	arguments []string,
 	mutations []Mutation,
 	environment ...string,
@@ -84,7 +84,7 @@ func GoTestMutated(
 		verb:        "test -c",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   arguments,
 		mutations:   mutations,
 		environment: environment,
@@ -94,7 +94,7 @@ func GoTestMutated(
 // GoBuildInMutated is GoBuildIn with mutations planted, as GoTestMutated plants them.
 func GoBuildInMutated(
 	test testing.TB,
-	module, output, pkg string,
+	module, output, packagePath string,
 	arguments []string,
 	mutations []Mutation,
 	environment ...string,
@@ -104,7 +104,7 @@ func GoBuildInMutated(
 		verb:        "build",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   arguments,
 		mutations:   mutations,
 		environment: environment,
@@ -115,7 +115,7 @@ func GoBuildInMutated(
 // product that records or runs the binary, which can be keyed by the binary's key rather than its bytes. The arguments
 // are made reproducible as the product's own are, so the key is the product's.
 func GoBuildInInputs(
-	module, output, pkg string,
+	module, output, packagePath string,
 	arguments []string,
 	mutations []Mutation,
 	environment ...string,
@@ -124,7 +124,7 @@ func GoBuildInInputs(
 		verb:        "build",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   reproducible(arguments),
 		mutations:   mutations,
 		environment: environment,
@@ -532,8 +532,14 @@ func goWorkspace(path string) string {
 }
 
 // GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
-func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
-	return goRequest{verb: "build", output: output, pkg: pkg, arguments: arguments, environment: environment}.inputs()
+func GoInputs(output, packagePath string, arguments []string, environment []string) (Inputs, error) {
+	return goRequest{
+		verb:        "build",
+		output:      output,
+		pkg:         packagePath,
+		arguments:   arguments,
+		environment: environment,
+	}.inputs()
 }
 
 // GoTestInputs is GoTestMutated's key (GoTest's, with no mutations), computed without building: for a product made by
@@ -541,7 +547,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 // holding the binary (#4ycgm2n: tsprinter's mutant oracle corpora). The arguments are made reproducible as the
 // product's own are, so the key is the product's.
 func GoTestInputs(
-	module, output, pkg string,
+	module, output, packagePath string,
 	arguments []string,
 	mutations []Mutation,
 	environment ...string,
@@ -550,7 +556,7 @@ func GoTestInputs(
 		verb:        "test -c",
 		module:      module,
 		output:      output,
-		pkg:         pkg,
+		pkg:         packagePath,
 		arguments:   reproducible(arguments),
 		mutations:   mutations,
 		environment: environment,
@@ -761,11 +767,11 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 						return Inputs{}, addError
 					}
 					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
-						pkg := filepath.ToSlash(mustRelative(root, listed.Dir))
+						packagePath := filepath.ToSlash(mustRelative(root, listed.Dir))
 						if relative := filepath.ToSlash(
 							mustRelative(root, include),
-						); !slices.Contains(outside[pkg], relative) {
-							outside[pkg] = append(outside[pkg], relative)
+						); !slices.Contains(outside[packagePath], relative) {
+							outside[packagePath] = append(outside[packagePath], relative)
 						}
 					}
 				}
@@ -829,9 +835,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		append([]string{"arguments " + strings.Join(overlay.arguments, " ")}, overlay.flags...),
 		request.mutationKeys()...,
 	), Toolchain: []string{Tool("go", "version")}}
-	for _, pkg := range slices.Sorted(maps.Keys(outside)) {
-		includes := slices.Sorted(slices.Values(outside[pkg]))
-		encoded, encodeError := json.Marshal(outsideHeaderPackage{Package: pkg, Includes: includes})
+	for _, packagePath := range slices.Sorted(maps.Keys(outside)) {
+		includes := slices.Sorted(slices.Values(outside[packagePath]))
+		encoded, encodeError := json.Marshal(outsideHeaderPackage{Package: packagePath, Includes: includes})
 		if encodeError != nil {
 			return Inputs{}, encodeError
 		}

@@ -18,9 +18,9 @@ import (
 func guardProgram(test *testing.T, name, text string) (*Program, string) {
 	test.Helper()
 	directory := test.TempDir()
-	config, file := filepath.Join(directory, "tsconfig.json"), filepath.Join(directory, name)
+	configuration, file := filepath.Join(directory, "tsconfig.json"), filepath.Join(directory, name)
 	for path, contents := range map[string]string{
-		config: fmt.Sprintf(
+		configuration: fmt.Sprintf(
 			`{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]},"files":[%q]}`,
 			name,
 		),
@@ -30,7 +30,7 @@ func guardProgram(test *testing.T, name, text string) (*Program, string) {
 			test.Fatal(writeError)
 		}
 	}
-	program, openError := Open(config, []string{file})
+	program, openError := Open(configuration, []string{file})
 	if openError != nil {
 		test.Fatal(openError)
 	}

@@ -39,12 +39,12 @@ func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
 	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
 		fn *ast.FuncDecl,
-		param string,
+		parameter string,
 		positions *token.FileSet,
 		lines []string,
 	) {
 		tests++
-		if parallelCheckFirstStatement(fn, param) || parallelCheckReason(fn, positions, lines) {
+		if parallelCheckFirstStatement(fn, parameter) || parallelCheckReason(fn, positions, lines) {
 			return
 		}
 		failures[rel+"\t"+fn.Name.Name] = true
@@ -132,7 +132,7 @@ func parallelCheckRoot(test *testing.T) string {
 // and visits each top-level test with its slash-separated path from root and the name of its *testing.T parameter.
 func parallelCheckEachTest(
 	root string,
-	visit func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string),
+	visit func(rel string, fn *ast.FuncDecl, parameter string, positions *token.FileSet, lines []string),
 ) error {
 	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, pathError error) error {
 		if pathError != nil {
@@ -179,8 +179,8 @@ func parallelCheckEachTest(
 			if !ok {
 				continue
 			}
-			if param, ok := parallelCheckTestParameter(fn, testingNames); ok {
-				visit(filepath.ToSlash(rel), fn, param, positions, lines)
+			if parameter, ok := parallelCheckTestParameter(fn, testingNames); ok {
+				visit(filepath.ToSlash(rel), fn, parameter, positions, lines)
 			}
 		}
 		return nil
@@ -206,27 +206,27 @@ func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) 
 		len(fn.Type.Params.List) != 1 {
 		return "", false
 	}
-	param := fn.Type.Params.List[0]
-	if len(param.Names) != 1 {
+	parameter := fn.Type.Params.List[0]
+	if len(parameter.Names) != 1 {
 		return "", false
 	}
-	ptr, ok := param.Type.(*ast.StarExpr)
+	ptr, ok := parameter.Type.(*ast.StarExpr)
 	if !ok {
 		return "", false
 	}
 	if typ, ok := ptr.X.(*ast.SelectorExpr); ok {
-		pkg, ok := typ.X.(*ast.Ident)
-		if ok && testingNames[pkg.Name] && typ.Sel.Name == "T" {
-			return param.Names[0].Name, true
+		ident, ok := typ.X.(*ast.Ident)
+		if ok && testingNames[ident.Name] && typ.Sel.Name == "T" {
+			return parameter.Names[0].Name, true
 		}
 	}
 	if typ, ok := ptr.X.(*ast.Ident); ok && testingNames["."] && typ.Name == "T" {
-		return param.Names[0].Name, true
+		return parameter.Names[0].Name, true
 	}
 	return "", false
 }
 
-func parallelCheckFirstStatement(fn *ast.FuncDecl, param string) bool {
+func parallelCheckFirstStatement(fn *ast.FuncDecl, parameter string) bool {
 	if len(fn.Body.List) == 0 {
 		return false
 	}
@@ -243,7 +243,7 @@ func parallelCheckFirstStatement(fn *ast.FuncDecl, param string) bool {
 		return false
 	}
 	receiver, ok := selector.X.(*ast.Ident)
-	return ok && receiver.Name == param
+	return ok && receiver.Name == parameter
 }
 
 func parallelCheckReason(fn *ast.FuncDecl, positions *token.FileSet, lines []string) bool {

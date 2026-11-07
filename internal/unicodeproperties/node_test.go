@@ -217,7 +217,7 @@ func TestNodeAgrees(test *testing.T) {
 		detail     string
 	}
 	var (
-		mu       sync.Mutex
+		mutex    sync.Mutex
 		problems []disagreement
 		checked  int
 	)
@@ -229,10 +229,10 @@ func TestNodeAgrees(test *testing.T) {
 			defer workers.Done()
 			for batch := range jobs {
 				got, runScannerError := runScanner(batch)
-				mu.Lock()
+				mutex.Lock()
 				if runScannerError != nil {
 					problems = append(problems, disagreement{detail: runScannerError.Error()})
-					mu.Unlock()
+					mutex.Unlock()
 					continue
 				}
 				checked += len(batch)
@@ -256,7 +256,7 @@ func TestNodeAgrees(test *testing.T) {
 					count, sample := differences(property.Set.Ranges, ranges)
 					problems = append(problems, disagreement{expression: expression, count: count, sample: sample})
 				}
-				mu.Unlock()
+				mutex.Unlock()
 			}
 		}()
 	}

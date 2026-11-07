@@ -461,14 +461,19 @@ func tableLayoutFixture(
 			)
 		}
 	}
-	leakCommand, leakArgs := binary, []string{nativeCases}
-	leakEnv := []string{"ASAN_OPTIONS=detect_leaks=1"}
+	leakCommand, leakArguments := binary, []string{nativeCases}
+	leakEnvironment := []string{"ASAN_OPTIONS=detect_leaks=1"}
 	if runtime.GOOS == "darwin" {
 		leakCommand = "leaks"
-		leakArgs = []string{"--atExit", "--", products.release, nativeCases}
-		leakEnv = nil
+		leakArguments = []string{"--atExit", "--", products.release, nativeCases}
+		leakEnvironment = nil
 	}
-	leakResult, tableLayoutExecuteError := tableLayoutExecute(callerContext, leakEnv, leakCommand, leakArgs...)
+	leakResult, tableLayoutExecuteError := tableLayoutExecute(
+		callerContext,
+		leakEnvironment,
+		leakCommand,
+		leakArguments...,
+	)
 	if tableLayoutExecuteError != nil {
 		test.Fatal(tableLayoutExecuteError)
 	}

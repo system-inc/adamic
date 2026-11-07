@@ -90,14 +90,14 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 		// This leaves the same data channels as the other transport comparisons.
 		errorFile := filepath.Join(test.TempDir(), "stderr")
 		command := strings.Join(words, " ") + " 2>" + quote(errorFile)
-		ctx, cmd := bounded(test, "script", "-qec", command, "/dev/null")
-		cmd.Env = []string{
+		ctx, osCommand := bounded(test, "script", "-qec", command, "/dev/null")
+		osCommand.Env = []string{
 			"PATH=/usr/bin:/bin",
 			"TERM=dumb",
 			"ASAN_OPTIONS=detect_leaks=1",
 			"UBSAN_OPTIONS=halt_on_error=1",
 		}
-		out, errout, captureError := childguard.Capture(ctx, cmd)
+		out, errout, captureError := childguard.Capture(ctx, osCommand)
 		var exited *exec.ExitError
 		if captureError != nil && !errors.As(captureError, &exited) {
 			test.Fatal(captureError)
@@ -109,13 +109,13 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		return run{stdout: out, stderr: data, exitCode: cmd.ProcessState.ExitCode()}
+		return run{stdout: out, stderr: data, exitCode: osCommand.ProcessState.ExitCode()}
 	}
-	_, cmd := bounded(test, name, args...)
-	cmd.Env = []string{"TERM=dumb", "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
+	_, command := bounded(test, name, args...)
+	command.Env = []string{"TERM=dumb", "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
 	var out, errout bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &errout
+	command.Stdout = &out
+	command.Stderr = &errout
 	var destination *os.File
 	if transport != "pipe" {
 		var err error
@@ -128,9 +128,9 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 			test.Fatal(err)
 		}
 		defer destination.Close()
-		cmd.Stdout = destination
+		command.Stdout = destination
 	}
-	runError := childguard.Run(cmd, childguard.Options{})
+	runError := childguard.Run(command, childguard.Options{})
 	var exited *exec.ExitError
 	if runError != nil && !errors.As(runError, &exited) {
 		test.Fatal(runError)
@@ -142,7 +142,7 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 		}
 		out.Write(b)
 	}
-	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
+	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 func TestStdoutIsTTYMatchesNodeOnPipe(test *testing.T) {

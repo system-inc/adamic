@@ -142,15 +142,15 @@ func (cache *cache) check(b []byte, hash string) bool {
 }
 
 func (cache *cache) readRemote(path string, limit int64) ([]byte, bool) {
-	res, getError := cache.client.Get(cache.store + path)
+	response, getError := cache.client.Get(cache.store + path)
 	if getError != nil {
 		return nil, false
 	}
-	defer res.Body.Close()
-	if res.StatusCode != http.StatusOK {
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
 		return nil, false
 	}
-	b, readError := io.ReadAll(io.LimitReader(res.Body, limit+1))
+	b, readError := io.ReadAll(io.LimitReader(response.Body, limit+1))
 	return b, readError == nil && int64(len(b)) <= limit
 }
 
@@ -202,21 +202,21 @@ func (cache *cache) get(req request) response {
 			break
 		}
 		for _, ns := range namespaces {
-			var ref []byte
+			var reference []byte
 			if remote {
 				var ok bool
-				ref, ok = cache.readRemote("/refs/"+ns+"/"+action, 256)
+				reference, ok = cache.readRemote("/refs/"+ns+"/"+action, 256)
 				if !ok {
 					continue
 				}
 			} else {
 				var readError error
-				ref, readError = os.ReadFile(cache.refPath(ns, action))
+				reference, readError = os.ReadFile(cache.refPath(ns, action))
 				if readError != nil {
 					continue
 				}
 			}
-			hash := strings.TrimSpace(string(ref))
+			hash := strings.TrimSpace(string(reference))
 			if !validHash(hash) {
 				continue
 			}
@@ -279,26 +279,26 @@ func (cache *cache) get(req request) response {
 }
 
 func (cache *cache) upload(path string, b []byte) bool {
-	req, newRequestError := http.NewRequest(http.MethodPut, cache.writer+path, bytes.NewReader(b))
+	request, newRequestError := http.NewRequest(http.MethodPut, cache.writer+path, bytes.NewReader(b))
 	if newRequestError != nil {
 		cache.log("write: %v", newRequestError)
 		return false
 	}
-	req.Header.Set("Authorization", "Bearer "+cache.token)
-	res, requestError := cache.client.Do(req)
+	request.Header.Set("Authorization", "Bearer "+cache.token)
+	response, requestError := cache.client.Do(request)
 	if requestError != nil {
 		cache.log("write: %v", requestError)
 		return false
 	}
-	defer res.Body.Close()
-	_, _ = io.Copy(io.Discard, io.LimitReader(res.Body, 4096))
-	if res.StatusCode == 200 || res.StatusCode == 201 {
+	defer response.Body.Close()
+	_, _ = io.Copy(io.Discard, io.LimitReader(response.Body, 4096))
+	if response.StatusCode == 200 || response.StatusCode == 201 {
 		return true
 	}
-	if res.StatusCode == 409 && strings.HasPrefix(path, "/refs/") {
+	if response.StatusCode == 409 && strings.HasPrefix(path, "/refs/") {
 		cache.log("ref conflict: %s already holds a different record; keeping local entry", path)
 	} else {
-		cache.log("write %s: HTTP %d", path, res.StatusCode)
+		cache.log("write %s: HTTP %d", path, response.StatusCode)
 	}
 	return false
 }
@@ -343,11 +343,11 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 	if encodeError := enc.Encode(response{KnownCommands: []string{"get", "put", "close"}}); encodeError != nil {
 		return encodeError
 	}
-	var wg sync.WaitGroup
-	var mu sync.Mutex
+	var waitGroup sync.WaitGroup
+	var mutex sync.Mutex
 	send := func(r response) {
-		mu.Lock()
-		defer mu.Unlock()
+		mutex.Lock()
+		defer mutex.Unlock()
 		if encodeError := enc.Encode(r); encodeError != nil {
 			c.log("protocol output: %v", encodeError)
 		}
@@ -375,7 +375,7 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 	for {
 		line, nextError := next()
 		if nextError != nil {
-			wg.Wait()
+			waitGroup.Wait()
 			if nextError == io.EOF {
 				return nil
 			}
@@ -383,14 +383,14 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 		}
 		var req request
 		if decodeError := json.Unmarshal(line, &req); decodeError != nil {
-			wg.Wait()
+			waitGroup.Wait()
 			return decodeError
 		}
 		var body []byte
 		if req.Command == "put" && req.BodySize > 0 {
 			line, nextError := next()
 			if nextError != nil && nextError != io.EOF {
-				wg.Wait()
+				waitGroup.Wait()
 				return nextError
 			}
 			// Base64 never holds a quote or a brace, so a body line that is not one
@@ -398,7 +398,7 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 			brace := bytes.IndexByte(line, '{')
 			if len(line) >= 2 && line[0] == '"' && line[len(line)-1] == '"' && brace < 0 {
 				if decodeError := json.Unmarshal(line, &body); decodeError != nil {
-					wg.Wait()
+					waitGroup.Wait()
 					return decodeError
 				}
 			} else if len(line) == 0 || line[0] == '"' {
@@ -415,19 +415,19 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 				)
 				continue
 			} else {
-				wg.Wait()
+				waitGroup.Wait()
 				return fmt.Errorf("put %d: body is not a JSON string", req.ID)
 			}
 		}
 		if req.Command == "close" {
-			wg.Wait()
+			waitGroup.Wait()
 			send(response{ID: req.ID})
 			return nil
 		}
 		slots <- struct{}{}
-		wg.Add(1)
+		waitGroup.Add(1)
 		go func(req request, body []byte) {
-			defer wg.Done()
+			defer waitGroup.Done()
 			defer func() { <-slots }()
 			switch req.Command {
 			case "get":

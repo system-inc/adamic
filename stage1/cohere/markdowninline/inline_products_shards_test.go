@@ -127,12 +127,12 @@ func (source inlineSource) buildNode(dir string) error {
 	if absolutePathError != nil {
 		return absolutePathError
 	}
-	cmd, ctx, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
+	command, ctx, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
 	defer cancel()
 	// Read through childguard.Capture for execute's reason: a WaitDelay could fail a build that had finished. The
 	// build script prints nothing unless it fails, so only childguard's 30-minute first-output window could have
 	// fired, and the 600 s Loom gives a product unit ends a hung build sooner.
-	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	if captureError != nil {
 		return fmt.Errorf("%w: %s%s", captureError, stdout, stderr)
 	}
@@ -427,12 +427,12 @@ func prepareInlineShards(
 		test.Fatal(inlineBoxError)
 	}
 	goBinary := inlineOverlayBuild(test)
-	nodeDir := inlineNodeProduct(test)
-	lowerDir := inlineLoweredProduct(test, -1)
-	nativeDir := inlineNativeProduct(test, -1, false)
-	sanitizedDir := inlineNativeProduct(test, -1, true)
-	fast, sanitized := filepath.Join(nativeDir, "port"), filepath.Join(sanitizedDir, "port")
-	mutantNativeDir := inlineNativeProduct(test, 0, true)
+	nodeDirectory := inlineNodeProduct(test)
+	lowerDirectory := inlineLoweredProduct(test, -1)
+	nativeDirectory := inlineNativeProduct(test, -1, false)
+	sanitizedDirectory := inlineNativeProduct(test, -1, true)
+	fast, sanitized := filepath.Join(nativeDirectory, "port"), filepath.Join(sanitizedDirectory, "port")
+	mutantNativeDirectory := inlineNativeProduct(test, 0, true)
 	mutantFast := fast
 	if runtime.GOOS == "darwin" {
 		mutantFast = filepath.Join(inlineNativeProduct(test, 0, false), "port")
@@ -522,11 +522,14 @@ func prepareInlineShards(
 		)
 		compare(
 			"Node",
-			timed("Node", func() run { return onNode(test, filepath.Join(nodeDir, "main.mjs"), "--batch", cases) }),
+			timed(
+				"Node",
+				func() run { return onNode(test, filepath.Join(nodeDirectory, "main.mjs"), "--batch", cases) },
+			),
 		)
 		compare("JavaScript backend", timed(
 			"backend",
-			func() run { return onNode(test, filepath.Join(lowerDir, "program.mjs"), "--batch", cases) },
+			func() run { return onNode(test, filepath.Join(lowerDirectory, "program.mjs"), "--batch", cases) },
 		))
 		test.Logf("children: %s", strings.Join(times, ", "))
 		if library != "" {
@@ -539,7 +542,7 @@ func prepareInlineShards(
 			}
 		}
 		if owns {
-			r := inlineNativeRun(test, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
+			r := inlineNativeRun(test, filepath.Join(mutantNativeDirectory, "port"), mutantFast, "--batch", cases)
 			clean(test, "planted mutant", r)
 			inlineDifferenceError := inlineDifference(test.Name(), shard.ids, r.stdout, want.stdout)
 			if inlineDifferenceError == nil {

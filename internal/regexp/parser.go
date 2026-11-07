@@ -308,16 +308,16 @@ func (parser *parser) modifiers() (Flags, Flags, error) {
 }
 
 func (parser *parser) quantifier(atom Node) (Node, error) {
-	min, max := big.NewInt(0), (*big.Int)(nil)
+	minimum, maximum := big.NewInt(0), (*big.Int)(nil)
 	switch parser.peek() {
 	case '*':
 		parser.pos++
 	case '+':
 		parser.pos++
-		min = big.NewInt(1)
+		minimum = big.NewInt(1)
 	case '?':
 		parser.pos++
-		max = big.NewInt(1)
+		maximum = big.NewInt(1)
 	case '{':
 		start := parser.pos
 		parser.pos++
@@ -326,21 +326,21 @@ func (parser *parser) quantifier(atom Node) (Node, error) {
 			parser.pos = start
 			return nil, parser.fail("incomplete quantifier")
 		}
-		min, max = m, new(big.Int).Set(m)
+		minimum, maximum = m, new(big.Int).Set(m)
 		if parser.take(',') {
-			max = nil
+			maximum = nil
 			if n, ok := parser.decimal(); ok {
-				max = n
+				maximum = n
 			}
 		}
 		if !parser.take('}') {
 			parser.pos = start
 			return nil, parser.fail("incomplete quantifier")
 		}
-		if max != nil && min.Cmp(max) > 0 {
+		if maximum != nil && minimum.Cmp(maximum) > 0 {
 			// Exact decimal MVs determine the spec's early error. Node's
 			// clamped comparison instead accepts this ruled-on divergence.
-			if max.Cmp(big.NewInt(2147483647)) >= 0 {
+			if maximum.Cmp(big.NewInt(2147483647)) >= 0 {
 				return nil, &V8DivergenceError{
 					Behavior: "clamps quantifier bounds above 2^31-1 before the min > max check",
 					Section:  "22.2.1.1 Static Semantics: Early Errors, QuantifierPrefix",
@@ -352,16 +352,16 @@ func (parser *parser) quantifier(atom Node) (Node, error) {
 			// Port of V8 RegExpParserImpl::ParseIntervalQuantifier after the
 			// exact-order refusal. kInfinity is the unbounded maximum sentinel.
 			limit := big.NewInt(2147483647)
-			if min.Cmp(limit) > 0 {
-				min.Set(limit)
+			if minimum.Cmp(limit) > 0 {
+				minimum.Set(limit)
 			}
-			if max != nil && max.Cmp(limit) >= 0 {
-				max = nil
+			if maximum != nil && maximum.Cmp(limit) >= 0 {
+				maximum = nil
 			}
 		}
 	}
 	greedy := !parser.take('?')
-	return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: greedy}, nil
+	return &Quantifier{Atom: atom, Min: minimum, Max: maximum, Greedy: greedy}, nil
 }
 
 func (parser *parser) escape(inClass bool) (Node, bool, error) {

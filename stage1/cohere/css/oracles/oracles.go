@@ -497,7 +497,7 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 		if writeError := os.WriteFile(requestPath, data, 0644); writeError != nil {
 			return writeError
 		}
-		cmd := toolchain.CommandContextIn(
+		command := toolchain.CommandContextIn(
 			test.Context(),
 			"",
 			oracle,
@@ -506,12 +506,12 @@ func CachedParserOutputs(test *testing.T) (string, string) {
 			"-test.count=1",
 			"-test.run=^TestAdamicPortCases$",
 		)
-		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
-		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
+		command.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
+		command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 		// Read through childguard.Capture for CompositionOracle's reason. The oracle writes no progress, only its
 		// test's start and end, so childguard.Run's four-minute silence window was a ceiling for it, and the unit's
 		// own ceiling bounds it instead.
-		stdout, stderr, captureError := childguard.Capture(test.Context(), cmd)
+		stdout, stderr, captureError := childguard.Capture(test.Context(), command)
 		if captureError != nil {
 			return fmt.Errorf("Go oracle: %w\n%s%s", captureError, stdout, stderr)
 		}
@@ -562,9 +562,9 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		// window could never fire before that ceiling.
 		timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 		defer cancel()
-		cmd := toolchain.CommandContextIn(timeoutContext, "", "node", script, library, input)
-		cmd.Env = os.Environ()
-		stdout, stderr, captureError := childguard.Capture(timeoutContext, cmd)
+		command := toolchain.CommandContextIn(timeoutContext, "", "node", script, library, input)
+		command.Env = os.Environ()
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("PostCSS oracle: %v; %s", captureError, stderr)
 		}
@@ -633,9 +633,9 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		side, pkg, target := "cohere_side_test.go", "postcss", "adamic_port_side_test.go"
+		side, packagePath, target := "cohere_side_test.go", "postcss", "adamic_port_side_test.go"
 		if printer {
-			side, pkg, target = "print_side_test.go", "", "adamic_print_side_test.go"
+			side, packagePath, target = "print_side_test.go", "", "adamic_print_side_test.go"
 		}
 		sidePath := filepath.Join(repo, "stage1/cohere/css/testdata", side)
 		inputs := buildcache.Inputs{
@@ -652,13 +652,15 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 			},
 			Flags: []string{
 				"go test -c " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
-				"./internal/format/css/" + pkg,
+				"./internal/format/css/" + packagePath,
 			},
 			Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := oracleProduct(test, inputs, func(dir string) error {
 			overlay, encodeError := json.Marshal(map[string]any{
-				"Replace": map[string]string{filepath.Join(repo, "cohere/internal/format/css", pkg, target): sidePath},
+				"Replace": map[string]string{
+					filepath.Join(repo, "cohere/internal/format/css", packagePath, target): sidePath,
+				},
 			})
 			if encodeError != nil {
 				return encodeError
@@ -671,17 +673,17 @@ func ComparisonOracle(test *testing.T, printer bool) string {
 			defer os.Remove(overlayPath)
 			// A product carries no deadline of its own: a cold Go build of cohere's css package can pass 60 s
 			// on a compiler-changing candidate, and the build phase's 10-minute ceiling bounds it (rule 10).
-			cmd := toolchain.CommandContextIn(test.Context(), filepath.Join(repo, "cohere"), "go", append(
+			command := toolchain.CommandContextIn(test.Context(), filepath.Join(repo, "cohere"), "go", append(
 				append([]string{"test"}, buildcache.ReproducibleGoFlags()...),
 				"-c",
 				"-overlay="+overlayPath,
 				"-o",
 				filepath.Join(dir, "oracle"),
-				"./internal/format/css/"+pkg,
+				"./internal/format/css/"+packagePath,
 			)...)
 			// This printer build historically inherited the caller environment.
-			cmd.Env = nil
-			output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Unbounded: true})
+			command.Env = nil
+			output, combinedOutputError := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
 			if combinedOutputError != nil {
 				return fmt.Errorf("Go oracle build: %w\n%s", combinedOutputError, output)
 			}

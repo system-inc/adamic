@@ -42,26 +42,26 @@ func Path(path string) (string, error) {
 	return filepath.ToSlash(absolute), absolutePathError
 }
 
-func Open(configPath string, files []string) (*Program, error) {
-	configPath, pathError := Path(configPath)
+func Open(configurationPath string, files []string) (*Program, error) {
+	configurationPath, pathError := Path(configurationPath)
 	if pathError != nil {
 		return nil, pathError
 	}
-	directory := filepath.ToSlash(filepath.Dir(configPath))
+	directory := filepath.ToSlash(filepath.Dir(configurationPath))
 	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
 	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
-		tspath.RootedFilePathFromAbsolute(configPath),
+	configuration, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
+		tspath.RootedFilePathFromAbsolute(configurationPath),
 		nil,
 		nil,
 		fs,
 		nil,
 	)
-	if config == nil {
-		return nil, fmt.Errorf("cannot parse %s: %s", configPath, diagnosticText(diagnostics))
+	if configuration == nil {
+		return nil, fmt.Errorf("cannot parse %s: %s", configurationPath, diagnosticText(diagnostics))
 	}
-	if len(config.Errors) != 0 {
-		return nil, fmt.Errorf("invalid config: %s", diagnosticText(config.Errors))
+	if len(configuration.Errors) != 0 {
+		return nil, fmt.Errorf("invalid config: %s", diagnosticText(configuration.Errors))
 	}
 	if len(diagnostics) != 0 {
 		return nil, fmt.Errorf("invalid config: %s", diagnosticText(diagnostics))
@@ -83,10 +83,10 @@ func Open(configPath string, files []string) (*Program, error) {
 		}
 		for _, root := range roots {
 			if strings.HasSuffix(root.AsString(), ".a") {
-				config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
+				configuration.CompilerOptions().AllowNonTsExtensions = core.TSTrue
 			}
 		}
-		for _, declaration := range config.FileNames() {
+		for _, declaration := range configuration.FileNames() {
 			if strings.HasSuffix(declaration.AsString(), ".d.ts") {
 				found := false
 				for _, root := range roots {
@@ -99,23 +99,28 @@ func Open(configPath string, files []string) (*Program, error) {
 				}
 			}
 		}
-		config = config.WithFileNames(roots)
+		configuration = configuration.WithFileNames(roots)
 	}
-	if len(config.ContentMappers()) != 0 {
+	if len(configuration.ContentMappers()) != 0 {
 		return nil, fmt.Errorf("content mappers are not supported by this bridge")
 	}
-	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	program := compiler.NewProgram(
+		compiler.ProgramOptions{Config: configuration, Host: host, SingleThreaded: core.TSTrue},
+	)
 	if program == nil {
 		return nil, fmt.Errorf("checker built no program")
 	}
-	for _, file := range config.FileNames() {
+	for _, file := range configuration.FileNames() {
 		if program.GetSourceFile(file) == nil {
 			return nil, fmt.Errorf("checker did not load %s", file)
 		}
 	}
 	// Initialize the checker pool in the load phase. Type resolution stays lazy.
-	if len(config.FileNames()) != 0 {
-		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(config.FileNames()[0]))
+	if len(configuration.FileNames()) != 0 {
+		_, release := program.GetTypeCheckerForFile(
+			context.Background(),
+			program.GetSourceFile(configuration.FileNames()[0]),
+		)
 		release()
 	}
 	return &Program{Compiler: program, typeIDs: make(map[*checker.Type]uint64)}, nil

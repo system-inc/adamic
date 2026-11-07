@@ -82,7 +82,7 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		Lib: []string{"lib.es2024.d.ts"}, Types: []string{},
 	}
 	fileSystem := cachedvfs.From(bundled.WrapFS(fs))
-	config := tsoptions.NewParsedCommandLine(
+	configuration := tsoptions.NewParsedCommandLine(
 		options,
 		roots,
 		nil,
@@ -90,7 +90,9 @@ func optionalProgram(paths []string, overlay map[string]string) (*compiler.Progr
 		fileSystem.CaseSensitivity(),
 	)
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
-	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	program := compiler.NewProgram(
+		compiler.ProgramOptions{Config: configuration, Host: host, SingleThreaded: core.TSTrue},
+	)
 	if program == nil {
 		return nil, nil, errors.New("building optional-property declaration resolver")
 	}

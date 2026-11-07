@@ -1274,8 +1274,8 @@ func buildAliasingGraph(function *Function, effects *AliasingEffects) (*aliasing
 	// Adamic: an Adamic function's parameters are mutable unless their type says otherwise (infer.go
 	// marks an immutable one with a Create of its kind), not frozen by React's rule for components
 	// and hooks; there's no context (captured variables aren't in this graph) and no Returns place.
-	for _, param := range function.Params {
-		state.create(param, aliasingNodeObject)
+	for _, parameter := range function.Params {
+		state.create(parameter, aliasingNodeObject)
 	}
 
 	seenBlocks := map[BlockId]bool{}

@@ -40,11 +40,11 @@ func TestEveryDuplicatedProductDeclarationAgrees(test *testing.T) {
 	parallelCheckEachTestError := parallelCheckEachTest(root, func(
 		rel string,
 		fn *ast.FuncDecl,
-		param string,
+		parameter string,
 		positions *token.FileSet,
 		lines []string,
 	) {
-		declaration, ok, productCensusDeclareError := productCensusDeclare(rel, fn, param)
+		declaration, ok, productCensusDeclareError := productCensusDeclare(rel, fn, parameter)
 		if productCensusDeclareError != nil && printError == nil {
 			printError = productCensusDeclareError
 		}
@@ -121,11 +121,11 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 				test.Fatalf("%s: %v", c.name, parseFileError)
 			}
 			fn := parsed.Decls[1].(*ast.FuncDecl)
-			param, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
+			parameter, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
 			if !ok {
 				test.Fatalf("%s: %s is not a test", c.name, file)
 			}
-			declaration, ok, productCensusDeclareError := productCensusDeclare(file, fn, param)
+			declaration, ok, productCensusDeclareError := productCensusDeclare(file, fn, parameter)
 			if productCensusDeclareError != nil || !ok {
 				test.Fatalf("%s: %s declares no product: %v", c.name, file, productCensusDeclareError)
 			}
@@ -152,12 +152,12 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 
 // productCensusDeclare reads fn as a product declaration if its name starts with TestProduct_. The body is printed
 // against an empty file set, so the printer sees no line positions and layout differences fall away with comments.
-func productCensusDeclare(rel string, fn *ast.FuncDecl, param string) (productCensusDeclaration, bool, error) {
+func productCensusDeclare(rel string, fn *ast.FuncDecl, parameter string) (productCensusDeclaration, bool, error) {
 	if !strings.HasPrefix(fn.Name.Name, "TestProduct_") {
 		return productCensusDeclaration{}, false, nil
 	}
 	statements := fn.Body.List
-	if parallelCheckFirstStatement(fn, param) {
+	if parallelCheckFirstStatement(fn, parameter) {
 		statements = statements[1:]
 	}
 	var body bytes.Buffer

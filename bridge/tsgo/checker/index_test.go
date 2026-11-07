@@ -13,8 +13,12 @@ import (
 func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	config := filepath.Join(directory, "tsconfig.json")
-	if writeError := os.WriteFile(config, []byte(`{"compilerOptions":{"strict":true}}`), 0600); writeError != nil {
+	configuration := filepath.Join(directory, "tsconfig.json")
+	if writeError := os.WriteFile(
+		configuration,
+		[]byte(`{"compilerOptions":{"strict":true}}`),
+		0600,
+	); writeError != nil {
 		test.Fatal(writeError)
 	}
 	var paths []string
@@ -30,7 +34,7 @@ func TestExactIndexMatchesCompilerNodes(test *testing.T) {
 		}
 		paths = append(paths, path)
 	}
-	program, openError := Open(config, paths)
+	program, openError := Open(configuration, paths)
 	if openError != nil {
 		test.Fatal(openError)
 	}

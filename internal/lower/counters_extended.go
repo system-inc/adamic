@@ -41,7 +41,13 @@ func extendedCounter(program *ir.Program, block ir.Block, known facts) {
 	}
 	counter := read.Local
 	local := program.Locals[counter]
-	if declaration.Local != counter || local.Counter || local.Type != ir.Number || local.Global || local.Captured || local.ExpressionAssigned || !perIteration(loop, counter) {
+	if declaration.Local != counter ||
+		local.Counter ||
+		local.Type != ir.Number ||
+		local.Global ||
+		local.Captured ||
+		local.ExpressionAssigned ||
+		!perIteration(loop, counter) {
 		return
 	}
 	written := map[int]bool{}
@@ -105,7 +111,7 @@ func extendedCounter(program *ir.Program, block ir.Block, known facts) {
 	inclusive := condition.Operator == ir.LessOrEqual || condition.Operator == ir.GreaterOrEqual
 	var inBody span
 	safe := false
-	maxStep := exact
+	maximumStep := exact
 	if square {
 		last := high
 		if !inclusive {
@@ -116,8 +122,8 @@ func extendedCounter(program *ir.Program, block ir.Block, known facts) {
 		// rounding up at a nonsquare can only overestimate this inclusive range.
 		end := math.Floor(math.Sqrt(math.Max(0, last)))
 		inBody = span{startLow, end}
-		maxStep = exact - math.Max(startHigh, end)
-		safe = stepHigh <= maxStep
+		maximumStep = exact - math.Max(startHigh, end)
+		safe = stepHigh <= maximumStep
 	} else if ascending {
 		end := high
 		if !inclusive {
@@ -170,7 +176,7 @@ func extendedCounter(program *ir.Program, block ir.Block, known facts) {
 		if guard {
 			plan.Bound, plan.Step = condition.Right, sum.Right
 			plan.Ascending, plan.Inclusive, plan.Square = ascending, inclusive, square
-			plan.MaxStep = maxStep
+			plan.MaxStep = maximumStep
 		}
 		program.Locals[counter].CounterGuard = plan
 		known.guarded[counter] = true
@@ -208,11 +214,20 @@ func invariantNumber(program *ir.Program, value ir.Expression, written map[int]b
 		return true
 	case ir.Read:
 		local := program.Locals[value.Local]
-		return value.Of == ir.Number && !local.Global && !local.Captured && !local.ExpressionAssigned && !value.Checked && value.Readiness == "" && !written[value.Local]
+		return value.Of == ir.Number &&
+			!local.Global &&
+			!local.Captured &&
+			!local.ExpressionAssigned &&
+			!value.Checked &&
+			value.Readiness == "" &&
+			!written[value.Local]
 	case ir.Unary:
-		return (value.Operator == ir.Plus || value.Operator == ir.Negate) && invariantNumber(program, value.Operand, written)
+		return (value.Operator == ir.Plus || value.Operator == ir.Negate) &&
+			invariantNumber(program, value.Operand, written)
 	case ir.Binary:
-		return (value.Operator == ir.Add || value.Operator == ir.Subtract || value.Operator == ir.Multiply) && invariantNumber(program, value.Left, written) && invariantNumber(program, value.Right, written)
+		return (value.Operator == ir.Add || value.Operator == ir.Subtract || value.Operator == ir.Multiply) &&
+			invariantNumber(program, value.Left, written) &&
+			invariantNumber(program, value.Right, written)
 	}
 	return false
 }

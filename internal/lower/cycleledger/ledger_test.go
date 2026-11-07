@@ -46,7 +46,7 @@ func TestOriginalCycleLedger(test *testing.T) {
 		VerbatimModuleSyntax: core.TSTrue,
 		NoEmit:               core.TSTrue,
 	}
-	config := tsoptions.NewParsedCommandLine(
+	configuration := tsoptions.NewParsedCommandLine(
 		options,
 		[]tspath.RootedFilePath{entry},
 		nil,
@@ -54,7 +54,7 @@ func TestOriginalCycleLedger(test *testing.T) {
 		fs.CaseSensitivity(),
 	)
 	program := compiler.NewProgram(compiler.ProgramOptions{
-		Config:         config,
+		Config:         configuration,
 		Host:           compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil),
 		SingleThreaded: core.TSTrue,
 	})

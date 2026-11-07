@@ -95,18 +95,18 @@ func compositionSetupCommand(test *testing.T, name string, arguments ...string) 
 }
 
 func compositionCommandContext(callerContext context.Context, name string, arguments ...string) *exec.Cmd {
-	cmd := toolchain.CommandContextIn(callerContext, "", name, arguments...)
-	cmd.Env = os.Environ()
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
-		if cmd.Process == nil {
+	command := toolchain.CommandContextIn(callerContext, "", name, arguments...)
+	command.Env = os.Environ()
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
 			return os.ErrProcessDone
 		}
-		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
 		return killError
 	}
-	return cmd
+	return command
 }

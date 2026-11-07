@@ -243,20 +243,20 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 	var wrappers strings.Builder
 	for _, export := range exports {
 		f := program.Functions[export.Function]
-		args, params := []string{}, []string{}
+		args, parameters := []string{}, []string{}
 		var body strings.Builder
 		for i, p := range export.Parameters {
 			name := fmt.Sprintf("p%d", i)
 			t := p.Type
 			switch t.Kind {
 			case "number":
-				params = append(params, "double "+name)
+				parameters = append(parameters, "double "+name)
 				args = append(args, name)
 			case "boolean":
-				params = append(params, "int32_t "+name)
+				parameters = append(parameters, "int32_t "+name)
 				args = append(args, "("+name+" != 0)")
 			default:
-				params = append(params, "const unsigned char *"+name, "uint32_t "+name+"_length")
+				parameters = append(parameters, "const unsigned char *"+name, "uint32_t "+name+"_length")
 				value := name + "_value"
 				args = append(args, value)
 				if t.Kind == "string" {
@@ -300,8 +300,8 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 		} else if export.Returns.Kind == "boolean" {
 			ret = "int32_t"
 		}
-		if len(params) == 0 {
-			params = append(params, "void")
+		if len(parameters) == 0 {
+			parameters = append(parameters, "void")
 		}
 		fmt.Fprintf(
 			&wrappers,
@@ -309,7 +309,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 			cString("adamic_export_"+export.Name),
 			ret,
 			stableName("adamic_abi_export", export.Name, export.Name+"/"+e.functionName(export.Function)),
-			strings.Join(params, ", "),
+			strings.Join(parameters, ", "),
 		)
 		wrappers.WriteString(body.String())
 		call := fmt.Sprintf("%s(%s)", e.functionName(export.Function), strings.Join(args, ", "))

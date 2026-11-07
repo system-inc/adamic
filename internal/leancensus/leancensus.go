@@ -68,13 +68,13 @@ func Imports(product string) (exports map[string]string, tree []string, listed m
 		return nil, nil, nil, decodeError
 	}
 	exports, listed = map[string]string{}, map[string]bool{}
-	for _, pkg := range listing {
-		path, _, _ := strings.Cut(pkg.ImportPath, " [")
+	for _, listingPackage := range listing {
+		path, _, _ := strings.Cut(listingPackage.ImportPath, " [")
 		listed[path] = true
-		if pkg.Export == "" || path != pkg.ImportPath {
+		if listingPackage.Export == "" || path != listingPackage.ImportPath {
 			continue
 		}
-		exports[path] = filepath.Join(product, pkg.Export)
+		exports[path] = filepath.Join(product, listingPackage.Export)
 		if strings.HasPrefix(path, ModulePath+"/") && !strings.HasSuffix(path, ".test") {
 			tree = append(tree, path)
 		}
@@ -859,8 +859,8 @@ func linknames(root string, packages []string) []string {
 			if len(fields) < 3 || fields[0] != "//go:linkname" {
 				continue
 			}
-			for _, pkg := range packages {
-				if strings.HasPrefix(fields[2], pkg+".") {
+			for _, packagePath := range packages {
+				if strings.HasPrefix(fields[2], packagePath+".") {
 					found = append(found, fmt.Sprintf(
 						"%s:%d: a go:linkname names %s, which reaches past the census",
 						filepath.ToSlash(relative),

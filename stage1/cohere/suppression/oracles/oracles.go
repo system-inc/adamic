@@ -43,12 +43,12 @@ func Suppression(test testing.TB) (string, string) {
 }
 
 // stock is the identical stock request in owners and finders; only the owner builds.
-func stock(test testing.TB, output, pkg string, arguments []string, environment ...string) string {
+func stock(test testing.TB, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	if producer {
-		return buildcache.GoTest(test, "cohere", output, pkg, arguments, environment...)
+		return buildcache.GoTest(test, "cohere", output, packagePath, arguments, environment...)
 	}
-	inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, pkg, arguments, nil, environment...)
+	inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, packagePath, arguments, nil, environment...)
 	if goTestInputsError != nil {
 		test.Fatal(goTestInputsError)
 	}

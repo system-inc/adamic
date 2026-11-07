@@ -65,9 +65,9 @@ func commandRunner(test *testing.T, root string) func(string, ...string) []byte 
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(test.Context(), 3*time.Minute)
 		defer cancel()
-		cmd := exec.CommandContext(timeoutContext, name, args...)
-		cmd.Dir = root
-		output, combinedOutputError := cmd.CombinedOutput()
+		command := exec.CommandContext(timeoutContext, name, args...)
+		command.Dir = root
+		output, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
 			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)
 		}

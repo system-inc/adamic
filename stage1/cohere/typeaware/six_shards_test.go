@@ -128,7 +128,7 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 	if started.IsZero() {
 		started = time.Now()
 	}
-	var mu sync.Mutex
+	var mutex sync.Mutex
 	var admittedIDs []string
 	var completed []sixShard
 	var admitted int
@@ -172,9 +172,9 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 				if elapsed > 30*time.Second {
 					test.Errorf("shard %s (%s) exceeded 30 s: %s", unit, shard.name, elapsed)
 				}
-				mu.Lock()
+				mutex.Lock()
 				completed = append(completed, shard)
-				mu.Unlock()
+				mutex.Unlock()
 			}()
 			directory := filepath.Join(h.directory, "shards", unit)
 			if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
@@ -233,10 +233,10 @@ func sixFindingUnion(stdout []byte, paths []string) error {
 	return sixUnion(expected, []sixShard{{name: "finding-output", ids: ids}})
 }
 
-func (h *harness) sixCompare(name, oracle, binary, config, roots string, paths []string) result {
+func (h *harness) sixCompare(name, oracle, binary, configuration, roots string, paths []string) result {
 	h.t.Helper()
 	selected := h.write("selected.manifest", strings.Join(paths, "\n")+"\n")
-	args := []string{config, roots, "--files", selected}
+	args := []string{configuration, roots, "--files", selected}
 	want := h.must(name+"-go", exec.Command(oracle, args...))
 	got := h.must(name+"-native", exec.Command(binary, args...))
 	if err := sixOutputError(h.t.Name(), want.stdout, got.stdout, got.stderr); err != nil {
@@ -344,9 +344,9 @@ func TestSixShardPlantedDisagreement(test *testing.T) {
 					pattern += fmt.Sprintf("/^shard-%03d$", i)
 					selector = ""
 				}
-				cmd := exec.Command(os.Args[0], "-test.run="+pattern, "-test.v")
-				cmd.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", "ADAMIC_TEST_SHARD="+selector)
-				text, combinedOutputError := cmd.CombinedOutput()
+				command := exec.Command(os.Args[0], "-test.run="+pattern, "-test.v")
+				command.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", "ADAMIC_TEST_SHARD="+selector)
+				text, combinedOutputError := command.CombinedOutput()
 				if i == 2 {
 					if combinedOutputError == nil ||
 						!bytes.Contains(text, []byte("shard TestSixShardPlantedDisagreement/shard-002 mismatch")) {

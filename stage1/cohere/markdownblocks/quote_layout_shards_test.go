@@ -227,7 +227,7 @@ func quoteLayoutBuildProduct(test *testing.T, root, target string) quoteLayoutPr
 		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
-	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
+	loweredDirectory := buildcache.Product(test, inputs, func(dir string) error {
 		program, loweredResultError := loweredResult(main)
 		if loweredResultError != nil {
 			return loweredResultError
@@ -241,11 +241,11 @@ func quoteLayoutBuildProduct(test *testing.T, root, target string) quoteLayoutPr
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	source, readError := os.ReadFile(filepath.Join(loweredDir, "program.c"))
+	source, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	backend, readError := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
+	backend, readError := os.ReadFile(filepath.Join(loweredDirectory, "program.mjs"))
 	if readError != nil {
 		test.Fatal(readError)
 	}

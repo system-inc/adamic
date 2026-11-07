@@ -36,7 +36,7 @@ func TestInspectRequestRefusals(test *testing.T) {
 	normal := h.archive(false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts")
 	binary := h.build(stage0, "request", entry, normal, false)
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	probe := h.write("probe.ts", "-1;\n")
 	var shards []sixShard
 	expected := []string{
@@ -51,7 +51,10 @@ func TestInspectRequestRefusals(test *testing.T) {
 		shards = append(shards, sixShard{name: name, ids: []string{name}, run: run})
 	}
 	add("request-valid", func(h *harness) {
-		h.must("request-valid", exec.Command(binary, config, probe, "0", "2", "PrefixUnaryExpression", "raw-type", "2"))
+		h.must(
+			"request-valid",
+			exec.Command(binary, configuration, probe, "0", "2", "PrefixUnaryExpression", "raw-type", "2"),
+		)
 	})
 	releasedEntry := h.write(
 		"released-name.ts",
@@ -59,7 +62,7 @@ func TestInspectRequestRefusals(test *testing.T) {
 	)
 	released := h.build(stage0, "released-name", releasedEntry, normal, false)
 	add("released-name", func(h *harness) {
-		stale := h.run("released-name-run", exec.Command(released, config, probe))
+		stale := h.run("released-name-run", exec.Command(released, configuration, probe))
 		if code, ok := stale.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			!bytes.Contains(stale.stderr, []byte("invalid or released checker handle")) {
@@ -71,7 +74,7 @@ func TestInspectRequestRefusals(test *testing.T) {
 		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node"},
 		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question"},
 	} {
-		args := []string{config, probe, "0", "2", change.kind, change.question, "2"}
+		args := []string{configuration, probe, "0", "2", change.kind, change.question, "2"}
 		add(change.name+"/refused", func(h *harness) {
 			got := h.run(change.name+"-refused", exec.Command(binary, args...))
 			if code, ok := got.err.(*exec.ExitError); !ok ||

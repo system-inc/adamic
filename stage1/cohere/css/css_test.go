@@ -139,10 +139,13 @@ func askedCasesIn(test *testing.T, directory, oracle string) (string, string) {
 	if oracle == "" {
 		oracle = oracles.ComparisonOracle(test, false)
 	}
-	cmd := bounded(test, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
-	cmd.Dir = packageDirectory
-	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	command := bounded(test, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+	command.Dir = packageDirectory
+	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
+	output, combinedOutputError := childguard.CombinedOutput(
+		command,
+		childguard.Options{Stall: oracles.ChildStallLimit},
+	)
 	if combinedOutputError != nil {
 		test.Fatalf("Go oracle: %v\n%s", combinedOutputError, output)
 	}

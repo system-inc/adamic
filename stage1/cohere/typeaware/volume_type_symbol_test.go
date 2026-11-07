@@ -267,7 +267,7 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 
 func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {
 	test, repository := h.t, h.repository
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	// Every root and the config are product inputs; Go-oracle bytes cover its
 	// embedded standard-library declarations and compiled production rules.
 	oracleHash, typeSymbolFileHashError := typeSymbolFileHash(oracle)
@@ -288,12 +288,12 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		Flags:     flags,
 		Toolchain: []string{buildcache.Tool("go", "version")},
 	}
-	outputDir := buildcache.Product(test, outputInputs, func(dir string) error {
+	outputDirectory := buildcache.Product(test, outputInputs, func(dir string) error {
 		// The oracle's run is the product's fill, as typeSymbolCommand's builds are: no clock of its own, the unit
 		// bounds it, so a builder's load never decides the product (#h4hrxpe).
 		cancelContext, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		command := typeSymbolExecContext(cancelContext, oracle, config, manifest)
+		command := typeSymbolExecContext(cancelContext, oracle, configuration, manifest)
 		command.Dir = repository
 		// Read through childguard.Capture for typeSymbolCommand's reason: a WaitDelay could fail a run that had
 		// finished but was slow to drain.
@@ -304,7 +304,7 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
 		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(string(stdout))), 0444)
 	})
-	truthBytes, readError := os.ReadFile(filepath.Join(outputDir, "findings"))
+	truthBytes, readError := os.ReadFile(filepath.Join(outputDirectory, "findings"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -329,10 +329,10 @@ func TestVolumeTypeSymbol_000(test *testing.T) {
 	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	oracle := typeSymbolOracle(h)
 	mutant := typeSymbolNativeProduct(h)
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	paths, manifest := typeSymbolFixtures(h)
 	truth := typeSymbolTruth(h, oracle, paths, manifest)
-	observed := typeSymbolMust(h, "type-symbol-run", mutant, config, manifest)
+	observed := typeSymbolMust(h, "type-symbol-run", mutant, configuration, manifest)
 	if typeSymbolSurvivedError := typeSymbolSurvived(observed, truth); typeSymbolSurvivedError != nil {
 		test.Fatal(typeSymbolSurvivedError)
 	}

@@ -113,8 +113,8 @@ func transact(test *testing.T, dir, url, trust, token string, req request, body 
 	test.Helper()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
-	cmd := exec.CommandContext(timeoutContext, os.Args[0], "-test.run=^TestHelperProcess$")
-	cmd.Env = helperEnv(dir, url, trust, token)
+	command := exec.CommandContext(timeoutContext, os.Args[0], "-test.run=^TestHelperProcess$")
+	command.Env = helperEnv(dir, url, trust, token)
 	var input, stderr, stdout bytes.Buffer
 	enc := json.NewEncoder(&input)
 	_ = enc.Encode(req)
@@ -122,10 +122,10 @@ func transact(test *testing.T, dir, url, trust, token string, req request, body 
 		_ = enc.Encode(body)
 	}
 	_ = enc.Encode(request{ID: 99, Command: "close"})
-	cmd.Stdin = &input
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	if runError := cmd.Run(); runError != nil {
+	command.Stdin = &input
+	command.Stdout = &stdout
+	command.Stderr = &stderr
+	if runError := command.Run(); runError != nil {
 		test.Fatalf("helper: %v: %s", runError, stderr.String())
 	}
 	dec := json.NewDecoder(&stdout)
@@ -281,20 +281,20 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 	if pathError != nil {
 		test.Skipf("no go command: %v", pathError)
 	}
-	cmd := exec.CommandContext(timeoutContext, goCommand, args...)
-	cmd.Dir = dir
+	command := exec.CommandContext(timeoutContext, goCommand, args...)
+	command.Dir = dir
 	var settings []string
 	for key, value := range helperSettings(test.TempDir(), url, "main", token) {
 		settings = append(settings, key+"="+value)
 	}
-	cmd.Env = toolchain.Env(append(
+	command.Env = toolchain.Env(append(
 		settings,
 		"GOCACHE="+test.TempDir(),
 		"GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]),
 		"GOMAXPROCS=4",
 	)...)
 	start := time.Now()
-	b, combinedOutputError := cmd.CombinedOutput()
+	b, combinedOutputError := command.CombinedOutput()
 	elapsed := time.Since(start)
 	if combinedOutputError != nil {
 		test.Fatalf("go %v: %v\n%s", args, combinedOutputError, b)

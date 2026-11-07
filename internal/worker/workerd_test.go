@@ -131,10 +131,10 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 			fmt.Sprintf("(name = %s, %s = embed %s)", strconv.Quote(name), kind, strconv.Quote(name)),
 		)
 	}
-	config := `using Workerd = import "/workerd/workerd.capnp";
+	configuration := `using Workerd = import "/workerd/workerd.capnp";
 const config :Workerd.Config = (services = [(name = "compute", worker = (modules = [` + strings.Join(modules, ",") + `], compatibilityDate = "2026-10-07"))], sockets = [(name = "http", address = ` + strconv.Quote(address) + `, http = (), service = "compute")]);`
-	configPath := filepath.Join(scratch, "config.capnp")
-	if writeError := os.WriteFile(configPath, []byte(config), 0600); writeError != nil {
+	configurationPath := filepath.Join(scratch, "config.capnp")
+	if writeError := os.WriteFile(configurationPath, []byte(configuration), 0600); writeError != nil {
 		return nil, writeError
 	}
 	logPath := filepath.Join(scratch, "server.log")
@@ -147,7 +147,7 @@ const config :Workerd.Config = (services = [(name = "compute", worker = (modules
 		log.Close()
 		return nil, pipeError
 	}
-	command := exec.Command(binary, "serve", configPath, "--control-fd", "3")
+	command := exec.Command(binary, "serve", configurationPath, "--control-fd", "3")
 	command.ExtraFiles = []*os.File{controlWrite}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Stdout, command.Stderr = log, log

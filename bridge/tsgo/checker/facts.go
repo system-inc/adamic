@@ -412,11 +412,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 				}
 			} else {
 				for _, signature := range c.GetSignaturesOfType(subject, checker.SignatureKindCall) {
-					params := checker.Signature_parameters(signature)
-					if len(params) > 0 {
+					parameters := checker.Signature_parameters(signature)
+					if len(parameters) > 0 {
 						roots = append(
 							roots,
-							g.add(checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(params[0], node))),
+							g.add(checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(parameters[0], node))),
 						)
 					}
 				}

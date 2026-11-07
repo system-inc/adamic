@@ -56,11 +56,11 @@ func TestFactEncoding(test *testing.T) {
 func TestShapeAndNameFacts(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	config := filepath.Join(directory, "tsconfig.json")
+	configuration := filepath.Join(directory, "tsconfig.json")
 	file := filepath.Join(directory, "file.ts")
 	source := "declare const value: \"世界🌍\";\nvalue;\n"
 	if writeError := os.WriteFile(
-		config,
+		configuration,
 		[]byte(`{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`),
 		0600,
 	); writeError != nil {
@@ -69,7 +69,7 @@ func TestShapeAndNameFacts(test *testing.T) {
 	if writeError := os.WriteFile(file, []byte(source), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	program, openError := Open(config, []string{file})
+	program, openError := Open(configuration, []string{file})
 	if openError != nil {
 		test.Fatal(openError)
 	}

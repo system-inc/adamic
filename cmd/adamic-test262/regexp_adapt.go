@@ -56,7 +56,12 @@ func adaptRegExpStringCollector(source string, counts map[string]int) string {
 	t := tokenize(source)
 	var edits []edit
 	for i := 0; i+5 < len(t); i++ {
-		if (t[i].text != "const" && t[i].text != "let") || t[i+1].kind != "ident" || t[i+2].text != "=" || t[i+3].text != "[" || t[i+4].text != "]" || t[i+5].text != ";" {
+		if (t[i].text != "const" && t[i].text != "let") ||
+			t[i+1].kind != "ident" ||
+			t[i+2].text != "=" ||
+			t[i+3].text != "[" ||
+			t[i+4].text != "]" ||
+			t[i+5].text != ";" {
 			continue
 		}
 		name := t[i+1].text
@@ -71,7 +76,11 @@ func adaptRegExpStringCollector(source string, counts map[string]int) string {
 			}
 			switch t[j+2].text {
 			case "length":
-				if j+3 < len(t) && (t[j+3].text == "=" || t[j+3].text == "++" || t[j+3].text == "--" || t[j+3].text == "+=" || t[j+3].text == "-=") {
+				if j+3 < len(t) && (t[j+3].text == "=" ||
+					t[j+3].text == "++" ||
+					t[j+3].text == "--" ||
+					t[j+3].text == "+=" ||
+					t[j+3].text == "-=") {
 					valid = false
 				}
 			case "push", "join":
@@ -114,7 +123,16 @@ func adaptRegExpCodePoint(source string, counts map[string]int) string {
 	}
 	var edits []edit
 	for i := 0; i+8 < len(t); i++ {
-		if t[i].kind != "ident" || (i > 0 && (t[i-1].text == "." || t[i-1].text == "?.")) || t[i+1].text != "." || t[i+2].text != "codePointAt" || t[i+3].text != "(" || t[i+4].text != "0" || t[i+5].text != ")" || t[i+6].text != "." || t[i+7].text != "toString" || t[i+8].text != "(" {
+		if t[i].kind != "ident" ||
+			(i > 0 && (t[i-1].text == "." || t[i-1].text == "?.")) ||
+			t[i+1].text != "." ||
+			t[i+2].text != "codePointAt" ||
+			t[i+3].text != "(" ||
+			t[i+4].text != "0" ||
+			t[i+5].text != ")" ||
+			t[i+6].text != "." ||
+			t[i+7].text != "toString" ||
+			t[i+8].text != "(" {
 			continue
 		}
 		edits = append(edits, edit{t[i].start, t[i+5].end, "requiredCodePoint(" + source[t[i].start:t[i+5].end] + ")"})
@@ -130,7 +148,12 @@ func adaptRegExpHarnessRecord(source string, counts map[string]int) string {
 	t := tokenize(source)
 	var edits []edit
 	for i := 1; i < len(t); i++ {
-		if (t[i].text == "testPropertyOfStrings" || t[i].text == "testExtendedCharacterClass") && (t[i-1].text == "function" || t[i-1].text == "const" || t[i-1].text == "let" || t[i-1].text == "var" || (i+1 < len(t) && t[i+1].text == "=")) {
+		if (t[i].text == "testPropertyOfStrings" || t[i].text == "testExtendedCharacterClass") &&
+			(t[i-1].text == "function" ||
+				t[i-1].text == "const" ||
+				t[i-1].text == "let" ||
+				t[i-1].text == "var" ||
+				(i+1 < len(t) && t[i+1].text == "=")) {
 			return source
 		}
 	}
@@ -218,7 +241,9 @@ func adaptRegExpNull(source string, counts map[string]int) string {
 	tokens := tokenize(source)
 	var edits []edit
 	for i := 0; i+3 < len(tokens); i++ {
-		if tokens[i].text != "assert" || tokens[i+1].text != "." || (tokens[i+2].text != "sameValue" && tokens[i+2].text != "notSameValue") {
+		if tokens[i].text != "assert" ||
+			tokens[i+1].text != "." ||
+			(tokens[i+2].text != "sameValue" && tokens[i+2].text != "notSameValue") {
 			continue
 		}
 		args, end, ok := tokenArguments(tokens, i+3)
@@ -242,7 +267,11 @@ func adaptRegExpNull(source string, counts map[string]int) string {
 		if tokens[i+2].text == "notSameValue" {
 			op = " !== null"
 		}
-		replacement := "assert.sameValue((" + source[tokens[other[0]].start:tokens[other[1]-1].end] + ")" + op + ", true"
+		replacement := "assert.sameValue((" +
+			source[tokens[other[0]].start:tokens[other[1]-1].end] +
+			")" +
+			op +
+			", true"
 		if len(args) == 3 {
 			a := args[2]
 			replacement += ", " + source[tokens[a[0]].start:tokens[a[1]-1].end]
@@ -283,7 +312,18 @@ func adaptRegExpExpected(source string, counts map[string]int) string {
 		}
 		a := end + 2
 		b := end + 8
-		if t[a].text != name || t[a+1].text != "." || t[a+2].text != "index" || t[a+3].text != "=" || t[a+4].kind != "num" || t[a+5].text != ";" || t[b].text != name || t[b+1].text != "." || t[b+2].text != "input" || t[b+3].text != "=" || t[b+4].kind != "str" || t[b+5].text != ";" {
+		if t[a].text != name ||
+			t[a+1].text != "." ||
+			t[a+2].text != "index" ||
+			t[a+3].text != "=" ||
+			t[a+4].kind != "num" ||
+			t[a+5].text != ";" ||
+			t[b].text != name ||
+			t[b+1].text != "." ||
+			t[b+2].text != "input" ||
+			t[b+3].text != "=" ||
+			t[b+4].kind != "str" ||
+			t[b+5].text != ";" {
 			continue
 		}
 		valid := true
@@ -313,7 +353,13 @@ func adaptRegExpExpected(source string, counts map[string]int) string {
 		if !valid {
 			continue
 		}
-		replacement := "{ entries: " + source[t[i+3].start:t[end].end] + ", index: " + t[a+4].text + ", input: " + t[b+4].text + " }"
+		replacement := "{ entries: " +
+			source[t[i+3].start:t[end].end] +
+			", index: " +
+			t[a+4].text +
+			", input: " +
+			t[b+4].text +
+			" }"
 		edits = append(edits, edit{t[i+3].start, t[b+5].end, replacement + ";"})
 		edits = append(edits, reads...)
 		counts["regex-expected-metadata"]++
@@ -336,27 +382,35 @@ func adaptRegExpReads(source string, counts map[string]int) string {
 	}
 	t := parsed.toks
 	var edits []edit
-	for _, ref := range parsed.refs {
-		binding := lookup(ref.scope, ref.name)
-		if binding == nil || binding.poison || len(binding.assigns) != 0 || binding.init == nil || binding.init.op != "call" || binding.init.left == nil || binding.init.left.op != "member" {
+	for _, reference := range parsed.refs {
+		binding := lookup(reference.scope, reference.name)
+		if binding == nil ||
+			binding.poison ||
+			len(binding.assigns) != 0 ||
+			binding.init == nil ||
+			binding.init.op != "call" ||
+			binding.init.left == nil ||
+			binding.init.left.op != "member" {
 			continue
 		}
 		method := binding.init.left.prop
 		if method != "exec" && method != "match" {
 			continue
 		}
-		j := ref.at
+		j := reference.at
 		if j < 0 || j+1 >= len(t) || (t[j+1].text != "." && t[j+1].text != "[") {
 			continue
 		}
-		if t[j+1].text == "." && j+2 < len(t) && !strings.Contains("|length|index|input|groups|indices|", "|"+t[j+2].text+"|") {
+		if t[j+1].text == "." &&
+			j+2 < len(t) &&
+			!strings.Contains("|length|index|input|groups|indices|", "|"+t[j+2].text+"|") {
 			continue
 		}
 		fn := "requiredRegexExec"
 		if method == "match" {
 			fn = "requiredRegexMatch"
 		}
-		edits = append(edits, edit{t[j].start, t[j].end, fn + "(" + ref.name + ")"})
+		edits = append(edits, edit{t[j].start, t[j].end, fn + "(" + reference.name + ")"})
 		counts["regex-checked-match-read"]++
 	}
 	return applyEdits(source, edits)
@@ -367,7 +421,10 @@ func regexpPristine(tokens []token) bool {
 		if t.text != "RegExp" {
 			continue
 		}
-		if i > 0 && (strings.Contains("|const|let|var|function|class|.|...|", "|"+tokens[i-1].text+"|") || (strings.Contains("|[|{|:|", "|"+tokens[i-1].text+"|") && (i+1 >= len(tokens) || tokens[i+1].text != "(")) || ((tokens[i-1].text == "(" || tokens[i-1].text == ",") && (i+1 >= len(tokens) || tokens[i+1].text != "("))) {
+		if i > 0 && (strings.Contains("|const|let|var|function|class|.|...|", "|"+tokens[i-1].text+"|") ||
+			(strings.Contains("|[|{|:|", "|"+tokens[i-1].text+"|") &&
+				(i+1 >= len(tokens) || tokens[i+1].text != "(")) ||
+			((tokens[i-1].text == "(" || tokens[i-1].text == ",") && (i+1 >= len(tokens) || tokens[i+1].text != "("))) {
 			return false
 		}
 		if i+1 < len(tokens) {

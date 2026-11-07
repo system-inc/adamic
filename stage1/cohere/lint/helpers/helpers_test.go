@@ -23,23 +23,23 @@ import (
 
 func run(test *testing.T, dir, name string, args ...string) []byte {
 	test.Helper()
-	cmd := exec.Command(name, args...)
-	cmd.Dir = dir
+	command := exec.Command(name, args...)
+	command.Dir = dir
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
 		// in dir with PWD to match. A program a test built (the Go oracle, the native build) runs as named, with this
 		// process's environment.
-		cmd = toolchain.CommandIn(dir, name, args...)
+		command = toolchain.CommandIn(dir, name, args...)
 	}
 	f, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
 	}
 	defer f.Close()
-	cmd.Stdout = f
+	command.Stdout = f
 	var stderr bytes.Buffer
-	cmd.Stderr = &stderr
-	if runError := childguard.Run(cmd, childguard.Options{}); runError != nil {
+	command.Stderr = &stderr
+	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
 		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}
 	if stderr.Len() != 0 {
@@ -225,21 +225,21 @@ func TestMessageRefusalsMatchGo(test *testing.T) {
 			{"node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog},
 		} {
 			// Refusals are silent until their final panic; protect startup with FirstOutput.
-			cmd := exec.Command(command[0], command[1:]...)
+			osCommand := exec.Command(command[0], command[1:]...)
 			if !strings.ContainsRune(
 				command[0],
 				filepath.Separator,
 			) { // node, through internal/toolchain; the native build runs as named
-				cmd = toolchain.Command(command[0], command[1:]...)
+				osCommand = toolchain.Command(command[0], command[1:]...)
 			}
 			output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 			if temporaryFileError != nil {
 				test.Fatal(temporaryFileError)
 			}
-			cmd.Stdout = output
+			osCommand.Stdout = output
 			var stderr bytes.Buffer
-			cmd.Stderr = &stderr
-			runError := childguard.Run(cmd, childguard.Options{})
+			osCommand.Stderr = &stderr
+			runError := childguard.Run(osCommand, childguard.Options{})
 			output.Close()
 			exit, ok := runError.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stderr.String() != expected {

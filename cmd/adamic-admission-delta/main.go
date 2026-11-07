@@ -223,7 +223,7 @@ func run(args []string) error {
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
-	corpusDir := flags.String("corpus", "", "ad hoc corpus directory relative to head")
+	corpusDirectory := flags.String("corpus", "", "ad hoc corpus directory relative to head")
 	corpusFilter := flags.String("corpus-filter", "", "comma-separated corpus names; diff is always included")
 	shard := flags.String("shard", "", "partition non-diff inputs as i/N, 1-based")
 	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
@@ -371,9 +371,9 @@ func run(args []string) error {
 		if err != nil {
 			return err
 		}
-	} else if *corpusDir != "" {
+	} else if *corpusDirectory != "" {
 		c := corpus{Name: "adhoc", Programs: []program{}}
-		cleanCorpus := filepath.Clean(*corpusDir)
+		cleanCorpus := filepath.Clean(*corpusDirectory)
 		if filepath.IsAbs(cleanCorpus) || cleanCorpus == ".." || strings.HasPrefix(cleanCorpus, "../") {
 			return fmt.Errorf("corpus must be inside head checkout")
 		}

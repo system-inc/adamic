@@ -100,7 +100,7 @@ func malformedEventsBuildProduct(
 		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: []string{runtime.Version()},
 	}
-	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
+	loweredDirectory := buildcache.Product(test, inputs, func(dir string) error {
 		program, loweredResultError := loweredResult(main)
 		if loweredResultError != nil {
 			return loweredResultError
@@ -115,7 +115,7 @@ func malformedEventsBuildProduct(
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
 	if lowerOnly {
-		return "", filepath.Join(loweredDir, "program.mjs")
+		return "", filepath.Join(loweredDirectory, "program.mjs")
 	}
 	options := native.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
@@ -130,14 +130,14 @@ func malformedEventsBuildProduct(
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeDir := buildcache.Product(test, inputs, func(dir string) error {
-		source, readError := os.ReadFile(filepath.Join(loweredDir, "main.c"))
+	nativeDirectory := buildcache.Product(test, inputs, func(dir string) error {
+		source, readError := os.ReadFile(filepath.Join(loweredDirectory, "main.c"))
 		if readError != nil {
 			return readError
 		}
 		return malformedEventsNativeBuild(callerContext, string(source), filepath.Join(dir, "port"), options)
 	})
-	return filepath.Join(nativeDir, "port"), filepath.Join(loweredDir, "program.mjs")
+	return filepath.Join(nativeDirectory, "port"), filepath.Join(loweredDirectory, "program.mjs")
 }
 
 // Each top-level shard is visible to go test -list and the test-only gate.

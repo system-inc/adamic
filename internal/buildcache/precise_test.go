@@ -4171,8 +4171,8 @@ func TestEveryLeanCallersCensusIsATestOfItsPackage(test *testing.T) {
 // censusMissing says why test, one a census names, isn't a test pkg's test binary runs on the line (linux/amd64), under
 // root, or "" when it is one: a func with test's name, no receiver, no type parameters and one *testing.T parameter, in
 // a _test.go file of pkg's directory that go builds there.
-func censusMissing(root, pkg, test string) string {
-	directory := filepath.Join(root, filepath.FromSlash(pkg))
+func censusMissing(root, packagePath, test string) string {
+	directory := filepath.Join(root, filepath.FromSlash(packagePath))
 	entries, readDirectoryError := os.ReadDir(directory)
 	if readDirectoryError != nil {
 		return "is in no package there: " + readDirectoryError.Error()

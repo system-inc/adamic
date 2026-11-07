@@ -1018,36 +1018,36 @@ func (parser *parser) parseFunction(statement bool) *fnInfo {
 func (parser *parser) parseParamList(info *fnInfo, fnScope *scope) {
 	parser.expect("(")
 	for !parser.failed && !parser.is(")") && !parser.eof() {
-		param := param{}
+		parameter := param{}
 		if parser.is("...") {
 			parser.next()
-			param.rest = true
+			parameter.rest = true
 		}
 		if parser.is("{") || parser.is("[") {
-			param.pattern = true
+			parameter.pattern = true
 			parser.skipBalanced(parser.peek().text, matchingClose(parser.peek().text))
 		} else if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
 			name := parser.next()
-			param.name = name.text
-			param.nameEnd = name.end
+			parameter.name = name.text
+			parameter.nameEnd = name.end
 			if parser.is(":") {
-				param.typed = true
+				parameter.typed = true
 				parser.next()
 				parser.skipType()
 			}
 			if parser.is("=") {
-				param.hasDefault = true
+				parameter.hasDefault = true
 				parser.next()
 				parser.parseAssign(false)
 			}
-			if param.name != "" {
-				fnScope.names[param.name] = &binding{kind: "param", name: param.name}
+			if parameter.name != "" {
+				fnScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
 			}
 		} else {
 			parser.fail()
 			break
 		}
-		info.params = append(info.params, param)
+		info.params = append(info.params, parameter)
 		if parser.is(",") {
 			parser.next()
 			continue
@@ -1175,12 +1175,12 @@ func (parser *parser) parseConditional(noIn bool) *texpr {
 	return &texpr{op: "ternary", left: yes, right: no, elems: []*texpr{expr}}
 }
 
-func (parser *parser) parseBinary(noIn bool, min int) *texpr {
+func (parser *parser) parseBinary(noIn bool, minimum int) *texpr {
 	left := parser.parseUnary()
 	for !parser.failed {
 		op := parser.peek()
 		prec := precedence(op.text, noIn)
-		if prec < min {
+		if prec < minimum {
 			break
 		}
 		parser.next()
@@ -1624,37 +1624,37 @@ func (parser *parser) looksArrow() bool {
 func (parser *parser) parseArrow() *texpr {
 	parser.next()
 	fnScope := parser.push("func")
-	var params []param
+	var parameters []param
 	for !parser.failed && !parser.is(")") && !parser.eof() {
-		param := param{}
+		parameter := param{}
 		if parser.is("...") {
 			parser.next()
-			param.rest = true
+			parameter.rest = true
 		}
 		if parser.is("[") || parser.is("{") {
-			param.pattern = true
+			parameter.pattern = true
 			open := parser.peek().text
 			parser.skipBalanced(open, matchingClose(open))
 		} else if parser.peek().kind == "ident" && !isKeyword(parser.peek().text) {
 			name := parser.next()
-			param.name = name.text
-			param.nameEnd = name.end
+			parameter.name = name.text
+			parameter.nameEnd = name.end
 			if parser.is(":") {
-				param.typed = true
+				parameter.typed = true
 				parser.next()
 				parser.skipType()
 			}
 			if parser.is("=") {
-				param.hasDefault = true
+				parameter.hasDefault = true
 				parser.next()
 				parser.parseAssign(false)
 			}
-			fnScope.names[param.name] = &binding{kind: "param", name: param.name}
+			fnScope.names[parameter.name] = &binding{kind: "param", name: parameter.name}
 		} else {
 			parser.fail()
 			break
 		}
-		params = append(params, param)
+		parameters = append(parameters, parameter)
 		if parser.is(",") {
 			parser.next()
 			continue
@@ -1662,11 +1662,11 @@ func (parser *parser) parseArrow() *texpr {
 		break
 	}
 	parser.expect(")")
-	return parser.finishArrow(params, fnScope)
+	return parser.finishArrow(parameters, fnScope)
 }
 
-func (parser *parser) finishArrow(params []param, fnScope *scope) *texpr {
-	info := &fnInfo{params: params, scope: fnScope}
+func (parser *parser) finishArrow(parameters []param, fnScope *scope) *texpr {
+	info := &fnInfo{params: parameters, scope: fnScope}
 	parser.expect("=>")
 	if parser.is("{") {
 		parser.next()
@@ -1755,36 +1755,36 @@ func (parser *parser) declSafe(decl *varDecl) bool {
 	if decls != 1 {
 		return false
 	}
-	for _, ref := range parser.refs {
-		binding := lookup(ref.scope, ref.name)
+	for _, reference := range parser.refs {
+		binding := lookup(reference.scope, reference.name)
 		if binding != decl.binding {
 			continue
 		}
-		if ref.inInit == decl.binding {
+		if reference.inInit == decl.binding {
 			return false
 		}
 		// A use whose token sits before the declarator is the var/let split: var reads undefined,
 		// let is in the temporal dead zone. That includes a closure written above the declarator.
-		if ref.at >= 0 && ref.at < decl.nameAt {
+		if reference.at >= 0 && reference.at < decl.nameAt {
 			return false
 		}
 		// let is scoped to the block that holds the declarator. A read from outside that block,
 		// including from a function that is not inside it, would stop seeing the binding.
-		if decl.block != nil && !scopeWithin(ref.scope, decl.block) {
+		if decl.block != nil && !scopeWithin(reference.scope, decl.block) {
 			return false
 		}
-		if parser.capturedAcrossLoop(decl, ref) {
+		if parser.capturedAcrossLoop(decl, reference) {
 			return false
 		}
 	}
 	return true
 }
 
-func (parser *parser) capturedAcrossLoop(decl *varDecl, ref reference) bool {
-	if ref.scope == nil || ref.scope.fn == decl.fn {
+func (parser *parser) capturedAcrossLoop(decl *varDecl, reference reference) bool {
+	if reference.scope == nil || reference.scope.fn == decl.fn {
 		return false
 	}
-	for scope := ref.scope; scope != nil && scope != decl.fn; scope = scope.parent {
+	for scope := reference.scope; scope != nil && scope != decl.fn; scope = scope.parent {
 		if scope.kind != "loop" {
 			continue
 		}
@@ -1821,8 +1821,8 @@ func (parser *parser) annotateCallbacks() {
 		if len(inferences) == 0 {
 			continue
 		}
-		for index, param := range fn.params {
-			if param.name == "" || param.typed || param.rest || param.pattern || param.hasDefault {
+		for index, parameter := range fn.params {
+			if parameter.name == "" || parameter.typed || parameter.rest || parameter.pattern || parameter.hasDefault {
 				continue
 			}
 			var chosen *jtype
@@ -1848,10 +1848,13 @@ func (parser *parser) annotateCallbacks() {
 			if rendered == "" {
 				continue
 			}
-			parser.edits = append(parser.edits, edit{start: param.nameEnd, end: param.nameEnd, text: ": " + rendered})
+			parser.edits = append(
+				parser.edits,
+				edit{start: parameter.nameEnd, end: parameter.nameEnd, text: ": " + rendered},
+			)
 			parser.counts[adaptCallbackParam]++
 			if fn.scope != nil {
-				if binding := fn.scope.names[param.name]; binding != nil && binding.kind == "param" {
+				if binding := fn.scope.names[parameter.name]; binding != nil && binding.kind == "param" {
 					binding.typ = chosen
 				}
 			}

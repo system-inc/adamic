@@ -82,7 +82,7 @@ func (watched *watched) Write(p []byte) (int, error) {
 // Run starts an unstarted command in its own process group and waits for it.
 // Output is forwarded to the command's original writers (nil means discard).
 // Context commands also cancel the whole process group.
-func Run(cmd *exec.Cmd, options Options) error {
+func Run(command *exec.Cmd, options Options) error {
 	if options.FirstOutput == 0 {
 		options.FirstOutput = DefaultFirstOutput
 	}
@@ -95,52 +95,52 @@ func Run(cmd *exec.Cmd, options Options) error {
 	if options.FirstOutput < 0 || options.Stall < 0 || options.Ceiling < 0 {
 		return fmt.Errorf("childguard: durations must be positive")
 	}
-	if cmd.SysProcAttr == nil {
-		cmd.SysProcAttr = &syscall.SysProcAttr{}
+	if command.SysProcAttr == nil {
+		command.SysProcAttr = &syscall.SysProcAttr{}
 	}
-	cmd.SysProcAttr.Setpgid = true
-	cmd.SysProcAttr.Pgid = 0
-	if cmd.Cancel != nil {
-		cmd.Cancel = func() error {
-			if cmd.Process == nil {
+	command.SysProcAttr.Setpgid = true
+	command.SysProcAttr.Pgid = 0
+	if command.Cancel != nil {
+		command.Cancel = func() error {
+			if command.Process == nil {
 				return os.ErrProcessDone
 			}
-			killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 			if errors.Is(killError, syscall.ESRCH) {
 				return os.ErrProcessDone
 			}
 			return killError
 		}
 	}
-	originalOut, originalError := cmd.Stdout, cmd.Stderr
-	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalError }()
+	originalOut, originalError := command.Stdout, command.Stderr
+	defer func() { command.Stdout, command.Stderr = originalOut, originalError }()
 	start := time.Now()
 	a := &activity{last: start, progress: make(chan struct{}, 1)}
-	wrap := func(dst io.Writer) io.Writer {
-		if dst == nil {
-			dst = io.Discard
+	wrap := func(destination io.Writer) io.Writer {
+		if destination == nil {
+			destination = io.Discard
 		}
-		return &watched{dst: dst, activity: a}
+		return &watched{dst: destination, activity: a}
 	}
-	cmd.Stdout = wrap(originalOut)
+	command.Stdout = wrap(originalOut)
 	// Preserve exec's serialization when both streams share a writer.
 	if originalOut != nil && reflect.TypeOf(originalOut).Comparable() && originalOut == originalError {
-		cmd.Stderr = cmd.Stdout
+		command.Stderr = command.Stdout
 	} else {
-		cmd.Stderr = wrap(originalError)
+		command.Stderr = wrap(originalError)
 	}
-	if startError := cmd.Start(); startError != nil {
+	if startError := command.Start(); startError != nil {
 		return startError
 	}
 	if options.Started != nil {
-		options.Started(cmd.Process.Pid)
+		options.Started(command.Process.Pid)
 	}
 	if options.Unbounded {
-		return cmd.Wait()
+		return command.Wait()
 	}
 
 	done := make(chan error, 1)
-	go func() { done <- cmd.Wait() }()
+	go func() { done <- command.Wait() }()
 	timer := time.NewTimer(min(options.FirstOutput, options.Ceiling))
 	defer timer.Stop()
 	for {
@@ -172,7 +172,7 @@ func Run(cmd *exec.Cmd, options Options) error {
 				reason = "stalled"
 			}
 			if reason != "" {
-				if killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL); killError != nil {
+				if killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL); killError != nil {
 					return <-done
 				}
 				<-done
@@ -186,7 +186,7 @@ func Run(cmd *exec.Cmd, options Options) error {
 					Reason:      reason,
 					Window:      window,
 					FirstOutput: firstOutput,
-					Command:     cmd.Path,
+					Command:     command.Path,
 					Elapsed:     elapsed,
 					Load:        load,
 				}
@@ -206,9 +206,9 @@ func Run(cmd *exec.Cmd, options Options) error {
 // ctx bounds it: when ctx is done the group is killed, and a writer outside the group (one that left it with setsid)
 // ends the reads with ctx's error. A command bound to ctx should be exec.CommandContext with the same ctx. Its exit
 // status is err's, as cmd.Run reports it.
-func Capture(callerContext context.Context, cmd *exec.Cmd) (stdout, stderr []byte, captureError error) {
+func Capture(callerContext context.Context, command *exec.Cmd) (stdout, stderr []byte, captureError error) {
 	var out, diagnostic bytes.Buffer
-	captureToError := CaptureTo(callerContext, cmd, &out, &diagnostic)
+	captureToError := CaptureTo(callerContext, command, &out, &diagnostic)
 	return out.Bytes(), diagnostic.Bytes(), captureToError
 }
 
@@ -216,15 +216,15 @@ func Capture(callerContext context.Context, cmd *exec.Cmd) (stdout, stderr []byt
 // retention without a timer on either drain. Nil destinations discard output.
 // Destinations are written concurrently and must not share unsynchronized state.
 // A destination error is reported after draining the remainder to discard.
-func CaptureTo(callerContext context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (captureToError error) {
-	if cmd.Stdout != nil || cmd.Stderr != nil {
+func CaptureTo(callerContext context.Context, command *exec.Cmd, stdout, stderr io.Writer) (captureToError error) {
+	if command.Stdout != nil || command.Stderr != nil {
 		return fmt.Errorf("childguard: output already configured")
 	}
-	if cmd.SysProcAttr == nil {
-		cmd.SysProcAttr = &syscall.SysProcAttr{}
+	if command.SysProcAttr == nil {
+		command.SysProcAttr = &syscall.SysProcAttr{}
 	}
-	cmd.SysProcAttr.Setpgid = true
-	cmd.SysProcAttr.Pgid = 0
+	command.SysProcAttr.Setpgid = true
+	command.SysProcAttr.Pgid = 0
 	type pipe struct {
 		read, write *os.File
 		output      io.Writer
@@ -253,9 +253,9 @@ func CaptureTo(callerContext context.Context, cmd *exec.Cmd, stdout, stderr io.W
 	}
 	// *os.File writers go to the child as they are, so exec starts no copying of its own and Wait waits only for the
 	// process; this process's write ends close once the child holds its own.
-	cmd.Stdout, cmd.Stderr = pipes[0].write, pipes[1].write
-	defer func() { cmd.Stdout, cmd.Stderr = nil, nil }()
-	if startError := cmd.Start(); startError != nil {
+	command.Stdout, command.Stderr = pipes[0].write, pipes[1].write
+	defer func() { command.Stdout, command.Stderr = nil, nil }()
+	if startError := command.Start(); startError != nil {
 		closeAll()
 		return startError
 	}
@@ -274,12 +274,12 @@ func CaptureTo(callerContext context.Context, cmd *exec.Cmd, stdout, stderr io.W
 	}
 	finished := make(chan struct{})
 	go func() { reads.Wait(); close(finished) }()
-	stop := context.AfterFunc(callerContext, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
-	captureToError = cmd.Wait()
+	stop := context.AfterFunc(callerContext, func() { _ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL) })
+	captureToError = command.Wait()
 	stop()
 	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
 	// exactly the processes it left behind, and none when it left none.
-	_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+	_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	closeReads := func() {
 		for _, p := range pipes {
 			p.read.Close()
@@ -288,7 +288,7 @@ func CaptureTo(callerContext context.Context, cmd *exec.Cmd, stdout, stderr io.W
 	if held := captureEnd(callerContext, finished, closeReads); captureToError == nil && held != nil {
 		captureToError = fmt.Errorf(
 			"childguard: %s's output is still held by a process outside its group: %w",
-			cmd.Path,
+			command.Path,
 			held,
 		)
 	}
@@ -320,13 +320,13 @@ func captureEnd(callerContext context.Context, finished <-chan struct{}, closeRe
 }
 
 // CombinedOutput is Run with both streams captured in one buffer.
-func CombinedOutput(cmd *exec.Cmd, options Options) ([]byte, error) {
-	if cmd.Stdout != nil || cmd.Stderr != nil {
+func CombinedOutput(command *exec.Cmd, options Options) ([]byte, error) {
+	if command.Stdout != nil || command.Stderr != nil {
 		return nil, fmt.Errorf("childguard: output already configured")
 	}
 	var buffer bytes.Buffer
-	cmd.Stdout, cmd.Stderr = &buffer, &buffer
-	runError := Run(cmd, options)
-	cmd.Stdout, cmd.Stderr = nil, nil
+	command.Stdout, command.Stderr = &buffer, &buffer
+	runError := Run(command, options)
+	command.Stdout, command.Stderr = nil, nil
 	return buffer.Bytes(), runError
 }

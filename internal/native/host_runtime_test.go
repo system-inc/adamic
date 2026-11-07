@@ -38,34 +38,34 @@ func hostBuild(test *testing.T, source, output, directory string, options native
 }
 func hostRun(test *testing.T, env []string, program string, args ...string) leakcheck.Run {
 	test.Helper()
-	cmd := exec.Command(program, args...)
-	cmd.Env = append(
+	command := exec.Command(program, args...)
+	command.Env = append(
 		os.Environ(),
 		"ASAN_OPTIONS=detect_leaks=0",
 		"UBSAN_OPTIONS=halt_on_error=1",
 		"HOST_EMPTY=",
 		"HOST_VALUE=héllo 🌍",
 	)
-	cmd.Env = append(cmd.Env, env...)
+	command.Env = append(command.Env, env...)
 	// Test that executable identity doesn't trust invocation argv[0].
 	if filepath.Base(program) != "node" {
-		cmd.Args[0] = "forged-argv-zero"
+		command.Args[0] = "forged-argv-zero"
 	}
 	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
+	command.Stdout = &stdout
+	command.Stderr = &stderr
 	for _, value := range env {
 		if value == "HOST_MERGE=1" {
-			cmd.Stderr = &stdout
+			command.Stderr = &stdout
 		}
 	}
-	runError := cmd.Run()
+	runError := command.Run()
 	if runError != nil {
 		if _, ok := runError.(*exec.ExitError); !ok {
 			test.Fatal(runError)
 		}
 	}
-	return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: cmd.ProcessState.ExitCode()}
+	return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }
 func hostMutant(test *testing.T, file, before, after string) string {
 	test.Helper()
@@ -210,15 +210,15 @@ func runHostRuntimeContracts(test *testing.T, options native.Options) {
 		if mode == "exit" {
 			args = append(args, "2")
 		}
-		mergedEnv := append(append([]string{}, env...), "HOST_MERGE=1")
-		truth := hostRun(test, mergedEnv, "node", append([]string{oracle}, args...)...)
-		got := hostRun(test, mergedEnv, binary, args...)
+		mergedEnvironment := append(append([]string{}, env...), "HOST_MERGE=1")
+		truth := hostRun(test, mergedEnvironment, "node", append([]string{oracle}, args...)...)
+		got := hostRun(test, mergedEnvironment, binary, args...)
 		if got.ExitCode != truth.ExitCode || !bytes.Equal(got.Stdout, truth.Stdout) || len(got.Stderr) != 0 {
 			test.Fatalf("merged streams %s: native %+v Node %+v", mode, got, truth)
 		}
 	}
-	naturalEnv := append(append([]string{}, env...), "ASAN_OPTIONS=detect_leaks=1")
-	natural := hostRun(test, naturalEnv, binary, "natural")
+	naturalEnvironment := append(append([]string{}, env...), "ASAN_OPTIONS=detect_leaks=1")
+	natural := hostRun(test, naturalEnvironment, binary, "natural")
 	truth := hostRun(test, env, "node", oracle, "natural")
 	// A normal nonzero completion still runs LSan; compare its expected Node status directly.
 	// This does not broaden the shared helper's intentional-teardown exception.

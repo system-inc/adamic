@@ -90,7 +90,7 @@ func recoveryDependencies(test *testing.T, repo string) recoverySources {
 	if sources, ok := recoveryDiscovered.sources[repo]; ok {
 		return sources
 	}
-	cmd := toolchain.CommandIn(
+	command := toolchain.CommandIn(
 		repo,
 		"go",
 		"list",
@@ -101,7 +101,7 @@ func recoveryDependencies(test *testing.T, repo string) recoverySources {
 		"./internal/native",
 		"./internal/javascript",
 	)
-	output, outputError := cmd.Output()
+	output, outputError := command.Output()
 	if outputError != nil {
 		test.Fatal(outputError)
 	}
@@ -256,8 +256,8 @@ func recoveryStableNative(repo, directory, source string) error {
 	)
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
-	cmd := recoveryClang(work, args...)
-	if output, combinedOutputError := cmd.CombinedOutput(); combinedOutputError != nil {
+	command := recoveryClang(work, args...)
+	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		return fmt.Errorf("sanitized native build: %w: %s", combinedOutputError, output)
 	}
 	return nil
@@ -359,14 +359,14 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 			if c.source != "normal" {
 				args = []string{c.source[:1]}
 			}
-			cmd := exec.Command(filepath.Join(first, "port"), args...)
-			cmd.Env = append(
+			command := exec.Command(filepath.Join(first, "port"), args...)
+			command.Env = append(
 				os.Environ(),
 				"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1",
 				"LSAN_OPTIONS=exitcode=23",
 				"UBSAN_OPTIONS=halt_on_error=1",
 			)
-			output, combinedOutputError := cmd.CombinedOutput()
+			output, combinedOutputError := command.CombinedOutput()
 			if c.source == "normal" {
 				if combinedOutputError != nil || len(output) != 0 {
 					test.Fatalf("positive fixture: %v: %s", combinedOutputError, output)

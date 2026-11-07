@@ -9,19 +9,19 @@ import (
 func TestAdamicRootKeepsConfigDeclarations(test *testing.T) {
 	test.Parallel()
 	directory := test.TempDir()
-	config := filepath.Join(directory, "tsconfig.json")
+	configuration := filepath.Join(directory, "tsconfig.json")
 	declaration := filepath.Join(directory, "prelude.d.ts")
 	source := filepath.Join(directory, "program.a")
 	for path, text := range map[string]string{
-		config:      `{"compilerOptions":{"strict":true},"files":["prelude.d.ts"]}`,
-		declaration: `declare const ambient: "世界🌍";`,
-		source:      "ambient;\n",
+		configuration: `{"compilerOptions":{"strict":true},"files":["prelude.d.ts"]}`,
+		declaration:   `declare const ambient: "世界🌍";`,
+		source:        "ambient;\n",
 	} {
 		if writeError := os.WriteFile(path, []byte(text), 0600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
-	program, openError := Open(config, []string{source})
+	program, openError := Open(configuration, []string{source})
 	if openError != nil {
 		test.Fatal(openError)
 	}

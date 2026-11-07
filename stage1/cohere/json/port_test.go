@@ -455,26 +455,26 @@ func jsonPortTopShard(test *testing.T, target int) {
 	}
 	setup := time.Now()
 	oracle := jsonTopOracle(test)
-	loweredDir := jsonTopProduct(test, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
-	cBytes, readError := os.ReadFile(filepath.Join(loweredDir, "main.c"))
+	loweredDirectory := jsonTopProduct(test, "lowered", jsonLoweredPortInputs(), buildJSONLoweredPort)
+	cBytes, readError := os.ReadFile(filepath.Join(loweredDirectory, "main.c"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
 	c := string(cBytes)
-	releaseDir := jsonTopProduct(
+	releaseDirectory := jsonTopProduct(
 		test,
 		"release",
 		jsonNativePortInputs(c, false, jsonTopState.clangTools),
 		buildJSONReleasePort(c),
 	)
-	sanitizedDir := jsonTopProduct(
+	sanitizedDirectory := jsonTopProduct(
 		test,
 		"sanitized",
 		jsonNativePortInputs(c, true, jsonTopState.clangTools),
 		buildJSONSanitizedPort(c),
 	)
-	entry, script := filepath.Join(loweredDir, "main.ts"), filepath.Join(loweredDir, "program.mjs")
-	release, sanitized := filepath.Join(releaseDir, "port"), filepath.Join(sanitizedDir, "port")
+	entry, script := filepath.Join(loweredDirectory, "main.ts"), filepath.Join(loweredDirectory, "program.mjs")
+	release, sanitized := filepath.Join(releaseDirectory, "port"), filepath.Join(sanitizedDirectory, "port")
 	if artifacts := os.Getenv("ADAMIC_JSON_ARTIFACTS"); artifacts != "" {
 		if createDirectoryError := os.MkdirAll(artifacts, 0755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)

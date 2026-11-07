@@ -43,10 +43,10 @@ func w(test *testing.T, root, name, text string) {
 }
 
 // Copy a checkout's worktree (minus .git) into dst.
-func unpack(test *testing.T, src, dst string) {
+func unpack(test *testing.T, source, destination string) {
 	test.Helper()
-	filepath.WalkDir(src, func(p string, e os.DirEntry, pathError error) error {
-		rel, _ := filepath.Rel(src, p)
+	filepath.WalkDir(source, func(p string, e os.DirEntry, pathError error) error {
+		rel, _ := filepath.Rel(source, p)
 		if e.Name() == ".git" {
 			if e.IsDir() {
 				return filepath.SkipDir
@@ -57,7 +57,7 @@ func unpack(test *testing.T, src, dst string) {
 			return nil
 		}
 		data, _ := os.ReadFile(p)
-		w(test, dst, rel, string(data))
+		w(test, destination, rel, string(data))
 		return nil
 	})
 }

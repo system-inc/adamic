@@ -395,7 +395,7 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 	}()
 	h := volumeGuardPreparationHarness(test)
 	h.ctx = timeoutContext
-	config := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	manifest := volumeAgreementManifest(h)
 	sort.Strings(keys)
 	for _, key := range keys {
@@ -405,7 +405,7 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 			if key == "controls-asan" {
 				name = "volume-asan"
 			}
-			truth := volumeGuardCompare(h, key, products["oracle"], products[name], config, manifest)
+			truth := volumeGuardCompare(h, key, products["oracle"], products[name], configuration, manifest)
 			if key == "controls" {
 				for _, rule := range volumeRules {
 					if !bytes.Contains(truth.stdout, []byte("@typescript-eslint/"+strings.ReplaceAll(rule, "_", "-"))) {
@@ -415,16 +415,24 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 			}
 		case "released-handle":
 			probe := h.write("probe.ts", "x;\n")
-			got := volumeGuardRun(h, "released-handle", exec.Command(products["released-handle-native"], config, probe))
+			got := volumeGuardRun(
+				h,
+				"released-handle",
+				exec.Command(products["released-handle-native"], configuration, probe),
+			)
 			if exit, ok := got.err.(*exec.ExitError); !ok ||
 				exit.ExitCode() != 70 ||
 				string(got.stderr) != "adamic: panic: invalid or released checker handle\n" {
 				test.Fatalf("released program escaped: %v %s", got.err, got.stderr)
 			}
-			volumeGuardMust(h, "released-registry", exec.Command(products["released-registry-native"], config, probe))
+			volumeGuardMust(
+				h,
+				"released-registry",
+				exec.Command(products["released-registry-native"], configuration, probe),
+			)
 		default:
-			truth := volumeGuardMust(h, key+"-truth", exec.Command(products["oracle"], config, manifest))
-			got := volumeGuardMust(h, key+"-run", exec.Command(products[key+"-native"], config, manifest))
+			truth := volumeGuardMust(h, key+"-truth", exec.Command(products["oracle"], configuration, manifest))
+			got := volumeGuardMust(h, key+"-run", exec.Command(products[key+"-native"], configuration, manifest))
 			if volumeAgreementSurvivedError := volumeAgreementSurvived(
 				got,
 				truth,

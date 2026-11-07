@@ -314,11 +314,11 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	}
 	return names, nil
 }
-func children(pkg, parent string) ([]string, error) {
-	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
+func children(packagePath, parent string) ([]string, error) {
+	if strings.HasSuffix(packagePath, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
 		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
 	}
-	if strings.HasSuffix(pkg, "/internal/oracle") {
+	if strings.HasSuffix(packagePath, "/internal/oracle") {
 		switch parent {
 		case "TestInputAgreesWithNode":
 			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
@@ -333,10 +333,10 @@ func children(pkg, parent string) ([]string, error) {
 			return paths, globError
 		}
 	}
-	if strings.HasSuffix(pkg, "/stage1/cohere/css") && parent == "TestCSSPrinterAgreesWithGo" {
+	if strings.HasSuffix(packagePath, "/stage1/cohere/css") && parent == "TestCSSPrinterAgreesWithGo" {
 		return literalChildren("stage1/cohere/css/print_test.go", parent)
 	}
-	if strings.HasSuffix(pkg, "/stage1/cohere/lint") {
+	if strings.HasSuffix(packagePath, "/stage1/cohere/lint") {
 		switch parent {
 		case "TestMutants":
 			return literalChildren("stage1/cohere/lint/lint_test.go", parent)
@@ -344,7 +344,7 @@ func children(pkg, parent string) ([]string, error) {
 			return literalChildren("stage1/cohere/lint/volume_test.go", parent)
 		}
 	}
-	if strings.HasSuffix(pkg, "/internal/native") {
+	if strings.HasSuffix(packagePath, "/internal/native") {
 		switch parent {
 		case "TestNormalizeMatchesNode":
 			return literalChildren("internal/native/normalize_test.go", parent)
@@ -441,22 +441,22 @@ func makePlan(count int) (plan, error) {
 			tests[e.Package] = append(tests[e.Package], name)
 		}
 	}
-	for _, pkg := range strings.Split(packages, "\n") {
-		for _, testCase := range tests[pkg] {
-			names, childrenError := children(pkg, testCase)
+	for _, packagePath := range strings.Split(packages, "\n") {
+		for _, testCase := range tests[packagePath] {
+			names, childrenError := children(packagePath, testCase)
 			if childrenError != nil {
 				return p, childrenError
 			}
 			if len(names) == 0 {
-				p.Units = append(p.Units, unit{Package: pkg, Test: testCase})
+				p.Units = append(p.Units, unit{Package: packagePath, Test: testCase})
 			} else {
 				for _, name := range names {
-					p.Units = append(p.Units, unit{Package: pkg, Test: testCase + "/" + name})
+					p.Units = append(p.Units, unit{Package: packagePath, Test: testCase + "/" + name})
 				}
 			}
 		}
-		if len(tests[pkg]) == 0 {
-			p.Units = append(p.Units, unit{Package: pkg})
+		if len(tests[packagePath]) == 0 {
+			p.Units = append(p.Units, unit{Package: packagePath})
 		}
 	}
 
@@ -757,13 +757,13 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return createError
 	}
 	var commandStderr io.Writer = stderr
-	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
-		cmd := exec.Command(name, args...)
-		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
-		cmd.Stdout = w
-		cmd.Stderr = commandStderr
+	runCommand := func(name string, args []string, temporary string, w io.Writer) int {
+		command := exec.Command(name, args...)
+		command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+temporary)
+		command.Stdout = w
+		command.Stderr = commandStderr
 		t := time.Now()
-		runError := cmd.Run()
+		runError := command.Run()
 		code := 0
 		if runError != nil {
 			code = 1
@@ -774,7 +774,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		}
 		if name == "go" && len(args) > 0 && args[0] == "test" {
 			uncached := false
-			for _, v := range cmd.Env {
+			for _, v := range command.Env {
 				if strings.HasPrefix(v, "ADAMIC_GATE_UNCACHED=") {
 					uncached = v == "ADAMIC_GATE_UNCACHED=1"
 				}
@@ -826,8 +826,8 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		}
 	}
 	pkgs := []string{}
-	for pkg := range byPackage {
-		pkgs = append(pkgs, pkg)
+	for packagePath := range byPackage {
+		pkgs = append(pkgs, packagePath)
 	}
 	sort.Strings(pkgs)
 	fmt.Printf(
@@ -838,65 +838,68 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		free("/tmp"),
 		tmpfs("/tmp"),
 	)
-	for _, pkg := range pkgs {
-		packageDir := filepath.Join(out, "packages", shortHash(pkg))
-		key := checkpointKey(state, pkg, patterns(byPackage[pkg]))
+	for _, packagePath := range pkgs {
+		packageDirectory := filepath.Join(out, "packages", shortHash(packagePath))
+		key := checkpointKey(state, packagePath, patterns(byPackage[packagePath]))
 		if cleanupPackageScratchError := cleanupPackageScratch(
-			packageDir,
+			packageDirectory,
 			key,
 			root,
 		); cleanupPackageScratchError != nil {
 			return cleanupPackageScratchError
 		}
 		if resume {
-			saved, found, loadPackageError := loadPackage(packageDir, key, p, index, pkg)
+			saved, found, loadPackageError := loadPackage(packageDirectory, key, p, index, packagePath)
 			if loadPackageError != nil {
 				return loadPackageError
 			}
 			if found {
-				if appendFileError := appendFile(raw, filepath.Join(packageDir, "test.jsonl")); appendFileError != nil {
+				if appendFileError := appendFile(
+					raw,
+					filepath.Join(packageDirectory, "test.jsonl"),
+				); appendFileError != nil {
 					return appendFileError
 				}
 				if appendFileError := appendFile(
 					stderr,
-					filepath.Join(packageDir, "test.stderr"),
+					filepath.Join(packageDirectory, "test.stderr"),
 				); appendFileError != nil {
 					return appendFileError
 				}
 				s.Invocations = append(s.Invocations, saved.Invocations...)
-				fmt.Printf("resumed %s from complete log\n", pkg)
+				fmt.Printf("resumed %s from complete log\n", packagePath)
 				continue
 			}
 		}
-		if createDirectoryError := os.MkdirAll(packageDir, 0755); createDirectoryError != nil {
+		if createDirectoryError := os.MkdirAll(packageDirectory, 0755); createDirectoryError != nil {
 			return createDirectoryError
 		}
-		packageLog, err := os.Create(filepath.Join(packageDir, "test.jsonl.partial"))
+		packageLog, err := os.Create(filepath.Join(packageDirectory, "test.jsonl.partial"))
 		if err != nil {
 			return err
 		}
-		packageStderr, err := os.Create(filepath.Join(packageDir, "test.stderr.partial"))
+		packageStderr, err := os.Create(filepath.Join(packageDirectory, "test.stderr.partial"))
 		if err != nil {
 			packageLog.Close()
 			return err
 		}
-		tmp, err := os.MkdirTemp(root, "package-")
+		temporary, err := os.MkdirTemp(root, "package-")
 		if err != nil {
 			return err
 		}
-		if changeModeError := os.Chmod(tmp, 0755); changeModeError != nil {
+		if changeModeError := os.Chmod(temporary, 0755); changeModeError != nil {
 			return changeModeError
 		}
 		if atomicJsonError := atomicJSON(
-			filepath.Join(packageDir, "scratch.json"),
-			scratchRecord{Key: key, Path: tmp},
+			filepath.Join(packageDirectory, "scratch.json"),
+			scratchRecord{Key: key, Path: temporary},
 		); atomicJsonError != nil {
 			return atomicJsonError
 		}
 		first := len(s.Invocations)
 		commandStderr = io.MultiWriter(stderr, packageStderr)
-		for _, pattern := range patterns(byPackage[pkg]) {
-			runCommand("go", testArgs(pkg, pattern), tmp, io.MultiWriter(raw, packageLog))
+		for _, pattern := range patterns(byPackage[packagePath]) {
+			runCommand("go", testArgs(packagePath, pattern), temporary, io.MultiWriter(raw, packageLog))
 		}
 		commandStderr = stderr
 		err = errors.Join(packageLog.Sync(), packageStderr.Sync(), packageLog.Close(), packageStderr.Close())
@@ -904,45 +907,51 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			return err
 		}
 		if renameError := os.Rename(
-			filepath.Join(packageDir, "test.jsonl.partial"),
-			filepath.Join(packageDir, "test.jsonl"),
+			filepath.Join(packageDirectory, "test.jsonl.partial"),
+			filepath.Join(packageDirectory, "test.jsonl"),
 		); renameError != nil {
 			return renameError
 		}
 		if renameError := os.Rename(
-			filepath.Join(packageDir, "test.stderr.partial"),
-			filepath.Join(packageDir, "test.stderr"),
+			filepath.Join(packageDirectory, "test.stderr.partial"),
+			filepath.Join(packageDirectory, "test.stderr"),
 		); renameError != nil {
 			return renameError
 		}
-		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: s.Invocations[first:]}
-		if completePackageError := completePackage(packageDir, checkpoint, p, index, pkg); completePackageError != nil {
+		checkpoint := packageEvidence{Key: key, Package: packagePath, Invocations: s.Invocations[first:]}
+		if completePackageError := completePackage(
+			packageDirectory,
+			checkpoint,
+			p,
+			index,
+			packagePath,
+		); completePackageError != nil {
 			s.Errors = append(s.Errors, completePackageError.Error())
 		} else {
 			var fileDigestError error
-			checkpoint.LogDigest, fileDigestError = fileDigest(filepath.Join(packageDir, "test.jsonl"))
+			checkpoint.LogDigest, fileDigestError = fileDigest(filepath.Join(packageDirectory, "test.jsonl"))
 			if fileDigestError != nil {
 				return fileDigestError
 			}
-			checkpoint.StderrDigest, fileDigestError = fileDigest(filepath.Join(packageDir, "test.stderr"))
+			checkpoint.StderrDigest, fileDigestError = fileDigest(filepath.Join(packageDirectory, "test.stderr"))
 			if fileDigestError != nil {
 				return fileDigestError
 			}
 			if atomicJsonError := atomicJSON(
-				filepath.Join(packageDir, "complete.json"),
+				filepath.Join(packageDirectory, "complete.json"),
 				checkpoint,
 			); atomicJsonError != nil {
 				return atomicJsonError
 			}
 		}
 		if cleanupPackageScratchError := cleanupPackageScratch(
-			packageDir,
+			packageDirectory,
 			key,
 			root,
 		); cleanupPackageScratchError != nil {
 			s.Errors = append(s.Errors, cleanupPackageScratchError.Error())
 		}
-		fmt.Printf("finished %s free=%d bytes\n", pkg, free(root))
+		fmt.Printf("finished %s free=%d bytes\n", packagePath, free(root))
 	}
 	raw.Close()
 	stderr.Close()
@@ -1299,14 +1308,14 @@ func merge(dirs []string, out string) error {
 // a record's errors are the same bytes on every run (ranging over the maps would order them by Go's per-run hash seed).
 func invocationCountErrors(declared, observed map[string]int) []string {
 	var problems []string
-	for _, pkg := range sortedKeys(declared) {
-		if observed[pkg] != declared[pkg] {
-			problems = append(problems, "invocation/terminal count mismatch: "+pkg)
+	for _, packagePath := range sortedKeys(declared) {
+		if observed[packagePath] != declared[packagePath] {
+			problems = append(problems, "invocation/terminal count mismatch: "+packagePath)
 		}
 	}
-	for _, pkg := range sortedKeys(observed) {
-		if declared[pkg] != observed[pkg] {
-			problems = append(problems, "unrecorded package invocation: "+pkg)
+	for _, packagePath := range sortedKeys(observed) {
+		if declared[packagePath] != observed[packagePath] {
+			problems = append(problems, "unrecorded package invocation: "+packagePath)
 		}
 	}
 	return problems

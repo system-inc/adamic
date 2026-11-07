@@ -31,12 +31,19 @@ func Comments(test *testing.T) string {
 }
 
 // stock is the identical stock request in owners and finders; only the owner builds.
-func stock(test testing.TB, output, pkg string, arguments []string, environment ...string) string {
+func stock(test testing.TB, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	if producer {
-		return buildcache.GoBuildIn(test, "cohere", output, pkg, arguments, environment...)
+		return buildcache.GoBuildIn(test, "cohere", output, packagePath, arguments, environment...)
 	}
-	inputs, goBuildInInputsError := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs(
+		"cohere",
+		output,
+		packagePath,
+		arguments,
+		nil,
+		environment...,
+	)
 	if goBuildInInputsError != nil {
 		test.Fatal(goBuildInInputsError)
 	}

@@ -118,8 +118,8 @@ func TestAdaptVarToLet(test *testing.T) {
 
 func TestAdaptCallbackParam(test *testing.T) {
 	test.Parallel()
-	src := "function callbackfn(val, idx, obj) {\n  return val;\n}\nvar arr = [1, 2, 3];\narr.forEach(callbackfn);\n"
-	got := adaptSource(src)
+	source := "function callbackfn(val, idx, obj) {\n  return val;\n}\nvar arr = [1, 2, 3];\narr.forEach(callbackfn);\n"
+	got := adaptSource(source)
 	if !strings.Contains(got.Source, "function callbackfn(val: number, idx: number, obj: number[])") {
 		test.Fatalf("annotation missing:\n%s", got.Source)
 	}

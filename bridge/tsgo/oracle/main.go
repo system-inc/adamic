@@ -30,7 +30,7 @@ func run() error {
 	if len(os.Args) < 3 {
 		return fmt.Errorf("usage: oracle tsconfig manifest [root files...]")
 	}
-	configPath, absolutePathError := filepath.Abs(os.Args[1])
+	configurationPath, absolutePathError := filepath.Abs(os.Args[1])
 	if absolutePathError != nil {
 		return absolutePathError
 	}
@@ -41,27 +41,29 @@ func run() error {
 	start := time.Now()
 	fs := bundled.WrapFS(osvfs.FS())
 	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
-		tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)),
+	configuration, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(
+		tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configurationPath)),
 		nil,
 		nil,
 		fs,
 		nil,
 	)
-	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
-		return fmt.Errorf("cannot parse config %s", configPath)
+	if configuration == nil || len(diagnostics) > 0 || len(configuration.Errors) > 0 {
+		return fmt.Errorf("cannot parse config %s", configurationPath)
 	}
 	if len(os.Args) > 3 {
 		roots := []tspath.RootedFilePath{}
 		for _, root := range os.Args[3:] {
 			if !filepath.IsAbs(root) {
-				root = filepath.Join(filepath.Dir(configPath), root)
+				root = filepath.Join(filepath.Dir(configurationPath), root)
 			}
 			roots = append(roots, tspath.RootedFilePathFromAbsolute(filepath.ToSlash(root)))
 		}
-		config = config.WithFileNames(roots)
+		configuration = configuration.WithFileNames(roots)
 	}
-	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	program := compiler.NewProgram(
+		compiler.ProgramOptions{Config: configuration, Host: host, SingleThreaded: core.TSTrue},
+	)
 	loadTime := time.Since(start)
 	queryTime := time.Duration(0)
 	count := 0

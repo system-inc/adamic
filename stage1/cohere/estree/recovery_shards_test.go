@@ -249,11 +249,11 @@ func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode
 	if planted >= len(cases) {
 		planted = len(cases) - 1
 	}
-	config := recoveryProof{Count: count, Planted: planted, Mode: mode}
+	configuration := recoveryProof{Count: count, Planted: planted, Mode: mode}
 	for _, c := range cases {
-		config.IDs = append(config.IDs, c.id)
+		configuration.IDs = append(configuration.IDs, c.id)
 	}
-	data, encodeError := json.Marshal(config)
+	data, encodeError := json.Marshal(configuration)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
@@ -284,20 +284,20 @@ func TestRecoveryShardProofChild(test *testing.T) {
 	if data == "" {
 		return
 	}
-	var config recoveryProof
-	if decodeError := json.Unmarshal([]byte(data), &config); decodeError != nil {
+	var configuration recoveryProof
+	if decodeError := json.Unmarshal([]byte(data), &configuration); decodeError != nil {
 		test.Fatal(decodeError)
 	}
 	var cases []recoveryCase
-	for _, id := range config.IDs {
+	for _, id := range configuration.IDs {
 		cases = append(cases, recoveryCase{id: id})
 	}
-	shards := partitionRecovery(test, cases, config.Count)
-	planted := cases[config.Planted].id
+	shards := partitionRecovery(test, cases, configuration.Count)
+	planted := cases[configuration.Planted].id
 	runRecoveryShards(test, shards, func(test *testing.T, i int, cases []recoveryCase) {
 		var want, got strings.Builder
 		for _, c := range cases {
-			if config.Mode == "refusal" {
+			if configuration.Mode == "refusal" {
 				script := "printf 'ESTree unattached decorator' >&2; exit 1"
 				if c.id == planted {
 					script = "printf 'accepted'"
@@ -313,8 +313,8 @@ func TestRecoveryShardProofChild(test *testing.T) {
 			}
 			want.WriteString("0 Program " + c.id + "\n")
 			bad := c.id == planted
-			if config.Mode == "mutant" {
-				bad = i != config.Planted%config.Count
+			if configuration.Mode == "mutant" {
+				bad = i != configuration.Planted%configuration.Count
 			}
 			if bad {
 				got.WriteString("0 WrongProgram " + c.id + "\n")
@@ -323,10 +323,10 @@ func TestRecoveryShardProofChild(test *testing.T) {
 			}
 		}
 		var failure string
-		if config.Mode == "control" {
+		if configuration.Mode == "control" {
 			failure = recoveryCount([]byte(got.String()), "0 Program ", len(cases))
-		} else if config.Mode != "refusal" {
-			failure = recoveryComparison([]byte(want.String()), []byte(got.String()), config.Mode == "mutant")
+		} else if configuration.Mode != "refusal" {
+			failure = recoveryComparison([]byte(want.String()), []byte(got.String()), configuration.Mode == "mutant")
 		}
 		if failure != "" {
 			test.Fatal(failure)

@@ -2414,14 +2414,14 @@ func IsMachinery(file string) bool {
 }
 
 func recipeOf(root string, process journalEntry) recipe {
-	pkg, test := strings.CutSuffix(process.Package, ".test")
-	if pkg == "" || pkg == "command-line-arguments" {
+	packagePath, test := strings.CutSuffix(process.Package, ".test")
+	if packagePath == "" || packagePath == "command-line-arguments" {
 		return recipe{reason: fmt.Sprintf(
 			"its process's binary (%s) names no package, so the code it ran can't be keyed",
 			process.Executable,
 		)}
 	}
-	return recipeListed(root, process, []recipeListing{{pkg: pkg, test: test, deps: true}})
+	return recipeListed(root, process, []recipeListing{{pkg: packagePath, test: test, deps: true}})
 }
 
 // leanRecipeFor is leanRecipeOf; a test in a tree of its own names a lean build's recipe itself, as recipeFor does.
@@ -2437,7 +2437,10 @@ var leanRecipeFor = leanRecipeOf
 // (leanCallers), and its declared Files are keyed again as read (leanReads). Under process's build settings, as the
 // binary was built, and refused as recipeOf refuses when process names no package.
 func leanRecipeOf(root, caller string, process journalEntry) recipe {
-	if pkg := strings.TrimSuffix(process.Package, ".test"); pkg == "" || pkg == "command-line-arguments" {
+	if packagePath := strings.TrimSuffix(
+		process.Package,
+		".test",
+	); packagePath == "" || packagePath == "command-line-arguments" {
 		return recipe{reason: fmt.Sprintf(
 			"its process's binary (%s) names no package, so the code it ran can't be keyed",
 			process.Executable,
@@ -2488,7 +2491,7 @@ func recipeListed(root string, process journalEntry, listings []recipeListing) r
 		entries[readEntry{Kind: kind, Path: filepath.ToSlash(relative)}] = true
 	}
 	for _, listing := range listings {
-		pkg, test := listing.pkg, listing.test
+		packagePath, test := listing.pkg, listing.test
 		arguments := []string{"list", "-json"}
 		if listing.deps {
 			arguments = append(arguments, "-deps")
@@ -2496,13 +2499,13 @@ func recipeListed(root string, process journalEntry, listings []recipeListing) r
 		if test {
 			arguments = append(arguments, "-test")
 		}
-		command := toolchain.Command("go", append(append(arguments, tags...), pkg)...)
+		command := toolchain.Command("go", append(append(arguments, tags...), packagePath)...)
 		command.Dir, command.Env = root, toolchain.Env(environment...)
 		output, outputError := command.Output()
 		if outputError != nil {
-			return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, outputError)}
+			return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", packagePath, outputError)}
 		}
-		if reason := recipeEntries(root, pkg, test, listing.whole, output, add); reason != "" {
+		if reason := recipeEntries(root, packagePath, test, listing.whole, output, add); reason != "" {
 			return recipe{reason: reason}
 		}
 	}
@@ -2536,7 +2539,7 @@ func recipeListed(root string, process journalEntry, listings []recipeListing) r
 // recipeEntries adds to a recipe, through add, what output, go list's JSON of pkg (a test binary's when test), names of
 // the tree: each package's directory, its files, and its module's go.mod and go.sum, buildcache's every non-test file
 // when whole. It's the reason the listing can't be read, or "".
-func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(kind, name string)) string {
+func recipeEntries(root, packagePath string, test, whole bool, output []byte, add func(kind, name string)) string {
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	for {
 		var listed struct {
@@ -2561,7 +2564,7 @@ func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(k
 		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
 		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
 		name, _, _ := strings.Cut(listed.ImportPath, " ")
-		under := test && (name == pkg || name == pkg+"_test")
+		under := test && (name == packagePath || name == packagePath+"_test")
 		ignored := listed.IgnoredGoFiles
 		if !under {
 			ignored = slices.DeleteFunc(

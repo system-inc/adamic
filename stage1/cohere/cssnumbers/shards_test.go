@@ -562,8 +562,8 @@ func numbersOracleAnswersWithCommand(
 		// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had
 		// finished. A run made by numbersCommand ends at its 90 s deadline; one made by numbersSetupCommand has
 		// none, and the unit's own ceiling bounds it.
-		cmd, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
-		stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+		osCommand, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
+		stdout, stderr, captureError := childguard.Capture(ctx, osCommand)
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("%s oracle: %v; %s", name, captureError, stderr)
 		}

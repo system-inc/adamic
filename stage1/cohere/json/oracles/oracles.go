@@ -35,23 +35,29 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string)
 		return build(dir)
 	})
 }
-func stockOracle(t *testing.T, output, pkg string, args []string, mutations []buildcache.Mutation, test bool) string {
+func stockOracle(
+	t *testing.T,
+	output, packagePath string,
+	args []string,
+	mutations []buildcache.Mutation,
+	test bool,
+) string {
 	t.Helper()
 	if oracleProducer {
 		if !test {
-			return buildcache.GoBuildIn(t, "cohere", output, pkg, args)
+			return buildcache.GoBuildIn(t, "cohere", output, packagePath, args)
 		}
 		if len(mutations) == 0 {
-			return buildcache.GoTest(t, "cohere", output, pkg, args)
+			return buildcache.GoTest(t, "cohere", output, packagePath, args)
 		}
-		return buildcache.GoTestMutated(t, "cohere", output, pkg, args, mutations)
+		return buildcache.GoTestMutated(t, "cohere", output, packagePath, args, mutations)
 	}
 	var inputs buildcache.Inputs
 	var err error
 	if test {
-		inputs, err = buildcache.GoTestInputs("cohere", output, pkg, args, mutations)
+		inputs, err = buildcache.GoTestInputs("cohere", output, packagePath, args, mutations)
 	} else {
-		inputs, err = buildcache.GoBuildInInputs("cohere", output, pkg, args, mutations)
+		inputs, err = buildcache.GoBuildInInputs("cohere", output, packagePath, args, mutations)
 	}
 	if err != nil {
 		t.Fatal(err)

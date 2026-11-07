@@ -181,22 +181,22 @@ func TestSplitTSGoAgrees(test *testing.T) {
 	test.Logf("product fetch phase %.3fs", time.Since(phase).Seconds())
 	directory := test.TempDir()
 	input := filepath.Join(directory, "sample.a")
-	config := filepath.Join(directory, "tsconfig.json")
+	configuration := filepath.Join(directory, "tsconfig.json")
 	manifest := filepath.Join(directory, "manifest")
 	for name, contents := range map[string]string{
-		input:    "const value = 1; const negative = -value;\n",
-		config:   `{"compilerOptions":{"strict":true,"target":"esnext"},"files":["sample.a"]}`,
-		manifest: input + "\n",
+		input:         "const value = 1; const negative = -value;\n",
+		configuration: `{"compilerOptions":{"strict":true,"target":"esnext"},"files":["sample.a"]}`,
+		manifest:      input + "\n",
 	} {
 		if writeError := os.WriteFile(name, []byte(contents), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
-	want, combinedOutputError := exec.Command(whole, config, manifest).CombinedOutput()
+	want, combinedOutputError := exec.Command(whole, configuration, manifest).CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("whole checker: %v\n%s", combinedOutputError, want)
 	}
-	got, combinedOutputError := exec.Command(split, config, manifest).CombinedOutput()
+	got, combinedOutputError := exec.Command(split, configuration, manifest).CombinedOutput()
 	if combinedOutputError != nil || !bytes.Equal(got, want) {
 		test.Fatalf("split checker: %v\nwhole=%s\nsplit=%s", combinedOutputError, want, got)
 	}

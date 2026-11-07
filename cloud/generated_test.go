@@ -41,7 +41,7 @@ func insideTree(name string) bool {
 }
 
 // checkGeneratedFile holds one declared file to its cap: a regular file, at most maxBytes.
-func checkGeneratedFile(root, name string, maxBytes int64) error {
+func checkGeneratedFile(root, name string, maximumBytes int64) error {
 	information, statError := os.Lstat(filepath.Join(root, filepath.FromSlash(name)))
 	if statError != nil {
 		return fmt.Errorf("%s: %v", name, statError)
@@ -49,8 +49,8 @@ func checkGeneratedFile(root, name string, maxBytes int64) error {
 	if !information.Mode().IsRegular() {
 		return fmt.Errorf("%s is not a regular file", name)
 	}
-	if information.Size() > maxBytes {
-		return fmt.Errorf("%s is %d bytes, over its maxBytes %d", name, information.Size(), maxBytes)
+	if information.Size() > maximumBytes {
+		return fmt.Errorf("%s is %d bytes, over its maxBytes %d", name, information.Size(), maximumBytes)
 	}
 	return nil
 }

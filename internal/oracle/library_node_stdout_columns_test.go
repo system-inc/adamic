@@ -291,11 +291,11 @@ func columnsLifecycleRun(test *testing.T, products, node, fixture, mutant string
 			filepath.Join(products, "resolved-await.mjs"),
 		)
 	}
-	_, cmd := bounded(test, "python3", args...)
+	_, command := bounded(test, "python3", args...)
 	var output strings.Builder
-	cmd.Stdout = &output
-	cmd.Stderr = &output
-	if runError := childguard.Run(cmd, childguard.Options{}); runError != nil {
+	command.Stdout = &output
+	command.Stderr = &output
+	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
 		test.Fatalf("pty protocol: %v\n%s", runError, output.String())
 	}
 	var result columnsLifecycleResult

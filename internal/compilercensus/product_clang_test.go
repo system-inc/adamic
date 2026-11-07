@@ -170,11 +170,11 @@ func selectorName(expression ast.Node) string {
 	if !ok {
 		return ""
 	}
-	pkg, ok := selector.X.(*ast.Ident)
+	ident, ok := selector.X.(*ast.Ident)
 	if !ok {
 		return ""
 	}
-	return pkg.Name + "." + selector.Sel.Name
+	return ident.Name + "." + selector.Sel.Name
 }
 
 // functionName is a function's name, or Receiver.name for a method.

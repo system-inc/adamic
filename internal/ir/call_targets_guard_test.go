@@ -104,22 +104,22 @@ func checkCallTargetReaders(test *testing.T, selected string) {
 		test.Fatal(decodeError)
 	}
 	exports := map[string]string{}
-	for index, pkg := range packages {
-		if pkg.Export != "" {
-			pkg.Export = filepath.Join(listingProduct, pkg.Export)
+	for index, listedPackage := range packages {
+		if listedPackage.Export != "" {
+			listedPackage.Export = filepath.Join(listingProduct, listedPackage.Export)
 		}
-		if pkg.Dir != "" {
-			pkg.Dir = filepath.Join(root, pkg.Dir)
+		if listedPackage.Dir != "" {
+			listedPackage.Dir = filepath.Join(root, listedPackage.Dir)
 		}
-		packages[index] = pkg
-		exports[pkg.ImportPath] = pkg.Export
+		packages[index] = listedPackage
+		exports[listedPackage.ImportPath] = listedPackage.Export
 		// External tests may use declarations from export_test.go. Import their
 		// package's test variant rather than the production-only export file.
 		if path, _, variant := strings.Cut(
-			pkg.ImportPath,
+			listedPackage.ImportPath,
 			" [",
-		); variant && (path == pkg.ForTest || exports[path] == "") {
-			exports[path] = pkg.Export
+		); variant && (path == listedPackage.ForTest || exports[path] == "") {
+			exports[path] = listedPackage.Export
 		}
 	}
 	fset := token.NewFileSet()
@@ -143,38 +143,41 @@ func checkCallTargetReaders(test *testing.T, selected string) {
 		}
 	}
 	seen := map[string]bool{}
-	for _, pkg := range packages {
-		if strings.Contains(pkg.ImportPath, "[") ||
-			!strings.HasPrefix(pkg.ImportPath, "github.com/system-inc/adamic/internal/") {
+	for _, listedPackage := range packages {
+		if strings.Contains(listedPackage.ImportPath, "[") ||
+			!strings.HasPrefix(listedPackage.ImportPath, "github.com/system-inc/adamic/internal/") {
 			continue
 		}
-		base := filepath.Base(pkg.Dir)
+		base := filepath.Base(listedPackage.Dir)
 		if base != selected {
 			continue
 		}
-		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base ||
+		if listedPackage.ImportPath != "github.com/system-inc/adamic/internal/"+base ||
 			(base != "native" && base != "lower" && base != "fresh" && base != "flow") {
 			continue
 		}
-		for group, names := range [][]string{append(pkg.GoFiles, pkg.TestGoFiles...), pkg.XTestGoFiles} {
+		for group, names := range [][]string{
+			append(listedPackage.GoFiles, listedPackage.TestGoFiles...),
+			listedPackage.XTestGoFiles,
+		} {
 			if len(names) == 0 {
 				continue
 			}
-			packagePath := pkg.ImportPath
+			packagePath := listedPackage.ImportPath
 			if group == 1 {
 				packagePath += "_test"
 			}
 			files := []*ast.File{}
 			for _, name := range names {
-				file, parseFileError := parser.ParseFile(fset, filepath.Join(pkg.Dir, name), nil, 0)
+				file, parseFileError := parser.ParseFile(fset, filepath.Join(listedPackage.Dir, name), nil, 0)
 				if parseFileError != nil {
 					test.Fatal(parseFileError)
 				}
 				files = append(files, file)
 			}
 			info := &types.Info{Selections: map[*ast.SelectorExpr]*types.Selection{}}
-			config := types.Config{Importer: imports}
-			if _, checkError := config.Check(packagePath, fset, files, info); checkError != nil {
+			configuration := types.Config{Importer: imports}
+			if _, checkError := configuration.Check(packagePath, fset, files, info); checkError != nil {
 				test.Fatal(checkError)
 			}
 			for _, file := range files {

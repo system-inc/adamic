@@ -205,23 +205,23 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	name := fmt.Sprintf("TestJsxMutants_%03d", shard)
-	cmd := jsxMutantsCommand(timeoutContext, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
+	command := jsxMutantsCommand(timeoutContext, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
 	for _, entry := range os.Environ() {
 		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") &&
 			!strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") &&
 			!strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PROOF_CHILD=") &&
 			!strings.HasPrefix(entry, jsxMutantsPreparedEnv+"=") {
-			cmd.Env = append(cmd.Env, entry)
+			command.Env = append(command.Env, entry)
 		}
 	}
-	cmd.Env = append(
-		cmd.Env,
+	command.Env = append(
+		command.Env,
 		"ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma",
 		"ADAMIC_JSX_MUTANTS_PROOF_CHILD=1",
 		jsxMutantsPreparedEnv+"="+descriptor,
 	)
 	// Read through childguard.Capture for jsxMutantsCommand's reason, stdout then stderr.
-	stdout, stderr, captureError := childguard.Capture(timeoutContext, cmd)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	out := append(stdout, stderr...)
 	if timeoutContext.Err() != nil {
 		test.Fatal("planted proof exceeded 60 seconds")
@@ -247,16 +247,16 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 // and the owner's exit error was never seen (#n3gk22h's shape). The proof's
 // 60 s deadline ends a hung run.
 func jsxMutantsCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
-	cmd := exec.CommandContext(callerContext, name, args...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	cmd.Cancel = func() error {
-		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+	command := exec.CommandContext(callerContext, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(killError, syscall.ESRCH) {
 			return os.ErrProcessDone
 		}
 		return killError
 	}
-	return cmd
+	return command
 }
 
 func jsxMutantsSource(test *testing.T, index int) string {

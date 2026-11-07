@@ -95,9 +95,9 @@ func stableSplitWitness(test *testing.T, name string) {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		cmd := exec.CommandContext(timeoutContext, command, arguments...)
-		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
-		output, outputError := cmd.Output()
+		osCommand := exec.CommandContext(timeoutContext, command, arguments...)
+		osCommand.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
+		output, outputError := osCommand.Output()
 		if outputError != nil {
 			test.Fatalf("%s: %v", command, outputError)
 		}

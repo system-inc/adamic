@@ -55,11 +55,11 @@ func TestMeasureClangUnits(test *testing.T) {
 		}
 		metadata[name] = strings.Split(strings.TrimSpace(string(data)), "\n")[0]
 	}
-	cpuMax, readError := os.ReadFile("/sys/fs/cgroup/cpu.max")
+	cpuMaximum, readError := os.ReadFile("/sys/fs/cgroup/cpu.max")
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	metadata["cpu.max"] = strings.TrimSpace(string(cpuMax))
+	metadata["cpu.max"] = strings.TrimSpace(string(cpuMaximum))
 	slow := false
 	run := func(program, loop string, round int, options Options, source string, trace bool) {
 		loadBefore, _ := os.ReadFile("/proc/loadavg")

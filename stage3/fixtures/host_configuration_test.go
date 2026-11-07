@@ -121,7 +121,7 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 				if reader == "directories" {
 					selector = "^TestFixtureDirectoriesHaveTopLevelTests$"
 				}
-				cmd := exec.Command(
+				command := exec.Command(
 					executable,
 					"-test.run="+selector,
 					"-test.count=1",
@@ -133,8 +133,8 @@ func TestHostConfigurationFixtureReaders(test *testing.T) {
 				if mode == "selected" {
 					selected = stub
 				}
-				cmd.Env = append(os.Environ(), "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected)
-				out, combinedOutputError := cmd.CombinedOutput()
+				command.Env = append(os.Environ(), "ADAMIC_HOST_NODE_WITHOUT_INSPECTOR="+selected)
+				out, combinedOutputError := command.CombinedOutput()
 				test.Logf("%s", out)
 				if mode == "wrong-recorded" {
 					if combinedOutputError == nil ||

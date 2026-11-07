@@ -49,9 +49,9 @@ func TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile(test *testing.T) {
 		test.Fatal(importsError)
 	}
 	// A slice package that isn't listed is one buildcache no longer links, or renamed: the slice is out of date.
-	for _, pkg := range buildcacheSlice {
-		if !slices.Contains(tree, pkg) {
-			test.Fatalf("buildcache's slice names %s, which this package's listing doesn't hold: %v", pkg, tree)
+	for _, packagePath := range buildcacheSlice {
+		if !slices.Contains(tree, packagePath) {
+			test.Fatalf("buildcache's slice names %s, which this package's listing doesn't hold: %v", packagePath, tree)
 		}
 	}
 	census := leancensus.Census{

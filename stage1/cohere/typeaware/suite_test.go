@@ -230,14 +230,14 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	// The corpus, its oracle and truth, and the 13 mutants that run over it are prepared apart from the rest of this
 	// plan, so a witness product builds without the plan's natives (sixCorpusOnce).
 	generated := sixCorpusOnce(test)
-	oracle, config, paths, manifest, truth := generated.oracle, generated.config, generated.paths, generated.manifest, generated.truth
+	oracle, configuration, paths, manifest, truth := generated.oracle, generated.config, generated.paths, generated.manifest, generated.truth
 	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
 	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for i, group := range sixRanges(paths, 32) {
 		add(
 			fmt.Sprintf("agreement/generated-%02d", i),
 			sixIDs("agreement/generated", group),
-			func(h *harness) { h.sixCompare("generated", oracle, binary(h), config, manifest, group) },
+			func(h *harness) { h.sixCompare("generated", oracle, binary(h), configuration, manifest, group) },
 		)
 	}
 	add("controls/reporting", sixRuleControlIDs(), func(h *harness) {
@@ -272,7 +272,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		}
 	})
 
-	globalConfig := h.write(
+	globalConfiguration := h.write(
 		"global.json",
 		`{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleDetection":"legacy","lib":["ES2022"]}}`,
 	)
@@ -281,10 +281,10 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		"/* first file */ interface Shared {}\n",
 	)+"\n"+h.write("global-class.ts", "class Shared {}\n")+"\n")
 	globalPaths := strings.Split(strings.TrimSpace(globalManifestText(h, globalManifest)), "\n")
-	globalTruth := h.must("global-truth", exec.Command(oracle, globalConfig, globalManifest))
+	globalTruth := h.must("global-truth", exec.Command(oracle, globalConfiguration, globalManifest))
 	add("agreement/cross-file", sixIDs("agreement/cross-file", globalPaths), func(h *harness) {
 		test := h.t
-		actual := h.sixCompare("cross-file", oracle, binary(h), globalConfig, globalManifest, globalPaths)
+		actual := h.sixCompare("cross-file", oracle, binary(h), globalConfiguration, globalManifest, globalPaths)
 		if !bytes.Contains(actual.stdout, []byte("\tunsafeMerging\t")) {
 			test.Fatal("cross-file declaration control missing")
 		}
@@ -294,7 +294,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test := h.t
 		globalArchive := typeAwareMutantArchive(h, "declaration-source")
 		globalMutant := typeAwareMutantNative(h, "declaration-source-suite", entry, globalArchive, false)
-		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
+		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfiguration, globalManifest))
 		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
 			test.Fatal("cross-file declaration source mutant survived oracle")
 		}
@@ -346,7 +346,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("control/released-handle", []string{"control/released-handle"}, func(h *harness) {
 		test := h.t
 		released := typeAwareBuild(h, stage0, "released-inspect", releasedEntry, normal(h), false)
-		got := h.run("released-inspect-run", exec.Command(released, config, probe))
+		got := h.run("released-inspect-run", exec.Command(released, configuration, probe))
 		if code, ok := got.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			!bytes.Contains(got.stderr, []byte("invalid or released checker handle")) {
@@ -358,7 +358,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test := h.t
 		staleArchive := typeAwareMutantArchive(h, "retained-handle")
 		stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
-		h.must("retained-handle-run", exec.Command(stale, config, probe))
+		h.must("retained-handle-run", exec.Command(stale, configuration, probe))
 		test.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
 	})
 
@@ -366,7 +366,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
 		test := h.t
 		length, cases := generated.witnessRun(h, "facts-length-asan")
-		got := h.run("facts-length-run", exec.Command(length, config, cases))
+		got := h.run("facts-length-run", exec.Command(length, configuration, cases))
 		if !generated.mutants["facts-length-asan"].dies(got) {
 			test.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
 		}
@@ -383,7 +383,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(h *harness) {
 			test := h.t
 			malformed, cases := generated.witnessRun(h, change.name+"-bad")
-			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, cases))
+			r := h.run(change.name+"-bad-run", exec.Command(malformed, configuration, cases))
 			if !generated.mutants[change.name+"-bad"].dies(r) {
 				test.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
 			}
@@ -455,7 +455,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 				}
 				test := h.t
 				args := []string{
-					config,
+					configuration,
 					costProbe,
 					strconv.Itoa(probe.start),
 					strconv.Itoa(probe.end),
@@ -463,9 +463,9 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					probe.question,
 					"10000",
 				}
-				cmd := exec.Command(nativeCost(h), args...)
-				cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-				native := h.must(fmt.Sprintf("facts-cost-%s-%d-native", probe.name, round), cmd)
+				command := exec.Command(nativeCost(h), args...)
+				command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+				native := h.must(fmt.Sprintf("facts-cost-%s-%d-native", probe.name, round), command)
 				direct := h.must(
 					fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round),
 					exec.Command(directCost(h), args...),
@@ -493,7 +493,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		sort.Strings(compilerPaths)
 	}
 	compilerManifest := h.write("compiler.manifest", strings.Join(compilerPaths, "\n")+"\n")
-	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
+	compilerConfiguration := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	groups := make([][]string, 8)
 	if len(compilerPaths) != 0 {
 		// compilerCommit fixes these 77 roots; repository growth cannot move them.
@@ -504,7 +504,7 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 			if len(group) == 0 {
 				h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 			}
-			h.sixCompare("compiler", oracle, binary(h), compilerConfig, compilerManifest, group)
+			h.sixCompare("compiler", oracle, binary(h), compilerConfiguration, compilerManifest, group)
 		})
 		for round := 1; round <= 3; round++ {
 			ids := sixIDs(fmt.Sprintf("bench/compiler-%d", round), group)
@@ -523,9 +523,16 @@ func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 				}
 				var expected []byte
 				for _, binary := range binaries {
-					cmd := exec.Command(binary, compilerConfig, compilerManifest, "--files", selected, "--count")
-					cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-					r := h.must(fmt.Sprintf("six-bench-%d-%s", round, filepath.Base(binary)), cmd)
+					command := exec.Command(
+						binary,
+						compilerConfiguration,
+						compilerManifest,
+						"--files",
+						selected,
+						"--count",
+					)
+					command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+					r := h.must(fmt.Sprintf("six-bench-%d-%s", round, filepath.Base(binary)), command)
 					if expected != nil && !bytes.Equal(r.stdout, expected) {
 						test.Fatal("timed counts differ")
 					}
@@ -732,7 +739,7 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 			setupStarted: time.Now(),
 		}
 		oracle := typeAwareOracle(h, "six")
-		config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+		configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 		var paths []string
 		for i, source := range suiteSources(test, repository) {
 			paths = append(paths, h.write(fmt.Sprintf("suite-case-%03d.ts", i), source+"\nexport {};\n"))
@@ -741,7 +748,7 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 		manifest := h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
 		// Table extraction can also pick rendered messages and deliberately malformed
 		// fixtures. The independent Go parser names the syntactically valid sources.
-		valid := h.must("source-filter", exec.Command(oracle, config, manifest, "--valid-sources"))
+		valid := h.must("source-filter", exec.Command(oracle, configuration, manifest, "--valid-sources"))
 		before := len(paths)
 		paths = strings.Split(strings.TrimSpace(string(valid.stdout)), "\n")
 		manifest = h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
@@ -750,11 +757,11 @@ func sixCorpusOnce(test *testing.T) *sixCorpus {
 			len(paths),
 			before-len(paths),
 		)
-		truth := h.must("generated-truth", exec.Command(oracle, config, manifest))
+		truth := h.must("generated-truth", exec.Command(oracle, configuration, manifest))
 		shared.corpus = &sixCorpus{
 			paths:    paths,
 			oracle:   oracle,
-			config:   config,
+			config:   configuration,
 			manifest: manifest,
 			truth:    truth,
 			mutants:  sixMutants(h, repository),
@@ -918,20 +925,20 @@ const sixDyingWitnesses = 8
 // first sixDyingWitnesses it dies on. An empty set fails: a mutant no case catches guards nothing.
 func (corpus *sixCorpus) witnesses(h *harness, name string, mutant func() string) []string {
 	h.t.Helper()
-	paths, config, manifest, truth, dies := corpus.paths, corpus.config, corpus.manifest, corpus.truth, corpus.mutants[name].dies
+	paths, configuration, manifest, truth, dies := corpus.paths, corpus.config, corpus.manifest, corpus.truth, corpus.mutants[name].dies
 	record, cachedTypeAwareProductError := cachedTypeAwareProduct("six witnesses "+
 		name, func(directory string) (string, error) {
 		binary := mutant()
 		var found []string
 		if dies == nil {
 			found = sixDifferingCases(
-				h.must(name+"-witness-search", exec.Command(binary, config, manifest)).stdout,
+				h.must(name+"-witness-search", exec.Command(binary, configuration, manifest)).stdout,
 				truth.stdout,
 			)
 		} else {
 			for _, path := range paths {
 				one := h.write(name+"-witness-search.manifest", path+"\n")
-				if dies(h.run(name+"-witness-search", exec.Command(binary, config, one))) {
+				if dies(h.run(name+"-witness-search", exec.Command(binary, configuration, one))) {
 					found = append(found, filepath.Base(path))
 					if len(found) == sixDyingWitnesses {
 						break

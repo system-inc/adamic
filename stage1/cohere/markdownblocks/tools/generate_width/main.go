@@ -200,17 +200,22 @@ func main() {
 		filepath.Join(filepath.Dir(*output), "widthRuneRanges.ts"),
 		[]byte("// Generated rune classes used by the finite emoji matchers.\n" + runeData.String()),
 	}} {
-		tmp, temporaryFileError := os.CreateTemp("", "adamic-width-*.ts")
+		temporary, temporaryFileError := os.CreateTemp("", "adamic-width-*.ts")
 		must(temporaryFileError)
-		defer os.Remove(tmp.Name())
-		_, writeError := tmp.Write(item.data)
+		defer os.Remove(temporary.Name())
+		_, writeError := temporary.Write(item.data)
 		must(writeError)
-		must(tmp.Close())
-		formatted, combinedOutputError := exec.Command(*formatter, "--no-cache", "--fix", tmp.Name()).CombinedOutput()
+		must(temporary.Close())
+		formatted, combinedOutputError := exec.Command(
+			*formatter,
+			"--no-cache",
+			"--fix",
+			temporary.Name(),
+		).CombinedOutput()
 		if combinedOutputError != nil {
 			panic(fmt.Sprintf("formatter: %v %s", combinedOutputError, formatted))
 		}
-		result, readError := os.ReadFile(tmp.Name())
+		result, readError := os.ReadFile(temporary.Name())
 		must(readError)
 		if *check {
 			actual, readError := os.ReadFile(item.path)

@@ -1070,18 +1070,18 @@ const ownerDirectory = "stage1/cohere/markdownblocks/oracles"
 
 var errorOwnedHere = errors.New("built by " + ownerDirectory + "'s product tests")
 
-func goOracle(test *testing.T, owner, module, output, pkg string, arguments []string) string {
+func goOracle(test *testing.T, owner, module, output, packagePath string, arguments []string) string {
 	test.Helper()
 	output += "-oracle-owner-v1"
 	if oracleProducer {
 		if module == "" {
-			return buildcache.GoBuild(test, output, pkg, arguments)
+			return buildcache.GoBuild(test, output, packagePath, arguments)
 		}
-		return buildcache.GoBuildIn(test, module, output, pkg, arguments)
+		return buildcache.GoBuildIn(test, module, output, packagePath, arguments)
 	}
-	inputs, goBuildInInputsError := buildcache.GoBuildInInputs(module, output, pkg, arguments, nil)
+	inputs, goBuildInInputsError := buildcache.GoBuildInInputs(module, output, packagePath, arguments, nil)
 	if goBuildInInputsError != nil {
-		test.Fatalf("go build %s: %v", pkg, goBuildInInputsError)
+		test.Fatalf("go build %s: %v", packagePath, goBuildInInputsError)
 	}
 	directory := buildcache.BuiltElsewhere(
 		test,
@@ -1392,18 +1392,18 @@ func TextGoBuild(test *testing.T, target string) string {
 	}
 	root := root(test)
 	cohere := filepath.Join(root, "cohere")
-	binary, directory, pkg := "go-text", cohere, filepath.Join(cohere, "cmd/adamic_text/main.go")
+	binary, directory, packagePath := "go-text", cohere, filepath.Join(cohere, "cmd/adamic_text/main.go")
 	switch target {
 	case "formatter":
-		binary, pkg = "cohere", "./command/cohere"
+		binary, packagePath = "cohere", "./command/cohere"
 	case "generator":
-		binary, directory, pkg = "generate", root, "./stage1/cohere/markdownblocks/tools/generate_classes"
+		binary, directory, packagePath = "generate", root, "./stage1/cohere/markdownblocks/tools/generate_classes"
 	}
 	dir := oracleProduct(test, textGoInputs(target, goCompilerIdentity()), func(dir string) error {
 		arguments := append([]string{"build"}, buildcache.ReproducibleGoFlags()...)
 		if target == "go" {
 			overlayPath, writeOverlayError := writeOverlay(dir, "overlay.json", map[string]string{
-				pkg: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"),
+				packagePath: filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_go.go"),
 				filepath.Join(
 					cohere,
 					"internal/format/markdown/adamic_text.go",
@@ -1419,7 +1419,7 @@ func TextGoBuild(test *testing.T, target string) string {
 		if output, toolchainGoError := toolchainGo(
 			test.Context(),
 			directory,
-			append(arguments, "-o", filepath.Join(dir, binary), pkg)...,
+			append(arguments, "-o", filepath.Join(dir, binary), packagePath)...,
 		); toolchainGoError != nil {
 			return fmt.Errorf("text %s: %w\n%s", target, toolchainGoError, output)
 		}
@@ -1590,15 +1590,15 @@ func GrainTool(test *testing.T, name string) string {
 	state, _ := grainToolPreparations.LoadOrStore(name, &grainToolPreparation{})
 	prepared := state.(*grainToolPreparation)
 	prepared.once.Do(func() {
-		pkg := "./stage1/cohere/markdownblocks/tools/generate_" + name
+		packagePath := "./stage1/cohere/markdownblocks/tools/generate_" + name
 		owner := "TestProduct_GrainMarkdownEntitiesGenerator"
 		switch name {
 		case "formatter":
-			pkg, owner = "github.com/system-inc/cohere/command/cohere", "TestProduct_GrainMarkdownFormatter"
+			packagePath, owner = "github.com/system-inc/cohere/command/cohere", "TestProduct_GrainMarkdownFormatter"
 		case "width":
 			owner = "TestProduct_GrainMarkdownWidthGenerator"
 		}
-		prepared.path = goOracle(test, owner, "", "grain-"+name, pkg, nil)
+		prepared.path = goOracle(test, owner, "", "grain-"+name, packagePath, nil)
 	})
 	return prepared.path
 }

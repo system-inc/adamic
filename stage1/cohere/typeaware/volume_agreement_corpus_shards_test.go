@@ -113,7 +113,7 @@ func volumeAgreementCorpusOwner(key string, groups int) int {
 func volumeAgreementCorpusFiles(test *testing.T, kind string) (string, []volumeAgreementCorpusFile) {
 	test.Helper()
 	var paths []string
-	var root, config string
+	var root, configuration string
 	switch kind {
 	case "compiler":
 		root = os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
@@ -126,7 +126,7 @@ func volumeAgreementCorpusFiles(test *testing.T, kind string) (string, []volumeA
 			test.Fatal(absolutePathError)
 		}
 		paths = pinnedCompilerFiles(test, root)
-		config = filepath.Join(root, "src/compiler/tsconfig.json")
+		configuration = filepath.Join(root, "src/compiler/tsconfig.json")
 	default:
 		test.Fatalf("unknown corpus %s", kind)
 	}
@@ -147,7 +147,7 @@ func volumeAgreementCorpusFiles(test *testing.T, kind string) (string, []volumeA
 	if len(files) == 0 {
 		test.Fatalf("empty %s corpus", kind)
 	}
-	return config, files
+	return configuration, files
 }
 func volumeAgreementCorpusUnion(test *testing.T, kind string, groups int) {
 	test.Helper()
@@ -205,7 +205,7 @@ func volumeAgreementGrouped(key, mode string) bool {
 func runVolumeAgreementCorpusShard(test *testing.T, kind string, groups, unit int) {
 	test.Helper()
 	// Live enumeration and required product fetches precede this unit's work clock.
-	config, files := volumeAgreementCorpusFiles(test, kind)
+	configuration, files := volumeAgreementCorpusFiles(test, kind)
 	group := unit % groups
 	name := "volume"
 	mode := "plain"
@@ -224,13 +224,13 @@ func runVolumeAgreementCorpusShard(test *testing.T, kind string, groups, unit in
 		test.Log("own work=0s")
 		return
 	}
-	volumeAgreementCorpusCompare(test, kind, mode, fmt.Sprintf("%03d", group), name, config, files, paths, nil)
+	volumeAgreementCorpusCompare(test, kind, mode, fmt.Sprintf("%03d", group), name, configuration, files, paths, nil)
 }
 
 // runVolumeAgreementCheckerPart checks the split file under ASan over one part's rules, in every program root.
 func runVolumeAgreementCheckerPart(test *testing.T, kind string, part int) {
 	test.Helper()
-	config, files := volumeAgreementCorpusFiles(test, kind)
+	configuration, files := volumeAgreementCorpusFiles(test, kind)
 	var paths []string
 	for _, file := range files {
 		if file.key == volumeAgreementSplitFile {
@@ -248,7 +248,7 @@ func runVolumeAgreementCheckerPart(test *testing.T, kind string, part int) {
 		"asan",
 		fmt.Sprintf("checker-%03d", part),
 		"volume-asan",
-		config,
+		configuration,
 		files,
 		paths,
 		rules,
@@ -259,7 +259,7 @@ func runVolumeAgreementCheckerPart(test *testing.T, kind string, part int) {
 // when it names some, and requires the same bytes.
 func volumeAgreementCorpusCompare(
 	test *testing.T,
-	kind, mode, label, name, config string,
+	kind, mode, label, name, configuration string,
 	files []volumeAgreementCorpusFile,
 	paths, rules []string,
 ) {
@@ -283,7 +283,7 @@ func volumeAgreementCorpusCompare(
 		allPaths = append(allPaths, file.path)
 	}
 	all := h.write("program-roots.manifest", strings.Join(allPaths, "\n")+"\n")
-	args := []string{config, manifest, "--program-roots", all}
+	args := []string{configuration, manifest, "--program-roots", all}
 	if len(rules) != 0 {
 		args = append(args, "--rules", h.write("rules.manifest", strings.Join(rules, "\n")+"\n"))
 	}

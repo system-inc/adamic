@@ -356,7 +356,7 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_probe.ts")
 	products := textProducts{main: main}
 	if target == "" || target == "lowered" || target == "sanitized" || target == "release" {
-		lowerDir := buildcache.Product(test, buildcache.Inputs{
+		lowerDirectory := buildcache.Product(test, buildcache.Inputs{
 			Name:      "markdownblocks-text-lowered",
 			Files:     files,
 			Toolchain: tools,
@@ -374,11 +374,11 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 			}
 			return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 		})
-		source, readError := os.ReadFile(filepath.Join(lowerDir, "program.c"))
+		source, readError := os.ReadFile(filepath.Join(lowerDirectory, "program.c"))
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		products.backend = filepath.Join(lowerDir, "program.mjs")
+		products.backend = filepath.Join(lowerDirectory, "program.mjs")
 		for _, sanitize := range []bool{true, false} {
 			if target != "" &&
 				(target == "lowered" || (sanitize && target != "sanitized") || (!sanitize && target != "release")) {
@@ -412,20 +412,20 @@ func textBuildProduct(test *testing.T, root, target string) textProducts {
 	}
 
 	// Regeneration is independent of case partitioning and executes once, after its build inputs.
-	var formatterDir, generatorDir string
+	var formatterDirectory, generatorDirectory string
 	if target == "" || target == "formatter" {
-		formatterDir = oracles.TextFormatterProduct(test, root)
+		formatterDirectory = oracles.TextFormatterProduct(test, root)
 	}
 	if target == "" || target == "generator" {
-		generatorDir = oracles.TextGeneratorProduct(test, root)
+		generatorDirectory = oracles.TextGeneratorProduct(test, root)
 	}
 	if target == "" {
 		command, ctx := textSetupCommand(
 			test,
-			filepath.Join(generatorDir, "generate"),
+			filepath.Join(generatorDirectory, "generate"),
 			"-check",
 			"-formatter",
-			filepath.Join(formatterDir, "cohere"),
+			filepath.Join(formatterDirectory, "cohere"),
 		)
 		command.Dir = root
 		if output, textCombinedOutputError := textCombinedOutput(ctx, command); textCombinedOutputError != nil {

@@ -63,17 +63,17 @@ func main() {
 	if count != 5 {
 		panic("expected five classes")
 	}
-	tmp, temporaryFileError := os.CreateTemp("", "adamic-text-classes-*.ts")
+	temporary, temporaryFileError := os.CreateTemp("", "adamic-text-classes-*.ts")
 	must(temporaryFileError)
-	defer os.Remove(tmp.Name())
-	_, writeError := tmp.Write(b.Bytes())
+	defer os.Remove(temporary.Name())
+	_, writeError := temporary.Write(b.Bytes())
 	must(writeError)
-	must(tmp.Close())
-	out, combinedOutputError := exec.Command(*formatter, "--no-cache", "--fix", tmp.Name()).CombinedOutput()
+	must(temporary.Close())
+	out, combinedOutputError := exec.Command(*formatter, "--no-cache", "--fix", temporary.Name()).CombinedOutput()
 	if combinedOutputError != nil {
 		panic(fmt.Sprintf("cohere: %v %s", combinedOutputError, out))
 	}
-	result, readError := os.ReadFile(tmp.Name())
+	result, readError := os.ReadFile(temporary.Name())
 	must(readError)
 	if *check {
 		actual, readError := os.ReadFile(*output)

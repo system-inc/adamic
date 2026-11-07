@@ -674,16 +674,16 @@ func compositionExecute(test *testing.T, environment []string, name string, argu
 // compositionRun is compositionExecute returning its failure to start or read the command instead of failing the
 // test, so a caller can run commands on goroutines of its own and fail on the test's.
 func compositionRun(test *testing.T, environment []string, name string, arguments ...string) (run, error) {
-	cmd, ctx := compositionCommand(test, name, arguments...)
+	command, ctx := compositionCommand(test, name, arguments...)
 	if environment != nil {
-		cmd.Env = append(os.Environ(), environment...)
+		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(ctx, command)
 	var exit *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exit) {
 		return run{}, fmt.Errorf("running %s: %v", name, captureError)
 	}
-	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 func compositionNode(test *testing.T, path string, arguments ...string) run {

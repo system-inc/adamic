@@ -2096,8 +2096,8 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 	if repositoryFiles == 0 {
 		test.Fatal("repository statement corpus is empty")
 	}
-	oracleDir := PrinterGateGoOracle(test)
-	flags := []string{"Go oracle sha256=" + statementFileHash(test, oracleDir+"/oracle"), "width=80"}
+	oracleDirectory := PrinterGateGoOracle(test)
+	flags := []string{"Go oracle sha256=" + statementFileHash(test, oracleDirectory+"/oracle"), "width=80"}
 	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it
 	// (#t37sw0f).
 	for _, file := range files {
@@ -2127,7 +2127,7 @@ func statementCorpusBuild(test *testing.T) (string, string, string) {
 		command := toolchain.CommandContextIn(
 			ctx,
 			"",
-			oracleDir+"/oracle",
+			oracleDirectory+"/oracle",
 			"-test.v",
 			"-test.count=1",
 			"-test.run=^TestAdamicStatementCorpus$",
@@ -2664,23 +2664,23 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(directo
 // builds. Its name is buildcache's own, so it carries no oracle-owner-v1.
 func goTestOracle(
 	test *testing.T,
-	owner, output, pkg string,
+	owner, output, packagePath string,
 	arguments []string,
 	mutations []buildcache.Mutation,
 ) string {
 	test.Helper()
 	if buildcache.Tracing() && !oracleProducer {
-		inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, pkg, arguments, mutations)
+		inputs, goTestInputsError := buildcache.GoTestInputs("cohere", output, packagePath, arguments, mutations)
 		if goTestInputsError != nil {
 			test.Fatal(goTestInputsError)
 		}
 		return filepath.Join(buildcache.BuiltElsewhere(test, "the Go oracle "+
-			pkg, inputs, "stage1/cohere/tsprinter/oracles "+owner, func(string) error {
+			packagePath, inputs, "stage1/cohere/tsprinter/oracles "+owner, func(string) error {
 			return errors.New("built by stage1/cohere/tsprinter/oracles")
 		}), output)
 	}
 	if len(mutations) > 0 {
-		return buildcache.GoTestMutated(test, "cohere", output, pkg, arguments, mutations)
+		return buildcache.GoTestMutated(test, "cohere", output, packagePath, arguments, mutations)
 	}
-	return buildcache.GoTest(test, "cohere", output, pkg, arguments)
+	return buildcache.GoTest(test, "cohere", output, packagePath, arguments)
 }

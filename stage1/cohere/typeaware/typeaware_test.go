@@ -521,10 +521,10 @@ func firstDifference(a, b []byte) int {
 	}
 	return min(len(a), len(b))
 }
-func (h *harness) compare(name, oracle, binary, config, manifest string) result {
+func (h *harness) compare(name, oracle, binary, configuration, manifest string) result {
 	h.t.Helper()
-	want := h.must(name+"-go", exec.Command(oracle, config, manifest))
-	got := h.must(name+"-native", exec.Command(binary, config, manifest))
+	want := h.must(name+"-go", exec.Command(oracle, configuration, manifest))
+	got := h.must(name+"-native", exec.Command(binary, configuration, manifest))
 	if len(got.stderr) != 0 {
 		h.t.Fatalf("sanitizer stderr: %s", got.stderr)
 	}
@@ -587,7 +587,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	normal = func(*harness) string { return readyNormal }
 	sanitized = func(*harness) string { return readySanitized }
 	oracle := typeAwareOracle(h, "typeaware")
-	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var generatedPathsForUnion []string
 	var shards []sixShard
 	var expected []string
@@ -652,13 +652,13 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	helper := h.write("helper.ts", "export const text: string = 'x';\n")
 	paths = append(paths, h.write("import.ts", "import { text } from './helper.js'; -text;\n"), helper)
 	manifest := h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
-	truth := h.must("generated-go", exec.Command(oracle, config, manifest))
+	truth := h.must("generated-go", exec.Command(oracle, configuration, manifest))
 	generatedPaths := append([]string(nil), paths...)
 	generatedPathsForUnion = generatedPaths
 	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
 	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
 		test := h.t
-		truth := h.compare("generated", oracle, binary(h), config, manifest)
+		truth := h.compare("generated", oracle, binary(h), configuration, manifest)
 		if sixFindingUnionError := sixFindingUnion(truth.stdout, generatedPaths); sixFindingUnionError != nil {
 			test.Fatal(sixFindingUnionError)
 		}
@@ -708,7 +708,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
 		test := h.t
 		wrong := typeAwareSetup(h, "wrong-node", func() string { return typeAwareWrongNodeNative(h, normal(h), true) })
-		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
+		observed := h.must("wrong-node-run", exec.Command(wrong, configuration, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			test.Fatal("wrong-node mutant was not caught by findings alone")
 		}
@@ -725,7 +725,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("refusal/released", []string{"refusal/released"}, func(h *harness) {
 		test := h.t
 		released := typeAwareBuild(h, stage0, "released", releasedEntry, normal(h), false)
-		stale := h.run("released-run", exec.Command(released, config, probe))
+		stale := h.run("released-run", exec.Command(released, configuration, probe))
 		if code, ok := stale.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
@@ -743,7 +743,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 			typeAwareMutantArchive(h, "retained-handle"),
 			false,
 		)
-		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
+		stale := h.must("stale-mutant-run", exec.Command(staleBinary, configuration, probe))
 		if len(stale.stderr) != 0 {
 			test.Fatal("stale mutant did not finish cleanly")
 		}
@@ -767,7 +767,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 				typeAwareMutantArchive(h, change.name),
 				false,
 			)
-			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
+			got := h.run(change.name+"-run", exec.Command(malformed, configuration, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok ||
 				code.ExitCode() != 70 ||
 				!bytes.Contains(got.stderr, []byte(change.message)) {
@@ -787,7 +787,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
 		test := h.t
 		bad := typeAwareBadKindNative(h, "bad-kind", normal(h))
-		got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
+		got := h.run("bad-kind-run", exec.Command(bad, configuration, probe, "2"))
 		if code, ok := got.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			!bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
@@ -798,7 +798,7 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
 		test := h.t
 		ignoredBinary := typeAwareBadKindNative(h, "ignored-kind-native", typeAwareMutantArchive(h, "ignored-kind"))
-		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
+		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, configuration, probe, "2"))
 		if len(ignored.stderr) != 0 {
 			test.Fatal("kind-guard mutant did not finish cleanly")
 		}
@@ -819,12 +819,12 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 				h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 			}
 			test := h.t
-			cmd := exec.Command(cost(h), config, probe, "10000")
-			cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), cmd)
+			command := exec.Command(cost(h), configuration, probe, "10000")
+			command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), command)
 			direct := h.must(
 				fmt.Sprintf("query-cost-go-%d", round),
-				exec.Command(oracle, config, probeManifest, "--query-cost", "10000"),
+				exec.Command(oracle, configuration, probeManifest, "--query-cost", "10000"),
 			)
 			if !bytes.Equal(nativeCost.stdout, direct.stdout) {
 				test.Fatal("query-cost result differs from direct Go")
@@ -850,22 +850,22 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	}
 	sort.Strings(paths)
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
-	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
+	compilerConfiguration := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	test.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
 	expected = append(expected, sixIDs("agreement/compiler", paths)...)
 	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(h *harness) {
 		if len(paths) == 0 {
 			h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 		}
-		truth := h.compare("compiler", oracle, binary(h), compilerConfig, compilerManifest)
+		truth := h.compare("compiler", oracle, binary(h), compilerConfiguration, compilerManifest)
 		if sixFindingUnionError := sixFindingUnion(truth.stdout, paths); sixFindingUnionError != nil {
 			h.t.Fatal(sixFindingUnionError)
 		}
 	})
 	{
 		for _, corpus := range []struct{ name, config, manifest string }{
-			{"compiler", compilerConfig, compilerManifest},
-			{"generated", config, manifest},
+			{"compiler", compilerConfiguration, compilerManifest},
+			{"generated", configuration, manifest},
 		} {
 			for round := 1; round <= 3; round++ {
 				files := generatedPaths

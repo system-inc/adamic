@@ -39,13 +39,13 @@ func captureNode(test *testing.T, cases []captureCase) []captureObservation {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	cmd := exec.Command(
+	command := exec.Command(
 		"node",
 		"-e",
 		`if(process.version !== 'v24.19.0') throw Error('requires Node 24.19.0'); const cs=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(JSON.stringify(cs.map(c=>{const r=new RegExp(c.Pattern,c.Flags);r.lastIndex=c.LastIndex;const input=c.InputUnits===null?c.Input:String.fromCharCode(...c.InputUnits);const m=r.exec(input);return m?{Match:true,Indices:Array.from(m,x=>x!==undefined),Names:Object.fromEntries(Object.entries(m.groups||{}).map(([k,v])=>[k,v!==undefined]))}:{Match:false};})));`,
 	)
-	cmd.Stdin = bytes.NewReader(data)
-	out, combinedOutputError := cmd.CombinedOutput()
+	command.Stdin = bytes.NewReader(data)
+	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("Node: %v %s", combinedOutputError, out)
 	}

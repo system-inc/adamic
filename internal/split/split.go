@@ -79,10 +79,10 @@ func summarize(program *ir.Program) *analysis {
 	}
 	for i, function := range program.Functions {
 		a.returns[i], a.writes[i] = roots{}, roots{}
-		for _, param := range function.Parameters {
-			if reference(program.Locals[param].Type) {
-				a.aliases[param][param] = true
-				a.contents[param][param] = true
+		for _, parameter := range function.Parameters {
+			if reference(program.Locals[parameter].Type) {
+				a.aliases[parameter][parameter] = true
+				a.contents[parameter][parameter] = true
 			}
 		}
 	}
@@ -174,9 +174,9 @@ func Analyze(program *ir.Program) []Function {
 			reason = "signature: constructor not crossable"
 		}
 		if pure[i] && reason == "" {
-			for j, param := range function.Parameters {
-				if reason == "" && program.Locals[param].Type.IsTypedArray() {
-					if a.writes[i][param] {
+			for j, parameter := range function.Parameters {
+				if reason == "" && program.Locals[parameter].Type.IsTypedArray() {
+					if a.writes[i][parameter] {
 						reason = fmt.Sprintf("writes parameter %d", j+1)
 					} else {
 						reason = fmt.Sprintf("signature: typed-array parameter %d not crossable", j+1)
@@ -197,8 +197,8 @@ func Analyze(program *ir.Program) []Function {
 			if reason == "" && !crossable(function.Boundary.Return) {
 				reason = "signature: return not crossable"
 			}
-			for j, param := range function.Parameters {
-				if reason == "" && a.writes[i][param] {
+			for j, parameter := range function.Parameters {
+				if reason == "" && a.writes[i][parameter] {
 					reason = fmt.Sprintf("writes parameter %d", j+1)
 				}
 			}
@@ -515,8 +515,8 @@ func (analysis *analysis) substitute(target int, value roots, args []ir.Expressi
 	function := analysis.program.Functions[target]
 	for root := range value {
 		mapped := false
-		for j, param := range function.Parameters {
-			if root == param {
+		for j, parameter := range function.Parameters {
+			if root == parameter {
 				if j < len(args) {
 					add(result, analysis.contained(args[j]))
 				}
@@ -693,8 +693,8 @@ func (analysis *analysis) closureTargets(call ir.Expression) targets {
 			}
 			walk(analysis.program.Main, definitions)
 			for _, function := range analysis.program.Functions {
-				for _, param := range function.Parameters {
-					if param == node.Local {
+				for _, parameter := range function.Parameters {
+					if parameter == node.Local {
 						result.Unknown = true
 					}
 				}
@@ -771,8 +771,8 @@ func (analysis *analysis) schema(value ir.Expression) (*ir.JSONDecodeSchema, int
 	switch node := value.(type) {
 	case ir.Read:
 		for _, function := range analysis.program.Functions {
-			for j, param := range function.Parameters {
-				if param == node.Local && j < len(function.Boundary.Parameters) {
+			for j, parameter := range function.Parameters {
+				if parameter == node.Local && j < len(function.Boundary.Parameters) {
 					schema := function.Boundary.Parameters[j].Schema
 					if schema != nil {
 						return schema, schema.Root

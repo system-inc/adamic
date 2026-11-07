@@ -332,7 +332,7 @@ func asyncLiveWrongEntry(test *testing.T, name string) {
 		if loop, ok := v.Interface().(ir.Loop); ok && !changed && len(loop.Body) > 0 {
 			if decl, ok := loop.Body[0].(ir.Declare); ok {
 				if call, ok := decl.Value.(ir.CallClosure); ok {
-					if prop, ok := call.Closure.(ir.Property); ok && prop.Name == "next" {
+					if property, ok := call.Closure.(ir.Property); ok && property.Name == "next" {
 						changed = true
 						loop.Body = append([]ir.Statement{ir.Evaluate{Value: call}}, loop.Body...)
 						return reflect.ValueOf(loop)

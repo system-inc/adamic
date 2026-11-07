@@ -1193,9 +1193,9 @@ func (finder *scanCycleFinder) graphFlows() {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, param := range program.Functions[target].Parameters {
+					for i, parameter := range program.Functions[target].Parameters {
 						if i < len(value.Arguments) {
-							sources[param+1] = append(sources[param+1], value.Arguments[i])
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
 						}
 					}
 				}
@@ -1206,9 +1206,9 @@ func (finder *scanCycleFinder) graphFlows() {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, param := range program.Functions[target].Parameters {
+					for i, parameter := range program.Functions[target].Parameters {
 						if i < len(value.Arguments) {
-							sources[param+1] = append(sources[param+1], value.Arguments[i])
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
 						}
 					}
 				}

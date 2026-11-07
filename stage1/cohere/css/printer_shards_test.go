@@ -123,14 +123,17 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 	if writeError := os.WriteFile(path, data, 0644); writeError != nil {
 		t.Fatal(writeError)
 	}
-	cmd := bounded(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
+	command := bounded(t, binary, "-test.run=^"+test+"$", "-test.timeout=0", "-test.v")
 	repo, _ := filepath.Abs(repository)
-	cmd.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
+	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css")
 	if test == "TestAdamicPortCases" {
-		cmd.Dir = filepath.Join(cmd.Dir, "postcss")
+		command.Dir = filepath.Join(command.Dir, "postcss")
 	}
-	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+path)
-	output, combinedOutputError := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+path)
+	output, combinedOutputError := childguard.CombinedOutput(
+		command,
+		childguard.Options{Stall: oracles.ChildStallLimit},
+	)
 	if combinedOutputError != nil {
 		t.Fatalf("oracle: %v %s", combinedOutputError, output)
 	}

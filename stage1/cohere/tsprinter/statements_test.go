@@ -23,14 +23,17 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 	test.Cleanup(func() { test.Logf("shared setup CPU including builds: %.3fs", oracles.StatementCPU()-cpu) })
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	port, _ := filepath.Abs("statementsMain.ts")
-	loweredDir := printerGateLowered(test, "statements")
+	loweredDirectory := printerGateLowered(test, "statements")
 	binary, release := printerGateNative(test, "statements", true)+
 		"/port", printerGateNative(test, "statements", false)+"/port"
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
 		if createDirectoryError := os.MkdirAll(keep, 0755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
-		for name, source := range map[string]string{"port.c": filepath.Join(loweredDir, "port.c"), "port": release} {
+		for name, source := range map[string]string{
+			"port.c": filepath.Join(loweredDirectory, "port.c"),
+			"port":   release,
+		} {
 			data, readError := os.ReadFile(source)
 			if readError != nil {
 				test.Fatal(readError)
@@ -57,7 +60,7 @@ func statementPrepareCommon(test *testing.T, shards *oracles.StatementGateShards
 		Want:        shards.Want,
 		Specs:       shards.Specs,
 		Port:        port,
-		LoweredDir:  loweredDir,
+		LoweredDir:  loweredDirectory,
 		Binary:      binary,
 		Release:     release,
 		Library:     library,
@@ -80,7 +83,7 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 	shard := products.Shards.Shard(test, shardNumber)
 	port := products.Port
 	binary, release, library := products.Binary, products.Release, products.Library
-	loweredDir := products.LoweredDir
+	loweredDirectory := products.LoweredDir
 
 	gapInput := ">const x:number=1;\n>const {x}=value;\n>export const x=1;\n>if(x)f();\n>#!/usr/bin/env node\\nf();\n"
 	gapWant := "notyet\tvariable-types\nnotyet\tvariable-pattern\nnotyet\tvariable-modifiers\nnotyet\tIfStatement\nnotyet\tcomment-attachment\n"
@@ -88,7 +91,7 @@ func statementAgainstGoAndPrettierShard(test *testing.T, shardNumber int) {
 	if writeError := os.WriteFile(gapPath, []byte(gapInput), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	backend := filepath.Join(loweredDir, "program.mjs")
+	backend := filepath.Join(loweredDirectory, "program.mjs")
 	libraryHash := products.LibraryHash
 	var oracleAnswers [2][]byte
 	for side := 0; side < 2; side++ {

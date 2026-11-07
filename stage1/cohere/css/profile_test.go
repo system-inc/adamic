@@ -125,14 +125,14 @@ func TestCSSProfileArtifacts(test *testing.T) {
 			test.Fatal(buildError)
 		}
 	}
-	runtimeDir := filepath.Join(repo, "internal/native/runtime")
-	files, _ := filepath.Glob(filepath.Join(runtimeDir, "*.c"))
+	runtimeDirectory := filepath.Join(repo, "internal/native/runtime")
+	files, _ := filepath.Glob(filepath.Join(runtimeDirectory, "*.c"))
 	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
 	args := append(
 		native.SourceFlags(code, native.Options{}),
 		"-g",
 		"-I",
-		runtimeDir,
+		runtimeDirectory,
 		"-o",
 		filepath.Join(directory, "profiled"),
 		source,
@@ -158,7 +158,7 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	if writeError := os.WriteFile(overlayPath, overlay, 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	cmd := bounded(
+	command := bounded(
 		test,
 		"go",
 		"test",
@@ -168,9 +168,9 @@ func TestCSSProfileArtifacts(test *testing.T) {
 		filepath.Join(directory, "go-printer"),
 		"./internal/format/css",
 	)
-	cmd.Dir = filepath.Join(repo, "cohere")
+	command.Dir = filepath.Join(repo, "cohere")
 	if output, combinedOutputError := childguard.CombinedOutput(
-		cmd,
+		command,
 		childguard.Options{Stall: oracles.ChildStallLimit},
 	); combinedOutputError != nil {
 		test.Fatalf("Go benchmark build: %v %s", combinedOutputError, output)

@@ -44,15 +44,22 @@ func StaticSingleAssignment(test testing.TB) (string, string) {
 }
 
 // stock is the identical stock request in owners and finders; only the owner builds.
-func stock(test testing.TB, output, pkg string, arguments []string, environment ...string) string {
+func stock(test testing.TB, output, packagePath string, arguments []string, environment ...string) string {
 	test.Helper()
 	if producer {
-		return buildcache.GoTest(test, "cohere/static_single_assignment", output, pkg, arguments, environment...)
+		return buildcache.GoTest(
+			test,
+			"cohere/static_single_assignment",
+			output,
+			packagePath,
+			arguments,
+			environment...,
+		)
 	}
 	inputs, goTestInputsError := buildcache.GoTestInputs(
 		"cohere/static_single_assignment",
 		output,
-		pkg,
+		packagePath,
 		arguments,
 		nil,
 		environment...,

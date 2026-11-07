@@ -353,17 +353,17 @@ func yepestaExecute(test *testing.T, directory, name string, args ...string) exe
 	}
 	timeoutContext, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
-	cmd := lintCommand(timeoutContext, directory, name, args...)
+	command := lintCommand(timeoutContext, directory, name, args...)
 	out, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
 	}
 	defer out.Close()
-	cmd.Stdout = out
+	command.Stdout = out
 	var stderr bytes.Buffer
-	cmd.Stderr = &stderr
+	command.Stderr = &stderr
 	started := time.Now()
-	runError := cmd.Run()
+	runError := command.Run()
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
 	}

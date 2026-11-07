@@ -29,7 +29,11 @@ func (graph *allocationFlowGraph) resultNode(function int) int {
 }
 
 func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
-	graph := &allocationFlowGraph{program: program, sources: map[int][]ir.Expression{}, unknownParameters: map[int]bool{}}
+	graph := &allocationFlowGraph{
+		program:           program,
+		sources:           map[int][]ir.Expression{},
+		unknownParameters: map[int]bool{},
+	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
@@ -44,18 +48,20 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 				graph.sources[value.Local+1] = append(graph.sources[value.Local+1], value.Value)
 			case ir.Return:
 				if function >= 0 {
-					graph.sources[graph.resultNode(function)] = append(graph.sources[graph.resultNode(function)], value.Value)
+					graph.sources[graph.resultNode(
+						function,
+					)] = append(graph.sources[graph.resultNode(function)], value.Value)
 				}
 			case ir.Call:
 				for _, target := range program.CallTargets(value) {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, param := range program.Functions[target].Parameters {
+					for i, parameter := range program.Functions[target].Parameters {
 						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
+							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[i])
 						} else {
-							graph.unknownParameters[param+1] = true
+							graph.unknownParameters[parameter+1] = true
 						}
 					}
 				}
@@ -66,11 +72,11 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, param := range program.Functions[target].Parameters {
+					for i, parameter := range program.Functions[target].Parameters {
 						if i < len(value.Arguments) {
-							graph.sources[param+1] = append(graph.sources[param+1], value.Arguments[i])
+							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[i])
 						} else {
-							graph.unknownParameters[param+1] = true
+							graph.unknownParameters[parameter+1] = true
 						}
 					}
 				}
@@ -86,7 +92,12 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 	return graph
 }
 
-func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation func(int), demand func(int), unknown func(string)) {
+func (graph *allocationFlowGraph) follow(
+	expression ir.Expression,
+	allocation func(int),
+	demand func(int),
+	unknown func(string),
+) {
 	program := graph.program
 	follow := func(value ir.Expression) { graph.follow(value, allocation, demand, unknown) }
 	if expression == nil {
@@ -170,6 +181,9 @@ func assignAllocationSites(program *ir.Program) {
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
 	for i := range program.Functions {
-		program.Functions[i].Body = graphAllocationSites(reflect.ValueOf(program.Functions[i].Body), &next).Interface().([]ir.Statement)
+		program.Functions[i].Body = graphAllocationSites(
+			reflect.ValueOf(program.Functions[i].Body),
+			&next,
+		).Interface().([]ir.Statement)
 	}
 }

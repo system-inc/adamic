@@ -42,22 +42,22 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 		test.Helper()
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 		defer cancel()
-		cmd := exec.CommandContext(timeoutContext, name, args...)
-		cmd.Dir = root
+		command := exec.CommandContext(timeoutContext, name, args...)
+		command.Dir = root
 		if name == "node" {
 			for index, arg := range args {
 				if arg == "oracle/node.mjs" && index+1 < len(args) {
 					if jsonTypesPath == "" {
 						jsonTypesPath = jsonTypes(test)
 					}
-					cmd.Env = append(os.Environ(), "ADAMIC_JSON_TYPES="+jsonTypesPath)
+					command.Env = append(os.Environ(), "ADAMIC_JSON_TYPES="+jsonTypesPath)
 				}
 			}
 		}
 		var stdout, stderr bytes.Buffer
-		cmd.Stdout = &stdout
-		cmd.Stderr = &stderr
-		if runError := cmd.Run(); runError != nil {
+		command.Stdout = &stdout
+		command.Stderr = &stderr
+		if runError := command.Run(); runError != nil {
 			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, runError, &stdout, &stderr)
 		}
 		return stdout.Bytes()

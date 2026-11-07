@@ -68,7 +68,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 		NoEmit:           core.TSTrue,
 		Types:            []string{},
 	}
-	config := tsoptions.NewParsedCommandLine(
+	configuration := tsoptions.NewParsedCommandLine(
 		options,
 		roots,
 		nil,
@@ -76,7 +76,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 		fileSystem.CaseSensitivity(),
 	)
 	sourceProgram := compiler.NewProgram(compiler.ProgramOptions{
-		Config:         config,
+		Config:         configuration,
 		Host:           compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil),
 		SingleThreaded: core.TSTrue,
 	})
