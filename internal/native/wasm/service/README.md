@@ -1,9 +1,3 @@
-Built a six-route, stateless Adamic service and a seeded 100,000-request Node/WASI oracle.
-Commits: claim 7c2d29a, implementation 098e052, framing fix 03e1a87, main merge f0f36df.
-WASI/native request comparisons, the native package, filtered WASI oracle, vet and format checks pass.
-All three mutants compiled and failed: changed byte, retained Parser (11 live), Unicode escape (+1).
-Not covered: deployment, concurrent calls, exhaustive JSON conformance, or the complete repository gate.
-
 The handler exports `handleRequest(request: string): string`. Routes are `GET /health`,
 `GET /catalog`, `POST /orders`, `POST /summary`, `POST /listing`, and `POST /quote`.
 Orders validate a customer and 1..128 items against a price map. Quantities are integers
