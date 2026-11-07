@@ -1,0 +1,14 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "arrayOf",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export function arrayOf<T>(count: number, f: (index: number) => T): T[] {\n    const result = new Array(count);\n    for (let i = 0; i < count; i++) {\n        result[i] = f(i);\n    }\n    return result;\n}",
+    "after": "export function arrayOf<T>(count: number, f: (index: number) => T): T[] {\n    const result: T[] = [];\n    for (let i = 0; i < count; i++) {\n        result.push(f(i));\n    }\n    return result;\n}",
+    "ownerBeforeSha256": "d0ce42138b0cca8a7fbd157b2e9a76d6563415176ada2d6f20533bf28a3ca911",
+    "ownerAfterSha256": "540e3eee118de33d9331fca497a0cf2a90f70c39a9d2b5ac010e242b7be84a25",
+    "site": "core.ts:1339:12",
+    "reason": "a member typed any ([]) related to T at the return site"
+  }
+]

@@ -1,0 +1,190 @@
+{
+  "status": "pass",
+  "task": "b5w3ycg",
+  "base": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "ruleClass": "JavaScript-changing established-shape, counted domain",
+  "ruling": "Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts",
+  "count": {
+    "complete": true,
+    "units": 398,
+    "counts": {
+      "non-negative integer": 860,
+      "negative": 0,
+      "fractional": 0,
+      "NaN": 0,
+      "infinite": 0
+    },
+    "returnedOrThrew": 860,
+    "callbackThrows": 0,
+    "counterexamples": 0,
+    "oracleCounts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "countHistogram": {
+      "0": 27,
+      "250": 1,
+      "1": 665,
+      "50": 52,
+      "150": 1,
+      "100": 4,
+      "5": 100,
+      "2": 10
+    },
+    "independentlyReclassifiedEveryRawInput": true,
+    "testIdentityDigest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+    "sameExactTestMultiset": true,
+    "baselineDiffByteIdentical": true,
+    "maxPieceSeconds": 156.21689238199997
+  },
+  "fullApplies": {
+    "beforeExit": 0,
+    "afterExit": 0,
+    "freshBaselineInputsCompared": 81504,
+    "baselineInputDifferences": 0,
+    "afterOuterShellStatusRetainedSeparately": true
+  },
+  "ownerContract": {
+    "pass_": true,
+    "checks": 11
+  },
+  "pairedReplay": {
+    "pass_": true,
+    "adapters": 84,
+    "changedOutcomes": [
+      "99-correctness-core-arrayof"
+    ],
+    "allOtherOutcomesByteIdenticalAfterTreePathNormalization": true,
+    "ownBefore": {
+      "files": 1,
+      "edits": 1
+    },
+    "ownAfter": {
+      "files": 0,
+      "edits": 0
+    },
+    "identicalNonzeroMainOutcomes": [
+      "30-indexed-reads",
+      "32-indexed-reads-program",
+      "33-indexed-reads-emit",
+      "40-explicit-any",
+      "41-explicit-any-remaining",
+      "43-any-returns",
+      "47-host-errors",
+      "65-temporary-node-builtins",
+      "76-truthful-casts",
+      "93-builtin-imports",
+      "95-checker-axolotl-b",
+      "95-checker-axolotl-h",
+      "98-axolotl-e",
+      "99-correctness-axolotl-g"
+    ]
+  },
+  "types": {
+    "before": {
+      "exit": 0,
+      "roots": 79
+    },
+    "after": {
+      "exit": 0,
+      "roots": 79,
+      "logBytes": 5146620
+    },
+    "diagnosticsBefore": 0,
+    "diagnosticsAfter": 0,
+    "evidence": "Both ordinary CLI types commands exit0; check returns no program on any checker diagnostics. Census metadata also has zero checker diagnostics. types-command.go.txt retains the unmodified CLI source."
+  },
+  "source": {
+    "files": 746,
+    "changed": [
+      "compiler/core.ts"
+    ],
+    "ownerOnly": true
+  },
+  "javascript": {
+    "completeCoreCommentsKeptAndRemovedOwnerOnly": true,
+    "compilerFiles": 9,
+    "changed": [
+      "_tsc.js",
+      "typescript.js"
+    ],
+    "allChangesOnlyArrayOf": true
+  },
+  "publicDeclarations": [
+    {
+      "name": "typescript.d.ts",
+      "identical": true,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "bytes": 593502
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "identical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "bytes": 866
+    }
+  ],
+  "census": {
+    "before": {
+      "units": 271,
+      "events": 63,
+      "sites": 59,
+      "checkerDiagnostics": 0
+    },
+    "after": {
+      "units": 271,
+      "events": 62,
+      "sites": 58,
+      "checkerDiagnostics": 0
+    },
+    "mutant": {
+      "units": 271,
+      "events": 63,
+      "sites": 59,
+      "checkerDiagnostics": 0
+    },
+    "removedSites": [
+      [
+        "1339:12",
+        "NotYet",
+        "a member typed any ([]) related to T at the return site",
+        "refusal_scan"
+      ]
+    ],
+    "newSites": [],
+    "mutantRestoresSite": true,
+    "mutantAllSitesEqualBaseline": true,
+    "scope": "entire core.ts; all raw Refused and NotYet events, not only the ranked range"
+  },
+  "checkpoint": {
+    "commit": "925b96360882e6701ada51bc98cb95f4c7f65b83",
+    "branch": "typescript/core-arrayof-checkpoint-b5w3ycg",
+    "base": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+    "files": 28,
+    "bothFullAppliesExit": 0,
+    "remoteVerified": true
+  },
+  "archives": {
+    "measurement.tar.gz": {
+      "bytes": 10326212,
+      "sha256": "2a4bace227b006078cb39225a30b7579564599db2ee74b561104329c4be8a94b"
+    },
+    "checkpoint.tar.gz": {
+      "bytes": 58285,
+      "sha256": "6981d7e3fbc34bf8d86626db594693a7162d11cae32fa01e7a48de68482b16dd"
+    },
+    "proof.tar.gz": {
+      "bytes": 1154610,
+      "sha256": "c15692ee660b5a35b4e28eb3e529ad0f1bbb23d0a7fa5f57e761bbd9d21f705d"
+    }
+  },
+  "processes": {
+    "taskRoot": "/workspace/scratch/arrayof",
+    "remainingWorkers": [],
+    "allMeasurementBuildCensusReplayWorkersStopped": true
+  },
+  "adapterDirectoryFiles": 37,
+  "totalChangedFiles": 38
+}
