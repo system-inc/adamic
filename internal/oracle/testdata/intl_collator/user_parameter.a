@@ -1,0 +1,21 @@
+// Language's c03 (#zjndrx5 head 1): a program's class and an object literal, each handed to a parameter
+// typed Intl.Collator, which calls its compare. Each call is the object's own, as on Node: 2, then 2.
+class Lengths implements Intl.Collator {
+	compare(x: string, y: string): number {
+		return x.length + y.length;
+	}
+	resolvedOptions(): Intl.ResolvedCollatorOptions {
+		return { locale: 'lengths', usage: 'sort', sensitivity: 'variant', ignorePunctuation: false, collation: 'default', caseFirst: 'false', numeric: true };
+	}
+}
+
+function compared(collator: Intl.Collator): string {
+	return String(collator.compare('a', 'b'));
+}
+
+const literal: Intl.Collator = {
+	compare: (x: string, y: string): number => x.length + y.length,
+	resolvedOptions: (): Intl.ResolvedCollatorOptions => ({ locale: 'lengths', usage: 'sort', sensitivity: 'variant', ignorePunctuation: false, collation: 'default', caseFirst: 'false', numeric: true }),
+};
+console.log(compared(new Lengths()));
+console.log(compared(literal));
