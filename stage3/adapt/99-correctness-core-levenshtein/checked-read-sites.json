@@ -1,0 +1,38 @@
+[
+  {
+    "site": "case-insensitive equal substitution",
+    "where": "core.ts:2246:20",
+    "expression": "previous[j - 1]!",
+    "index": "j - 1"
+  },
+  {
+    "site": "case-insensitive unequal substitution",
+    "where": "core.ts:2247:20",
+    "expression": "previous[j - 1]!",
+    "index": "j - 1"
+  },
+  {
+    "site": "equal code-unit branch",
+    "where": "core.ts:2249:19",
+    "expression": "previous[j - 1]!",
+    "index": "j - 1"
+  },
+  {
+    "site": "delete candidate",
+    "where": "core.ts:2250:39",
+    "expression": "previous[j]!",
+    "index": "j"
+  },
+  {
+    "site": "insert candidate",
+    "where": "core.ts:2250:68",
+    "expression": "current[j - 1]!",
+    "index": "j - 1"
+  },
+  {
+    "site": "final result",
+    "where": "core.ts:2267:17",
+    "expression": "previous[s2.length]!",
+    "index": "s2.length"
+  }
+]
