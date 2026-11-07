@@ -79,8 +79,9 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 // setTimeout's extra arguments are handed over as the slots a call through its callback would
 // pack, each with whether it's a reference, which the provider retains and copies until the
 // timeout fires or is cleared, and its thunk calls the callback with them. clearTimeout hands the
-// runtime a reference as the heap value it is and anything else as NULL, a value that can't be a
-// Timeout, which the runtime tells by its shape.
+// runtime a reference as the heap value it is, which the runtime tells a Timeout by its shape. A union
+// is a reference (unknown and NodeJS.Timeout | boolean are), a Timeout in it the object itself. Every
+// other representation, a number, a boolean or a maybe of one, can't hold a Timeout, and goes as NULL.
 func (e *emitter) nodeTimer(call ir.NodeFSFile) string {
 	if include := "#include \"timers.h\""; !slices.Contains(e.declarations, include) {
 		e.declarations = append(e.declarations, include)

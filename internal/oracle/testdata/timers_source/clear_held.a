@@ -1,0 +1,21 @@
+// clearTimeout of a Timeout held where its type isn't Timeout alone (Library's must on #995spev):
+// unknown, and NodeJS.Timeout | boolean, each a union natively whose reference is the Timeout itself,
+// which the runtime knows by its shape. Each is cleared before it fires; the boolean arm is a no-op.
+import 'node:timers';
+
+function viewed(value: unknown): unknown {
+    return value;
+}
+
+function either(armed: boolean): NodeJS.Timeout | boolean {
+    return armed ? setTimeout(() => { console.log('either fired'); }, 3) : false;
+}
+
+const held = viewed(setTimeout(() => { console.log('unknown fired'); }, 2));
+clearTimeout(held);
+const slot = either(true);
+clearTimeout(slot);
+const off = either(false);
+clearTimeout(off);
+setTimeout(() => { console.log('kept fired'); }, 5);
+console.log('cleared');
