@@ -1,0 +1,14 @@
+// Language's d01 (#zjndrx5 head 1): a collator held as a type that has compare as a writable field,
+// never named Intl.Collator, so a write by the receiver's type let it by. Node throws a TypeError at
+// the write, since compare is a getter on Intl.Collator.prototype, and the collator still compares.
+// Both backends took the write into the shape's slot and printed wrote, then 0. A collator goes only
+// into a slot that shows it as Intl.Collator itself, so the view is a compile-time NotYet.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+const v: { compare: (x: string, y: string) => number } = collator;
+try {
+	v.compare = (x: string, y: string): number => 0;
+	console.log('wrote');
+} catch (error) {
+	console.log('threw');
+}
+console.log(String(v.compare('a', 'b')));

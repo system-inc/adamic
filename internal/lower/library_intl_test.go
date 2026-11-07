@@ -27,6 +27,11 @@ func TestIntlCollatorLowers(t *testing.T) {
 		{"compare through a variable", intlCollatorConstruct + "const collator = make(undefined);\nconsole.log(String(collator.compare(\"a\", \"b\")));\n", 1},
 		{"compare in tsc's comparer", intlCollatorConstruct + "function comparer(locale: string | undefined): (a: string, b: string) => number {\n\tconst collator = make(locale);\n\treturn (a, b) => collator.compare(a, b);\n}\nconsole.log(String(comparer(undefined)(\"a\", \"b\")));\n", 1},
 		{"compare on the new collator", "console.log(String(new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare(\"a\", \"b\")));\n", 1},
+		// The slots that show a collator as nothing but itself (intlCollatorViewRefusal).
+		{"a slot typed Intl.Collator", intlCollatorConstruct + "const held: Intl.Collator = make(undefined);\nconsole.log(typeof held);\n", 1},
+		{"a slot typed Intl.Collator | undefined", intlCollatorConstruct + "const held: Intl.Collator | undefined = make(undefined);\nconsole.log(typeof held);\n", 1},
+		{"a slot typed unknown", intlCollatorConstruct + "const held: unknown = make(undefined);\nconsole.log(typeof held);\n", 1},
+		{"an unconstrained type parameter", intlCollatorConstruct + "function same<T>(value: T): T {\n\treturn value;\n}\nconsole.log(typeof same(make(undefined)));\n", 1},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -86,9 +91,10 @@ func intlCollatorsMade(program *ir.Program) int {
 // Object.hasOwn would answer from native's own compare slot, so it's a NotYet by name, as a write by
 // key and Object.assign onto a collator are (internal/oracle's
 // TestIntlCollatorWritesAndCopiesStopByName holds the rest of Runtime's roads on head 1's C); for...in
-// and JSON.stringify stop in their own words; Object.keys, an in test and a run-time key read stop at
-// run time (internal/oracle's own_keys.a, in_compare.a and reflect_get's stop_host_collator.a), so
-// none lists compare (Runtime's must 2). compare read as a value, held, handed to sort, or through call
+// and JSON.stringify stop in their own words; an in test and a run-time key read stop at run time
+// (internal/oracle's in_compare.a and reflect_get's stop_host_collator.a), and Object.keys is the view
+// rule's NotYet (own_keys.a, TestIntlCollatorSeenAsAnotherTypeIsNotYet), so none lists compare
+// (Runtime's must 2). compare read as a value, held, handed to sort, or through call
 // or bind, stops where it stops today, the method value refusal, until Lower's #9tw2b9z reads the slot.
 // Mutants: the value test dropped, so "numeric: false" lowers; an unknown option let by, so "caseFirst
 // added" lowers; the resolvedOptions and without-new stops dropped, so those rows meet other words.
@@ -157,6 +163,52 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, probe.source)
+			if err == nil || !strings.Contains(err.Error(), probe.want) {
+				t.Errorf("got %v, want a stop containing %q", err, probe.want)
+			}
+		})
+	}
+}
+
+// intlCollatorMade is a collator written as tsc builds it, held in a const.
+const intlCollatorMade = "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\n"
+
+// intlCollatorViewStop is what a collator seen as another type stops in, at where.
+func intlCollatorViewStop(where string) string {
+	return "main.a:" + where + ": stage 0 can't lower an Intl.Collator seen as a type other than Intl.Collator (Node's collator has no own compare, and a view could write one) yet"
+}
+
+// A collator goes only into a slot that shows it as Intl.Collator itself (Language's must on #zjndrx5
+// head 1, Library's closed form): every other slot is a NotYet at the value, whichever site writes it
+// there, and a constrained type parameter bound to a collator is a NotYet at its binding, since the
+// generic's body sees the constraint. internal/oracle's TestIntlCollatorWritesAndCopiesStopByName holds
+// Language's d01 and d03, which wrote compare through a view on both backends. Mutants: the view rule
+// dropped, so each view row lowers or meets other words; the binding rule dropped, so both type
+// parameter rows lower.
+func TestIntlCollatorSeenAsAnotherTypeIsNotYet(t *testing.T) {
+	t.Parallel()
+	const compare = "(x: string, y: string) => number"
+	for _, probe := range []struct{ name, source, want string }{
+		{"a readonly field view", "const view: { readonly compare: " + compare + " } = collator;\nconsole.log(typeof view);\n", intlCollatorViewStop("2:70")},
+		{"an interface with a method signature", "interface Comparing {\n\tcompare(x: string, y: string): number;\n}\nconst view: Comparing = collator;\nconsole.log(typeof view);\n", intlCollatorViewStop("5:25")},
+		{"an empty object type", "const view: {} = collator;\nconsole.log(typeof view);\n", intlCollatorViewStop("2:18")},
+		{"object", "const view: object = collator;\nconsole.log(typeof view);\n", intlCollatorViewStop("2:22")},
+		{"a return", "function view(): { compare: " + compare + " } {\n\treturn collator;\n}\nconsole.log(typeof view());\n", intlCollatorViewStop("3:9")},
+		{"an object literal's field", "const box: { held: { compare: " + compare + " } } = { held: collator };\nconsole.log(typeof box.held);\n", intlCollatorViewStop("2:78")},
+		{"an array element", "const views: { compare: " + compare + " }[] = [collator];\nconsole.log(String(views.length));\n", intlCollatorViewStop("2:65")},
+		{"a union slot", "const view: { compare: " + compare + " } | undefined = collator;\nconsole.log(typeof view);\n", intlCollatorViewStop("2:73")},
+		{"a parameter", "function take(target: { compare: " + compare + " }): string {\n\treturn typeof target;\n}\nconsole.log(take(collator));\n", intlCollatorViewStop("5:18")},
+		{"a shorthand field", "const box: { collator: { compare: " + compare + " } } = { collator };\nconsole.log(typeof box.collator);\n", intlCollatorViewStop("2:76")},
+		{"an as cast", "const view = collator as { compare: " + compare + " };\nconsole.log(typeof view);\n", intlCollatorViewStop("2:14")},
+		{"a conditional with no slot", "const other = { compare: (x: string, y: string): number => x.length - y.length };\nconst pick = other.compare(\"a\", \"b\") < 0 ? collator : other;\nconsole.log(typeof pick);\n", intlCollatorViewStop("3:44")},
+		{"a constrained type parameter inferred", "function take<T extends { compare: " + compare + " }>(target: T): string {\n\treturn typeof target;\n}\nconsole.log(take(collator));\n",
+			"main.a:5:13: stage 0 can't lower an Intl.Collator bound to a type parameter constrained to { compare: " + compare + "; } (Node's collator has no own compare, and the generic's body could write one) yet"},
+		{"a constrained type parameter written", "function take<T extends { compare: " + compare + " }>(target: T): string {\n\treturn typeof target;\n}\nconsole.log(take<Intl.Collator>(collator));\n",
+			"main.a:5:18: stage 0 can't lower an Intl.Collator bound to a type parameter constrained to { compare: " + compare + "; } (Node's collator has no own compare, and the generic's body could write one) yet"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSource(t, intlCollatorMade+probe.source)
 			if err == nil || !strings.Contains(err.Error(), probe.want) {
 				t.Errorf("got %v, want a stop containing %q", err, probe.want)
 			}

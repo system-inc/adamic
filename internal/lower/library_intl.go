@@ -32,7 +32,9 @@ import (
 // Object.assign, entries, values, getOwnPropertyNames and hasOwn of one, are compile-time NotYets by
 // name too (Runtime's must on head 1's C). A spread of one is the library spread rule's refusal
 // (librarySpreadRefusal), delete of compare is tsc's own error (TS2790, compare isn't optional), and
-// Object.keys, an in test and a run-time key read stop at run time on the host shape.
+// an in test and a run-time key read stop at run time on the host shape. A collator seen as any type
+// but Intl.Collator is a NotYet at the view (intlCollatorViewRefusal), Object.keys' {} parameter among
+// them, since a view could write compare.
 
 // intlCollatorOptions is tsc's options literal as tsc writes it, in its order, each option with the
 // one literal it's written with: usage "sort", sensitivity "variant" and numeric true.
@@ -122,8 +124,8 @@ func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
 // intlCollatorOwnPropertyCalls are the Object calls that read or copy a value's own properties, which
 // lowering would answer from native's shape: hasOwn reads the shape's names unguarded
 // (library_object.c), and the others would copy or list its slots, compare among them, where Node's
-// collator has no own property at all. Object.keys isn't one: it stops at run time on the host shape
-// (#0sps03r's keyless form, own_keys.a).
+// collator has no own property at all. Object.keys isn't one: its parameter is {}, a view of the
+// collator, which intlCollatorViewRefusal stops (own_keys.a).
 var intlCollatorOwnPropertyCalls = map[string]bool{"assign": true, "entries": true, "getOwnPropertyNames": true, "hasOwn": true, "values": true}
 
 // intlCollatorOwnProperties is the stop for an Object call of intlCollatorOwnPropertyCalls handed a
@@ -168,6 +170,131 @@ func (l *lowering) intlCollatorMember(node *ast.Node) error {
 }
 
 func init() { refusalRules.register(150, "intlCollatorRefusal", (*lowering).intlCollatorRefusal) }
+
+// intlCollatorView is what a collator seen as another type stops in.
+const intlCollatorView = "an Intl.Collator seen as a type other than Intl.Collator (Node's collator has no own compare, and a view could write one)"
+
+// intlCollatorViewRefusal is the stop for a collator going into a slot that sees it as another type
+// (#zjndrx5 head 1, Language's must on its write stop). intlCollatorWrite judges a write by its
+// receiver's type, so a collator held as { compare: F } took the write into native's slot 0 and answered
+// from it, where Node throws a TypeError. A type says what a value looks like, never what reaches it, so
+// the closed form is Library's: a value whose type holds an Intl.Collator goes only into a slot whose
+// every member is Intl.Collator itself, unknown, any, null, undefined or a primitive, which can't hold a
+// collator at all. Every other slot is a NotYet: a field view, readonly or not, since a readonly view is
+// assignable to a writable one, an interface, {}, object and a type parameter. The slot is read at each
+// site a value goes into one (intlCollatorSite) through slotType, so every relation site sees it,
+// refuseInSlot's explicit slots too, and a value with no slot is judged against what tsc took it into,
+// a conditional's reduced type, a literal's element type or a function's inferred result (impliedTarget).
+func (l *lowering) intlCollatorViewRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) || !l.holdsIntlCollator(l.checker.GetTypeAtLocation(node)) {
+		return nil
+	}
+	var slot *checker.Type
+	if intlCollatorSite(node) {
+		slot = l.slotType(node)
+	}
+	if slot == nil {
+		slot = l.impliedTarget(node)
+	}
+	if slot == nil || l.intlCollatorSlot(slot) {
+		return nil
+	}
+	return l.notYet(node, intlCollatorView)
+}
+
+func init() {
+	refusalRules.register(160, "intlCollatorViewRefusal", (*lowering).intlCollatorViewRefusal)
+}
+
+// intlCollatorSite reports whether node is a value going into a slot tsc gives it: viewSite's sites, a
+// shorthand property's name, an as or angle-bracket assertion's operand, whose slot is the asserted
+// type, a yield's operand, the right of &&=, ||= and ??=, a binding element's default, and a
+// conditional's branch or a logical operand, which take the slot their expression goes into.
+// Parentheses around it are the same site.
+func intlCollatorSite(node *ast.Node) bool {
+	if viewSite(node) {
+		return true
+	}
+	child := node
+	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+		child = child.Parent
+	}
+	parent := child.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindShorthandPropertyAssignment:
+		return parent.Name() == node
+	case ast.KindAsExpression, ast.KindTypeAssertionExpression, ast.KindYieldExpression:
+		return true
+	case ast.KindBindingElement:
+		return parent.AsBindingElement().Initializer == child
+	case ast.KindConditionalExpression:
+		conditional := parent.AsConditionalExpression()
+		return conditional.WhenTrue == child || conditional.WhenFalse == child
+	case ast.KindBinaryExpression:
+		binary := parent.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindAmpersandAmpersandEqualsToken, ast.KindBarBarEqualsToken, ast.KindQuestionQuestionEqualsToken, ast.KindAmpersandAmpersandToken, ast.KindCommaToken:
+			return binary.Right == child
+		case ast.KindBarBarToken, ast.KindQuestionQuestionToken:
+			return true
+		}
+	}
+	return false
+}
+
+// holdsIntlCollator reports whether a type is the library's Intl.Collator or a union holding it.
+func (l *lowering) holdsIntlCollator(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+		return l.isIntlCollatorType(proven)
+	}
+	for _, member := range proven.Types() {
+		if l.isIntlCollatorType(member) {
+			return true
+		}
+	}
+	return false
+}
+
+// intlCollatorSlot reports whether a slot shows a collator as nothing but itself: each member of it
+// Intl.Collator, unknown, any, or a primitive (null and undefined among them).
+func (l *lowering) intlCollatorSlot(slot *checker.Type) bool {
+	members := []*checker.Type{slot}
+	if slot.Flags()&checker.TypeFlagsUnion != 0 {
+		members = slot.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsPrimitive) == 0 && !l.isIntlCollatorType(member) {
+			return false
+		}
+	}
+	return true
+}
+
+// intlCollatorBindingRefusal is the stop for an Intl.Collator bound to a constrained type parameter,
+// written or inferred. f<T extends { compare: F }>(x: T) called with a collator binds T to
+// Intl.Collator, so the argument's slot is Intl.Collator itself and intlCollatorViewRefusal lets it by,
+// while the body sees x as the constraint and can write its compare. Any constraint but unknown or any
+// is a NotYet, the closed form. An unconstrained parameter shows nothing to write, and a type parameter
+// the library declares binds a body that's the runtime's own (constraintRelation's library exemption).
+func (l *lowering) intlCollatorBindingRefusal(node *ast.Node) error {
+	return l.typeArgumentBindings(node, func(binding typeArgumentBinding) error {
+		if binding.argument == nil || !l.holdsIntlCollator(binding.argument) || binding.constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || l.libraryTypeParameter(binding.parameter) {
+			return nil
+		}
+		where := binding.site
+		if binding.written != nil {
+			where = binding.written
+		}
+		return l.notYet(where, "an Intl.Collator bound to a type parameter constrained to "+l.checker.TypeToString(binding.constraint)+" (Node's collator has no own compare, and the generic's body could write one)")
+	})
+}
+
+func init() {
+	refusalRules.register(170, "intlCollatorBindingRefusal", (*lowering).intlCollatorBindingRefusal)
+}
 
 // intlCollatorArguments holds new Intl.Collator to tsc's two arguments: a locale typed string or
 // undefined, and its options literal exactly as tsc writes it, in place, each option a plain field
