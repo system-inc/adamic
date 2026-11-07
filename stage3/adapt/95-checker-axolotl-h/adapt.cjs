@@ -4,6 +4,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const ts=require(process.env.CENSUS_TYPESCRIPT||'typescript');
 const {compiler,nodes}=require('../47-host-errors/adapt.cjs');
 const inventory=require('./sites.json');
+const multimap=require('./multimap.cjs');
 const {slice,records,importEdit,javascriptEdits}=require('./fold.cjs');
 const hash=text=>crypto.createHash('sha256').update(text).digest('hex');
 const hasUndefined=type=>!!(type.flags&ts.TypeFlags.Undefined)||type.isUnion()&&type.types.some(t=>!!(t.flags&ts.TypeFlags.Undefined));
@@ -29,6 +30,8 @@ function adapt(tree,check=false){
  const helpers=nodes(ts,core,n=>ts.isFunctionDeclaration(n)&&n.name?.text==='maybeBind');
  assert.equal(helpers.length,1,'core maybeBind declaration');
  const maybeBind=symbolAt(helpers[0].name);
+ const mm=multimap.inspect(ts,program,tree);
+ for(const edit of mm.edits)plan(mm.source,edit);
 
  function beforeCall(expression,member){
   assert(ts.isCallExpression(expression)&&!expression.questionDotToken&&!expression.typeArguments&&expression.arguments.length===2,'maybeBind call shape');
@@ -69,6 +72,7 @@ function adapt(tree,check=false){
     const states=owned.map(site=>{const text=site.node.getText(source);assert([site.member.initializer.before,site.member.initializer.after].includes(text),'folded initializer shape');return text===site.member.initializer.after?'after':'before';});
     assert(states.every(value=>value===states[0]),'half-adapted owner: '+row.owner);state=states[0];
     const undo=owned.map(site=>({start:site.node.getStart(source)-owner.getStart(source),end:site.node.end-owner.getStart(source),text:site.member.initializer.before}));
+    if(row.owner==='createProgram'){assert.equal(mm.state,state,'half-adapted MultiMap calls');undo.push(...mm.undo);}
     // Parent createProgram owns the nested getEmitHost changes as well. Its
     // original owner pin is checked before its literal, including on replay.
     // The checker owner's literal is checked first on purpose, repeating the
@@ -78,6 +82,7 @@ function adapt(tree,check=false){
     assert.equal(hash(slice(owner.getText(source),undo)),row.ownerBeforeSha256,'writer owner shape: '+row.owner);
     assert.equal(hash(owner.getText(source)),state==='after'?row.ownerAfterSha256:row.ownerBeforeSha256,'writer owner state: '+row.owner);
     assert.equal(hash(literal.getText(source)),state==='after'?row.literalAfterSha256:row.literalBeforeSha256,'whole literal shape: '+row.owner);
+    if(row.owner==='createProgram'){const edit=multimap.importEdit(ts,mm.source,state);if(edit){assert(!check,'missing MultiMap import');plan(mm.source,edit);}}
     if(row.file===inventory.importRemoval.file){
      const edit=importEdit(ts,source,inventory);assert.equal(!!edit,state==='before','half-adapted checker import');
      const uses=nodes(ts,source,n=>ts.isIdentifier(n)&&n.text==='maybeBind'&&symbolAt(n)===maybeBind);
@@ -159,7 +164,8 @@ function adapt(tree,check=false){
  for(const [source,text] of changedRuntime)for(const removeComments of [false,true]){
   const relative=path.relative(tree,source.fileName),options={fileName:source.fileName,compilerOptions:{target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,verbatimModuleSyntax:true,removeComments}};
   const oldJS=ts.transpileModule(source.text,options).outputText,newJS=ts.transpileModule(text,options).outputText;
-  assert.equal(newJS,slice(oldJS,javascriptEdits(ts,oldJS,relative,inventory)),'only six folds and checker import cleanup: '+relative);
+  const expected=slice(oldJS,javascriptEdits(ts,oldJS,relative,inventory));
+  assert.equal(newJS,multimap.javascript(ts,expected,relative),'only six folds, two MultiMap calls and import cleanup: '+relative);
  }
 
  for(const source of inputs)assert.equal(fs.readFileSync(source.fileName,'utf8'),source.text,'source changed while planning');

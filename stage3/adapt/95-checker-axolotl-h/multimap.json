@@ -1,0 +1,20 @@
+{
+  "calls": [
+    {
+      "before": "redirectTargetsMap.add(fileFromPackageId.path, fileName)",
+      "after": "multiMapAddValue(redirectTargetsMap, fileFromPackageId.path, fileName)"
+    },
+    {
+      "before": "programDiagnostics.getFileReasons().add(file.path, reason)",
+      "after": "multiMapAddValue(programDiagnostics.getFileReasons(), file.path, reason)"
+    }
+  ],
+  "import": {
+    "previous": "createMultiMap",
+    "next": "createProgramDiagnostics",
+    "before": ",\r\n    ",
+    "after": ",\r\n    multiMapAddValue,\r\n    "
+  },
+  "ownerBeforeAmendmentSha256": "904e66026ef3720eb2ba4f0f6915e20043289c25d4500798ff5ec03a1762e76d",
+  "ownerAfterAmendmentSha256": "71f7676d9324bbf40fe42fddaa7d2e6cb3482a1a170d19049c98d25ab8604de7"
+}

@@ -1,0 +1,187 @@
+{
+  "ordering": [
+    "94-axolotl-property-read",
+    "94-correctness-multimap",
+    "95-checker-axolotl-a"
+  ],
+  "fullApplyAdapters": 86,
+  "mandatoryAdapterProcessesAllExit0": true,
+  "requiredSemanticAdapters": [
+    "97-cli-axolotl-e",
+    "98-axolotl-c",
+    "99-cli-perf-hooks-import"
+  ],
+  "directAPICandidates": [
+    {
+      "adapter": "10-type-imports",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getSemanticDiagnostics",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "20-optional-declarations",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getPreEmitDiagnostics",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "47-host-errors",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "70-readonly-views",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "71-writable-views",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "75-optional-widening",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "78-variance-marker",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "79-exit-code",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "90-void-widening",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "91-patcher-discard",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "93-builtin-imports",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-a",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-b",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-c",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-d",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-e",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-f",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-g",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "95-checker-axolotl-h",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "97-cli-axolotl-e",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "98-axolotl-c",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "99-cli-debug-assertion-level",
+      "directCheckerOrProgramAPIs": [
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "99-cli-perf-hooks-import",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getSemanticDiagnostics",
+        "getTypeChecker"
+      ]
+    },
+    {
+      "adapter": "99-correctness-axolotl-i",
+      "directCheckerOrProgramAPIs": [
+        "createProgram"
+      ]
+    },
+    {
+      "adapter": "99-correctness-axolotl-j",
+      "directCheckerOrProgramAPIs": [
+        "createProgram"
+      ]
+    },
+    {
+      "adapter": "99-wasm-crypto-import",
+      "directCheckerOrProgramAPIs": [
+        "createProgram",
+        "getTypeChecker"
+      ]
+    }
+  ],
+  "method": "apply.py adapts sorted directory paths sequentially; run() requires every adapter process to succeed; the completed patch table records each incremental checkpoint. Checks inside each adapter therefore ran at its own step, before later adapters.",
+  "applyPySha256": "8f5b9fac51c349fc0e6d75574b1e5ff4ab1f32cf2c90e512c98938812de770d2"
+}

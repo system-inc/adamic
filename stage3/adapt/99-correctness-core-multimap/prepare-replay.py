@@ -1,0 +1,11 @@
+import os,json,pathlib,shutil,subprocess
+repo=pathlib.Path('/workspace/adamic');s=pathlib.Path('/workspace/scratch/multimap');base=pathlib.Path('/workspace/multimap-base');tree=s/'expected-after';shutil.copytree(base,tree,symlinks=True,ignore=lambda d,names:[n for n in names if pathlib.Path(d)==base and n in ['.git','node_modules','built']]);env=dict(os.environ,NODE_PATH=str(repo/'stage3/api/node_modules'))
+with (s/'expected-early.log').open('w') as log:subprocess.run(['node',str(repo/'stage3/adapt/94-correctness-multimap/adapt.cjs'),str(tree)],env=env,stdout=log,stderr=log,check=True)
+p=tree/'src/compiler/program.ts';text=p.read_bytes().decode();pin=json.loads((repo/'stage3/adapt/95-checker-axolotl-h/multimap.json').read_text())
+for c in pin['calls']:assert text.count(c['before'])==1;text=text.replace(c['before'],c['after'])
+old=pin['import']['previous']+pin['import']['before'];new=pin['import']['previous']+pin['import']['after'];assert text.count(old)==1;text=text.replace(old,new);p.write_bytes(text.encode())
+with (s/'expected-late.log').open('w') as log:subprocess.run(['node',str(repo/'stage3/adapt/99-correctness-core-multimap/adapt.cjs'),str(tree)],env=env,stdout=log,stderr=log,check=True)
+with (s/'expected-early-replay.log').open('w') as log:subprocess.run(['node',str(repo/'stage3/adapt/94-correctness-multimap/adapt.cjs'),str(tree)],env=env,stdout=log,stderr=log,check=True)
+with (s/'expected-body-proof.log').open('w') as log:subprocess.run(['node',str(repo/'stage3/adapt/99-correctness-core-multimap/body-proof.cjs'),str(tree),str(s/'bodies.json'),str(s/'body-proof.json')],env=env,stdout=log,stderr=log,check=True)
+print('expected source prepared; final full apply equality still required',flush=True)
+subprocess.run(['python3',str(repo/'stage3/adapt/99-correctness-core-multimap/replay.py'),'/workspace/multimap-main',str(repo),str(base),str(tree),str(s/'replay')],env=env,check=True)

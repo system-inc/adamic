@@ -1,0 +1,727 @@
+--- before/built/local/_tsc.js
++++ after/built/local/_tsc.js
+@@ -754,7 +754,7 @@
+   const result = createMultiMap();
+   for (let i = 0; i < values.length; i++) {
+     const value = values[i];
+-    result.add(makeKey(value), makeValue(value));
++    multiMapAddValue(result, makeKey(value), makeValue(value));
+   }
+   return result;
+ }
+@@ -795,26 +795,23 @@
+   }
+ }
+ function createMultiMap() {
+-  const map2 = /* @__PURE__ */ new Map();
+-  map2.add = multiMapAdd;
+-  map2.remove = multiMapRemove;
+-  return map2;
+-}
+-function multiMapAdd(key, value) {
+-  let values = this.get(key);
++  return /* @__PURE__ */ new Map();
++}
++function multiMapAddValue(map2, key, value) {
++  let values = map2.get(key);
+   if (values !== void 0) {
+     values.push(value);
+   } else {
+-    this.set(key, values = [value]);
++    map2.set(key, values = [value]);
+   }
+   return values;
+ }
+-function multiMapRemove(key, value) {
+-  const values = this.get(key);
++function multiMapRemoveValue(map2, key, value) {
++  const values = map2.get(key);
+   if (values !== void 0) {
+     unorderedRemoveItem(values, value);
+     if (!values.length) {
+-      this.delete(key);
++      map2.delete(key);
+     }
+   }
+ }
+@@ -4211,7 +4208,7 @@
+   return nonPollingWatchFile;
+   function nonPollingWatchFile(fileName, callback, _pollingInterval, fallbackOptions) {
+     const filePath = toCanonicalName(fileName);
+-    if (fileWatcherCallbacks.add(filePath, callback).length === 1 && fileTimestamps) {
++    if (multiMapAddValue(fileWatcherCallbacks, filePath, callback).length === 1 && fileTimestamps) {
+       fileTimestamps.set(filePath, getModifiedTime3(fileName) || missingFileModifiedTime);
+     }
+     const dirPath = getDirectoryPath(filePath) || ".";
+@@ -4225,7 +4222,7 @@
+         } else {
+           watcher.referenceCount--;
+         }
+-        fileWatcherCallbacks.remove(filePath, callback);
++        multiMapRemoveValue(fileWatcherCallbacks, filePath, callback);
+       }
+     };
+   }
+@@ -4397,14 +4394,14 @@
+     if (link) (directoryWatcher.links ?? (directoryWatcher.links = /* @__PURE__ */ new Set())).add(link);
+     const callbackToAdd = callback && { dirName, callback };
+     if (callbackToAdd) {
+-      callbackCache.add(dirPath, callbackToAdd);
++      multiMapAddValue(callbackCache, dirPath, callbackToAdd);
+     }
+     return {
+       dirName,
+       close: () => {
+         var _a;
+         const directoryWatcher2 = Debug.checkDefined(cache.get(dirPath));
+-        if (callbackToAdd) callbackCache.remove(dirPath, callbackToAdd);
++        if (callbackToAdd) multiMapRemoveValue(callbackCache, dirPath, callbackToAdd);
+         if (link) (_a = directoryWatcher2.links) == null ? void 0 : _a.delete(link);
+         directoryWatcher2.refCount--;
+         if (directoryWatcher2.refCount) return;
+@@ -18402,7 +18399,7 @@
+       if (!containsIgnoredPath(symlinkPath)) {
+         symlinkPath = ensureTrailingDirectorySeparator(symlinkPath);
+         if (real !== false && !(symlinkedDirectories == null ? void 0 : symlinkedDirectories.has(symlinkPath))) {
+-          (symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap())).add(real.realPath, symlink);
++          multiMapAddValue(symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap()), real.realPath, symlink);
+         }
+         (symlinkedDirectories || (symlinkedDirectories = /* @__PURE__ */ new Map())).set(symlinkPath, real);
+       }
+@@ -52525,7 +52522,7 @@
+           if (typeNode) {
+             result.push(typeNode);
+             if (seenNames && isIdentifierTypeReference(typeNode)) {
+-              seenNames.add(typeNode.typeName.escapedText, [type, result.length - 1]);
++              multiMapAddValue(seenNames, typeNode.typeName.escapedText, [type, result.length - 1]);
+             }
+           }
+         }
+@@ -124472,7 +124469,7 @@
+       const fileFromPackageId = packageIdToSourceFile.get(packageIdKey);
+       if (fileFromPackageId) {
+         const dupFile = createRedirectedSourceFile(fileFromPackageId, file, fileName, path, toPath3(fileName), originalFileName, sourceFileOptions);
+-        redirectTargetsMap.add(fileFromPackageId.path, fileName);
++        multiMapAddValue(redirectTargetsMap, fileFromPackageId.path, fileName);
+         addFileToFilesByName(dupFile, path, fileName, redirectedPath);
+         addFileIncludeReason(
+           dupFile,
+@@ -124531,7 +124528,7 @@
+   }
+   function addFileIncludeReason(file, reason, checkExisting) {
+     if (file && (!checkExisting || !isReferencedFile(reason) || !(filesWithReferencesProcessed == null ? void 0 : filesWithReferencesProcessed.has(reason.file)))) {
+-      programDiagnostics.getFileReasons().add(file.path, reason);
++      multiMapAddValue(programDiagnostics.getFileReasons(), file.path, reason);
+       return true;
+     }
+     return false;
+--- before/built/local/run.js
++++ after/built/local/run.js
+@@ -869,7 +869,7 @@
+   const result = createMultiMap();
+   for (let i = 0; i < values.length; i++) {
+     const value = values[i];
+-    result.add(makeKey(value), makeValue(value));
++    multiMapAddValue(result, makeKey(value), makeValue(value));
+   }
+   return result;
+ }
+@@ -922,26 +922,23 @@
+   return fn == null ? void 0 : fn.bind(obj);
+ }
+ function createMultiMap() {
+-  const map2 = /* @__PURE__ */ new Map();
+-  map2.add = multiMapAdd;
+-  map2.remove = multiMapRemove;
+-  return map2;
+-}
+-function multiMapAdd(key, value) {
+-  let values = this.get(key);
++  return /* @__PURE__ */ new Map();
++}
++function multiMapAddValue(map2, key, value) {
++  let values = map2.get(key);
+   if (values !== void 0) {
+     values.push(value);
+   } else {
+-    this.set(key, values = [value]);
++    map2.set(key, values = [value]);
+   }
+   return values;
+ }
+-function multiMapRemove(key, value) {
+-  const values = this.get(key);
++function multiMapRemoveValue(map2, key, value) {
++  const values = map2.get(key);
+   if (values !== void 0) {
+     unorderedRemoveItem(values, value);
+     if (!values.length) {
+-      this.delete(key);
++      map2.delete(key);
+     }
+   }
+ }
+@@ -5381,7 +5378,7 @@
+   return nonPollingWatchFile;
+   function nonPollingWatchFile(fileName, callback, _pollingInterval, fallbackOptions) {
+     const filePath2 = toCanonicalName(fileName);
+-    if (fileWatcherCallbacks.add(filePath2, callback).length === 1 && fileTimestamps) {
++    if (multiMapAddValue(fileWatcherCallbacks, filePath2, callback).length === 1 && fileTimestamps) {
+       fileTimestamps.set(filePath2, getModifiedTime3(fileName) || missingFileModifiedTime);
+     }
+     const dirPath = getDirectoryPath(filePath2) || ".";
+@@ -5395,7 +5392,7 @@
+         } else {
+           watcher.referenceCount--;
+         }
+-        fileWatcherCallbacks.remove(filePath2, callback);
++        multiMapRemoveValue(fileWatcherCallbacks, filePath2, callback);
+       }
+     };
+   }
+@@ -5565,14 +5562,14 @@
+     if (link) (directoryWatcher.links ?? (directoryWatcher.links = /* @__PURE__ */ new Set())).add(link);
+     const callbackToAdd = callback && { dirName, callback };
+     if (callbackToAdd) {
+-      callbackCache.add(dirPath, callbackToAdd);
++      multiMapAddValue(callbackCache, dirPath, callbackToAdd);
+     }
+     return {
+       dirName,
+       close: () => {
+         var _a;
+         const directoryWatcher2 = Debug.checkDefined(cache.get(dirPath));
+-        if (callbackToAdd) callbackCache.remove(dirPath, callbackToAdd);
++        if (callbackToAdd) multiMapRemoveValue(callbackCache, dirPath, callbackToAdd);
+         if (link) (_a = directoryWatcher2.links) == null ? void 0 : _a.delete(link);
+         directoryWatcher2.refCount--;
+         if (directoryWatcher2.refCount) return;
+@@ -19273,7 +19270,7 @@
+       if (!containsIgnoredPath(symlinkPath)) {
+         symlinkPath = ensureTrailingDirectorySeparator(symlinkPath);
+         if (real !== false && !(symlinkedDirectories == null ? void 0 : symlinkedDirectories.has(symlinkPath))) {
+-          (symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap())).add(real.realPath, symlink);
++          multiMapAddValue(symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap()), real.realPath, symlink);
+         }
+         (symlinkedDirectories || (symlinkedDirectories = /* @__PURE__ */ new Map())).set(symlinkPath, real);
+       }
+@@ -55027,7 +55024,7 @@
+           if (typeNode) {
+             result.push(typeNode);
+             if (seenNames && isIdentifierTypeReference(typeNode)) {
+-              seenNames.add(typeNode.typeName.escapedText, [type, result.length - 1]);
++              multiMapAddValue(seenNames, typeNode.typeName.escapedText, [type, result.length - 1]);
+             }
+           }
+         }
+@@ -127784,7 +127781,7 @@
+       const fileFromPackageId = packageIdToSourceFile.get(packageIdKey);
+       if (fileFromPackageId) {
+         const dupFile = createRedirectedSourceFile(fileFromPackageId, file, fileName, path3, toPath3(fileName), originalFileName, sourceFileOptions);
+-        redirectTargetsMap.add(fileFromPackageId.path, fileName);
++        multiMapAddValue(redirectTargetsMap, fileFromPackageId.path, fileName);
+         addFileToFilesByName(dupFile, path3, fileName, redirectedPath);
+         addFileIncludeReason(
+           dupFile,
+@@ -127843,7 +127840,7 @@
+   }
+   function addFileIncludeReason(file, reason, checkExisting) {
+     if (file && (!checkExisting || !isReferencedFile(reason) || !(filesWithReferencesProcessed == null ? void 0 : filesWithReferencesProcessed.has(reason.file)))) {
+-      programDiagnostics.getFileReasons().add(file.path, reason);
++      multiMapAddValue(programDiagnostics.getFileReasons(), file.path, reason);
+       return true;
+     }
+     return false;
+@@ -141813,7 +141810,7 @@
+       const storedSymbol = symbol.flags & 33554432 /* Transient */ ? void 0 : symbol;
+       const storedModuleSymbol = moduleSymbol.flags & 33554432 /* Transient */ ? void 0 : moduleSymbol;
+       if (!storedSymbol || !storedModuleSymbol) symbols.set(id, [symbol, moduleSymbol]);
+-      exportInfo.add(key(symbolName2, symbol, isExternalModuleNameRelative(moduleName) ? void 0 : moduleName, checker), {
++      multiMapAddValue(exportInfo, key(symbolName2, symbol, isExternalModuleNameRelative(moduleName) ? void 0 : moduleName, checker), {
+         id,
+         symbolTableKey,
+         symbolName: symbolName2,
+@@ -153870,7 +153867,7 @@
+         function addDeclaration(declaration) {
+           const name = getDeclarationName(declaration);
+           if (name) {
+-            result.add(name, declaration);
++            multiMapAddValue(result, name, declaration);
+           }
+         }
+         function getDeclarations(name) {
+@@ -155175,7 +155172,7 @@
+ function registerCodeFix(reg) {
+   for (const error2 of reg.errorCodes) {
+     errorCodeToFixesArray = void 0;
+-    errorCodeToFixes.add(String(error2), reg);
++    multiMapAddValue(errorCodeToFixes, String(error2), reg);
+   }
+   if (reg.fixIds) {
+     for (const fixId56 of reg.fixIds) {
+@@ -156623,7 +156620,7 @@
+         const ident = (firstParameter == null ? void 0 : firstParameter.valueDeclaration) && isParameter(firstParameter.valueDeclaration) && tryCast(firstParameter.valueDeclaration.name, isIdentifier) || factory.createUniqueName("result", 16 /* Optimistic */);
+         const synthName = getNewNameIfConflict(ident, collidingSymbolMap);
+         synthNamesMap.set(symbolIdString, synthName);
+-        collidingSymbolMap.add(ident.text, symbol);
++        multiMapAddValue(collidingSymbolMap, ident.text, symbol);
+       } else if (node.parent && (isParameter(node.parent) || isVariableDeclaration(node.parent) || isBindingElement(node.parent))) {
+         const originalName = node.text;
+         const collidingSymbols = collidingSymbolMap.get(originalName);
+@@ -156631,11 +156628,11 @@
+           const newName = getNewNameIfConflict(node, collidingSymbolMap);
+           identsToRenameMap.set(symbolIdString, newName.identifier);
+           synthNamesMap.set(symbolIdString, newName);
+-          collidingSymbolMap.add(originalName, symbol);
++          multiMapAddValue(collidingSymbolMap, originalName, symbol);
+         } else {
+           const identifier = getSynthesizedDeepClone(node);
+           synthNamesMap.set(symbolIdString, createSynthIdentifier(identifier));
+-          collidingSymbolMap.add(originalName, symbol);
++          multiMapAddValue(collidingSymbolMap, originalName, symbol);
+         }
+       }
+     }
+@@ -157614,7 +157611,7 @@
+ }
+ function collectFreeIdentifiers(file) {
+   const map2 = createMultiMap();
+-  forEachFreeIdentifier(file, (id) => map2.add(id.text, id));
++  forEachFreeIdentifier(file, (id) => multiMapAddValue(map2, id.text, id));
+   return map2;
+ }
+ function forEachFreeIdentifier(node, cb) {
+@@ -159125,12 +159122,12 @@
+     if (isVariableDeclarationInitializedToRequire(i.parent)) {
+       const moduleSymbol = checker.resolveExternalModuleName(moduleSpecifier);
+       if (moduleSymbol) {
+-        (importMap || (importMap = createMultiMap())).add(getSymbolId(moduleSymbol), i.parent);
++        multiMapAddValue(importMap || (importMap = createMultiMap()), getSymbolId(moduleSymbol), i.parent);
+       }
+     } else if (i.kind === 273 /* ImportDeclaration */ || i.kind === 272 /* ImportEqualsDeclaration */ || i.kind === 352 /* JSDocImportTag */) {
+       const moduleSymbol = checker.getSymbolAtLocation(moduleSpecifier);
+       if (moduleSymbol) {
+-        (importMap || (importMap = createMultiMap())).add(getSymbolId(moduleSymbol), i);
++        multiMapAddValue(importMap || (importMap = createMultiMap()), getSymbolId(moduleSymbol), i);
+       }
+     }
+   }
+@@ -159505,7 +159502,7 @@
+     const moduleSpecifierResolutionHost = getModuleSpecifierResolutionHost(isFromPackageJson);
+     if (isImportable(program2, fromFile, toFile, moduleSymbol, preferences, packageJsonFilter, moduleSpecifierResolutionHost, moduleSpecifierCache)) {
+       const checker = program2.getTypeChecker();
+-      originalSymbolToExportInfos.add(getUniqueSymbolId(exportedSymbol, checker).toString(), { symbol: exportedSymbol, moduleSymbol, moduleFileName: toFile == null ? void 0 : toFile.fileName, exportKind, targetFlags: skipAlias(exportedSymbol, checker).flags, isFromPackageJson });
++      multiMapAddValue(originalSymbolToExportInfos, getUniqueSymbolId(exportedSymbol, checker).toString(), { symbol: exportedSymbol, moduleSymbol, moduleFileName: toFile == null ? void 0 : toFile.fileName, exportKind, targetFlags: skipAlias(exportedSymbol, checker).flags, isFromPackageJson });
+     }
+   }
+   forEachExternalModuleToImportFrom(program, host, preferences, useAutoImportProvider, (moduleSymbol, sourceFile2, program2, isFromPackageJson) => {
+@@ -165007,7 +165004,7 @@
+     const props = createMultiMap();
+     for (const anon2 of anons) {
+       for (const p of checker.getPropertiesOfType(anon2)) {
+-        props.add(p.escapedName, p.valueDeclaration ? checker.getTypeOfSymbolAtLocation(p, p.valueDeclaration) : checker.getAnyType());
++        multiMapAddValue(props, p.escapedName, p.valueDeclaration ? checker.getTypeOfSymbolAtLocation(p, p.valueDeclaration) : checker.getAnyType());
+       }
+       calls.push(...checker.getSignaturesOfType(anon2, 0 /* Call */));
+       constructs.push(...checker.getSignaturesOfType(anon2, 1 /* Construct */));
+@@ -180738,7 +180735,7 @@
+         if (!this.newFileChanges) {
+           this.newFileChanges = createMultiMap();
+         }
+-        this.newFileChanges.add(fileName, { oldFile, statements });
++        multiMapAddValue(this.newFileChanges, fileName, { oldFile, statements });
+       }
+       insertFirstParameter(sourceFile2, parameters, newParam) {
+         const p0 = firstOrUndefined(parameters);
+@@ -185752,7 +185749,7 @@
+             if (realpath) {
+               this.realpath = project.toPath(realpath);
+               if (this.realpath !== this.path) {
+-                project.projectService.realpathToScriptInfos.add(this.realpath, this);
++                multiMapAddValue(project.projectService.realpathToScriptInfos, this.realpath, this);
+               }
+             }
+           }
+@@ -189814,7 +189811,7 @@
+         this.stopWatchingScriptInfo(info);
+         const realpath = info.getRealpathIfDifferent();
+         if (realpath) {
+-          this.realpathToScriptInfos.remove(realpath, info);
++          multiMapRemoveValue(this.realpathToScriptInfos, realpath, info);
+         }
+         info.closeSourceMapFileWatcher();
+       }
+@@ -190688,9 +190685,9 @@
+               if (project.languageServiceEnabled && !project.isOrphan() && !project.getCompilerOptions().preserveSymlinks && !info.isAttached(project)) {
+                 if (!projects) {
+                   projects = createMultiMap();
+-                  projects.add(toAddInfo.path, project);
++                  multiMapAddValue(projects, toAddInfo.path, project);
+                 } else if (!forEachEntry(projects, (projs, path3) => path3 === toAddInfo.path ? false : contains(projs, project))) {
+-                  projects.add(toAddInfo.path, project);
++                  multiMapAddValue(projects, toAddInfo.path, project);
+                 }
+               }
+             }
+@@ -198930,6 +198927,8 @@
+   moveRangePastModifiers: () => moveRangePastModifiers,
+   moveRangePos: () => moveRangePos,
+   moveSyntheticComments: () => moveSyntheticComments,
++  multiMapAddValue: () => multiMapAddValue,
++  multiMapRemoveValue: () => multiMapRemoveValue,
+   mutateMap: () => mutateMap,
+   mutateMapSkippingNewValues: () => mutateMapSkippingNewValues,
+   needsParentheses: () => needsParentheses,
+@@ -202242,6 +202241,8 @@
+   moveRangePastModifiers: () => moveRangePastModifiers,
+   moveRangePos: () => moveRangePos,
+   moveSyntheticComments: () => moveSyntheticComments,
++  multiMapAddValue: () => multiMapAddValue,
++  multiMapRemoveValue: () => multiMapRemoveValue,
+   mutateMap: () => mutateMap,
+   mutateMapSkippingNewValues: () => mutateMapSkippingNewValues,
+   needsParentheses: () => needsParentheses,
+@@ -208224,7 +208225,7 @@
+       serialize
+     };
+     function add(path3, data) {
+-      actuals.add(path3, data);
++      multiMapAddValue(actuals, path3, data);
+       if (actuals.get(path3).length !== 1) return;
+       const canonicalPath = getCanonicalFileName(path3);
+       if (canonicalPath !== path3) {
+@@ -208238,11 +208239,11 @@
+       if (real === path3) return;
+       const canonicalReal = getCanonicalFileName(real);
+       if (getCanonicalFileName(path3) !== canonicalReal) {
+-        (realToLinked ?? (realToLinked = createMultiMap())).add(canonicalReal, path3);
++        multiMapAddValue(realToLinked ?? (realToLinked = createMultiMap()), canonicalReal, path3);
+       }
+     }
+     function remove(path3, data) {
+-      actuals.remove(path3, data);
++      multiMapRemoveValue(actuals, path3, data);
+       if (actuals.has(path3)) return;
+       const canonicalPath = getCanonicalFileName(path3);
+       if (canonicalPath !== path3) {
+@@ -208255,7 +208256,7 @@
+       if (real === path3) return;
+       const canonicalReal = getCanonicalFileName(real);
+       if (getCanonicalFileName(path3) !== canonicalReal) {
+-        realToLinked.remove(canonicalReal, path3);
++        multiMapRemoveValue(realToLinked, canonicalReal, path3);
+       }
+     }
+     function getAllData(path3) {
+@@ -211405,6 +211406,8 @@
+   moveRangePastModifiers: () => moveRangePastModifiers,
+   moveRangePos: () => moveRangePos,
+   moveSyntheticComments: () => moveSyntheticComments,
++  multiMapAddValue: () => multiMapAddValue,
++  multiMapRemoveValue: () => multiMapRemoveValue,
+   mutateMap: () => mutateMap,
+   mutateMapSkippingNewValues: () => mutateMapSkippingNewValues,
+   needsParentheses: () => needsParentheses,
+@@ -217150,7 +217153,7 @@
+         this.testData.rangesByText = result;
+         for (const range of this.getRanges()) {
+           const text = this.rangeText(range);
+-          result.add(text, range);
++          multiMapAddValue(result, text, range);
+         }
+         return result;
+       }
+@@ -271586,7 +271589,8 @@
+           const calledMap = createMultiMap();
+           originals[prop] = host[prop].bind(host);
+           host[prop] = (f) => {
+-            calledMap.add(
++            multiMapAddValue(
++              calledMap,
+               f,
+               /*value*/
+               true
+@@ -271599,7 +271603,7 @@
+           const calledMap = createMultiMap();
+           originals[prop] = host[prop].bind(host);
+           host[prop] = (f, arg1, arg2, arg3, arg4) => {
+-            calledMap.add(f, [arg1, arg2, arg3, arg4]);
++            multiMapAddValue(calledMap, f, [arg1, arg2, arg3, arg4]);
+             return originals[prop](f, arg1, arg2, arg3, arg4);
+           };
+           return calledMap;
+--- before/built/local/typescript.js
++++ after/built/local/typescript.js
+@@ -1896,6 +1896,8 @@
+   moveRangePastModifiers: () => moveRangePastModifiers,
+   moveRangePos: () => moveRangePos,
+   moveSyntheticComments: () => moveSyntheticComments,
++  multiMapAddValue: () => multiMapAddValue,
++  multiMapRemoveValue: () => multiMapRemoveValue,
+   mutateMap: () => mutateMap,
+   mutateMapSkippingNewValues: () => mutateMapSkippingNewValues,
+   needsParentheses: () => needsParentheses,
+@@ -3131,7 +3133,7 @@
+   const result = createMultiMap();
+   for (let i = 0; i < values.length; i++) {
+     const value = values[i];
+-    result.add(makeKey(value), makeValue(value));
++    multiMapAddValue(result, makeKey(value), makeValue(value));
+   }
+   return result;
+ }
+@@ -3184,26 +3186,23 @@
+   return fn == null ? void 0 : fn.bind(obj);
+ }
+ function createMultiMap() {
+-  const map2 = /* @__PURE__ */ new Map();
+-  map2.add = multiMapAdd;
+-  map2.remove = multiMapRemove;
+-  return map2;
+-}
+-function multiMapAdd(key, value) {
+-  let values = this.get(key);
++  return /* @__PURE__ */ new Map();
++}
++function multiMapAddValue(map2, key, value) {
++  let values = map2.get(key);
+   if (values !== void 0) {
+     values.push(value);
+   } else {
+-    this.set(key, values = [value]);
++    map2.set(key, values = [value]);
+   }
+   return values;
+ }
+-function multiMapRemove(key, value) {
+-  const values = this.get(key);
++function multiMapRemoveValue(map2, key, value) {
++  const values = map2.get(key);
+   if (values !== void 0) {
+     unorderedRemoveItem(values, value);
+     if (!values.length) {
+-      this.delete(key);
++      map2.delete(key);
+     }
+   }
+ }
+@@ -7596,7 +7595,7 @@
+   return nonPollingWatchFile;
+   function nonPollingWatchFile(fileName, callback, _pollingInterval, fallbackOptions) {
+     const filePath = toCanonicalName(fileName);
+-    if (fileWatcherCallbacks.add(filePath, callback).length === 1 && fileTimestamps) {
++    if (multiMapAddValue(fileWatcherCallbacks, filePath, callback).length === 1 && fileTimestamps) {
+       fileTimestamps.set(filePath, getModifiedTime3(fileName) || missingFileModifiedTime);
+     }
+     const dirPath = getDirectoryPath(filePath) || ".";
+@@ -7610,7 +7609,7 @@
+         } else {
+           watcher.referenceCount--;
+         }
+-        fileWatcherCallbacks.remove(filePath, callback);
++        multiMapRemoveValue(fileWatcherCallbacks, filePath, callback);
+       }
+     };
+   }
+@@ -7782,14 +7781,14 @@
+     if (link) (directoryWatcher.links ?? (directoryWatcher.links = /* @__PURE__ */ new Set())).add(link);
+     const callbackToAdd = callback && { dirName, callback };
+     if (callbackToAdd) {
+-      callbackCache.add(dirPath, callbackToAdd);
++      multiMapAddValue(callbackCache, dirPath, callbackToAdd);
+     }
+     return {
+       dirName,
+       close: () => {
+         var _a;
+         const directoryWatcher2 = Debug.checkDefined(cache.get(dirPath));
+-        if (callbackToAdd) callbackCache.remove(dirPath, callbackToAdd);
++        if (callbackToAdd) multiMapRemoveValue(callbackCache, dirPath, callbackToAdd);
+         if (link) (_a = directoryWatcher2.links) == null ? void 0 : _a.delete(link);
+         directoryWatcher2.refCount--;
+         if (directoryWatcher2.refCount) return;
+@@ -22372,7 +22371,7 @@
+       if (!containsIgnoredPath(symlinkPath)) {
+         symlinkPath = ensureTrailingDirectorySeparator(symlinkPath);
+         if (real !== false && !(symlinkedDirectories == null ? void 0 : symlinkedDirectories.has(symlinkPath))) {
+-          (symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap())).add(real.realPath, symlink);
++          multiMapAddValue(symlinkedDirectoriesByRealpath || (symlinkedDirectoriesByRealpath = createMultiMap()), real.realPath, symlink);
+         }
+         (symlinkedDirectories || (symlinkedDirectories = /* @__PURE__ */ new Map())).set(symlinkPath, real);
+       }
+@@ -57155,7 +57154,7 @@
+           if (typeNode) {
+             result.push(typeNode);
+             if (seenNames && isIdentifierTypeReference(typeNode)) {
+-              seenNames.add(typeNode.typeName.escapedText, [type, result.length - 1]);
++              multiMapAddValue(seenNames, typeNode.typeName.escapedText, [type, result.length - 1]);
+             }
+           }
+         }
+@@ -129341,7 +129340,7 @@
+       const fileFromPackageId = packageIdToSourceFile.get(packageIdKey);
+       if (fileFromPackageId) {
+         const dupFile = createRedirectedSourceFile(fileFromPackageId, file, fileName, path, toPath3(fileName), originalFileName, sourceFileOptions);
+-        redirectTargetsMap.add(fileFromPackageId.path, fileName);
++        multiMapAddValue(redirectTargetsMap, fileFromPackageId.path, fileName);
+         addFileToFilesByName(dupFile, path, fileName, redirectedPath);
+         addFileIncludeReason(
+           dupFile,
+@@ -129400,7 +129399,7 @@
+   }
+   function addFileIncludeReason(file, reason, checkExisting) {
+     if (file && (!checkExisting || !isReferencedFile(reason) || !(filesWithReferencesProcessed == null ? void 0 : filesWithReferencesProcessed.has(reason.file)))) {
+-      programDiagnostics.getFileReasons().add(file.path, reason);
++      multiMapAddValue(programDiagnostics.getFileReasons(), file.path, reason);
+       return true;
+     }
+     return false;
+@@ -142999,7 +142998,7 @@
+       const storedSymbol = symbol.flags & 33554432 /* Transient */ ? void 0 : symbol;
+       const storedModuleSymbol = moduleSymbol.flags & 33554432 /* Transient */ ? void 0 : moduleSymbol;
+       if (!storedSymbol || !storedModuleSymbol) symbols.set(id, [symbol, moduleSymbol]);
+-      exportInfo.add(key(symbolName2, symbol, isExternalModuleNameRelative(moduleName) ? void 0 : moduleName, checker), {
++      multiMapAddValue(exportInfo, key(symbolName2, symbol, isExternalModuleNameRelative(moduleName) ? void 0 : moduleName, checker), {
+         id,
+         symbolTableKey,
+         symbolName: symbolName2,
+@@ -153172,7 +153171,7 @@
+     function addDeclaration(declaration) {
+       const name = getDeclarationName(declaration);
+       if (name) {
+-        result.add(name, declaration);
++        multiMapAddValue(result, name, declaration);
+       }
+     }
+     function getDeclarations(name) {
+@@ -156030,7 +156029,7 @@
+ function registerCodeFix(reg) {
+   for (const error2 of reg.errorCodes) {
+     errorCodeToFixesArray = void 0;
+-    errorCodeToFixes.add(String(error2), reg);
++    multiMapAddValue(errorCodeToFixes, String(error2), reg);
+   }
+   if (reg.fixIds) {
+     for (const fixId56 of reg.fixIds) {
+@@ -157388,7 +157387,7 @@
+         const ident = (firstParameter == null ? void 0 : firstParameter.valueDeclaration) && isParameter(firstParameter.valueDeclaration) && tryCast(firstParameter.valueDeclaration.name, isIdentifier) || factory.createUniqueName("result", 16 /* Optimistic */);
+         const synthName = getNewNameIfConflict(ident, collidingSymbolMap);
+         synthNamesMap.set(symbolIdString, synthName);
+-        collidingSymbolMap.add(ident.text, symbol);
++        multiMapAddValue(collidingSymbolMap, ident.text, symbol);
+       } else if (node.parent && (isParameter(node.parent) || isVariableDeclaration(node.parent) || isBindingElement(node.parent))) {
+         const originalName = node.text;
+         const collidingSymbols = collidingSymbolMap.get(originalName);
+@@ -157396,11 +157395,11 @@
+           const newName = getNewNameIfConflict(node, collidingSymbolMap);
+           identsToRenameMap.set(symbolIdString, newName.identifier);
+           synthNamesMap.set(symbolIdString, newName);
+-          collidingSymbolMap.add(originalName, symbol);
++          multiMapAddValue(collidingSymbolMap, originalName, symbol);
+         } else {
+           const identifier = getSynthesizedDeepClone(node);
+           synthNamesMap.set(symbolIdString, createSynthIdentifier(identifier));
+-          collidingSymbolMap.add(originalName, symbol);
++          multiMapAddValue(collidingSymbolMap, originalName, symbol);
+         }
+       }
+     }
+@@ -158368,7 +158367,7 @@
+ }
+ function collectFreeIdentifiers(file) {
+   const map2 = createMultiMap();
+-  forEachFreeIdentifier(file, (id) => map2.add(id.text, id));
++  forEachFreeIdentifier(file, (id) => multiMapAddValue(map2, id.text, id));
+   return map2;
+ }
+ function forEachFreeIdentifier(node, cb) {
+@@ -159875,12 +159874,12 @@
+     if (isVariableDeclarationInitializedToRequire(i.parent)) {
+       const moduleSymbol = checker.resolveExternalModuleName(moduleSpecifier);
+       if (moduleSymbol) {
+-        (importMap || (importMap = createMultiMap())).add(getSymbolId(moduleSymbol), i.parent);
++        multiMapAddValue(importMap || (importMap = createMultiMap()), getSymbolId(moduleSymbol), i.parent);
+       }
+     } else if (i.kind === 273 /* ImportDeclaration */ || i.kind === 272 /* ImportEqualsDeclaration */ || i.kind === 352 /* JSDocImportTag */) {
+       const moduleSymbol = checker.getSymbolAtLocation(moduleSpecifier);
+       if (moduleSymbol) {
+-        (importMap || (importMap = createMultiMap())).add(getSymbolId(moduleSymbol), i);
++        multiMapAddValue(importMap || (importMap = createMultiMap()), getSymbolId(moduleSymbol), i);
+       }
+     }
+   }
+@@ -160255,7 +160254,7 @@
+     const moduleSpecifierResolutionHost = getModuleSpecifierResolutionHost(isFromPackageJson);
+     if (isImportable(program2, fromFile, toFile, moduleSymbol, preferences, packageJsonFilter, moduleSpecifierResolutionHost, moduleSpecifierCache)) {
+       const checker = program2.getTypeChecker();
+-      originalSymbolToExportInfos.add(getUniqueSymbolId(exportedSymbol, checker).toString(), { symbol: exportedSymbol, moduleSymbol, moduleFileName: toFile == null ? void 0 : toFile.fileName, exportKind, targetFlags: skipAlias(exportedSymbol, checker).flags, isFromPackageJson });
++      multiMapAddValue(originalSymbolToExportInfos, getUniqueSymbolId(exportedSymbol, checker).toString(), { symbol: exportedSymbol, moduleSymbol, moduleFileName: toFile == null ? void 0 : toFile.fileName, exportKind, targetFlags: skipAlias(exportedSymbol, checker).flags, isFromPackageJson });
+     }
+   }
+   forEachExternalModuleToImportFrom(program, host, preferences, useAutoImportProvider, (moduleSymbol, sourceFile, program2, isFromPackageJson) => {
+@@ -165459,7 +165458,7 @@
+     const props = createMultiMap();
+     for (const anon2 of anons) {
+       for (const p of checker.getPropertiesOfType(anon2)) {
+-        props.add(p.escapedName, p.valueDeclaration ? checker.getTypeOfSymbolAtLocation(p, p.valueDeclaration) : checker.getAnyType());
++        multiMapAddValue(props, p.escapedName, p.valueDeclaration ? checker.getTypeOfSymbolAtLocation(p, p.valueDeclaration) : checker.getAnyType());
+       }
+       calls.push(...checker.getSignaturesOfType(anon2, 0 /* Call */));
+       constructs.push(...checker.getSignaturesOfType(anon2, 1 /* Construct */));
+@@ -180212,7 +180211,7 @@
+     if (!this.newFileChanges) {
+       this.newFileChanges = createMultiMap();
+     }
+-    this.newFileChanges.add(fileName, { oldFile, statements });
++    multiMapAddValue(this.newFileChanges, fileName, { oldFile, statements });
+   }
+   insertFirstParameter(sourceFile, parameters, newParam) {
+     const p0 = firstOrUndefined(parameters);
+@@ -185997,6 +185996,8 @@
+   moveRangePastModifiers: () => moveRangePastModifiers,
+   moveRangePos: () => moveRangePos,
+   moveSyntheticComments: () => moveSyntheticComments,
++  multiMapAddValue: () => multiMapAddValue,
++  multiMapRemoveValue: () => multiMapRemoveValue,
+   mutateMap: () => mutateMap,
+   mutateMapSkippingNewValues: () => mutateMapSkippingNewValues,
+   needsParentheses: () => needsParentheses,
+@@ -187683,7 +187684,7 @@
+         if (realpath) {
+           this.realpath = project.toPath(realpath);
+           if (this.realpath !== this.path) {
+-            project.projectService.realpathToScriptInfos.add(this.realpath, this);
++            multiMapAddValue(project.projectService.realpathToScriptInfos, this.realpath, this);
+           }
+         }
+       }
+@@ -191717,7 +191718,7 @@
+     this.stopWatchingScriptInfo(info);
+     const realpath = info.getRealpathIfDifferent();
+     if (realpath) {
+-      this.realpathToScriptInfos.remove(realpath, info);
++      multiMapRemoveValue(this.realpathToScriptInfos, realpath, info);
+     }
+     info.closeSourceMapFileWatcher();
+   }
+@@ -192591,9 +192592,9 @@
+           if (project.languageServiceEnabled && !project.isOrphan() && !project.getCompilerOptions().preserveSymlinks && !info.isAttached(project)) {
+             if (!projects) {
+               projects = createMultiMap();
+-              projects.add(toAddInfo.path, project);
++              multiMapAddValue(projects, toAddInfo.path, project);
+             } else if (!forEachEntry(projects, (projs, path) => path === toAddInfo.path ? false : contains(projs, project))) {
+-              projects.add(toAddInfo.path, project);
++              multiMapAddValue(projects, toAddInfo.path, project);
+             }
+           }
+         }
+@@ -200818,6 +200819,8 @@
+   moveRangePastModifiers,
+   moveRangePos,
+   moveSyntheticComments,
++  multiMapAddValue,
++  multiMapRemoveValue,
+   mutateMap,
+   mutateMapSkippingNewValues,
+   needsParentheses,

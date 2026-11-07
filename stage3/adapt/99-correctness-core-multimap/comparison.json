@@ -1,0 +1,187 @@
+{
+  "sourceFiles": 746,
+  "changedFiles": [
+    {
+      "file": "src/compiler/checker.ts",
+      "before": "83a7f4bbdb0a7f99c34431ab46ecc6a326a509da471de85c958443188c93d12c",
+      "after": "6579e762b535793a6ba5593766345e6ba8ffebe0532ab9ff7f64181c7efb0353",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "before": "8943f4ec6c11dec6430378fb388359376e96f19af2ed9ccc86067fd6702a0918",
+      "after": "39090686df834ab24f5983b4207c9a57b6e9bc10a72f53cffaa5353e1f8a9662",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "before": "90c26c97b709428c3f79d1173f4feb4eedcad49b850710661ab67e6c27c6e322",
+      "after": "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "before": "8a4bd2136c672d865347086513d51c42ed521367bf271c1810232e14abf9f418",
+      "after": "b607fe5e61112245d0c976ac2f9facf6811883736c9105040cdd7b48602d6700",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "06d1bed6f40dfd246845f95cba4f2011299a340f2d25d6aaf59cfa24f323de64",
+      "after": "5b8b62cfe16a6685325f9cbfa949eef1e933eca1e4b800994815c6e9153f13f2",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "before": "9cd519a9569ff589fed5345b090ffd4add41e1692c2fc93b0342fa3a69e952d3",
+      "after": "e77c0fe7c2219dea549a2726c000e73fca52eebd2f8dda38efcce6943910d89a",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "before": "10f15abc55b68da94ab3e9b9a222ed439dc450579edb31fad0fbe4a0a289391b",
+      "after": "78b02ee9cb8a5198c0361b4bc4a40ecca5ebc1bdff368afa77176b9898eb8723",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "before": "4ca2f9ca914e399efa82ffaa121d73240b6df05cfa2dd1bb6204c60393b6788a",
+      "after": "6c5144ccd4f7d19214bcb058e5153331448d54a4f275cae878c4c60bb55e9bfe",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "before": "579087e6ad92486c1a3250625fa273c9e4fa40f747ff6077a07315601dfa0d0e",
+      "after": "4647d38faf43d11dcd6bf0ff6ca1a90acff87291cc3c0f02a93078f4e7ea2284",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "before": "2d91eacb58d5860cc9eb88d95d96e2eb6832c2758cf256d61785a8e05450a1dc",
+      "after": "fe7c60e2bbccf70b824bb0a788cb13b6f73d52618a4060345c6202ca851cd693",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "before": "a10aca98b1c2f11250c3ec4690afca2cfb338b828382380f8128bb516d603dbf",
+      "after": "fdcabf53f81cd09266bb3dff2a7768529432a9ed7e4091eb12239e2cf459b442",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/services.ts",
+      "before": "6b5c84385fcb8a444603f4d359581a7f5232ad4a75d020a88af254381b7bce9b",
+      "after": "8dc644a8ba2f215fbc8710fa61d8b30e170bbf0510ebd62eb42de8f4b577916c",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "before": "1978c8a775af8ddc0ed1473477912b6b666e7623fbf1eff15804a07235db40c0",
+      "after": "5db6f7eebe7cb63431042f1a63d189058fbdf245559f6042ef125f6d6ec916a5",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "before": "4c167ebbb0da45586e9664d68d22a6fd526eb1c27c2b8eaf56f397ab0fb01658",
+      "after": "aa8c176eef1c64d9ccbb939d8b55432f24f59647c1a03fddd7ff3a77ac3af686",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "before": "846c853838c8b481224b972af71369938301cd7955bee98d3a549f3dfcbfce4f",
+      "after": "5cf218d0b539d5cfd7d18bf1e1ef2c7634aa345e9d61b3a356f38b9e396874dc",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "before": "4166d8b757f4aeb553f5316dc13b58a6106e19b12e3aa91b2dacf4db034c099b",
+      "after": "1a745ad5df2aa2bbf76898d29dafdc911ee51ebf0bfb29c9b9e558e72aa28d9d",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "before": "88985269d2bba9890bfec2d281d2481647433385fbe85a3619fc3ba3edddeab1",
+      "after": "51d20bc6df20685812e433ac7c2f07394c6cc3e15636c4deae00daa09104bce7",
+      "ownerOnly": true
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "before": "6c6b8c2ed69c8d6ddcb0c1c93f3e2b38794e59451f583de5fcd9a93e6618f88e",
+      "after": "40fda43a5f0807948e94a3d6bf8bdff34bbc65616422f10e2f4428f7d4b16469",
+      "ownerOnly": true
+    }
+  ],
+  "declarations": [
+    {
+      "name": "typescript.d.ts",
+      "identical": true,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b"
+    },
+    {
+      "name": "tsserverlibrary.d.ts",
+      "identical": true,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  ],
+  "javascript": [
+    {
+      "name": "_tsc.js",
+      "identical": false,
+      "before": "b84d1f49b93be93b430ae60601af219ad1e5f5e3708e8a1092105e790ebfbee8",
+      "after": "8481fabaa3522cee8c2729500e10471a0cd941d077f38ad594399b4626cc9013"
+    },
+    {
+      "name": "_tsserver.js",
+      "identical": true,
+      "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "identical": true,
+      "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+    },
+    {
+      "name": "run.js",
+      "identical": false,
+      "before": "9a4ec9c20d48c1f1b30684648226b1c761f778fc962a59b6273b47baf1c143de",
+      "after": "e4dbf9c320d9c5adb7feb30bef919d5706ac59aea65b4fb6796ae96201123a1e"
+    },
+    {
+      "name": "tsc.js",
+      "identical": true,
+      "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "name": "tsserver.js",
+      "identical": true,
+      "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "identical": true,
+      "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+    },
+    {
+      "name": "typescript.js",
+      "identical": false,
+      "before": "a0fbd255513da84a222cc192568ed433580061f6a1e17b04baed8d431fa2bbca",
+      "after": "af16f7df6e3f4e541d163243dd9f3e441717521185d9d633e2231473d1f76694"
+    },
+    {
+      "name": "typingsInstaller.js",
+      "identical": true,
+      "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+    },
+    {
+      "name": "watchGuard.js",
+      "identical": true,
+      "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ]
+}
