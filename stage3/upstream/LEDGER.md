@@ -676,3 +676,5 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+
+compareComparableValues, 99-correctness-core-compare: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. JavaScript-changing typeof split; whole lane 144697378 calls, 0 mixed string/number calls, 0 result differences. The overload-forbidden mixed arm returns Comparison.GreaterThan; mixed witnesses can differ and their real-call count is 0.

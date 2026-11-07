@@ -1,0 +1,182 @@
+{
+  "rows": [
+    {
+      "name": "equal numbers",
+      "a": 1,
+      "b": 1,
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 0,
+      "adapted": 0,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "equal strings",
+      "a": "a",
+      "b": "a",
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": 0,
+      "adapted": 0,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "both undefined",
+      "a": "undefined",
+      "b": "undefined",
+      "typeofA": "undefined",
+      "typeofB": "undefined",
+      "original": 0,
+      "adapted": 0,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "left undefined number",
+      "a": "undefined",
+      "b": 1,
+      "typeofA": "undefined",
+      "typeofB": "number",
+      "original": -1,
+      "adapted": -1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "left undefined string",
+      "a": "undefined",
+      "b": "a",
+      "typeofA": "undefined",
+      "typeofB": "string",
+      "original": -1,
+      "adapted": -1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "right undefined string",
+      "a": "a",
+      "b": "undefined",
+      "typeofA": "string",
+      "typeofB": "undefined",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "right undefined number",
+      "a": 1,
+      "b": "undefined",
+      "typeofA": "number",
+      "typeofB": "undefined",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "numbers ascending",
+      "a": 1,
+      "b": 2,
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": -1,
+      "adapted": -1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "numbers descending",
+      "a": 2,
+      "b": 1,
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "string case upper first",
+      "a": "A",
+      "b": "a",
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": -1,
+      "adapted": -1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "string case lower first",
+      "a": "a",
+      "b": "A",
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "NaN left",
+      "a": "NaN",
+      "b": 1,
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "NaN right",
+      "a": 1,
+      "b": "NaN",
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "NaN both",
+      "a": "NaN",
+      "b": "NaN",
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 1,
+      "adapted": 1,
+      "same": true,
+      "mixed": false
+    },
+    {
+      "name": "mixed string number",
+      "a": "1",
+      "b": 2,
+      "typeofA": "string",
+      "typeofB": "number",
+      "original": -1,
+      "adapted": 1,
+      "same": false,
+      "mixed": true
+    },
+    {
+      "name": "mixed number string",
+      "a": 1,
+      "b": "2",
+      "typeofA": "number",
+      "typeofB": "string",
+      "original": -1,
+      "adapted": 1,
+      "same": false,
+      "mixed": true
+    }
+  ],
+  "mixedReturn": "Comparison.GreaterThan (1)",
+  "onlyMixedMayDiffer": true
+}
