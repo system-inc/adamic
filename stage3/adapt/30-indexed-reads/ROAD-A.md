@@ -38,3 +38,43 @@ Step A continues with all lane shards and both backend witnesses. Step B is
 conditional on the complete count and native sparse behavior. No Step B gate
 is claimed here. The counter exists only in a scratch tree and is not in any
 adaptation transformation.
+
+## Checked native and JavaScript backends, completed
+
+All four full proposed-body witnesses fail compilation identically on both
+backends at fixture line 8:37, the narrowed collection read at filter.
+Lower's localRead, internal/lower/locals.go:318, asks arrayPredicateDomain
+(internal/lower/library_array_predicate.go:97) about every original union
+member. That predicate does not accept the structural MapLike member.
+A separate control replaces only the array return with [] so the record
+branch can be measured: both backends stop at its for-in collection read,
+fixture line 10:23, localRead at locals.go:341. Neither full arm currently
+lowers in this union. No compiler rule was changed or suppressed.
+
+The independently typed array filter and dictionary loop both compile and
+match Node byte for byte, on native --sanitize and the JavaScript backend.
+The array controls also match Node for [undefined, 'x'] and the empty array:
+filter keeps the present undefined and returns an empty array respectively.
+The dictionary control returns b then a for {'1':'a','0':'b'}.
+
+The independent sparse-write control compiles on both backends. Both print
+`before-write-length=0`, then exit 70 at a[5] = 'x', with exact stderr:
+
+```text
+adamic: panic: index 5 is outside an array of length 0
+```
+
+There is no length growth, gap fill or filter execution. Native
+internal/native/runtime/array.c:504, adamic_array_set, rejects the absent
+slot; the panic is at line 512's bounds message. The JavaScript backend's
+adamicSetIndex helper, internal/javascript/javascript.go:111, makes the
+same check before assignment. Node instead grows to length 6 with five
+holes, then filter returns one element, x. Thus native cannot hold this
+hole. If the full count finds any sparse arrays, Step B's explicit sparse
+condition fails. The lane count is still being completed.
+
+getownvalues-native.tar.gz retains all source, generated JavaScript, compile
+and run output bytes, build provenance and relevant lowering/runtime source.
+The JavaScript cases use the normal oracle/node.mjs runtime. An initial
+invocation without that host runtime could not resolve package adamic; it
+is retained as a setup attempt and excluded from backend verdicts.
