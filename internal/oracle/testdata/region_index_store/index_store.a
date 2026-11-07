@@ -1,7 +1,9 @@
 // keep stores its parameter into an outer array by index, so the point make(7) built outlives the
 // statement that made it. escapes' SetIndex arm (internal/native/region.go) must keep it off the
-// statement's region: freed at the statement's end, the print below would read it after free. The
-// label is built at runtime, since an immortal string literal would hide that.
+// statement's region: freed at the statement's end, the print below would read it after free. keep
+// returns a Binary, which escaping consumes, since `return p.x` would mark the escape on its own (a
+// Property is followed to its object) and the SetIndex arm would carry nothing. The label is built at
+// runtime, since an immortal string literal would hide a use after free.
 interface P {
 	readonly x: number;
 	readonly label: string;
@@ -15,7 +17,7 @@ const outer: P[] = [{ x: 0, label: 'seed' }];
 
 function keep(p: P): number {
 	outer[0] = p;
-	return p.x;
+	return p.x + p.label.length;
 }
 
 let total = 0;
