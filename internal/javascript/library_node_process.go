@@ -19,8 +19,10 @@ func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
 		return value, true
 	}
 	// The emitted program is an ES module, where Node binds neither __filename nor __dirname, so a
-	// CommonJS build's two are the module's own path and its directory, read from import.meta as
-	// Node's url documentation spells them. Lowering makes these only for a CommonJS build.
+	// bundled image's two are the module's own path and its directory, read from import.meta as
+	// Node's url documentation spells them. The emitted module is the whole program, so every module
+	// gets them, as every module of a bundle gets the bundle's. Lowering makes these only for a build
+	// that declares one bundled image (lower.ModuleFormatCommonJSBundle).
 	switch call.Operation {
 	case "filename":
 		return "adamicNodeURL.fileURLToPath(import.meta.url)", true

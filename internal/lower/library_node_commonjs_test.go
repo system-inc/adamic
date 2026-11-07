@@ -167,13 +167,13 @@ var commonJSModuleValuePrograms = []struct{ name, operation, where string }{
 	{"dirname", "dirname", "4:36"},
 }
 
-// Under a build that declares CommonJS, a .ts file's __filename and __dirname lower as reads of the running image's
-// path and its directory (Adamic's ruling, Nov 6, #redxes2); declared an ES module, by name or by naming nothing,
-// they keep nodeCommonJSModuleValues' NotYet, as TestNodeCommonJSNamesItsReasons pins for Lower's default. Mutants:
-// (a) nodeCommonJSModuleValuesBound ignoring the declared format binds them in every .ts file, and the ES rows here
-// and TestNodeCommonJSNamesItsReasons/filename and /dirname go red; it answering false leaves the CommonJS rows
-// NotYet, and they go red.
-func TestNodeCommonJSModuleValuesBindInATSFileUnderCommonJS(t *testing.T) {
+// Under a build that declares one bundled image, a .ts file's __filename and __dirname lower as reads of the running
+// image's path and its directory (Adamic's ruling, Nov 6, #redxes2); declared an ES module, by name or by naming
+// nothing, they keep nodeCommonJSModuleValues' NotYet, as TestNodeCommonJSNamesItsReasons pins for Lower's default.
+// Mutants: (a) nodeCommonJSModuleValuesBound ignoring the declared format binds them in every .ts file, and the ES
+// rows here and TestNodeCommonJSNamesItsReasons/filename and /dirname go red; it answering false leaves the bundle's
+// rows NotYet, and they go red.
+func TestNodeCommonJSModuleValuesBindInATSFileOfABundle(t *testing.T) {
 	t.Parallel()
 	for _, one := range commonJSModuleValuePrograms {
 		t.Run(one.name, func(t *testing.T) {
@@ -182,7 +182,7 @@ func TestNodeCommonJSModuleValuesBindInATSFileUnderCommonJS(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSourceIn(t, string(source), ".ts", ModuleFormatCommonJS)
+			program, err := lowerSourceIn(t, string(source), ".ts", ModuleFormatCommonJSBundle)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -199,7 +199,7 @@ func TestNodeCommonJSModuleValuesBindInATSFileUnderCommonJS(t *testing.T) {
 	}
 }
 
-// A .a file is an ES module whatever its build declares, so under CommonJS its __filename and __dirname keep the
+// A .a file is an ES module whatever its build declares, so in a bundled image its __filename and __dirname keep the
 // NotYet they have with nothing declared (Adamic's ruling, Nov 6, #redxes2). Mutant: (b) nodeCommonJSModuleValuesBound
 // without its .ts test binds them in a .a file too, and this goes red.
 func TestNodeCommonJSModuleValuesStayNotYetInAnAFile(t *testing.T) {
@@ -211,7 +211,7 @@ func TestNodeCommonJSModuleValuesStayNotYetInAnAFile(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lowerSourceIn(t, string(source), ".a", ModuleFormatCommonJS)
+			_, err = lowerSourceIn(t, string(source), ".a", ModuleFormatCommonJSBundle)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || filepath.Base(notYet.Where) != "main.a:"+one.where || notYet.What != nodeCommonJSModuleValues {
 				t.Fatalf("want NotYet at main.a:%s: %s, got %v", one.where, nodeCommonJSModuleValues, err)
@@ -220,8 +220,8 @@ func TestNodeCommonJSModuleValuesStayNotYetInAnAFile(t *testing.T) {
 	}
 }
 
-// Where they're bound, only a read of the name itself lowers: a CommonJS module's __filename is its own, so Node reads
-// undefined through globalThis, and a write is the module's alone. Each stays refused.
+// Where they're bound, only a read of the name itself lowers: a CommonJS module's __filename is its wrapper's, so Node
+// reads undefined through globalThis, and a write's reach is the bundle's making. Each stays refused.
 func TestNodeCommonJSModuleValuesBoundOnlyForAReadByName(t *testing.T) {
 	t.Parallel()
 	for name, source := range map[string]string{
@@ -230,9 +230,39 @@ func TestNodeCommonJSModuleValuesBoundOnlyForAReadByName(t *testing.T) {
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			if program, err := lowerSourceIn(t, source, ".ts", ModuleFormatCommonJS); err == nil {
+			if program, err := lowerSourceIn(t, source, ".ts", ModuleFormatCommonJSBundle); err == nil {
 				t.Fatalf("lowered: %#v", program.Main)
 			}
 		})
+	}
+}
+
+// In one bundled image every module's __dirname is the image's (Adamic's ruling on #0ta3dk9): an imported module's
+// read lowers to the same operation as the entry's, never to a path of its own. Mutant: nodeCommonJSModuleValuesBound
+// judging only the entry's file, and sys/sys.ts's read stays NotYet.
+func TestNodeCommonJSBundleGivesEveryModuleTheImagesDirectory(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(directory, "sys"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	for name, source := range map[string]string{
+		"main.ts":    "import { executingDirectory } from './sys/sys.ts';\nconsole.log(__dirname === executingDirectory() ? 'one image' : 'two');\n",
+		"sys/sys.ts": "import 'node:process';\nexport function executingDirectory(): string {\n\treturn __dirname;\n}\n",
+	} {
+		if err := os.WriteFile(filepath.Join(directory, filepath.FromSlash(name)), []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	lowered, err := LowerWithOptions(context.Background(), program, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if held := strings.Count(fmt.Sprintf("%#v", lowered), `ir.ProcessCall{Operation:"dirname"`); held != 2 {
+		t.Fatalf("want both modules' __dirname as the image's directory, got %d reads", held)
 	}
 }

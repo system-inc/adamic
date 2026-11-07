@@ -93,6 +93,10 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 				return 2
 			}
 			declared, known := moduleFormats[arguments[index]]
+			if refusal, refused := moduleFormatRefusals[arguments[index]]; refused {
+				fmt.Fprintln(os.Stderr, refusal)
+				return 2
+			}
 			if !known {
 				fmt.Fprintln(os.Stderr, usage)
 				return 2

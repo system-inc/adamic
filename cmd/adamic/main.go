@@ -11,9 +11,9 @@
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
 // them to stderr as it exits, for measuring what the memory model costs.
 //
-// c, js and build take --module-format commonjs to declare the program a CommonJS module, where a .ts
-// file's __filename and __dirname are bound (lower.ModuleFormat); esm, the default, declares an ES
-// module.
+// c, js and build take --module-format commonjs-bundle to declare the program one bundled image of
+// CommonJS modules, where every .ts module's __filename and __dirname are the image's
+// (lower.ModuleFormat); esm, the default, declares an ES module.
 package main
 
 import (
@@ -37,10 +37,10 @@ import (
 
 const usage = `usage:
   adamic types <file.a|file.ts>...
-  adamic c <file.a|file.ts> [--module-format commonjs|esm] [--explain-checks]
+  adamic c <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
-  adamic js <file.a|file.ts> [--module-format commonjs|esm] [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--module-format commonjs|esm] [--explain-checks]
+  adamic js <file.a|file.ts> [--module-format commonjs-bundle|esm] [--explain-checks]
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--debug] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--module-format commonjs-bundle|esm] [--explain-checks]
   adamic --help | -h
   adamic --version`
 
@@ -65,8 +65,13 @@ func run(arguments []string) (code int) {
 	}
 	if explain {
 		if len(filtered) >= 2 && (filtered[0] == "c" || filtered[0] == "js") {
-			if path, format, ok := renderArguments(filtered[1:]); ok {
+			path, format, refusal, ok := renderArguments(filtered[1:])
+			if ok {
 				return renderWithChecks(filtered[0], path, format)
+			}
+			if refusal != "" {
+				fmt.Fprintln(os.Stderr, refusal)
+				return 2
 			}
 		}
 		if len(filtered) > 0 && filtered[0] == "build" {
@@ -97,7 +102,11 @@ func run(arguments []string) (code int) {
 		}
 		return 0
 	case len(arguments) >= 2 && arguments[0] == "c":
-		path, format, ok := renderArguments(arguments[1:])
+		path, format, refusal, ok := renderArguments(arguments[1:])
+		if refusal != "" {
+			fmt.Fprintln(os.Stderr, refusal)
+			return 2
+		}
 		if !ok {
 			break
 		}
@@ -112,7 +121,11 @@ func run(arguments []string) (code int) {
 		fmt.Print(native.C(lowered))
 		return 0
 	case len(arguments) >= 2 && arguments[0] == "js":
-		path, format, ok := renderArguments(arguments[1:])
+		path, format, refusal, ok := renderArguments(arguments[1:])
+		if refusal != "" {
+			fmt.Fprintln(os.Stderr, refusal)
+			return 2
+		}
 		if !ok {
 			break
 		}
@@ -214,20 +227,29 @@ func check(paths []string) (*load.Program, int) {
 }
 
 // moduleFormats are the words --module-format takes, and the format each declares.
-var moduleFormats = map[string]lower.ModuleFormat{"commonjs": lower.ModuleFormatCommonJS, "esm": lower.ModuleFormatEcmaScript}
+var moduleFormats = map[string]lower.ModuleFormat{"commonjs-bundle": lower.ModuleFormatCommonJSBundle, "esm": lower.ModuleFormatEcmaScript}
+
+// moduleFormatRefusals are words --module-format refuses by name, each with what it says in place of the usage: a
+// word that reads as a format Adamic doesn't build is told what it isn't and what to write. Each is a usage error,
+// exit 2. A plain commonjs would read as a CommonJS module a file each, whose __dirname Node gives each module of its
+// own, where the declaration Adamic builds is one bundled image (Adamic's ruling on #0ta3dk9).
+var moduleFormatRefusals = map[string]string{
+	"commonjs": "adamic: --module-format commonjs is not a format Adamic builds: a CommonJS declaration is one bundled image, where every module's __filename and __dirname are the image's; use --module-format commonjs-bundle",
+}
 
 // renderArguments is what c and js take after their name: a file, and the format a
 // `--module-format <format>` after it declares, an ES module when there's none. ok is false for
-// anything else, a usage error.
-func renderArguments(arguments []string) (string, lower.ModuleFormat, bool) {
+// anything else, a usage error; refusal is what to say for a format refused by name
+// (moduleFormatRefusals), "" for any other.
+func renderArguments(arguments []string) (string, lower.ModuleFormat, string, bool) {
 	switch {
 	case len(arguments) == 1:
-		return arguments[0], lower.ModuleFormatEcmaScript, true
+		return arguments[0], lower.ModuleFormatEcmaScript, "", true
 	case len(arguments) == 3 && arguments[1] == "--module-format":
 		format, known := moduleFormats[arguments[2]]
-		return arguments[0], format, known
+		return arguments[0], format, moduleFormatRefusals[arguments[2]], known
 	}
-	return "", lower.ModuleFormatEcmaScript, false
+	return "", lower.ModuleFormatEcmaScript, "", false
 }
 
 // compile checks and lowers one program, as an ES module.

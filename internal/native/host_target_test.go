@@ -52,7 +52,7 @@ func TestWASIHostTargetRefusals(t *testing.T) {
 	}
 }
 
-// __filename and __dirname, bound in a CommonJS build's .ts files, are refused on wasm32-wasi by name, as
+// __filename and __dirname, bound in a bundled image's .ts files, are refused on wasm32-wasi by name, as
 // process.argv is (Adamic's ruling, Nov 6, #redxes2): a read's C names its runtime function, and that function's row
 // refuses it as the binding the program wrote. TestWASIHostTargetRefusals holds every row to the build boundary.
 // Mutants: either row taken out of wasiHostRefusals, or nodeProcessCall mapping its operation to another function.

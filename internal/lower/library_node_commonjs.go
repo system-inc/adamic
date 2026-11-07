@@ -8,12 +8,12 @@ import (
 )
 
 // __filename, __dirname and require are what Node gives a CommonJS module. An Adamic program is an
-// ES module unless its build declares CommonJS, and an ES module has none of them. Each is NotYet
-// under a reason of its own, so the meter names who owns it (#redxes2); none is registered. Two
-// requires tsc makes inside a try lower as the throw its catch sees instead (Adamic's ruling, Nov 3):
-// of source-map-support, and of a computed module path. __filename and __dirname read in a .ts file
-// of a build that declares CommonJS lower as the running image's path and its directory
-// (nodeCommonJSModuleValuesBound).
+// ES module unless its build declares one bundled image of CommonJS modules, and an ES module has
+// none of them. Each is NotYet under a reason of its own, so the meter names who owns it (#redxes2);
+// none is registered. Two requires tsc makes inside a try lower as the throw its catch sees instead
+// (Adamic's ruling, Nov 3): of source-map-support, and of a computed module path. __filename and
+// __dirname read in a .ts file of a build that declares one bundled image lower as the running
+// image's path and its directory (nodeCommonJSModuleValuesBound).
 const (
 	nodeFilenameMember = "node:module.__filename"
 	nodeDirnameMember  = "node:module.__dirname"
@@ -82,18 +82,22 @@ func (l *lowering) nodeCommonJSUseRefusal(node *ast.Node) (bool, error) {
 }
 
 // nodeCommonJSModuleValuesBound says whether __filename and __dirname are bound where node is:
-// only in a build that declares the CommonJS format, a build input lowered.Options keys, and only in a
-// .ts file, since a .a file is an ES module whatever the build declares (Adamic's ruling, Nov 6,
-// #redxes2). Everywhere else they keep nodeCommonJSModuleValues' NotYet. It's the one place the
-// format and the file are judged, so the refusal and the lowering can't disagree.
+// only in a build that declares one bundled image (ModuleFormatCommonJSBundle), a build input
+// lowered.Options keys, and only in a .ts file, since a .a file is an ES module whatever the build
+// declares (Adamic's ruling, Nov 6, #redxes2). Bound, every module of the program gets the image's
+// two values, its real path and its directory, as every module of tsc's _tsc.js gets the bundle's
+// (Adamic's ruling on #0ta3dk9), never a path of its own. Everywhere else they keep
+// nodeCommonJSModuleValues' NotYet. It's the one place the format and the file are judged, so the
+// refusal and the lowering can't disagree.
 func (l *lowering) nodeCommonJSModuleValuesBound(node *ast.Node) bool {
-	return l.moduleFormat == ModuleFormatCommonJS && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+	return l.moduleFormat == ModuleFormatCommonJSBundle && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
 }
 
 // nodeCommonJSModuleValueRefusal judges a use of __filename or __dirname where they're bound. Only a
-// read of the name itself lowers. A CommonJS module's two are its own locals, never the global
+// read of the name itself lowers. A CommonJS module's two are its wrapper's locals, never the global
 // object's, so a read through globalThis is undefined on Node and stays NotYet, as does a write,
-// which Node would keep for the module alone. The name of a property access is judged as its access.
+// which reaches one module or every module the bundle wraps, as the bundle was made. The name of a
+// property access is judged as its access.
 func (l *lowering) nodeCommonJSModuleValueRefusal(node *ast.Node) error {
 	name := l.nodeLibraryMember(node)
 	if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {

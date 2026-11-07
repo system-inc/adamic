@@ -176,24 +176,27 @@ adamic_array *adamic_node_argv(void) {
     return adamic_retain(arguments);
 }
 
-// A CommonJS module's __filename is the running image's real path, and its __dirname that path's
-// directory as path.dirname answers it (Adamic's ruling, Nov 6, #redxes2). Lowering binds them
-// only in a .ts file of a build that declares CommonJS.
+// In one bundled image every module's __filename is the running image's real path, and its
+// __dirname that path's directory as path.dirname answers it (Adamic's ruling, Nov 6, #redxes2, and
+// on #0ta3dk9). Lowering binds them only in a .ts file of a build that declares one bundled image
+// (CommonJSBundle). wasm32-wasi has no executable path, so there each panics and never names the
+// host's (adamic_panic doesn't return), so it needn't link into wasm32.
 adamic_string *adamic_node_filename(void) {
 #ifdef ADAMIC_TARGET_WASI
     adamic_panic("wasm32-wasi: __filename requires executable paths", sizeof "wasm32-wasi: __filename requires executable paths" - 1);
-#endif
+#else
     adamic_string *path = adamic_host_executing_file_path();
     if (path == NULL) {
         adamic_panic("__filename: startup executable path unavailable", sizeof "__filename: startup executable path unavailable" - 1);
     }
     return path;
+#endif
 }
 
 adamic_string *adamic_node_dirname(void) {
 #ifdef ADAMIC_TARGET_WASI
     adamic_panic("wasm32-wasi: __dirname requires executable paths", sizeof "wasm32-wasi: __dirname requires executable paths" - 1);
-#endif
+#else
     adamic_string *path = adamic_host_executing_file_path();
     if (path == NULL) {
         adamic_panic("__dirname: startup executable path unavailable", sizeof "__dirname: startup executable path unavailable" - 1);
@@ -201,6 +204,7 @@ adamic_string *adamic_node_dirname(void) {
     adamic_string *directory = adamic_node_path_dirname(path);
     adamic_release(path);
     return directory;
+#endif
 }
 
 adamic_array *adamic_node_exec_argv(void) {

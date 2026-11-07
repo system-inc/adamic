@@ -42,9 +42,11 @@ const (
 	// otherwise. It's the zero value, so Options that name no format lower as they always have, and
 	// one format is never spelled two ways.
 	ModuleFormatEcmaScript ModuleFormat = ""
-	// ModuleFormatCommonJS is a CommonJS module, where Node binds __filename and __dirname
-	// (nodeCommonJSModuleValuesBound).
-	ModuleFormatCommonJS ModuleFormat = "CommonJS"
+	// ModuleFormatCommonJSBundle is one bundled image of CommonJS modules, as tsc ships as _tsc.js,
+	// where every module's __filename and __dirname are the running image's (Adamic's ruling on
+	// #0ta3dk9; nodeCommonJSModuleValuesBound). It isn't a module a file each, whose two Node gives
+	// each module of its own.
+	ModuleFormatCommonJSBundle ModuleFormat = "CommonJSBundle"
 )
 
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
