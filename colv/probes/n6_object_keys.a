@@ -1,0 +1,4 @@
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+const keys = Object.keys(collator);
+console.log(`keys [${keys.join(',')}]`);

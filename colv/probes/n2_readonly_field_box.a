@@ -1,0 +1,10 @@
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+const box: { readonly held: Intl.Collator } = { held: collator };
+const view: { readonly held: { compare: (x: string, y: string) => number } } = box;
+try {
+	view.held.compare = (x: string, y: string): number => 0;
+	console.log('wrote');
+} catch (error) {
+	console.log('threw');
+}
+console.log(String(collator.compare('a', 'b')));

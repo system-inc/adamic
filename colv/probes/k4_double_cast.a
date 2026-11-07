@@ -1,0 +1,8 @@
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+try {
+	(collator as unknown as { compare: (x: string, y: string) => number }).compare = (x: string, y: string): number => 0;
+	console.log('wrote');
+} catch (error) {
+	console.log('threw');
+}
+console.log(String(collator.compare('a', 'b')));

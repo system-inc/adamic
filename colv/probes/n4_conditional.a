@@ -1,0 +1,10 @@
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+const other = { compare: (x: string, y: string): number => 1 };
+const pick = Math.random() < 2 ? collator : other;
+try {
+	pick.compare = (x: string, y: string): number => 0;
+	console.log('wrote');
+} catch (error) {
+	console.log('threw');
+}
+console.log(String(collator.compare('a', 'b')));
