@@ -29,15 +29,17 @@ function check(op,map,key,value){
  counts[kind]=(counts[kind]||0)+1;
  const lazy=map.size>32,result=evaluate(op,map,key,value,lazy),{equal,ae,be}=result;
  counts[lazy?'lazySnapshots':'fullClones']=(counts[lazy?'lazySnapshots':'fullClones']||0)+1;
- if(!equal){failures.push({op,kind,mapSize:map.size,legacyError:ae?.name,freeError:be?.name});throw Error('MultiMap measurement counterexample');}
+ if(!equal){failures.push({op,kind,mapSize:map.size,legacyError:ae?.name,freeError:be?.name});flush();throw Error('MultiMap measurement counterexample');}
  counts.calls=(counts.calls||0)+1;counts.sparseArrays=(counts.sparseArrays||0)+(existing?Object.keys(existing).filter(k=>/^\d+$/.test(k)).length!==existing.length:0);
 }
 function register(map){maps.add(map);counts.created=(counts.created||0)+1;return map;}
-function enumeration(value){if(value&&maps.has(value)){counts.enumerations=(counts.enumerations||0)+1;throw Error('STOP: MultiMap own-key enumeration');}return value;}
+function enumeration(value){if(value&&maps.has(value)){counts.enumerations=(counts.enumerations||0)+1;flush();throw Error('STOP: MultiMap own-key enumeration');}return value;}
 function ownCall(receiver,fn,name){return function(...args){for(const arg of name==='assign'?args.slice(1):args.slice(0,1))enumeration(arg);return Reflect.apply(fn,receiver,args);};}
 const callbacks={__mmCheck:check,__mmRegister:register,__mmEnumeration:enumeration,__mmOwnCall:ownCall};Object.assign(globalThis,callbacks);
 function inject(context){if(context&&typeof context==='object')for(const [key,value]of Object.entries(callbacks))Object.defineProperty(context,key,{value,configurable:true});return context;}
 const create=vm.createContext;vm.createContext=function(context={},...rest){return Reflect.apply(create,this,[inject(context),...rest]);};
 const run=vm.runInNewContext;vm.runInNewContext=function(code,context={},...rest){return Reflect.apply(run,this,[code,inject(context),...rest]);};
 const script=vm.Script.prototype.runInNewContext;vm.Script.prototype.runInNewContext=function(context={},...rest){return Reflect.apply(script,this,[inject(context),...rest]);};
-process.on('exit',()=>{if(!process.env.MM_COUNTS)return;fs.mkdirSync(process.env.MM_COUNTS,{recursive:true});fs.writeFileSync(path.join(process.env.MM_COUNTS,(process.env.MM_SHARD||'prepare')+'.'+process.pid+'.json'),JSON.stringify({recorderVersion:2,counts,failures}));});
+let exitEmissions=0,lastExitLateCalls=0;
+function flush(){if(!process.env.MM_COUNTS)return;fs.mkdirSync(process.env.MM_COUNTS,{recursive:true});fs.writeFileSync(path.join(process.env.MM_COUNTS,(process.env.MM_SHARD||'prepare')+'.'+process.pid+'.json'),JSON.stringify({recorderVersion:3,counts,failures,exitEmissions,lastExitLateCalls}));}
+const originalEmit=process.emit;process.emit=function(event,...args){if(event!=='exit')return Reflect.apply(originalEmit,this,[event,...args]);const before=counts.calls||0;exitEmissions++;try{return Reflect.apply(originalEmit,this,[event,...args]);}finally{lastExitLateCalls=(counts.calls||0)-before;flush();}};

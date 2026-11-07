@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "archives": [
+    {
+      "archive": "count-evidence.tar.gz",
+      "externalSHA256Verified": true,
+      "internalFilesVerified": 5981,
+      "files": 5982,
+      "allGoFilesUseTxtSuffix": true
+    },
+    {
+      "archive": "proof-evidence.tar.gz",
+      "externalSHA256Verified": true,
+      "internalFilesVerified": 673,
+      "files": 674,
+      "allGoFilesUseTxtSuffix": true
+    },
+    {
+      "archive": "preparation.tar.gz",
+      "externalSHA256Verified": true,
+      "internalFilesVerified": 26,
+      "files": 27,
+      "allGoFilesUseTxtSuffix": true
+    }
+  ],
+  "pythonDriversParse": true
+}

@@ -1772,6 +1772,384 @@
       "kind": "call"
     }
   ],
+  "typeReferences": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1444,
+      "column": 88,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1446,
+      "column": 119,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, U>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1448,
+      "column": 134,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V | U>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1537,
+      "column": 18,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "export interface MultiMap<K, V> extends Map<K, V[]> {\r\n    /**\r\n     * Adds the value to an array of values associated with the key, and returns the array.\r\n     * Creates the array if it does not already exist.\r\n     */\r\n    add(key: K, value: V): V[];\r\n    /**\r\n     * Removes a value from an array of values associated with the key.\r\n     * Does not preserve the order of those values.\r\n     * Does nothing if `key` is not in `map`, or `value` is not in `map[key]`.\r\n     */\r\n    remove(key: K, value: V): void;\r\n}",
+      "kind": "other"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "line": 54,
+      "column": 23,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "ts.MultiMap",
+      "kind": "other"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 26,
+      "column": 62,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "MultiMap",
+      "context": "ts.MultiMap",
+      "kind": "other"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "line": 26,
+      "column": 122,
+      "owners": [
+        "<anonymous>",
+        "createLoggerTrackingHostCalls"
+      ],
+      "text": "MultiMap",
+      "context": "ts.MultiMap",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1552,
+      "column": 41,
+      "owners": [
+        "createMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1553,
+      "column": 38,
+      "owners": [
+        "createMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1558,
+      "column": 34,
+      "owners": [
+        "multiMapAdd"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1568,
+      "column": 37,
+      "owners": [
+        "multiMapRemove"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<K, V>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10,
+      "column": 10,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "type MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 4898,
+      "column": 25,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, string>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 4921,
+      "column": 47,
+      "owners": [
+        "getFileIncludeReasons"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, FileIncludeReason>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10013,
+      "column": 30,
+      "owners": [
+        "getFileIncludeReasons"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, FileIncludeReason>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 442,
+      "column": 10,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "type MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9470,
+      "column": 42,
+      "owners": [
+        "getSymlinkedDirectoriesByRealpath"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, string>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9502,
+      "column": 41,
+      "owners": [
+        "createSymlinkCache"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, string>",
+      "kind": "other"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 45,
+      "column": 10,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "type MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 81,
+      "column": 23,
+      "owners": [
+        "getFileReasons"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, FileIncludeReason>",
+      "kind": "other"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 90,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1313,
+      "column": 37,
+      "owners": [
+        "ProjectService"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, ScriptInfo>",
+      "kind": "other"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3482,
+      "column": 45,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, Project>",
+      "kind": "other"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3483,
+      "column": 23,
+      "owners": [
+        "ProjectService",
+        "getSymlinkedProjects"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, Project>",
+      "kind": "other"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 96,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 487,
+      "column": 33,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, Project>",
+      "kind": "other"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 2134,
+      "column": 32,
+      "owners": [
+        "Session",
+        "getProjects"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, Project>",
+      "kind": "other"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 11,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 77,
+      "column": 27,
+      "owners": [
+        "createWatchUtils",
+        "initializeWatches"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<string, string>",
+      "kind": "other"
+    },
+    {
+      "file": "src/harness/watchUtils.ts",
+      "line": 198,
+      "column": 85,
+      "owners": [
+        "serializeMultiMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<string, T>",
+      "kind": "other"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 120,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1175,
+      "column": 20,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<SymbolId, AnyImportOrRequire>",
+      "kind": "other"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 213,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 1074,
+      "column": 80,
+      "owners": [
+        "getReferencesForNonModule"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<Path, FileIncludeReason>",
+      "kind": "other"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 124,
+      "column": 5,
+      "owners": [],
+      "text": "MultiMap",
+      "context": "MultiMap",
+      "kind": "binding"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 495,
+      "column": 30,
+      "owners": [
+        "ChangeTracker"
+      ],
+      "text": "MultiMap",
+      "context": "MultiMap<string, NewFileInsertion>",
+      "kind": "other"
+    }
+  ],
   "valueReads": [],
   "summary": {
     "add": {

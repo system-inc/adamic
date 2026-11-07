@@ -1,0 +1,300 @@
+{
+  "functions": {
+    "multiMapAddValue": {
+      "calls": 27,
+      "sites": [
+        {
+          "file": "src/compiler/core.ts",
+          "line": 1452,
+          "text": "multiMapAddValue(result, makeKey(value), makeValue(value))"
+        },
+        {
+          "file": "src/harness/fourslashImpl.ts",
+          "line": 3002,
+          "text": "ts.multiMapAddValue(result, text, range)"
+        },
+        {
+          "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+          "line": 56,
+          "text": "ts.multiMapAddValue(calledMap, f, /*value*/ true)"
+        },
+        {
+          "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+          "line": 66,
+          "text": "ts.multiMapAddValue(calledMap, f, [arg1!, arg2!, arg3!, arg4!])"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 403,
+          "text": "multiMapAddValue(fileWatcherCallbacks, filePath, callback)"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 682,
+          "text": "multiMapAddValue(callbackCache, dirPath, callbackToAdd)"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9519,
+          "text": "multiMapAddValue((symlinkedDirectoriesByRealpath ||= createMultiMap()), real.realPath, symlink)"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7943,
+          "text": "multiMapAddValue(seenNames, typeNode.typeName.escapedText, [type, result.length - 1])"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3650,
+          "text": "multiMapAddValue(redirectTargetsMap, fileFromPackageId.path, fileName)"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3711,
+          "text": "multiMapAddValue(programDiagnostics.getFileReasons(), file.path, reason)"
+        },
+        {
+          "file": "src/server/scriptInfo.ts",
+          "line": 474,
+          "text": "multiMapAddValue(project.projectService.realpathToScriptInfos!, this.realpath, this)"
+        },
+        {
+          "file": "src/server/editorServices.ts",
+          "line": 3508,
+          "text": "multiMapAddValue(projects, toAddInfo.path, project)"
+        },
+        {
+          "file": "src/server/editorServices.ts",
+          "line": 3511,
+          "text": "multiMapAddValue(projects, toAddInfo.path, project)"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 89,
+          "text": "multiMapAddValue(actuals, path, data)"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 103,
+          "text": "multiMapAddValue((realToLinked ??= createMultiMap()), canonicalReal, path)"
+        },
+        {
+          "file": "src/services/exportInfoMap.ts",
+          "line": 215,
+          "text": "multiMapAddValue(exportInfo, key(symbolName, symbol, isExternalModuleNameRelative(moduleName) ? undefined : moduleName, checker), {\r\n                id,\r\n                symbolTableKey,\r\n                symbolName,\r\n                capitalizedSymbolName,\r\n                moduleName,\r\n                moduleFile,\r\n                moduleFileName: moduleFile?.fileName,\r\n                packageName,\r\n                exportKind,\r\n                targetFlags: target.flags,\r\n                isFromPackageJson,\r\n                symbol: storedSymbol,\r\n                moduleSymbol: storedModuleSymbol,\r\n            })"
+        },
+        {
+          "file": "src/services/services.ts",
+          "line": 1172,
+          "text": "multiMapAddValue(result, name, declaration)"
+        },
+        {
+          "file": "src/services/codeFixProvider.ts",
+          "line": 55,
+          "text": "multiMapAddValue(errorCodeToFixes, String(error), reg)"
+        },
+        {
+          "file": "src/services/codefixes/convertToAsyncFunction.ts",
+          "line": 321,
+          "text": "multiMapAddValue(collidingSymbolMap, ident.text, symbol)"
+        },
+        {
+          "file": "src/services/codefixes/convertToAsyncFunction.ts",
+          "line": 333,
+          "text": "multiMapAddValue(collidingSymbolMap, originalName, symbol)"
+        },
+        {
+          "file": "src/services/codefixes/convertToAsyncFunction.ts",
+          "line": 338,
+          "text": "multiMapAddValue(collidingSymbolMap, originalName, symbol)"
+        },
+        {
+          "file": "src/services/codefixes/convertToEsModule.ts",
+          "line": 603,
+          "text": "multiMapAddValue(map, id.text, id)"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1182,
+          "text": "multiMapAddValue((importMap ||= createMultiMap()), getSymbolId(moduleSymbol), i.parent)"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1188,
+          "text": "multiMapAddValue((importMap ||= createMultiMap()), getSymbolId(moduleSymbol), i)"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1642,
+          "text": "multiMapAddValue(originalSymbolToExportInfos, getUniqueSymbolId(exportedSymbol, checker).toString(), { symbol: exportedSymbol, moduleSymbol, moduleFileName: toFile?.fileName, exportKind, targetFlags: skipAlias(exportedSymbol, checker).flags, isFromPackageJson })"
+        },
+        {
+          "file": "src/services/codefixes/inferFromUsage.ts",
+          "line": 1032,
+          "text": "multiMapAddValue(props, p.escapedName, p.valueDeclaration ? checker.getTypeOfSymbolAtLocation(p, p.valueDeclaration) : checker.getAnyType())"
+        },
+        {
+          "file": "src/services/textChanges.ts",
+          "line": 663,
+          "text": "multiMapAddValue(this.newFileChanges, fileName, { oldFile, statements })"
+        }
+      ]
+    },
+    "multiMapRemoveValue": {
+      "calls": 5,
+      "sites": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 419,
+          "text": "multiMapRemoveValue(fileWatcherCallbacks, filePath, callback)"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 689,
+          "text": "multiMapRemoveValue(callbackCache, dirPath, callbackToAdd)"
+        },
+        {
+          "file": "src/server/editorServices.ts",
+          "line": 2396,
+          "text": "multiMapRemoveValue(this.realpathToScriptInfos!, realpath, info)"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 108,
+          "text": "multiMapRemoveValue(actuals, path, data)"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 121,
+          "text": "multiMapRemoveValue(realToLinked!, canonicalReal, path)"
+        }
+      ]
+    },
+    "createMultiMap": {
+      "calls": 24,
+      "sites": [
+        {
+          "file": "src/compiler/core.ts",
+          "line": 1449,
+          "text": "createMultiMap<K, V | U>()"
+        },
+        {
+          "file": "src/harness/fourslashImpl.ts",
+          "line": 2998,
+          "text": "ts.createMultiMap<string, Range>()"
+        },
+        {
+          "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+          "line": 53,
+          "text": "ts.createMultiMap<string, true>()"
+        },
+        {
+          "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+          "line": 63,
+          "text": "ts.createMultiMap<string, [U, V, W, X]>()"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 395,
+          "text": "createMultiMap<string, FileWatcherCallback>()"
+        },
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 622,
+          "text": "createMultiMap<Path, { dirName: string; callback: DirectoryWatcherCallback; }>()"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9519,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7920,
+          "text": "createMultiMap<__String, [Type, number]>()"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1701,
+          "text": "createMultiMap<Path, string>()"
+        },
+        {
+          "file": "src/compiler/programDiagnostics.ts",
+          "line": 96,
+          "text": "createMultiMap<Path, FileIncludeReason>()"
+        },
+        {
+          "file": "src/server/editorServices.ts",
+          "line": 1465,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/server/editorServices.ts",
+          "line": 3507,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 76,
+          "text": "createMultiMap<string, Data>()"
+        },
+        {
+          "file": "src/harness/watchUtils.ts",
+          "line": 103,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/services/exportInfoMap.ts",
+          "line": 142,
+          "text": "createMultiMap<ExportMapInfoKey, CachedSymbolExportInfo>()"
+        },
+        {
+          "file": "src/services/services.ts",
+          "line": 1163,
+          "text": "createMultiMap<string, Declaration>()"
+        },
+        {
+          "file": "src/services/codeFixProvider.ts",
+          "line": 29,
+          "text": "createMultiMap<string, CodeFixRegistration>()"
+        },
+        {
+          "file": "src/services/codefixes/convertToAsyncFunction.ts",
+          "line": 295,
+          "text": "createMultiMap<string, Symbol>()"
+        },
+        {
+          "file": "src/services/codefixes/convertToEsModule.ts",
+          "line": 602,
+          "text": "createMultiMap<string, Identifier>()"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1182,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1188,
+          "text": "createMultiMap()"
+        },
+        {
+          "file": "src/services/codefixes/importFixes.ts",
+          "line": 1632,
+          "text": "createMultiMap<string, SymbolExportInfo>()"
+        },
+        {
+          "file": "src/services/codefixes/inferFromUsage.ts",
+          "line": 1029,
+          "text": "createMultiMap<__String, Type>()"
+        },
+        {
+          "file": "src/services/textChanges.ts",
+          "line": 661,
+          "text": "createMultiMap<string, NewFileInsertion>()"
+        }
+      ]
+    }
+  },
+  "legacyIdentifiers": []
+}

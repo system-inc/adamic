@@ -1,6 +1,6 @@
 """Continue bounded pieces, recording the exact accepted lane unit union."""
 import collections, hashlib, json, os, pathlib, subprocess, time, sys
-repo=pathlib.Path('/workspace/adamic');s=pathlib.Path('/workspace/scratch/multimap');out=repo/'stage3/adapt/99-correctness-core-multimap';tree=s/'counted';units=json.loads((repo/'stage3/lane/shards.json').read_text())['units']
+repo=pathlib.Path('/workspace/adamic');s=pathlib.Path(os.environ.get('MM_SCRATCH','/workspace/scratch/multimap/count-v3'));s.mkdir(parents=True,exist_ok=True);out=repo/'stage3/adapt/99-correctness-core-multimap';tree=pathlib.Path('/workspace/scratch/multimap/counted');units=json.loads((repo/'stage3/lane/shards.json').read_text())['units']
 def manifest():
  return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for d in ['src','built','tests/cases','tests/baselines/reference'] for p in sorted((tree/d).rglob('*')) if p.is_file()}
 frozen=manifest();manifest_file=s/'counted-manifest.json'
@@ -10,6 +10,9 @@ def aggregate():
  accepted={};processes={};attempts=[]
  for directory in sorted(s.glob('count-*')):
   if not directory.is_dir() or not (directory/'summary.json').exists():continue
+
+  for raw in (directory/'calls').glob('*.json'):
+   record=json.loads(raw.read_text());assert not record['failures'] and not record['counts'].get('enumerations',0),'STOP: failed attempt has a counterexample or enumeration'
   summary=json.loads((directory/'summary.json').read_text());attempts.append({k:summary[k] for k in ['start','end','seconds','complete']})
   for row in summary['units']:
    if row['exit']==0 and row['report'].get('status')=='pass':
@@ -22,7 +25,7 @@ def aggregate():
   for p in processes[name]:
    r=json.loads(p.read_text());counts.update(r['counts']);failures+=r['failures']
  result={'complete':len(accepted)==len(units),'units':len(accepted),'manifestUnits':len(units),'acceptedUnits':[u['name'] for u in units if u['name'] in accepted],'counts':dict(counts),'counterexamples':len(failures),'enumerations':counts['enumerations'],'oracleCounts':dict(oracle),'attempts':attempts,'sourceAndBuiltManifestUnchanged':manifest()==frozen,'excluded':'All failed-unit records, preparation calls, and synthetic witnesses. The initial byte-comparison unit is replaced only by its passing retry.'}
- (out/'COUNT.json').write_text(json.dumps(result,indent=2)+'\n');assert not failures and counts['enumerations']==0 and result['sourceAndBuiltManifestUnchanged'];return result
+ (s/'COUNT.json').write_text(json.dumps(result,indent=2)+'\n');assert not failures and counts['enumerations']==0 and result['sourceAndBuiltManifestUnchanged'];return result
 print(json.dumps(aggregate()),flush=True)
 for start in range(int(sys.argv[1]) if len(sys.argv)>1 else 0,len(units),40):
  directory=s/f'count-{start:03d}'
