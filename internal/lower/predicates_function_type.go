@@ -55,22 +55,12 @@ func (l *lowering) checkedFunctionTypeClaim(annotation *ast.Node) bool {
 	// The census overload proof refuses overload_union_impl too today ("cannot be served by
 	// implementation result"), so its fixture goes red through that refusal without this rule: the two
 	// guard one claim independently, and this one stays if the census proof is relaxed (Compiler, Oct 30).
+	// The parameter it lands in is overloadImplementationParameter's, predicateParameter's own mapping,
+	// so an argument landing in a rest reads the rest's element at its position (#1w5bve2), and an
+	// element carrying a checked claim of its own checks every call the body makes through it.
 	if parameter := signature.Parent; parameter.Kind == ast.KindParameter && parameter.Parent.Kind == ast.KindFunctionDeclaration && parameter.Parent.Body() == nil {
-		implementation := l.censusImplementation(parameter.Parent)
-		if implementation == nil {
-			return false
-		}
-		for index, candidate := range parameter.Parent.Parameters() {
-			if candidate != parameter {
-				continue
-			}
-			if index >= len(implementation.Parameters()) {
-				return false
-			}
-			implemented := implementation.Parameters()[index].Type()
-			return implemented != nil && implemented.Kind == ast.KindFunctionType && l.checkedFunctionTypeClaim(implemented.Type())
-		}
-		return false
+		_, implemented := l.overloadImplementationParameter(parameter.Parent, parameter)
+		return implemented != nil && implemented.Kind == ast.KindFunctionType && l.checkedFunctionTypeClaim(implemented.Type())
 	}
 	return true
 }
