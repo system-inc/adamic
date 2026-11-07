@@ -69,6 +69,10 @@ var compilerSites = map[string]string{
 	"stage1/cohere/typeaware/typeaware_cache_test.go:TestTypeAwareKeysNameTheBuildsCompiler":          "sets CC to check the keys name the compiler cgo runs; compiles nothing",
 	"stage1/cohere/typeaware/volume_profile_Controls_test.go:typeAwareCompilerKey":                    "names cgo's compiler in a key; compiles nothing",
 	"stage1/typescript/scanner/profile_test.go:TestProfileArtifacts":                                  "a profiling build into a scratch directory, never a product",
+
+	// buildcache's compiler report tests read a real clang's version under a cross triple (#5xsd2ha).
+	"internal/buildcache/compiler_report_test.go:compilerReportBuild":                                       "finds the real clang whose version report a test reads under a cross triple, with that triple's config beside it or named; compiles nothing",
+	"internal/buildcache/compiler_report_test.go:TestACompilerReportReadsTheBuildsTriplesConfigBesideClang": "hard links or copies clang beside a config to read its version report there; compiles nothing",
 }
 
 // Every Go file outside internal/native that names a C compiler does so in a function compilerSites gives a reason for:
