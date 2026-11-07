@@ -293,7 +293,8 @@ const neverRestCalledThroughSlot = neverRestOverloaded +
 
 // Pins 3, 4, 5 and 9: a use off the proof's list keeps main's road for every read of the function, and
 // main's stop at its first value read: a call through the never-rest parameter, a variable, a field, an
-// ordinary function slot, and typeof or .length through the parameter.
+// ordinary function slot, typeof or .length through the parameter, and the parameter captured by an arrow
+// that hands it on (Language's untried shape on 9f8cfe3d), since a captured parameter answers no.
 func TestNeverRestMarkerOffListKeepsMainsStop(t *testing.T) {
 	t.Parallel()
 	const optional = "function g(mark?: AnyFunction): void {\n" +
@@ -305,6 +306,7 @@ func TestNeverRestMarkerOffListKeepsMainsStop(t *testing.T) {
 		{"a field", neverRestOverloaded + optional + "const o = { m: f };\ng(f);\ng(o.m);\n", "10:16"},
 		{"an ordinary slot", neverRestOverloaded + "interface Node {\n\treadonly kind: number;\n}\nfunction visitAll(visit: (value: readonly Node[]) => void): void {\n\tvisit([]);\n}\n" + optional + "visitAll(f);\ng(f);\n", "16:10"},
 		{"typeof through the parameter", neverRestOverloaded + "function run(): void {\n\tg(f);\n}\nfunction g(mark?: AnyFunction): void {\n\tconsole.log(typeof mark);\n}\nrun();\n", "8:4"},
+		{"the parameter captured by an arrow", neverRestOverloaded + "function run(): void {\n\tg(f);\n}\nfunction h(mark?: AnyFunction): void {\n\tconsole.log(String(mark === undefined));\n}\nfunction g(mark: AnyFunction): void {\n\tconst later = (): void => {\n\t\th(mark);\n\t};\n\tlater();\n}\nrun();\n", "8:4"},
 		{"length through the parameter", neverRestOverloaded + "function run(): void {\n\tg(f);\n}\nfunction g(mark: AnyFunction): void {\n\tconsole.log(String(mark.length));\n}\nrun();\n", "8:4"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
