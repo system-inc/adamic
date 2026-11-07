@@ -36,11 +36,22 @@ type Rules struct {
 // WitnessRule is the witness of main: a witness of main's tip every Every landings, or Hours after the last one while a
 // landing a narrow key decided waits for one, on the first of Machines with none running. Every is from 1 to
 // MaximumWitnessEvery, Hours from 1 to MaximumWitnessHours, and Machines 1 to MaximumWitnessMachines box names, each once,
-// all three required. The lander's WitnessRule.
+// all three required. At, optional (Loom 0.8.909, #h9p10te), is a UTC time of day "HH:MM" when the queue makes a due each
+// day. FullBlock, optional (Loom 0.8.1132, #xtymtgv), names the box whose fresh take of a block runs it as a full witness,
+// at most once each Hours. The lander's WitnessRule, and the queue's (QueueRules.ts).
 type WitnessRule struct {
-	Every    int      `json:"every"`
-	Hours    int      `json:"hours"`
-	Machines []string `json:"machines"`
+	Every     int                   `json:"every"`
+	Hours     int                   `json:"hours"`
+	Machines  []string              `json:"machines"`
+	At        *string               `json:"at"`
+	FullBlock *WitnessFullBlockRule `json:"fullBlock"`
+}
+
+// WitnessFullBlockRule is the full-witness block (#xtymtgv): Box, a box name, and Hours, from 1 to MaximumWitnessHours,
+// both required, as the queue's checkWitnessFullBlock reads it.
+type WitnessFullBlockRule struct {
+	Box   string `json:"box"`
+	Hours int    `json:"hours"`
 }
 
 // MaximumWitnessEvery, MaximumWitnessHours and MaximumWitnessMachines are the queue's: a thousand landings, a week, and as
@@ -212,8 +223,10 @@ func ParseRules(data []byte) (Rules, error) {
 	return rules, nil
 }
 
-// checkWitness reads the witness as strictly as the lander's parseWitness: an object of exactly every, hours and machines,
-// never null, each present and in its range, and the machines box names, each once.
+// checkWitness reads the witness as strictly as the lander's parseWitness and the queue's checkWitness: an object of every,
+// hours and machines, never null, each present and in its range, and the machines box names, each once; at, when present,
+// a UTC time of day "HH:MM"; and fullBlock, when present, exactly {box, hours}, box a box name and hours from 1 to
+// MaximumWitnessHours. Any other key is refused by ParseRules' strict decode.
 func checkWitness(raw json.RawMessage) error {
 	var named map[string]json.RawMessage
 	if bytes.Equal(bytes.TrimSpace(raw), []byte("null")) || json.Unmarshal(raw, &named) != nil {
@@ -238,8 +251,32 @@ func checkWitness(raw json.RawMessage) error {
 		}
 		seen[box] = true
 	}
+	if at, present := named["at"]; present {
+		var time string
+		if json.Unmarshal(at, &time) != nil || !witnessAtPattern.MatchString(time) {
+			return fmt.Errorf(`rules.json: witness's at is %s, and it's a UTC time of day "HH:MM"`, at)
+		}
+	}
+	if full, present := named["fullBlock"]; present {
+		var fields map[string]json.RawMessage
+		if bytes.Equal(bytes.TrimSpace(full), []byte("null")) || json.Unmarshal(full, &fields) != nil || len(fields) != 2 {
+			return fmt.Errorf("rules.json: witness's fullBlock is %s, and it's exactly {box, hours}", full)
+		}
+		var box string
+		if json.Unmarshal(fields["box"], &box) != nil || !builderPattern.MatchString(box) {
+			return fmt.Errorf("rules.json: witness's fullBlock's box is %s, and it's a box name", fields["box"])
+		}
+		var hours int
+		if json.Unmarshal(fields["hours"], &hours) != nil || hours < 1 || hours > MaximumWitnessHours {
+			return fmt.Errorf("rules.json: witness's fullBlock's hours is %s, and it's a whole number from 1 to %d", fields["hours"], MaximumWitnessHours)
+		}
+	}
 	return nil
 }
+
+// witnessAtPattern is the queue's WitnessAtPattern and the lander's: a UTC time of day, hours 00 to 23 and minutes 00 to
+// 59, two digits each.
+var witnessAtPattern = regexp.MustCompile(`^(?:[01][0-9]|2[0-3]):[0-5][0-9]$`)
 
 // changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
 var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
