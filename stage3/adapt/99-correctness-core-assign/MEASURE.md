@@ -51,3 +51,10 @@ All later units and all spelling trials remain pending at this checkpoint.
 
 300 accepted units pass, with 24757 calls and 49518 argument appearances.
 All later units and all spelling trials remain pending at this checkpoint.
+
+## Runtime complete checkpoint
+
+All 398 accepted units pass, with 30782 calls and 61568 argument appearances.
+Oracle counts: {'pass': 106366, 'fail': 1, 'skip': 0}. Independent final reconciliation, the remainder
+of the baseline census, and every spelling trial are pending at this checkpoint.
+No assign adaptation has been built.
