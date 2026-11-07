@@ -1,6 +1,8 @@
 # getAllKeys reach, task b5w3ycg
 
-Status: stopped with read-only findings. The adapted-tree search and whole-lane runtime measurement are blocked, not completed. Neither runtime count is zero: both are unmeasured.
+Status: measurement resumed after explicit permission for setup builds. The unchanged full apply with --build-product passed in 588.272 seconds, exit 0. This is the requested post-apply checkpoint. Compiler/harness preparation and the whole-lane runtime measurement are pending. Both counts remain unmeasured at this checkpoint.
+
+The earlier stopped-state notes below are historical and will be replaced by the completed measurement.
 
 Base: origin/main `837da8ed9a306db11ca0f0a39f396111048c5040`.
 Pinned TypeScript: v6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`.
