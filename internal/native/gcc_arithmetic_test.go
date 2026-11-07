@@ -20,7 +20,10 @@ func gccArithmeticProduct(t *testing.T) string {
 	if !ok {
 		t.Skip(why)
 	}
-	flags := slices.DeleteFunc(Flags(Options{cpu: cpu}), func(s string) bool { return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" })
+	// --target= is clang's, and gcc refuses it: a gcc portability build is the host's, so it names no triple.
+	flags := slices.DeleteFunc(Flags(Options{cpu: cpu}), func(s string) bool {
+		return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" || strings.HasPrefix(s, "--target=")
+	})
 	files := []runtimeFile{{"main.c", []byte(fusedHarness)}}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
