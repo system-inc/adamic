@@ -15,6 +15,7 @@ import (
 )
 
 type generator struct {
+	irTypes   map[string]ast.Expr
 	types     map[string]ast.Expr
 	needed    map[string]bool
 	sortedMap *ast.TypeSpec
@@ -23,7 +24,7 @@ type generator struct {
 	privateIRFields []string
 }
 
-// How the full latent copy treats each unexported field of an exported IR struct. latentCopyIR copies an IR
+// How both latent copies treat each unexported field of an exported IR struct. latentCopyIR copies an IR
 // value by reflection, which can't write an unexported field, so every such field is named here with what the
 // copy does instead, and loadGenerator refuses one that isn't (#fwbnwn3: methodTables arrived Oct 20 and every
 // full-mode unit that copied a Program panicked on it until this table existed).
@@ -40,10 +41,10 @@ const (
 )
 
 var irPrivateFields = map[string]privateIRField{
-	"Program.argumentFacts":       privateNil,
-	"Program.methodTables":        privateEmpty,
-	"BoundaryStringTable.indexes": privateEmpty,
-	"GeneratedType.identity":      privateShared,
+	"Program.argumentFacts":       privateNil,    // Backend-only derivation; a census must not populate it.
+	"Program.methodTables":        privateEmpty,  // Rebuilt from the copied method declarations.
+	"BoundaryStringTable.indexes": privateEmpty,  // Rebuilt from copied Values.
+	"GeneratedType.identity":      privateShared, // Immutable owner identity, compared by pointer.
 }
 
 // Only audited program facts are listed. Every unlisted field keeps the normal
@@ -143,7 +144,7 @@ func (g *generator) copyMap(ty string, key, item ast.Expr, value string) string 
 	return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for key,item:=range value {result[" + g.copy(key, "key") + "]=" + g.copy(item, "item") + "}; return result}(" + value + ")"
 }
 func loadGenerator(repository, lowerInput string) generator {
-	g := generator{types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}, positions: token.NewFileSet()}
+	g := generator{irTypes: map[string]ast.Expr{}, types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}, positions: token.NewFileSet()}
 
 	irFiles, err := filepath.Glob(filepath.Join(repository, "internal/ir/*.go"))
 	if err != nil {
@@ -165,6 +166,7 @@ func loadGenerator(repository, lowerInput string) generator {
 					if !ok {
 						continue
 					}
+					g.irTypes[spec.Name.Name] = spec.Type
 					if spec.Name.Name == "SortedMap" {
 						g.sortedMap = spec
 					}
@@ -189,6 +191,7 @@ func loadGenerator(repository, lowerInput string) generator {
 			}
 		}
 	}
+	g.checkIRFields(irPositions, irSpecFields)
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
 	if err != nil {
 		panic(err)
@@ -300,7 +303,7 @@ func generate(repository, lowerInput string) []byte {
 		}
 		body.WriteString("}\n")
 	}
-	// The full copy's answers for unexported IR fields, from irPrivateFields, so the table has one home.
+	// Both copies' answers for unexported IR fields, from irPrivateFields, so the table has one home.
 	keys := make([]string, 0, len(irPrivateFields))
 	for key := range irPrivateFields {
 		keys = append(keys, key)
@@ -328,6 +331,8 @@ func generate(repository, lowerInput string) []byte {
 		}
 	}
 	body.WriteString("return false}\n")
+	g.specFunctionCopy(&body)
+	g.specMutableFields(&body)
 	// Only imports actually mentioned in generated field types are needed.
 	var header strings.Builder
 	header.WriteString("package lower\nimport(\n\"reflect\"\n")
