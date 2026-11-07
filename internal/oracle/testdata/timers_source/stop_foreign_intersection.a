@@ -1,0 +1,21 @@
+// An object that isn't a timer but holds a truthy _onTimeout, seen through an intersection, which the
+// compile-time guard doesn't read, stops at run time on both backends after what Node printed so far
+// (Adamic's ruling on #995spev, Nov 7). Node unenrolls it and runs on.
+import 'node:timers';
+
+interface Labelled {
+    label: string;
+}
+
+interface Pending {
+    _onTimeout: string;
+}
+
+function both(label: string): Labelled & Pending {
+    return { label, _onTimeout: `pending ${label}` };
+}
+
+const live = setTimeout(() => { console.log('live fired'); }, 1);
+console.log(`live ${live ? 'held' : 'released'}`);
+clearTimeout(both('intersection'));
+console.log('cleared the object');

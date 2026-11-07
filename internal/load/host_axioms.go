@@ -15,6 +15,8 @@ import (
 
 // The package remains the published tarball. Only the checker's served view
 // corrects host declarations whose published types promise more than Node does.
+// A row may also widen a parameter to what Node accepts, where a ruling says so
+// and names itself in the row: clearTimeout takes unknown (#995spev, Nov 7).
 //
 //go:embed host_axioms.json
 var hostAxiomsJSON []byte
