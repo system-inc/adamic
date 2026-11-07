@@ -1,0 +1,41 @@
+{
+  "gatePassed": true,
+  "eligibleSpelling": "generic-own-helper",
+  "implementedInOwner40": true,
+  "sharedFinalEntrypoint": "99-correctness-core-assign",
+  "contract": {
+    "firstWrites": 1,
+    "replayWrites": 0,
+    "replayMtimePreserved": true,
+    "earlyPhaseOutputPreserved": true,
+    "upstreamAndObjectInputsAccepted": true,
+    "refusals": [
+      "changed before body",
+      "changed after body",
+      "parameter only half",
+      "type parameter only half",
+      "changed generic constraint",
+      "changed key type",
+      "changed parameter name",
+      "missing owner",
+      "duplicate owner",
+      "nested duplicate",
+      "moved owner",
+      "parse error"
+    ],
+    "foreignEditPreserved": true,
+    "lfAndCrlfPreserved": true
+  },
+  "beforeFullApply": "pass",
+  "beforeCompilerBuild": "pass",
+  "afterFullApply": "in progress",
+  "pairedReplay": "baseline running; accepted pending",
+  "publicDeclarations": "pending",
+  "restorationMutant": "pending",
+  "transformSha256": {
+    "stage3/adapt/40-explicit-any/adapt.cjs": "56410f0472979a3386ea17f4570cea80c85c913f1b76c4705a88d3fd7d186d42",
+    "stage3/adapt/40-explicit-any/hasproperty.cjs": "c9a1b7f928f72ed4f89c541b4008748b21e690155d0b5e8d18e3c24798cb3270",
+    "stage3/adapt/40-explicit-any/hasproperty-owner.json": "d3700fa5449eeeaf5c5e142f37cb2c86fad989f3617e7351c41aa30f3e5e847c",
+    "stage3/adapt/99-correctness-core-assign/adapt.cjs": "5b0a1f35d74ad2479c8f718b3b96916c7d91b9995312c70c8fd97d842bc1c7d5"
+  }
+}

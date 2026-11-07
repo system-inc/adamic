@@ -407,8 +407,8 @@
     "column": 42,
     "source": "export function hasProperty(map: MapLike<any>, key: string): boolean {",
     "disposition": "changed",
-    "replacement": "object",
-    "reason": "Key-ownership test accepts SourceFile, Node, PackageJson, array, function and formatting object consumers, without an index signature."
+    "replacement": "T with T extends object",
+    "reason": "The generic object parameter retains each caller type for ownership testing, including records, SourceFile, Node, PackageJson, arrays, functions and formatting objects without an index signature. The body and JavaScript are unchanged; task b5w3ycg core assign measurement proves the 73-root advance."
   },
   {
     "file": "src/compiler/core.ts",

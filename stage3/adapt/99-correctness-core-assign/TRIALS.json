@@ -1,0 +1,3466 @@
+[
+  {
+    "name": "maplike-unknown",
+    "description": "assign<T extends MapLike<unknown>>",
+    "coreBeforeSha256": "8943f4ec6c11dec6430378fb388359376e96f19af2ed9ccc86067fd6702a0918",
+    "coreAfterSha256": "924bc2797c2e938c8ede3ebc143401de2a7553ca84fe0b938b2b1cbe2c2b2436",
+    "emission": [
+      {
+        "removeComments": false,
+        "byteIdentical": true,
+        "beforeSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "afterSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "beforeBytes": 64998,
+        "afterBytes": 64998
+      },
+      {
+        "removeComments": true,
+        "byteIdentical": true,
+        "beforeSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "afterSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "beforeBytes": 45885,
+        "afterBytes": 45885
+      }
+    ],
+    "types": {
+      "exit": 1,
+      "roots": 79,
+      "seconds": 7.769261538000137,
+      "log": "maplike-unknown-types.log",
+      "diagnostics": 1
+    },
+    "sourceFiles": 746,
+    "changedSources": [
+      "compiler/core.ts"
+    ],
+    "groups": [
+      {
+        "start": 0,
+        "count": 20,
+        "seconds": 78.89366613699985,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.943428939
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/_namespaces/ts.performance.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.747363587
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/_namespaces/ts.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.91075411
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/binder.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.743908613
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/builder.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.800120444
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/builderPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.752726434
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/builderState.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.0380557440000002
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/builderStatePublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.221997588
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/checker.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.568054406
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.679221407
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/core.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.5647377369999997
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/corePublic.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.037278448
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/debug.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.975424395
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/diagnosticInformationMap.generated.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.640567931
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/emitter.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.575317333
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/executeCommandLine.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.848009233
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/expressionToTypeNode.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.420997739
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/baseNodeFactory.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.371996119
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/emitHelpers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.40848305
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/emitNode.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.562896843
+          }
+        ]
+      },
+      {
+        "start": 20,
+        "count": 20,
+        "seconds": 86.77179872800025,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/nodeChildren.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.309622852
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/nodeConverters.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.55105285
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/nodeFactory.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.083746517
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/nodeTests.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.115022835
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/parenthesizerRules.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.753269956
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.439692692
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/factory/utilitiesPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.569537573
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/hostErrors.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.036940388
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/moduleNameResolver.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.334047025
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/moduleSpecifiers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.499255123
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/parser.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.359495615
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/path.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.7467576860000005
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/performance.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.871790229
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/performanceCore.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.511009727
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/program.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.945273848
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/programDiagnostics.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.43605068
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/resolutionCache.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.354492016
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/scanner.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.414238054
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/semver.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.392831561
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/sourcemap.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.993460236
+          }
+        ]
+      },
+      {
+        "start": 40,
+        "count": 20,
+        "seconds": 102.26449288100048,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/symbolWalker.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.1982554069999996
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/sys.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.074987055
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/tracing.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.831506726
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformer.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.513882301
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/classFields.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.9173779680000003
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/classThis.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.361085207
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/declarations.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.417584217
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/declarations/diagnostics.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.437066509
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/destructuring.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.634626731
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2015.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.427073635
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2016.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.459700353
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2017.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.99174586
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2018.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.734610187
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2019.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.55168973
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2020.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.064871878
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/es2021.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.65759879
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/esDecorators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.339352741
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/esnext.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.748461205
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/generators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.411186194
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/jsx.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.421178203
+          }
+        ]
+      },
+      {
+        "start": 60,
+        "count": 19,
+        "seconds": 108.45452185700015,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/legacyDecorators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.010851517
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/module/esnextAnd2015.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.208571744
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.095093385
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/module/module.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.798253126
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/module/system.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.12161362
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/namedEvaluation.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.707384533
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/taggedTemplate.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.725114365
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/ts.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.452728994
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/typeSerializer.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 8.442150517
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/transformers/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.739658748
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/tsbuild.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.287701887
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/tsbuildPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.956725042
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/types.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.768107043
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.907011893
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/utilitiesPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.227583018
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/visitorPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.608193444
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/watch.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.953663899
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/watchPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.27264987
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/watchUtilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/maplike-unknown/src/compiler/commandLineParser.ts:2712:36: error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.077785644
+          }
+        ]
+      }
+    ],
+    "allCallersUntouched": true,
+    "censusSummary": [
+      {
+        "roots": 77,
+        "kind": "checker",
+        "where": "commandLineParser.ts:2712:36",
+        "reason": "error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-"
+      }
+    ],
+    "former73Summary": [
+      {
+        "roots": 73,
+        "kind": "checker",
+        "where": "commandLineParser.ts:2712:36",
+        "reason": "error TS2345: Argument of type 'object' is not assignable to parameter of type 'MapLike<unknown>'.\n  Index signature for type 'string' is missing in type '{}'."
+      }
+    ],
+    "namedWallCleared": false,
+    "regressesEarlierWithinCore": false
+  },
+  {
+    "name": "self-mapped",
+    "description": "assign<T extends object & { [K in keyof T]: unknown }>",
+    "coreBeforeSha256": "8943f4ec6c11dec6430378fb388359376e96f19af2ed9ccc86067fd6702a0918",
+    "coreAfterSha256": "1f0e9fc15b060275b576ab63a516890fd5f36470c962759bfd49ae94dfb2d672",
+    "emission": [
+      {
+        "removeComments": false,
+        "byteIdentical": true,
+        "beforeSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "afterSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "beforeBytes": 64998,
+        "afterBytes": 64998
+      },
+      {
+        "removeComments": true,
+        "byteIdentical": true,
+        "beforeSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "afterSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "beforeBytes": 45885,
+        "afterBytes": 45885
+      }
+    ],
+    "types": {
+      "exit": 0,
+      "roots": 79,
+      "seconds": 6.142933066000296,
+      "log": "self-mapped-types.log",
+      "diagnostics": 0
+    },
+    "sourceFiles": 746,
+    "changedSources": [
+      "compiler/core.ts"
+    ],
+    "groups": [
+      {
+        "start": 0,
+        "count": 20,
+        "seconds": 339.4182926700005,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.850592218
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/_namespaces/ts.performance.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 23.851956348
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/_namespaces/ts.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 23.779653587
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/binder.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.667776705
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/builder.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.047224179
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/builderPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.064976983
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/builderState.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.456198679
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/builderStatePublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.777670074
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/checker.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 14.044121963
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/commandLineParser.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.522068662
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/debug.ts:243:59",
+            "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+            "seconds": 19.323050551
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/corePublic.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.037516469
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/debug.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/semver.ts:71:9",
+            "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+            "seconds": 3.583596509
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/diagnosticInformationMap.generated.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/commandLineParser.ts:293:35",
+            "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+            "seconds": 3.863295409
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/emitter.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.00086679
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/executeCommandLine.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.566117971
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/expressionToTypeNode.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.190233293
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/baseNodeFactory.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.56434361
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/emitHelpers.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.384328907
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/emitNode.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.705064056
+          }
+        ]
+      },
+      {
+        "start": 20,
+        "count": 20,
+        "seconds": 370.5887243010002,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/nodeChildren.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 26.575459507
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/nodeConverters.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.118642426
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/nodeFactory.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.713842089
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/nodeTests.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 21.20214526
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/parenthesizerRules.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.676098289
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/utilities.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.233956202
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/factory/utilitiesPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 20.840693141
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/hostErrors.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.040513302
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/moduleNameResolver.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.097597888
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/moduleSpecifiers.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 13.700073253
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/parser.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.414431463
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/path.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.047275378
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/performance.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.885621874
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/performanceCore.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 25.06262815
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/program.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.0272254
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/programDiagnostics.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 20.356958866
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/resolutionCache.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 15.806825733
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/scanner.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.046246758
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/semver.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.235316282
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/sourcemap.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.368861523
+          }
+        ]
+      },
+      {
+        "start": 40,
+        "count": 20,
+        "seconds": 394.88897160099987,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/symbolWalker.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.2228734
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/sys.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.483577876
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/tracing.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 14.020471547
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformer.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.237833464
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/classFields.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 15.990217365
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/classThis.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.922620662
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/declarations.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.230027603
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/declarations/diagnostics.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.735335445
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/destructuring.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 21.302518002
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2015.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.477310375
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2016.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 15.087906123
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2017.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.852385682
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2018.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.076456509
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2019.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 21.770451563
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2020.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.212761947
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/es2021.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.573053673
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/esDecorators.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.854866381
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/esnext.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 20.340654048
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/generators.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.607558409
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/jsx.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 15.513728231
+          }
+        ]
+      },
+      {
+        "start": 60,
+        "count": 19,
+        "seconds": 366.52959809299955,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/legacyDecorators.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 16.492466603
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/module/esnextAnd2015.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 14.905482134
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 15.723714496
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/module/module.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.629240714
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/module/system.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 23.84087738
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/namedEvaluation.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.362289005
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/taggedTemplate.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 25.461566744
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/ts.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.688214556
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/typeSerializer.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 17.526511856
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/transformers/utilities.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 18.375658329
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/tsbuild.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 22.011024683
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/tsbuildPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 21.543405065
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/types.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+            "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+            "seconds": 7.482600478
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/utilities.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 23.312149251
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/utilitiesPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 21.55733588
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/visitorPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 24.14169473
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/watch.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 19.223214532
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/watchPublic.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 20.413828538
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/watchUtilities.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/self-mapped/src/compiler/core.ts:1364:29",
+            "reason": "a non-object representation passed through an opaque object parameter",
+            "seconds": 14.745702658
+          }
+        ]
+      }
+    ],
+    "allCallersUntouched": true,
+    "censusSummary": [
+      {
+        "roots": 73,
+        "kind": "NotYet",
+        "where": "core.ts:1364:29",
+        "reason": "a non-object representation passed through an opaque object parameter"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      }
+    ],
+    "former73Summary": [
+      {
+        "roots": 73,
+        "kind": "NotYet",
+        "where": "core.ts:1364:29",
+        "reason": "a non-object representation passed through an opaque object parameter"
+      }
+    ],
+    "namedWallCleared": false,
+    "regressesEarlierWithinCore": false
+  },
+  {
+    "name": "checked-record-local",
+    "description": "const record: MapLike<unknown> = arg; hasProperty(record, p)",
+    "coreBeforeSha256": "8943f4ec6c11dec6430378fb388359376e96f19af2ed9ccc86067fd6702a0918",
+    "coreAfterSha256": "1f17af56f5dda3cbc276beb81de5a02320950a7ea9e76e390c1040bdf69c5e93",
+    "emission": [
+      {
+        "removeComments": false,
+        "byteIdentical": false,
+        "beforeSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "afterSha256": "988b7b064978ae3c39ef74b964b2881feb2e7d6c8653dcfd3d75817bd056378f",
+        "beforeBytes": 64998,
+        "afterBytes": 65029
+      },
+      {
+        "removeComments": true,
+        "byteIdentical": false,
+        "beforeSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "afterSha256": "5c16744b94e66709dc254cfe9f81ae2a312cd4c054ad0a6cda2d1cf233ae38e6",
+        "beforeBytes": 45885,
+        "afterBytes": 45916
+      }
+    ],
+    "types": {
+      "exit": 1,
+      "roots": 79,
+      "seconds": 6.203399553000054,
+      "log": "checked-record-local-types.log",
+      "diagnostics": 1
+    },
+    "sourceFiles": 746,
+    "changedSources": [
+      "compiler/core.ts"
+    ],
+    "groups": [
+      {
+        "start": 0,
+        "count": 20,
+        "seconds": 84.61260372699962,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.229413152
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/_namespaces/ts.performance.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.035597908
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/_namespaces/ts.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.714048645
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/binder.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.483395363
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/builder.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.456577355
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/builderPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.482025877
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/builderState.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.64429155
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/builderStatePublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.477479974
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/checker.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.472744697
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/commandLineParser.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.71057076
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.5412945540000003
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/corePublic.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.03651942
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/debug.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.6635207899999997
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/diagnosticInformationMap.generated.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.092299593
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/emitter.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.312483525
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/executeCommandLine.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.158972902
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/expressionToTypeNode.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.9839678769999995
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/baseNodeFactory.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.6979612280000005
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/emitHelpers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.405899787
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/emitNode.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.9151129080000002
+          }
+        ]
+      },
+      {
+        "start": 20,
+        "count": 20,
+        "seconds": 84.20779377800045,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/nodeChildren.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.155910805
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/nodeConverters.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.489324794
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/nodeFactory.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.699273788
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/nodeTests.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.300595868
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/parenthesizerRules.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.587435474
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.248315754
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/factory/utilitiesPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.682077847
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/hostErrors.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.039614649
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/moduleNameResolver.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.441377467
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/moduleSpecifiers.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.695400229
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/parser.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.543164445
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/path.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.576413376
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/performance.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.8866767749999998
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/performanceCore.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.291264408
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/program.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.382072436
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/programDiagnostics.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.890040032
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/resolutionCache.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.861492623
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/scanner.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.8983452
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/semver.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.69650606
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/sourcemap.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.7234804969999997
+          }
+        ]
+      },
+      {
+        "start": 40,
+        "count": 20,
+        "seconds": 95.58866691200001,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/symbolWalker.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.943703566
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/sys.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.377492835
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/tracing.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.361630489
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformer.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.635209774
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/classFields.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.78616885
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/classThis.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.352789456
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/declarations.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.391532078
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/declarations/diagnostics.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.415212282
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/destructuring.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.281494676
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2015.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.7055486460000004
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2016.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.716018156
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2017.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 8.298391984
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2018.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.29380143
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2019.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.760204694
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2020.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 7.064965539
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/es2021.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.398340489
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/esDecorators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.321053847
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/esnext.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.366609372
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/generators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.104911651
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/jsx.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.9425279460000002
+          }
+        ]
+      },
+      {
+        "start": 60,
+        "count": 19,
+        "seconds": 90.8942650480003,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/legacyDecorators.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.92015126
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/module/esnextAnd2015.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.592362705
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.516901274
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/module/module.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.5414792999999998
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/module/system.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.16465378
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/namedEvaluation.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.566507232
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/taggedTemplate.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.3071937479999995
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/ts.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.730890501
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/typeSerializer.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.63729897
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/transformers/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.496271832
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/tsbuild.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.948568925
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/tsbuildPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.046748282
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/types.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.018159178
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/utilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 6.186050985
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/utilitiesPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.167102606
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/visitorPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 4.640406401
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/watch.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.57638316
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/watchPublic.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 3.481411723
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/watchUtilities.ts"
+            ],
+            "diagnostics": [
+              "/workspace/scratch/core-assign/trials/checked-record-local/src/compiler/core.ts:1363:15: error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+            ],
+            "kind": "checker",
+            "seconds": 5.004694224
+          }
+        ]
+      }
+    ],
+    "allCallersUntouched": true,
+    "censusSummary": [
+      {
+        "roots": 77,
+        "kind": "checker",
+        "where": "core.ts:1363:15",
+        "reason": "error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-"
+      }
+    ],
+    "former73Summary": [
+      {
+        "roots": 73,
+        "kind": "checker",
+        "where": "core.ts:1363:15",
+        "reason": "error TS2322: Type 'T' is not assignable to type 'MapLike<unknown>'.\n  Type 'object' is not assignable to type 'MapLike<unknown>'.\n    Index signature for type 'string' is missing in type '{}'."
+      }
+    ],
+    "namedWallCleared": false,
+    "regressesEarlierWithinCore": true
+  },
+  {
+    "name": "generic-own-helper",
+    "description": "hasProperty<T extends object>(map: T, key: string)",
+    "owner": "40-explicit-any / hasProperty",
+    "coreBeforeSha256": "8943f4ec6c11dec6430378fb388359376e96f19af2ed9ccc86067fd6702a0918",
+    "coreAfterSha256": "5448db3753f16dc64414c6d773e95841f7a81cafbfb3fd858dbbf739dad900ee",
+    "emission": [
+      {
+        "removeComments": false,
+        "byteIdentical": true,
+        "beforeSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "afterSha256": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "beforeBytes": 64998,
+        "afterBytes": 64998
+      },
+      {
+        "removeComments": true,
+        "byteIdentical": true,
+        "beforeSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "afterSha256": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "beforeBytes": 45885,
+        "afterBytes": 45885
+      }
+    ],
+    "types": {
+      "exit": 0,
+      "roots": 79,
+      "seconds": 6.201565725000364,
+      "diagnostics": 0,
+      "log": "generic-own-helper-types.log"
+    },
+    "sourceFiles": 746,
+    "changedSources": [
+      "compiler/core.ts"
+    ],
+    "allCallersUntouched": true,
+    "groups": [
+      {
+        "start": 0,
+        "count": 20,
+        "seconds": 403.90844926299997,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.099829996
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/_namespaces/ts.performance.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.067509798
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/_namespaces/ts.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 21.020806517
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/binder.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.614426345
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/builder.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 15.69774552
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/builderPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 14.113389998
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/builderState.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.397608438
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/builderStatePublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 16.652878061
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/checker.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.831287342
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/commandLineParser.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.494125203
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/debug.ts:243:59",
+            "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+            "seconds": 32.021443074
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/corePublic.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.100066394
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/debug.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/semver.ts:71:9",
+            "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+            "seconds": 6.480965247
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/diagnosticInformationMap.generated.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/commandLineParser.ts:293:35",
+            "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+            "seconds": 5.818072513
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/emitter.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.427402656
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/executeCommandLine.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.093041955
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/expressionToTypeNode.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.655536466
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/baseNodeFactory.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.591269781
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/emitHelpers.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 37.408848515
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/emitNode.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.202313606
+          }
+        ]
+      },
+      {
+        "start": 20,
+        "count": 20,
+        "seconds": 411.29216536200056,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/nodeChildren.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.544955667
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/nodeConverters.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.671063674
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/nodeFactory.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.348862875000002
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/nodeTests.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.1066957
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/parenthesizerRules.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.172071706
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/utilities.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 14.005171149
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/factory/utilitiesPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.03472309
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/hostErrors.ts"
+            ],
+            "kind": "accepted",
+            "seconds": 0.042787514
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/moduleNameResolver.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.256719148
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/moduleSpecifiers.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 21.387739036
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/parser.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.330293186
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/path.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.309874601
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/performance.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 30.60071397
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/performanceCore.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.549201531
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/program.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 19.430752134
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/programDiagnostics.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.381427274
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/resolutionCache.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 16.909698296
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/scanner.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 29.740363625
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/semver.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.309273046
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/sourcemap.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 33.744709691
+          }
+        ]
+      },
+      {
+        "start": 40,
+        "count": 20,
+        "seconds": 460.8014609290003,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/symbolWalker.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.438579084
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/sys.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.683323395
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/tracing.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.60032336
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformer.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 21.113176068
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/classFields.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.150419828
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/classThis.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.213130183
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/declarations.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.934334384
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/declarations/diagnostics.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.827232921
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/destructuring.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 25.897587846
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2015.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 25.150471006
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2016.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 20.158224956
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2017.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 32.869223218
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2018.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 30.375855079
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2019.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.724304638
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2020.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.396654134
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/es2021.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 19.073316405
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/esDecorators.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 19.285053468
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/esnext.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.396623968
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/generators.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.674252311
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/jsx.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 19.694096219
+          }
+        ]
+      },
+      {
+        "start": 60,
+        "count": 19,
+        "seconds": 424.62699639200036,
+        "rows": [
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/legacyDecorators.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.62519755
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/module/esnextAnd2015.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.968166925
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.803234204
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/module/module.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.835019167
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/module/system.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.560955908
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/namedEvaluation.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 21.526101814
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/taggedTemplate.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.737515919
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/ts.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.566052377
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/typeSerializer.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 24.798887663
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/transformers/utilities.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 26.212886534
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/tsbuild.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 23.888165018
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/tsbuildPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 27.406673696
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/types.ts"
+            ],
+            "kind": "NotYet",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+            "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+            "seconds": 7.458858973
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/utilities.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 25.67652479
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/utilitiesPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 22.231421119
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/visitorPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 17.362344263
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/watch.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 18.947900024
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/watchPublic.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 17.220478515
+          },
+          {
+            "roots": [
+              "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/watchUtilities.ts"
+            ],
+            "kind": "Refused",
+            "where": "/workspace/scratch/core-assign/trials/generic-own-helper/src/compiler/core.ts:1484:12",
+            "reason": "a cast the runtime can't check",
+            "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+            "seconds": 16.659776351
+          }
+        ]
+      }
+    ],
+    "censusSummary": [
+      {
+        "roots": 73,
+        "kind": "Refused",
+        "where": "core.ts:1484:12",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "debug.ts:243:59",
+        "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read"
+      },
+      {
+        "roots": 2,
+        "kind": "accepted",
+        "where": "-",
+        "reason": "-"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "roots": 1,
+        "kind": "NotYet",
+        "where": "diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      }
+    ],
+    "former73Summary": [
+      {
+        "roots": 73,
+        "kind": "Refused",
+        "where": "core.ts:1484:12",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "namedWallCleared": true,
+    "regressesEarlierWithinCore": false
+  }
+]
