@@ -12,17 +12,20 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// buildEnvironment is the list of settings buildPlatform reads, this process's environment; a test hands it a list the
-// process can't hold, two settings of one name, which Go's own environment keeps one of.
-var buildEnvironment = os.Environ
-
-// buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, read by toolchain.Platform,
-// the one reader cgo's compilers read too, so a build cross-compiled for arm64 on an amd64 box names, keys and links
-// arm64 (#5xsd2ha). Either one unset or empty is this process's own, runtime.GOOS or runtime.GOARCH, which is what go
-// itself builds for then. That fallback is a person's road, running adamic or go test by hand, never Loom's: every
-// unit environment Loom builds carries both.
+// buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, read by toolchain.Platform
+// (buildPlatformOf), the one reader cgo's compilers read too, so a build cross-compiled for arm64 on an amd64 box names,
+// keys and links arm64 (#5xsd2ha). Either one unset or empty is this process's own, runtime.GOOS or runtime.GOARCH,
+// which is what go itself builds for then. That fallback is a person's road, running adamic or go test by hand, never
+// Loom's: every unit environment Loom builds carries both. The two are read by name, so runtimeproducts' census sees
+// which variables a build reads; the process's environment holds one setting of each, as the list does.
 func buildPlatform() (goos string, goarch string) {
-	return toolchain.Platform(buildEnvironment())
+	return buildPlatformOf([]string{"GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")})
+}
+
+// buildPlatformOf is the build platform environment, a list of settings, names: toolchain.Platform of it, the last
+// setting of each name winning.
+func buildPlatformOf(environment []string) (goos string, goarch string) {
+	return toolchain.Platform(environment)
 }
 
 // darwinBuild says whether the build is for macOS (buildPlatform): its link is ld64's, which loads an archive whole with
