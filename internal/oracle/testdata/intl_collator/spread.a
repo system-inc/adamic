@@ -1,0 +1,7 @@
+// A collator has no own property on Node, so a spread of one is {} (#zjndrx5 head 1's C). Native's
+// shape holds compare and the locale in its slots, and the library spread rule refuses a spread of a
+// library class rather than copy them.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+const copy = { ...collator };
+console.log(`keys ${Object.keys(copy).length}`);

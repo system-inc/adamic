@@ -1,0 +1,6 @@
+// Object.assign copies a collator's own properties, none on Node (#zjndrx5 head 1's C), where native's
+// shape would hand out its slots: a compile-time NotYet by name.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+const copy = Object.assign({}, collator);
+console.log(`keys ${Object.keys(copy).length}`);
