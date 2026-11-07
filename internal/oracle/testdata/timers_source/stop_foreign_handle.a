@@ -1,0 +1,14 @@
+// Node's clearTimeout unenrolls a value whose _onTimeout is truthy, whatever made it, writing its
+// fields (lib/timers.js), which native's no-op wouldn't. So an object that isn't a timer but holds
+// one, its field hidden from the type as unknown, stops on both backends after what Node printed so
+// far (Adamic's ruling on #995spev, Nov 7), and Node runs on past it.
+import 'node:timers';
+
+function hidden(label: string): unknown {
+    return { _onTimeout: `pending ${label}`, label };
+}
+
+const live = setTimeout(() => { console.log('live fired'); }, 1);
+console.log(`live ${live ? 'held' : 'released'}`);
+clearTimeout(hidden('not a timer'));
+console.log('cleared the object');
