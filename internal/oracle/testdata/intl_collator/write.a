@@ -1,0 +1,8 @@
+// compare is a getter on Intl.Collator.prototype on Node, so writing it throws a TypeError, uncaught
+// here (Runtime's must on #zjndrx5 head 1's C). TypeScript types compare as an assignable method, so
+// this type-checks, and natively the write would land in the shape's slot and go on: it's a
+// compile-time NotYet by name.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+collator.compare = (a: string, b: string): number => a.length - b.length;
+console.log('wrote');
