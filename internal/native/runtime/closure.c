@@ -17,7 +17,8 @@ adamic_cell *adamic_cell_new(adamic_value value, bool references) {
 adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 	adamic_closure *closure = adamic_allocate(sizeof *closure + count * sizeof closure->cells[0], adamic_kind_closure);
 	closure->code = code;
-	closure->bound_method = (adamic_method_entry){0};
+	closure->bound_method_storage.counted = false;
+	closure->bound_method_storage.code = NULL;
 	closure->counted = false;
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  closure->receiver = false;
@@ -192,7 +193,7 @@ adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *argum
 #ifdef ADAMIC_CLOSURE_CONVENTION
   return adamic_method_call(self->bound_method, self->cells[1]->value.reference, arguments, argument_count);
 #else
-  return self->bound_method(self->cells[1]->value.reference, arguments);
+  return ((adamic_method)self->bound_method_storage.code)(self->cells[1]->value.reference, arguments);
 #endif
  }
 #ifdef ADAMIC_CLOSURE_RECEIVERS
