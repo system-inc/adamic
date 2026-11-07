@@ -60,9 +60,16 @@ func (l *lowering) nodeSetTimeout(node *ast.Node, written []*ast.Node) (ir.Expre
 		return nil, l.notYet(written[0], nodeSetTimeoutName+" with a generic, this-typed or rest-parameter callback")
 	}
 	// Node drops what a callback returns; a promise's rejection would be an unhandled one, which this
-	// head doesn't report.
-	if returned, known := l.representation(l.checker.GetReturnTypeOfSignature(signature)); known && returned == ir.Promise {
-		return nil, l.notYet(written[0], nodeSetTimeoutName+" with a callback returning a promise")
+	// head doesn't report. A union may hold one too.
+	returned := l.checker.GetReturnTypeOfSignature(signature)
+	results := []*checker.Type{returned}
+	if returned.Flags()&checker.TypeFlagsUnion != 0 {
+		results = returned.Types()
+	}
+	for _, result := range results {
+		if of, known := l.representation(result); known && of == ir.Promise {
+			return nil, l.notYet(written[0], nodeSetTimeoutName+" with a callback returning a promise")
+		}
 	}
 	callback, err := l.expression(written[0])
 	if err != nil {
