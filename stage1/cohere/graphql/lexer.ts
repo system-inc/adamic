@@ -10,12 +10,12 @@
  * graphql-js throws a GraphQLError where lexing or parsing fails, and the Go panics with a
  * *SyntaxError that Parse recovers. Here each failure is `throw new Error(syntaxError(...))`, caught in
  * parser.ts's parse: syntaxError gives the message, since stage 0 throws only an Error made where it is
- * thrown (GAPS.md, gap 2). The message is Prettier's, GraphQLError's message and then its first
+ * thrown (`GAPS.md`, gap 2). The message is Prettier's, GraphQLError's message and then its first
  * location, " (line:column)".
  *
  * Every string the lexer gives, a token's value or a message, is written in the test's output form,
  * `escaped` below, rather than as the text itself: a String token's \u escapes can't be cooked into
- * characters without String.fromCodePoint (gitignore's GAPS.md, gap 1; GAPS.md here, "Cooking a string
+ * characters without String.fromCodePoint (gitignore's `GAPS.md`, gap 1; `GAPS.md` here, "Cooking a string
  * without String.fromCodePoint"), and every other string is written the same way so that the output
  * is one form.
  */
@@ -197,7 +197,7 @@ function readHexDigit(code: number): number {
  *
  * Returns a negative number if any char was not a valid hexadecimal digit. graphql-js ORs the digits
  * shifted into place, where a -1 makes the whole negative; without the bitwise operators (gitignore's
- * GAPS.md, gap 2) that is a test for a -1, then arithmetic.
+ * `GAPS.md`, gap 2) that is a test for a -1, then arithmetic.
  */
 function read16BitHexCode(body: string, position: number): number {
     const first = readHexDigit(body.charCodeAt(position));
@@ -838,7 +838,7 @@ export class Lexer {
     // Character offset where the current line starts.
     lineStart = 0;
 
-    // Every token read, ignored ones included, in order: graphql-js's linked list of tokens, from <SOF>
+    // Every token read, ignored ones included, in order: graphql-js's linked list of tokens, from `<SOF>`
     // (token.ts says why it is an array), with the places in it of token and lastToken.
     readonly tokens: Token[] = [];
     tokenIndex = 0;

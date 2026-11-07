@@ -31,7 +31,7 @@ function unescapeOf(letter: string, line: string): string {
         case 'r':
             return '\r';
     }
-    // return panic(...), but stage 0 doesn't lower that yet (gitignore's GAPS.md, gap 9).
+    // return panic(...), but stage 0 doesn't lower that yet (gitignore's `GAPS.md`, gap 9).
     panic(`an unknown escape \\${letter} in ${line}`);
 }
 
