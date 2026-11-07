@@ -70,3 +70,14 @@ whole-oracle run. The candidate has the completed-tree Node witnesses, positive
 emitted counter controls, both declaration checks, full build/type checks,
 paired replay and full census proof above. The oracle's existing expected
 public-API acknowledgement failure is retained. No lane expectation changed.
+
+## Requested stacked move, stopped checkpoint
+
+The user ruled that head 2, 99-correctness-core-getfunctionname-move, amends
+this directory so the condition-4 getFunctionName guard follows the same body
+byte for byte to deprecate.ts and still refuses drift on replay. That amendment
+is authorized but pending: adapter 45's unchanged replay changes from exit 0
+to exit 1 after the isolated move probe, and the common section requires
+stopping. The move directory records this blocker. No helper guard has been
+relaxed or relocated in this stopped checkpoint; adapt.cjs and pins.json here
+remain unchanged. The preceding historical proofs describe road (b) alone.
