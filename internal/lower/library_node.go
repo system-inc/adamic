@@ -77,10 +77,16 @@ func nodeLibraryName(symbol *ast.Symbol) string {
 // declares it, or by the host type itself, the owner's name and the member's. A declaration many
 // host types inherit is registered by its owner only: FSWatcher's on is InternalEventEmitter's, as
 // ChildProcess's is, whose shape has no on (Library on #j71fn59). The one place that answers it, for
-// the view check here and Workers' census.
+// the view check here and Workers' census. lib's Intl.Collator is one too, though no Node library file
+// declares it (#zjndrx5): its compare is on Intl.Collator.prototype on Node and off the shape natively, so
+// its registration names no member, and a view of a collator that names any of them, at any depth this
+// walk reaches, is NotYet by name. Its own reads (head 1's rules) never go through a view.
 func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member *ast.Symbol) bool, host bool) {
 	if proven == nil || proven.Symbol() == nil {
 		return nil, false
+	}
+	if l.isIntlCollatorType(proven) {
+		return func(*ast.Symbol) bool { return false }, true
 	}
 	owner := nodeLibraryName(proven.Symbol())
 	if owner == "" {
