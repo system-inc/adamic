@@ -1,45 +1,47 @@
-// A port of cohere's internal/gitignore/gitignore.go to Adamic 0.1. The Go is beside it in the cohere
-// submodule (cohere/internal/gitignore/gitignore.go); each piece here names the Go it reads as.
-//
-// It decides which paths a repository's ignore files exclude, the way git decides it, without running
-// git.
-//
-// It reads what gitignore(5) names for a working tree: every `.gitignore` from the repository root down,
-// each scoped to its own directory, and `.git/info/exclude` when `.git` is a directory. The user's global
-// core.excludesFile is not read: it is configuration on one machine, not the repository's, so a check that
-// read it would pass on one machine and fail on another. Matching is case sensitive, as git's is unless
-// core.ignorecase is set, which is likewise a property of a clone rather than of the repository.
-//
-// The semantics are gitignore(5)'s:
-//
-//   - Precedence, highest first: a `.gitignore` in the path's own directory, then each parent's up to the
-//     root, then info/exclude. Within one file the last matching line decides, and a `!` line re-includes.
-//   - A pattern with a `/` at its start or middle is anchored to its file's directory. One without matches
-//     a base name at any depth below it. A trailing `/` matches directories only.
-//   - Nothing below an excluded directory can be re-included: git never looks inside one, so the rule
-//     that excluded the directory decides every path under it.
-//   - Trailing spaces are dropped unless escaped, `#` starts a comment, and a backslash escapes `#`, `!`
-//     and any other byte. A file's byte order mark and each line's carriage return are not part of a
-//     pattern.
-//
-// What git would read differently from its documentation is refused by name rather than followed: a
-// `.gitignore` that is a symbolic link (git does not follow one inside a working tree), one larger than
-// 100 MiB (git skips it with a warning), and a line holding a NUL byte. Each is an error naming the file,
-// because skipping one would leave its patterns unapplied without a word.
-//
-// The matcher only answers. Walking, and pruning what it excludes, belong to the caller: it enters each
-// directory it descends into with enter, and asks ignored about each entry it finds there.
-//
-// Where the port differs from the Go, and why:
-//
-//   - 0.1 has no input (docs/0.1.md, decision 7), so the Go's reads through os are reads of a
-//     WorkingTree, which holds the entries the matcher looks at: ignore files, `.git` entries and
-//     symbolic links, keyed by their slash-separated path below the root. When Adamic can read files,
-//     a WorkingTree read from disk takes its place and nothing else changes.
-//   - 0.1 has no exceptions, so the Go's (value, error) is a Result. Its other two results are tuples:
-//     (bool, Source) is a Verdict, and strings.CutPrefix's (after, found) is [after, found].
-//   - The Go's unexported fields are #private fields, and a Matcher's are written only while enter
-//     builds a new one, as the Go writes only its copy.
+/*
+ * A port of cohere's internal/gitignore/gitignore.go to Adamic 0.1. The Go is beside it in the cohere
+ * submodule (cohere/internal/gitignore/gitignore.go); each piece here names the Go it reads as.
+ *
+ * It decides which paths a repository's ignore files exclude, the way git decides it, without running
+ * git.
+ *
+ * It reads what gitignore(5) names for a working tree: every `.gitignore` from the repository root down,
+ * each scoped to its own directory, and `.git/info/exclude` when `.git` is a directory. The user's global
+ * core.excludesFile is not read: it is configuration on one machine, not the repository's, so a check that
+ * read it would pass on one machine and fail on another. Matching is case sensitive, as git's is unless
+ * core.ignorecase is set, which is likewise a property of a clone rather than of the repository.
+ *
+ * The semantics are gitignore(5)'s:
+ *
+ *   - Precedence, highest first: a `.gitignore` in the path's own directory, then each parent's up to the
+ *     root, then info/exclude. Within one file the last matching line decides, and a `!` line re-includes.
+ *   - A pattern with a `/` at its start or middle is anchored to its file's directory. One without matches
+ *     a base name at any depth below it. A trailing `/` matches directories only.
+ *   - Nothing below an excluded directory can be re-included: git never looks inside one, so the rule
+ *     that excluded the directory decides every path under it.
+ *   - Trailing spaces are dropped unless escaped, `#` starts a comment, and a backslash escapes `#`, `!`
+ *     and any other byte. A file's byte order mark and each line's carriage return are not part of a
+ *     pattern.
+ *
+ * What git would read differently from its documentation is refused by name rather than followed: a
+ * `.gitignore` that is a symbolic link (git does not follow one inside a working tree), one larger than
+ * 100 MiB (git skips it with a warning), and a line holding a NUL byte. Each is an error naming the file,
+ * because skipping one would leave its patterns unapplied without a word.
+ *
+ * The matcher only answers. Walking, and pruning what it excludes, belong to the caller: it enters each
+ * directory it descends into with enter, and asks ignored about each entry it finds there.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - 0.1 has no input (docs/0.1.md, decision 7), so the Go's reads through os are reads of a
+ *     WorkingTree, which holds the entries the matcher looks at: ignore files, `.git` entries and
+ *     symbolic links, keyed by their slash-separated path below the root. When Adamic can read files,
+ *     a WorkingTree read from disk takes its place and nothing else changes.
+ *   - 0.1 has no exceptions, so the Go's (value, error) is a Result. Its other two results are tuples:
+ *     (bool, Source) is a Verdict, and strings.CutPrefix's (after, found) is [after, found].
+ *   - The Go's unexported fields are #private fields, and a Matcher's are written only while enter
+ *     builds a new one, as the Go writes only its copy.
+ */
 
 import { panic, utf8Length } from 'adamic';
 import type { Glob } from './glob.ts';
@@ -196,13 +198,15 @@ class Rule {
     }
 }
 
-// gitignore.go: Matcher. It is one directory's view of a repository's ignore rules: those of every
-// ignore file from the root down to that directory. It is never modified once made, so a walk may keep
-// one per directory and share them freely.
-//
-// files are the rule lists of each `.gitignore` from the root down, root first. exclude is
-// info/exclude's. excludedBy is the rule that excluded this directory or one above it. It decides every
-// path below.
+/*
+ * gitignore.go: Matcher. It is one directory's view of a repository's ignore rules: those of every
+ * ignore file from the root down to that directory. It is never modified once made, so a walk may keep
+ * one per directory and share them freely.
+ *
+ * files are the rule lists of each `.gitignore` from the root down, root first. exclude is
+ * info/exclude's. excludedBy is the rule that excluded this directory or one above it. It decides every
+ * path below.
+ */
 export class Matcher {
     readonly #tree: WorkingTree;
     #directory: string;
@@ -244,14 +248,16 @@ export class Matcher {
         return [true, this.#excludedBy.source];
     }
 
-    // gitignore.go: (*Matcher).Enter. It returns the matcher for relativeDirectory, which is this
-    // matcher's directory or one below it, slash separated and relative to the root.
-    //
-    // It reads each `.gitignore` between the two once, and stops reading at a directory that is itself
-    // excluded, as git does: the rule that excluded it then decides everything below. A directory holding
-    // a `.git` is refused as a nested repository, and an ignore file that cannot be read faithfully (a
-    // symbolic link, which git does not follow in a tree; one too large) is an error naming it, never
-    // skipped.
+    /*
+     * gitignore.go: (*Matcher).Enter. It returns the matcher for relativeDirectory, which is this
+     * matcher's directory or one below it, slash separated and relative to the root.
+     *
+     * It reads each `.gitignore` between the two once, and stops reading at a directory that is itself
+     * excluded, as git does: the rule that excluded it then decides everything below. A directory holding
+     * a `.git` is refused as a nested repository, and an ignore file that cannot be read faithfully (a
+     * symbolic link, which git does not follow in a tree; one too large) is an error naming it, never
+     * skipped.
+     */
     enter(relativeDirectoryAsGiven: string): Result<Matcher> {
         const relativeDirectory = cleanRelative(relativeDirectoryAsGiven);
         if(relativeDirectory === this.#directory) {
@@ -297,14 +303,16 @@ export class Matcher {
         return { kind: 'Ok', value: entered };
     }
 
-    // gitignore.go: (*Matcher).Ignored. It reports whether relativePath, an entry of this matcher's
-    // directory given relative to the root, is excluded, and the rule that decided. A rule that
-    // re-included the path is reported with false.
-    //
-    // isDirectory says whether the path is a directory, which is what a pattern with a trailing `/` asks;
-    // a symbolic link to a directory is not one, as git does not follow it. Asking about a path outside
-    // this directory is a programming error and panics, because the answer would silently leave out the
-    // ignore files between the two.
+    /*
+     * gitignore.go: (*Matcher).Ignored. It reports whether relativePath, an entry of this matcher's
+     * directory given relative to the root, is excluded, and the rule that decided. A rule that
+     * re-included the path is reported with false.
+     *
+     * isDirectory says whether the path is a directory, which is what a pattern with a trailing `/` asks;
+     * a symbolic link to a directory is not one, as git does not follow it. Asking about a path outside
+     * this directory is a programming error and panics, because the answer would silently leave out the
+     * ignore files between the two.
+     */
     ignored(relativePathAsGiven: string, isDirectory: boolean): Verdict {
         const relativePath = cleanRelative(relativePathAsGiven);
         let parent = dir(relativePath);
@@ -326,11 +334,13 @@ export class Matcher {
         return [!decided.negated, decided.source];
     }
 
-    // gitignore.go: (*Matcher).IgnoredPath. It is ignored for a path anywhere below this matcher's
-    // directory: it enters the directories in between first, reading their ignore files, so the answer
-    // names a nested file's line when one decides. It is for a question about one path, such as
-    // explaining why a file was left out; a walk enters each directory itself and asks ignored, which
-    // reads every ignore file once.
+    /*
+     * gitignore.go: (*Matcher).IgnoredPath. It is ignored for a path anywhere below this matcher's
+     * directory: it enters the directories in between first, reading their ignore files, so the answer
+     * names a nested file's line when one decides. It is for a question about one path, such as
+     * explaining why a file was left out; a walk enters each directory itself and asks ignored, which
+     * reads every ignore file once.
+     */
     ignoredPath(relativePathAsGiven: string, isDirectory: boolean): Result<Verdict> {
         const relativePath = cleanRelative(relativePathAsGiven);
         let parent = dir(relativePath);
