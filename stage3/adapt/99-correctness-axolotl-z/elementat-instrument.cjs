@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),crypto=require('node:crypto'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
+const name=process.argv[2]+'/src/compiler/core.ts',text=fs.readFileSync(name,'utf8'),source=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true);
+const declarations=source.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations).filter(d=>d.name.getText(source)==='elementAt');
+if(declarations.length!==1)throw Error('elementAt owner count');const init=declarations[0].initializer,original=init.getText(source);
+if(!original.startsWith('!!(Array.prototype as any).at'))throw Error('unexpected original initializer');
+const prefix='((implementation: typeof elementAt): typeof elementAt => (array, offset) => { (globalThis as any).__elementAtCensus(array, offset); return implementation(array, offset); })(';
+const instrumented=text.slice(0,init.getStart(source))+prefix+original+')'+text.slice(init.end);
+if(instrumented.split('\n').length!==text.split('\n').length)throw Error('line count changed');
+fs.writeFileSync(name,instrumented);
+const hash=s=>crypto.createHash('sha256').update(s).digest('hex');console.log(JSON.stringify({file:name,originalInitializer:original,prefix,suffix:')',before:hash(text),after:hash(instrumented),lineCountPreserved:true,measurementOnly:true},null,2));

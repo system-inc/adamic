@@ -1,0 +1,124 @@
+{
+  "base": "980870faa63a164ad82200d7688218dbc31d163a",
+  "originMain": "251898645470552041f76a2cc1261372492b0690",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript": "6.0.3",
+  "owner": "No existing whole elementAt initializer pin; new 99z measurement checkpoint",
+  "exactAxochkLibRulingLocated": false,
+  "fullApplyBeforeExit": 0,
+  "step2": "Not entered: no measured no-new-cast spelling passes both libs and preserves JavaScript",
+  "freshPerFileCensus": false,
+  "rootCountPerTypesInvocation": 79,
+  "variants": [
+    {
+      "variant": "baseline",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [],
+      "javascriptIdentical": [
+        true,
+        true
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1076:100",
+        "reason": "a cast the runtime can't check"
+      }
+    },
+    {
+      "variant": "direct",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => T | undefined",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [
+        2550,
+        2339
+      ],
+      "javascriptIdentical": [
+        true,
+        true
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1326:26",
+        "reason": "a cast the runtime can't check"
+      }
+    },
+    {
+      "variant": "probeOnly",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [
+        2550
+      ],
+      "javascriptIdentical": [
+        true,
+        true
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1077:27",
+        "reason": "a cast the runtime can't check"
+      }
+    },
+    {
+      "variant": "callOnly",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => T | undefined",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [
+        2339
+      ],
+      "javascriptIdentical": [
+        true,
+        true
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1076:100",
+        "reason": "a cast the runtime can't check"
+      }
+    },
+    {
+      "variant": "satisfies",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => T | undefined",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [
+        2559,
+        2550,
+        2339
+      ],
+      "javascriptIdentical": [
+        true,
+        true
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1326:26",
+        "reason": "a cast the runtime can't check"
+      }
+    },
+    {
+      "variant": "indexed",
+      "typesExit": 0,
+      "ES2024Initializer": "<T>(array: readonly T[] | undefined, offset: number) => T | undefined",
+      "ES2020Initializer": "<T>(array: readonly T[] | undefined, offset: number) => any",
+      "ES2020DiagnosticCodes": [
+        7015,
+        7015
+      ],
+      "javascriptIdentical": [
+        false,
+        false
+      ],
+      "binder": {
+        "kind": "Refused",
+        "where": "core.ts:1326:26",
+        "reason": "a cast the runtime can't check"
+      }
+    }
+  ]
+}
