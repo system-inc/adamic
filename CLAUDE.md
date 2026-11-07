@@ -6,7 +6,7 @@ You're working on Adamic: TypeScript whose types are true, compiled to native co
 
 ## The layout
 
-- `cmd/adamic`: `adamic types | c | build | js <file>`.
+- `cmd/adamic`: `adamic types | c | js | build <file>`, `adamic worker <entry>`, `adamic --help` and `adamic --version`; docs/cli.md is the whole contract.
 - `internal/load`: typescript-go in process. Adamic's compiler options are set in code, `.a` files are shown to the checker as TypeScript, the 0.1 library is embedded.
 - `internal/ir`: the typed tree IR.
 - `internal/lower`: the checker's types to IR. `NotYet` means stage 0 hasn't learned it; `Refused` means 0.1 forbids it, with the fix. `refusals.go` is the up-front refusal pass.
