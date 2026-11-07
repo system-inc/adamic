@@ -367,3 +367,94 @@ func TestNeverRestMarkerFence(t *testing.T) {
 		t.Fatalf("native: exit %d, stdout %q, stderr %q; want exit 70 and %q", code, stdout, stderr, panicked)
 	}
 }
+
+// neverRestNamespace is tsc's shape as debug.ts declares it, inside namespace Debug, read bare inside the
+// namespace and as Debug.f outside it, without asserts signatures so it lowers whole.
+const neverRestNamespace = "interface Node {\n" +
+	"\treadonly kind: number;\n" +
+	"}\n" +
+	"type AnyFunction = (...args: never[]) => void;\n" +
+	"namespace Debug {\n" +
+	"\texport function fail(message: string, mark?: AnyFunction): never {\n" +
+	"\t\tif (mark === undefined) {\n" +
+	"\t\t\tthrow new Error(message);\n" +
+	"\t\t}\n" +
+	"\t\tthrow new Error(message + ' (marked)');\n" +
+	"\t}\n" +
+	"\texport function assertIsDefined<T>(value: T, message?: string, mark?: AnyFunction): void {\n" +
+	"\t\tif (value === undefined) {\n" +
+	"\t\t\tfail(message ?? 'undefined', mark || assertIsDefined);\n" +
+	"\t\t}\n" +
+	"\t}\n" +
+	"\texport function assertEachIsDefined<T extends Node>(value: readonly T[], message?: string, mark?: AnyFunction): void;\n" +
+	"\texport function assertEachIsDefined<T>(value: readonly T[], message?: string, mark?: AnyFunction): void;\n" +
+	"\texport function assertEachIsDefined<T>(value: readonly T[], message?: string, mark?: AnyFunction): void {\n" +
+	"\t\tfor (const v of value) {\n" +
+	"\t\t\tassertIsDefined(v, message, mark || assertEachIsDefined);\n" +
+	"\t\t}\n" +
+	"\t}\n" +
+	"}\n"
+
+// neverRestNamespaceRun is neverRestTscRun through Debug's qualified names.
+const neverRestNamespaceRun = "const nodes: readonly Node[] = [{ kind: 1 }, { kind: 2 }];\n" +
+	"Debug.assertEachIsDefined(nodes);\n" +
+	"console.log('ok');\n" +
+	"const holes: readonly (Node | undefined)[] = [{ kind: 1 }, undefined];\n" +
+	"try {\n" +
+	"\tDebug.assertEachIsDefined(holes, 'a hole');\n" +
+	"} catch (error) {\n" +
+	"\tif (error instanceof Error) {\n" +
+	"\t\tconsole.log(error.message);\n" +
+	"\t}\n" +
+	"}\n" +
+	"console.log('after');\n"
+
+// neverRestStopsSaying wants err to be a NotYet whose text holds reason, wherever it stands.
+func neverRestStopsSaying(t *testing.T, err error, reason string) {
+	t.Helper()
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.Error(), reason) {
+		t.Fatalf("got %v, want a NotYet saying %q", err, reason)
+	}
+}
+
+// tsc's own place for the helpers, namespace Debug (stage3's adapted debug.ts:26): a member of a
+// namespace declared at a file's top level is a root too, its bare reads inside the namespace taking the
+// marker and its qualified calls outside it staying calls, and it lowers and agrees (Lower's question on
+// 4e89ac5, which found the proof answering no for the real root).
+func TestNeverRestMarkerNamespaceMember(t *testing.T) {
+	t.Parallel()
+	neverRestAgrees(t, neverRestNamespace+neverRestNamespaceRun, ".ts", "ok\na hole (marked)\nafter\n")
+}
+
+// Lower's must on 4e89ac5: a read the reference index doesn't see would lower on the ordinary road beside
+// the marker, so === would split from Node's. Every such read is already NotYet, through the namespace
+// object or the module's: a member by a computed name, and the namespace or module object as a value.
+// Each program also reads the function into a never-rest slot, so only that read stands between it and a
+// marker beside a forwarder.
+func TestNeverRestMarkerUnseenReadsStop(t *testing.T) {
+	t.Parallel()
+	const slot = "function g(mark?: AnyFunction): void {\n\tconsole.log(String(mark === undefined));\n}\n"
+	t.Run("a namespace member by a computed name", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconsole.log(String(D['f'] === undefined));\n", ".ts")
+		neverRestStopsSaying(t, err, "a computed namespace member")
+	})
+	t.Run("a namespace object as a value", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconst all = D;\nconsole.log(String(all.f === undefined));\n", ".ts")
+		neverRestStopsSaying(t, err, "a namespace object used as a value")
+	})
+	const library = "export type AnyFunction = (...args: never[]) => void;\nexport function f(): void {}\n"
+	const user = "import * as D from './library.ts';\nimport { f, type AnyFunction } from './library.ts';\n" + slot
+	t.Run("a module member by a computed name", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerModules(t, map[string]string{"library.ts": library, "main.ts": user + "g(f);\nconsole.log(String(D['f'] === f));\n"})
+		neverRestStopsSaying(t, err, "a computed namespace member")
+	})
+	t.Run("a module object as a value", func(t *testing.T) {
+		t.Parallel()
+		_, err := lowerModules(t, map[string]string{"library.ts": library, "main.ts": user + "g(f);\nconst all = D;\nconsole.log(String(all.f === f));\n"})
+		neverRestStopsSaying(t, err, "namespace object used as a value")
+	})
+}

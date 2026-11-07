@@ -44,9 +44,10 @@ func (l *lowering) neverRestState() *neverRestMarks {
 
 // neverRestOnly reports whether every read of the function symbol names is one the identity marker
 // serves: a direct call, which isn't a value, or a value that only ever goes into never-rest slots,
-// compared or handed to Error.captureStackTrace (neverRestReference). Only a top-level function
-// declaration of the program's own, with a body, or an overload set with its implementation, and with
-// no this parameter, not a generator and not async, is asked about; anything else answers no.
+// compared or handed to Error.captureStackTrace (neverRestReference). Only a function declared at a
+// file's top level or in a top-level namespace's block (neverRestPlace), of the program's own, with a
+// body, or an overload set with its implementation, and with no this parameter, not a generator and not
+// async, is asked about; anything else answers no.
 func (l *lowering) neverRestOnly(symbol *ast.Symbol) bool {
 	if l.neverRestImplementation(symbol) == nil {
 		return false
@@ -79,15 +80,15 @@ func (l *lowering) neverRestOnly(symbol *ast.Symbol) bool {
 }
 
 // neverRestImplementation is the declaration with a body of a function the proof may be asked about, or
-// nil: every declaration is a top-level function declaration in a program file, not a library's or the
-// prelude's, none a generator, async or taking this, and exactly one has a body.
+// nil: every declaration is a function declaration in a place neverRestPlace admits, in a program file,
+// not a library's or the prelude's, none a generator, async or taking this, and exactly one has a body.
 func (l *lowering) neverRestImplementation(symbol *ast.Symbol) *ast.Node {
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsFunction == 0 {
 		return nil
 	}
 	var implementation *ast.Node
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Name() == nil || declaration.Parent == nil || declaration.Parent.Kind != ast.KindSourceFile || !neverRestProgramFile(ast.GetSourceFileOfNode(declaration)) {
+		if declaration.Kind != ast.KindFunctionDeclaration || declaration.Name() == nil || !neverRestPlace(declaration) || !neverRestProgramFile(ast.GetSourceFileOfNode(declaration)) {
 			return nil
 		}
 		if generatorDeclaration(declaration) || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) || neverRestThisParameter(declaration) {
@@ -101,6 +102,29 @@ func (l *lowering) neverRestImplementation(symbol *ast.Symbol) *ast.Node {
 		}
 	}
 	return implementation
+}
+
+// neverRestPlace reports whether a function declaration sits where its every read is a name the
+// reference index sees: at a file's top level, or in the block of a namespace declared at a file's top
+// level by a plain name and not ambient, as tsc's debug.ts declares its helpers inside namespace Debug.
+// A namespace member is read bare inside the namespace and as Debug.f outside it, and the namespace
+// itself is never a runtime object: reading it as a value, or a member by a computed name, is already
+// NotYet (namespaceRefusal, namespaceExpression), and so is an ESM namespace object read as a value
+// (moduleNamespaceRefusal), so no read the index misses can lower. A nested function, a nested or dotted
+// namespace's member and a class's member answer no.
+func neverRestPlace(declaration *ast.Node) bool {
+	parent := declaration.Parent
+	if parent == nil {
+		return false
+	}
+	if parent.Kind == ast.KindSourceFile {
+		return true
+	}
+	if parent.Kind != ast.KindModuleBlock {
+		return false
+	}
+	namespace := parent.Parent
+	return namespace != nil && namespace.Kind == ast.KindModuleDeclaration && ast.IsIdentifier(namespace.Name()) && !ambientDeclaration(namespace) && namespace.Parent != nil && namespace.Parent.Kind == ast.KindSourceFile
 }
 
 // neverRestProgramFile reports whether a file is one of the program's own sources: not a declaration
