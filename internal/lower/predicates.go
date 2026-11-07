@@ -477,18 +477,13 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 		return nil
 	}
 	function := parameter.Parent
+	written := parameter.Type()
 	if function.Kind == ast.KindFunctionDeclaration && function.Body() == nil {
-		implementation := l.censusImplementation(function)
-		if implementation == nil {
+		parameter, written = l.overloadImplementationParameter(function, parameter)
+		if parameter == nil {
 			return nil
 		}
-		for index, candidate := range function.Parameters() {
-			if candidate == parameter && index < len(implementation.Parameters()) {
-				parameter = implementation.Parameters()[index]
-				function = implementation
-				break
-			}
-		}
+		function = parameter.Parent
 	}
 	if !ast.IsFunctionLike(function) || function.Body() == nil {
 		return nil
@@ -507,15 +502,103 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	if changed {
 		return nil
 	}
-	// A bodyless overload's callback predicate is not the implementation's
-	// contract when the implementation takes an ordinary boolean callback.
-	if signature.Parent != parameter && plainCallbackType(parameter.Type()) {
+	// A bodyless overload's callback predicate is not the implementation's contract when the
+	// implementation takes an ordinary boolean callback, alone or as each element of a rest, as core.ts's
+	// or does (#1w5bve2): the body holds the callback as a plain type, so it can't narrow through a claim
+	// its type doesn't carry, and the overload's result predicate stays R-T80's checked closure
+	// (checkedFunctionTypeClaim). This proves nothing about a predicate's own body, where the verifier
+	// still refuses a rest parameter (rulings.md:135).
+	if signature.Parent != parameter && plainCallbackType(written) {
 		return parameter
 	}
 	if !l.predicateCallbackCallers(function, symbol) {
 		return nil
 	}
 	return parameter
+}
+
+// overloadImplementationParameter is where parameter, one of overload's, lands in overload's
+// implementation: the implementation's parameter declaration holding it, and the type that declaration
+// holds it as, written (#1w5bve2). predicateParameter and checkedFunctionTypeClaim both read it, so the
+// two can't map an overload's parameter apart. Before the implementation's rest, or with none, it's the
+// parameter at the same index and its written type. At or past a rest, it's the rest and the written
+// type of the one argument landing there (overloadRestElement): core.ts's or takes f1, f2 and f3 in
+// `...fs: ((...args: T) => U)[]`. Anything else is nil for both, so its claim stays refused: the
+// overload's own rest, which spans a run of arguments rather than one, and an index past the end of an
+// implementation with no rest, where nothing holds the argument.
+func (l *lowering) overloadImplementationParameter(overload, parameter *ast.Node) (implemented, written *ast.Node) {
+	implementation := l.censusImplementation(overload)
+	if implementation == nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
+		return nil, nil
+	}
+	index := -1
+	for position, candidate := range overload.Parameters() {
+		if candidate == parameter {
+			index = position
+		}
+	}
+	if index < 0 {
+		return nil, nil
+	}
+	for position, candidate := range implementation.Parameters() {
+		if candidate.AsParameterDeclaration().DotDotDotToken != nil {
+			// A rest is the last parameter, so every index from its position on lands in it.
+			if element := overloadRestElement(candidate.Type(), index-position); element != nil {
+				return candidate, element
+			}
+			return nil, nil
+		}
+		if position == index {
+			return candidate, candidate.Type()
+		}
+	}
+	return nil, nil
+}
+
+// overloadRestElement is the written type of the argument at offset within a rest written as rest, or nil
+// where what's written doesn't say it alone (#1w5bve2).
+func overloadRestElement(rest *ast.Node, offset int) *ast.Node {
+	if rest == nil {
+		return nil
+	}
+	rest = ast.SkipTypeParentheses(rest)
+	switch rest.Kind {
+	case ast.KindArrayType:
+		// Every argument from the rest on is an element of X[], whatever its position. An array of function
+		// types is written in parentheses, ((x: N) => boolean)[], so the element is read through them, as
+		// checkedFunctionTypeClaim's test for a function type needs.
+		return ast.SkipTypeParentheses(rest.AsArrayTypeNode().ElementType)
+	case ast.KindTupleType:
+		// A tuple holds each argument at its own position, so the type is that position's, never one
+		// merged across the tuple. Past the tuple's end no argument lands.
+		elements := rest.AsTupleTypeNode().Elements
+		if elements == nil || offset >= len(elements.Nodes) {
+			return nil
+		}
+		// An optional element is one a call can leave out, so the body holds it as the element or
+		// undefined, which isn't what's written. A rest element spans a run of arguments, so from it on
+		// an argument's index is no longer its element's position. Either one up to offset fails closed.
+		for _, element := range elements.Nodes[:offset+1] {
+			if element.Kind == ast.KindOptionalType || element.Kind == ast.KindRestType {
+				return nil
+			}
+			if element.Kind == ast.KindNamedTupleMember && (element.AsNamedTupleMember().DotDotDotToken != nil || element.AsNamedTupleMember().QuestionToken != nil) {
+				return nil
+			}
+		}
+		element := elements.Nodes[offset]
+		if element.Kind == ast.KindNamedTupleMember {
+			return ast.SkipTypeParentheses(element.AsNamedTupleMember().Type)
+		}
+		return ast.SkipTypeParentheses(element)
+	}
+	// Every other rest fails closed. A reference such as Array<X> names its element through a type
+	// argument of a name that can be shadowed or aliased, and a type parameter holds whatever each call
+	// instantiates it as, so the checker says what the body holds there, not what's written, and
+	// plainCallbackType reads only what's written. A readonly array is an operator over one; reading
+	// through it would be sound, but this rule was ruled on the two shapes above and waits for a program
+	// that needs more.
+	return nil
 }
 
 // plainCallbackType is whether written, an implementation parameter's type, is a function type
