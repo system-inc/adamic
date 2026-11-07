@@ -23,7 +23,7 @@ function space(code: number): boolean {
     return code === 32 || code === 10 || code === 9 || code === 13 || code === 12;
 }
 function hex(code: number): boolean {
-    return code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102;
+    return (code >= 48 && code <= 57) || (code >= 65 && code <= 70) || (code >= 97 && code <= 102);
 }
 export class Tokenizer {
     readonly input: Input;
@@ -108,7 +108,15 @@ export class Tokenizer {
             start = -1;
             next--;
         }
-        else if(code === 91 || code === 93 || code === 123 || code === 125 || code === 58 || code === 59 || code === 41) {
+        else if(
+            code === 91 ||
+            code === 93 ||
+            code === 123 ||
+            code === 125 ||
+            code === 58 ||
+            code === 59 ||
+            code === 41
+        ) {
             kind = this.input.slice(pos, pos + 1);
         }
         else if(this.scss && code === 44) {
@@ -271,7 +279,12 @@ export class Tokenizer {
         }
         else {
             next = pos + 1;
-            while(next < length && !(this.scss && this.code(next) === 44) && !/[\t\n\f\r !"#'():;@[\\\]{}]/.test(this.input.slice(next, next + 1)) && !(this.code(next) === 47 && this.code(next + 1) === 42)) {
+            while(
+                next < length &&
+                !(this.scss && this.code(next) === 44) &&
+                !/[\t\n\f\r !"#'():;@[\\\]{}]/.test(this.input.slice(next, next + 1)) &&
+                !(this.code(next) === 47 && this.code(next + 1) === 42)
+            ) {
                 next++;
             }
             next--;
