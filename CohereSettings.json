@@ -59,7 +59,9 @@
         "cloud/markdown-width/{package,package-lock,npm-bootstrap}.json",
         "cloud/fast-gate/{build-units,compiler-dependencies,generated,product-order}.json",
         "loom/rules.json",
-        "cloud/admission-corpus/*.json"
+        "cloud/admission-corpus/*.json",
+        "internal/load/host_{axioms,bindings}.json",
+        "internal/load/node_types_manifest.json"
     ],
     "overrides": [
         {
