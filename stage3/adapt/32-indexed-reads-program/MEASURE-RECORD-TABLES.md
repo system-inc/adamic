@@ -1,5 +1,9 @@
 # Record id tables, measurement first
 
+The 73-root stop at core.ts:1326:26 requires elementAt's earlier wall to be
+past. Exact 99z is retained here; the ordinary baseline binder probe confirms
+1326:26 on this base.
+
 Ruling: b5w3ycg, Nov 7 00:55Z, road (b). Adamic keeps its intentional
 past-end-write panic. tsc's visitedTypes and visitedSymbols become records.
 No adaptation amendment has been built at this checkpoint.
@@ -75,3 +79,54 @@ parameter type, and cannot simultaneously retain the old internal declaration
 bytes. record-tables-declarations-measured.json preserves both hashes and the
 complete diff. Clarification was requested while the independent oracle
 measurement continues. No adapter amendment is built pending this constraint.
+
+## Final measurement gate and stopping point
+
+PASS: all 398 lane units ran exactly once on each side, in 20 pieces, each
+committed and plain-pushed before adapter construction. The largest piece was
+201.761 seconds. Every shard report passes its ordinary identity, API,
+baseline and count guards. Each side has 106366 passes, the same 1 expected
+failure and 0 skips. The independent reconciliation reopens every archive,
+checks both layers of hashes, reconstructs all ordered process traces from
+raw rows, and checks all 796 reports against the unchanged lane plan.
+
+All 1109 calls match element for element and in order, including all 445
+formerly sparse calls. The baseline has 692 array calls; the candidate has
+zero. There are 1985 returned elements and 734 id stores per side, zero
+non-integer ids, zero noncanonical own keys, zero order/value differences,
+and zero within-run reference identity failures. The service action records'
+complete primitive fields are compared; Type and Symbol values retain their
+ids and own primitive/reference metadata. No returned value order is sorted.
+The generator assigns type ids by incrementing typeCount in createType and
+symbol ids by incrementing nextSymbolId in getSymbolId (checker.ts).
+
+The fresh unchanged full apply exits 0 and its 746 source files match the
+uninstrumented baseline measurement exactly. Both the baseline and an
+uninstrumented candidate source copy pass adamic types over all 79 compiler
+roots, exit 0. Both ordinary binder rows agree on each side: baseline is
+Refused at core.ts:1326:26; the measured candidate reaches NotYet at
+core.ts:1364:29, assign's hasProperty(arg, p). The exact source is recorded in
+record-tables-candidate-probe.json. (*lowering).detachedOwnRefusal constructs
+this NotYet in internal/lower/detached_own.go:94. This is a binder observation,
+not a claim that the amended 73-root census has been completed.
+
+STOP before construction: the public declaration is byte-identical, but the
+internal declaration has exactly the required parameter hunk documented
+above. The record-only signature and byte-identical internal declaration
+cannot both hold. No compatibility overload, false public signature or new
+cast was introduced to conceal this. Clarification on that single internal
+hunk was requested while measurement continued and remains pending.
+
+The implementation files and site ledgers of 30 and 32 are unchanged. The
+table port belongs in 32 and the helper amendment in 30; no 99ab was created.
+No amended full apply, replay, lane, owner mutants or after census is claimed.
+Optional baseline census prework completed and archived groups of 20 and 20
+roots; its third group was stopped with 7 observations when construction was
+blocked. The partial rows and stop ledger are retained, not counted as a
+completed group. All started background measurement processes are stopped.
+
+PROOF-RECORD-TABLES.json records this exact status. record-tables-final-measure
+tarball retains the final raw logs, source bytes, manifests, provenance,
+independent reconciler, ordinary census driver and partial prework. Its
+adjacent SHA256 and internal SHA256SUMS cover the archive and every member.
+No source change or result is submitted to Loom.
