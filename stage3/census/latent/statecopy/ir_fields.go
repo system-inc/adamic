@@ -190,6 +190,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Comma.Left":                         {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Comma.Right":                        {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Concat.Parts":                       {"[]Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"Concat.Site":                        {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Conditional.Condition":              {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Conditional.WhenTrue":               {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Conditional.WhenNot":                {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
