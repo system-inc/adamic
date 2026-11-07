@@ -413,6 +413,10 @@ type lowering struct {
 	forwarders      map[int]int
 	forwarderValues []ir.Statement
 
+	// neverRest is the identity-marker proof's reference index and answers, and each proven function's
+	// marker, made the first time it's asked for (never_rest_marker.go).
+	neverRest *neverRestMarks
+
 	// unsetUntil is where, in the constructor being lowered, its last assignment of a field without an
 	// initializer ends: before it, this is only for reading and writing fields (useOfThis).
 	unsetUntil int
