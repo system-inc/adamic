@@ -1,0 +1,967 @@
+{
+  "baseCommit": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "upstreamCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "branch": "typescript/core-compare",
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "cpuMax": "400000 100000",
+  "binaries": {
+    "adamic": "fbd0693f8eea42ed2096d727d33380010788ffbc53c12414c5916d149ad2ee61",
+    "latent": "9b8c94ff2784309525b2364bc140eef86568261657ac61edc652a061614b0899"
+  },
+  "ownerPinsSha256": "5bbd20ba6f0953c74554a0918e1e5276b7d17578a5dddb5be147c308967fa271",
+  "adapterSha256": "d8e547fe4d28a71dd1f656e878f96dfdc4a458f83720adba0f73e4ff30136dff",
+  "ordinaryCompilerSourceUnmodified": true,
+  "allProofPhases": {
+    "worktree": {
+      "childExitCode": 0,
+      "seconds": 12.335226696000063,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "apply-after": {
+      "childExitCode": 0,
+      "seconds": 482.10707094899954,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "apply-before": {
+      "childExitCode": 0,
+      "seconds": 491.72638184900006,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "exit-code-canary": {
+      "childExitCode": 7,
+      "seconds": 0.11603311799990479,
+      "acceptedCodes": [
+        7
+      ]
+    },
+    "contract": {
+      "childExitCode": 0,
+      "seconds": 2.881887727000503,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "witness": {
+      "childExitCode": 0,
+      "seconds": 0.5668114550007886,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "types-before": {
+      "childExitCode": 0,
+      "seconds": 6.136306324000543,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "census-before": {
+      "childExitCode": 0,
+      "seconds": 26.576897856999494,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "build-before": {
+      "childExitCode": 0,
+      "seconds": 25.79414663300122,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "types-after": {
+      "childExitCode": 0,
+      "seconds": 4.657107482000356,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "census-after": {
+      "childExitCode": 0,
+      "seconds": 25.494967767999697,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "build-after": {
+      "childExitCode": 0,
+      "seconds": 25.393362685001193,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "comparison": {
+      "childExitCode": 0,
+      "seconds": 4.991998194000189,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "census-mutant": {
+      "childExitCode": 0,
+      "seconds": 26.38910667899836,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "census-comparison": {
+      "childExitCode": 0,
+      "seconds": 0.06476468599976215,
+      "acceptedCodes": [
+        0
+      ]
+    },
+    "replay/00-setup-after": {
+      "childExitCode": 0,
+      "seconds": 0.2179835050010297,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/00-setup-before": {
+      "childExitCode": 0,
+      "seconds": 0.2676919360001193,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/10-type-imports-after": {
+      "childExitCode": 0,
+      "seconds": 20.266912885999773,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/10-type-imports-before": {
+      "childExitCode": 0,
+      "seconds": 20.32346305399915,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/20-optional-declarations-after": {
+      "childExitCode": 0,
+      "seconds": 14.371894862000772,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/20-optional-declarations-before": {
+      "childExitCode": 0,
+      "seconds": 15.01870660699933,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/30-indexed-reads-before": {
+      "childExitCode": 1,
+      "seconds": 0.4164613199991436,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/30-indexed-reads-after": {
+      "childExitCode": 1,
+      "seconds": 0.41833177899934526,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/31-indexed-reads-checker-after": {
+      "childExitCode": 0,
+      "seconds": 1.135489685999346,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/31-indexed-reads-checker-before": {
+      "childExitCode": 0,
+      "seconds": 1.1804540570010431,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/32-indexed-reads-program-after": {
+      "childExitCode": 1,
+      "seconds": 0.6379767599992192,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/32-indexed-reads-program-before": {
+      "childExitCode": 1,
+      "seconds": 0.6691733629995724,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/33-indexed-reads-emit-after": {
+      "childExitCode": 1,
+      "seconds": 0.47150940299979993,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/33-indexed-reads-emit-before": {
+      "childExitCode": 1,
+      "seconds": 0.47373040299862623,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/40-explicit-any-after": {
+      "childExitCode": 1,
+      "seconds": 2.011277223000434,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/40-explicit-any-before": {
+      "childExitCode": 1,
+      "seconds": 2.0611333569995622,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/41-explicit-any-remaining-before": {
+      "childExitCode": 1,
+      "seconds": 0.6791700289995788,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/41-explicit-any-remaining-after": {
+      "childExitCode": 1,
+      "seconds": 0.7343502629992145,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/42-scanner-any-after": {
+      "childExitCode": 0,
+      "seconds": 0.6275932680000551,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/42-scanner-any-before": {
+      "childExitCode": 0,
+      "seconds": 0.6456760679993749,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/43-any-returns-before": {
+      "childExitCode": 1,
+      "seconds": 0.26505936099965766,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/43-any-returns-after": {
+      "childExitCode": 1,
+      "seconds": 0.2656627149990527,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/44-config-generics-before": {
+      "childExitCode": 0,
+      "seconds": 0.875016518000848,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/44-config-generics-after": {
+      "childExitCode": 0,
+      "seconds": 0.9268411199991533,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/45-regex-captures-after": {
+      "childExitCode": 0,
+      "seconds": 1.8367379819992493,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/45-regex-captures-before": {
+      "childExitCode": 0,
+      "seconds": 2.147125135999886,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/46-fix-pragma-empty-argument-after": {
+      "childExitCode": 0,
+      "seconds": 0.8425445110005967,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/46-fix-pragma-empty-argument-before": {
+      "childExitCode": 0,
+      "seconds": 1.027009920000637,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/47-host-errors-before": {
+      "childExitCode": 1,
+      "seconds": 3.6543514489985682,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/47-host-errors-after": {
+      "childExitCode": 1,
+      "seconds": 3.900198368999554,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/48-memoize-before": {
+      "childExitCode": 0,
+      "seconds": 0.3667197890008538,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/48-memoize-after": {
+      "childExitCode": 0,
+      "seconds": 0.3676433710006677,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/49-honest-optionals-after": {
+      "childExitCode": 0,
+      "seconds": 20.083975995999936,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/49-honest-optionals-before": {
+      "childExitCode": 0,
+      "seconds": 20.63007688399921,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/50-temporary-scanner-implicit-returns-before": {
+      "childExitCode": 0,
+      "seconds": 0.4286004879995744,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/50-temporary-scanner-implicit-returns-after": {
+      "childExitCode": 0,
+      "seconds": 0.48792605900052877,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/51-temporary-scanner-fallthrough-before": {
+      "childExitCode": 0,
+      "seconds": 0.06659405199934554,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/51-temporary-scanner-fallthrough-after": {
+      "childExitCode": 0,
+      "seconds": 0.06630104499890876,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/52-json-values-before": {
+      "childExitCode": 0,
+      "seconds": 2.9376749849998305,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/52-json-values-after": {
+      "childExitCode": 0,
+      "seconds": 3.0124331150000216,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/60-temporary-factory-local-symbol-before": {
+      "childExitCode": 0,
+      "seconds": 0.4241295739993802,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/60-temporary-factory-local-symbol-after": {
+      "childExitCode": 0,
+      "seconds": 0.4775557570010278,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/61-temporary-factory-type-expression-after": {
+      "childExitCode": 0,
+      "seconds": 0.4792753210003866,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/61-temporary-factory-type-expression-before": {
+      "childExitCode": 0,
+      "seconds": 0.4828995860007126,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/62-temporary-tracing-write-after": {
+      "childExitCode": 0,
+      "seconds": 0.3659359159992164,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/62-temporary-tracing-write-before": {
+      "childExitCode": 0,
+      "seconds": 0.3673278370006301,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/63-temporary-tracing-legend-before": {
+      "childExitCode": 0,
+      "seconds": 0.3673931490011455,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/63-temporary-tracing-legend-after": {
+      "childExitCode": 0,
+      "seconds": 0.3673954440000671,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/64-temporary-parser-range-read-after": {
+      "childExitCode": 0,
+      "seconds": 0.36588502199992945,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/64-temporary-parser-range-read-before": {
+      "childExitCode": 0,
+      "seconds": 0.36855920900052297,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/65-temporary-node-builtins-after": {
+      "childExitCode": 1,
+      "seconds": 1.029978705000758,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/65-temporary-node-builtins-before": {
+      "childExitCode": 1,
+      "seconds": 1.1857849219995842,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/70-readonly-views-after": {
+      "childExitCode": 0,
+      "seconds": 61.77732541300065,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/70-readonly-views-before": {
+      "childExitCode": 0,
+      "seconds": 61.933909933000905,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/71-writable-views-after": {
+      "childExitCode": 0,
+      "seconds": 9.405077719000474,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/71-writable-views-before": {
+      "childExitCode": 0,
+      "seconds": 9.437830009001118,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/75-optional-widening-after": {
+      "childExitCode": 0,
+      "seconds": 2.8148127530002967,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/75-optional-widening-before": {
+      "childExitCode": 0,
+      "seconds": 3.37996976300019,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/76-truthful-casts-before": {
+      "childExitCode": 1,
+      "seconds": 0.37396590299977106,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/76-truthful-casts-after": {
+      "childExitCode": 1,
+      "seconds": 0.47439144600139116,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/78-variance-marker-before": {
+      "childExitCode": 0,
+      "seconds": 10.39314377700066,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/78-variance-marker-after": {
+      "childExitCode": 0,
+      "seconds": 10.707490949000203,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/79-exit-code-before": {
+      "childExitCode": 0,
+      "seconds": 2.95000133800022,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/79-exit-code-after": {
+      "childExitCode": 0,
+      "seconds": 3.1136259819995757,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/90-void-widening-after": {
+      "childExitCode": 0,
+      "seconds": 18.832073326999307,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/90-void-widening-before": {
+      "childExitCode": 0,
+      "seconds": 19.09722004700052,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/91-patcher-discard-before": {
+      "childExitCode": 0,
+      "seconds": 3.1811853120016167,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/91-patcher-discard-after": {
+      "childExitCode": 0,
+      "seconds": 3.2429598620001343,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/92-tty-host-results-after": {
+      "childExitCode": 0,
+      "seconds": 2.537765696999486,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/92-tty-host-results-before": {
+      "childExitCode": 0,
+      "seconds": 2.618255339000825,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/93-builtin-imports-after": {
+      "childExitCode": 1,
+      "seconds": 2.4622166470016964,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/93-builtin-imports-before": {
+      "childExitCode": 1,
+      "seconds": 3.6349880319994554,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/94-axolotl-property-read-before": {
+      "childExitCode": 0,
+      "seconds": 0.3161052350005775,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/94-axolotl-property-read-after": {
+      "childExitCode": 0,
+      "seconds": 0.3171714719992451,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-a-before": {
+      "childExitCode": 0,
+      "seconds": 13.780612800999734,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-a-after": {
+      "childExitCode": 0,
+      "seconds": 13.830247939999026,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-b-before": {
+      "childExitCode": 1,
+      "seconds": 3.9779055190010695,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-b-after": {
+      "childExitCode": 1,
+      "seconds": 4.131565911999132,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-c-after": {
+      "childExitCode": 0,
+      "seconds": 11.590344996000567,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-c-before": {
+      "childExitCode": 0,
+      "seconds": 11.93981879400053,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-d-after": {
+      "childExitCode": 0,
+      "seconds": 12.676728825001192,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-d-before": {
+      "childExitCode": 0,
+      "seconds": 13.242228981000153,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-e-after": {
+      "childExitCode": 0,
+      "seconds": 4.556147395998778,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-e-before": {
+      "childExitCode": 0,
+      "seconds": 4.781147351999607,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-f-after": {
+      "childExitCode": 0,
+      "seconds": 4.812960328999907,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-f-before": {
+      "childExitCode": 0,
+      "seconds": 5.396501688001081,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-g-after": {
+      "childExitCode": 0,
+      "seconds": 6.567750901000181,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-g-before": {
+      "childExitCode": 0,
+      "seconds": 6.6527277329987555,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-h-after": {
+      "childExitCode": 1,
+      "seconds": 7.206121639999765,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/95-checker-axolotl-h-before": {
+      "childExitCode": 1,
+      "seconds": 7.307150503998855,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-a-before": {
+      "childExitCode": 0,
+      "seconds": 0.3669767850005883,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-a-after": {
+      "childExitCode": 0,
+      "seconds": 0.3677905299991835,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-b-before": {
+      "childExitCode": 0,
+      "seconds": 0.316015411999615,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-b-after": {
+      "childExitCode": 0,
+      "seconds": 0.36778883500119264,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-c-after": {
+      "childExitCode": 0,
+      "seconds": 0.41737783099961234,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/96-emit-axolotl-c-before": {
+      "childExitCode": 0,
+      "seconds": 0.4226155590004055,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-a-after": {
+      "childExitCode": 0,
+      "seconds": 0.5241129089990864,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-a-before": {
+      "childExitCode": 0,
+      "seconds": 0.5705368259987154,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-b-before": {
+      "childExitCode": 0,
+      "seconds": 1.0301741900002526,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-b-after": {
+      "childExitCode": 0,
+      "seconds": 1.0318041509999603,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-c-before": {
+      "childExitCode": 0,
+      "seconds": 0.41695795899977384,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-c-after": {
+      "childExitCode": 0,
+      "seconds": 0.41764732699994056,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-d-after": {
+      "childExitCode": 0,
+      "seconds": 1.2402984949985694,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-d-before": {
+      "childExitCode": 0,
+      "seconds": 1.2825802010011103,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-e-before": {
+      "childExitCode": 0,
+      "seconds": 3.625617247998889,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/97-cli-axolotl-e-after": {
+      "childExitCode": 0,
+      "seconds": 3.8299825220001367,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-a-after": {
+      "childExitCode": 0,
+      "seconds": 1.0908919529993,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-a-before": {
+      "childExitCode": 0,
+      "seconds": 1.2409783010007231,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-b-after": {
+      "childExitCode": 0,
+      "seconds": 1.2680172750006022,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-b-before": {
+      "childExitCode": 0,
+      "seconds": 1.2894141400010994,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-c-after": {
+      "childExitCode": 0,
+      "seconds": 3.9944322379997175,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-c-before": {
+      "childExitCode": 0,
+      "seconds": 4.125564416999623,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-d-after": {
+      "childExitCode": 0,
+      "seconds": 0.8768296670004929,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-d-before": {
+      "childExitCode": 0,
+      "seconds": 0.8791572459995223,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-e-before": {
+      "childExitCode": 1,
+      "seconds": 0.7415936680008599,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/98-axolotl-e-after": {
+      "childExitCode": 1,
+      "seconds": 0.7435679779991915,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-cli-debug-assertion-level-before": {
+      "childExitCode": 0,
+      "seconds": 0.3676227390005806,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-cli-debug-assertion-level-after": {
+      "childExitCode": 0,
+      "seconds": 0.3684153600006539,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-cli-perf-hooks-import-after": {
+      "childExitCode": 0,
+      "seconds": 0.26542963499923644,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-cli-perf-hooks-import-before": {
+      "childExitCode": 0,
+      "seconds": 0.26705319800021243,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-a-after": {
+      "childExitCode": 0,
+      "seconds": 0.5336348799992265,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-a-before": {
+      "childExitCode": 0,
+      "seconds": 0.6138633869995829,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-b-before": {
+      "childExitCode": 0,
+      "seconds": 0.477945267000905,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-b-after": {
+      "childExitCode": 0,
+      "seconds": 0.5180165809997561,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-c-before": {
+      "childExitCode": 0,
+      "seconds": 1.0033266369991907,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-c-after": {
+      "childExitCode": 0,
+      "seconds": 1.1128137260002404,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-d-before": {
+      "childExitCode": 0,
+      "seconds": 0.4693108449991996,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-d-after": {
+      "childExitCode": 0,
+      "seconds": 0.4711634029990819,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-e-after": {
+      "childExitCode": 0,
+      "seconds": 0.4186902299989015,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-e-before": {
+      "childExitCode": 0,
+      "seconds": 0.42102479400091397,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-f-after": {
+      "childExitCode": 0,
+      "seconds": 0.8271563119997154,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-f-before": {
+      "childExitCode": 0,
+      "seconds": 0.936181900999145,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-g-before": {
+      "childExitCode": 1,
+      "seconds": 0.4662853850004467,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-g-after": {
+      "childExitCode": 1,
+      "seconds": 0.4732348349989479,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-h-before": {
+      "childExitCode": 0,
+      "seconds": 0.5413182770007552,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-h-after": {
+      "childExitCode": 0,
+      "seconds": 0.543105689001095,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-i-before": {
+      "childExitCode": 0,
+      "seconds": 0.6730756560009468,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-i-after": {
+      "childExitCode": 0,
+      "seconds": 0.6750663700004225,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-j-after": {
+      "childExitCode": 0,
+      "seconds": 2.0504814430005354,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-j-before": {
+      "childExitCode": 0,
+      "seconds": 2.329575425999792,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-k-after": {
+      "childExitCode": 0,
+      "seconds": 1.0991239080012747,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-k-before": {
+      "childExitCode": 0,
+      "seconds": 1.183616168998924,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-l-before": {
+      "childExitCode": 0,
+      "seconds": 1.1791918719991372,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-l-after": {
+      "childExitCode": 0,
+      "seconds": 1.2366633229994477,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-m-before": {
+      "childExitCode": 0,
+      "seconds": 1.0756191170003149,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-m-after": {
+      "childExitCode": 0,
+      "seconds": 1.1348089599996456,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-n-before": {
+      "childExitCode": 0,
+      "seconds": 0.4251046879999194,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-n-after": {
+      "childExitCode": 0,
+      "seconds": 0.46960883799874864,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-q-before": {
+      "childExitCode": 0,
+      "seconds": 0.9861910460003855,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-q-after": {
+      "childExitCode": 0,
+      "seconds": 1.0392714839999826,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-r-after": {
+      "childExitCode": 0,
+      "seconds": 3.1048272980006004,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-r-before": {
+      "childExitCode": 0,
+      "seconds": 3.2788394760009396,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-s-after": {
+      "childExitCode": 0,
+      "seconds": 0.4673739999998361,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-s-before": {
+      "childExitCode": 0,
+      "seconds": 0.4697539509998023,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-t-after": {
+      "childExitCode": 0,
+      "seconds": 0.3658888489990204,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-t-before": {
+      "childExitCode": 0,
+      "seconds": 0.4210890139984258,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-u-after": {
+      "childExitCode": 0,
+      "seconds": 0.6253938089994335,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-u-before": {
+      "childExitCode": 0,
+      "seconds": 0.6304792200007796,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-w-after": {
+      "childExitCode": 0,
+      "seconds": 1.0360494880005717,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-w-before": {
+      "childExitCode": 0,
+      "seconds": 1.0794440049994591,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-y-after": {
+      "childExitCode": 0,
+      "seconds": 1.0378204739990906,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-y-before": {
+      "childExitCode": 0,
+      "seconds": 1.0417055140005687,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-z-before": {
+      "childExitCode": 0,
+      "seconds": 0.5681727169994701,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-axolotl-z-after": {
+      "childExitCode": 0,
+      "seconds": 0.5744776460014691,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-core-compare-after": {
+      "childExitCode": 0,
+      "seconds": 0.37023841900008847,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-correctness-core-compare-before": {
+      "childExitCode": 0,
+      "seconds": 0.4674768579989177,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-wasm-crypto-import-after": {
+      "childExitCode": 0,
+      "seconds": 5.91844645799938,
+      "acceptedCodes": "recorded validation subject"
+    },
+    "replay/99-wasm-crypto-import-before": {
+      "childExitCode": 0,
+      "seconds": 6.068831226999464,
+      "acceptedCodes": "recorded validation subject"
+    }
+  },
+  "filesBeforeEvidencePackaging": 57,
+  "amendmentParentCommit": "3cf7ef3e29ab4ec52078d6f85e3545cbd0c6d45c",
+  "amendmentRuling": "Compiler, task b5w3ycg: unreachable mixed arm must Debug.fail",
+  "countReused": true,
+  "failArmReached": 0
+}
