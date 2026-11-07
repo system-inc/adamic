@@ -70,8 +70,8 @@ func (l *lowering) typeArgumentBindings(node *ast.Node, visit func(typeArgumentB
 // instantiates it, as contextualGenericSignature instantiates a function value: const make: new (held:
 // Options) => Store<Options> = Store binds Store's T to Options with no call or new to judge it at. One
 // left generic, with no slot or a generic one, binds nothing until it's called or constructed, and is
-// judged then. One whose instantiation can't be read, since it or its slot has more than one signature,
-// is visited unread.
+// judged then. One going into a never-rest slot binds each type parameter to never. One whose
+// instantiation can't be read, since it or its slot has more than one signature, is visited unread.
 func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgumentBinding) error) error {
 	own := l.checker.GetTypeAtLocation(node)
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
@@ -89,6 +89,25 @@ func (l *lowering) valueTypeArgumentBindings(node *ast.Node, visit func(typeArgu
 		}
 		slots := l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), kind)
 		if len(slots) == 0 || len(slots) == 1 && len(slots[0].TypeParameters()) > 0 {
+			continue
+		}
+		if len(slots) == 1 && l.censusNeverRestSignature(slots[0]) {
+			// A never-rest slot, (...args: never[]) => void, as tsc's AnyFunction is: nothing passed
+			// through it can carry a type argument, so tsc's instantiation in context infers never for each
+			// type parameter, and never fits every constraint. Each is bound to never and visited, so every
+			// reader of the bindings judges it, rather than read as unread (debug.ts's
+			// `stackCrawlMark || assertEachIsDefined`, an overload set into AnyFunction, #avqasqt). A call
+			// through the slot is a separate stop: callClosure refuses any call through a never-rest
+			// marker, since never[] admits a zero-argument call that would run the body with its
+			// parameters absent. container_fit.go reads censusNeverRestSignature for the same slot.
+			bottom := l.checker.GetNonNullableType(l.checker.GetUndefinedType())
+			for _, parameter := range parameters {
+				if constraint := l.checker.GetConstraintOfTypeParameter(parameter); constraint != nil {
+					if err := visit(typeArgumentBinding{site: node, parameter: parameter, argument: bottom, constraint: constraint}); err != nil {
+						return err
+					}
+				}
+			}
 			continue
 		}
 		if len(signatures) == 1 && len(slots) == 1 {
