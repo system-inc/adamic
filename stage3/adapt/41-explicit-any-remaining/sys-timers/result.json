@@ -1,0 +1,241 @@
+{
+  "counts": {
+    "before": {
+      "checkerDiagnostics": 0,
+      "units": 140,
+      "statuses": {
+        "attempted": 137,
+        "deferred_generic_instantiation": 3
+      },
+      "observations": 422,
+      "distinctSites": 246,
+      "distinctWalls": 123,
+      "distinctKinds": {
+        "NotYet": 91,
+        "Boundary": 123,
+        "Refused": 32
+      }
+    },
+    "candidate": {
+      "checkerDiagnostics": 0,
+      "units": 138,
+      "statuses": {
+        "attempted": 135,
+        "deferred_generic_instantiation": 3
+      },
+      "observations": 416,
+      "distinctSites": 241,
+      "distinctWalls": 120,
+      "distinctKinds": {
+        "NotYet": 90,
+        "Boundary": 121,
+        "Refused": 30
+      }
+    },
+    "mutant": {
+      "checkerDiagnostics": 0,
+      "units": 140,
+      "statuses": {
+        "attempted": 137,
+        "deferred_generic_instantiation": 3
+      },
+      "observations": 422,
+      "distinctSites": 246,
+      "distinctWalls": 123,
+      "distinctKinds": {
+        "Boundary": 123,
+        "NotYet": 91,
+        "Refused": 32
+      }
+    }
+  },
+  "deletedDeclarationLinesBefore": [
+    57,
+    58
+  ],
+  "removed": [
+    [
+      "deleted-declaration",
+      57,
+      "1",
+      "Boundary",
+      "function signature or prologue failed; continued at next declaration",
+      "lowering"
+    ],
+    [
+      "deleted-declaration",
+      57,
+      "1",
+      "NotYet",
+      "a function without a body",
+      "lowering"
+    ],
+    [
+      "deleted-declaration",
+      57,
+      "1",
+      "Refused",
+      "an ambient function declaration",
+      "refusal_scan"
+    ],
+    [
+      "deleted-declaration",
+      58,
+      "1",
+      "Boundary",
+      "function signature or prologue failed; continued at next declaration",
+      "lowering"
+    ],
+    [
+      "deleted-declaration",
+      58,
+      "1",
+      "NotYet",
+      "a function without a body",
+      "lowering"
+    ],
+    [
+      "deleted-declaration",
+      58,
+      "1",
+      "Refused",
+      "an ambient function declaration",
+      "refusal_scan"
+    ]
+  ],
+  "added": [
+    [
+      "sys.ts",
+      1499,
+      "13",
+      "NotYet",
+      "reading setTimeout",
+      "lowering"
+    ]
+  ],
+  "mutantRestoresBaseline": true,
+  "ambientDeclarationFindingsBefore": 2,
+  "ambientDeclarationFindingsAfter": 0,
+  "status": "STOP: new latent site; no adapter built",
+  "base": "e8f3723bd41abcebedabfcc7546fdf104a9bbf08",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "sourceScope": {
+    "files": 746,
+    "changed": [
+      "compiler/sys.ts"
+    ]
+  },
+  "emissions": [
+    {
+      "file": "_tsc.js",
+      "byteIdentical": true,
+      "before": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "after": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "beforeBytes": 6249277,
+      "afterBytes": 6249277
+    },
+    {
+      "file": "_tsserver.js",
+      "byteIdentical": true,
+      "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "beforeBytes": 27889,
+      "afterBytes": 27889
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "byteIdentical": true,
+      "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "beforeBytes": 10364,
+      "afterBytes": 10364
+    },
+    {
+      "file": "tsc.js",
+      "byteIdentical": true,
+      "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "beforeBytes": 267,
+      "afterBytes": 267
+    },
+    {
+      "file": "tsserver.js",
+      "byteIdentical": true,
+      "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "beforeBytes": 272,
+      "afterBytes": 272
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "byteIdentical": true,
+      "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "beforeBytes": 1013,
+      "afterBytes": 1013
+    },
+    {
+      "file": "typescript.js",
+      "byteIdentical": true,
+      "before": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "after": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "beforeBytes": 9157055,
+      "afterBytes": 9157055
+    },
+    {
+      "file": "typingsInstaller.js",
+      "byteIdentical": true,
+      "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "beforeBytes": 280,
+      "afterBytes": 280
+    },
+    {
+      "file": "watchGuard.js",
+      "byteIdentical": true,
+      "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "beforeBytes": 2314,
+      "afterBytes": 2314
+    },
+    {
+      "file": "typescript.d.ts",
+      "byteIdentical": true,
+      "before": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "after": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "beforeBytes": 593502,
+      "afterBytes": 593502
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "byteIdentical": true,
+      "before": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "after": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "beforeBytes": 866,
+      "afterBytes": 866
+    },
+    {
+      "file": "typescript.internal.d.ts",
+      "byteIdentical": true,
+      "before": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "after": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "beforeBytes": 1545132,
+      "afterBytes": 1545132
+    }
+  ],
+  "types79": {
+    "before": 0,
+    "candidate": 0
+  },
+  "fullApplyBeforeExit": 0,
+  "amendedFullApply": "not run: census gate failed before construction",
+  "pairedReplay": "not run: no amended adapter",
+  "fourDestinationSignaturesUnchanged": true,
+  "binaries": {
+    "adamic": "f15a09db6df45eb39f899c07b4f1ae26ec7a6c8ad09626a0a53265976b0b1d46",
+    "latent": "732bd49f1921a22efe5d72a54d354e1dca4f6ff93d32adf6c22d9c3f5e1c558d",
+    "type-probe-signatures": "3278a97cc9440289160888fecf9237695bc6aaa9b81393a4966d503fc9553911"
+  },
+  "node": "v24.19.0",
+  "existingAdapterFilesUnchanged": true
+}
