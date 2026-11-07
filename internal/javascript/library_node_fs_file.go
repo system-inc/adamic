@@ -11,6 +11,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "set_timeout":
+		return "adamicSetTimeout(" + args[0] + ", " + args[1] + ", [" + strings.Join(args[2:], ", ") + "])"
+	case "clear_timeout":
+		return "globalThis.clearTimeout(" + args[0] + ")"
 	case "host_watch_file":
 		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
 	case "host_watch":
@@ -106,6 +110,15 @@ const adamicWatchFileListener = callback => {
   adamicWatchFileListeners.set(callback, (curr, prev) => adamicCall(callback, [curr, prev]));
  }
  return adamicWatchFileListeners.get(callback);
+};
+`
+
+// setTimeout called from source is Node's own, its Timeout Node's, and its callback a function in
+// the closure calling convention, handed the extra arguments Node hands it. A delay native's timer
+// provider names NotYet (timers_impl.h) stops here in the same words, before Node would warn.
+const nodeTimersRuntime = `const adamicSetTimeout = (callback, delay, values) => {
+ if (!(delay >= 0 && delay <= 2147483647)) panic('NotYet: timer delay requiring Node warnings');
+ return globalThis.setTimeout((...handed) => { adamicCall(callback, handed); }, delay, ...values);
 };
 `
 
