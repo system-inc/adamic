@@ -200,6 +200,9 @@ func (l *lowering) boundSource(node *ast.Node, seen map[*ast.Symbol]bool) bool {
 
 func (l *lowering) boundObservation(node *ast.Node) error {
 	if node.Kind == ast.KindCallExpression {
+		if l.boundKeyedLength(node) {
+			return l.notYet(node, "a bound function's length (bound length metadata)")
+		}
 		if err := l.bindReceiverRule(node); err != nil {
 			return err
 		}
@@ -221,6 +224,64 @@ func (l *lowering) boundObservation(node *ast.Node) error {
 		return l.notYet(node, "new on a bound function (bound construction)")
 	}
 	return nil
+}
+
+// A literal length key passed to the admitted Reflect.get helper must stop for
+// a bound value before the unknown-view guard loses the adapter's provenance.
+// Match the helper's parameter symbols and read shape, never its written name.
+func (l *lowering) boundKeyedLength(node *ast.Node) bool {
+	call := node.AsCallExpression()
+	if len(call.Arguments.Nodes) != 2 {
+		return false
+	}
+	key := ast.SkipParentheses(call.Arguments.Nodes[1])
+	if key.Kind != ast.KindStringLiteral || key.Text() != "length" || !l.boundSource(call.Arguments.Nodes[0], map[*ast.Symbol]bool{}) {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(node)
+	if signature == nil || signature.Declaration() == nil || !ast.IsFunctionLike(signature.Declaration()) {
+		return false
+	}
+	declaration := signature.Declaration()
+	parameters := declaration.Parameters()
+	if parameters == nil || len(parameters) != 2 || declaration.Body() == nil {
+		return false
+	}
+	valueSymbol, keySymbol := l.symbol(parameters[0].Name()), l.symbol(parameters[1].Name())
+	if valueSymbol == nil || keySymbol == nil {
+		return false
+	}
+	matches := func(read *ast.Node) bool {
+		if read.Kind != ast.KindCallExpression {
+			return false
+		}
+		invoke := read.AsCallExpression()
+		callee := ast.SkipParentheses(invoke.Expression)
+		if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "get" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Reflect") || len(invoke.Arguments.Nodes) != 3 {
+			return false
+		}
+		arguments := invoke.Arguments.Nodes
+		if l.symbol(ast.SkipParentheses(arguments[1])) != keySymbol || l.symbol(ast.SkipParentheses(arguments[2])) != valueSymbol {
+			return false
+		}
+		wrapped := ast.SkipParentheses(arguments[0])
+		if wrapped.Kind != ast.KindCallExpression {
+			return false
+		}
+		wrapper := wrapped.AsCallExpression()
+		return l.isLibraryGlobal(wrapper.Expression, "Object") && len(wrapper.Arguments.Nodes) == 1 && l.symbol(ast.SkipParentheses(wrapper.Arguments.Nodes[0])) == valueSymbol
+	}
+	found := false
+	var visit ast.Visitor
+	visit = func(read *ast.Node) bool {
+		found = matches(read)
+		if found {
+			return true
+		}
+		return read.ForEachChild(visit)
+	}
+	declaration.Body().ForEachChild(visit)
+	return found
 }
 
 func init() { refusalRules.register(2890, "boundObservation", (*lowering).boundObservation) }
