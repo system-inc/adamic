@@ -1,18 +1,20 @@
-// The port's driver: it reads the cases file named by its one argument, parses each text in it, and
-// prints the tree and the comments, or the syntax error, so its output can be held byte for byte to Go
-// cohere's (graphql_test.go, whose Go side prints the Go's the same way).
-//
-// A cases file is one text per line, after a `>` (so that the empty text is a line too), with a
-// backslash, a tab, a newline and a carriage return written as \\, \t, \n and \r.
-//
-// The output, for each text, is `case <number>`, then either `error <message>`, or the tree on one line
-// in the outline form of cohere's parser_test.go (Kind[start,end]{key=value ...}, a list in
-// parentheses, a field written as undefined as `undefined`, one never written left out) and then one
-// line `comment Comment[start,end]{value="..."}` for each comment. Offsets are UTF-16 indexes. Every
-// string, and every message, is in the output form lexer.ts's `escaped` writes: printable ASCII as
-// itself but a backslash as two, and any other code point as \u{HEX}.
-//
-//	node oracle/node.mjs stage1/cohere/graphql/main.ts stage1/cohere/graphql/sample-cases.txt
+/*
+ * The port's driver: it reads the cases file named by its one argument, parses each text in it, and
+ * prints the tree and the comments, or the syntax error, so its output can be held byte for byte to Go
+ * cohere's (graphql_test.go, whose Go side prints the Go's the same way).
+ *
+ * A cases file is one text per line, after a `>` (so that the empty text is a line too), with a
+ * backslash, a tab, a newline and a carriage return written as \\, \t, \n and \r.
+ *
+ * The output, for each text, is `case <number>`, then either `error <message>`, or the tree on one line
+ * in the outline form of cohere's parser_test.go (Kind[start,end]{key=value ...}, a list in
+ * parentheses, a field written as undefined as `undefined`, one never written left out) and then one
+ * line `comment Comment[start,end]{value="..."}` for each comment. Offsets are UTF-16 indexes. Every
+ * string, and every message, is in the output form lexer.ts's `escaped` writes: printable ASCII as
+ * itself but a backslash as two, and any other code point as \u{HEX}.
+ *
+ * 	node oracle/node.mjs stage1/cohere/graphql/main.ts stage1/cohere/graphql/sample-cases.txt
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { type GraphNode, parse } from './parser.ts';
