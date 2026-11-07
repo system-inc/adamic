@@ -1,4 +1,8 @@
-// Code generated for the fixed top-level shard table; DO NOT EDIT individual wrappers.
+// The fixed top-level shard table: a top-level test per shard of the package's split tests, so a
+// unit runs one shard alone. The script that first wrote it (b852efa2) was never committed, and
+// it has been edited by hand since, so it is source: a shard added to the split needs its wrapper
+// written here.
+
 package cssstrings
 
 import (
