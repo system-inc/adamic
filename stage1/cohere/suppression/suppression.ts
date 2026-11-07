@@ -1,21 +1,23 @@
-// A port of cohere's internal/lint/suppression (suppression.go, parse.go and directive_subject.go) to
-// Adamic 0.1: the comments that tell a rule "not here", and what they did. Each piece names the Go it
-// reads as.
-//
-// Two properties matter more than the parsing, and both are about not lying. A suppression is never
-// silent: every finding withheld is counted, so a run that suppressed forty findings cannot print the
-// same line as a run that found none. And a suppression that never fires is visible too: an unused one
-// is a rule silently scoped off a file that no longer needs it.
-//
-// The index works on source text and offsets rather than on a parsed file. A suppression is a fact
-// about a line, not about a node.
-//
-// Where the port differs from the Go, and why:
-//
-//   - Offsets are UTF-16 indexes where the Go's are byte offsets (scan.ts says why both decide alike).
-//   - Go's Kind is an int enum with a String method; here it is the union of those strings.
-//   - The Go's methods check for a nil *Index, which a caller with no index passes. The port's Index is
-//     always one Build made, so it has no such check; a caller with no index has no Index to ask.
+/*
+ * A port of cohere's internal/lint/suppression (suppression.go, parse.go and directive_subject.go) to
+ * Adamic 0.1: the comments that tell a rule "not here", and what they did. Each piece names the Go it
+ * reads as.
+ *
+ * Two properties matter more than the parsing, and both are about not lying. A suppression is never
+ * silent: every finding withheld is counted, so a run that suppressed forty findings cannot print the
+ * same line as a run that found none. And a suppression that never fires is visible too: an unused one
+ * is a rule silently scoped off a file that no longer needs it.
+ *
+ * The index works on source text and offsets rather than on a parsed file. A suppression is a fact
+ * about a line, not about a node.
+ *
+ * Where the port differs from the Go, and why:
+ *
+ *   - Offsets are UTF-16 indexes where the Go's are byte offsets (scan.ts says why both decide alike).
+ *   - Go's Kind is an int enum with a String method; here it is the union of those strings.
+ *   - The Go's methods check for a nil *Index, which a caller with no index passes. The port's Index is
+ *     always one Build made, so it has no such check; a caller with no index has no Index to ask.
+ */
 
 import { isSubject, parseDisable, parseEnable } from './directives.ts';
 import { buildLineIndex, scanComments, scanEnables } from './scan.ts';
