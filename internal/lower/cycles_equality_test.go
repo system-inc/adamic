@@ -35,7 +35,7 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 		}
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if entry.Name() == ".git" || relative == "cohere" {
+			if entry.Name() == ".git" || relative == "cohere" || relative == "internal/oracle/testdata/bind_runtime" {
 				return filepath.SkipDir
 			}
 			return nil

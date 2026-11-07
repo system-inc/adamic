@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/system-inc/adamic/internal/load"
@@ -72,6 +73,10 @@ func main() {
 	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
+		}
+		// These programs are dedicated runtime-failure pins, not census inputs.
+		if entry.IsDir() && strings.HasSuffix(filepath.ToSlash(path), "/oracle/testdata/bind_runtime") {
+			return filepath.SkipDir
 		}
 		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
 			paths = append(paths, path)

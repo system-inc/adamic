@@ -287,6 +287,9 @@ func (l *lowering) programAllocation(node *ast.Node, value ir.Expression) (ir.Ex
 	case ir.SetValues:
 		value.ProgramRegion = member
 		return value, nil
+	case ir.BoundClosure:
+		value.ProgramRegion = member
+		return value, nil
 	case ir.MakeClosure:
 		value.ProgramRegion = member
 		return value, nil

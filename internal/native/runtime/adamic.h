@@ -267,6 +267,27 @@ void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
+typedef struct adamic_object adamic_object;
+// adamic_method is a class's method as a call through an interface calls it: the object as this, and
+// the arguments and the result as adamic_value, as a closure's are (the result owned).
+typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
+typedef adamic_method_function *adamic_method;
+typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
+typedef adamic_counted_method_function *adamic_counted_method;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+typedef struct adamic_method_entry {
+ bool counted;
+ union { adamic_method code; adamic_counted_method counted_code; };
+} adamic_method_entry;
+static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
+ if (method.counted) { return method.counted_code(self, arguments, argument_count); }
+ return method.code(self, arguments);
+}
+#else
+typedef adamic_method adamic_method_entry;
+#endif
+
+
 // adamic_closure is a function value: its code, and the cells it captured. Every closure is called
 // the same way, its arguments and its result as adamic_value, whatever its types.
 typedef struct adamic_closure adamic_closure;
@@ -286,11 +307,20 @@ struct adamic_closure {
 	adamic_heap heap;
 #ifdef ADAMIC_CLOSURE_CONVENTION
  union { adamic_code code; adamic_counted_code counted_code; };
- bool counted;
-
 #else
  adamic_code code;
 #endif
+	// The strict WASI runtime and generated callers can select different conventions.
+	// Reserve both tags so code, metadata and captures keep the same offsets.
+	bool counted;
+	// A bound class method keeps code here; every owning edge remains in cells.
+	union {
+		adamic_method_entry bound_method;
+		struct {
+			bool counted;
+			union { adamic_method code; adamic_counted_method counted_code; };
+		} bound_method_storage;
+	};
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  bool receiver;
 #endif
@@ -363,6 +393,21 @@ adamic_closure *adamic_counted_closure_canonical_graph(adamic_cell *identity, ad
 #endif
 void adamic_closure_uncache(adamic_closure *closure);
 #endif
+
+// A bound closure uses the same allocation and captured-cell links as a closure.
+// Cell zero owns the target, cell one owns thisArg, and the rest own fixed values.
+// Its generated adapter packs fixed values before incoming values without taking them.
+adamic_closure *adamic_bound_closure_new(adamic_code code, size_t count);
+void adamic_closure_free_children(adamic_closure *closure, void (*drop)(void *));
+#ifdef ADAMIC_CLOSURE_CONVENTION
+static inline adamic_closure *adamic_counted_bound_closure_new(adamic_counted_code code, size_t count) {
+ adamic_closure *closure = adamic_bound_closure_new(NULL, count);
+ closure->counted = true;
+ closure->counted_code = code;
+ return closure;
+}
+#endif
+adamic_value adamic_bound_closure_call(adamic_closure *self, adamic_value *arguments, size_t argument_count, size_t packed_size);
 
 // adamic_string is an immutable string: UTF-8 bytes (string.c).
 typedef struct adamic_string {
@@ -451,7 +496,6 @@ static inline void adamic_shape_check(const adamic_shape *shape) {
 }
 
 
-typedef struct adamic_object adamic_object;
 typedef struct adamic_accessor {
 	const char *name;
 	adamic_value (*get)(adamic_object *);
@@ -543,24 +587,6 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
 
-// adamic_method is a class's method as a call through an interface calls it: the object as this, and
-// the arguments and the result as adamic_value, as a closure's are (the result owned).
-typedef adamic_value adamic_method_function(adamic_object *self, adamic_value *arguments);
-typedef adamic_method_function *adamic_method;
-typedef adamic_value adamic_counted_method_function(adamic_object *self, adamic_value *arguments, size_t argument_count);
-typedef adamic_counted_method_function *adamic_counted_method;
-#ifdef ADAMIC_CLOSURE_CONVENTION
-typedef struct adamic_method_entry {
- bool counted;
- union { adamic_method code; adamic_counted_method counted_code; };
-} adamic_method_entry;
-static inline adamic_value adamic_method_call(adamic_method_entry method, adamic_object *self, adamic_value *arguments, size_t argument_count) {
- if (method.counted) { return method.counted_code(self, arguments, argument_count); }
- return method.code(self, arguments);
-}
-#else
-typedef adamic_method adamic_method_entry;
-#endif
 
 struct adamic_methods {
 	size_t count;
@@ -603,7 +629,8 @@ adamic_string *adamic_error_to_string(const adamic_object *error);
 
 // adamic_object_callee finds what object.name(...) calls, where the object is seen through an
 // interface: its own field of that name, a function value, which it returns; or else its class's
-// method of that name, which it puts in *method, returning NULL. The checker proved one is there.
+// method of that name, which it puts in *method, returning NULL. When absent,
+// both arms remain empty, for optional binding; callers initialize *method to zero.
 adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method_entry *method);
 
 // adamic_object_new makes an object of a shape, its fields zeroed for the caller to fill; a reference

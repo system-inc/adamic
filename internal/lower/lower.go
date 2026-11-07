@@ -175,6 +175,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkBoundArguments(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}
@@ -246,8 +249,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 }
 
 type lowering struct {
-	debug      bool
-	cycleTypes map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+	bindGetters map[string]bool // source getter names, memoized for bind receiver admission
+	debug       bool
+	cycleTypes  map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
 
 	// Source-only sites for graph adoption diagnostics; never stored in emitted IR.
 	graphViewSite, graphDynamicSite *ast.Node

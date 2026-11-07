@@ -33,6 +33,10 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
+			case ir.BoundClosure:
+				for _, parameter := range program.Functions[value.Function].Parameters {
+					graph.unknownParameters[parameter+1] = true
+				}
 			case ir.MakeClosure:
 				// Callback invocations are outside the collected call edges.
 				for _, parameter := range program.Functions[value.Function].Parameters {

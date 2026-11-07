@@ -20,6 +20,9 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
 	}
 	switch value := value.(type) {
+	case ir.BoundClosure:
+		value.GraphTypes = ids
+		return value
 	case ir.ObjectLiteral:
 		if value.Record {
 			l.graphDynamicSite = node
@@ -408,7 +411,7 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 		for _, closure := range f.l.closureRecords {
 			if f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range f.l.result.Functions[closure.function].Environment {
+				for _, local := range f.l.closureLinks(closure) {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}

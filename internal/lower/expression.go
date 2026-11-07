@@ -813,6 +813,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		// A yield's result is what next(x) sends in, which isn't built (#qk8rztp S5).
 		return nil, l.generatorNotYet(node, "using a yield's result as a value")
 	case ast.KindCallExpression:
+		if value, handled, err := l.functionBind(node); handled {
+			return value, err
+		}
 		if value, handled, err := l.promiseValue(node); handled {
 			return value, err
 		}
