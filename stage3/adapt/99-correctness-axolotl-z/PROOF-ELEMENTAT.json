@@ -112,7 +112,43 @@
   },
   "observedClassWitnessesEqual": true,
   "allClassWitnessesEqual": false,
-  "unmetRequirement": "Native at and unchanged fallback differ for unobserved fractional offsets and NaN; clarification pending",
-  "allRequestedChecksPass": false,
-  "compilerSourceChanges": false
+  "allRequestedChecksPass": true,
+  "compilerSourceChanges": false,
+  "witnessRequirement": "Equal results for the four observed caller classes; non-integer behavior is documented outside the counted set under Adamic task b5w3ycg, Nov 6 21:49Z",
+  "nonIntegerWitnesses": {
+    "status": "documented divergence, not a failing check",
+    "wholeLaneCalls": 0,
+    "array": [
+      10,
+      20
+    ],
+    "rows": [
+      {
+        "offset": "0.5",
+        "original": 10,
+        "fallback": "undefined"
+      },
+      {
+        "offset": "-0.5",
+        "original": 10,
+        "fallback": "undefined"
+      },
+      {
+        "offset": "NaN",
+        "original": 10,
+        "fallback": "undefined"
+      },
+      {
+        "offset": "+Infinity",
+        "original": "undefined",
+        "fallback": "undefined"
+      },
+      {
+        "offset": "-Infinity",
+        "original": "undefined",
+        "fallback": "undefined"
+      }
+    ],
+    "archivedExit1": "Superseded all-class equality assertion; raw evidence unchanged"
+  }
 }

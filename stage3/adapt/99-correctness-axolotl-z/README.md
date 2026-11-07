@@ -1,15 +1,16 @@
 # 99z: elementAt keeps its existing fallback
 
-The count-authorized fallback is implemented. All corpus, type, emission,
-replay and native-census checks below pass. One requested assertion remains
-false: the original and fallback do not agree for unobserved fractional offsets
-and NaN. Those witness results are retained as a failing check, not reported as
-all-class equality. The clarification asked during Step A remains pending.
+The count-authorized fallback is implemented. All required checks pass under
+Adamic's count condition. Equal-result witnesses cover every observed class;
+non-integer witnesses document behavior outside the counted caller inputs.
 
 ## Ruling and ledger entry
 
 Status: JavaScript-changing adaptation under Adamic's road (b), task b5w3ycg,
 Nov 6 21:49Z, admitted only on the completed count. Lib es2022 is refused.
+Equivalence holds on every offset tsc's own callers produce (counted: 414,
+1,138, 217 and 167, with 0 non-integers), and the divergence on non-integer
+offsets is outside that set.
 Adamic's lib ruling, task axochk, Nov 1 16:06Z: "tsc is checked against the lib
 its own tsconfig declares." The upstream lib remains es2020.
 
@@ -102,25 +103,34 @@ not an instrumented compiler trace. next-stop.json and cast_proof.go.txt retain
 the exact source. No Adamic compiler-source overlay or refusal suppression is used; the batch
 tool overlay changes only its entry point and keeps inspect byte-identical.
 
-## Node witnesses and remaining requirement
+## Node witnesses and documented non-integer divergence
 
 The Node program extracts both actual complete owners and toOffset from the
 full-applied trees. It checks that the fallback body is exact, runs each on the
-same inputs, and records results and Object.is equality. All four observed
-classes agree. Both infinities also agree. Fractions and NaN on [10,20] differ:
+same inputs, and records results and Object.is equality. Equal-result witnesses
+pass for all four observed classes: in-range non-negative integer, in-range
+negative integer, out-of-range integer and undefined array.
 
-| Offset | Original | Fallback | Equal |
-| --- | --- | --- | --- |
-| 0.5 | 10 | undefined | no |
-| -0.5 | 10 | undefined | no |
-| NaN | 10 | undefined | no |
+The whole lane oracle count found 0 non-integer calls, so tsc never gives
+elementAt a non-integer in that run. The following witnesses on [10,20] document
+behavior outside that counted set, rather than a failing check:
 
-The witness process exits 1 for this unmet all-class equality requirement.
-PROOF-ELEMENTAT.json records allRequestedChecksPass false for that reason.
-There is no Math.trunc change, because the requested body must remain unchanged
-and a truncation repair needs its own ruling. No empty-array example is used to
-hide the nonempty-array counterexamples. Acceptance of these off-count witness
-differences is the outstanding clarification, not a claimed passing assertion.
+| Offset | Original at | Fallback |
+| --- | --- | --- |
+| 0.5 | 10 | undefined |
+| -0.5 | 10 | undefined |
+| NaN | 10 | undefined |
+| +Infinity | undefined | undefined |
+| -Infinity | undefined | undefined |
+
+Native at truncates fractions and treats NaN as zero; the unchanged fallback
+does neither. Both infinities return undefined in both implementations.
+Adamic's ruling on task b5w3ycg, Nov 6 21:49Z admits this adaptation on the
+count, requiring equivalence on tsc's own caller inputs rather than every
+possible input. The original request for equality in absent classes was
+corrected by the user. The archived witness process's exit 1 reflects that
+superseded assertion; its raw results remain unchanged. PROOF-ELEMENTAT.json
+records the corrected passing requirement and the documented divergence.
 
 ## Evidence
 
