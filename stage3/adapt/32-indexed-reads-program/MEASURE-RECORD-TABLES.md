@@ -47,3 +47,21 @@ RECORD-TABLE-COUNT.json and record-tables-measure-NN archives record each
 completed piece, committed and plain-pushed immediately with the normal lane
 identity, API, baseline and count guards. No result beyond the recorded
 completed units is claimed.
+
+## Independent runtime witnesses
+
+The extracted original and record table operations give byte-identical Node
+output for id 5, ids inserted as 4468, 2, 10, and empty tables. Both private
+tables are checked, followed by another empty walk using the same containers.
+All three record witnesses compile and run on the native backend with
+--sanitize --explain-checks and on the JavaScript backend. All six executions
+exit 0, have empty stderr, and match Node stdout byte for byte. The id-5
+record insertion succeeds. The previous sparse array insertion panicked.
+
+record-tables-witnesses.tar.gz includes the extracted sources, generated
+JavaScript, compiler check diagnostics, outputs, driver, and summaries. The
+initial witness extractor also included the now-unused array-only clear
+helper; its erased unknown[] diagnostic is retained separately. Removing
+that unused helper from the record witness changed none of the tested code.
+The record read's ! is a runtime checked non-null assertion, not a new cast.
+The whole-oracle gate remains pending; no adapter implementation is changed.
