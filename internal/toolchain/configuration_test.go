@@ -10,7 +10,7 @@ import (
 
 // A config's lines name no path, and each file it names by an absolute path, quoted or after an option's =, is keyed
 // once by its bytes, as is a config it includes; a word in a comment names nothing, and an include cycle ends. A config
-// that can't be read is named by its error. Mutants: comments read as words; the include's seen set dropped (the cycle
+// that can't be read is refused, naming it. Mutants: comments read as words; the include's seen set dropped (the cycle
 // never ends); a quoted path left with its quotes, so it names no file.
 func TestAConfigsLinesAreWhatItAndItsFilesHold(t *testing.T) {
 	t.Parallel()
@@ -45,8 +45,7 @@ func TestAConfigsLinesAreWhatItAndItsFilesHold(t *testing.T) {
 	if !slices.Equal(kinds, want) {
 		t.Errorf("the config's lines are %q, want the config, ld.lld, the quoted file and back.cfg:\n%s", kinds, strings.Join(lines, "\n"))
 	}
-	report := ConfigurationsByContent("clang version 20.1.8\nConfiguration file: " + filepath.Join(directory, "absent.cfg"))
-	if !strings.Contains(report, "Configuration file: unreadable (") {
-		t.Errorf("an absent config reported %q", report)
+	if report, err := ConfigurationsByContent("clang version 20.1.8\nConfiguration file: " + filepath.Join(directory, "absent.cfg")); err == nil || !strings.Contains(err.Error(), "reading clang's config "+filepath.Join(directory, "absent.cfg")) {
+		t.Errorf("an absent config reported %q, %v; want it refused by its path", report, err)
 	}
 }
